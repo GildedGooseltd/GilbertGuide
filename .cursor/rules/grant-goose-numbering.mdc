@@ -1,0 +1,20 @@
+---
+description: Grant Goose — always number grant opportunities for easy reference
+alwaysApply: true
+---
+
+# Grant Goose numbering (locked)
+
+When discussing grants, programs, or funding opportunities for Kate / Gilded Goose / Lazy Goose Acres:
+
+1. **Assign a stable ID** to every active opportunity: `OP-01`, `OP-02`, … (increment; never renumber existing IDs).
+2. **Separate lists:**
+   - **Active ops** — apply now or this round
+   - **NEW-OP-XX** — discovered opportunities not yet on the saved list
+   - **NEXT-YR-XX** — closed windows but strong fit; store for next-year plan only
+   - **LATER-XX** — business/art bucket (deferred round)
+3. **Reference by number** in replies, tracker updates, and handoff docs (e.g. "attack OP-01 first").
+4. **Do not remove numbers** when deprioritizing — mark `hold`, `later`, or move to NEXT-YR instead.
+5. **Sync IDs** to `gilded-goose/GRANTS-TRACKER.md` OP registry when adding or changing status.
+
+User should not need to restate this preference.
