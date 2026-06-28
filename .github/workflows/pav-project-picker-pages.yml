@@ -1,0 +1,54 @@
+# Deploy Picky Pavi to GitHub Pages (gh-pages branch)
+# Repo: https://github.com/GildedGooseltd/PickyPavi
+# Enable: repo Settings → Pages → Deploy from branch gh-pages / root
+# Secret: PAV_PICKER_WEBHOOK_URL = Apps Script web app /exec URL
+# Optional: PAV_PICKER_DEPOSIT_AMOUNT (default 2500), PAV_PICKER_QUICKBOOKS_DEPOSIT_URL
+
+name: Deploy Picky Pavi
+
+on:
+  push:
+    paths:
+      - "gilded-goose/clients/pav-law/project-picker/**"
+      - ".github/workflows/pav-project-picker-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build projects-data.js from content/
+        working-directory: gilded-goose/clients/pav-law/project-picker
+        run: npm run build
+
+      - name: Write config.js from secret
+        working-directory: gilded-goose/clients/pav-law/project-picker
+        env:
+          WEBHOOK_URL: ${{ secrets.PAV_PICKER_WEBHOOK_URL }}
+          DEPOSIT_AMOUNT: ${{ secrets.PAV_PICKER_DEPOSIT_AMOUNT }}
+          QUICKBOOKS_URL: ${{ secrets.PAV_PICKER_QUICKBOOKS_DEPOSIT_URL }}
+        run: |
+          if [ -n "$WEBHOOK_URL" ]; then
+            DEP="${DEPOSIT_AMOUNT:-2500}"
+            if [ -n "$QUICKBOOKS_URL" ]; then
+              printf 'window.PAV_PICKER_CONFIG = {\n  webhookUrl: "%s",\n  depositAmount: %s,\n  quickbooksDepositUrl: "%s"\n};\n' \
+                "$WEBHOOK_URL" "$DEP" "$QUICKBOOKS_URL" > config.js
+            else
+              printf 'window.PAV_PICKER_CONFIG = {\n  webhookUrl: "%s",\n  depositAmount: %s,\n  quickbooksDepositUrl: ""\n};\n' \
+                "$WEBHOOK_URL" "$DEP" > config.js
+            fi
+          elif [ ! -f config.js ]; then
+            cp config.example.js config.js
+          fi
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: gilded-goose/clients/pav-law/project-picker
+          branch: gh-pages
+          clean: true

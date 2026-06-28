@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Picky Pavi — Project Prioritizer</title>
+  <style>
+    :root {
+      --peacock-teal: #00a896;
+      --peacock-blue: #3d7ae8;
+      --peacock-violet: #6b4ce6;
+      --peacock-purple: #9a3fd4;
+      --bg: #040810;
+      --surface: #0a1020;
+      --surface2: #121a2e;
+      --border: rgba(0, 212, 196, 0.28);
+      --text: #ececf2;
+      --secondary: #b8c0d4;
+      --accent-dim: rgba(77, 139, 255, 0.14);
+      --green: #00d4c4;
+      --green-dim: rgba(0, 212, 196, 0.12);
+      --gradient-brand: linear-gradient(135deg, #00796f 0%, #4a3db8 50%, #7a2fb8 100%);
+      --radius: 12px;
+      --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+      --space-sm: 0.75rem;
+      --space-md: 1.25rem;
+      --space-lg: 2rem;
+      --space-xl: 2.75rem;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.8; min-height: 100vh; font-size: 1.14rem; }
+    header {
+      background: var(--gradient-brand);
+      border-bottom: 3px solid var(--peacock-teal);
+      padding: var(--space-lg) 2rem;
+    }
+    .header-row { display: flex; align-items: flex-start; gap: var(--space-md); }
+    .site-tagline { font-size: 0.95rem; color: var(--secondary); margin: 0.25rem 0 0; font-weight: 400; }
+    header h1 { font-size: 1.85rem; font-weight: 800; color: #fff; }
+    header .intro { color: #d0f5f2; margin-top: var(--space-sm); font-size: 1.15rem; max-width: 54rem; line-height: 1.8; }
+    .pavi-icon { width: 64px; height: 64px; flex-shrink: 0; border-radius: 50%; object-fit: cover; border: 2px solid rgba(0, 212, 196, 0.5); }
+    .layout { display: grid; grid-template-columns: 1fr 380px; gap: 0; max-width: 1400px; margin: 0 auto; }
+    @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } .sidebar { order: -1; position: static !important; } }
+    main { padding: var(--space-lg) 2rem var(--space-xl); }
+    .sidebar {
+      background: var(--surface); border-left: 2px solid var(--border);
+      padding: var(--space-lg); position: sticky; top: 0;
+      height: fit-content; max-height: 100vh; overflow-y: auto;
+    }
+    .card {
+      scroll-margin-top: 1.25rem;
+      background: var(--surface); border: 2px solid var(--border);
+      border-radius: var(--radius); padding: var(--space-md) var(--space-md) var(--space-lg);
+      margin-bottom: var(--space-md); cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .card:hover { border-color: var(--peacock-blue); box-shadow: 0 4px 24px rgba(61, 122, 232, 0.15); }
+    .card.selected { border-color: var(--peacock-violet); box-shadow: 0 0 0 2px var(--peacock-violet); background: linear-gradient(180deg, #12132a 0%, var(--surface) 100%); }
+    .card-header { display: flex; align-items: flex-start; gap: var(--space-md); }
+    .card input[type="checkbox"] { width: 22px; height: 22px; margin-top: 4px; accent-color: var(--peacock-teal); cursor: pointer; flex-shrink: 0; }
+    .card-body { flex: 1; min-width: 0; }
+    .card-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: var(--space-sm); }
+    .card-title { font-weight: 800; font-size: 1.34rem; line-height: 1.45; color: #fff; flex: 1; min-width: 0; }
+    .card-corner { display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; max-width: 55%; }
+    .verified-data-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+      padding: 0.25rem 0.55rem; border-radius: 4px; white-space: nowrap;
+      background: rgba(0, 212, 196, 0.12); border: 1px solid var(--peacock-teal); color: #99f6e4;
+    }
+    .verified-data-badge::before {
+      content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0;
+    }
+    .badge-priority { background: rgba(61, 122, 232, 0.2); color: #93c5fd; border: 1px solid var(--peacock-blue); font-size: 0.72rem; }
+    .badge-cat-corner { background: rgba(107, 76, 230, 0.25); color: #e9d5ff; border: 1px solid var(--peacock-violet); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .card-meta { display: flex; gap: 0.55rem; flex-wrap: wrap; margin-bottom: var(--space-sm); }
+    .badge { font-size: 0.85rem; padding: 0.3rem 0.7rem; border-radius: 999px; font-weight: 700; white-space: nowrap; }
+    .badge-required { background: rgba(248, 113, 113, 0.15); color: #fca5a5; border: 1px solid #f87171; }
+    .badge-fee { background: var(--green-dim); color: var(--green); border: 1px solid var(--peacock-teal); }
+    .badge-cat { background: rgba(107, 76, 230, 0.2); color: #c4b5fd; border: 1px solid var(--peacock-violet); }
+    .badge-wip { background: rgba(255, 176, 32, 0.15); color: #ffc866; border: 1px solid #ffb020; }
+    .badge-ongoing { background: rgba(61, 122, 232, 0.2); color: #93c5fd; border: 1px solid var(--peacock-blue); }
+    .badge-done { background: rgba(0, 212, 196, 0.15); color: var(--green); border: 1px solid var(--peacock-teal); }
+    .badge-enabler { background: rgba(154, 63, 212, 0.2); color: #e9d5ff; border: 1px solid var(--peacock-purple); }
+    .card-description { color: var(--secondary); font-size: 1.18rem; margin-bottom: var(--space-md); line-height: 1.85; }
+    .card-description p { margin: 0 0 0.75rem; }
+    .account-data-footnote { margin: 0.85rem 0 0; padding-top: 0.85rem; border-top: 1px solid var(--border); font-size: 1.02rem; color: #99f6e4; line-height: 1.7; }
+    .account-data-footnote .metric-source { color: var(--secondary); font-size: 0.92rem; }
+    .value-added-box {
+      font-size: 1.12rem; padding: var(--space-md); margin-bottom: var(--space-md);
+      background: rgba(107, 76, 230, 0.12); border-radius: var(--radius);
+      border-left: 4px solid var(--peacock-violet); color: #e2e8f0; line-height: 1.75;
+    }
+    .value-added-title { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-violet); margin: 0 0 0.65rem; font-weight: 800; }
+    .value-added-list { list-style: none; padding: 0; margin: 0; }
+    .value-added-list li { padding: 0.35rem 0; color: #e2e8f0; line-height: 1.7; }
+    .learnings-intro { font-size: 1.05rem; color: var(--secondary); line-height: 1.75; margin-bottom: var(--space-md); }
+    .fee-note { font-size: 0.95rem; color: var(--secondary); margin-top: 0.35rem; line-height: 1.6; font-style: italic; }
+    .progress-block { margin-bottom: var(--space-md); }
+    .progress-block h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--peacock-teal); margin: 0.65rem 0 0.35rem; font-weight: 700; }
+    .in-progress-box {
+      border: 2px solid #ffb020; border-radius: var(--radius); padding: var(--space-md);
+      margin: var(--space-sm) 0 var(--space-md); background: rgba(255, 176, 32, 0.07);
+    }
+    .in-progress-box h4 { color: #ffc866; margin-top: 0; }
+    .in-progress-box .progress-list li { font-size: 1.05rem; color: #fde68a; }
+    .badge-related { background: rgba(61, 122, 232, 0.18); color: #93c5fd; border: 1px solid var(--peacock-blue); font-size: 0.72rem; max-width: 100%; white-space: normal; line-height: 1.35; }
+    .card-sub-related { margin-left: 1.75rem; border-left: 4px solid var(--peacock-blue); background: linear-gradient(90deg, rgba(61, 122, 232, 0.08) 0%, var(--surface) 12%); }
+    .card-sub-related .card-title { font-size: 1.22rem; }
+    .table-project-sub { font-weight: 600; color: #c4d4f0; }
+    .progress-list { list-style: none; padding: 0; }
+    .progress-list li { font-size: 1rem; padding: 0.25rem 0; color: var(--secondary); line-height: 1.6; }
+    .done-item { color: #86efac !important; }
+    .wip-item { color: #ffc866 !important; }
+    .expand-btn {
+      background: none; border: none; color: var(--peacock-blue);
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; margin-top: var(--space-sm); padding: 0;
+    }
+    .card-detail { display: none; margin-top: var(--space-md); padding-top: var(--space-md); border-top: 2px solid var(--border); font-size: 1.06rem; }
+    .card.expanded .card-detail { display: block; }
+    .detail-block { margin-bottom: var(--space-md); }
+    .detail-block h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-teal); margin-bottom: 0.5rem; font-weight: 700; }
+    .deliverable-list { list-style: none; padding: 0; }
+    .deliverable-list li { padding: 0.35rem 0; color: var(--secondary); line-height: 1.65; font-size: 1.02rem; }
+    .deliverable-list.compact li { font-size: 0.85rem; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .ref-list a { color: var(--peacock-blue); font-weight: 600; text-decoration: none; }
+    .ref-list a:hover { text-decoration: underline; }
+    .ref-note { display: block; font-size: 0.85rem; color: var(--secondary); margin-top: 0.25rem; line-height: 1.55; }
+    .sidebar h2 { font-size: 1.15rem; margin-bottom: 1rem; font-weight: 700; color: #fff; }
+    .total-box { background: var(--surface2); border-radius: var(--radius); padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--border); }
+    .total-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.4rem; gap: 1rem; color: var(--secondary); }
+    .total-row span:first-child { flex: 1; color: var(--text); }
+    .total-row.grand { font-size: 1.1rem; font-weight: 700; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); color: var(--green); }
+    .impact-section { margin-bottom: 1.25rem; font-size: 0.88rem; }
+    .impact-section h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-teal); margin-bottom: 0.5rem; font-weight: 700; }
+    .impact-item { background: var(--surface2); border-radius: var(--radius); padding: 0.65rem 0.85rem; margin-bottom: 0.5rem; border: 1px solid var(--border); }
+    .impact-item strong { color: #fff; display: block; margin-bottom: 0.35rem; }
+    .btn {
+      display: block; width: 100%; padding: 0.7rem 1rem; border: none;
+      border-radius: var(--radius); font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; margin-bottom: 0.5rem; transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-primary { background: var(--gradient-brand); color: #fff; border: 1px solid var(--peacock-teal); }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 2px solid var(--peacock-blue); }
+    .empty-state { color: var(--secondary); font-size: 0.9rem; font-style: italic; }
+    .retainer-card { border-color: var(--peacock-teal); background: linear-gradient(180deg, rgba(0, 121, 111, 0.12) 0%, var(--surface) 100%); }
+    .retainer-card.required-retainer { border-color: #f87171; box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.35); }
+    .card input[type="checkbox"]:disabled { opacity: 0.85; cursor: not-allowed; }
+    .note { font-size: 0.88rem; color: var(--secondary); margin-top: var(--space-md); padding: var(--space-md); background: var(--surface2); border-radius: var(--radius); border: 1px solid var(--border); line-height: 1.65; }
+    .note code { color: var(--green); font-size: 0.85rem; }
+    .submit-field { margin-bottom: var(--space-md); }
+    .submit-field label { display: block; font-size: 0.85rem; color: #fff; font-weight: 600; margin-bottom: 0.35rem; }
+    .goal-field { margin-bottom: var(--space-md); }
+    .goal-field label { display: block; font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; }
+    .goal-field textarea, .submit-field textarea, .submit-field input, .project-note, .general-note, .filter-field input {
+      width: 100%; padding: 0.6rem 0.75rem; border-radius: 6px;
+      border: 2px solid var(--border); background: var(--surface2); color: var(--text); font-size: 0.95rem; font-family: inherit;
+    }
+    .goal-field textarea { min-height: 3.5rem; resize: vertical; }
+    .project-note, .general-note { min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
+    .goal-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .goal-actions .btn { width: auto; margin: 0; }
+    .filter-bar { background: var(--surface); border-bottom: 2px solid var(--border); padding: var(--space-lg) 2rem; max-width: 1400px; margin: 0 auto; }
+    .filter-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end; margin-top: 1rem; }
+    @media (max-width: 768px) { .filter-grid { grid-template-columns: 1fr; } }
+    .filter-field label { display: block; font-size: 0.82rem; color: #fff; font-weight: 600; margin-bottom: 0.3rem; }
+    .filter-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .filter-actions .btn { width: auto; margin: 0; padding: 0.55rem 1rem; font-size: 0.85rem; }
+    .filter-status { margin-top: 0.85rem; padding: 0.65rem 0.85rem; background: var(--surface2); border-radius: 6px; font-size: 0.9rem; color: var(--secondary); border: 2px solid var(--border); }
+    .filter-status.ok { border-left: 4px solid var(--green); }
+    .filter-status.bad { border-left: 4px solid #f87171; }
+    .filter-status strong { color: #fff; }
+    .filter-status code { color: var(--green); }
+    .filter-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; color: var(--secondary); margin-top: 0.5rem; }
+    .filter-check input { accent-color: var(--peacock-teal); }
+    .priority-table-wrap {
+      max-width: 1400px; margin: 0 auto; padding: var(--space-lg) 2rem 0;
+    }
+    .priority-table-wrap h2 { font-size: 1.05rem; color: #fff; margin-bottom: 0.35rem; }
+    .priority-table-intro { font-size: 0.95rem; color: var(--secondary); margin-bottom: var(--space-md); line-height: 1.65; }
+    .priority-table-scroll { overflow-x: auto; border: 2px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+    .priority-table { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+    .priority-table th, .priority-table td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .priority-table th { background: var(--surface2); color: #fff; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; }
+    .priority-table tr:last-child td { border-bottom: none; }
+    .priority-table tr:hover td { background: rgba(61, 122, 232, 0.08); }
+    .priority-table tr.row-package td { border-left: 3px solid var(--peacock-teal); }
+    .pkg-dot { color: var(--green); margin-left: 0.25rem; font-size: 0.65rem; }
+    .card.package-included { border-left: 4px solid var(--peacock-teal); }
+    .priority-table .col-p { min-width: 4.5rem; color: var(--green); font-weight: 800; vertical-align: top; }
+    .priority-table .col-p .table-required { display: block; margin-top: 0.35rem; font-size: 0.62rem; font-weight: 700; white-space: normal; line-height: 1.2; }
+    .table-project-link { color: #fff; font-weight: 700; text-decoration: none; border-bottom: 1px solid rgba(61, 122, 232, 0.45); }
+    .table-project-link:hover { color: var(--peacock-blue); border-bottom-color: var(--peacock-blue); }
+    .priority-table .col-fee { white-space: nowrap; color: var(--green); font-weight: 600; }
+    .priority-table .col-type { color: var(--secondary); white-space: nowrap; }
+    .priority-table tr.row-selected td { background: rgba(107, 76, 230, 0.12); }
+    .table-filter-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: var(--space-md);
+    }
+    @media (max-width: 768px) { .table-filter-row { grid-template-columns: 1fr; } }
+    .table-filter-status { font-size: 0.85rem; color: var(--secondary); margin-bottom: var(--space-sm); }
+    .card.filtered-out { display: none; }
+    .card.over-budget:not(.selected) { opacity: 0.35; pointer-events: none; }
+    .card.recommended { box-shadow: 0 0 0 2px var(--peacock-teal); }
+    .budget-bar-wrap { margin-top: 0.5rem; }
+    .budget-bar { height: 6px; background: var(--surface); border-radius: 3px; overflow: hidden; }
+    .budget-bar-fill { height: 100%; background: var(--green); transition: width 0.2s; }
+    .budget-bar-fill.over { background: #f87171; }
+    .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--green); color: #040810; padding: 0.75rem 1.25rem; border-radius: var(--radius); font-size: 0.9rem; opacity: 0; transform: translateY(10px); transition: all 0.25s; z-index: 100; max-width: 320px; font-weight: 600; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.error { background: #f87171; color: #fff; }
+    .thank-you { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(4, 8, 16, 0.92); overflow-y: auto; padding: 2rem 1rem; }
+    .thank-you.show { display: flex; align-items: flex-start; justify-content: center; }
+    .thank-you-panel { background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius); max-width: 560px; width: 100%; padding: 1.75rem; margin: auto; }
+    .thank-you-panel h2 { font-size: 1.35rem; margin-bottom: 0.35rem; color: #fff; }
+    .thank-you-panel .sub { color: var(--secondary); font-size: 0.95rem; margin-bottom: 1.25rem; }
+    .thank-you-list { font-size: 0.92rem; color: var(--secondary); margin-bottom: 1rem; padding-left: 1.2rem; }
+    .confirm-note, .deposit-note { font-size: 0.95rem; color: var(--secondary); line-height: 1.65; margin-bottom: 0.75rem; }
+    .thank-you-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+    .thank-you-actions .btn { margin-bottom: 0; text-align: center; text-decoration: none; }
+    .main-app.hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div id="thank-you" class="thank-you" aria-hidden="true">
+    <div class="thank-you-panel">
+      <h2>Submission received</h2>
+      <p class="sub">Confirmation emails go to you and Gilded Goose. Pay the standard deposit via QuickBooks; your full project invoice follows separately.</p>
+      <div id="thank-you-body"></div>
+      <div class="thank-you-actions">
+        <a class="btn btn-primary" id="btn-pay-deposit" href="#" target="_blank" rel="noopener noreferrer" style="display:none">Pay deposit</a>
+        <button type="button" class="btn btn-secondary" id="btn-back-picker">Browse more projects</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-app">
+    <header>
+      <div class="header-row">
+        <img class="pavi-icon" id="pavi-header-img" src="assets/pavi-icon.png" alt="Picky Pavi">
+        <div>
+          <h1>Picky Pavi</h1>
+          <p class="site-tagline">Pav Law project prioritizer</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="filter-bar">
+      <div class="goal-field">
+        <label for="goal-input">What are you trying to accomplish?</label>
+        <textarea id="goal-input" placeholder="Example: Shift budget to Military Search at about $67 per call, stop $526 per call domestic violence waste, finish website and SEO, launch NTGUILT display before July 4"></textarea>
+        <div class="goal-actions">
+          <button type="button" class="btn btn-primary" id="match-goal">Find matching projects</button>
+          <button type="button" class="btn btn-secondary" id="clear-goal">Clear goal match</button>
+        </div>
+      </div>
+      <div class="filter-grid">
+        <div class="filter-field">
+          <label for="filter-consulting">Consulting budget for project fees</label>
+          <input type="number" id="filter-consulting" min="0" step="100" placeholder="8000">
+        </div>
+        <div class="filter-field">
+          <label for="filter-media">Google Ads media budget</label>
+          <input type="number" id="filter-media" min="0" step="100" placeholder="6000">
+        </div>
+        <div class="filter-actions">
+          <button type="button" class="btn btn-primary" id="suggest-plan">Suggest plan</button>
+          <button type="button" class="btn btn-secondary" id="clear-filters">Clear budgets</button>
+        </div>
+      </div>
+      <label class="filter-check">
+        <input type="checkbox" id="filter-hide-nonmatching" checked>
+        Hide projects that do not fit your consulting budget
+      </label>
+      <div class="filter-status" id="filter-status">Enter budgets to filter projects.</div>
+    </div>
+
+    <div class="priority-table-wrap">
+      <h2>Recommended project order</h2>
+      <p class="priority-table-intro" id="package-intro"></p>
+      <div class="table-filter-row">
+        <div class="filter-field">
+          <label for="filter-max-fee">Max project fee</label>
+          <input type="number" id="filter-max-fee" min="0" step="100" placeholder="Any">
+        </div>
+        <div class="filter-field">
+          <label for="filter-priority-min">Priority from</label>
+          <input type="number" id="filter-priority-min" min="1" step="1" placeholder="1">
+        </div>
+        <div class="filter-field">
+          <label for="filter-priority-max">Priority to</label>
+          <input type="number" id="filter-priority-max" min="1" step="1" placeholder="21">
+        </div>
+      </div>
+      <p class="table-filter-status" id="table-filter-status"></p>
+      <div class="priority-table-scroll">
+        <table class="priority-table" id="priority-table">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Project</th>
+              <th>Fee</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody id="priority-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="layout">
+      <main>
+        <div id="project-list"></div>
+      </main>
+
+      <aside class="sidebar">
+        <h2>Your selection</h2>
+        <div class="total-box" id="totals">
+          <div class="empty-state">Select projects to see totals.</div>
+        </div>
+
+        <div class="impact-section" id="selected-deliverables">
+          <h3>Key deliverables in selection</h3>
+          <div class="empty-state">—</div>
+        </div>
+
+        <div class="submit-field">
+          <label for="submitted-by">Your name</label>
+          <input type="text" id="submitted-by" class="general-note" placeholder="Your name" autocomplete="name">
+        </div>
+
+        <div class="submit-field">
+          <label for="submitted-email">Your email</label>
+          <input type="email" id="submitted-email" class="general-note" placeholder="you@example.com" autocomplete="email">
+        </div>
+
+        <div class="submit-field">
+          <label for="general-suggestions">General questions or suggestions</label>
+          <textarea id="general-suggestions" class="general-note" placeholder="Budget timing, priorities, anything not tied to one project…"></textarea>
+        </div>
+
+        <button class="btn btn-primary" id="submit-selections" disabled>Submit selections and notes</button>
+        <button class="btn btn-secondary" id="download-csv" disabled>Download spreadsheet CSV</button>
+
+        <p class="note">
+          Submit sends selections to Gilded Goose and emails you a confirmation. Standard deposit via QuickBooks; full invoice for selected projects follows.
+        </p>
+      </aside>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="projects-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
