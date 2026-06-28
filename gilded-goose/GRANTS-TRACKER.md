@@ -21,7 +21,8 @@ Columns: `id | program | score | config | entity | payout | deadline | status | 
 
 **Zero tax owed:** Credit is **refundable** — e.g. $10k equip → ~$7,500 state check if you owe $0 CO tax.
 
-**Next:** Letter of Eligibility before big purchase · `cda_cfa@state.co.us` · mercantile LILA + farm letter of support
+**Next:** Send LOE email (`OP-01-SUBMISSION.md` §1) · attach quotes · mercantile permission  
+**Submit package:** `OP-01-SUBMISSION.md` · **Brainstorm:** `OP-01-FOOD-BRAINSTORM.md` · **Prompts:** `GRANT-WRITING-PROMPTS.md`
 
 ---
 
@@ -182,7 +183,29 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 
 ## Attack order
 
-1. OP-01 · 2. OP-02 + OP-03 (same NRCS visit) · 3. OP-05 if DIC passes · 4. NEW-OP-01 Fall · 5. OP-04 partner emails + SIEA call · 6. OP-06 when opens · 7. NEW-OP-02 when opens
+1. OP-01 · 2. OP-02 + OP-03 (same NRCS visit) · 3. OP-05 if DIC passes · 4. NEW-OP-01 Fall · 5. OP-04 partner path · 6. OP-06 when opens · 7. NEW-OP-02 when opens
+
+---
+
+## July 2026 finder (sweep Jun 27)
+
+| ID | Due | Program | $ | Fit | Action |
+|----|-----|---------|---|-----|--------|
+| **JUL-01** | **Jul 1** | CWCB Colorado Water Plan Grant | varies (~$40M pool) | **Low** — LLC alone weak; ag/water efficiency angle if ditch/partner | Skip unless water-conservation partner |
+| **JUL-02** | **Jul 1 opens** | OEDIT Advanced Industries Early-Stage / Accelerator | varies | **Low** — tech/VC startups, not farm | Skip this round |
+| **JUL-03** | **Jul 20** | OEDIT Opportunity Now Tax Credit (reservation) | up to 50% asset | **Low** — major qualified capital asset | Skip |
+| **JUL-04** | **Jul 23** | GOCO Community Impact concept | $100K–$2M | **Low** — county/nonprofit lead only | NEW-OP-03 · skip solo |
+| **JUL-05** | **Jul 31** | Galaxy Grant (LATER-03 / GG-011) | ~$4,250 | **Med** — free · woman-owned · business bucket | Optional · 30-sec app |
+| **JUL-06** | **Jul 31** | Amber Grant monthly | $10K×3 | **Skip** — July category **Animal Services** · $15 fee | Wait Mar 2027 Food or Apr Sustainability |
+| **JUL-07** | Rolling | Startup Colorado Entrepreneur Grant | $2,500 | **High** — rural · free · no July hard deadline | LATER · apply anytime |
+| **JUL-08** | Rolling | IFundWomen | varies | **Med** — profile + matches | LATER · complete profile |
+| **JUL-ACT** | After **Jul 1** | OP-02/03 Garrett NRCS visit | cost-share | **High** — not a grant deadline | Schedule / prep GG-Q01–Q10 |
+| **JUL-ACT** | Late Jul | OP-05 DIC map go/no-go | — | **High** — before Aug 7 pre-app | Run EnviroScreen map |
+| **JUL-ACT** | All July | OP-01 prep | 75% credit | **High** — **Aug 31** batch | Letter of Eligibility + quotes |
+
+**Closed before July:** VAPG Apr 22 · Agrivoltaics Jun 15 · Allstate Jun 23 · NextGen Apr 24 · PLAYA/Women Founders Jun 30
+
+**August next:** OP-05 pre-app **Aug 7** · OP-01 batch **Aug 31**
 
 ---
 
@@ -250,7 +273,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 | GG-014 | [CDA CFA Equipment Tax Credit](https://ag.colorado.gov/markets/markets-funding/community-food-access-program/community-food-access-equipment-tax-credit) | 50–75 | A-LILA | Gilded Goose | 75% equipment | **Aug 31, 2026** | queue | Moved to Apply now — see top section |
 | GG-019 | [Amber Grant](https://ambergrantsforwomen.com/) — June dual track | 70–78 | E,A,B,C | Gilded Goose | $10K × 3/mo | Monthly | queue | Stage 2: $15 after narrative ≥75; June = Business Support |
 | — | [HerRise MicroGrant](https://www.hersuitespot.com/herrise/) | 68 | E | Gilded Goose | $1,000/mo | Monthly | queue | Stage 2: $15; recycle Amber draft |
-| — | [Pollock-Krasner Foundation](https://www.pkf.org/grants/grant-for-artists/) | 55 | C | Kate | Up to $50K | Rolling | queue | Needs professional exhibition record; 9–12 mo review |
+| GG-026 | ~~Pollock-Krasner~~ | — | C | Kate | — | — | **canceled** | **Not qualified** — do not pursue |
 | — | [Artist Grant](https://artistgrant.org/apply) | 40 | C | Kate | $1,200 | Jul/Nov 2026 | hold | **$30 fee** — excluded per free-only rule |
 | GG-035 | [Gottlieb Individual Support](https://www.gottliebfoundation.org/grant) | 50 | C | Kate | Up to $20K | Rolling | queue | Free; painters; 6-mo review |
 | — | [NRCS CSP](https://www.nrcs.usda.gov/programs-initiatives/conservation-stewardship-program/colorado/conservation-stewardship-program-csp) | 70 | B | Lazy Goose | Annual payments | Rolling | queue | Ask Garrett at visit; stacks with EQIP |
@@ -340,7 +363,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 |----|---------|-----|----------|-----|--------|
 | GG-032 | PLAYA 2027 Art/Sci | [playasummerlake.org/2027-artsci](https://playasummerlake.org/2027-artsci/) | **Jun 30, 2026** | Free (waiver granted on request) | apply |
 | — | Artist Grant | [artistgrant.org/apply](https://artistgrant.org/apply) | Jul/Nov 2026 | **$30** | excluded |
-| — | Pollock-Krasner | [pkf.org/grants/grant-for-artists](https://www.pkf.org/grants/grant-for-artists/) | Rolling | Free | queue when exhibition record ready |
+| GG-026 | ~~Pollock-Krasner~~ | — | — | **canceled** | Not qualified |
 | GG-035 | Gottlieb Individual Support | [gottliebfoundation.org/grant](https://www.gottliebfoundation.org/grant) | Rolling | Free | queue |
 | GG-033 | Green Box AiR 2027 | [greenboxarts.org/…/apply](https://greenboxarts.org/year-round-programs/artists-in-residence/apply/) | Opens **Sep 2026** | Free | wait |
 | GG-027 | RedLine Denver AiR | [redlineart.org/apply](https://www.redlineart.org/apply) | **~Jun 2027** | Free | wait (score 35; skip 2026–28) |

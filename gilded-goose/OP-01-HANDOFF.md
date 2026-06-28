@@ -1,9 +1,10 @@
 # OP-01 Handoff — CDA Community Food Access Equipment Tax Credit
 
 **Copy this entire file to the next agent.**  
-**Mission:** Research remaining gaps, then draft the application package and healthy-food expansion plan for the Aug 31, 2026 batch.
+**Mission:** Finalize LOE + Aug 31, 2026 application using the submission package.
 
-**Tracker:** `gilded-goose/GRANTS-TRACKER.md` (OP-01 section) · **Task ID:** GG-014 · **Score:** 85
+**Tracker:** `GRANTS-TRACKER.md` · **Task ID:** GG-014 · **Score:** 85  
+**Submit from:** `OP-01-SUBMISSION.md` · **Ideas:** `OP-01-FOOD-BRAINSTORM.md` · **Agent prompts:** `GRANT-WRITING-PROMPTS.md`
 
 ---
 
@@ -33,14 +34,14 @@
 | FSA farm number | On file (Jun 2026) |
 | NRCS | Intake map + paperwork submitted; Garrett Quintana visit after **Jul 1, 2026** |
 
-### Mercantile (primary retail anchor for LILA)
+### Mercantile (launch pad only — you do not own)
 
 | Field | Value |
 |-------|--------|
 | Location | Walsenburg Mercantile, **408 Russell Ave**, Walsenburg, CO |
-| Rev-share | **35% confirmed** (GG-015 done) |
-| Current retail | Coin-operated **candy** vending (do **not** lead grant narrative with this) |
-| Direction | **Mobile custom grocery** + healthy/local food access in LILA county |
+| Relationship | **Tenant/partner use** — pop-up, consignment, ship-to, vending placement with owner permission |
+| Candy machines | **Wind down** — not the long-term or grant narrative |
+| Direction | Healthy-food access via wholesale + vending + trading — see `OP-01-FOOD-BRAINSTORM.md` |
 | County | Huerfano ~**56% low-access** food population (USDA LILA) |
 
 ### Entity question for agent to resolve
@@ -80,17 +81,17 @@
 
 ---
 
-## Proposed equipment (draft for agent to refine)
+## Proposed equipment (see `OP-01-SUBMISSION.md` Section 5)
 
-**Lead narrative:** Expand **healthy food** access across Huerfano LILA — Gardner farm → Walsenburg mercantile → mobile delivery to underserved areas.
+**Lead narrative:** Wholesale cold hub + **unattended** healthy-food nodes in Huerfano LILA — not candy, not a staffed rolling store.
 
-| Priority | Equipment | Grant role | Notes |
-|----------|-----------|------------|-------|
-| **A** | Refrigerated **commercial delivery vehicle** | Mobile grocery / farm-to-store / LILA routes | Must be commercial/refrigerated; **not** passenger car. Class 6 reefer box truck (18–26 ft, GVWR ≤26k non-CDL) OR Isuzu NPR-HD + **≤8,000 lb GVWR** reefer trailer. Confirm Letter of Eligibility for exact spec. |
-| **B** | Cold storage / display / produce washing or sorting | Mercantile healthy-food expansion | Pairs with farm product |
-| **C** | Greenhouse / high tunnel (if in plan) | Extend local produce season for LILA | Align with farm growth story |
+| Stage | FOOD ID | Equipment | Role |
+|-------|---------|-----------|------|
+| **1** | FOOD-14, FOOD-10, FOOD-11, FOOD-13 | Freezers, generator, SNAP POS, smart fridge | Hub + one 24/7 node |
+| **2** | FOOD-08, FOOD-22 | Reefer truck/trailer (parked), Gardner pad | Restock + corridor node |
+| **0** | FOOD-07 | Pre-order board | Demand test before spend |
 
-**Explicitly exclude from application:** coin candy machines, candy inventory, consulting-only equipment.
+**Exclude:** candy machines, candy inventory, excavation/install-only, passenger vehicles, food inventory.
 
 ---
 
@@ -121,25 +122,21 @@
 
 ---
 
-## Narrative angles that score (use these, not candy)
+## Narrative angles that score (paste-ready copy in `OP-01-SUBMISSION.md` §3)
 
-1. **Food desert / LILA** — Rural Huerfano; long distances to full grocery; mercantile as community access point.
-2. **Woman-owned** small business expanding **produce, dairy, meat, local farm goods** — not confectionery.
-3. **Mobile delivery** — Refrigerated vehicle reaches Gardner, Walsenburg, and surrounding LILA tracts without requiring residents to drive 20+ miles.
-4. **Farm-to-retail pipeline** — Lazy Goose Acres → mercantile → customers (letter of support if farm applies).
-5. **Tech/ops strength** — Route planning, cold-chain, inventory — Kate’s consulting background supports reliable food access (secondary, not primary).
+1. **LILA / food desert** — 20+ miles to full grocery; convenience stores dominate.
+2. **Wholesale distributor** — bulk buy lowers prices; not a full-time grower.
+3. **Unattended 24/7 nodes** — smart fridges (FOOD-13) for card/SNAP; Japan-style unmanned shop.
+4. **Parked + restock** — reefer unit parked at Gardner pad (FOOD-22); routes restock 2–3×/week (FOOD-24).
+5. **Woman-owned + ops** — cold-chain reliability from tech/consulting background (secondary).
 
 ---
 
-## Agent writing outputs requested
+## Agent writing outputs
 
-1. **Letter of Eligibility request** (ready to send)
-2. **Healthy Food Access Plan** (2 pages max — for internal use + application narrative source)
-3. **Equipment spec memo** — recommended truck/trailer option with GVWR, cost estimate, 75% credit math
-4. **Application Q&A draft** — pre-fill expected portal questions from FAQ
-5. **Retailer letter of support** template (if farm entity)
-6. **Timeline** — Letter of Eligibility → quotes → purchase → Aug 31 application
-7. **Risk list** — what gets denied (candy, install costs, wrong vehicle class, no LILA proof)
+**Drafted in `OP-01-SUBMISSION.md`:** LOE email · Healthy Food Access Plan · narratives · portal Q&A · equipment memo · retailer letter · timeline · risk list.
+
+**Remaining for Kate:** fill `[brackets]` · attach quotes · send LOE · mercantile permission · FOOD-07 pilot data.
 
 ---
 
@@ -159,6 +156,8 @@
 | Path | Purpose |
 |------|---------|
 | `gilded-goose/GRANTS-TRACKER.md` | OP-01–OP-06 numbered ops |
+| `gilded-goose/OP-01-SUBMISSION.md` | **Ready-to-send LOE + application content** |
+| `gilded-goose/GRANT-WRITING-PROMPTS.md` | Copy-paste agent prompts |
 | `gilded-goose/BUSINESS-BIO.md` | Kate / entity voice |
 | `daily/sheets/grant-goose-tasks.csv` | GG-014 task row |
 | `~/Downloads/8 CCR 1204-10 CLEAN for AG Opinion 01152025.pdf` | Tax credit rules |
