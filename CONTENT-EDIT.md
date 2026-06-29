@@ -10,7 +10,7 @@
 
 | File | Purpose |
 |------|---------|
-| [INDEX.md](INDEX.md) | **You edit** — table titles + **## Notes** (build merges; your edits win) |
+| [INDEX.md](INDEX.md) | **You edit only** — table titles + **## Notes** (build reads; never writes) |
 | [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches B2) |
 | settings.md | Default package |
 | retainer.md | Retainer card |
@@ -45,6 +45,6 @@ npm run watch    # rebuild on save
 
 Push `content/` → GitHub → [GITHUB-PUSH.md](GITHUB-PUSH.md)
 
-**INDEX.md:** edit table **Project** names and **`## Notes`** at the bottom — build adds new projects but keeps your titles and notes.
+**INDEX.md:** you maintain the table and **## Notes** by hand. Build picks up your **Project** names and **P** values for the live picker — it will not change this file.
 
 **Where to get GitHub secret URLs:** [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)

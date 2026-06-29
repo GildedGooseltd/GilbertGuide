@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Compile content/*.md → projects-data.js for GitHub Pages.
- * Edit markdown in content/ — do not hand-edit projects-data.js.
+ * INDEX.md is read-only here — never written by this script.
  */
 import fs from "fs";
 import path from "path";
@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import {
   parseProjectMarkdown,
   parseSettingsMarkdown,
-  buildIndex
+  applyIndexOverrides
 } from "./markdown-project.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -41,8 +41,14 @@ function loadRetainer() {
 
 function build() {
   const settings = loadSettings();
-  const retainer = loadRetainer();
-  const projects = loadProjects();
+  let retainer = loadRetainer();
+  let projects = loadProjects();
+
+  const indexPath = path.join(CONTENT, "INDEX.md");
+  if (fs.existsSync(indexPath)) {
+    const existingIndex = fs.readFileSync(indexPath, "utf8");
+    ({ retainer, projects } = applyIndexOverrides(projects, retainer, existingIndex));
+  }
 
   const data = {
     paviIcon: settings.paviIcon,
@@ -51,27 +57,14 @@ function build() {
     projects
   };
 
-  const indexPath = path.join(CONTENT, "INDEX.md");
-  const existingIndex = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : "";
-  fs.writeFileSync(indexPath, buildIndex(projects, retainer, existingIndex), "utf8");
-
   const header = `/**
- * AUTO-GENERATED — do not edit. Source: content/*.md
- * Rebuild: npm run build  (or push → GitHub Action runs build before deploy)
+ * AUTO-GENERATED — do not edit. Source: content/*.md (titles/priority from INDEX.md when present)
+ * Rebuild: npm run build
  */
 window.PROJECT_DATA = `;
 
   fs.writeFileSync(OUT, header + JSON.stringify(data, null, 2) + ";\n", "utf8");
-  console.log(`Built ${OUT} (${projects.length} projects) + merged INDEX.md`);
-}
-
-function writeIndex() {
-  const retainer = loadRetainer();
-  const projects = loadProjects();
-  const indexPath = path.join(CONTENT, "INDEX.md");
-  const existing = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : "";
-  fs.writeFileSync(indexPath, buildIndex(projects, retainer, existing), "utf8");
-  console.log("Merged INDEX.md (your titles + Notes preserved)");
+  console.log(`Built ${OUT} (${projects.length} projects)`);
 }
 
 function watch() {
@@ -83,9 +76,8 @@ function watch() {
       console.error(e.message);
     }
   });
-  console.log("Watching content/ …");
+  console.log("Watching content/ … (INDEX.md is never modified by build)");
 }
 
-if (process.argv.includes("--index")) writeIndex();
-else if (process.argv.includes("--watch")) watch();
+if (process.argv.includes("--watch")) watch();
 else build();

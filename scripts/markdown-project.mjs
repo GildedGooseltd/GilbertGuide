@@ -16,6 +16,7 @@ const META_KEYS = {
   keywords: "keywords",
   parent: "parentId",
   enabler: "enabler",
+  "payment type": "paymentType",
   "monthly only": "monthlyOnly",
   "ongoing fee": "ongoingFee",
   "per campaign fee": "perCampaignFee",
@@ -60,6 +61,11 @@ function parseMetaTable(text) {
       meta[field] = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
     else if (field === "enabler" || field === "monthlyOnly")
       meta[field] = /^(yes|true|1)$/i.test(val);
+    else if (field === "paymentType") {
+      const v = val.toLowerCase();
+      if (/perf/.test(v)) meta.paymentType = "performance";
+      else if (/flat|fixed/.test(v)) meta.paymentType = "flat";
+    }
     else if (field === "keywords")
       meta.keywords = val.split(/,\s*/).filter(Boolean);
     else if (field === "status")
@@ -198,6 +204,7 @@ function metaTableRows(p) {
     ...(p.parentId ? [["Parent", p.parentId]] : []),
     ...(p.enabler ? [["Enabler", "yes"]] : []),
     ...(p.monthlyOnly ? [["Monthly only", "yes"]] : []),
+    ...(p.paymentType ? [["Payment type", p.paymentType === "performance" ? "performance" : "flat"]] : []),
     ...(p.ongoingFee ? [["Ongoing fee", p.ongoingFee]] : []),
     ...(p.perCampaignFee ? [["Per campaign fee", p.perCampaignFee]] : []),
     ["Keywords", (p.keywords || []).join(", ")]
@@ -293,6 +300,11 @@ Include retainer: ${pkg.retainer !== false ? "yes" : "no"}
 `;
 }
 
+/** Valid picker project IDs — rejects scratch rows like "WIP Live" in the ID column. */
+export function isValidProjectId(id) {
+  return /^(RETAINER|[AB]\d+M?)$/i.test(String(id || "").trim());
+}
+
 export function parseIndexMarkdown(text) {
   const result = {
     intro: "",
@@ -314,7 +326,8 @@ export function parseIndexMarkdown(text) {
     const cells = line.split("|").map(c => c.trim()).filter(Boolean);
     if (cells.length < 4 || cells[0] === "P") continue;
     const id = cells[1];
-    if (!id || id === "ID") continue;
+    if (!id || id === "ID" || !isValidProjectId(id)) continue;
+    if (result.rowsById[id]) continue;
     result.rowsById[id] = {
       p: cells[0],
       title: cells[2],
@@ -329,6 +342,23 @@ export function parseIndexMarkdown(text) {
   if (footerStart > 0) result.footer = text.slice(footerStart).trim();
 
   return result;
+}
+
+/** INDEX table titles + P column → picker data (INDEX wins over project .md H1). */
+export function applyIndexOverrides(projects, retainer, existingText) {
+  const { rowsById } = parseIndexMarkdown(existingText || "");
+  const applyTo = item => {
+    const o = rowsById[item.id];
+    if (!o) return item;
+    const next = { ...item };
+    if (o.title) next.title = o.title;
+    const pm = String(o.p || "").match(/^P(\d+)$/i);
+    if (pm) next.priority = parseInt(pm[1], 10);
+    return next;
+  };
+  const merged = projects.map(applyTo);
+  merged.sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
+  return { retainer: applyTo(retainer), projects: merged };
 }
 
 export function buildIndex(projects, retainer, existingText) {
@@ -357,7 +387,7 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
   }
 
   for (const [id, o] of Object.entries(overrides.rowsById)) {
-    if (seen.has(id)) continue;
+    if (seen.has(id) || !isValidProjectId(id)) continue;
     md += `| ${o.p} | ${id} | ${o.title} | ${o.file} |\n`;
   }
 

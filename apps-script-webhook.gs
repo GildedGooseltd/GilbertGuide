@@ -31,11 +31,12 @@ function setup() {
       "First month consulting subtotal",
       "Grand total note",
       "Deposit amount",
+      "Monthly payment terms",
       "General suggestions",
       "Per-project notes (JSON)",
       "Raw JSON"
     ]);
-    sh.getRange(1, 1, 1, 17).setFontWeight("bold");
+    sh.getRange(1, 1, 1, 18).setFontWeight("bold");
   }
 }
 
@@ -76,6 +77,8 @@ function buildInternalEmail(data, projects, noteBlock) {
     "",
     "First month consulting subtotal: " + (data.projectsSubtotal || "$0"),
     "Grand total note: " + (data.grandTotalNote || "—"),
+    "",
+    "Monthly payment terms (QuickBooks): " + (data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "—"),
     "",
     "Standard deposit collected separately: " + depositLine,
     "",
@@ -124,6 +127,7 @@ function buildClientEmail(data, projects, noteBlock) {
     "",
     "Estimated consulting (first month projects): " + (data.projectsSubtotal || "—"),
     "Note: " + (data.grandTotalNote || "—"),
+    "Monthly payment terms: " + (data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "—"),
     depositSection,
     "",
     "Your notes:",
@@ -176,6 +180,7 @@ function doPost(e) {
       data.projectsSubtotalNum != null ? data.projectsSubtotalNum : "",
       data.grandTotalNote || "",
       data.depositAmount != null ? data.depositAmount : "",
+      data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "",
       data.generalSuggestions || "",
       JSON.stringify(data.projectNotes || {}),
       JSON.stringify(data)

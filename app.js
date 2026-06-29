@@ -16,16 +16,29 @@
     return `<span class="hot-star${inline ? " hot-star-inline" : ""}" title="Top priority — work on next">★</span>`;
   }
 
+  function isPriorityUrgent(item) {
+    return isHotPriority(item) || !!item.enabler || item.status === "wip" || hasPartialProgress(item);
+  }
+
+  function priorityTocHtml(item) {
+    const required = item.isRetainer || item.id === "RETAINER" || item.monthlyOnly;
+    const p = item.priority != null && item.priority !== "" ? Math.trunc(Number(item.priority)) : "—";
+    const urgent = isPriorityUrgent(item) ? '<span class="priority-urgent" title="Urgent or fixing an active issue">!</span>' : "";
+    const hot = isHotPriority(item) ? hotStarHtml(false) : "";
+    const req = required ? '<span class="badge badge-required table-required">Req</span>' : "";
+    return `<span class="toc-priority-inner">${urgent}${hot}${p}</span>${req}`;
+  }
+
   const VALUE_ICON_DEFS = [
     { id: "foundation", icon: "⚙", cls: "icon-foundation", label: "Foundation — other marketing depends on this", match: item => !!item.enabler },
     { id: "retainer", icon: "⟳", cls: "icon-leads", label: "Ongoing paid media management", match: item => item.isRetainer || item.id === "RETAINER" || item.category === "Retainer" },
-    { id: "leads", icon: "📞", cls: "icon-leads", label: "Lead generation — calls & paid media", match: item => /paid media|outbound|display|search|seasonal/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "crm", icon: "🔄", cls: "icon-crm", label: "Pipeline, CRM & follow-up", match: item => /crm/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "seo", icon: "🔍", cls: "icon-seo", label: "Organic search & visibility", match: item => /seo|blog|local search|website ux/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "trust", icon: "⭐", cls: "icon-trust", label: "Trust, referrals & social proof", match: item => /referral|testimonial|social proof|direct mail|mailer/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
-    { id: "efficiency", icon: "📊", cls: "icon-efficiency", label: "Reporting, analytics & spend control", match: item => /analytics|dashboard|strategy|audit|finance|operations/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "intake", icon: "💬", cls: "icon-foundation", label: "Intake, phone & client experience", match: item => /intake|chat|after-hours|infrastructure|call infrastructure/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
-    { id: "creative", icon: "🎨", cls: "icon-trust", label: "Creative, email & brand reach", match: item => /creative|email|social/i.test((item.category || "") + (item.campaignType || "")) }
+    { id: "leads", icon: "📞", cls: "icon-leads", label: "Lead generation — calls and paid media", match: item => /paid media|outbound|display|search|seasonal/i.test((item.category || "") + (item.campaignType || "")) },
+    { id: "crm", icon: "🔄", cls: "icon-crm", label: "Pipeline, CRM, and follow-up", match: item => /crm/i.test((item.category || "") + (item.campaignType || "")) },
+    { id: "seo", icon: "🔍", cls: "icon-seo", label: "Organic search and visibility", match: item => /seo|blog|local search|website ux/i.test((item.category || "") + (item.campaignType || "")) },
+    { id: "referrals", icon: "🤝", cls: "icon-referrals", label: "Referrals and repeat clients", match: item => /referral|testimonial|social proof|direct mail|mailer|case win/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
+    { id: "efficiency", icon: "📊", cls: "icon-efficiency", label: "Reporting, analytics, and spend control", match: item => /analytics|dashboard|strategy|audit|finance|operations/i.test((item.category || "") + (item.campaignType || "")) },
+    { id: "intake", icon: "💬", cls: "icon-intake", label: "Intake, phone, and client experience", match: item => /intake|chat|after-hours|infrastructure|call infrastructure/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
+    { id: "creative", icon: "🎨", cls: "icon-creative", label: "Creative, email, and brand reach", match: item => /creative|email|social/i.test((item.category || "") + (item.campaignType || "")) }
   ];
 
   let RETAINER = PROJECT_DATA.retainer;
@@ -38,12 +51,73 @@
     recommended: new Set(),
     notes: {},
     generalSuggestions: "",
-    submittedBy: "",
     submitterEmail: "",
-    filters: { consultingBudget: null, hideNonMatching: true, maxFee: null, minPriority: null, maxPriority: null },
+    invoicePaymentMonths: "",
+    invoicePaymentMonthlyAmount: "",
+    filters: { hideNonMatching: true, maxFee: null },
     goalText: "",
-    tocSort: { field: "priority", dir: "asc" }
+    tocSort: { field: "priority", dir: "asc" },
+    showAllProjects: false
   };
+
+  const PROJECT_LIST_LIMIT = 10;
+
+  const PERFORMANCE_PAY_IDS = new Set(["RETAINER", "A1", "A2", "A3", "A4", "A6", "A7", "A11"]);
+
+  function getPaymentTermsPayload() {
+    const monthsEl = document.getElementById("invoice-payment-months");
+    const amountEl = document.getElementById("invoice-payment-amount");
+    const monthsRaw = monthsEl ? monthsEl.value : state.invoicePaymentMonths;
+    const amountRaw = amountEl ? amountEl.value : state.invoicePaymentMonthlyAmount;
+    const months = monthsRaw !== "" && monthsRaw != null ? Number(monthsRaw) : null;
+    const monthlyAmount = amountRaw !== "" && amountRaw != null ? Math.max(0, Number(amountRaw)) : null;
+    let label = null;
+    if (months && monthlyAmount != null) {
+      label = `${months} month${months === 1 ? "" : "s"} at ${fmt(monthlyAmount)}/mo (${fmt(monthlyAmount * months)} total)`;
+    } else if (months) {
+      label = `${months} month${months === 1 ? "" : "s"}`;
+    } else if (monthlyAmount != null) {
+      label = `${fmt(monthlyAmount)}/mo`;
+    }
+    return { months, monthlyAmount, label };
+  }
+
+  function syncPaymentTermsFromDom() {
+    const monthsEl = document.getElementById("invoice-payment-months");
+    const amountEl = document.getElementById("invoice-payment-amount");
+    state.invoicePaymentMonths = monthsEl ? monthsEl.value : "";
+    state.invoicePaymentMonthlyAmount = amountEl ? amountEl.value : "";
+  }
+
+  function getPaymentType(item, isRetainer) {
+    const raw = item.paymentType;
+    if (raw === "performance" || raw === "flat") return raw;
+    if (isRetainer || item.id === "RETAINER") return "performance";
+    if (item.monthlyOnly) return "flat";
+    if (PERFORMANCE_PAY_IDS.has(item.id)) return "performance";
+    return "flat";
+  }
+
+  function paymentBadgeHtml(item, isRetainer, compact) {
+    const t = getPaymentType(item, isRetainer);
+    if (t === "performance") {
+      return `<span class="badge badge-payment-perf" title="Eligible for performance-based pay when KPIs are met">${compact ? "Perf" : "Perf pay"}</span>`;
+    }
+    return `<span class="badge badge-payment-flat" title="Fixed fee — flat payment required">${compact ? "Flat" : "Flat fee"}</span>`;
+  }
+
+  function visibleOptionalProjects(optional) {
+    if (state.showAllProjects) return optional;
+    const selected = optional.filter(p => state.projects.has(p.id));
+    const rest = optional.filter(p => !state.projects.has(p.id));
+    const room = Math.max(0, PROJECT_LIST_LIMIT - selected.length);
+    return [...selected, ...rest.slice(0, room)];
+  }
+
+  function hiddenOptionalCount(optional) {
+    if (state.showAllProjects) return 0;
+    return optional.length - visibleOptionalProjects(optional).length;
+  }
 
   function getValueIcons(item) {
     const icons = [];
@@ -73,7 +147,18 @@
 
   function isItemSelected(item) {
     if (item.isRetainer || item.id === "RETAINER") return true;
+    if (item.monthlyOnly) return true;
     return state.projects.has(item.id);
+  }
+
+  function getMaintenanceProjects() {
+    return PROJECTS.filter(p => p.monthlyOnly);
+  }
+
+  function requiredMaintenanceMonthly() {
+    let n = state.retainer ? RETAINER.fee : 0;
+    getMaintenanceProjects().forEach(p => { n += p.fee; });
+    return n;
   }
 
   function sortSelectedFirst(items) {
@@ -88,66 +173,40 @@
   function buildRecommendation() {
     const selected = [];
     if (state.retainer) selected.push({ ...RETAINER, isRetainer: true });
+    getMaintenanceProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
     getSelectedProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
 
-    const f = getFilters();
-    const cost = getSelectionCost();
     const hasGoal = !!state.goalText.trim();
-    const hasBudget = f.consultingBudget != null;
-    const hasFilters = filtersActive();
+    if (!selected.length && !hasGoal) return null;
 
-    if (!selected.length && !hasGoal && !hasBudget && !hasFilters) return null;
+    const count = selected.length;
+    const cost = getSelectionCost();
 
-    const introParts = [];
-    if (hasGoal) {
-      const g = state.goalText.trim();
-      introParts.push(`Goal: "${g.length > 140 ? g.slice(0, 140) + "…" : g}"`);
-    }
-    if (hasBudget && selected.length) {
-      const pct = Math.min(100, Math.round((cost / f.consultingBudget) * 100));
-      introParts.push(`Uses ${fmt(cost)} of ${fmt(f.consultingBudget)} consulting budget (${pct}%).`);
-    } else if (hasBudget && !selected.length) {
-      introParts.push(`Consulting budget ${fmt(f.consultingBudget)} — click Suggest plan or select projects below.`);
-    }
-
-    if (!selected.length) {
-      return { intro: introParts.join(" "), bullets: [] };
-    }
-
-    const bullets = selected.map(item => {
-      const icons = getValueIcons(item);
-      const valueHint = icons.map(i => i.label.split("—")[0].trim()).join(", ");
-      const topValue = valueAddedBullets(item)[0];
-      let line = `${item.title} — ${valueHint}`;
-      if (item.enabler) line += ". Foundation work: call tracking and ads depend on this first.";
-      else if (topValue) line += `. ${topValue.replace(/^Deliverable:\s*/i, "")}`;
-      return line;
-    });
-
-    if (selected.length > 1) {
+    if (hasGoal && count) {
       const hasEnabler = selected.some(i => i.enabler);
       const hasLeads = selected.some(i => getValueIcons(i).some(v => v.id === "leads" || v.id === "retainer"));
       if (hasEnabler && hasLeads) {
-        introParts.push("This mix fixes infrastructure first, then scales lead generation — the order that protects ad spend.");
-      } else if (hasLeads) {
-        introParts.push("These projects focus on measurable leads and calls within your budget.");
+        return `${count} items · ${fmt(cost)} — infrastructure first, then lead generation.`;
       }
+      return `${count} items · ${fmt(cost)} — matched to your goals and issues.`;
     }
-
-    return { intro: introParts.join(" "), bullets };
+    if (count) {
+      return `${count} items · ${fmt(cost)} — review projects below and adjust anytime.`;
+    }
+    return "Describe goals or problems above — your plan updates automatically.";
   }
 
   function renderRecommendation() {
     const el = document.getElementById("recommendation-box");
     if (!el) return;
-    const rec = buildRecommendation();
-    if (!rec) {
+    const summary = buildRecommendation();
+    if (!summary) {
       el.className = "recommendation-box empty";
-      el.innerHTML = "<h3>Why this combination</h3><p>Enter a goal or consulting budget, then click <strong>Find matching projects</strong> or <strong>Suggest plan</strong>.</p>";
+      el.innerHTML = "<p>Describe your goals and any problems you're fixing — Pavi will match projects and update your summary.</p>";
       return;
     }
     el.className = "recommendation-box";
-    el.innerHTML = `<h3>Why this combination</h3>${rec.intro ? `<p>${escapeHtml(rec.intro)}</p>` : ""}${rec.bullets.length ? `<ul>${rec.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>` : "<p>Select projects below or use Suggest plan.</p>"}`;
+    el.innerHTML = `<p>${escapeHtml(summary)}</p>`;
   }
 
   function getAllItems() {
@@ -176,15 +235,57 @@
       .replace(/<\/?[^>]+(>|$)/g, "");
   }
 
-  function descriptionHtml(item) {
-    const desc = stripInlineLinks(item.description);
-    const value = stripInlineLinks(item.valueAdd || "");
-    const merged = value ? `${desc} ${value}` : desc;
-    let account = "";
-    if (item.backedMetric) {
-      account = `<p class="account-data-footnote"><strong>Account data:</strong> ${item.backedMetric.label} <span class="metric-source">(${item.backedMetric.source})</span></p>`;
+  function conciseDescription(item) {
+    const desc = stripInlineLinks(item.description || "");
+    if (!desc) return "";
+    const first = desc.match(/[^.!?]+[.!?]+/);
+    const text = first ? first[0].trim() : desc;
+    return text.length > 160 ? text.slice(0, 157).trim() + "…" : text;
+  }
+
+  function briefValueAdd(item) {
+    const bullets = valueAddedBullets(item);
+    if (bullets.length) {
+      const b = String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim();
+      return b.length > 110 ? b.slice(0, 107).trim() + "…" : b;
     }
-    return `<div class="card-description"><p>${merged}</p>${account}</div>`;
+    const v = buildBusinessValue(item);
+    if (v.why) return v.why.length > 110 ? v.why.slice(0, 107).trim() + "…" : v.why;
+    return conciseDescription(item);
+  }
+
+  function descriptionHtml(item) {
+    const merged = conciseDescription(item);
+    if (!merged) return "";
+    return `<div class="card-description"><p>${escapeHtml(merged)}</p></div>`;
+  }
+
+  function cornerMetaHtml(item) {
+    const parts = [];
+    const cat = item.category;
+    const camp = item.campaignType;
+    if (cat) parts.push(`<span class="badge badge-cat-corner">${escapeHtml(cat)}</span>`);
+    if (camp && camp !== cat) parts.push(`<span class="badge badge-cat">${escapeHtml(camp)}</span>`);
+    if (item.backedMetric) {
+      const tip = escapeHtml(item.backedMetric.source || item.backedMetric.label || "Verified account data");
+      parts.push(`<span class="verified-data-badge" title="${tip}">Account data</span>`);
+    }
+    return parts.length ? `<div class="card-corner-meta">${parts.join("")}</div>` : "";
+  }
+
+  function valueCompactDetailHtml(item) {
+    const bullets = valueAddedBullets(item).slice(0, 4);
+    let html = "";
+    if (bullets.length) {
+      html += `<div class="detail-block"><h4>Value add</h4><ul class="deliverable-list compact">${bullets.map(b =>
+        `<li>${STAR} ${escapeHtml(String(b).replace(/^Deliverable:\s*/i, ""))}</li>`
+      ).join("")}</ul></div>`;
+    }
+    if (item.backedMetric) {
+      const src = item.backedMetric.source ? ` <span class="metric-source">(${escapeHtml(item.backedMetric.source)})</span>` : "";
+      html += `<div class="detail-block account-data-detail"><h4>Account data</h4><p>${escapeHtml(item.backedMetric.label)}${src}</p></div>`;
+    }
+    return html;
   }
 
   function valueAddedBullets(item) {
@@ -246,27 +347,6 @@
     return { why, ...buckets };
   }
 
-  function valueSectionHtml(title, items) {
-    if (!items || !items.length) return "";
-    return `<div class="value-section"><h5>${title}</h5><ul>${items.map(i => `<li>${escapeHtml(i)}</li>`).join("")}</ul></div>`;
-  }
-
-  function valueAddedHtml(item) {
-    const v = buildBusinessValue(item);
-    const hasContent = v.why || v.client.length || v.brand.length || v.marketing.length || v.business.length;
-    if (!hasContent) return "";
-    return `<div class="value-added-box">
-      <h4 class="value-added-title">Business value</h4>
-      ${v.why ? `<p class="value-why"><strong>Why invest in this:</strong> ${escapeHtml(v.why)}</p>` : ""}
-      <div class="value-sections">
-        ${valueSectionHtml("Impact on clients", v.client)}
-        ${valueSectionHtml("Brand & reputation", v.brand)}
-        ${valueSectionHtml("Marketing & growth", v.marketing)}
-        ${valueSectionHtml("Business outcomes", v.business)}
-      </div>
-    </div>`;
-  }
-
   function mdLinksToHtml(text) {
     if (!text) return "";
     return String(text).replace(
@@ -309,20 +389,13 @@
     </div>`;
   }
 
-  function priorityBadge(item) {
-    if (item.priority == null || item.priority === "") return "";
-    const p = Math.trunc(Number(item.priority));
-    if (!p || p < 1) return "";
-    const hot = isHotPriority(item) ? hotStarHtml(true) : "";
-    return `<span class="badge badge-priority" title="Recommended priority order">${hot}P${p}</span>`;
+  function isRequiredMaintenance(item, isRetainer) {
+    return isRetainer || item.id === "RETAINER" || item.category === "Retainer" || !!item.monthlyOnly;
   }
 
-  function isRequiredRetainer(item, isRetainer) {
-    return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
-  }
-
-  function ensureRequiredRetainer() {
+  function ensureRequiredMaintenance() {
     state.retainer = true;
+    getMaintenanceProjects().forEach(p => state.projects.add(p.id));
   }
 
   function isInRecommendedPackage(item) {
@@ -343,15 +416,12 @@
       state.projects.add(id);
       state.recommended.add(id);
     });
-    ensureRequiredRetainer();
+    ensureRequiredMaintenance();
   }
 
   function renderPackageIntro() {
     const el = document.getElementById("package-intro");
-    if (!el) return;
-    const pkg = PROJECT_DATA.recommendedPackage;
-    if (!pkg) { el.textContent = ""; return; }
-    el.textContent = pkg.label || "Pre-selected package";
+    if (el) el.textContent = "";
   }
 
   function sortedProjects() {
@@ -407,6 +477,9 @@
     const { field, dir } = state.tocSort;
     const mult = dir === "asc" ? 1 : -1;
     return [...items].sort((a, b) => {
+      const aSel = isItemSelected(a);
+      const bSel = isItemSelected(b);
+      if (aSel !== bSel) return aSel ? -1 : 1;
       if (field === "fee") {
         const diff = tocItemFee(a) - tocItemFee(b);
         return diff !== 0 ? mult * diff : mult * ((a.priority ?? 99) - (b.priority ?? 99));
@@ -419,18 +492,11 @@
   }
 
   function updateTocSortUi() {
-    ["priority", "fee"].forEach(f => {
-      const btn = document.getElementById("toc-sort-" + f);
-      const arrow = document.getElementById("sort-arrow-" + f);
-      if (!btn || !arrow) return;
-      if (state.tocSort.field === f) {
-        btn.classList.add("active");
-        arrow.textContent = state.tocSort.dir === "asc" ? "▲" : "▼";
-      } else {
-        btn.classList.remove("active");
-        arrow.textContent = "↕";
-      }
-    });
+    const btn = document.getElementById("toc-sort-priority");
+    const arrow = document.getElementById("sort-arrow-priority");
+    if (!btn || !arrow) return;
+    btn.classList.add("active");
+    arrow.textContent = state.tocSort.dir === "asc" ? "▲" : "▼";
   }
 
   function toggleTocSort(field) {
@@ -454,55 +520,38 @@
     listEl.innerHTML = items.map(item => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
-      const fee = item.isRetainer ? `${fmt(item.fee)}/mo` : feeLabelFor(item, false);
-      const pLabel = item.priority != null ? Math.trunc(item.priority) : "—";
-      const hot = isHotPriority(item) ? hotStarHtml(false) : "";
+      const blurb = briefValueAdd(item);
       return `<li class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}" data-id="${item.id}">
-        <span class="toc-priority">${hot}${pLabel}</span>
-        <span class="toc-id">${escapeHtml(item.id || "")}</span>
-        <span class="toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a>${item.isRetainer ? ' <span class="badge badge-required table-required">Required</span>' : ""}</span>
-        <span class="toc-fee">${fee}</span>
+        <span class="toc-priority">${priorityTocHtml(item)}</span>
+        <span class="toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a> ${paymentBadgeHtml(item, !!item.isRetainer, true)}</span>
+        <span class="toc-blurb">${escapeHtml(blurb)}</span>
         <span class="toc-value">${valueIconsHtml(item, true)}</span>
       </li>`;
     }).join("");
     if (hintEl) {
-      const hotIds = items.filter(isHotPriority).map(i => i.id).join(", ");
       const selCount = items.filter(i => isItemSelected(i)).length;
-      hintEl.textContent = hotIds
-        ? `★ Next: ${hotIds} · ${items.length} projects${selCount ? ` · ${selCount} selected` : ""}`
-        : `${items.length} projects · click to expand`;
+      hintEl.textContent = selCount ? `${items.length} projects · ${selCount} selected` : `${items.length} projects`;
     }
     if (statusEl) {
       const total = allItemsByPriority().length;
       const shown = items.length;
-      const sortLabel = state.tocSort.field === "fee"
-        ? `fee (${state.tocSort.dir === "asc" ? "low→high" : "high→low"})`
-        : `priority (${state.tocSort.dir === "asc" ? "P1 first" : "P21 first"})`;
-      if (costPriorityFiltersActive() && shown !== total) {
-        statusEl.textContent = `Showing ${shown} of ${total} · sorted by ${sortLabel} · ★ = work on next (P1–P6)`;
-      } else {
-        statusEl.textContent = `Sorted by ${sortLabel} · ★ = work on next (P1–P6)`;
-      }
+      statusEl.textContent = costFiltersActive() && shown !== total
+        ? `Showing ${shown} of ${total} projects`
+        : "";
     }
     updateTocSortUi();
   }
 
   function getFilters() {
-    const consultingRaw = document.getElementById("filter-consulting").value;
     const maxFeeRaw = document.getElementById("filter-max-fee").value;
-    const minPRaw = document.getElementById("filter-priority-min").value;
-    const maxPRaw = document.getElementById("filter-priority-max").value;
-    state.filters.consultingBudget = consultingRaw === "" ? null : Math.max(0, Number(consultingRaw));
     state.filters.maxFee = maxFeeRaw === "" ? null : Math.max(0, Number(maxFeeRaw));
-    state.filters.minPriority = minPRaw === "" ? null : Number(minPRaw);
-    state.filters.maxPriority = maxPRaw === "" ? null : Number(maxPRaw);
     state.filters.hideNonMatching = document.getElementById("filter-hide-nonmatching").checked;
     return state.filters;
   }
 
-  function costPriorityFiltersActive() {
+  function costFiltersActive() {
     const f = getFilters();
-    return f.maxFee != null || f.minPriority != null || f.maxPriority != null;
+    return f.maxFee != null;
   }
 
   function itemFeeForFilter(item, isRetainer) {
@@ -514,16 +563,12 @@
     const f = getFilters();
     const isRetainer = item.isRetainer || item.id === "RETAINER";
     const cost = itemFeeForFilter(item, isRetainer);
-    const p = item.priority ?? 99;
     if (f.maxFee != null && cost > f.maxFee) return false;
-    if (f.minPriority != null && p < f.minPriority) return false;
-    if (f.maxPriority != null && p > f.maxPriority) return false;
     return true;
   }
 
   function filtersActive() {
-    const f = getFilters();
-    return f.consultingBudget != null || costPriorityFiltersActive() || !!state.goalText.trim();
+    return costFiltersActive() || !!state.goalText.trim();
   }
 
   function feeLabelFor(item, isRetainer) {
@@ -540,8 +585,7 @@
   }
 
   function getSelectionCost() {
-    let cost = 0;
-    if (state.retainer) cost += RETAINER.fee;
+    let cost = requiredMaintenanceMonthly();
     getSelectedProjects().forEach(p => { cost += itemSelectionCost(p); });
     return cost;
   }
@@ -554,25 +598,10 @@
     const f = getFilters();
     const classes = [];
     const id = isRetainer ? "RETAINER" : item.id;
-    const selected = isRetainer ? state.retainer : state.projects.has(item.id);
+    const selected = isRetainer ? state.retainer : (item.monthlyOnly || state.projects.has(item.id));
 
     if (!itemPassesCostPriorityFilter({ ...item, isRetainer }) && !selected) {
       if (f.hideNonMatching) classes.push("filtered-out");
-    }
-
-    if (filtersActive() && f.consultingBudget != null) {
-      const cost = getSelectionCost();
-      const budget = f.consultingBudget;
-      const remaining = budget - cost + (selected ? itemSelectionCost(item) : 0);
-      const affordable = itemSelectionCost(item) <= remaining;
-      const couldHelp = itemCouldHelpPlan(item, budget);
-      if (!couldHelp && !selected) {
-        if (f.hideNonMatching) classes.push("filtered-out");
-        else classes.push("over-budget");
-      } else if (!affordable && !selected) {
-        if (f.hideNonMatching) classes.push("filtered-out");
-        else classes.push("over-budget");
-      }
     }
 
     if (state.recommended.has(id)) classes.push("recommended");
@@ -591,82 +620,39 @@
     return score;
   }
 
-  function matchGoalFromInput() {
-    const goal = document.getElementById("goal-input").value.trim();
-    if (!goal) { showToast("Describe your goal first", true); return; }
-    state.goalText = goal;
-    const words = goal.toLowerCase().split(/\W+/).filter(Boolean);
-    const scored = getAllItems().map(item => ({
-      item, score: scoreItemForGoal(item, words), isRetainer: item.isRetainer
-    })).filter(s => s.score > 0).sort((a, b) => b.score - a.score);
-
-    if (!scored.length) { showToast("No strong matches — try different keywords", true); return; }
-
-    state.retainer = false;
-    state.projects = new Set();
-    state.recommended = new Set();
-    ensureRequiredRetainer();
-    state.recommended.add("RETAINER");
-    const budget = getFilters().consultingBudget;
-    let spent = RETAINER.fee;
-
-    scored.slice(0, 5).forEach(({ item, isRetainer }) => {
-      if (isRetainer) return;
-      if (budget != null && spent + itemSelectionCost(item) > budget) return;
-      state.projects.add(item.id);
-      state.recommended.add(item.id);
-      spent += itemSelectionCost(item);
-    });
-
-    saveState();
-    renderAllCards();
-    renderSummary();
-    renderFilterStatus();
-    renderRecommendation();
-    showToast("Selected " + ((state.retainer ? 1 : 0) + state.projects.size) + " matching projects — review and adjust");
-  }
-
-  function clearGoalMatch() {
-    document.getElementById("goal-input").value = "";
-    state.goalText = "";
-    state.recommended = new Set();
-    ensureRequiredRetainer();
-    renderAllCards();
-    renderRecommendation();
-  }
-
-  function suggestPlan() {
+  function suggestPlan(silent) {
     getFilters();
-    const budget = state.filters.consultingBudget;
-    if (budget == null) { showToast("Enter a consulting budget first", true); return; }
-
-    const candidates = [{ id: "RETAINER", fee: RETAINER.fee, isRetainer: true, enabler: false, priority: RETAINER.priority ?? 3 }];
-    PROJECTS.forEach(p => {
-      candidates.push({ id: p.id, fee: itemSelectionCost(p), isRetainer: false, enabler: !!p.enabler, priority: p.priority ?? 99 });
-    });
-    candidates.sort((a, b) => {
-      if (a.enabler !== b.enabler) return a.enabler ? -1 : 1;
-      return a.priority - b.priority;
-    });
-
-    state.retainer = false;
+    const goal = document.getElementById("goal-input").value.trim();
+    state.goalText = goal;
     state.projects = new Set();
     state.recommended = new Set();
-    ensureRequiredRetainer();
+    ensureRequiredMaintenance();
     state.recommended.add("RETAINER");
-    let spent = RETAINER.fee;
+    getMaintenanceProjects().forEach(p => state.recommended.add(p.id));
 
-    for (const c of candidates) {
-      if (c.isRetainer) continue;
-      if (spent + c.fee > budget) continue;
-      state.projects.add(c.id);
-      state.recommended.add(c.id);
-      spent += c.fee;
-    }
+    if (goal) {
+      const words = goal.toLowerCase().split(/\W+/).filter(Boolean);
+      const scored = getAllItems().map(item => ({
+        item, score: scoreItemForGoal(item, words), isRetainer: item.isRetainer
+      })).filter(s => s.score > 0).sort((a, b) => b.score - a.score);
 
-    if (budget < RETAINER.fee) {
-      showToast("Consulting budget is below the required retainer ($2,700/mo)", true);
-      return;
+      scored.slice(0, 6).forEach(({ item, isRetainer }) => {
+        if (isRetainer || item.monthlyOnly) return;
+        if (!itemPassesCostPriorityFilter({ ...item, isRetainer: false })) return;
+        state.projects.add(item.id);
+        state.recommended.add(item.id);
+      });
+
+      if (!scored.length && !silent) showToast("No strong matches — try different keywords", true);
+    } else {
+      const pkg = PROJECT_DATA.recommendedPackage;
+      (pkg?.projectIds || []).forEach(id => {
+        const p = PROJECTS.find(x => x.id === id);
+        if (p && itemPassesCostPriorityFilter({ ...p, isRetainer: false })) {
+          state.projects.add(id);
+          state.recommended.add(id);
+        }
+      });
     }
 
     saveState();
@@ -674,47 +660,38 @@
     renderSummary();
     renderFilterStatus();
     renderRecommendation();
-    showToast("Suggested plan applied — review and adjust");
+  }
+
+  let suggestTimer;
+  function scheduleSuggestPlan() {
+    clearTimeout(suggestTimer);
+    suggestTimer = setTimeout(() => suggestPlan(true), 350);
   }
 
   function clearFilters() {
-    document.getElementById("filter-consulting").value = "";
+    document.getElementById("goal-input").value = "";
+    state.goalText = "";
     document.getElementById("filter-max-fee").value = "";
-    document.getElementById("filter-priority-min").value = "";
-    document.getElementById("filter-priority-max").value = "";
-    state.filters = { consultingBudget: null, hideNonMatching: true, maxFee: null, minPriority: null, maxPriority: null };
+    state.filters = { hideNonMatching: true, maxFee: null };
+    state.projects = new Set();
     state.recommended = new Set();
-    ensureRequiredRetainer();
-    renderAllCards();
-    renderSummary();
-    renderFilterStatus();
-    renderRecommendation();
+    ensureRequiredMaintenance();
+    suggestPlan(true);
   }
 
   function renderFilterStatus() {
     const el = document.getElementById("filter-status");
-    const f = getFilters();
+    if (!el) return;
+    getFilters();
     const cost = getSelectionCost();
-    const parts = [];
-
-    if (f.consultingBudget != null) {
-      const pct = Math.min(100, Math.round((cost / f.consultingBudget) * 100));
-      const over = cost > f.consultingBudget;
-      parts.push(`<strong>Consulting selected:</strong> ${fmt(cost)} of ${fmt(f.consultingBudget)} (${pct}%)`);
-      parts.push(`<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill${over ? " over" : ""}" style="width:${pct}%"></div></div></div>`);
-    }
-    if (!filtersActive() && !state.projects.size && state.retainer) {
-      el.className = "filter-status";
-      el.innerHTML = "Enter a consulting budget or goal to filter and recommend projects.";
+    const count = (state.retainer ? 1 : 0) + getMaintenanceProjects().length + getSelectedProjects().length;
+    if (state.goalText.trim() || count > getMaintenanceProjects().length + (state.retainer ? 1 : 0)) {
+      el.className = "filter-status ok";
+      el.textContent = `${count} items · ${fmt(cost)} total — plan updates as you type.`;
       return;
     }
-    if (!filtersActive()) {
-      el.className = "filter-status";
-      el.innerHTML = "Enter a consulting budget or goal to filter projects.";
-      return;
-    }
-    el.className = cost > (f.consultingBudget || Infinity) ? "filter-status bad" : "filter-status ok";
-    el.innerHTML = parts.join("<br>");
+    el.className = "filter-status";
+    el.textContent = "Describe goals or problems above — your plan updates automatically.";
   }
 
   function loadState() {
@@ -722,7 +699,7 @@
       const raw = localStorage.getItem("pav-project-picker");
       if (!raw) {
         applyRecommendedPackage();
-        ensureRequiredRetainer();
+        ensureRequiredMaintenance();
         return;
       }
       const saved = JSON.parse(raw);
@@ -730,40 +707,49 @@
       state.projects = new Set(saved.projects || []);
       state.notes = saved.notes || {};
       state.generalSuggestions = saved.generalSuggestions || "";
-      state.submittedBy = saved.submittedBy || "";
       state.submitterEmail = saved.submitterEmail || "";
       if (state.generalSuggestions) document.getElementById("general-suggestions").value = state.generalSuggestions;
-      if (state.submittedBy) document.getElementById("submitted-by").value = state.submittedBy;
       if (state.submitterEmail) document.getElementById("submitted-email").value = state.submitterEmail;
+      if (saved.invoicePaymentMonths != null) {
+        state.invoicePaymentMonths = saved.invoicePaymentMonths;
+        const monthsEl = document.getElementById("invoice-payment-months");
+        if (monthsEl) monthsEl.value = saved.invoicePaymentMonths;
+      }
+      if (saved.invoicePaymentMonthlyAmount != null) {
+        state.invoicePaymentMonthlyAmount = saved.invoicePaymentMonthlyAmount;
+        const amountEl = document.getElementById("invoice-payment-amount");
+        if (amountEl) amountEl.value = saved.invoicePaymentMonthlyAmount;
+      }
       if (saved.filters) {
-        if (saved.filters.consultingBudget != null) document.getElementById("filter-consulting").value = saved.filters.consultingBudget;
-        else if (saved.filters.budget != null) document.getElementById("filter-consulting").value = saved.filters.budget;
         if (saved.filters.hideNonMatching != null) document.getElementById("filter-hide-nonmatching").checked = saved.filters.hideNonMatching;
         if (saved.filters.maxFee != null) document.getElementById("filter-max-fee").value = saved.filters.maxFee;
-        if (saved.filters.minPriority != null) document.getElementById("filter-priority-min").value = saved.filters.minPriority;
-        if (saved.filters.maxPriority != null) document.getElementById("filter-priority-max").value = saved.filters.maxPriority;
       }
       if (saved.goalText) {
         document.getElementById("goal-input").value = saved.goalText;
         state.goalText = saved.goalText;
       }
+      if (saved.expanded) state.expanded = new Set(saved.expanded);
+      if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
     } catch (e) {}
-    ensureRequiredRetainer();
+    ensureRequiredMaintenance();
   }
 
   function saveState() {
-    ensureRequiredRetainer();
+    ensureRequiredMaintenance();
     getFilters();
     state.generalSuggestions = document.getElementById("general-suggestions").value;
-    state.submittedBy = document.getElementById("submitted-by").value;
     state.submitterEmail = document.getElementById("submitted-email").value;
+    syncPaymentTermsFromDom();
     localStorage.setItem("pav-project-picker", JSON.stringify({
       retainer: state.retainer,
       projects: [...state.projects],
+      expanded: [...state.expanded],
+      expandAll: isExpandAll(),
       notes: state.notes,
       generalSuggestions: state.generalSuggestions,
-      submittedBy: state.submittedBy,
       submitterEmail: state.submitterEmail,
+      invoicePaymentMonths: state.invoicePaymentMonths,
+      invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
       filters: state.filters,
       goalText: state.goalText
     }));
@@ -789,41 +775,73 @@
     return notes;
   }
 
+  function allProjectIds() {
+    const ids = ["RETAINER"];
+    getMaintenanceProjects().forEach(p => ids.push(p.id));
+    orderedProjects().filter(p => !p.monthlyOnly).forEach(p => ids.push(p.id));
+    return ids;
+  }
+
+  function isExpandAll() {
+    const ids = allProjectIds();
+    return ids.length > 0 && ids.every(id => state.expanded.has(id));
+  }
+
+  function syncExpandAllCheckbox() {
+    const chk = document.getElementById("expand-all-projects");
+    if (chk) chk.checked = isExpandAll();
+  }
+
+  function setExpandAll(open) {
+    if (open) allProjectIds().forEach(id => state.expanded.add(id));
+    else state.expanded.clear();
+    saveState();
+    renderAllCards();
+  }
+
   function cardHtml(item, isRetainer, isFirstSelected) {
     const id = item.id;
-    const sel = isRetainer ? true : state.projects.has(id);
+    const required = isRequiredMaintenance(item, isRetainer);
+    const sel = required || state.projects.has(id);
     const exp = state.expanded.has(id);
     const extra = getItemFilterClasses(item, isRetainer);
     const pkgClass = isInRecommendedPackage({ ...item, isRetainer }) ? " package-included" : "";
-    const feeLabel = feeLabelFor(item, isRetainer);
+    const valueBlurb = briefValueAdd(item);
     const enablerBadge = item.enabler ? `<span class="badge badge-enabler">Foundation project</span>` : "";
     const retainerClass = isRetainer ? " retainer-card required-retainer" : "";
+    const maintClass = item.monthlyOnly ? " maintenance-card required-maintenance" : "";
     const subClass = item.parentId ? " card-sub-related" : "";
     const selFirst = isFirstSelected ? " selected-first" : "";
+    const chkDisabled = required ? " disabled" : "";
+    const requiredBadge = item.monthlyOnly ? `<span class="badge badge-enabler">Required maintenance</span>` : "";
 
     return `
-      <div class="card${retainerClass}${subClass}${pkgClass}${selFirst} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}">
+      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}">
         <div class="card-header">
-          <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer" disabled' : ""} ${sel || isRetainer ? "checked" : ""}>
+          <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled} ${sel ? "checked" : ""}>
             <div class="card-body">
               <div class="card-top-row">
-                <div class="card-title">${isHotPriority(item) ? hotStarHtml(true) : ""}${item.title}</div>
-                <span class="card-price">${feeLabel}</span>
+                <div class="card-title">${escapeHtml(item.title)}</div>
+                <div class="card-value-slot">
+                  ${cornerMetaHtml(item)}
+                  ${valueIconsHtml(item)}
+                  <span class="card-value-blurb">${escapeHtml(valueBlurb)}</span>
+                </div>
               </div>
               <div class="card-meta-row">
-                ${priorityBadge(item)}
-                <span class="card-corner-icons">${valueIconsHtml(item)}</span>
+                ${paymentBadgeHtml(item, isRetainer, false)}
                 ${relatedSubHtml(item)}
                 ${statusBadge(item)}
                 ${enablerBadge}
+                ${requiredBadge}
               </div>
               ${descriptionHtml(item)}
-            ${valueAddedHtml(item)}
             ${progressHtml(item)}
             <button type="button" class="expand-btn">${exp ? "Hide details" : "Deliverables and learnings"}</button>
           </div>
         </div>
         <div class="card-detail">
+          ${valueCompactDetailHtml(item)}
           ${deliverablesHtml(item)}
           ${marketingLearningsHtml(item)}
           <div class="detail-block">
@@ -836,15 +854,34 @@
 
   function renderAllCards() {
     const list = document.getElementById("project-list");
-    const ordered = orderedProjects();
+    const maintenance = sortByPriority(getMaintenanceProjects());
+    const optional = sortSelectedFirst(orderedProjects().filter(p => !p.monthlyOnly));
+    const visible = visibleOptionalProjects(optional);
+    const hidden = hiddenOptionalCount(optional);
     let markedFirst = false;
-    const projectCards = ordered.map(p => {
+    const projectCards = visible.map(p => {
       const sel = state.projects.has(p.id);
       const isFirst = sel && !markedFirst;
       if (isFirst) markedFirst = true;
       return cardHtml(p, false, isFirst);
     }).join("");
-    list.innerHTML = cardHtml(RETAINER, true, true) + projectCards;
+    const maintCards = maintenance.map(p => cardHtml(p, false, false)).join("");
+    const showMoreBtn = hidden > 0
+      ? `<div class="project-list-show-more"><button type="button" class="btn btn-secondary" id="show-more-projects">Show ${hidden} more project${hidden === 1 ? "" : "s"}</button></div>`
+      : state.showAllProjects && optional.length > PROJECT_LIST_LIMIT
+        ? `<div class="project-list-show-more"><button type="button" class="btn btn-secondary" id="show-more-projects">Show fewer</button></div>`
+        : "";
+    list.innerHTML = cardHtml(RETAINER, true, true) + maintCards + projectCards + showMoreBtn;
+    syncExpandAllCheckbox();
+
+    const showMoreEl = document.getElementById("show-more-projects");
+    if (showMoreEl) {
+      showMoreEl.addEventListener("click", e => {
+        e.preventDefault();
+        state.showAllProjects = !state.showAllProjects;
+        renderAllCards();
+      });
+    }
 
     list.querySelectorAll(".project-note").forEach(ta => {
       ta.addEventListener("click", e => e.stopPropagation());
@@ -859,8 +896,8 @@
       chk.addEventListener("change", e => {
         e.stopPropagation();
         const id = chk.dataset.id;
-        const isRetainer = id === "RETAINER";
-        if (isRetainer) return;
+        const card = chk.closest(".card");
+        if (card && card.dataset.required === "true") return;
         if (chk.checked) state.projects.add(id);
         else state.projects.delete(id);
         saveState();
@@ -875,8 +912,7 @@
         if (e.target.type === "checkbox" || e.target.classList.contains("expand-btn") || e.target.closest("a")) return;
         if (card.classList.contains("over-budget")) return;
         const id = card.dataset.id;
-        const isRetainer = card.dataset.retainer === "true";
-        if (isRetainer) return;
+        if (card.dataset.required === "true") return;
         if (state.projects.has(id)) state.projects.delete(id);
         else state.projects.add(id);
         saveState();
@@ -889,17 +925,18 @@
         const id = card.dataset.id;
         if (state.expanded.has(id)) state.expanded.delete(id);
         else state.expanded.add(id);
+        saveState();
         renderAllCards();
       });
     });
   }
 
   function getSelectedProjects() {
-    return PROJECTS.filter(p => state.projects.has(p.id));
+    return PROJECTS.filter(p => state.projects.has(p.id) && !p.monthlyOnly);
   }
 
   function hasSelection() {
-    return state.retainer || state.projects.size > 0;
+    return true;
   }
 
   function canSubmit() {
@@ -914,40 +951,63 @@
 
   function updateSubmitButtons() {
     document.getElementById("submit-selections").disabled = !canSubmit();
-    document.getElementById("download-csv").disabled = !hasSelection();
   }
 
   function buildPayload() {
     const selected = getSelectedProjects();
+    const maintenance = getMaintenanceProjects();
     const projectTotal = selected.reduce((s, p) => s + itemSelectionCost(p), 0);
-    const submittedBy = (document.getElementById("submitted-by") || {}).value || "";
+    const maintMonthly = requiredMaintenanceMonthly();
     const submitterEmail = (document.getElementById("submitted-email") || {}).value || "";
+    const paymentTerms = getPaymentTermsPayload();
+    const maintRows = maintenance.map(p => ({
+      id: p.id,
+      title: p.title,
+      fee: feeLabelFor(p, false),
+      feeNum: p.fee,
+      timeline: p.timeline || "",
+      priority: p.priority ?? null,
+      parentId: p.parentId || null,
+      monthlyOnly: true,
+      paymentType: getPaymentType(p, false)
+    }));
+    const projectRows = selected.map(p => ({
+      id: p.id,
+      title: p.title,
+      fee: feeLabelFor(p, false),
+      feeNum: itemSelectionCost(p),
+      timeline: p.timeline || "",
+      priority: p.priority ?? null,
+      parentId: p.parentId || null,
+      paymentType: getPaymentType(p, false)
+    }));
     return {
       submittedAt: new Date().toISOString(),
-      submittedBy: submittedBy.trim(),
+      submittedBy: "",
       submitterEmail: submitterEmail.trim(),
+      invoicePaymentTerms: paymentTerms.label || "",
+      invoicePaymentTermsLabel: paymentTerms.label,
+      invoicePaymentMonths: paymentTerms.months,
+      invoicePaymentMonthlyAmount: paymentTerms.monthlyAmount,
+      invoicePaymentMonthlyAmountFormatted: paymentTerms.monthlyAmount != null ? fmt(paymentTerms.monthlyAmount) : null,
+      invoicePaymentTotalFormatted: paymentTerms.months && paymentTerms.monthlyAmount != null
+        ? fmt(paymentTerms.months * paymentTerms.monthlyAmount)
+        : null,
       goalText: document.getElementById("goal-input").value.trim(),
-      filterConsultingBudget: state.filters.consultingBudget,
+      filterConsultingBudget: null,
       filterMediaBudget: null,
       retainer: state.retainer,
       retainerFee: state.retainer ? fmt(RETAINER.fee) : null,
       retainerTitle: state.retainer ? RETAINER.title : null,
+      retainerPaymentType: state.retainer ? getPaymentType(RETAINER, true) : null,
+      maintenanceMonthly: fmt(maintMonthly),
+      maintenanceMonthlyNum: maintMonthly,
       depositAmount: CONFIG.depositAmount || null,
       quickbooksDepositUrl: CONFIG.quickbooksDepositUrl || null,
-      projects: selected.map(p => ({
-        id: p.id,
-        title: p.title,
-        fee: feeLabelFor(p, false),
-        feeNum: itemSelectionCost(p),
-        timeline: p.timeline || "",
-        priority: p.priority ?? null,
-        parentId: p.parentId || null
-      })),
+      projects: [...maintRows, ...projectRows],
       projectsSubtotal: fmt(projectTotal),
       projectsSubtotalNum: projectTotal,
-      grandTotalNote: state.retainer
-        ? fmt(RETAINER.fee) + " per month retainer + " + fmt(projectTotal) + " first month projects"
-        : fmt(projectTotal) + " projects only",
+      grandTotalNote: fmt(getSelectionCost()),
       generalSuggestions: document.getElementById("general-suggestions").value.trim(),
       projectNotes: getNotesPayload()
     };
@@ -1020,6 +1080,27 @@
     "Smart stack! Your clients will feel the difference."
   ];
 
+  const PAVI_GUIDE_LINES = [
+    "What are you trying to fix? Be specific — I love details!",
+    "Calls not tracking? Ads bleeding budget? Tell me!",
+    "Goals plus problems = better project matches.",
+    "HubSpot messy? Website slow? Name it — I'll find the fix.",
+    "July 4 deadline? Referrals flat? I speak project.",
+    "The more you share, the smarter your plan gets."
+  ];
+
+  function initPaviGuide() {
+    const guideImg = document.getElementById("pavi-guide-img");
+    if (guideImg) guideImg.src = PAVI_IMG;
+    const bubble = document.getElementById("pavi-guide-speech");
+    if (!bubble || PAVI_GUIDE_LINES.length < 2) return;
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % PAVI_GUIDE_LINES.length;
+      bubble.textContent = PAVI_GUIDE_LINES[idx];
+    }, 7000);
+  }
+
   function showThankYou(payload) {
     const selected = getSelectedProjects();
     const depositAmt = CONFIG.depositAmount;
@@ -1029,14 +1110,18 @@
     document.getElementById("pavi-speech").textContent =
       PAVI_CELEBRATE_LINES[Math.floor(Math.random() * PAVI_CELEBRATE_LINES.length)];
     document.getElementById("thank-you-sub").textContent =
-      payload.submittedBy
-        ? `${payload.submittedBy}, your selections set Pav Law up for stronger leads, better intake, and marketing you can measure.`
-        : "Your selections set Pav Law up for stronger leads, better intake, and marketing you can measure.";
+      "Your selections set Pav Law up for stronger leads, better intake, and marketing you can measure.";
 
     const lines = [];
     if (payload.retainer) lines.push(`<li><strong>${escapeHtml(RETAINER.title)}</strong> — ${fmt(RETAINER.fee)}/mo</li>`);
     (payload.projects || []).forEach(p => lines.push(`<li><strong>${escapeHtml(p.title)}</strong> — ${p.fee}</li>`));
     if (!lines.length) lines.push("<li><em>Notes submitted — Gilded Goose will follow up</em></li>");
+
+    const itemCount = lines.length;
+    const totalLine = payload.grandTotalNote || "—";
+    const termsLine = payload.invoicePaymentTermsLabel
+      ? escapeHtml(payload.invoicePaymentTermsLabel)
+      : "Not specified";
 
     let notesHtml = "";
     if (payload.generalSuggestions) {
@@ -1069,8 +1154,8 @@
       ${buildThankYouReturnsHtml(selected, payload.retainer)}
       <div class="thank-you-selection">
         <h3>Your consulting estimate</h3>
-        <p style="margin:0 0 0.5rem;font-size:0.95rem;color:#fff;font-weight:600">${payload.grandTotalNote || "—"}</p>
-        <ul class="thank-you-list">${lines.join("")}</ul>
+        <p class="thank-you-total-single">${itemCount} item${itemCount === 1 ? "" : "s"} · <strong>${totalLine}</strong></p>
+        <p class="thank-you-terms-line">Monthly payment terms: <strong>${termsLine}</strong></p>
       </div>
       ${depositHtml}
       ${notesHtml}
@@ -1092,25 +1177,10 @@
   }
 
   function buildTotalsHtml() {
-    const selected = sortByPriority(getSelectedProjects());
-    const projectTotal = selected.reduce((s, p) => s + itemSelectionCost(p), 0);
-    if (!hasSelection()) {
-      return '<div class="empty-state">Select projects below to see your consulting total.</div>';
-    }
-    let rows = "";
-    if (state.retainer) {
-      rows += `<div class="total-row"><span>${RETAINER.title}</span><span>${fmt(RETAINER.fee)} per month</span></div>`;
-    }
-    selected.forEach(p => {
-      const label = p.ongoingFee ? `${p.title} (setup)` : p.title;
-      const hot = isHotPriority(p) ? hotStarHtml(true) : "";
-      rows += `<div class="total-row"><span>${hot}${escapeHtml(label)}</span><span>${feeLabelFor(p, false)}</span></div>`;
-    });
-    const grandLabel = state.retainer && selected.length
-      ? `${fmt(projectTotal)} projects + ${fmt(RETAINER.fee)} per month retainer`
-      : state.retainer ? `${fmt(RETAINER.fee)} per month retainer` : `${fmt(projectTotal)} total`;
-    rows += `<div class="total-row grand"><span>Consulting total</span><span>${grandLabel}</span></div>`;
-    return rows;
+    const total = getSelectionCost();
+    const count = (state.retainer ? 1 : 0) + getMaintenanceProjects().length + getSelectedProjects().length;
+    const label = count === 1 ? "1 item selected" : `${count} items selected`;
+    return `<div class="total-row grand total-row-single"><span>${label}</span><span>${fmt(total)}</span></div>`;
   }
 
   function renderInvoiceSummary() {
@@ -1126,53 +1196,10 @@
 
   function renderSummary() {
     renderInvoiceSummary();
-
-    const selected = getSelectedProjects();
-    const deliverablesEl = document.getElementById("selected-deliverables");
-    const items = [];
-    if (state.retainer) items.push(RETAINER);
-    selected.forEach(p => items.push(p));
-    if (!items.length) {
-      deliverablesEl.innerHTML = '<div class="empty-state">—</div>';
-    } else {
-      deliverablesEl.innerHTML = items.map(item =>
-        `<div class="impact-item"><strong>${isHotPriority(item) ? hotStarHtml(true) : ""}${item.title}</strong><ul class="deliverable-list compact">${(item.deliverables || []).slice(0, 3).map(d => `<li>${STAR} ${d}</li>`).join("")}</ul></div>`
-      ).join("");
-    }
-
     updateSubmitButtons();
     renderFilterStatus();
     renderProjectToc();
     renderRecommendation();
-  }
-
-  function buildCsvRows() {
-    const payload = buildPayload();
-    const header = ["Submitted at", "Goal", "Retainer", "Retainer fee per month", "Project ID", "Project title", "Est. fee", "Timeline"];
-    const rows = [header];
-    const base = [payload.submittedAt, payload.goalText || "", payload.retainer ? "YES" : "NO", payload.retainer ? RETAINER.fee : ""];
-    if (payload.retainer) rows.push([...base, "RETAINER", RETAINER.title, RETAINER.fee, RETAINER.timeline]);
-    getSelectedProjects().forEach(p => rows.push([...base, p.id, p.title, p.fee, p.timeline]));
-    if (!payload.retainer && !getSelectedProjects().length) return [];
-    return rows;
-  }
-
-  function csvEscape(v) {
-    const s = String(v == null ? "" : v);
-    return s.includes(",") || s.includes('"') || s.includes("\n") ? '"' + s.replace(/"/g, '""') + '"' : s;
-  }
-
-  function downloadCsv() {
-    const rows = buildCsvRows();
-    if (!rows.length) return;
-    const csv = rows.map(r => r.map(csvEscape).join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "pav-law-project-selection-" + new Date().toISOString().slice(0, 10) + ".csv";
-    a.click();
-    URL.revokeObjectURL(a.href);
-    showToast("CSV downloaded");
   }
 
   function showToast(msg, isError) {
@@ -1201,37 +1228,45 @@
         if (data.ok) ok = true;
         else throw new Error(data.error || "Submit failed");
       } catch (err) {
-        downloadCsv();
-        showToast("Webhook failed — CSV downloaded. " + err.message, true);
-        ok = true;
+        showToast("Submit failed — try again or email Gilded Goose. " + err.message, true);
       }
     } else {
-      downloadCsv();
-      showToast("Webhook not configured — CSV downloaded for now.");
-      ok = true;
+      showToast("Submit not configured yet — contact Gilded Goose.", true);
     }
 
     if (ok) showThankYou(payload);
-    btn.textContent = "Submit selections and notes";
+    btn.textContent = "Submit selections";
     updateSubmitButtons();
   }
 
-  document.getElementById("pavi-header-img").src = PAVI_IMG;
-  document.getElementById("download-csv").addEventListener("click", downloadCsv);
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
   document.getElementById("general-suggestions").addEventListener("input", saveState);
-  document.getElementById("submitted-by").addEventListener("input", saveState);
   document.getElementById("submitted-email").addEventListener("input", () => { saveState(); updateSubmitButtons(); });
-  document.getElementById("match-goal").addEventListener("click", matchGoalFromInput);
-  document.getElementById("clear-goal").addEventListener("click", clearGoalMatch);
-  document.getElementById("goal-input").addEventListener("input", () => { state.goalText = document.getElementById("goal-input").value; saveState(); });
-  document.getElementById("suggest-plan").addEventListener("click", suggestPlan);
-  document.getElementById("clear-filters").addEventListener("click", clearFilters);
-  ["filter-consulting", "filter-max-fee", "filter-priority-min", "filter-priority-max"].forEach(id => {
-    document.getElementById(id).addEventListener("input", () => { renderAllCards(); renderSummary(); renderRecommendation(); });
+  document.getElementById("invoice-payment-months").addEventListener("change", saveState);
+  document.getElementById("invoice-payment-amount").addEventListener("input", saveState);
+  document.getElementById("goal-input").addEventListener("input", () => {
+    state.goalText = document.getElementById("goal-input").value;
+    saveState();
+    scheduleSuggestPlan();
   });
-  document.getElementById("filter-hide-nonmatching").addEventListener("change", () => { renderAllCards(); renderProjectToc(); renderRecommendation(); });
+  document.getElementById("clear-filters").addEventListener("click", clearFilters);
+  document.getElementById("filter-max-fee").addEventListener("input", () => {
+    getFilters();
+    if (state.goalText.trim()) scheduleSuggestPlan();
+    else {
+      renderAllCards();
+      renderProjectToc();
+      renderSummary();
+    }
+  });
+  document.getElementById("filter-hide-nonmatching").addEventListener("change", () => {
+    getFilters();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  });
+  document.getElementById("expand-all-projects").addEventListener("change", e => setExpandAll(e.target.checked));
 
   document.querySelectorAll(".toc-sort-btn").forEach(btn => {
     btn.addEventListener("click", e => {
@@ -1242,11 +1277,15 @@
   });
 
   loadState();
-  ensureRequiredRetainer();
+  ensureRequiredMaintenance();
+  initPaviGuide();
   renderPackageIntro();
   renderValueIconKey();
   renderAllCards();
-  renderSummary();
-  renderFilterStatus();
-  renderRecommendation();
+  if (state.goalText.trim()) suggestPlan(true);
+  else {
+    renderSummary();
+    renderFilterStatus();
+    renderRecommendation();
+  }
 })();
