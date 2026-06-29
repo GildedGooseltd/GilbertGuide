@@ -144,6 +144,19 @@ export function parseProjectMarkdown(text, fallbackId) {
     valueAdded.push(sections["value add"].trim());
   project.valueAdded = valueAdded.filter(Boolean);
 
+  const deliverables = [...(project.deliverables || [])];
+  const cleanValue = [];
+  for (const item of project.valueAdded) {
+    const text = String(item).trim();
+    if (/^Deliverable:\s*/i.test(text)) {
+      deliverables.push(text.replace(/^Deliverable:\s*/i, "").trim());
+    } else {
+      cleanValue.push(text);
+    }
+  }
+  project.valueAdded = cleanValue;
+  if (deliverables.length) project.deliverables = deliverables;
+
   if (sections["marketing education"]) {
     const body = sections["marketing education"].trim();
     const linkLines = parseLearnings(body);
@@ -154,11 +167,16 @@ export function parseProjectMarkdown(text, fallbackId) {
       .trim();
     project.marketingEducation = applyProperCase(prose);
     if (linkLines.length) {
-      project.learningsLinks = linkLines;
+      project.learningsLinks = dedupeLinks(linkLines);
     }
   }
 
-  if (sections.deliverables) project.deliverables = parseListSection(sections.deliverables);
+  if (sections.deliverables) {
+    project.deliverables = [
+      ...(project.deliverables || []),
+      ...parseListSection(sections.deliverables)
+    ];
+  }
   if (sections.completed || sections.done)
     project.completedItems = parseListSection(sections.completed || sections.done);
   if (sections.wip || sections["in progress"])
@@ -218,9 +236,19 @@ function listSection(title, items) {
   return `## ${title}\n\n${clean.map(i => `- ${i}`).join("\n")}\n\n`;
 }
 
+function dedupeLinks(links) {
+  const seen = new Set();
+  return (links || []).filter(l => {
+    const key = (l.url || "").toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function buildMarketingEducation(p) {
   let edu = p.marketingEducation || "";
-  const links = [...(p.learningsLinks || []), ...(p.references || [])];
+  const links = dedupeLinks([...(p.learningsLinks || []), ...(p.references || [])]);
   if (links.length) {
     const linkBlock = links
       .map(l => `- [${l.label}](${l.url})${l.note ? ` — ${l.note}` : ""}`)
@@ -241,8 +269,6 @@ function buildAccountSection(p) {
 export function projectToMarkdown(p) {
   const id = p.id || "NEW";
   const title = applyProperCase(p.title || "Untitled Project");
-  const valueItems = [...(p.valueAdded || [])];
-  if (p.deliverables?.length) valueItems.push(...p.deliverables.map(d => `Deliverable: ${d}`));
 
   let md = `# ${id} — ${title}\n\n`;
   md += `|                   |                                                            |\n`;
@@ -251,11 +277,12 @@ export function projectToMarkdown(p) {
   md += `\n\n---\n\n`;
 
   if (p.description) md += `## Description\n\n${applyProperCase(p.description.trim())}\n\n`;
-  md += listSection("Value Added", valueItems);
+  md += listSection("Value Added", p.valueAdded || []);
   const edu = buildMarketingEducation(p);
   if (edu) md += `## Marketing Education\n\n${edu}\n\n`;
   md += listSection("WIP", p.inProgressItems);
   md += listSection("Completed", p.completedItems);
+  md += listSection("Deliverables", p.deliverables);
   const account = buildAccountSection(p);
   if (account) md += `## Account Data & Marketing Principles Applied\n\n${account}\n\n`;
 
@@ -402,21 +429,39 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
   return md.trim() + "\n";
 }
 
-/** Migrate all project markdown to B2 format in place. */
+/** Migrate all project markdown to B2 format in place. Preserves wording; normalizes layout. */
 export function migrateAllToB2Format(root) {
   const content = path.join(root, "content");
   const projectsDir = path.join(content, "projects");
+  const indexPath = path.join(content, "INDEX.md");
+  const indexTitles = fs.existsSync(indexPath)
+    ? parseIndexMarkdown(fs.readFileSync(indexPath, "utf8")).rowsById
+    : {};
+
+  function normalizeOne(fp, fallbackId) {
+    const p = parseProjectMarkdown(fs.readFileSync(fp, "utf8"), fallbackId);
+    const row = indexTitles[p.id];
+    if (row?.title) p.title = row.title;
+    if (row?.p) {
+      const pm = String(row.p).match(/^P(\d+)$/i);
+      if (pm) p.priority = parseInt(pm[1], 10);
+    }
+    if (p.learningsLinks) p.learningsLinks = dedupeLinks(p.learningsLinks);
+    if (p.references) p.references = dedupeLinks(p.references);
+    fs.writeFileSync(fp, projectToMarkdown(p));
+    return p.id;
+  }
+
+  const ids = [];
   for (const file of ["retainer.md"]) {
     const fp = path.join(content, file);
     if (!fs.existsSync(fp)) continue;
-    const p = parseProjectMarkdown(fs.readFileSync(fp, "utf8"), file);
-    fs.writeFileSync(fp, projectToMarkdown(p));
+    ids.push(normalizeOne(fp, file));
   }
   for (const f of fs.readdirSync(projectsDir).filter(x => x.endsWith(".md") && !x.startsWith("_"))) {
-    const fp = path.join(projectsDir, f);
-    const p = parseProjectMarkdown(fs.readFileSync(fp, "utf8"), f);
-    fs.writeFileSync(fp, projectToMarkdown(p));
+    ids.push(normalizeOne(path.join(projectsDir, f), f));
   }
+  return ids;
 }
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");

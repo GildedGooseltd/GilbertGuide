@@ -23,10 +23,6 @@ After the lead-source dashboard is live (A8), this retainer keeps reports curren
 - Monthly lead-source report published from live dashboard data
 - UTM and conversion flags checked — issues flagged before month-end
 - Google Ads and LSA tie-ins updated where integrations allow
-- Deliverable: Monthly lead-source report from dashboard fields
-- Deliverable: UTM and conversion pass/fail check each month
-- Deliverable: One review call or async summary for Andrew or Casey
-- Deliverable: Data break log when tags or integrations fail
 
 ## Marketing Education
 
@@ -34,3 +30,10 @@ Reporting only stays useful when someone reviews it every month — validating t
 
 - [HubSpot — attribution reporting](https://knowledge.hubspot.com/reports/understand-attribution-reporting)
 - [Google Analytics Academy](https://analytics.google.com/analytics/academy/)
+
+## Deliverables
+
+- Monthly lead-source report from dashboard fields
+- UTM and conversion pass/fail check each month
+- One review call or async summary for Andrew or Casey
+- Data break log when tags or integrations fail
