@@ -68,6 +68,20 @@ git push -u origin HEAD:main
 *(If `remote origin already exists`: `git remote set-url origin https://github.com/GildedGooseltd/PickyPavi.git` then push.)*
 **If asked to log in:** GitHub username + Personal Access Token (not password) — create at GitHub → **Settings** → **Developer settings** → **Personal access tokens**
 
+**If HTTPS auth fails once** (can't paste token, "Device not configured", repeated password prompts) → **stop retrying the same Terminal flow.** Switch immediately to **GitHub Desktop** (recommended) or SSH — do not send the user through token paste again.
+
+### Auth failed? Use GitHub Desktop (do this next)
+
+1. Install: https://desktop.github.com  
+2. Sign in via browser in the app  
+3. **File → Add Local Repository** → `/Users/gildedgoose/Documents/1 Cursor Helper`  
+4. **Publish branch** / **Push origin** → `GildedGooseltd/PickyPavi`, branch **main**
+
+No token paste in Terminal.
+
+**SSH alternative:** see BACKEND-SETUP troubleshooting or ask agent for `ssh-keygen` steps.
+
+
 **Verify:** Browser → your repo on GitHub → you should see folder `gilded-goose/clients/pav-law/project-picker/` with `content/projects/B1.md` etc.
 
 ### Step 4 — Add secrets (GitHub only — two saves, not one)

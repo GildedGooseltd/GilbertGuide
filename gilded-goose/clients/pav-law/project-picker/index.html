@@ -29,19 +29,9 @@
     }
     html { scroll-behavior: smooth; }
     body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.8; min-height: 100vh; font-size: 1.14rem; }
-    header {
-      background: var(--gradient-brand);
-      border-bottom: 3px solid var(--peacock-teal);
-      padding: var(--space-lg) 2rem;
-    }
-    .header-row { display: flex; align-items: flex-start; gap: var(--space-md); }
-    .site-tagline { font-size: 0.95rem; color: var(--secondary); margin: 0.25rem 0 0; font-weight: 400; }
-    header h1 { font-size: 1.85rem; font-weight: 800; color: #fff; }
-    header .intro { color: #d0f5f2; margin-top: var(--space-sm); font-size: 1.15rem; max-width: 54rem; line-height: 1.8; }
-    .pavi-icon { width: 64px; height: 64px; flex-shrink: 0; border-radius: 50%; object-fit: cover; border: 2px solid rgba(0, 212, 196, 0.5); }
-    .layout { display: grid; grid-template-columns: 1fr 380px; gap: 0; max-width: 1400px; margin: 0 auto; }
-    @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } .sidebar { order: -1; position: static !important; } }
-    main { padding: var(--space-lg) 2rem var(--space-xl); }
+    .layout { display: block; max-width: none; }
+    .layout main { padding: 0; }
+    .sidebar-submit-only h2 { margin-bottom: 0.75rem; }
     .sidebar {
       background: var(--surface); border-left: 2px solid var(--border);
       padding: var(--space-lg); position: sticky; top: 0;
@@ -171,6 +161,69 @@
       border: 2px solid var(--border); background: var(--surface2); color: var(--text); font-size: 0.95rem; font-family: inherit;
     }
     .goal-field textarea { min-height: 3.5rem; resize: vertical; }
+    .goal-prompts { margin-top: 0.5rem; }
+    .goal-prompts-label { font-size: 0.78rem; color: var(--secondary); margin: 0 0 0.45rem; line-height: 1.45; }
+    .goal-prompt-group { margin-bottom: 0.55rem; }
+    .goal-prompt-group-label {
+      display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--peacock-teal); font-weight: 700; margin-bottom: 0.35rem;
+    }
+    .goal-prompt-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .goal-prompt-chip {
+      font: inherit; font-size: 0.76rem; line-height: 1.3; cursor: pointer;
+      padding: 0.3rem 0.55rem; border-radius: 999px; border: 1px solid rgba(0, 212, 196, 0.45);
+      background: rgba(0, 168, 150, 0.12); color: #b8f5ee; transition: background 0.12s, border-color 0.12s, transform 0.12s;
+    }
+    .goal-prompt-chip:hover { background: rgba(0, 168, 150, 0.28); border-color: var(--peacock-teal); transform: translateY(-1px); }
+    .goal-prompt-chip.problem {
+      border-color: rgba(255, 16, 168, 0.45); background: rgba(255, 16, 168, 0.1); color: #fbcfe8;
+    }
+    .goal-prompt-chip.problem:hover { background: rgba(255, 16, 168, 0.22); border-color: #ff10a8; }
+    .pavi-guide-strip {
+      max-width: 1400px; margin: 0 auto; padding: var(--space-md) 2rem 0;
+    }
+    .pavi-guide-inner {
+      display: flex; align-items: center; gap: var(--space-md);
+      padding: var(--space-md) var(--space-md) var(--space-md) 1.1rem;
+      background: linear-gradient(135deg, rgba(107, 76, 230, 0.22) 0%, rgba(255, 16, 168, 0.12) 55%, rgba(0, 168, 150, 0.15) 100%);
+      border: 2px solid rgba(255, 16, 168, 0.45); border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(107, 76, 230, 0.15);
+    }
+    .pavi-guide-wrap { flex-shrink: 0; margin: 0; }
+    .pavi-guide-img {
+      width: 72px; height: 72px; border-radius: 50%; object-fit: cover;
+      border: 3px solid #ff10a8; box-shadow: 0 0 20px rgba(255, 16, 168, 0.45);
+      animation: pavi-bounce 1.4s ease-in-out infinite;
+    }
+    .pavi-guide-bubble {
+      position: absolute; left: calc(100% + 0.35rem); top: 0.15rem;
+      min-width: 10rem; max-width: 13rem; font-size: 0.76rem;
+      border: 2px solid rgba(255, 16, 168, 0.35);
+    }
+    .pavi-guide-copy { flex: 1; min-width: 0; }
+    .pavi-guide-title { font-size: 1.05rem; font-weight: 800; color: #fff; margin: 0 0 0.2rem; }
+    .pavi-guide-sub { font-size: 0.88rem; color: #dce4f8; margin: 0; line-height: 1.5; }
+    .pavi-guide-sub em { color: #f0abfc; font-style: normal; font-weight: 700; }
+    .pavi-submit-nudge {
+      display: flex; align-items: center; gap: 0.65rem; margin-top: var(--space-md);
+      padding: 0.65rem 0.75rem; border-radius: var(--radius);
+      background: rgba(255, 16, 168, 0.08); border: 1px dashed rgba(255, 16, 168, 0.4);
+    }
+    .pavi-submit-nudge img {
+      width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--peacock-teal); flex-shrink: 0;
+      animation: pavi-wiggle 2.5s ease-in-out infinite;
+    }
+    @keyframes pavi-wiggle {
+      0%, 100% { transform: rotate(-4deg); }
+      50% { transform: rotate(4deg); }
+    }
+    .pavi-submit-nudge p { margin: 0; font-size: 0.78rem; color: #dce4f8; line-height: 1.45; }
+    @media (max-width: 640px) {
+      .pavi-guide-inner { flex-direction: column; text-align: center; padding-top: 1rem; }
+      .pavi-guide-bubble { position: static; margin: 0.5rem auto 0; max-width: 16rem; }
+      .pavi-guide-bubble::before { display: none; }
+    }
     .project-note, .general-note { min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
     .goal-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
     .goal-actions .btn { width: auto; margin: 0; }
@@ -342,12 +395,41 @@
     .invoice-summary-bar {
       background: linear-gradient(90deg, rgba(107, 76, 230, 0.22) 0%, rgba(0, 168, 150, 0.12) 100%);
       border-bottom: 2px solid var(--peacock-violet);
-      padding: var(--space-md) 2rem;
     }
-    .invoice-summary-inner { max-width: 1400px; margin: 0 auto; }
-    .invoice-summary-bar h2 { font-size: 1rem; margin: 0 0 0.65rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
-    .invoice-summary-bar .total-box { margin: 0; background: rgba(4, 8, 16, 0.45); border-color: rgba(107, 76, 230, 0.4); }
-    .invoice-summary-bar .total-row.grand { color: #f0abfc; font-size: 1.2rem; }
+    .top-split-panel {
+      max-width: 1400px; margin: 0 auto; padding: var(--space-lg) 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: start;
+    }
+    @media (max-width: 960px) { .top-split-panel { grid-template-columns: 1fr; } }
+    .filter-panel-col { display: flex; flex-direction: column; gap: var(--space-md); }
+    .filter-panel-col h2 { font-size: 1rem; margin: 0; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
+    .invoice-submit-col {
+      background: rgba(4, 8, 16, 0.45); border: 2px solid rgba(107, 76, 230, 0.45);
+      border-radius: var(--radius); padding: var(--space-md);
+    }
+    .invoice-submit-col h2 { font-size: 1rem; margin: 0 0 0.65rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
+    .invoice-submit-col .total-box { margin: 0 0 var(--space-md); background: rgba(18, 26, 46, 0.8); }
+    .invoice-submit-col .total-row.grand { color: #f0abfc; font-size: 1.15rem; }
+    .total-row-maintenance-header { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--peacock-teal); font-weight: 700; padding-top: 0.25rem; }
+    .total-row-maintenance-header span { color: var(--peacock-teal); }
+    .filter-actions-simple { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .filter-actions-simple .btn { width: auto; margin: 0; flex: 1; min-width: 7rem; padding: 0.55rem 0.75rem; font-size: 0.85rem; }
+    .filter-actions-simple .btn-reset { flex: 0; min-width: auto; padding: 0.55rem 1rem; }
+    .submit-compact .submit-field { margin-bottom: 0.65rem; }
+    .submit-compact .submit-field label { font-size: 0.78rem; }
+    .submit-compact .general-note, .submit-compact input { font-size: 0.88rem; padding: 0.45rem 0.6rem; }
+    .submit-compact textarea.general-note { min-height: 2.5rem; }
+    .submit-actions { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.5rem; }
+    .submit-actions .btn { margin: 0; }
+    .submit-note { font-size: 0.78rem; color: var(--secondary); margin: 0.5rem 0 0; line-height: 1.5; }
+    .deliverables-compact { margin-bottom: var(--space-md); font-size: 0.82rem; }
+    .deliverables-compact h3 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--peacock-teal); margin: 0 0 0.4rem; }
+    .projects-section-full { max-width: 1400px; margin: 0 auto; padding: 0 2rem var(--space-xl); }
+    .project-list-controls {
+      display: flex; justify-content: flex-end; align-items: center;
+      padding: var(--space-md) 0 var(--space-sm);
+    }
+    .maintenance-card { border-color: var(--peacock-teal); opacity: 0.95; }
     .project-toc {
       margin-top: var(--space-md);
       border: 2px solid rgba(0, 212, 196, 0.3);
@@ -437,77 +519,84 @@
   </div>
 
   <div id="main-app">
-    <header>
-      <div class="header-row">
-        <img class="pavi-icon" id="pavi-header-img" src="assets/pavi-icon.png" alt="Picky Pavi">
-        <div>
-          <h1>Picky Pavi</h1>
-          <p class="site-tagline">Pav Law project prioritizer</p>
+    <section class="finder-panel" aria-label="Find projects and submit">
+      <div class="pavi-guide-strip">
+        <div class="pavi-guide-inner">
+          <div class="pavi-celebrate-wrap pavi-guide-wrap">
+            <img class="pavi-guide-img" id="pavi-guide-img" src="assets/pavi-icon.png" alt="Pavi the project picker">
+            <div class="pavi-speech-bubble pavi-guide-bubble" id="pavi-guide-speech">What are you trying to fix? Be specific — I love details!</div>
+          </div>
+          <div class="pavi-guide-copy">
+            <p class="pavi-guide-title">Hi — I'm Pavi!</p>
+            <p class="pavi-guide-sub">Share your <em>goals</em> and any <em>problems</em> you're fixing below. I'll match projects and build your plan.</p>
+          </div>
         </div>
       </div>
-    </header>
 
-    <section class="invoice-summary-bar" aria-label="Invoice summary">
-      <div class="invoice-summary-inner">
-        <h2>Invoice summary</h2>
-        <div class="total-box" id="invoice-summary-top">
-          <div class="empty-state">Select projects below to see your consulting total.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="finder-panel" aria-label="Find and filter projects">
-      <h2>Find the right projects</h2>
-      <p class="finder-panel-intro">Set your goal and filters in the left column. Use the right column to suggest a plan and see why those projects fit.</p>
-
-      <div class="finder-grid">
-        <div class="finder-col finder-col-filters">
+      <div class="top-split-panel">
+        <div class="filter-panel-col">
+          <h2>Find projects</h2>
           <div class="goal-field">
-            <label for="goal-input">What are you trying to accomplish?</label>
-            <textarea id="goal-input" placeholder="Example: Fix call tracking, launch NTGUILT display before July 4, improve SEO and referrals"></textarea>
+            <label for="goal-input">What are you trying to accomplish — or fix?</label>
+            <textarea id="goal-input" placeholder="Example: Calls aren't tracking to Google Ads. Need NTGUILT display live before July 4. HubSpot pipeline is messy."></textarea>
+            <div class="goal-prompts" id="goal-prompts"></div>
           </div>
           <div class="filter-field">
-            <label for="filter-consulting">Consulting budget for project fees</label>
+            <label for="filter-consulting">Consulting budget</label>
             <input type="number" id="filter-consulting" min="0" step="100" placeholder="8000">
           </div>
-          <div class="filter-row-3">
-            <div class="filter-field">
-              <label for="filter-max-fee">Max project fee</label>
-              <input type="number" id="filter-max-fee" min="0" step="100" placeholder="Any">
-            </div>
-            <div class="filter-field">
-              <label for="filter-priority-min">Priority from</label>
-              <input type="number" id="filter-priority-min" min="1" step="1" placeholder="1">
-            </div>
-            <div class="filter-field">
-              <label for="filter-priority-max">Priority to</label>
-              <input type="number" id="filter-priority-max" min="1" step="1" placeholder="21">
-            </div>
+          <div class="filter-field">
+            <label for="filter-max-fee">Max fee</label>
+            <input type="number" id="filter-max-fee" min="0" step="100" placeholder="Any">
           </div>
           <label class="filter-check">
             <input type="checkbox" id="filter-hide-nonmatching" checked>
-            Hide projects that do not fit your consulting budget
+            Hide projects over budget
           </label>
-          <div class="filter-status" id="filter-status">Enter a consulting budget or goal to filter projects.</div>
-        </div>
-
-        <div class="finder-col finder-col-actions">
-          <div class="filter-actions">
-            <button type="button" class="btn btn-primary" id="match-goal">Find matching projects</button>
+          <div class="filter-actions-simple">
+            <button type="button" class="btn btn-primary" id="match-goal">Find matches</button>
             <button type="button" class="btn btn-primary" id="suggest-plan">Suggest plan</button>
+            <button type="button" class="btn btn-secondary btn-reset" id="clear-filters">Reset</button>
           </div>
-          <div class="filter-actions">
-            <button type="button" class="btn btn-secondary" id="clear-goal">Clear goal</button>
-            <button type="button" class="btn btn-secondary" id="clear-filters">Clear filters</button>
-          </div>
+          <div class="filter-status" id="filter-status">Set a budget or goal to filter projects.</div>
           <div class="recommendation-box empty" id="recommendation-box">
             <h3>Why this combination</h3>
-            <p>Enter a goal or consulting budget, then click <strong>Find matching projects</strong> or <strong>Suggest plan</strong>.</p>
+            <p>Describe your goals and any problems you're fixing, then click <strong>Find matches</strong> or <strong>Suggest plan</strong>.</p>
+          </div>
+        </div>
+
+        <div class="invoice-submit-col invoice-summary-bar">
+          <h2>Invoice &amp; submit</h2>
+          <div class="total-box" id="invoice-summary-top">
+            <div class="empty-state">Required maintenance included — add projects below.</div>
+          </div>
+          <div class="deliverables-compact impact-section" id="selected-deliverables">
+            <h3>Key deliverables</h3>
+            <div class="empty-state">—</div>
+          </div>
+          <div class="submit-compact">
+            <div class="submit-field">
+              <label for="submitted-email">Your email</label>
+              <input type="email" id="submitted-email" class="general-note" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="submit-field">
+              <label for="general-suggestions">Notes (optional)</label>
+              <textarea id="general-suggestions" class="general-note" placeholder="Timing, priorities, questions…"></textarea>
+            </div>
+            <div class="submit-actions">
+              <button class="btn btn-primary" id="submit-selections" disabled>Submit selections</button>
+              <button class="btn btn-secondary" id="download-csv" disabled>Download CSV</button>
+            </div>
+            <p class="submit-note">Confirmation email + QuickBooks deposit link. Full invoice follows.</p>
+            <div class="pavi-submit-nudge">
+              <img id="pavi-submit-img" src="assets/pavi-icon.png" alt="">
+              <p>All set? Submit when you're happy with the plan — I'll send your confirmation and deposit link.</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="value-icon-key" id="value-icon-key"></div>
+      <div style="max-width:1400px;margin:0 auto;padding:0 2rem">
 
       <details class="project-toc" id="project-toc" open>
         <summary class="project-toc-summary">
@@ -527,45 +616,21 @@
           <ul class="toc-list" id="toc-list" role="list"></ul>
         </div>
       </details>
+
+      <div class="value-icon-key" id="value-icon-key"></div>
+      </div>
     </section>
 
     <section class="projects-section">
-    <div class="layout">
-      <main>
+      <div class="projects-section-full">
+        <div class="project-list-controls">
+          <label class="filter-check">
+            <input type="checkbox" id="expand-all-projects">
+            Show all project details open
+          </label>
+        </div>
         <div id="project-list"></div>
-      </main>
-
-      <aside class="sidebar sidebar-submit-only">
-        <h2>Submit selection</h2>
-
-        <div class="impact-section" id="selected-deliverables">
-          <h3>Key deliverables in selection</h3>
-          <div class="empty-state">—</div>
-        </div>
-
-        <div class="submit-field">
-          <label for="submitted-by">Your name</label>
-          <input type="text" id="submitted-by" class="general-note" placeholder="Your name" autocomplete="name">
-        </div>
-
-        <div class="submit-field">
-          <label for="submitted-email">Your email</label>
-          <input type="email" id="submitted-email" class="general-note" placeholder="you@example.com" autocomplete="email">
-        </div>
-
-        <div class="submit-field">
-          <label for="general-suggestions">General questions or suggestions</label>
-          <textarea id="general-suggestions" class="general-note" placeholder="Budget timing, priorities, anything not tied to one project…"></textarea>
-        </div>
-
-        <button class="btn btn-primary" id="submit-selections" disabled>Submit selections and notes</button>
-        <button class="btn btn-secondary" id="download-csv" disabled>Download spreadsheet CSV</button>
-
-        <p class="note">
-          Submit sends selections to Gilded Goose and emails you a confirmation. Standard deposit via QuickBooks; full invoice for selected projects follows.
-        </p>
-      </aside>
-    </div>
+      </div>
     </section>
   </div>
 
