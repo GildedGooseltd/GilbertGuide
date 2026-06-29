@@ -29,17 +29,35 @@
     return `<span class="toc-priority-inner">${urgent}${hot}${p}</span>${req}`;
   }
 
+  const VALUE_ICON_SVGS = {
+    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.25"/><path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.55 1.55M16.85 16.85l1.55 1.55M5.6 18.4l1.55-1.55M16.85 7.15l1.55-1.55"/></svg>`,
+    retainer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>`,
+    leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4h4l2 5.5-2.5 1.8c1.2 2.4 3.2 4.4 5.6 5.6L17 14.5 22.5 16.5V20.5h-4C9.8 20.5 3.5 14.2 3.5 6V4h3z"/></svg>`,
+    crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10H7z"/><path d="M4 10V4h6M14 20v-6h6"/></svg>`,
+    seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
+    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM16 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M8 14c2.2 0 4 1.2 4.8 3M16 10c-2.2 0-4 1.2-4.8 3"/></svg>`,
+    efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
+    intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v9H8l-4 4V5z"/></svg>`,
+    creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-9 5 5 9-12"/></svg>`,
+    general: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 6.8H21l-5.5 4 2.1 6.7L12 17.8 6.4 20.5l2.1-6.7L3 9.8h6.6L12 3z"/></svg>`
+  };
+
   const VALUE_ICON_DEFS = [
-    { id: "foundation", icon: "⚙", cls: "icon-foundation", label: "Foundation — other marketing depends on this", match: item => !!item.enabler },
-    { id: "retainer", icon: "⟳", cls: "icon-leads", label: "Ongoing paid media management", match: item => item.isRetainer || item.id === "RETAINER" || item.category === "Retainer" },
-    { id: "leads", icon: "📞", cls: "icon-leads", label: "Lead generation — calls and paid media", match: item => /paid media|outbound|display|search|seasonal/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "crm", icon: "🔄", cls: "icon-crm", label: "Pipeline, CRM, and follow-up", match: item => /crm/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "seo", icon: "🔍", cls: "icon-seo", label: "Organic search and visibility", match: item => /seo|blog|local search|website ux/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "referrals", icon: "🤝", cls: "icon-referrals", label: "Referrals and repeat clients", match: item => /referral|testimonial|social proof|direct mail|mailer|case win/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
-    { id: "efficiency", icon: "📊", cls: "icon-efficiency", label: "Reporting, analytics, and spend control", match: item => /analytics|dashboard|strategy|audit|finance|operations/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "intake", icon: "💬", cls: "icon-intake", label: "Intake, phone, and client experience", match: item => /intake|chat|after-hours|infrastructure|call infrastructure/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
-    { id: "creative", icon: "🎨", cls: "icon-creative", label: "Creative, email, and brand reach", match: item => /creative|email|social/i.test((item.category || "") + (item.campaignType || "")) }
+    { id: "foundation", svgId: "foundation", cls: "icon-foundation", label: "Foundation — other marketing depends on this", match: item => !!item.enabler },
+    { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Ongoing paid media management", match: item => item.isRetainer || item.id === "RETAINER" || item.category === "Retainer" },
+    { id: "leads", svgId: "leads", cls: "icon-leads", label: "Lead generation — calls and paid media", match: item => /paid media|outbound|display|search|seasonal/i.test((item.category || "") + (item.campaignType || "")) },
+    { id: "crm", svgId: "crm", cls: "icon-crm", label: "Pipeline, CRM, and follow-up", match: item => /crm/i.test((item.category || "") + (item.campaignType || "")) },
+    { id: "seo", svgId: "seo", cls: "icon-seo", label: "Organic search and visibility", match: item => /seo|blog|local search|website ux/i.test((item.category || "") + (item.campaignType || "")) },
+    { id: "referrals", svgId: "referrals", cls: "icon-referrals", label: "Referrals and repeat clients", match: item => /referral|testimonial|social proof|direct mail|mailer|case win/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
+    { id: "efficiency", svgId: "efficiency", cls: "icon-efficiency", label: "Reporting, analytics, and spend control", match: item => /analytics|dashboard|strategy|audit|finance|operations/i.test((item.category || "") + (item.campaignType || "")) },
+    { id: "intake", svgId: "intake", cls: "icon-intake", label: "Intake, phone, and client experience", match: item => /intake|chat|after-hours|infrastructure|call infrastructure/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
+    { id: "creative", svgId: "creative", cls: "icon-creative", label: "Creative, email, and brand reach", match: item => /creative|email|social/i.test((item.category || "") + (item.campaignType || "")) }
   ];
+
+  function valueIconMarkup(def) {
+    const svg = VALUE_ICON_SVGS[def.svgId || def.id] || VALUE_ICON_SVGS.general;
+    return `<span class="value-icon ${def.cls}" title="${escapeHtml(def.label)}" aria-label="${escapeHtml(def.label)}">${svg}</span>`;
+  }
 
   let RETAINER = PROJECT_DATA.retainer;
   let PROJECTS = PROJECT_DATA.projects;
@@ -125,15 +143,13 @@
       if (def.match(item) && !icons.some(i => i.id === def.id)) icons.push(def);
       if (icons.length >= 3) break;
     }
-    if (!icons.length) icons.push({ id: "general", icon: "✦", cls: "icon-seo", label: "Business growth project" });
+    if (!icons.length) icons.push({ id: "general", svgId: "general", cls: "icon-general", label: "Business growth project" });
     return icons.slice(0, 3);
   }
 
-  function valueIconsHtml(item, compact) {
+  function valueIconsHtml(item) {
     const icons = getValueIcons(item);
-    return `<span class="value-icons">${icons.map(i =>
-      `<span class="value-icon ${i.cls}" title="${escapeHtml(i.label)}" aria-label="${escapeHtml(i.label)}">${i.icon}</span>`
-    ).join("")}</span>`;
+    return `<span class="value-icons">${icons.map(valueIconMarkup).join("")}</span>`;
   }
 
   function renderValueIconKey() {
@@ -141,7 +157,7 @@
     if (!el) return;
     el.innerHTML = `<span class="value-icon-key-title">Value icons key</span>` +
       VALUE_ICON_DEFS.map(d =>
-        `<span class="key-item"><span class="value-icon ${d.cls}">${d.icon}</span> ${escapeHtml(d.label)}</span>`
+        `<span class="key-item">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></span>`
       ).join("");
   }
 
@@ -170,43 +186,62 @@
     });
   }
 
-  function buildRecommendation() {
-    const selected = [];
-    if (state.retainer) selected.push({ ...RETAINER, isRetainer: true });
-    getMaintenanceProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
-    getSelectedProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
-
-    const hasGoal = !!state.goalText.trim();
-    if (!selected.length && !hasGoal) return null;
-
-    const count = selected.length;
-    const cost = getSelectionCost();
-
-    if (hasGoal && count) {
-      const hasEnabler = selected.some(i => i.enabler);
-      const hasLeads = selected.some(i => getValueIcons(i).some(v => v.id === "leads" || v.id === "retainer"));
-      if (hasEnabler && hasLeads) {
-        return `${count} items · ${fmt(cost)} — infrastructure first, then lead generation.`;
-      }
-      return `${count} items · ${fmt(cost)} — matched to your goals and issues.`;
+  function getInvoiceLineItems() {
+    const rows = [];
+    if (state.retainer) {
+      rows.push({ id: "RETAINER", title: RETAINER.title, fee: feeLabelFor(RETAINER, true) });
     }
-    if (count) {
-      return `${count} items · ${fmt(cost)} — review projects below and adjust anytime.`;
+    getMaintenanceProjects().forEach(p => {
+      rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p, false) });
+    });
+    getSelectedProjects().forEach(p => {
+      rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p, false) });
+    });
+    return rows;
+  }
+
+  function getSuggestedItems() {
+    const items = [];
+    if (state.retainer) items.push({ ...RETAINER, isRetainer: true });
+    getMaintenanceProjects().forEach(p => items.push({ ...p, isRetainer: false }));
+    getSelectedProjects().forEach(p => items.push({ ...p, isRetainer: false }));
+    return sortByPriority(items);
+  }
+
+  function projectAnchor(id) {
+    return `#project-${id}`;
+  }
+
+  function renderSearchSuggestions() {
+    const el = document.getElementById("search-suggestions");
+    if (!el) return;
+    const goal = state.goalText.trim();
+    if (!goal) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
     }
-    return "Describe goals or problems above — your plan updates automatically.";
+    const items = getSuggestedItems();
+    if (!items.length) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+    el.hidden = false;
+    el.innerHTML = `
+      <p class="search-suggestions-title">Suggested projects — click for full description</p>
+      <ul class="search-suggestions-list">${items.map(item => {
+        const id = item.isRetainer ? "RETAINER" : item.id;
+        const pri = item.priority != null ? `P${Math.trunc(item.priority)}` : "—";
+        return `<li>
+          <a href="${projectAnchor(id)}" class="search-suggestion-link">${pri} · ${escapeHtml(item.title)}</a>
+          <span class="search-suggestion-fee">${feeLabelFor(item, !!item.isRetainer)}</span>
+        </li>`;
+      }).join("")}</ul>`;
   }
 
   function renderRecommendation() {
-    const el = document.getElementById("recommendation-box");
-    if (!el) return;
-    const summary = buildRecommendation();
-    if (!summary) {
-      el.className = "recommendation-box empty";
-      el.innerHTML = "<p>Describe your goals and any problems you're fixing — Pavi will match projects and update your summary.</p>";
-      return;
-    }
-    el.className = "recommendation-box";
-    el.innerHTML = `<p>${escapeHtml(summary)}</p>`;
+    /* suggestions live under search panel */
   }
 
   function getAllItems() {
@@ -521,12 +556,12 @@
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
       const blurb = briefValueAdd(item);
-      return `<li class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}" data-id="${item.id}">
-        <span class="toc-priority">${priorityTocHtml(item)}</span>
-        <span class="toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a> ${paymentBadgeHtml(item, !!item.isRetainer, true)}</span>
-        <span class="toc-blurb">${escapeHtml(blurb)}</span>
-        <span class="toc-value">${valueIconsHtml(item, true)}</span>
-      </li>`;
+      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}" data-id="${item.id}">
+        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item)}</span></td>
+        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a> ${paymentBadgeHtml(item, !!item.isRetainer, true)}</td>
+        <td class="toc-col-blurb toc-blurb">${escapeHtml(blurb)}</td>
+        <td class="toc-col-icons toc-value">${valueIconsHtml(item)}</td>
+      </tr>`;
     }).join("");
     if (hintEl) {
       const selCount = items.filter(i => isItemSelected(i)).length;
@@ -658,8 +693,6 @@
     saveState();
     renderAllCards();
     renderSummary();
-    renderFilterStatus();
-    renderRecommendation();
   }
 
   let suggestTimer;
@@ -680,18 +713,7 @@
   }
 
   function renderFilterStatus() {
-    const el = document.getElementById("filter-status");
-    if (!el) return;
-    getFilters();
-    const cost = getSelectionCost();
-    const count = (state.retainer ? 1 : 0) + getMaintenanceProjects().length + getSelectedProjects().length;
-    if (state.goalText.trim() || count > getMaintenanceProjects().length + (state.retainer ? 1 : 0)) {
-      el.className = "filter-status ok";
-      el.textContent = `${count} items · ${fmt(cost)} total — plan updates as you type.`;
-      return;
-    }
-    el.className = "filter-status";
-    el.textContent = "Describe goals or problems above — your plan updates automatically.";
+    /* status shown via search suggestions + invoice summary */
   }
 
   function loadState() {
@@ -903,7 +925,6 @@
         saveState();
         renderAllCards();
         renderSummary();
-        renderFilterStatus();
       });
     });
 
@@ -918,7 +939,6 @@
         saveState();
         renderAllCards();
         renderSummary();
-        renderFilterStatus();
       });
       card.querySelector(".expand-btn").addEventListener("click", e => {
         e.stopPropagation();
@@ -1073,32 +1093,18 @@
     return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
   }
 
-  const PAVI_CELEBRATE_LINES = [
-    "Great picks! I'll get the team on it.",
-    "Love these choices — big win for the firm!",
-    "Pavi approves! Let's make it happen.",
-    "Smart stack! Your clients will feel the difference."
-  ];
-
-  const PAVI_GUIDE_LINES = [
-    "What are you trying to fix? Be specific — I love details!",
-    "Calls not tracking? Ads bleeding budget? Tell me!",
-    "Goals plus problems = better project matches.",
-    "HubSpot messy? Website slow? Name it — I'll find the fix.",
-    "July 4 deadline? Referrals flat? I speak project.",
-    "The more you share, the smarter your plan gets."
-  ];
+  function showThankYou(payload) {
+    const guideImg = document.getElementById("pavi-guide-img");
+    if (guideImg && !guideImg.src.includes("pavi-full-body")) {
+      guideImg.src = "assets/pavi-full-body.png";
+    }
+  }
 
   function initPaviGuide() {
     const guideImg = document.getElementById("pavi-guide-img");
-    if (guideImg) guideImg.src = PAVI_IMG;
-    const bubble = document.getElementById("pavi-guide-speech");
-    if (!bubble || PAVI_GUIDE_LINES.length < 2) return;
-    let idx = 0;
-    setInterval(() => {
-      idx = (idx + 1) % PAVI_GUIDE_LINES.length;
-      bubble.textContent = PAVI_GUIDE_LINES[idx];
-    }, 7000);
+    if (guideImg && !guideImg.src.includes("pavi-full-body")) {
+      guideImg.src = "assets/pavi-full-body.png";
+    }
   }
 
   function showThankYou(payload) {
@@ -1106,9 +1112,7 @@
     const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-pavi").src = PAVI_IMG;
-    document.getElementById("pavi-speech").textContent =
-      PAVI_CELEBRATE_LINES[Math.floor(Math.random() * PAVI_CELEBRATE_LINES.length)];
+    document.getElementById("thank-you-pavi").src = "assets/pavi-full-body.png";
     document.getElementById("thank-you-sub").textContent =
       "Your selections set Pav Law up for stronger leads, better intake, and marketing you can measure.";
 
@@ -1177,10 +1181,16 @@
   }
 
   function buildTotalsHtml() {
+    const items = getInvoiceLineItems();
     const total = getSelectionCost();
-    const count = (state.retainer ? 1 : 0) + getMaintenanceProjects().length + getSelectedProjects().length;
-    const label = count === 1 ? "1 item selected" : `${count} items selected`;
-    return `<div class="total-row grand total-row-single"><span>${label}</span><span>${fmt(total)}</span></div>`;
+    if (!items.length) {
+      return `<p class="empty-state">Selections appear here as you choose projects.</p>`;
+    }
+    const rows = items.map(row =>
+      `<div class="total-row"><span><a href="${projectAnchor(row.id)}" class="invoice-item-link">${escapeHtml(row.title)}</a></span><span>${row.fee}</span></div>`
+    ).join("");
+    const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;
+    return rows + `<div class="total-row grand total-row-single"><span>${label}</span><span>${fmt(total)}</span></div>`;
   }
 
   function renderInvoiceSummary() {
@@ -1196,10 +1206,9 @@
 
   function renderSummary() {
     renderInvoiceSummary();
+    renderSearchSuggestions();
     updateSubmitButtons();
-    renderFilterStatus();
     renderProjectToc();
-    renderRecommendation();
   }
 
   function showToast(msg, isError) {
@@ -1279,13 +1288,24 @@
   loadState();
   ensureRequiredMaintenance();
   initPaviGuide();
+  document.getElementById("search-suggestions")?.addEventListener("click", e => {
+    const link = e.target.closest(".search-suggestion-link, .invoice-item-link");
+    if (!link) return;
+    const id = (link.getAttribute("href") || "").replace("#project-", "");
+    if (!id) return;
+    state.expanded.add(id);
+    saveState();
+    const card = document.getElementById("project-" + id);
+    if (card) {
+      card.classList.add("expanded");
+      card.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
   renderPackageIntro();
   renderValueIconKey();
   renderAllCards();
   if (state.goalText.trim()) suggestPlan(true);
   else {
     renderSummary();
-    renderFilterStatus();
-    renderRecommendation();
   }
 })();

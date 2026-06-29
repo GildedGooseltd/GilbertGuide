@@ -21,12 +21,6 @@ Pav Law invests about $6,000/month in Google Ads media, but without a formal <a 
 - Protects Military Search at roughly $67 per call (~36 calls/month in May 2026 data)
 - Monthly reporting catches waste before it runs another month
 - Keeps Google Ads, LSA, and Microsoft Ads aligned under one scope
-- Deliverable: Google Ads monitoring with weekly bid and budget notes
-- Deliverable: LSA spend, lead-type, and CPL review
-- Deliverable: Microsoft Ads monitoring aligned with Google strategy
-- Deliverable: Monthly paid-media report — calls, spend, CPL by campaign
-- Deliverable: One strategy call per month on media performance
-- Deliverable: Call recording spot-checks on high-CPL campaigns
 
 ## Marketing Education
 
@@ -54,6 +48,15 @@ Ongoing PPC management means watching campaigns weekly — pausing losers, scali
 - Google Ads and Microsoft Ads campaign buildout
 - GBP content, hours, and service-area cleanup
 - Cross-platform paid search optimization
+
+## Deliverables
+
+- Google Ads monitoring with weekly bid and budget notes
+- LSA spend, lead-type, and CPL review
+- Microsoft Ads monitoring aligned with Google strategy
+- Monthly paid-media report — calls, spend, CPL by campaign
+- One strategy call per month on media performance
+- Call recording spot-checks on high-CPL campaigns
 
 ## Account Data & Marketing Principles Applied
 

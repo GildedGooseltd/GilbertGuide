@@ -38,6 +38,10 @@ Strategy context for the expand section — no pricing. Add reference links as m
 
 - Already finished work (✓ on card)
 
+## Deliverables
+
+Optional — key deliverables (shown in expanded card detail)
+
 ## Account Data & Marketing Principles Applied
 
 Verified metric or principle text. Tie to account data where possible.
