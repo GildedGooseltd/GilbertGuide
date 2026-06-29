@@ -49,7 +49,17 @@
     .card input[type="checkbox"] { width: 22px; height: 22px; margin-top: 4px; accent-color: var(--peacock-teal); cursor: pointer; flex-shrink: 0; }
     .card-body { flex: 1; min-width: 0; }
     .card-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: var(--space-sm); }
-    .card-title { font-weight: 800; font-size: 1.34rem; line-height: 1.45; color: #fff; flex: 1; min-width: 0; }
+    .card-title { font-weight: 800; font-size: 1.22rem; line-height: 1.4; color: #fff; flex: 1; min-width: 0; }
+    .card-value-slot {
+      flex: 0 1 42%; min-width: 9rem; max-width: 20rem; text-align: right;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem;
+    }
+    .card-value-slot .value-icons { justify-content: flex-end; }
+    .card-corner-meta { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; margin-bottom: 0.1rem; }
+    .card-value-blurb {
+      font-size: 0.82rem; font-weight: 600; color: #e2e8f0; line-height: 1.45;
+      display: block;
+    }
     .card-price {
       font-size: 1.12rem; font-weight: 800; color: var(--green);
       white-space: nowrap; flex-shrink: 0; text-align: right; line-height: 1.35;
@@ -77,7 +87,10 @@
     .badge-ongoing { background: rgba(61, 122, 232, 0.2); color: #93c5fd; border: 1px solid var(--peacock-blue); }
     .badge-done { background: rgba(0, 212, 196, 0.15); color: var(--green); border: 1px solid var(--peacock-teal); }
     .badge-enabler { background: rgba(154, 63, 212, 0.2); color: #e9d5ff; border: 1px solid var(--peacock-purple); }
-    .card-description { color: var(--secondary); font-size: 1.18rem; margin-bottom: var(--space-md); line-height: 1.85; }
+    .badge-payment-perf { background: rgba(0, 168, 150, 0.25); color: #99f6e4; border: 1px solid var(--peacock-teal); font-size: 0.72rem; }
+    .badge-payment-flat { background: rgba(61, 122, 232, 0.22); color: #bfdbfe; border: 1px solid var(--peacock-blue); font-size: 0.72rem; }
+    .payment-key { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; font-size: 0.78rem; color: #dce4f8; margin-right: auto; }
+    .card-description { color: #dce4f8; font-size: 0.98rem; margin-bottom: var(--space-md); line-height: 1.65; }
     .card-description p { margin: 0 0 0.75rem; }
     .account-data-footnote { margin: 0.85rem 0 0; padding-top: 0.85rem; border-top: 1px solid var(--border); font-size: 1.02rem; color: #99f6e4; line-height: 1.7; }
     .account-data-footnote .metric-source { color: var(--secondary); font-size: 0.92rem; }
@@ -161,24 +174,6 @@
       border: 2px solid var(--border); background: var(--surface2); color: var(--text); font-size: 0.95rem; font-family: inherit;
     }
     .goal-field textarea { min-height: 3.5rem; resize: vertical; }
-    .goal-prompts { margin-top: 0.5rem; }
-    .goal-prompts-label { font-size: 0.78rem; color: var(--secondary); margin: 0 0 0.45rem; line-height: 1.45; }
-    .goal-prompt-group { margin-bottom: 0.55rem; }
-    .goal-prompt-group-label {
-      display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em;
-      color: var(--peacock-teal); font-weight: 700; margin-bottom: 0.35rem;
-    }
-    .goal-prompt-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .goal-prompt-chip {
-      font: inherit; font-size: 0.76rem; line-height: 1.3; cursor: pointer;
-      padding: 0.3rem 0.55rem; border-radius: 999px; border: 1px solid rgba(0, 212, 196, 0.45);
-      background: rgba(0, 168, 150, 0.12); color: #b8f5ee; transition: background 0.12s, border-color 0.12s, transform 0.12s;
-    }
-    .goal-prompt-chip:hover { background: rgba(0, 168, 150, 0.28); border-color: var(--peacock-teal); transform: translateY(-1px); }
-    .goal-prompt-chip.problem {
-      border-color: rgba(255, 16, 168, 0.45); background: rgba(255, 16, 168, 0.1); color: #fbcfe8;
-    }
-    .goal-prompt-chip.problem:hover { background: rgba(255, 16, 168, 0.22); border-color: #ff10a8; }
     .pavi-guide-strip {
       max-width: 1400px; margin: 0 auto; padding: var(--space-md) 2rem 0;
     }
@@ -230,8 +225,7 @@
     .finder-panel {
       background: linear-gradient(165deg, #0c1835 0%, #121a32 45%, #0a1428 100%);
       border-bottom: 3px solid var(--peacock-teal);
-      padding: var(--space-lg) 2rem var(--space-xl);
-      max-width: 1400px; margin: 0 auto;
+      padding-bottom: var(--space-xl);
     }
     .finder-panel h2 { font-size: 1.15rem; color: #fff; margin: 0 0 0.35rem; font-weight: 800; }
     .finder-panel-intro { font-size: 0.92rem; color: #a8b8d8; margin-bottom: var(--space-md); line-height: 1.6; }
@@ -250,36 +244,36 @@
     .filter-status.bad { border-left: 4px solid #f87171; }
     .filter-status strong { color: #fff; }
     .recommendation-box {
-      padding: var(--space-md); background: rgba(107, 76, 230, 0.14); border-radius: var(--radius);
-      border: 2px solid rgba(107, 76, 230, 0.45); font-size: 0.92rem; color: #dce4f8; line-height: 1.65;
+      padding: 0.65rem 0.85rem; background: rgba(107, 76, 230, 0.14); border-radius: var(--radius);
+      border: 2px solid rgba(107, 76, 230, 0.45); font-size: 0.88rem; color: #dce4f8; line-height: 1.5;
+      margin-bottom: var(--space-md);
     }
-    .recommendation-box h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: #c4b5fd; margin: 0 0 0.5rem; font-weight: 800; }
-    .recommendation-box p { margin: 0 0 0.65rem; }
-    .recommendation-box ul { margin: 0; padding-left: 1.1rem; }
-    .recommendation-box li { margin-bottom: 0.35rem; }
+    .recommendation-box p { margin: 0; }
     .recommendation-box.empty { color: var(--secondary); font-style: italic; border-color: var(--border); background: rgba(4, 8, 16, 0.35); }
     .filter-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; color: var(--secondary); }
     .filter-check input { accent-color: var(--peacock-teal); }
     .value-icon-key {
-      display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: var(--space-md) 0;
-      padding: 0.65rem 0.85rem; background: rgba(4, 8, 16, 0.35); border-radius: var(--radius);
-      border: 1px solid var(--border); font-size: 0.78rem; color: var(--secondary);
+      display: flex; flex-wrap: wrap; gap: 0.55rem 1rem; margin: var(--space-md) 0;
+      padding: 0.75rem 1rem; background: rgba(18, 26, 46, 0.95); border-radius: var(--radius);
+      border: 2px solid rgba(0, 212, 196, 0.45); font-size: 0.82rem; color: #f1f5f9;
     }
-    .value-icon-key-title { width: 100%; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-teal); font-weight: 700; margin-bottom: 0.15rem; }
-    .key-item { display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
-    .value-icons { display: inline-flex; gap: 0.2rem; align-items: center; flex-wrap: wrap; }
+    .value-icon-key-title { width: 100%; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-teal); font-weight: 700; margin-bottom: 0.25rem; }
+    .key-item { display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; font-weight: 600; }
+    .value-icons { display: inline-flex; gap: 0.25rem; align-items: center; flex-wrap: wrap; }
     .value-icon {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 1.65rem; height: 1.65rem; border-radius: 6px; font-size: 0.95rem;
-      background: rgba(61, 122, 232, 0.2); border: 1px solid rgba(61, 122, 232, 0.45);
-      cursor: help; line-height: 1;
+      width: 1.85rem; height: 1.85rem; border-radius: 7px; font-size: 1rem;
+      background: #1e293b; border: 2px solid #94a3b8; color: #fff;
+      cursor: help; line-height: 1; box-shadow: 0 1px 4px rgba(0,0,0,0.35);
     }
-    .value-icon.icon-foundation { background: rgba(154, 63, 212, 0.22); border-color: var(--peacock-purple); }
-    .value-icon.icon-leads { background: rgba(0, 212, 196, 0.15); border-color: var(--peacock-teal); }
-    .value-icon.icon-crm { background: rgba(107, 76, 230, 0.22); border-color: var(--peacock-violet); }
-    .value-icon.icon-seo { background: rgba(61, 122, 232, 0.2); border-color: var(--peacock-blue); }
-    .value-icon.icon-trust { background: rgba(255, 176, 32, 0.15); border-color: #ffb020; }
-    .value-icon.icon-efficiency { background: rgba(134, 239, 172, 0.12); border-color: #86efac; }
+    .value-icon.icon-foundation { background: #4c1d95; border-color: #c4b5fd; }
+    .value-icon.icon-leads { background: #0f766e; border-color: #5eead4; }
+    .value-icon.icon-crm { background: #4338ca; border-color: #a5b4fc; }
+    .value-icon.icon-seo { background: #1d4ed8; border-color: #93c5fd; }
+    .value-icon.icon-referrals { background: #9d174d; border-color: #f9a8d4; }
+    .value-icon.icon-efficiency { background: #166534; border-color: #86efac; }
+    .value-icon.icon-intake { background: #7c2d12; border-color: #fdba74; }
+    .value-icon.icon-creative { background: #6b21a8; border-color: #e9d5ff; }
     .card-corner-icons { display: flex; gap: 0.25rem; flex-shrink: 0; }
     .priority-table-wrap { margin-top: var(--space-md); }
     .priority-table-intro { font-size: 0.9rem; color: #a8b8d8; margin-bottom: var(--space-sm); line-height: 1.55; }
@@ -377,6 +371,8 @@
     .thank-you-roi-item strong { color: #fff; display: block; font-size: 0.92rem; margin-bottom: 0.15rem; }
     .thank-you-roi-summary { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,16,168,0.25); font-size: 0.92rem; color: #f0abfc; font-weight: 600; line-height: 1.55; }
     .thank-you-selection { margin-bottom: 1rem; }
+    .thank-you-total-single { margin: 0 0 0.35rem; font-size: 1.05rem; color: #fff; font-weight: 600; }
+    .thank-you-terms-line { margin: 0; font-size: 0.88rem; color: #cbd5e1; }
     .thank-you-selection h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-teal); margin: 0 0 0.5rem; font-weight: 800; }
     .thank-you-list { font-size: 0.92rem; color: var(--secondary); margin: 0; padding-left: 1.2rem; }
     .thank-you-list li { margin-bottom: 0.35rem; }
@@ -395,6 +391,7 @@
     .invoice-summary-bar {
       background: linear-gradient(90deg, rgba(107, 76, 230, 0.22) 0%, rgba(0, 168, 150, 0.12) 100%);
       border-bottom: 2px solid var(--peacock-violet);
+      padding: var(--space-lg) 0 var(--space-md);
     }
     .top-split-panel {
       max-width: 1400px; margin: 0 auto; padding: var(--space-lg) 2rem;
@@ -410,6 +407,7 @@
     .invoice-submit-col h2 { font-size: 1rem; margin: 0 0 0.65rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
     .invoice-submit-col .total-box { margin: 0 0 var(--space-md); background: rgba(18, 26, 46, 0.8); }
     .invoice-submit-col .total-row.grand { color: #f0abfc; font-size: 1.15rem; }
+    .invoice-submit-col .total-row-single { margin: 0; padding: 0.35rem 0; border-top: none; }
     .total-row-maintenance-header { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--peacock-teal); font-weight: 700; padding-top: 0.25rem; }
     .total-row-maintenance-header span { color: var(--peacock-teal); }
     .filter-actions-simple { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
@@ -417,8 +415,13 @@
     .filter-actions-simple .btn-reset { flex: 0; min-width: auto; padding: 0.55rem 1rem; }
     .submit-compact .submit-field { margin-bottom: 0.65rem; }
     .submit-compact .submit-field label { font-size: 0.78rem; }
+    .submit-field-label { display: block; font-size: 0.85rem; color: #fff; font-weight: 600; margin-bottom: 0.35rem; }
     .submit-compact .general-note, .submit-compact input { font-size: 0.88rem; padding: 0.45rem 0.6rem; }
+    .submit-compact select.general-note { width: 100%; cursor: pointer; appearance: auto; }
+    .payment-terms-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+    .payment-terms-row .sub-label { display: block; font-size: 0.72rem; color: var(--secondary); margin-bottom: 0.25rem; font-weight: 600; }
     .submit-compact textarea.general-note { min-height: 2.5rem; }
+    .field-hint { font-size: 0.72rem; color: var(--secondary); margin: 0.35rem 0 0; line-height: 1.45; }
     .submit-actions { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.5rem; }
     .submit-actions .btn { margin: 0; }
     .submit-note { font-size: 0.78rem; color: var(--secondary); margin: 0.5rem 0 0; line-height: 1.5; }
@@ -426,9 +429,11 @@
     .deliverables-compact h3 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--peacock-teal); margin: 0 0 0.4rem; }
     .projects-section-full { max-width: 1400px; margin: 0 auto; padding: 0 2rem var(--space-xl); }
     .project-list-controls {
-      display: flex; justify-content: flex-end; align-items: center;
+      display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 0.75rem;
       padding: var(--space-md) 0 var(--space-sm);
     }
+    .project-list-show-more { text-align: center; padding: var(--space-md) 0 var(--space-sm); }
+    .project-list-show-more .btn { width: auto; margin: 0 auto; min-width: 14rem; }
     .maintenance-card { border-color: var(--peacock-teal); opacity: 0.95; }
     .project-toc {
       margin-top: var(--space-md);
@@ -450,10 +455,11 @@
     .project-toc[open] .project-toc-summary::before { transform: rotate(90deg); }
     .project-toc-title { font-size: 0.95rem; }
     .project-toc-hint { font-size: 0.78rem; font-weight: 500; color: var(--secondary); text-align: right; flex: 1; }
-    .project-toc-body { padding: 0.65rem 1rem 1rem; }
+    .priority-table-intro:empty { display: none; }
+    .table-filter-status:empty { display: none; }
     .toc-list { list-style: none; margin: 0; padding: 0; font-size: 0.88rem; }
     .toc-header {
-      display: grid; grid-template-columns: 2.5rem 2.5rem 1fr auto auto;
+      display: grid; grid-template-columns: 3rem 1fr minmax(7rem, 11rem) auto;
       gap: 0.5rem; align-items: center;
       padding: 0.35rem 0.35rem 0.5rem; margin-bottom: 0.25rem;
       border-bottom: 2px solid rgba(0, 212, 196, 0.25);
@@ -469,7 +475,7 @@
     .toc-header-title, .toc-header-value { padding: 0 0.15rem; }
     .toc-header-fee { text-align: right; }
     .toc-item {
-      display: grid; grid-template-columns: 2.5rem 2.5rem 1fr auto auto;
+      display: grid; grid-template-columns: 3rem 1fr minmax(7rem, 11rem) auto;
       gap: 0.5rem; align-items: center;
       padding: 0.4rem 0.35rem; border-bottom: 1px solid rgba(255,255,255,0.06);
     }
@@ -477,21 +483,41 @@
     .toc-item:hover { background: rgba(61, 122, 232, 0.1); border-radius: 4px; }
     .toc-item.row-selected { background: rgba(107, 76, 230, 0.15); }
     .toc-item.row-package { border-left: 3px solid var(--peacock-teal); padding-left: 0.5rem; }
-    .toc-priority { font-weight: 800; color: var(--green); text-align: center; }
+    .toc-priority { font-weight: 800; color: var(--green); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+    .toc-priority-inner { white-space: nowrap; }
+    .toc-priority .table-required { font-size: 0.58rem; padding: 0.12rem 0.35rem; margin: 0; line-height: 1.2; }
     .toc-id { font-size: 0.75rem; color: var(--secondary); font-weight: 600; }
     .toc-title { min-width: 0; }
     .toc-title a { color: #fff; text-decoration: none; font-weight: 600; }
     .toc-title a:hover { color: var(--peacock-blue); text-decoration: underline; }
+    .toc-blurb { font-size: 0.76rem; color: #cbd5e1; line-height: 1.35; }
     .toc-fee { color: var(--green); font-weight: 600; white-space: nowrap; font-size: 0.82rem; }
     .toc-value .value-icon { width: 1.4rem; height: 1.4rem; font-size: 0.8rem; }
     .hot-star {
-      color: #ff10a8; font-size: 1rem; line-height: 1;
-      text-shadow: 0 0 10px rgba(255, 16, 168, 0.75);
-      margin-right: 0.15rem;
+      color: #9d0059; font-size: 1rem; line-height: 1;
+      text-shadow: 0 0 6px rgba(157, 0, 89, 0.65);
+      margin-right: 0.1rem;
     }
+    .priority-urgent {
+      color: #ff6b6b; font-weight: 900; font-size: 0.95rem; margin-right: 0.1rem;
+    }
+    .total-row-compact span { color: var(--secondary); font-size: 0.82rem; }
+    .pavi-filter-header {
+      display: flex; align-items: center; gap: var(--space-md);
+      padding: var(--space-md); margin-bottom: var(--space-sm);
+      background: linear-gradient(135deg, rgba(107, 76, 230, 0.28) 0%, rgba(157, 0, 89, 0.18) 55%, rgba(0, 168, 150, 0.18) 100%);
+      border: 2px solid rgba(157, 0, 89, 0.55); border-radius: var(--radius);
+    }
+    .pavi-filter-header .pavi-guide-img {
+      width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+      border: 3px solid #ff10a8; box-shadow: 0 0 20px rgba(255, 16, 168, 0.45);
+      animation: pavi-bounce 1.4s ease-in-out infinite;
+    }
+    .pavi-filter-header .pavi-guide-bubble { max-width: 11rem; }
     .hot-star-inline { font-size: 0.85rem; }
     @media (max-width: 700px) {
-      .toc-item { grid-template-columns: 2rem 2rem 1fr auto; }
+      .toc-item, .toc-header { grid-template-columns: 2.5rem 1fr auto; }
+      .toc-blurb { display: none; }
       .toc-value { display: none; }
     }
     .sidebar-submit-only h2 { margin-bottom: 0.75rem; }
@@ -520,30 +546,23 @@
 
   <div id="main-app">
     <section class="finder-panel" aria-label="Find projects and submit">
-      <div class="pavi-guide-strip">
-        <div class="pavi-guide-inner">
-          <div class="pavi-celebrate-wrap pavi-guide-wrap">
-            <img class="pavi-guide-img" id="pavi-guide-img" src="assets/pavi-icon.png" alt="Pavi the project picker">
-            <div class="pavi-speech-bubble pavi-guide-bubble" id="pavi-guide-speech">What are you trying to fix? Be specific — I love details!</div>
-          </div>
-          <div class="pavi-guide-copy">
-            <p class="pavi-guide-title">Hi — I'm Pavi!</p>
-            <p class="pavi-guide-sub">Share your <em>goals</em> and any <em>problems</em> you're fixing below. I'll match projects and build your plan.</p>
-          </div>
-        </div>
-      </div>
-
       <div class="top-split-panel">
         <div class="filter-panel-col">
-          <h2>Find projects</h2>
+          <div class="pavi-filter-header">
+            <div class="pavi-celebrate-wrap pavi-guide-wrap">
+              <img class="pavi-guide-img" id="pavi-guide-img" src="assets/pavi-icon.png" alt="Pavi the project picker">
+              <div class="pavi-speech-bubble pavi-guide-bubble" id="pavi-guide-speech">What are you trying to fix? Be specific — I love details!</div>
+            </div>
+            <div class="pavi-guide-copy">
+              <p class="pavi-guide-title">Hi — I'm Pavi!</p>
+              <p class="pavi-guide-sub">Share your <em>goals</em> and any <em>problems</em> you're fixing — your plan updates as you type.</p>
+            </div>
+          </div>
+          <h2>Search</h2>
           <div class="goal-field">
             <label for="goal-input">What are you trying to accomplish — or fix?</label>
-            <textarea id="goal-input" placeholder="Example: Calls aren't tracking to Google Ads. Need NTGUILT display live before July 4. HubSpot pipeline is messy."></textarea>
-            <div class="goal-prompts" id="goal-prompts"></div>
-          </div>
-          <div class="filter-field">
-            <label for="filter-consulting">Consulting budget</label>
-            <input type="number" id="filter-consulting" min="0" step="100" placeholder="8000">
+            <textarea id="goal-input" placeholder="Goals: Launch NTGUILT display before July 4, improve SEO, grow referrals. Problems: calls not tracking, wasted ad spend, HubSpot pipeline messy, website forms broken."></textarea>
+            <p class="field-hint">Share goals and problems you're fixing — your plan updates as you type.</p>
           </div>
           <div class="filter-field">
             <label for="filter-max-fee">Max fee</label>
@@ -551,28 +570,19 @@
           </div>
           <label class="filter-check">
             <input type="checkbox" id="filter-hide-nonmatching" checked>
-            Hide projects over budget
+            Hide projects over max fee
           </label>
           <div class="filter-actions-simple">
-            <button type="button" class="btn btn-primary" id="match-goal">Find matches</button>
-            <button type="button" class="btn btn-primary" id="suggest-plan">Suggest plan</button>
             <button type="button" class="btn btn-secondary btn-reset" id="clear-filters">Reset</button>
           </div>
-          <div class="filter-status" id="filter-status">Set a budget or goal to filter projects.</div>
-          <div class="recommendation-box empty" id="recommendation-box">
-            <h3>Why this combination</h3>
-            <p>Describe your goals and any problems you're fixing, then click <strong>Find matches</strong> or <strong>Suggest plan</strong>.</p>
-          </div>
+          <div class="filter-status" id="filter-status">Describe goals or problems above — your plan updates automatically.</div>
         </div>
 
-        <div class="invoice-submit-col invoice-summary-bar">
-          <h2>Invoice &amp; submit</h2>
-          <div class="total-box" id="invoice-summary-top">
-            <div class="empty-state">Required maintenance included — add projects below.</div>
-          </div>
-          <div class="deliverables-compact impact-section" id="selected-deliverables">
-            <h3>Key deliverables</h3>
-            <div class="empty-state">—</div>
+        <div class="invoice-submit-col">
+          <h2>Summary &amp; submit</h2>
+          <div class="total-box" id="invoice-summary-top"></div>
+          <div class="recommendation-box empty" id="recommendation-box">
+            <p>Describe your goals and any problems you're fixing — Pavi will match projects and update your summary.</p>
           </div>
           <div class="submit-compact">
             <div class="submit-field">
@@ -580,22 +590,44 @@
               <input type="email" id="submitted-email" class="general-note" placeholder="you@example.com" autocomplete="email">
             </div>
             <div class="submit-field">
+              <span class="submit-field-label">Monthly payment terms</span>
+              <div class="payment-terms-row">
+                <div>
+                  <label class="sub-label" for="invoice-payment-months">Months</label>
+                  <select id="invoice-payment-months" class="general-note">
+                    <option value="">Select…</option>
+                    <option value="1">1 month</option>
+                    <option value="2">2 months</option>
+                    <option value="3">3 months</option>
+                    <option value="4">4 months</option>
+                    <option value="5">5 months</option>
+                    <option value="6">6 months</option>
+                    <option value="9">9 months</option>
+                    <option value="12">12 months</option>
+                    <option value="18">18 months</option>
+                    <option value="24">24 months</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="sub-label" for="invoice-payment-amount">Amount per month</label>
+                  <input type="number" id="invoice-payment-amount" class="general-note" min="0" step="100" placeholder="4600">
+                </div>
+              </div>
+              <p class="field-hint">Split project fees over time. Retainer + maintenance bill separately. Deposit is separate.</p>
+            </div>
+            <div class="submit-field">
               <label for="general-suggestions">Notes (optional)</label>
               <textarea id="general-suggestions" class="general-note" placeholder="Timing, priorities, questions…"></textarea>
             </div>
             <div class="submit-actions">
               <button class="btn btn-primary" id="submit-selections" disabled>Submit selections</button>
-              <button class="btn btn-secondary" id="download-csv" disabled>Download CSV</button>
             </div>
             <p class="submit-note">Confirmation email + QuickBooks deposit link. Full invoice follows.</p>
-            <div class="pavi-submit-nudge">
-              <img id="pavi-submit-img" src="assets/pavi-icon.png" alt="">
-              <p>All set? Submit when you're happy with the plan — I'll send your confirmation and deposit link.</p>
-            </div>
           </div>
         </div>
       </div>
 
+      <div class="invoice-summary-bar">
       <div style="max-width:1400px;margin:0 auto;padding:0 2rem">
 
       <details class="project-toc" id="project-toc" open>
@@ -608,10 +640,9 @@
           <p class="table-filter-status" id="table-filter-status"></p>
           <div class="toc-header" aria-hidden="true">
             <button type="button" class="toc-sort-btn active" data-sort="priority" id="toc-sort-priority">Priority <span class="sort-arrow" id="sort-arrow-priority">▲</span></button>
-            <span>ID</span>
             <span class="toc-header-title">Project</span>
-            <button type="button" class="toc-sort-btn" data-sort="fee" id="toc-sort-fee">Fee <span class="sort-arrow" id="sort-arrow-fee">↕</span></button>
-            <span class="toc-header-value">Value</span>
+            <span class="toc-header-blurb">Value add</span>
+            <span class="toc-header-value">Icons</span>
           </div>
           <ul class="toc-list" id="toc-list" role="list"></ul>
         </div>
@@ -619,11 +650,16 @@
 
       <div class="value-icon-key" id="value-icon-key"></div>
       </div>
+      </div>
     </section>
 
     <section class="projects-section">
       <div class="projects-section-full">
         <div class="project-list-controls">
+          <div class="payment-key" aria-label="Payment type key">
+            <span class="badge badge-payment-perf">Perf pay</span> KPI-based
+            <span class="badge badge-payment-flat">Flat fee</span> Fixed upfront
+          </div>
           <label class="filter-check">
             <input type="checkbox" id="expand-all-projects">
             Show all project details open

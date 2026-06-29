@@ -1,6 +1,6 @@
 /**
- * AUTO-GENERATED — do not edit. Source: content/*.md
- * Rebuild: npm run build  (or push → GitHub Action runs build before deploy)
+ * AUTO-GENERATED — do not edit. Source: content/*.md (titles/priority from INDEX.md when present)
+ * Rebuild: npm run build
  */
 window.PROJECT_DATA = {
   "paviIcon": "assets/pavi-icon.png",
@@ -116,7 +116,7 @@ window.PROJECT_DATA = {
         "888-7888",
         "infrastructure"
       ],
-      "title": "Phone, VoIP, and Call Extension Setup With Team Training",
+      "title": "Hubspot Phone/ VoIP Setup",
       "description": "Transfer phone numbers into HubSpot to get started with phone menus, call tracking, call logging, and stronger overall metrics.",
       "valueAdded": [
         "Verified call extensions so paid clicks can be tracked with more accuracy",
@@ -159,7 +159,7 @@ window.PROJECT_DATA = {
         "mountain",
         "fix"
       ],
-      "title": "Google Search Account Fix",
+      "title": "Digital Ad Enhancements",
       "description": "Your May 2026 account audit showed paid search budget flowing to the wrong places: <a href=\"https://support.google.com/google-ads/answer/1703646\" target=\"_blank\" rel=\"noopener\">call-only campaigns</a> still collecting form leads, Mountain DUI clicks at about $76 each, and domestic violence calls near $526 each — while Military Search delivers calls at roughly $67. This fix realigns the account so spend follows proven performance.",
       "valueAdded": [
         "Stops spend on $526/call and $76/click lanes that bleed budget",
@@ -235,7 +235,7 @@ window.PROJECT_DATA = {
         "car",
         "racing"
       ],
-      "title": "NTGUILT Display Campaign Launch",
+      "title": "NTGUILT Display & Search Campaign Launch",
       "description": "Most people do not search for a criminal defense lawyer until they need one. A <a href=\"https://skillshop.exceedlms.com/student/path/508763-display-ads\" target=\"_blank\" rel=\"noopener\">marketing funnel</a> starts with awareness — and <a href=\"https://support.google.com/google-ads/answer/2404190\" target=\"_blank\" rel=\"noopener\">Google Display</a> puts NTGUILT car and racing creative in front of drivers before they search. This project launches that upper-funnel layer with proper <a href=\"https://support.google.com/analytics/answer/10917952\" target=\"_blank\" rel=\"noopener\">UTM tracking</a> and conversion measurement on NTGUILT.com.",
       "valueAdded": [
         "Builds brand recognition before high-intent Search",
@@ -306,7 +306,7 @@ window.PROJECT_DATA = {
         "warning",
         "past client"
       ],
-      "title": "Holiday Safety Email Campaign — July 4 Window",
+      "title": "Summer Safety Email Campaign",
       "description": "DUI and traffic ticket volume spikes around July 4 — exactly when past clients and their networks are most likely to need you again. <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">Seasonal email nurture</a> reaches people who already trust Pav Law: a pre-holiday safety message, then a post-holiday guide on what to do if pulled over, ticketed, or charged.",
       "valueAdded": [
         "Reaches past clients when DUI and ticket volume spikes around July 4",
@@ -356,7 +356,7 @@ window.PROJECT_DATA = {
         "pipeline",
         "crm"
       ],
-      "title": "HubSpot Pipeline Sprint — Workflows, Romina Booking, and Referral Import",
+      "title": "HubSpot Pipeline Sprint",
       "description": "A web lead only becomes revenue if intake moves fast. Research on <a href=\"https://blog.hubspot.com/sales/inbound-sales\" target=\"_blank\" rel=\"noopener\">speed to lead</a> shows response within five minutes dramatically improves qualification rates — yet Pav Law's HubSpot workflows, Romina booking link, and referral import path are not fully connected. This sprint proves the full path: form submit → task → bookable consult.",
       "valueAdded": [
         "Proves web lead → HubSpot task → Romina booking without handoffs",
@@ -467,7 +467,7 @@ window.PROJECT_DATA = {
         "print",
         "postcard"
       ],
-      "title": "Insurance Envelope Mailer to Previous Clients",
+      "title": "Insurance Envelope Mailer - Client Re-engagement",
       "description": "Email alone does not reach everyone on your past-client list — and a physical reminder keeps Pav Law top of mind when a ticket or charge happens months later. Print materials are already purchased; this project covers list prep, merge, vendor coordination, and send. <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">Direct mail to past clients</a> complements digital nurture within <a href=\"https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/\" target=\"_blank\" rel=\"noopener\">ABA advertising guidelines</a>.",
       "valueAdded": [
         "Print materials already purchased — list prep and send only",
@@ -523,7 +523,7 @@ window.PROJECT_DATA = {
         "utm",
         "conversion"
       ],
-      "title": "Lead Source Dashboard and Reporting Build",
+      "title": "Lead & KPI Dashboard",
       "description": "You cannot optimize what you cannot see. Partial <a href=\"https://support.google.com/analytics/answer/10917952\" target=\"_blank\" rel=\"noopener\">UTM tracking</a> and conversion flags exist, but there is no client-facing dashboard tying calls, forms, and ad spend together. <a href=\"https://knowledge.hubspot.com/reports/understand-attribution-reporting\" target=\"_blank\" rel=\"noopener\">Marketing attribution</a> requires one reliable view of which channels produce consults.",
       "valueAdded": [
         "One dashboard for calls, forms, and spend by channel",
@@ -588,7 +588,7 @@ window.PROJECT_DATA = {
         "backlink",
         "local"
       ],
-      "title": "SEO and Local Search Foundation",
+      "title": "Website Content Overhaul - SEO, linking, referrals etc.",
       "description": "Pav Law's organic search averaged position 45–58 in early 2025 — meaning most searchers never see you without paid ads. <a href=\"https://developers.google.com/search/docs/appearance/structured-data/local-business\" target=\"_blank\" rel=\"noopener\">Local business schema</a>, consistent <a href=\"https://moz.com/learn/seo/local-business-listings\" target=\"_blank\" rel=\"noopener\">NAP data</a>, and attorney attribution build the <a href=\"https://www.clio.com/blog/law-firm-seo/\" target=\"_blank\" rel=\"noopener\">local SEO</a> foundation that earns free visibility over time.",
       "valueAdded": [
         "Organic consults compound — less reliance on paid ads over time",
@@ -717,7 +717,7 @@ window.PROJECT_DATA = {
         "reuse",
         "ad strength"
       ],
-      "title": "Repurpose NTGUILT Event Creative for Paid Ads and Display",
+      "title": "NTGUILT Social Ad Campaign(s)",
       "description": "NTGUILT event creative is already paid for — but sitting unused in paid channels means that investment generates no calls. <a href=\"https://support.google.com/google-ads/answer/7684791\" target=\"_blank\" rel=\"noopener\">Ad strength</a> and fresh <a href=\"https://support.google.com/google-ads/answer/10724897\" target=\"_blank\" rel=\"noopener\">responsive search ads</a> directly affect click-through rate; fatigued creative quietly raises cost per click.",
       "valueAdded": [
         "Puts sunk NTGUILT event creative to work in paid channels",
@@ -890,7 +890,7 @@ window.PROJECT_DATA = {
         "meta",
         "internal links"
       ],
-      "title": "Blog Page Updates and Content SEO",
+      "title": "Blog Revamp",
       "description": "People search specific questions before they call a lawyer — \"what happens after a DUI stop,\" military traffic rules, and similar long-tail queries. Existing blog posts can rank for those searches if titles, meta descriptions, and <a href=\"https://moz.com/learn/seo/internal-link\" target=\"_blank\" rel=\"noopener\">internal links</a> point readers to practice pages. This is the <a href=\"https://www.clio.com/blog/law-firm-seo/\" target=\"_blank\" rel=\"noopener\">content SEO</a> layer on top of technical site work.",
       "valueAdded": [
         "Long-tail questions become organic consult paths",
@@ -963,7 +963,7 @@ window.PROJECT_DATA = {
         "america",
         "referral"
       ],
-      "title": "HubSpot Marketing Contacts Upload and List Cleanup",
+      "title": "HubSpot Marketing Contacts Upload",
       "description": "Holiday emails, referral sends, and mailers cannot run until contacts live in HubSpot as clean, segmented <a href=\"https://knowledge.hubspot.com/crm-setup/import-objects\" target=\"_blank\" rel=\"noopener\">marketing contacts</a>. MyCase exports, America lists, and spreadsheets need field mapping, deduplication, and lifecycle tags before any warm-channel campaign can target the right people.",
       "valueAdded": [
         "Unlocks holiday email, referral sends, and mailers",
@@ -1034,7 +1034,7 @@ window.PROJECT_DATA = {
         "calendar",
         "publish"
       ],
-      "title": "HubSpot Social Media Marketing and Team Tool Training",
+      "title": "HubSpot Social Media Marketing",
       "description": "Social media is a free touchpoint between paid campaigns — but only if posting is consistent, on-brand, and tracked. HubSpot Marketing connects Facebook, Instagram, and LinkedIn so Pav Law can publish firm-safe content (safety tips, NTGUILT creative, consult CTAs) with approval before go-live, following <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">law firm social media</a> best practices and <a href=\"https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/\" target=\"_blank\" rel=\"noopener\">ABA advertising rules</a>.",
       "valueAdded": [
         "Organic social between paid touches — no extra ad spend per post",
@@ -1156,7 +1156,7 @@ window.PROJECT_DATA = {
         "dial",
         "script"
       ],
-      "title": "Gabriel Outbound Call Pack",
+      "title": "Gabriel Outbound Sales Calling Campaign",
       "description": "Not every consult will come from Google Ads. <a href=\"https://blog.hubspot.com/sales/inbound-sales\" target=\"_blank\" rel=\"noopener\">Outbound calling</a> to a targeted list — with a clear script and CRM logging — lets Gabriel add phone conversations without increasing media spend.",
       "valueAdded": [
         "Adds phone conversations without increasing ad spend",

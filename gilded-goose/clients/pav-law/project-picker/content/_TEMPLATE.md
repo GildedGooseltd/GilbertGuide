@@ -12,7 +12,7 @@
 | **Status**        | available                                                  |
 | **Keywords**      | keyword1, keyword2                                         |
 
-Optional rows (delete if unused): **Parent**, **Enabler**, **Monthly only**, **Ongoing fee**, **Per campaign fee**. Omit **Priority** for retainer / monthly-only projects.
+Optional rows (delete if unused): **Parent**, **Enabler**, **Monthly only**, **Payment type** (`performance` or `flat`), **Ongoing fee**, **Per campaign fee**. Omit **Priority** for retainer / monthly-only projects.
 
 ---
 
