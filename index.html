@@ -60,7 +60,13 @@
     .card-body { flex: 1; min-width: 0; }
     .card-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: var(--space-sm); }
     .card-title { font-weight: 800; font-size: 1.34rem; line-height: 1.45; color: #fff; flex: 1; min-width: 0; }
-    .card-corner { display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; max-width: 55%; }
+    .card-price {
+      font-size: 1.12rem; font-weight: 800; color: var(--green);
+      white-space: nowrap; flex-shrink: 0; text-align: right; line-height: 1.35;
+      padding: 0.2rem 0.55rem; background: var(--green-dim); border-radius: 6px;
+      border: 1px solid var(--peacock-teal);
+    }
+    .card-meta-row { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; margin-bottom: var(--space-sm); }
     .verified-data-badge {
       display: inline-flex; align-items: center; gap: 0.3rem;
       font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
@@ -86,13 +92,18 @@
     .account-data-footnote { margin: 0.85rem 0 0; padding-top: 0.85rem; border-top: 1px solid var(--border); font-size: 1.02rem; color: #99f6e4; line-height: 1.7; }
     .account-data-footnote .metric-source { color: var(--secondary); font-size: 0.92rem; }
     .value-added-box {
-      font-size: 1.12rem; padding: var(--space-md); margin-bottom: var(--space-md);
+      font-size: 1.05rem; padding: var(--space-md); margin-bottom: var(--space-md);
       background: rgba(107, 76, 230, 0.12); border-radius: var(--radius);
       border-left: 4px solid var(--peacock-violet); color: #e2e8f0; line-height: 1.75;
     }
     .value-added-title { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-violet); margin: 0 0 0.65rem; font-weight: 800; }
-    .value-added-list { list-style: none; padding: 0; margin: 0; }
-    .value-added-list li { padding: 0.35rem 0; color: #e2e8f0; line-height: 1.7; }
+    .value-why { margin: 0 0 0.85rem; font-size: 1.02rem; color: #f1f5f9; line-height: 1.7; }
+    .value-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1.25rem; }
+    @media (max-width: 700px) { .value-sections { grid-template-columns: 1fr; } }
+    .value-section h5 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--peacock-teal); margin: 0 0 0.35rem; font-weight: 700; }
+    .value-section ul { list-style: none; padding: 0; margin: 0; font-size: 0.92rem; }
+    .value-section li { padding: 0.2rem 0; color: #cbd5e1; line-height: 1.55; }
+    .value-section li::before { content: "→ "; color: var(--peacock-violet); }
     .learnings-intro { font-size: 1.05rem; color: var(--secondary); line-height: 1.75; margin-bottom: var(--space-md); }
     .fee-note { font-size: 0.95rem; color: var(--secondary); margin-top: 0.35rem; line-height: 1.6; font-style: italic; }
     .progress-block { margin-bottom: var(--space-md); }
@@ -163,45 +174,85 @@
     .project-note, .general-note { min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
     .goal-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
     .goal-actions .btn { width: auto; margin: 0; }
-    .filter-bar { background: var(--surface); border-bottom: 2px solid var(--border); padding: var(--space-lg) 2rem; max-width: 1400px; margin: 0 auto; }
-    .filter-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end; margin-top: 1rem; }
-    @media (max-width: 768px) { .filter-grid { grid-template-columns: 1fr; } }
+    .finder-panel {
+      background: linear-gradient(165deg, #0c1835 0%, #121a32 45%, #0a1428 100%);
+      border-bottom: 3px solid var(--peacock-teal);
+      padding: var(--space-lg) 2rem var(--space-xl);
+      max-width: 1400px; margin: 0 auto;
+    }
+    .finder-panel h2 { font-size: 1.15rem; color: #fff; margin: 0 0 0.35rem; font-weight: 800; }
+    .finder-panel-intro { font-size: 0.92rem; color: #a8b8d8; margin-bottom: var(--space-md); line-height: 1.6; }
+    .finder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: start; }
+    @media (max-width: 900px) { .finder-grid { grid-template-columns: 1fr; } }
+    .finder-col { display: flex; flex-direction: column; gap: var(--space-md); }
+    .finder-col-actions { background: rgba(0, 168, 150, 0.08); border: 2px solid rgba(0, 212, 196, 0.35); border-radius: var(--radius); padding: var(--space-md); }
     .filter-field label { display: block; font-size: 0.82rem; color: #fff; font-weight: 600; margin-bottom: 0.3rem; }
+    .filter-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .filter-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+    @media (max-width: 600px) { .filter-row-2, .filter-row-3 { grid-template-columns: 1fr; } }
     .filter-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
-    .filter-actions .btn { width: auto; margin: 0; padding: 0.55rem 1rem; font-size: 0.85rem; }
-    .filter-status { margin-top: 0.85rem; padding: 0.65rem 0.85rem; background: var(--surface2); border-radius: 6px; font-size: 0.9rem; color: var(--secondary); border: 2px solid var(--border); }
+    .filter-actions .btn { width: auto; margin: 0; padding: 0.55rem 1rem; font-size: 0.85rem; flex: 1; min-width: 8rem; }
+    .filter-status { padding: 0.65rem 0.85rem; background: rgba(4, 8, 16, 0.45); border-radius: 6px; font-size: 0.88rem; color: var(--secondary); border: 2px solid var(--border); }
     .filter-status.ok { border-left: 4px solid var(--green); }
     .filter-status.bad { border-left: 4px solid #f87171; }
     .filter-status strong { color: #fff; }
-    .filter-status code { color: var(--green); }
-    .filter-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; color: var(--secondary); margin-top: 0.5rem; }
-    .filter-check input { accent-color: var(--peacock-teal); }
-    .priority-table-wrap {
-      max-width: 1400px; margin: 0 auto; padding: var(--space-lg) 2rem 0;
+    .recommendation-box {
+      padding: var(--space-md); background: rgba(107, 76, 230, 0.14); border-radius: var(--radius);
+      border: 2px solid rgba(107, 76, 230, 0.45); font-size: 0.92rem; color: #dce4f8; line-height: 1.65;
     }
-    .priority-table-wrap h2 { font-size: 1.05rem; color: #fff; margin-bottom: 0.35rem; }
-    .priority-table-intro { font-size: 0.95rem; color: var(--secondary); margin-bottom: var(--space-md); line-height: 1.65; }
-    .priority-table-scroll { overflow-x: auto; border: 2px solid var(--border); border-radius: var(--radius); background: var(--surface); }
-    .priority-table { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
-    .priority-table th, .priority-table td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
-    .priority-table th { background: var(--surface2); color: #fff; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; }
+    .recommendation-box h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: #c4b5fd; margin: 0 0 0.5rem; font-weight: 800; }
+    .recommendation-box p { margin: 0 0 0.65rem; }
+    .recommendation-box ul { margin: 0; padding-left: 1.1rem; }
+    .recommendation-box li { margin-bottom: 0.35rem; }
+    .recommendation-box.empty { color: var(--secondary); font-style: italic; border-color: var(--border); background: rgba(4, 8, 16, 0.35); }
+    .filter-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; color: var(--secondary); }
+    .filter-check input { accent-color: var(--peacock-teal); }
+    .value-icon-key {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: var(--space-md) 0;
+      padding: 0.65rem 0.85rem; background: rgba(4, 8, 16, 0.35); border-radius: var(--radius);
+      border: 1px solid var(--border); font-size: 0.78rem; color: var(--secondary);
+    }
+    .value-icon-key-title { width: 100%; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-teal); font-weight: 700; margin-bottom: 0.15rem; }
+    .key-item { display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
+    .value-icons { display: inline-flex; gap: 0.2rem; align-items: center; flex-wrap: wrap; }
+    .value-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.65rem; height: 1.65rem; border-radius: 6px; font-size: 0.95rem;
+      background: rgba(61, 122, 232, 0.2); border: 1px solid rgba(61, 122, 232, 0.45);
+      cursor: help; line-height: 1;
+    }
+    .value-icon.icon-foundation { background: rgba(154, 63, 212, 0.22); border-color: var(--peacock-purple); }
+    .value-icon.icon-leads { background: rgba(0, 212, 196, 0.15); border-color: var(--peacock-teal); }
+    .value-icon.icon-crm { background: rgba(107, 76, 230, 0.22); border-color: var(--peacock-violet); }
+    .value-icon.icon-seo { background: rgba(61, 122, 232, 0.2); border-color: var(--peacock-blue); }
+    .value-icon.icon-trust { background: rgba(255, 176, 32, 0.15); border-color: #ffb020; }
+    .value-icon.icon-efficiency { background: rgba(134, 239, 172, 0.12); border-color: #86efac; }
+    .card-corner-icons { display: flex; gap: 0.25rem; flex-shrink: 0; }
+    .priority-table-wrap { margin-top: var(--space-md); }
+    .priority-table-intro { font-size: 0.9rem; color: #a8b8d8; margin-bottom: var(--space-sm); line-height: 1.55; }
+    .priority-table-scroll { overflow-x: auto; border: 2px solid rgba(0, 212, 196, 0.25); border-radius: var(--radius); background: rgba(4, 8, 16, 0.5); }
+    .priority-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+    .priority-table th, .priority-table td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .priority-table th { background: rgba(18, 26, 46, 0.95); color: #fff; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; }
     .priority-table tr:last-child td { border-bottom: none; }
     .priority-table tr:hover td { background: rgba(61, 122, 232, 0.08); }
     .priority-table tr.row-package td { border-left: 3px solid var(--peacock-teal); }
-    .pkg-dot { color: var(--green); margin-left: 0.25rem; font-size: 0.65rem; }
     .card.package-included { border-left: 4px solid var(--peacock-teal); }
-    .priority-table .col-p { min-width: 4.5rem; color: var(--green); font-weight: 800; vertical-align: top; }
-    .priority-table .col-p .table-required { display: block; margin-top: 0.35rem; font-size: 0.62rem; font-weight: 700; white-space: normal; line-height: 1.2; }
+    .priority-table .col-priority { min-width: 4.5rem; color: var(--green); font-weight: 800; }
+    .priority-table .col-priority .table-required { display: block; margin-top: 0.35rem; font-size: 0.62rem; font-weight: 700; white-space: normal; line-height: 1.2; }
     .table-project-link { color: #fff; font-weight: 700; text-decoration: none; border-bottom: 1px solid rgba(61, 122, 232, 0.45); }
     .table-project-link:hover { color: var(--peacock-blue); border-bottom-color: var(--peacock-blue); }
     .priority-table .col-fee { white-space: nowrap; color: var(--green); font-weight: 600; }
-    .priority-table .col-type { color: var(--secondary); white-space: nowrap; }
-    .priority-table tr.row-selected td { background: rgba(107, 76, 230, 0.12); }
-    .table-filter-row {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: var(--space-md);
+    .priority-table .col-value { min-width: 5rem; }
+    .priority-table tr.row-selected td { background: rgba(107, 76, 230, 0.18); }
+    .priority-table tr.row-selected-first td { border-top: 2px solid var(--peacock-violet); }
+    .table-filter-status { font-size: 0.85rem; color: #a8b8d8; margin-bottom: var(--space-sm); }
+    .projects-section {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
     }
-    @media (max-width: 768px) { .table-filter-row { grid-template-columns: 1fr; } }
-    .table-filter-status { font-size: 0.85rem; color: var(--secondary); margin-bottom: var(--space-sm); }
+    .projects-section > .layout { max-width: 1400px; margin: 0 auto; }
+    .card.selected-first { border-top: 3px solid var(--peacock-violet); }
     .card.filtered-out { display: none; }
     .card.over-budget:not(.selected) { opacity: 0.35; pointer-events: none; }
     .card.recommended { box-shadow: 0 0 0 2px var(--peacock-teal); }
@@ -212,26 +263,174 @@
     .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--green); color: #040810; padding: 0.75rem 1.25rem; border-radius: var(--radius); font-size: 0.9rem; opacity: 0; transform: translateY(10px); transition: all 0.25s; z-index: 100; max-width: 320px; font-weight: 600; }
     .toast.show { opacity: 1; transform: translateY(0); }
     .toast.error { background: #f87171; color: #fff; }
-    .thank-you { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(4, 8, 16, 0.92); overflow-y: auto; padding: 2rem 1rem; }
+    .thank-you { display: none; position: fixed; inset: 0; z-index: 200; background: radial-gradient(ellipse at 50% 20%, rgba(107, 76, 230, 0.35) 0%, rgba(4, 8, 16, 0.96) 55%); overflow-y: auto; padding: 2rem 1rem; }
     .thank-you.show { display: flex; align-items: flex-start; justify-content: center; }
-    .thank-you-panel { background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius); max-width: 560px; width: 100%; padding: 1.75rem; margin: auto; }
-    .thank-you-panel h2 { font-size: 1.35rem; margin-bottom: 0.35rem; color: #fff; }
-    .thank-you-panel .sub { color: var(--secondary); font-size: 0.95rem; margin-bottom: 1.25rem; }
-    .thank-you-list { font-size: 0.92rem; color: var(--secondary); margin-bottom: 1rem; padding-left: 1.2rem; }
-    .confirm-note, .deposit-note { font-size: 0.95rem; color: var(--secondary); line-height: 1.65; margin-bottom: 0.75rem; }
-    .thank-you-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+    .thank-you-panel {
+      background: linear-gradient(165deg, #121a32 0%, #0a1020 100%);
+      border: 2px solid rgba(255, 16, 168, 0.45); border-radius: var(--radius);
+      max-width: 620px; width: 100%; padding: 0; margin: auto;
+      box-shadow: 0 0 48px rgba(255, 16, 168, 0.15), 0 0 80px rgba(0, 212, 196, 0.12);
+      overflow: hidden;
+    }
+    .thank-you-hero {
+      text-align: center; padding: 1.75rem 1.75rem 1.25rem;
+      background: var(--gradient-brand);
+      border-bottom: 3px solid #ff10a8;
+      position: relative;
+    }
+    .thank-you-hero::before {
+      content: "✦ ✦ ✦"; position: absolute; top: 0.65rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.75rem; color: rgba(255, 255, 255, 0.45); letter-spacing: 0.5rem;
+    }
+    .pavi-celebrate-wrap { position: relative; display: inline-block; margin: 0.5rem 0 0.75rem; }
+    .thank-you-pavi {
+      width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
+      border: 3px solid #ff10a8; box-shadow: 0 0 24px rgba(255, 16, 168, 0.5);
+      animation: pavi-bounce 1.2s ease-in-out infinite;
+    }
+    @keyframes pavi-bounce {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-8px) rotate(3deg); }
+    }
+    .pavi-speech-bubble {
+      position: absolute; left: calc(100% + 0.5rem); top: 0.25rem; min-width: 9rem;
+      background: #fff; color: #1a1030; font-size: 0.78rem; font-weight: 700;
+      padding: 0.45rem 0.65rem; border-radius: 12px; line-height: 1.35; text-align: left;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .pavi-speech-bubble::before {
+      content: ""; position: absolute; left: -6px; top: 18px;
+      border: 6px solid transparent; border-right-color: #fff;
+    }
+    @media (max-width: 520px) {
+      .pavi-speech-bubble { position: static; margin: 0.65rem auto 0; max-width: 14rem; }
+      .pavi-speech-bubble::before { display: none; }
+    }
+    .thank-you-headline { font-size: 1.55rem; font-weight: 800; color: #fff; margin: 0 0 0.35rem; }
+    .thank-you-sub { color: #d0f5f2; font-size: 0.95rem; margin: 0; line-height: 1.55; }
+    .thank-you-content { padding: 1.5rem 1.75rem 1.75rem; }
+    .thank-you-affirm {
+      padding: 1rem 1.1rem; margin-bottom: 1.1rem; border-radius: var(--radius);
+      background: rgba(0, 212, 196, 0.1); border: 2px solid rgba(0, 212, 196, 0.35);
+      font-size: 0.95rem; color: #e2e8f0; line-height: 1.65;
+    }
+    .thank-you-affirm strong { color: #99f6e4; display: block; margin-bottom: 0.35rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .thank-you-roi-box {
+      padding: 1rem 1.1rem; margin-bottom: 1.1rem; border-radius: var(--radius);
+      background: rgba(255, 16, 168, 0.08); border: 2px solid rgba(255, 16, 168, 0.35);
+    }
+    .thank-you-roi-box h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: #f0abfc; margin: 0 0 0.65rem; font-weight: 800; }
+    .thank-you-roi-item { margin-bottom: 0.65rem; font-size: 0.88rem; color: var(--secondary); line-height: 1.55; }
+    .thank-you-roi-item strong { color: #fff; display: block; font-size: 0.92rem; margin-bottom: 0.15rem; }
+    .thank-you-roi-summary { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,16,168,0.25); font-size: 0.92rem; color: #f0abfc; font-weight: 600; line-height: 1.55; }
+    .thank-you-selection { margin-bottom: 1rem; }
+    .thank-you-selection h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--peacock-teal); margin: 0 0 0.5rem; font-weight: 800; }
+    .thank-you-list { font-size: 0.92rem; color: var(--secondary); margin: 0; padding-left: 1.2rem; }
+    .thank-you-list li { margin-bottom: 0.35rem; }
+    .thank-you-deposit-box {
+      padding: 1.1rem; margin-bottom: 1rem; border-radius: var(--radius);
+      background: rgba(107, 76, 230, 0.15); border: 2px solid var(--peacock-violet); text-align: center;
+    }
+    .thank-you-deposit-box p { margin: 0 0 0.75rem; font-size: 0.92rem; color: #dce4f8; line-height: 1.6; }
+    .thank-you-deposit-box .deposit-amount { font-size: 1.35rem; font-weight: 800; color: var(--green); }
+    .thank-you-qb-link { display: block; font-size: 0.78rem; color: var(--peacock-blue); margin-top: 0.5rem; word-break: break-all; }
+    .confirm-note { font-size: 0.88rem; color: var(--secondary); line-height: 1.55; margin: 0; text-align: center; }
+    .thank-you-actions { display: flex; flex-direction: column; gap: 0.5rem; padding: 0 1.75rem 1.75rem; }
+    .thank-you-actions .btn-pay-celebrate { font-size: 1.05rem; padding: 0.85rem 1.25rem; }
     .thank-you-actions .btn { margin-bottom: 0; text-align: center; text-decoration: none; }
     .main-app.hidden { display: none; }
+    .invoice-summary-bar {
+      background: linear-gradient(90deg, rgba(107, 76, 230, 0.22) 0%, rgba(0, 168, 150, 0.12) 100%);
+      border-bottom: 2px solid var(--peacock-violet);
+      padding: var(--space-md) 2rem;
+    }
+    .invoice-summary-inner { max-width: 1400px; margin: 0 auto; }
+    .invoice-summary-bar h2 { font-size: 1rem; margin: 0 0 0.65rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
+    .invoice-summary-bar .total-box { margin: 0; background: rgba(4, 8, 16, 0.45); border-color: rgba(107, 76, 230, 0.4); }
+    .invoice-summary-bar .total-row.grand { color: #f0abfc; font-size: 1.2rem; }
+    .project-toc {
+      margin-top: var(--space-md);
+      border: 2px solid rgba(0, 212, 196, 0.3);
+      border-radius: var(--radius);
+      background: rgba(4, 8, 16, 0.45);
+      overflow: hidden;
+    }
+    .project-toc-summary {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 0.75rem 1rem; cursor: pointer; list-style: none;
+      font-weight: 700; color: #fff; user-select: none;
+      background: rgba(18, 26, 46, 0.8);
+    }
+    .project-toc-summary::-webkit-details-marker { display: none; }
+    .project-toc-summary::before {
+      content: "▸"; color: var(--peacock-teal); margin-right: 0.5rem; transition: transform 0.15s;
+    }
+    .project-toc[open] .project-toc-summary::before { transform: rotate(90deg); }
+    .project-toc-title { font-size: 0.95rem; }
+    .project-toc-hint { font-size: 0.78rem; font-weight: 500; color: var(--secondary); text-align: right; flex: 1; }
+    .project-toc-body { padding: 0.65rem 1rem 1rem; }
+    .toc-list { list-style: none; margin: 0; padding: 0; font-size: 0.88rem; }
+    .toc-header {
+      display: grid; grid-template-columns: 2.5rem 2.5rem 1fr auto auto;
+      gap: 0.5rem; align-items: center;
+      padding: 0.35rem 0.35rem 0.5rem; margin-bottom: 0.25rem;
+      border-bottom: 2px solid rgba(0, 212, 196, 0.25);
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--secondary);
+    }
+    .toc-sort-btn {
+      background: none; border: none; padding: 0.15rem 0;
+      font: inherit; color: inherit; cursor: pointer; text-align: center;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .toc-sort-btn:hover, .toc-sort-btn.active { color: var(--green); }
+    .toc-sort-btn .sort-arrow { font-size: 0.65rem; margin-left: 0.15rem; }
+    .toc-header-title, .toc-header-value { padding: 0 0.15rem; }
+    .toc-header-fee { text-align: right; }
+    .toc-item {
+      display: grid; grid-template-columns: 2.5rem 2.5rem 1fr auto auto;
+      gap: 0.5rem; align-items: center;
+      padding: 0.4rem 0.35rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .toc-item:last-child { border-bottom: none; }
+    .toc-item:hover { background: rgba(61, 122, 232, 0.1); border-radius: 4px; }
+    .toc-item.row-selected { background: rgba(107, 76, 230, 0.15); }
+    .toc-item.row-package { border-left: 3px solid var(--peacock-teal); padding-left: 0.5rem; }
+    .toc-priority { font-weight: 800; color: var(--green); text-align: center; }
+    .toc-id { font-size: 0.75rem; color: var(--secondary); font-weight: 600; }
+    .toc-title { min-width: 0; }
+    .toc-title a { color: #fff; text-decoration: none; font-weight: 600; }
+    .toc-title a:hover { color: var(--peacock-blue); text-decoration: underline; }
+    .toc-fee { color: var(--green); font-weight: 600; white-space: nowrap; font-size: 0.82rem; }
+    .toc-value .value-icon { width: 1.4rem; height: 1.4rem; font-size: 0.8rem; }
+    .hot-star {
+      color: #ff10a8; font-size: 1rem; line-height: 1;
+      text-shadow: 0 0 10px rgba(255, 16, 168, 0.75);
+      margin-right: 0.15rem;
+    }
+    .hot-star-inline { font-size: 0.85rem; }
+    @media (max-width: 700px) {
+      .toc-item { grid-template-columns: 2rem 2rem 1fr auto; }
+      .toc-value { display: none; }
+    }
+    .sidebar-submit-only h2 { margin-bottom: 0.75rem; }
   </style>
 </head>
 <body>
   <div id="thank-you" class="thank-you" aria-hidden="true">
     <div class="thank-you-panel">
-      <h2>Submission received</h2>
-      <p class="sub">Confirmation emails go to you and Gilded Goose. Pay the standard deposit via QuickBooks; your full project invoice follows separately.</p>
-      <div id="thank-you-body"></div>
+      <div class="thank-you-hero">
+        <div class="pavi-celebrate-wrap">
+          <img class="thank-you-pavi" id="thank-you-pavi" src="assets/pavi-icon.png" alt="Pavi celebrating">
+          <div class="pavi-speech-bubble" id="pavi-speech">Great picks! I'll get the team on it.</div>
+        </div>
+        <h2 class="thank-you-headline">Excellent choices — you're on your way!</h2>
+        <p class="thank-you-sub" id="thank-you-sub">Your selections set Pav Law up for stronger leads, better intake, and marketing you can measure.</p>
+      </div>
+      <div class="thank-you-content">
+        <div id="thank-you-body"></div>
+      </div>
       <div class="thank-you-actions">
-        <a class="btn btn-primary" id="btn-pay-deposit" href="#" target="_blank" rel="noopener noreferrer" style="display:none">Pay deposit</a>
+        <a class="btn btn-primary btn-pay-celebrate" id="btn-pay-deposit" href="#" target="_blank" rel="noopener noreferrer" style="display:none">Pay deposit via QuickBooks</a>
         <button type="button" class="btn btn-secondary" id="btn-back-picker">Browse more projects</button>
       </div>
     </div>
@@ -248,79 +447,96 @@
       </div>
     </header>
 
-    <div class="filter-bar">
-      <div class="goal-field">
-        <label for="goal-input">What are you trying to accomplish?</label>
-        <textarea id="goal-input" placeholder="Example: Shift budget to Military Search at about $67 per call, stop $526 per call domestic violence waste, finish website and SEO, launch NTGUILT display before July 4"></textarea>
-        <div class="goal-actions">
-          <button type="button" class="btn btn-primary" id="match-goal">Find matching projects</button>
-          <button type="button" class="btn btn-secondary" id="clear-goal">Clear goal match</button>
+    <section class="invoice-summary-bar" aria-label="Invoice summary">
+      <div class="invoice-summary-inner">
+        <h2>Invoice summary</h2>
+        <div class="total-box" id="invoice-summary-top">
+          <div class="empty-state">Select projects below to see your consulting total.</div>
         </div>
       </div>
-      <div class="filter-grid">
-        <div class="filter-field">
-          <label for="filter-consulting">Consulting budget for project fees</label>
-          <input type="number" id="filter-consulting" min="0" step="100" placeholder="8000">
-        </div>
-        <div class="filter-field">
-          <label for="filter-media">Google Ads media budget</label>
-          <input type="number" id="filter-media" min="0" step="100" placeholder="6000">
-        </div>
-        <div class="filter-actions">
-          <button type="button" class="btn btn-primary" id="suggest-plan">Suggest plan</button>
-          <button type="button" class="btn btn-secondary" id="clear-filters">Clear budgets</button>
-        </div>
-      </div>
-      <label class="filter-check">
-        <input type="checkbox" id="filter-hide-nonmatching" checked>
-        Hide projects that do not fit your consulting budget
-      </label>
-      <div class="filter-status" id="filter-status">Enter budgets to filter projects.</div>
-    </div>
+    </section>
 
-    <div class="priority-table-wrap">
-      <h2>Recommended project order</h2>
-      <p class="priority-table-intro" id="package-intro"></p>
-      <div class="table-filter-row">
-        <div class="filter-field">
-          <label for="filter-max-fee">Max project fee</label>
-          <input type="number" id="filter-max-fee" min="0" step="100" placeholder="Any">
-        </div>
-        <div class="filter-field">
-          <label for="filter-priority-min">Priority from</label>
-          <input type="number" id="filter-priority-min" min="1" step="1" placeholder="1">
-        </div>
-        <div class="filter-field">
-          <label for="filter-priority-max">Priority to</label>
-          <input type="number" id="filter-priority-max" min="1" step="1" placeholder="21">
-        </div>
-      </div>
-      <p class="table-filter-status" id="table-filter-status"></p>
-      <div class="priority-table-scroll">
-        <table class="priority-table" id="priority-table">
-          <thead>
-            <tr>
-              <th>P</th>
-              <th>Project</th>
-              <th>Fee</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody id="priority-table-body"></tbody>
-        </table>
-      </div>
-    </div>
+    <section class="finder-panel" aria-label="Find and filter projects">
+      <h2>Find the right projects</h2>
+      <p class="finder-panel-intro">Set your goal and filters in the left column. Use the right column to suggest a plan and see why those projects fit.</p>
 
+      <div class="finder-grid">
+        <div class="finder-col finder-col-filters">
+          <div class="goal-field">
+            <label for="goal-input">What are you trying to accomplish?</label>
+            <textarea id="goal-input" placeholder="Example: Fix call tracking, launch NTGUILT display before July 4, improve SEO and referrals"></textarea>
+          </div>
+          <div class="filter-field">
+            <label for="filter-consulting">Consulting budget for project fees</label>
+            <input type="number" id="filter-consulting" min="0" step="100" placeholder="8000">
+          </div>
+          <div class="filter-row-3">
+            <div class="filter-field">
+              <label for="filter-max-fee">Max project fee</label>
+              <input type="number" id="filter-max-fee" min="0" step="100" placeholder="Any">
+            </div>
+            <div class="filter-field">
+              <label for="filter-priority-min">Priority from</label>
+              <input type="number" id="filter-priority-min" min="1" step="1" placeholder="1">
+            </div>
+            <div class="filter-field">
+              <label for="filter-priority-max">Priority to</label>
+              <input type="number" id="filter-priority-max" min="1" step="1" placeholder="21">
+            </div>
+          </div>
+          <label class="filter-check">
+            <input type="checkbox" id="filter-hide-nonmatching" checked>
+            Hide projects that do not fit your consulting budget
+          </label>
+          <div class="filter-status" id="filter-status">Enter a consulting budget or goal to filter projects.</div>
+        </div>
+
+        <div class="finder-col finder-col-actions">
+          <div class="filter-actions">
+            <button type="button" class="btn btn-primary" id="match-goal">Find matching projects</button>
+            <button type="button" class="btn btn-primary" id="suggest-plan">Suggest plan</button>
+          </div>
+          <div class="filter-actions">
+            <button type="button" class="btn btn-secondary" id="clear-goal">Clear goal</button>
+            <button type="button" class="btn btn-secondary" id="clear-filters">Clear filters</button>
+          </div>
+          <div class="recommendation-box empty" id="recommendation-box">
+            <h3>Why this combination</h3>
+            <p>Enter a goal or consulting budget, then click <strong>Find matching projects</strong> or <strong>Suggest plan</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="value-icon-key" id="value-icon-key"></div>
+
+      <details class="project-toc" id="project-toc" open>
+        <summary class="project-toc-summary">
+          <span class="project-toc-title">Recommended projects — table of contents</span>
+          <span class="project-toc-hint" id="toc-summary-hint"></span>
+        </summary>
+        <div class="project-toc-body">
+          <p class="priority-table-intro" id="package-intro"></p>
+          <p class="table-filter-status" id="table-filter-status"></p>
+          <div class="toc-header" aria-hidden="true">
+            <button type="button" class="toc-sort-btn active" data-sort="priority" id="toc-sort-priority">Priority <span class="sort-arrow" id="sort-arrow-priority">▲</span></button>
+            <span>ID</span>
+            <span class="toc-header-title">Project</span>
+            <button type="button" class="toc-sort-btn" data-sort="fee" id="toc-sort-fee">Fee <span class="sort-arrow" id="sort-arrow-fee">↕</span></button>
+            <span class="toc-header-value">Value</span>
+          </div>
+          <ul class="toc-list" id="toc-list" role="list"></ul>
+        </div>
+      </details>
+    </section>
+
+    <section class="projects-section">
     <div class="layout">
       <main>
         <div id="project-list"></div>
       </main>
 
-      <aside class="sidebar">
-        <h2>Your selection</h2>
-        <div class="total-box" id="totals">
-          <div class="empty-state">Select projects to see totals.</div>
-        </div>
+      <aside class="sidebar sidebar-submit-only">
+        <h2>Submit selection</h2>
 
         <div class="impact-section" id="selected-deliverables">
           <h3>Key deliverables in selection</h3>
@@ -350,6 +566,7 @@
         </p>
       </aside>
     </div>
+    </section>
   </div>
 
   <div class="toast" id="toast"></div>
