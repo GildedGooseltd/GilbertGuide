@@ -70,18 +70,49 @@ git push -u origin HEAD:main
 
 **Verify:** Browser → your repo on GitHub → you should see folder `gilded-goose/clients/pav-law/project-picker/` with `content/projects/B1.md` etc.
 
-### Step 4 — Add webhook secrets (required before submit works)
+### Step 4 — Add secrets (GitHub only — two saves, not one)
 
-See [BACKEND-SETUP.md](BACKEND-SETUP.md) **Part C3–C5** — paste Apps Script URL and QuickBooks URL into GitHub **Settings → Secrets and variables → Actions**.
+**Both secrets go in GitHub.** Secret 2 does **not** go in Apps Script or the Sheet.
+
+| Secret | Copy link from | Save in GitHub |
+|--------|----------------|----------------|
+| 1 — webhook | Apps Script Deploy (`/exec`) | `PAV_PICKER_WEBHOOK_URL` |
+| 2 — deposit | QuickBooks Payment links (`connect.intuit.com`) | `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL` |
+
+Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
+
+**Secret 1:** [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+
+| Field | Paste this |
+|-------|------------|
+| **Name** | `PAV_PICKER_WEBHOOK_URL` |
+| **Secret** | Apps Script `/exec` URL only (BACKEND-SETUP Part A16) |
+
+→ **Add secret**
+
+**Secret 2:** [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) again
+
+| Field | Paste this |
+|-------|------------|
+| **Name** | `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL` |
+| **Secret** | QuickBooks pay URL only (Part B6) — **not** an Apps Script URL |
+
+→ **Add secret**
+
+**Check:** [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) — both names appear.
+
+**Wrong value?** Remove secret → add again (GitHub cannot edit secrets).
+
+**Not this:** putting secret names or HTML buttons in the **Secret** box — URL only.
 
 ### Step 5 — Turn on Pages and deploy
 
-| Where | Do this |
-|--------|---------|
-| GitHub repo → **Settings** → **Pages** | Branch: **`gh-pages`** · folder **`/ (root)`** → **Save** |
-| **Actions** tab → **Deploy Pav Project Picker** | **Run workflow** → **Run workflow** |
-| **Actions** tab | Wait for green ✓ |
-| **Settings** → **Pages** | Copy **Your site is live at** — that is the public picker URL |
+| Link | Do this |
+|------|---------|
+| [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | Branch **`gh-pages`** / **`/ (root)`** → **Save** |
+| [Run Deploy Picky Pavi](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** |
+| [Actions](https://github.com/GildedGooseltd/PickyPavi/actions) | Wait for green ✓ |
+| [Live site](https://gildedgooseltd.github.io/PickyPavi/) | Picker loads when deploy finishes |
 
 ---
 

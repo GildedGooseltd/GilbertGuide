@@ -123,7 +123,7 @@ window.PROJECT_DATA = {
         "Fewer dropped calls and lost cases due to routing and response-time issues",
         "Intake and Romina training on day and night call routing once the carrier transfer completes"
       ],
-      "marketingEducation": "For law firms running call-heavy Search campaigns, call tracking must be in place before you increase budget. The ability to track and record calls also improves training and accountability. See [Google — call reporting in Google Ads](https://support.google.com/google-ads/answer/2454052) and [HubSpot — speed to lead](https://blog.HubSpot.com/sales/inbound-sales).",
+      "marketingEducation": "For law firms running call-heavy Search campaigns, call tracking must be in place before you increase budget. The ability to track and record calls also improves training and accountability. See [Google — call reporting in Google Ads](https://support.google.com/google-ads/answer/2454052) and [HubSpot — speed to lead](https://blog.hubspot.com/sales/inbound-sales).",
       "completedItems": [
         "Phone setup documentation in HubSpot/PHONE-SETUP.md",
         "Google Ads call extension strategy drafted"
@@ -134,7 +134,7 @@ window.PROJECT_DATA = {
         "Team training and routing documentation"
       ],
       "backedMetric": {
-        "label": "About 36 Military Search calls per month depend on a verified phone line. Reported volume is likely understated because call-only tracking misses some mobile and cross-device conversions — a common issue when phone setup is incomplete. Firms that respond within five minutes are far more likely to qualify a lead than those that wait hours, so routing, logging, and speed-to-lead must work before scaling spend ([HubSpot speed-to-lead research](https://blog.HubSpot.com/sales/inbound-sales); [Google call extensions](https://support.google.com/google-ads/answer/2454052)).",
+        "label": "About 36 Military Search calls per month depend on a verified phone line. Reported volume is likely understated because call-only tracking misses some mobile and cross-device conversions — a common issue when phone setup is incomplete. Firms that respond within five minutes are far more likely to qualify a lead than those that wait hours, so routing, logging, and speed-to-lead must work before scaling spend ([HubSpot speed-to-lead research](https://blog.hubspot.com/sales/inbound-sales); [Google call extensions](https://support.google.com/google-ads/answer/2454052)).",
         "source": "May 2026 Google Ads Audit"
       }
     },
@@ -357,7 +357,7 @@ window.PROJECT_DATA = {
         "crm"
       ],
       "title": "HubSpot Pipeline Sprint — Workflows, Romina Booking, and Referral Import",
-      "description": "A web lead only becomes revenue if intake moves fast. Research on <a href=\"https://blog.HubSpot.com/sales/inbound-sales\" target=\"_blank\" rel=\"noopener\">speed to lead</a> shows response within five minutes dramatically improves qualification rates — yet Pav Law's HubSpot workflows, Romina booking link, and referral import path are not fully connected. This sprint proves the full path: form submit → task → bookable consult.",
+      "description": "A web lead only becomes revenue if intake moves fast. Research on <a href=\"https://blog.hubspot.com/sales/inbound-sales\" target=\"_blank\" rel=\"noopener\">speed to lead</a> shows response within five minutes dramatically improves qualification rates — yet Pav Law's HubSpot workflows, Romina booking link, and referral import path are not fully connected. This sprint proves the full path: form submit → task → bookable consult.",
       "valueAdded": [
         "Proves web lead → HubSpot task → Romina booking without handoffs",
         "Faster follow-up recovers leads that would have gone cold",
@@ -524,7 +524,7 @@ window.PROJECT_DATA = {
         "conversion"
       ],
       "title": "Lead Source Dashboard and Reporting Build",
-      "description": "You cannot optimize what you cannot see. Partial <a href=\"https://support.google.com/analytics/answer/10917952\" target=\"_blank\" rel=\"noopener\">UTM tracking</a> and conversion flags exist, but there is no client-facing dashboard tying calls, forms, and ad spend together. <a href=\"https://knowledge.HubSpot.com/reports/understand-attribution-reporting\" target=\"_blank\" rel=\"noopener\">Marketing attribution</a> requires one reliable view of which channels produce consults.",
+      "description": "You cannot optimize what you cannot see. Partial <a href=\"https://support.google.com/analytics/answer/10917952\" target=\"_blank\" rel=\"noopener\">UTM tracking</a> and conversion flags exist, but there is no client-facing dashboard tying calls, forms, and ad spend together. <a href=\"https://knowledge.hubspot.com/reports/understand-attribution-reporting\" target=\"_blank\" rel=\"noopener\">Marketing attribution</a> requires one reliable view of which channels produce consults.",
       "valueAdded": [
         "One dashboard for calls, forms, and spend by channel",
         "Faster decisions on where the media budget should go",
@@ -657,7 +657,7 @@ window.PROJECT_DATA = {
         "email"
       ],
       "title": "Client Referral Program — Setup and Ongoing Maintenance",
-      "description": "<a href=\"https://blog.HubSpot.com/service/customer-referral-program\" target=\"_blank\" rel=\"noopener\">Referral marketing</a> consistently outperforms cold paid channels because trust is already established. Pav Law has past clients, friends-and-family contacts, and America list prospects — but no structured program to ask for referrals or make booking easy. This project builds the HubSpot foundation and keeps it running month to month.",
+      "description": "<a href=\"https://blog.hubspot.com/service/customer-referral-program\" target=\"_blank\" rel=\"noopener\">Referral marketing</a> consistently outperforms cold paid channels because trust is already established. Pav Law has past clients, friends-and-family contacts, and America list prospects — but no structured program to ask for referrals or make booking easy. This project builds the HubSpot foundation and keeps it running month to month.",
       "valueAdded": [
         "Highest-trust lead channel — one signed referral often covers project fee",
         "Setup plus monthly upkeep so the program stays active",
@@ -964,7 +964,7 @@ window.PROJECT_DATA = {
         "referral"
       ],
       "title": "HubSpot Marketing Contacts Upload and List Cleanup",
-      "description": "Holiday emails, referral sends, and mailers cannot run until contacts live in HubSpot as clean, segmented <a href=\"https://knowledge.HubSpot.com/crm-setup/import-objects\" target=\"_blank\" rel=\"noopener\">marketing contacts</a>. MyCase exports, America lists, and spreadsheets need field mapping, deduplication, and lifecycle tags before any warm-channel campaign can target the right people.",
+      "description": "Holiday emails, referral sends, and mailers cannot run until contacts live in HubSpot as clean, segmented <a href=\"https://knowledge.hubspot.com/crm-setup/import-objects\" target=\"_blank\" rel=\"noopener\">marketing contacts</a>. MyCase exports, America lists, and spreadsheets need field mapping, deduplication, and lifecycle tags before any warm-channel campaign can target the right people.",
       "valueAdded": [
         "Unlocks holiday email, referral sends, and mailers",
         "Deduped segments: past clients, referral, friends-and-family",
@@ -1104,7 +1104,7 @@ window.PROJECT_DATA = {
         "web"
       ],
       "title": "HubSpot Landing Page or Website Module",
-      "description": "Sending paid traffic to your homepage spreads attention across every practice area — which typically lowers <a href=\"https://blog.HubSpot.com/marketing/landing-page-best-practices\" target=\"_blank\" rel=\"noopener\">landing page conversion rate</a>. A single-offer page (referral signup, resources QR, or intake variant) gives each campaign one message, one form, and one path into HubSpot.",
+      "description": "Sending paid traffic to your homepage spreads attention across every practice area — which typically lowers <a href=\"https://blog.hubspot.com/marketing/landing-page-best-practices\" target=\"_blank\" rel=\"noopener\">landing page conversion rate</a>. A single-offer page (referral signup, resources QR, or intake variant) gives each campaign one message, one form, and one path into HubSpot.",
       "valueAdded": [
         "Single-offer pages typically convert better than a general homepage",
         "One form path tested into HubSpot for each campaign",
@@ -1157,7 +1157,7 @@ window.PROJECT_DATA = {
         "script"
       ],
       "title": "Gabriel Outbound Call Pack",
-      "description": "Not every consult will come from Google Ads. <a href=\"https://blog.HubSpot.com/sales/inbound-sales\" target=\"_blank\" rel=\"noopener\">Outbound calling</a> to a targeted list — with a clear script and CRM logging — lets Gabriel add phone conversations without increasing media spend.",
+      "description": "Not every consult will come from Google Ads. <a href=\"https://blog.hubspot.com/sales/inbound-sales\" target=\"_blank\" rel=\"noopener\">Outbound calling</a> to a targeted list — with a clear script and CRM logging — lets Gabriel add phone conversations without increasing media spend.",
       "valueAdded": [
         "Adds phone conversations without increasing ad spend",
         "Ready-to-dial list and script approved by Andrew",
@@ -1205,7 +1205,7 @@ window.PROJECT_DATA = {
         "trust"
       ],
       "title": "Case Win Log and Testimonials",
-      "description": "Generic ad copy underperforms because it does not prove results. [Social proof](https://blog.HubSpot.com/marketing/social-proof-examples) — outcome type and jurisdiction, never client names — builds trust within [ABA advertising rules](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/). This project creates an approved win log and rotating ad snippets.",
+      "description": "Generic ad copy underperforms because it does not prove results. [Social proof](https://blog.hubspot.com/marketing/social-proof-examples) — outcome type and jurisdiction, never client names — builds trust within [ABA advertising rules](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/). This project creates an approved win log and rotating ad snippets.",
       "valueAdded": [
         "Real outcomes become reusable ad copy the team approves once",
         "Privacy-safe snippets — outcome type and jurisdiction only",
@@ -1255,7 +1255,7 @@ window.PROJECT_DATA = {
         "plan"
       ],
       "title": "Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone",
-      "description": "Pav Law is running Google Ads, LSA, HubSpot, referral, outbound, website, and SEO work simultaneously — without a ranked plan, consulting spend scatters. A focused <a href=\"https://blog.HubSpot.com/marketing/marketing-audit\" target=\"_blank\" rel=\"noopener\">marketing audit</a> session ranks every channel by ROI, effort, and what depends on what else.",
+      "description": "Pav Law is running Google Ads, LSA, HubSpot, referral, outbound, website, and SEO work simultaneously — without a ranked plan, consulting spend scatters. A focused <a href=\"https://blog.hubspot.com/marketing/marketing-audit\" target=\"_blank\" rel=\"noopener\">marketing audit</a> session ranks every channel by ROI, effort, and what depends on what else.",
       "valueAdded": [
         "One agreed 30-day action list across all channels",
         "Defer/cut list so spend does not scatter",

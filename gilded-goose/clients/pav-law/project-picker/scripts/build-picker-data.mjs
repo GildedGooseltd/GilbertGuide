@@ -51,7 +51,9 @@ function build() {
     projects
   };
 
-  fs.writeFileSync(path.join(CONTENT, "INDEX.md"), buildIndex(projects, retainer), "utf8");
+  const indexPath = path.join(CONTENT, "INDEX.md");
+  const existingIndex = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : "";
+  fs.writeFileSync(indexPath, buildIndex(projects, retainer, existingIndex), "utf8");
 
   const header = `/**
  * AUTO-GENERATED — do not edit. Source: content/*.md
@@ -60,7 +62,16 @@ function build() {
 window.PROJECT_DATA = `;
 
   fs.writeFileSync(OUT, header + JSON.stringify(data, null, 2) + ";\n", "utf8");
-  console.log(`Built ${OUT} (${projects.length} projects) + INDEX.md`);
+  console.log(`Built ${OUT} (${projects.length} projects) + merged INDEX.md`);
+}
+
+function writeIndex() {
+  const retainer = loadRetainer();
+  const projects = loadProjects();
+  const indexPath = path.join(CONTENT, "INDEX.md");
+  const existing = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : "";
+  fs.writeFileSync(indexPath, buildIndex(projects, retainer, existing), "utf8");
+  console.log("Merged INDEX.md (your titles + Notes preserved)");
 }
 
 function watch() {
@@ -75,5 +86,6 @@ function watch() {
   console.log("Watching content/ …");
 }
 
-if (process.argv.includes("--watch")) watch();
+if (process.argv.includes("--index")) writeIndex();
+else if (process.argv.includes("--watch")) watch();
 else build();

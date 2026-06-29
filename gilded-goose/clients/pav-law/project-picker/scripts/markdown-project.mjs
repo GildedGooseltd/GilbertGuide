@@ -34,9 +34,13 @@ const BRAND_FIXES = [
 
 function applyProperCase(text) {
   if (!text) return text;
-  let out = text;
-  for (const [re, rep] of BRAND_FIXES) out = out.replace(re, rep);
-  return out;
+  const preserved = [];
+  let safe = text.replace(/(\[[^\]]*\]\([^)]+\)|https?:\/\/[^\s)'"]+|<a [^>]*>[\s\S]*?<\/a>)/gi, m => {
+    preserved.push(m);
+    return `\x00${preserved.length - 1}\x00`;
+  });
+  for (const [re, rep] of BRAND_FIXES) safe = safe.replace(re, rep);
+  return safe.replace(/\x00(\d+)\x00/g, (_, i) => preserved[Number(i)]);
 }
 
 function parseMetaTable(text) {
@@ -289,26 +293,83 @@ Include retainer: ${pkg.retainer !== false ? "yes" : "no"}
 `;
 }
 
-export function buildIndex(projects, retainer) {
+export function parseIndexMarkdown(text) {
+  const result = {
+    intro: "",
+    rowsById: {},
+    footer: "",
+    notes: ""
+  };
+  if (!text) return result;
+
+  const notesMatch = text.match(/\n## Notes[^\n]*\n([\s\S]*)$/i);
+  if (notesMatch) {
+    result.notes = notesMatch[0].trim();
+    text = text.slice(0, notesMatch.index);
+  }
+
+  const lines = text.split("\n");
+  const tableLines = lines.filter(l => /^\|/.test(l) && !/^\|[\s\-:|]+\|$/.test(l.replace(/\s/g, "")));
+  for (const line of tableLines) {
+    const cells = line.split("|").map(c => c.trim()).filter(Boolean);
+    if (cells.length < 4 || cells[0] === "P") continue;
+    const id = cells[1];
+    if (!id || id === "ID") continue;
+    result.rowsById[id] = {
+      p: cells[0],
+      title: cells[2],
+      file: cells[3]
+    };
+  }
+
+  const introEnd = text.indexOf("| P |");
+  if (introEnd > 0) result.intro = text.slice(0, introEnd).trim();
+
+  const footerStart = text.indexOf("**Retainer");
+  if (footerStart > 0) result.footer = text.slice(footerStart).trim();
+
+  return result;
+}
+
+export function buildIndex(projects, retainer, existingText) {
+  const overrides = parseIndexMarkdown(existingText || "");
   const all = [{ ...retainer, id: retainer.id || "RETAINER" }, ...projects];
   all.sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
 
-  let md = `# Project Index
+  let md = overrides.intro || `# Project Index
 
 Open a file below to edit. Sorted by priority (P). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
 
-| P | ID | Project | File |
-|---|-----|---------|------|
-`;
+Edit **Project** titles and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
+  md += `\n\n| P | ID | Project | File |\n|---|-----|---------|------|\n`;
+
+  const seen = new Set();
   for (const p of all) {
-    const file = p.id === "RETAINER" ? "retainer.md" : `projects/${p.id}.md`;
-    const pri = p.priority != null ? `P${p.priority}` : "—";
-    md += `| ${pri} | ${p.id} | ${p.title} | [${file}](${file}) |\n`;
+    const id = p.id;
+    seen.add(id);
+    const file = id === "RETAINER" ? "retainer.md" : `projects/${id}.md`;
+    const fileCell = `[${file}](${file})`;
+    const o = overrides.rowsById[id];
+    const pri = o?.p ?? (p.priority != null ? `P${p.priority}` : "—");
+    const title = o?.title || p.title;
+    md += `| ${pri} | ${id} | ${title} | ${fileCell} |\n`;
   }
 
-  md += `\n**Retainer / monthly-only:** omit **Priority** row (shows as —).\n`;
-  return md;
+  for (const [id, o] of Object.entries(overrides.rowsById)) {
+    if (seen.has(id)) continue;
+    md += `| ${o.p} | ${id} | ${o.title} | ${o.file} |\n`;
+  }
+
+  md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Priority** row (shows as —)."}\n`;
+
+  if (overrides.notes) {
+    md += `\n${overrides.notes}\n`;
+  } else {
+    md += `\n## Notes\n\n<!-- Your notes for agents — preserved on every build -->\n\n`;
+  }
+
+  return md.trim() + "\n";
 }
 
 /** Migrate all project markdown to B2 format in place. */

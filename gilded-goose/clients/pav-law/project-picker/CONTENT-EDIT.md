@@ -10,7 +10,7 @@
 
 | File | Purpose |
 |------|---------|
-| [INDEX.md](INDEX.md) | All projects by priority |
+| [INDEX.md](INDEX.md) | **You edit** — table titles + **## Notes** (build merges; your edits win) |
 | [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches B2) |
 | settings.md | Default package |
 | retainer.md | Retainer card |
@@ -44,3 +44,7 @@ npm run watch    # rebuild on save
 ```
 
 Push `content/` → GitHub → [GITHUB-PUSH.md](GITHUB-PUSH.md)
+
+**INDEX.md:** edit table **Project** names and **`## Notes`** at the bottom — build adds new projects but keeps your titles and notes.
+
+**Where to get GitHub secret URLs:** [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)

@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build-picker-data.mjs",
+    "index": "node scripts/build-picker-data.mjs --index",
     "watch": "node scripts/build-picker-data.mjs --watch",
     "migrate": "node scripts/migrate-to-b2-format.mjs"
   }

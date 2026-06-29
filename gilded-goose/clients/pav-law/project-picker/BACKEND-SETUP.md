@@ -6,6 +6,17 @@
 
 Complete **Part A → B → C → D** in order. Each paste step lists **Copy from** and **Paste into**.
 
+### Two secrets — two tools (both saved in GitHub only)
+
+| | Secret 1 | Secret 2 |
+|---|----------|----------|
+| **GitHub name** | `PAV_PICKER_WEBHOOK_URL` | `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL` |
+| **Get link from** | **Part A** — Google Apps Script Deploy | **Part B** — QuickBooks Payment links |
+| **Link type** | `script.google.com/.../exec` | `connect.intuit.com/pay/...` |
+| **Save in** | GitHub | GitHub — **not Google, not Apps Script** |
+
+Quick reference: **[WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)**
+
 ---
 
 ## Part A — Google Sheet + Apps Script webhook
@@ -50,15 +61,17 @@ You should see ~210 lines in Code.gs starting with `const NOTIFY_EMAIL = "suppor
 
 **Verify A:** Browser address bar → paste `WEBHOOK_URL` + `?ping=1` → Enter.
 
-Expected on screen: `{"ok":true,"service":"pav-law-project-picker"}`
+Expected on screen: `{"ok":true,"service":"picky-pavi"}`
 
 ---
 
 ## Part B — QuickBooks deposit link
 
+**This link is Secret 2.** You copy it from QuickBooks and paste it into **GitHub only** (Part C, Secret 2). Do not paste it into Apps Script, the Sheet, or Secret 1.
+
 | Step | Where | Do this |
 |------|--------|---------|
-| **B1** | QuickBooks Online | Left nav **Sales & get paid** → **Payment links** *(or search: Payment links)* |
+| **B1** | [QuickBooks Online](https://qbo.intuit.com) | Left nav **Sales & get paid** → **Payment links** *(or search: Payment links)* |
 | **B2** | Payment links page | **New payment link** |
 | **B3** | Link type | **Multi-use payment link** → **Next** |
 | **B4** | Amount field | `2500` |
@@ -66,6 +79,8 @@ Expected on screen: `{"ok":true,"service":"pav-law-project-picker"}`
 | **B6** | After **Create link** → payment URL shown | Copy URL → Notes as `QB_DEPOSIT_URL` |
 
 **Verify B:** Browser → paste `QB_DEPOSIT_URL` → checkout shows **$2,500**.
+
+**Save for picker:** Part C Secret 2 → [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) — name `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`, Secret = `QB_DEPOSIT_URL`.
 
 ---
 
@@ -82,24 +97,102 @@ Summary below assumes files are already on GitHub.
 | **C1** | Browser → [github.com/new](https://github.com/new) | Create repo (e.g. `1-cursor-helper`) — no README |
 | **C2** | **Mac Terminal** | Run each line:<br>`cd "/Users/gildedgoose/Documents/1 Cursor Helper"`<br>`git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git` *(skip if remote exists)*<br>`git push -u origin HEAD:main` |
 
-### C3–C5 — Repository secrets
+### C3–C5 — Repository secrets (two secrets, added one at a time)
 
-| Step | Copy from | Paste into |
-|------|-----------|------------|
-| **C3** | Notes `WEBHOOK_URL` (Part A16) | GitHub repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret** → Name: `PAV_PICKER_WEBHOOK_URL` → Value: paste URL → **Add secret** |
-| **C4** | Notes `QB_DEPOSIT_URL` (Part B6) | Same page → **New repository secret** → Name: `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL` → Value: paste URL → **Add secret** |
-| **C5** | *(optional)* | Secret `PAV_PICKER_DEPOSIT_AMOUNT` → Value `2500` |
+**Where secrets live:** GitHub repo settings only. Neither secret is saved in Google after Part A/B — you only *copy* links from Google (A) and QuickBooks (B), then paste into GitHub here.
+
+**You are on the right page** if the heading says **Actions secrets / New secret** (or you see **New repository secret**).
+
+**Do not** put both names in the **Secret** box. GitHub wants **one secret per save** — a **Name** (label) and a **Secret** (the actual URL only).
+
+**Cannot edit a secret later** — [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) → **Remove** → [New secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) again.
+
+---
+
+#### Secret 1 of 2 — webhook
+
+1. Open: [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+2. **Name** field — type exactly (copy/paste):
+
+   `PAV_PICKER_WEBHOOK_URL`
+
+3. **Secret** field — paste **only** your Apps Script URL from Part A16. Example shape:
+
+   `https://script.google.com/macros/s/AKfycb…/exec`
+
+   Not the words “Apps Script URL”. Not `PAV_PICKER_WEBHOOK_URL = …`. **Just the https:// link.**
+
+4. Click **Add secret**.
+
+---
+
+#### Secret 2 of 2 — QuickBooks deposit (NOT Apps Script)
+
+1. Open again: [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+2. **Name** field:
+
+   `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`
+
+3. **Secret** field — paste **only** your QuickBooks payment link from Part B6. Example shape:
+
+   `https://connect.intuit.com/pay/GildedGooseLimited/scs-v1-…`
+
+   **Wrong for this field:** any `script.google.com/.../exec` URL (that is Secret 1).
+
+4. Click **Add secret**.
+
+---
+
+#### Optional secret 3 — deposit amount
+
+Only if you need something other than $2,500:
+
+- [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+- **Name:** `PAV_PICKER_DEPOSIT_AMOUNT`
+- **Secret:** `2500`
+
+---
+
+#### Verify secrets saved
+
+Open: [Actions secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions)
+
+Under **Repository secrets** you should see at least:
+
+- `PAV_PICKER_WEBHOOK_URL`
+- `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`
+
+(GitHub never shows the URL values again — only the names.)
+
+**Wrong (what the screenshot showed):** both lines pasted into **Secret** — that creates one broken secret.
+
+**Wrong:** `https://script.google.com/macros/s/XXXX/exec` — `XXXX` is a placeholder. Use your real URL from Apps Script deploy ([where to get it](WHERE-TO-GET-LINKS.md)).
+
+**Right:** two trips to **New repository secret** — name in **Name**, URL in **Secret**, each time.
+
+Full link guide: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
+
+**No Settings tab?** You need **Admin** on [PickyPavi](https://github.com/GildedGooseltd/PickyPavi).
+
+**Terminal alternative:**
+
+```bash
+gh secret set PAV_PICKER_WEBHOOK_URL --repo GildedGooseltd/PickyPavi
+gh secret set PAV_PICKER_QUICKBOOKS_DEPOSIT_URL --repo GildedGooseltd/PickyPavi
+```
+
+Paste each URL when prompted — not the secret name.
 
 ### C6–C9 — Pages + first deploy
 
-| Step | Where | Do this |
-|------|--------|---------|
-| **C6** | GitHub repo → **Settings** → **Pages** | Source: **Deploy from a branch** → Branch: **`gh-pages`** / **`/ (root)`** → **Save** |
-| **C7** | **Actions** tab → **Deploy Pav Project Picker** | **Run workflow** → **Run workflow** |
-| **C8** | **Actions** tab | Wait for green ✓ on latest run |
-| **C9** | **Settings** → **Pages** | Copy **Your site is live at** URL → Notes as `PAGES_URL` |
+| Step | Link | Do this |
+|------|------|---------|
+| **C6** | [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | **Build and deployment** → Source: **Deploy from a branch** → Branch: **`gh-pages`** / **`/ (root)`** → **Save** |
+| **C7** | [Actions — Deploy Picky Pavi](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** → **Run workflow** |
+| **C8** | [Actions tab](https://github.com/GildedGooseltd/PickyPavi/actions) | Wait for green ✓ on latest run |
+| **C9** | [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | Copy **Your site is live at** → `https://gildedgooseltd.github.io/PickyPavi/` |
 
-**Verify C:** Browser → `PAGES_URL` (picker loads) → then `PAGES_URL/config.js` → must show your real webhook URL and QuickBooks URL (not `YOUR_DEPLOYMENT_ID`).
+**Verify C:** [Live picker](https://gildedgooseltd.github.io/PickyPavi/) loads → then [config.js](https://gildedgooseltd.github.io/PickyPavi/config.js) shows real URLs (not `YOUR_DEPLOYMENT_ID`).
 
 ---
 
@@ -133,6 +226,10 @@ Summary below assumes files are already on GitHub.
 | Symptom | Fix |
 |---------|-----|
 | CSV download, no thank-you | `PAGES_URL/config.js` has empty webhook — redo C3, C7 |
+| **Script function not found: doGet** | Deployed code is incomplete — copy **entire** `apps-script-webhook.gs` from Mac (includes `doGet` + `doPost`) → Save → **Deploy → Manage deployments → Edit → New version → Deploy** |
+| Apps Script URL in Secret 2 | Remove Secret 2 → re-add with QuickBooks `connect.intuit.com` link only |
+| “Nowhere to save deposit link” | GitHub Secret 2 only — not Google |
+| Two `/exec` URLs | Archive spare deployment; one URL in Secret 1 |
 | CORS / failed to fetch | A14 must be **Anyone**; URL must end `/exec` |
 | Sheet empty | Run `setup` from Apps Script bound to this spreadsheet (open via **Extensions → Apps Script** on the sheet, not a standalone script project) |
 | Code.gs wrong after edit | Always copy full file from Mac path in A5 — do not paste fragments |
