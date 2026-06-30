@@ -3,7 +3,10 @@
  * Rebuild: npm run build
  */
 window.PROJECT_DATA = {
-  "paviIcon": "assets/pavi-icon.png",
+  "guideIcon": "assets/gigi-icon.png",
+  "guideSeal": "assets/gigi-seal.jpg",
+  "guideLogo": "assets/gigi-logo.jpg",
+  "paviIcon": "assets/gigi-icon.png",
   "recommendedPackage": {
     "label": "Recommended package (P1 B2 · P6 B1 · P10 B4 · P11 A4 · P3 A2 + Retainer)",
     "retainer": true,
@@ -1111,6 +1114,86 @@ window.PROJECT_DATA = {
           "url": "https://www.clio.com/blog/law-firm-overhead/"
         }
       ]
+    },
+    {
+      "id": "B10",
+      "priority": 23,
+      "fee": 2400,
+      "timeline": "2–3 weeks",
+      "category": "Brand / Local Presence",
+      "campaignType": "Profile Audit & Refresh",
+      "status": "available",
+      "keywords": [
+        "social",
+        "facebook",
+        "instagram",
+        "yelp",
+        "linkedin",
+        "avvo",
+        "justia",
+        "findlaw",
+        "branding",
+        "profile",
+        "nap",
+        "directory",
+        "gbp",
+        "reviews",
+        "outdated",
+        "andrew",
+        "casey",
+        "attorney",
+        "personal",
+        "utm",
+        "attribution",
+        "ga4",
+        "traffic"
+      ],
+      "title": "Social & Directory Profile Refresh — Firm + Andrew + Casey",
+      "description": "Prospects check more than pav.law before they call — they also look up **Andrew Brown**, **Casey**, and **Pav Law** separately on Facebook, Instagram, Yelp, LinkedIn, Avvo, and other directories. Firm pages and personal attorney profiles often show stale bios, old logos, mismatched phone numbers, or practice areas that no longer match how the firm actually works. This project runs a full <a href=\"https://moz.com/learn/seo/local-business-listings\" target=\"_blank\" rel=\"noopener\">NAP and profile audit</a> at **three levels — Pav Law (company), Andrew Brown (personal), and Casey (personal)** — discovers listings you may have forgotten, then refreshes copy, photos, categories, and links so every touchpoint matches current branding and intake paths (call, text, HubSpot booking). Complements website SEO (B4) and HubSpot social posting (B8) — this is the **profile layer**, not the posting calendar.\n\n**Known outdated (client-reported):** Pav Law Facebook, Yelp, Instagram, plus several legal directory profiles (firm and attorney).\n\n**Scope — company + personal (Andrew + Casey):**\n\n| Level | What we audit and refresh |\n|-------|---------------------------|\n| **Pav Law (firm)** | Company pages and firm listings — social, GBP, Yelp, Bing/Apple, BBB, firm rows on Avvo/Justia/FindLaw/Martindale where applicable |\n| **Andrew Brown (personal)** | Individual attorney profiles — LinkedIn, Avvo, Justia, state bar directory, any personal Facebook/Instagram/X used for firm visibility; bios and headshots aligned to pav.law/team |\n| **Casey (personal)** | Same pass for Casey — personal LinkedIn, Avvo/Justia attorney pages, bar directory, GBP attorney verification support (per prior tracker note), social accounts tied to traffic-case lead role |\n\n**Also audit (research — common for CO criminal defense firms):**\n\n| Bucket | Platforms to find, claim, or refresh |\n|--------|--------------------------------------|\n| **Social (firm + personal)** | Facebook Page (firm), Instagram (firm), LinkedIn company showcase **and** Andrew + Casey personal profiles, X/Twitter, YouTube — confirm active vs. archive |\n| **Reviews & local** | Google Business Profile (firm + attorney attributions, photos, services, Q&A), Yelp (firm and any attorney-linked pages), Bing Places, Apple Business Connect, Nextdoor Business |\n| **Major legal directories** | Avvo, Justia, FindLaw, Martindale-Hubbell, LawInfo, Lawyers.com, HG.org, Nolo — **firm listing plus individual attorney profiles for Andrew and Casey** |\n| **Bar & trust** | Colorado Bar Association public directory (each attorney), El Paso County Bar (if listed), BBB profile |\n| **Aggregators & misc.** | Foursquare, MapQuest, YellowPages, Manta, Expertise.com, Thumbtack, LegalRank and similar auto-generated pages (firm or attorney name searches) |\n| **Bilingual / niche** | Abogado.com (Spanish-speaking intake), Super Lawyers / Best Lawyers (only if already listed or eligible — no paid vanity buys without approval) |\n\nDiscovery uses **firm name, Andrew Brown, Casey, address, and phone** searches — not just logins you already have — so orphaned or duplicate firm *and* personal listings surface before updates go live.\n\n**UTM routing — see which profiles send traffic:**\n\nEvery profile website link that allows a custom URL gets a unique tagged link to pav.law (contact page or homepage — one landing target, documented in handoff). That lets GA4 and HubSpot show which directory or social profile drove the visit instead of lumping everything under “direct” or “referral.”\n\n| UTM field | Convention (example) |\n|-----------|----------------------|\n| `utm_source` | Platform slug: `facebook`, `instagram`, `yelp`, `avvo`, `linkedin`, `gbp`, `justia`, `findlaw`, etc. |\n| `utm_medium` | `social`, `directory`, or `local` |\n| `utm_campaign` | `profile-2026` (stable campaign name for all profile links this round) |\n| `utm_content` | Owner + level: `firm`, `andrew`, `casey` — so firm Avvo vs. Andrew Avvo vs. Casey Avvo split cleanly |\n\nExample: `https://pav.law/contact?utm_source=avvo&utm_medium=directory&utm_campaign=profile-2026&utm_content=andrew`\n\nDeliverables include a **UTM link sheet** (profile name → tagged URL → where to paste it) and a quick GA4/HubSpot check that sessions land with the expected source/medium. Feeds the lead-source dashboard (A8) — without unique UTMs, profile traffic stays invisible next to paid ads.",
+      "valueAdded": [
+        "Single inventory of every live profile (**firm, Andrew, Casey**): URL, login owner, last updated, match/mismatch vs. current NAP and branding",
+        "Refreshed bios, practice areas, photos, and CTAs for company and both attorneys — aligned to current positioning and ABA advertising rules",
+        "**Unique UTM-tagged website links per profile** — link sheet + validation in GA4/HubSpot so you can rank which platforms drive the most site traffic",
+        "Duplicate or abandoned listings flagged for merge, claim, or suppress — fewer wrong-number or wrong-address paths",
+        "Handoff doc: who owns each login (firm vs. Andrew vs. Casey), tagged URLs, what changed, and a quarterly re-check checklist"
+      ],
+      "marketingEducation": "Consistent name-address-phone data across directories and social profiles still drives local search and AI citation trust — models and Google both lean on Avvo, Justia, FindLaw, Martindale, GBP, and bar directories when recommending lawyers. **UTM parameters** on each profile’s website link are the only practical way to attribute organic profile clicks in GA4 and HubSpot — otherwise Yelp, Avvo, and LinkedIn all look like generic referral traffic. See [Google — UTM parameters](https://support.google.com/analytics/answer/10917952), [HubSpot — track traffic with UTMs](https://knowledge.hubspot.com/settings/add-utm-parameters-to-a-page-url), [Moz — local business listings](https://moz.com/learn/seo/local-business-listings), [FindLaw — optimize directory profiles](https://www.findlaw.com/lawyer-marketing/blog/how-to-optimize-your-findlaw-directory-profile-top-3-data-driven-tactics/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
+      "learningsLinks": [
+        {
+          "label": "Google — UTM parameters",
+          "url": "https://support.google.com/analytics/answer/10917952"
+        },
+        {
+          "label": "HubSpot — track traffic with UTMs",
+          "url": "https://knowledge.hubspot.com/settings/add-utm-parameters-to-a-page-url"
+        },
+        {
+          "label": "Moz — local business listings",
+          "url": "https://moz.com/learn/seo/local-business-listings"
+        },
+        {
+          "label": "FindLaw — optimize directory profiles",
+          "url": "https://www.findlaw.com/lawyer-marketing/blog/how-to-optimize-your-findlaw-directory-profile-top-3-data-driven-tactics/"
+        },
+        {
+          "label": "ABA Model Rule 7.2 — advertising",
+          "url": "https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/"
+        }
+      ],
+      "completedItems": [
+        "(None — discovery starts on kickoff)"
+      ],
+      "inProgressItems": [
+        "LinkedIn company showcase exists but shows low follower count and 2024-era launch copy — needs refresh",
+        "Andrew + Casey personal LinkedIn and directory profiles — audit not started",
+        "GBP attorney verification support for Casey — outreach drafted in project tracker; fold into this scope",
+        "Partial UTM logic already drafted for Pav Law contact-page URLs (project tracker) — extend naming scheme to all profile links in this project",
+        "GBP social links previously cleaned (B8 completed) — verify firm and attorney photos still current"
+      ],
+      "backedMetric": {
+        "label": "LinkedIn showcase page and third-party aggregator (e.g. LegalRank) already surface firm NAP and positioning — worth aligning with pav.law and GBP before next paid campaign push",
+        "source": "Public web search + client report, Jun 2026"
+      }
     },
     {
       "id": "A8M",

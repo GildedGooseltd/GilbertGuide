@@ -51,7 +51,10 @@ function build() {
   }
 
   const data = {
-    paviIcon: settings.paviIcon,
+    guideIcon: settings.guideIcon,
+    guideSeal: settings.guideSeal,
+    guideLogo: settings.guideLogo,
+    paviIcon: settings.guideIcon,
     recommendedPackage: settings.recommendedPackage,
     retainer,
     projects

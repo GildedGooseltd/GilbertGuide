@@ -20,7 +20,9 @@ const META_KEYS = {
   "monthly only": "monthlyOnly",
   "ongoing fee": "ongoingFee",
   "per campaign fee": "perCampaignFee",
-  icon: "paviIcon"
+  icon: "guideIcon",
+  seal: "guideSeal",
+  logo: "guideLogo"
 };
 
 const BRAND_FIXES = [
@@ -318,7 +320,10 @@ export function parseSettingsMarkdown(text) {
   const ids = parseListSection(sections["default package projects"] || "");
   const retainerLine = text.match(/Include retainer:\s*(yes|no)/i);
   return {
-    paviIcon: meta.paviIcon || "assets/pavi-icon.png",
+    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-icon.png",
+    guideSeal: meta.guideSeal || "assets/gigi-seal.jpg",
+    guideLogo: meta.guideLogo || "assets/gigi-logo.jpg",
+    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-icon.png",
     recommendedPackage: {
       label,
       retainer: retainerLine ? /^yes/i.test(retainerLine[1]) : true,

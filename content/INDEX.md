@@ -29,6 +29,7 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
 | P20      | A9       | Case Win Log and Testimonials                                    | [projects/A9.md](projects/A9.md)   |
 | P21      | A10      | Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone | [projects/A10.md](projects/A10.md) |
 | P22      | B9       | Credit Card & Subscription Leak Spend Audit                      | [projects/B9.md](projects/B9.md)   |
+| P23      | B10      | Social & Directory Profile Refresh — Firm + Andrew + Casey         | [projects/B10.md](projects/B10.md) |
 | —        | RETAINER | Digital Ads Maintenance Retainer                                 | [retainer.md](retainer.md)         |
 | —        | A8M      | Lead Source Dashboard — Monthly Maintenance Retainer             | [projects/A8M.md](projects/A8M.md) |
 
