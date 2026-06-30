@@ -15,10 +15,6 @@
       --surface2: #121a2e;
       --surface-panel: #1e2a42;
       --surface-panel-nested: #273247;
-      --surface-plan: #364a6a;
-      --surface-plan-inner: #435774;
-      --input-text: #ffffff;
-      --input-placeholder: #aab4cc;
       --border: rgba(255, 255, 255, 0.12);
       --border-strong: rgba(255, 255, 255, 0.2);
       --text: #ececf2;
@@ -54,17 +50,7 @@
     .card:hover { border-color: var(--border-strong); }
     .card.selected { border-color: var(--border-strong); background: var(--surface2); }
     .card-header { display: flex; align-items: flex-start; gap: var(--space-md); }
-    .card-check-col {
-      display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
-      flex-shrink: 0; width: 22px; min-width: 22px;
-    }
-    .card-check-col .required-icon { margin: 0; width: 1.15rem; height: 1.15rem; }
-    .card-check-col .required-icon svg { width: 0.62rem; height: 0.62rem; }
-    .card-wip-under-chk {
-      font-size: 0.62rem; padding: 0.12rem 0.32rem; line-height: 1.1;
-      white-space: nowrap; letter-spacing: 0.02em;
-    }
-    .card input[type="checkbox"] { width: 22px; height: 22px; margin-top: 0; accent-color: var(--peacock-teal); cursor: pointer; flex-shrink: 0; }
+    .card input[type="checkbox"] { width: 22px; height: 22px; margin-top: 4px; accent-color: var(--peacock-teal); cursor: pointer; flex-shrink: 0; }
     .card-body { flex: 1; min-width: 0; }
     .card-top-row { position: relative; margin-bottom: var(--space-sm); padding-right: 9.5rem; min-height: 2.25rem; }
     .card-title { font-weight: 800; font-size: 1.22rem; line-height: 1.4; color: #fff; display: flex; align-items: flex-start; gap: 0.4rem; }
@@ -79,11 +65,12 @@
     .account-data-shield {
       display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
       width: 1.55rem; height: 1.85rem; cursor: help; line-height: 0;
-      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
+      filter: drop-shadow(0 0 5px rgba(0, 212, 196, 0.28));
     }
-    .pav-law-shield-img {
-      width: 100%; height: 100%; display: block; object-fit: contain;
-    }
+    .account-data-shield svg { width: 100%; height: 100%; display: block; }
+    .account-data-shield .shield-fill { fill: #f4f7ff; }
+    .account-data-shield .shield-cut { fill: var(--surface); }
+    .card.selected .account-data-shield .shield-cut { fill: var(--surface2); }
     .key-shield { width: 1.35rem; height: 1.6rem; filter: none; }
     .card-corner-meta { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
     .card-price {
@@ -131,15 +118,6 @@
     .payment-key { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; font-size: 0.78rem; color: #dce4f8; margin-right: auto; }
     .card-description { color: #dce4f8; font-size: 0.98rem; margin-bottom: var(--space-md); line-height: 1.65; clear: both; width: 100%; }
     .card-description p { margin: 0 0 0.65rem; }
-    .card-description a { color: #93c5fd; text-decoration: underline; text-underline-offset: 2px; }
-    .card-description a:hover { color: #fff; }
-    .card-objectives { list-style: none; padding: 0; margin: 0 0 0.65rem; }
-    .card-objectives li {
-      padding: 0.2rem 0 0.2rem 1.1rem; color: #e2e8f0; font-size: 0.94rem; line-height: 1.55;
-      position: relative; font-weight: 600;
-    }
-    .card-objectives li::before { content: "→"; position: absolute; left: 0; color: var(--peacock-violet); font-weight: 800; }
-    .card-principles { color: #b8c8e8; font-size: 0.92rem; font-style: italic; }
     .card-value-add-list { list-style: none; padding: 0; margin: 0; }
     .card-value-add-list li {
       padding: 0.2rem 0; color: #e2e8f0; font-size: 0.92rem; line-height: 1.5; font-weight: 600;
@@ -173,16 +151,7 @@
     .progress-completed h4 { color: var(--peacock-teal); }
     .progress-wip h4 { color: #ffc866; }
     .progress-list { list-style: none; padding: 0; margin: 0; }
-    .progress-list li {
-      display: flex; align-items: flex-start; gap: 0.45rem;
-      font-size: 0.95rem; padding: 0.2rem 0; color: var(--secondary); line-height: 1.55;
-    }
-    .progress-check { flex-shrink: 0; margin-top: 0.15rem; line-height: 1; }
-    .progress-check.done { color: var(--green); font-weight: 800; font-size: 0.9rem; }
-    .progress-check.open {
-      width: 0.85rem; height: 0.85rem; border: 2px solid #ffc866; border-radius: 2px;
-      background: transparent; box-sizing: border-box;
-    }
+    .progress-list li { font-size: 0.95rem; padding: 0.2rem 0; color: var(--secondary); line-height: 1.55; }
     .badge-related { background: rgba(61, 122, 232, 0.18); color: #93c5fd; border: 1px solid var(--peacock-blue); font-size: 0.75rem; max-width: 100%; white-space: normal; line-height: 1.35; }
     .card-sub-related { margin-left: 1.75rem; border-left: 2px solid var(--border); background: var(--surface); }
     .card-sub-related .card-title { font-size: 1.22rem; }
@@ -241,11 +210,8 @@
     .goal-field label { display: block; font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; }
     .goal-field textarea, .submit-field textarea, .submit-field input, .project-note, .general-note, .filter-field input {
       width: 100%; padding: 0.6rem 0.75rem; border-radius: 6px;
-      border: 2px solid var(--border-strong); background: var(--surface2);
-      color: var(--input-text); font-size: 0.95rem; font-family: inherit;
-      caret-color: var(--green);
+      border: 2px solid var(--border); background: var(--surface2); color: var(--text); font-size: 0.95rem; font-family: inherit;
     }
-    textarea::placeholder, input::placeholder { color: var(--input-placeholder); opacity: 1; }
     .goal-field textarea { min-height: 3.5rem; resize: vertical; }
     .pavi-guide-strip {
       max-width: 1400px; margin: 0 auto; padding: var(--space-md) 2rem 0;
@@ -277,18 +243,30 @@
     .search-unified-filters .btn-reset { width: auto; margin: 0; padding: 0.45rem 0.85rem; font-size: 0.82rem; }
     .search-unified-panel textarea,
     .search-unified-panel .filter-field input {
-      background: #3a4d6c;
-      border-color: rgba(255, 255, 255, 0.22);
-      color: var(--input-text);
+      background: var(--surface-panel-nested);
+      border-color: rgba(0, 212, 196, 0.22);
     }
-    .plan-summary {
-      display: flex; flex-direction: column; gap: var(--space-md);
-      margin-bottom: var(--space-md);
+    .search-suggestions {
+      margin-top: var(--space-md); padding-top: var(--space-md);
+      border-top: 1px solid rgba(255, 16, 168, 0.25);
     }
-    .plan-summary .recommendation-box { margin: 0; background: rgba(255, 255, 255, 0.06); }
-    .plan-summary .total-box { margin: 0; background: var(--surface-plan-inner); border-color: rgba(255, 255, 255, 0.16); }
-    .plan-summary .total-row span:first-child { color: #f0f4fc; }
-    .plan-summary .empty-state { margin: 0; }
+    .search-suggestions[hidden] { display: none !important; }
+    .search-suggestions-title {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--peacock-teal); font-weight: 800; margin: 0 0 0.5rem;
+    }
+    .search-suggestions-list { list-style: none; padding: 0; margin: 0; }
+    .search-suggestion-item {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      padding: 0.35rem 0; font-size: 0.88rem; border-bottom: 1px solid var(--border);
+    }
+    .search-suggestion-item:last-child { border-bottom: none; }
+    .search-suggestion-link {
+      display: inline-flex; align-items: center; gap: 0.4rem; flex: 1; min-width: 0;
+      color: var(--secondary); font-weight: 500; text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .search-suggestion-link:hover { color: var(--text); }
     .card-icons-inline {
       display: inline-flex; align-items: center; justify-content: flex-end; gap: 0.2rem; flex-shrink: 0;
     }
@@ -296,6 +274,7 @@
     .card-icons-inline .value-icon { width: 1.65rem; height: 1.65rem; border-radius: 8px; }
     .card-icons-inline .value-icon svg { width: 1rem; height: 1rem; }
     .card-icons-inline .account-data-shield { width: 1.15rem; height: 1.35rem; filter: none; }
+    .search-suggestions .recommendation-box { margin-top: 0; margin-bottom: var(--space-md); }
     .recommendation-box h3 {
       font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
       color: var(--peacock-violet); font-weight: 800; margin: 0 0 0.45rem;
@@ -314,8 +293,7 @@
       .search-unified-body { width: 100%; }
       .pavi-hero { width: 64px; height: 64px; }
     }
-    .project-note { color: var(--input-text); background: #1a2438; border-color: var(--border-strong); min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
-    .general-note { min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
+    .project-note, .general-note { min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
     .goal-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
     .goal-actions .btn { width: auto; margin: 0; }
     .finder-panel {
@@ -482,13 +460,12 @@
     .filter-panel-col { display: flex; flex-direction: column; gap: var(--space-md); }
     .filter-panel-col h2 { font-size: 1rem; margin: 0; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
     .invoice-submit-col {
-      background: var(--surface-plan);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: var(--surface-panel);
+      border: 1px solid var(--border);
       border-radius: var(--radius); padding: var(--space-md);
     }
     .invoice-submit-col h2 { font-size: 1rem; margin: 0 0 0.65rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
-    .invoice-submit-col .total-box,
-    .plan-summary .total-box { margin: 0 0 var(--space-md); background: var(--surface-plan-inner); border-color: rgba(255, 255, 255, 0.16); }
+    .invoice-submit-col .total-box { margin: 0 0 var(--space-md); background: var(--surface-panel-nested); border-color: var(--border); }
     .invoice-submit-col .total-row.grand { color: var(--green); font-size: 1.15rem; }
     .invoice-submit-col .total-row-single { margin: 0; padding: 0.35rem 0; border-top: none; }
     .total-row-maintenance-header { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--peacock-teal); font-weight: 700; padding-top: 0.25rem; }
@@ -499,11 +476,7 @@
     .submit-compact .submit-field { margin-bottom: 0.65rem; }
     .submit-compact .submit-field label { font-size: 0.78rem; }
     .submit-field-label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--peacock-teal); font-weight: 700; margin-bottom: 0.35rem; }
-    .submit-compact .general-note, .submit-compact input {
-      font-size: 0.88rem; padding: 0.45rem 0.6rem;
-      background: #3a4d6c; border-color: rgba(255, 255, 255, 0.22);
-      color: var(--input-text);
-    }
+    .submit-compact .general-note, .submit-compact input { font-size: 0.88rem; padding: 0.45rem 0.6rem; background: var(--surface-panel-nested); border-color: rgba(0, 212, 196, 0.22); }
     .submit-compact select.general-note { width: 100%; cursor: pointer; appearance: auto; }
     .payment-terms-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
     .payment-terms-row .sub-label { display: block; font-size: 0.75rem; color: var(--secondary); margin-bottom: 0.25rem; font-weight: 600; }
@@ -616,9 +589,16 @@
     .toc-value .value-icons { justify-content: flex-end; flex-wrap: wrap; gap: 0.25rem; max-width: 7.5rem; }
     .toc-value .value-icon { width: 2.15rem; height: 2.15rem; }
     .toc-value .value-icon svg { width: 1.2rem; height: 1.2rem; }
+    .hot-star {
+      color: #9d0059; font-size: 1rem; line-height: 1;
+      text-shadow: 0 0 6px rgba(157, 0, 89, 0.65);
+      margin-right: 0.1rem;
+    }
     .priority-urgent {
       color: #ff6b6b; font-weight: 900; font-size: 0.95rem; margin-right: 0.1rem;
     }
+    .total-row-compact span { color: var(--secondary); font-size: 0.82rem; }
+    .hot-star-inline { font-size: 0.85rem; }
     @media (max-width: 700px) {
       .toc-table { min-width: 28rem; }
       .toc-col-icons { width: 6.5rem; }
@@ -724,12 +704,13 @@
                 </div>
               </div>
             </div>
+            <div id="search-suggestions" class="search-suggestions" hidden></div>
           </div>
         </div>
 
-        <div class="invoice-submit-col plan-summary-col">
-          <h2>Your plan</h2>
-          <div id="plan-summary" class="plan-summary"></div>
+        <div class="invoice-submit-col">
+          <h2>Project summary</h2>
+          <div class="total-box" id="invoice-summary-top"></div>
           <div class="summary-continue">
             <button type="button" class="btn btn-primary" id="continue-to-confirm" disabled>Continue to submit</button>
           </div>
@@ -788,6 +769,6 @@
   <script src="pages-config.js?v=20260629"></script>
   <script src="config.js?v=20260629"></script>
   <script src="projects-data.js?v=20260629"></script>
-  <script src="app.js?v=20260702"></script>
+  <script src="app.js?v=20260629"></script>
 </body>
 </html>

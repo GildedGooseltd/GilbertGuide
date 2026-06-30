@@ -3,36 +3,30 @@
     { webhookUrl: "", depositAmount: 2500, quickbooksDepositUrl: "" },
     typeof window !== "undefined" && window.PAV_PICKER_CONFIG ? window.PAV_PICKER_CONFIG : {}
   );
+  const STAR = "★";
   const PAVI_IMG = PROJECT_DATA.paviIcon || "assets/pavi-icon.png";
+  const HOT_PRIORITY_MAX = 6;
 
-  function isRequiredProject(item, isRetainer) {
-    return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
+  function isHotPriority(item) {
+    const p = item.priority;
+    return p != null && p >= 1 && p <= HOT_PRIORITY_MAX;
+  }
+
+  function hotStarHtml(inline) {
+    return `<span class="hot-star${inline ? " hot-star-inline" : ""}" title="Top priority — work on next">★</span>`;
   }
 
   function isPriorityUrgent(item) {
-    return !!item.enabler || item.status === "wip" || hasPartialProgress(item);
+    return isHotPriority(item) || !!item.enabler || item.status === "wip" || hasPartialProgress(item);
+  }
+
+  function isRequiredProject(item, isRetainer) {
+    return isRetainer || item.id === "RETAINER" || item.category === "Retainer" || !!item.monthlyOnly;
   }
 
   const REQUIRED_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
 
-  const PAV_LAW_SHIELD = "assets/pav-law-shield.svg";
-
-  function pavLawShieldHtml() {
-    return `<img class="pav-law-shield-img" src="${PAV_LAW_SHIELD}" alt="" width="24" height="29">`;
-  }
-
-  const VALUE_ICON_SVGS = {
-    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12l-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25L8.29 2.34a1 1 0 0 0-1.42 0l-2.76 2.76a1 1 0 0 0 0 1.42l10.42 10.42"/></svg>`,
-    retainer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>`,
-    leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.5"/><path d="M2 20v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5V20"/><circle cx="17.5" cy="8.5" r="2.5"/><path d="M21 20v-1a3.5 3.5 0 0 0-2.5-3.35"/><circle cx="5" cy="10.5" r="2"/><path d="M1 20v-0.5a2.5 2.5 0 0 1 2-2.45"/></svg>`,
-    crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/><path d="M13 13h5"/><path d="M13 17h5"/></svg>`,
-    seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
-    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="3"/><path d="M3 20v-2a4 4 0 0 1 4-4h0"/><circle cx="17" cy="8" r="3"/><path d="M21 20v-2a4 4 0 0 0-4-4h0"/><path d="M10.5 10.5h3"/><path d="M12 10.5v2.5"/><path d="M11 13h2"/></svg>`,
-    efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
-    intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v9H8l-4 4V5z"/></svg>`,
-    creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.5 0-8 3.6-8 8.2 0 2.8 1.3 4.8 3 6 .6.4 1.2.6 1.8.6.9 0 1.6-.5 1.9-1.3.5-1 1.6-1.6 2.6-1.3 1.1.4 1.8 1.5 1.8 2.7 0 .3 0 .6-.1.9-.4 1.4 1 2.9 2.8 2.9 3.2 0 5.8-2.6 5.8-5.8C22 8.2 17.5 3 12 3z"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="12.5" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="13.5" r="1" fill="currentColor" stroke="none"/></svg>`,
-    general: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 6.8H21l-5.5 4 2.1 6.7L12 17.8 6.4 20.5l2.1-6.7L3 9.8h6.6L12 3z"/></svg>`
-  };
+  const PAV_SHIELD_SVG = `<svg class="pav-shield-mark" viewBox="0 0 40 48" aria-hidden="true"><path class="shield-fill" d="M20 1.5 37.5 6.5V26.5 20 46.5 2.5 26.5V6.5 20 1.5z"/><path class="shield-cut" d="M12 12h7v3.5h-3v14.5h-4V12zm9.5 0h3.8l9.2 18.5h-4l-1.9-3.8h-8.6l-1.9 3.8h-4.1L21.5 12z"/></svg>`;
 
   function requiredMarkerHtml(item, isRetainer) {
     if (!isRequiredProject(item, isRetainer)) return "";
@@ -45,12 +39,25 @@
 
   function priorityTocHtml(item) {
     const required = isRequiredProject(item, !!item.isRetainer);
-    const hasPriority = item.priority != null && item.priority !== "" && !Number.isNaN(Number(item.priority));
-    const p = hasPriority ? Math.trunc(Number(item.priority)) : "";
+    const p = item.priority != null && item.priority !== "" ? Math.trunc(Number(item.priority)) : "—";
     const urgent = isPriorityUrgent(item) ? '<span class="priority-urgent" title="Urgent or fixing an active issue">!</span>' : "";
+    const hot = isHotPriority(item) ? hotStarHtml(false) : "";
     const req = required ? requiredMarkerHtml(item, !!item.isRetainer) : "";
-    return `<span class="toc-priority-inner">${urgent}${p}</span>${req ? `<span class="toc-required-icon">${req}</span>` : ""}`;
+    return `<span class="toc-priority-inner">${urgent}${hot}${p}</span>${req ? `<span class="toc-required-icon">${req}</span>` : ""}`;
   }
+
+  const VALUE_ICON_SVGS = {
+    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.25"/><path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.55 1.55M16.85 16.85l1.55 1.55M5.6 18.4l1.55-1.55M16.85 7.15l1.55-1.55"/></svg>`,
+    retainer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>`,
+    leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4h4l2 5.5-2.5 1.8c1.2 2.4 3.2 4.4 5.6 5.6L17 14.5 22.5 16.5V20.5h-4C9.8 20.5 3.5 14.2 3.5 6V4h3z"/></svg>`,
+    crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10H7z"/><path d="M4 10V4h6M14 20v-6h6"/></svg>`,
+    seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
+    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
+    intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v9H8l-4 4V5z"/></svg>`,
+    creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-9 5 5 9-12"/></svg>`,
+    general: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 6.8H21l-5.5 4 2.1 6.7L12 17.8 6.4 20.5l2.1-6.7L3 9.8h6.6L12 3z"/></svg>`
+  };
 
   const VALUE_ICON_DEFS = [
     { id: "foundation", svgId: "foundation", cls: "icon-foundation", label: "Foundation", match: item => !!item.enabler },
@@ -213,7 +220,7 @@
     const label = item.backedMetric.label || "Verified account data";
     const src = item.backedMetric.source ? ` (${item.backedMetric.source})` : "";
     const tip = escapeHtml(label + src);
-    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${pavLawShieldHtml()}</span>`;
+    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${PAV_SHIELD_SVG}</span>`;
   }
 
   function cardCornerIconsHtml(item, isRetainer, inline) {
@@ -231,11 +238,12 @@
       VALUE_ICON_DEFS.map(d =>
         `<span class="key-item">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></span>`
       ).join("") +
-      `<span class="key-item"><span class="account-data-shield key-shield">${pavLawShieldHtml()}</span><span class="key-item-label">Account data</span></span>`;
+      `<span class="key-item"><span class="account-data-shield key-shield">${PAV_SHIELD_SVG}</span><span class="key-item-label">Account data</span></span>`;
   }
 
   function isItemSelected(item) {
-    if (item.isRetainer || item.id === "RETAINER") return state.retainer;
+    if (item.isRetainer || item.id === "RETAINER") return true;
+    if (item.monthlyOnly) return true;
     return state.projects.has(item.id);
   }
 
@@ -245,9 +253,7 @@
 
   function requiredMaintenanceMonthly() {
     let n = state.retainer ? RETAINER.fee : 0;
-    getMaintenanceProjects().forEach(p => {
-      if (state.projects.has(p.id)) n += p.fee;
-    });
+    getMaintenanceProjects().forEach(p => { n += p.fee; });
     return n;
   }
 
@@ -266,9 +272,7 @@
       rows.push({ id: "RETAINER", title: RETAINER.title, fee: feeLabelFor(RETAINER) });
     }
     getMaintenanceProjects().forEach(p => {
-      if (state.projects.has(p.id)) {
-        rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p) });
-      }
+      rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p) });
     });
     getSelectedProjects().forEach(p => {
       rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p) });
@@ -279,9 +283,7 @@
   function getSuggestedItems() {
     const items = [];
     if (state.retainer) items.push({ ...RETAINER, isRetainer: true });
-    getMaintenanceProjects().forEach(p => {
-      if (state.projects.has(p.id)) items.push({ ...p, isRetainer: false });
-    });
+    getMaintenanceProjects().forEach(p => items.push({ ...p, isRetainer: false }));
     getSelectedProjects().forEach(p => items.push({ ...p, isRetainer: false }));
     return sortByPriority(items);
   }
@@ -293,9 +295,7 @@
   function buildRecommendation() {
     const selected = [];
     if (state.retainer) selected.push({ ...RETAINER, isRetainer: true });
-    getMaintenanceProjects().forEach(p => {
-      if (state.projects.has(p.id)) selected.push({ ...p, isRetainer: false });
-    });
+    getMaintenanceProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
     getSelectedProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
 
     const f = getFilters();
@@ -345,30 +345,44 @@
     return { intro: introParts.join(" ") };
   }
 
-  function renderPlanSummary() {
-    const el = document.getElementById("plan-summary");
+  function renderSearchSuggestions() {
+    const el = document.getElementById("search-suggestions");
     if (!el) return;
-    const items = getInvoiceLineItems();
-    const rec = buildRecommendation();
-    const parts = [];
-
-    if (state.goalText.trim() && rec && rec.intro) {
-      parts.push(`<div class="recommendation-box"><h3>Why this combination</h3><p>${escapeHtml(rec.intro)}</p></div>`);
-    } else if (state.goalText.trim()) {
-      parts.push(`<div class="recommendation-box empty"><h3>Why this combination</h3><p>Adjust your goal or pick projects below.</p></div>`);
+    const goal = state.goalText.trim();
+    if (!goal) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
     }
-
+    const items = getSuggestedItems();
     if (!items.length) {
-      parts.push(`<p class="empty-state">Selections appear here as you choose projects.</p>`);
-    } else {
-      parts.push(`<div class="total-box">${buildTotalsHtml()}</div>`);
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
     }
-
-    el.innerHTML = parts.join("");
+    const rec = buildRecommendation();
+    let recHtml = "";
+    if (rec && rec.intro) {
+      recHtml = `<div class="recommendation-box"><h3>Why this combination</h3><p>${escapeHtml(rec.intro)}</p></div>`;
+    } else if (rec) {
+      recHtml = `<div class="recommendation-box empty"><h3>Why this combination</h3><p>Adjust your goal or pick projects below.</p></div>`;
+    }
+    el.hidden = false;
+    el.innerHTML = `
+      ${recHtml}
+      <p class="search-suggestions-title">Suggested projects — click for full description</p>
+      <ul class="search-suggestions-list">${items.map(item => {
+        const id = item.isRetainer ? "RETAINER" : item.id;
+        const icons = cardCornerIconsHtml(item, !!item.isRetainer, true);
+        return `<li class="search-suggestion-item">
+          <a href="${projectAnchor(id)}" class="search-suggestion-link">${requiredMarkerHtml(item, !!item.isRetainer)}<span>${escapeHtml(item.title)}</span></a>
+          ${icons}
+        </li>`;
+      }).join("")}</ul>`;
   }
 
   function renderRecommendation() {
-    renderPlanSummary();
+    renderSearchSuggestions();
   }
 
   function getAllItems() {
@@ -379,22 +393,15 @@
     return (item.completedItems || []).length > 0 || (item.inProgressItems || []).length > 0;
   }
 
-  function wipBadgeUnderCheckbox(item) {
-    if (item.status === "completed") return "";
+  function statusBadge(item) {
+    if (item.status === "ongoing") return "";
+    if (item.status === "completed") {
+      return `<span class="badge badge-done" title="Completed">✓ Completed</span>`;
+    }
     if (item.status === "wip" || hasPartialProgress(item)) {
-      return `<span class="badge badge-wip card-wip-under-chk" title="Work already started on this project">WIP</span>`;
+      return `<span class="badge badge-wip" title="Work already started on this project">WIP</span>`;
     }
     return "";
-  }
-
-  function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled) {
-    const id = item.id;
-    const reqMark = required ? requiredMarkerHtml(item, isRetainer) : "";
-    return `<div class="card-check-col">
-      <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled} ${sel ? "checked" : ""}>
-      ${reqMark}
-      ${wipBadgeUnderCheckbox(item)}
-    </div>`;
   }
 
   function stripInlineLinks(html) {
@@ -424,24 +431,9 @@
   }
 
   function descriptionHtml(item) {
-    const parts = [];
-    const desc = item.description ? String(item.description).trim() : "";
-    if (desc) {
-      const descHtml = desc.includes("<a ") ? desc : mdLinksToHtml(escapeHtml(desc));
-      parts.push(`<p>${descHtml}</p>`);
-    }
-    const bullets = valueAddedBullets(item);
-    if (bullets.length) {
-      parts.push(`<ul class="card-objectives">${bullets.map(b =>
-        `<li>${escapeHtml(String(b).replace(/^Deliverable:\s*/i, "").trim())}</li>`
-      ).join("")}</ul>`);
-    }
-    const edu = item.marketingEducation && String(item.marketingEducation).trim();
-    if (edu) {
-      parts.push(`<div class="card-principles">${marketingEducationToHtml(edu)}</div>`);
-    }
-    if (!parts.length) return "";
-    return `<div class="card-description">${parts.join("")}</div>`;
+    const desc = conciseDescription(item);
+    if (!desc) return "";
+    return `<div class="card-description"><p>${escapeHtml(desc)}</p></div>`;
   }
 
   function marketingEducationToHtml(text) {
@@ -453,23 +445,37 @@
       .join("");
   }
 
+  function marketingReferencesHtml(item) {
+    const edu = item.marketingEducation && String(item.marketingEducation).trim();
+    const links = item.learningsLinks;
+    if (!edu && (!links || !links.length)) return "";
+    const proseHtml = edu ? `<div class="marketing-ref-prose">${marketingEducationToHtml(edu)}</div>` : "";
+    const linkHtml = !edu && links && links.length
+      ? `<ul class="ref-list">${links.map(r =>
+          `<li><a href="${r.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(r.label)}</a></li>`
+        ).join("")}</ul>`
+      : "";
+    return `<div class="detail-block marketing-references">
+      <h4>Marketing references</h4>
+      ${proseHtml}${linkHtml}
+    </div>`;
+  }
+
   function progressHtml(item) {
-    const done = (item.completedItems || []).map(t =>
-      `<li><span class="progress-check done" aria-hidden="true">✓</span><span>${escapeHtml(t)}</span></li>`
-    ).join("");
-    const wip = (item.inProgressItems || []).map(t =>
-      `<li><span class="progress-check open" aria-hidden="true"></span><span>${escapeHtml(t)}</span></li>`
-    ).join("");
+    const done = (item.completedItems || []).map(t => `<li>${escapeHtml(t)}</li>`).join("");
+    const wip = (item.inProgressItems || []).map(t => `<li>${escapeHtml(t)}</li>`).join("");
     if (!done && !wip) return "";
     return `<div class="progress-split">
-      ${wip ? `<div class="progress-col progress-wip"><h4>WIP</h4><ul class="progress-list">${wip}</ul></div>` : ""}
       ${done ? `<div class="progress-col progress-completed"><h4>Completed</h4><ul class="progress-list">${done}</ul></div>` : ""}
+      ${wip ? `<div class="progress-col progress-wip"><h4>WIP</h4><ul class="progress-list">${wip}</ul></div>` : ""}
     </div>`;
   }
 
   function expandBtnLabel(item, exp) {
     const hasProgress = hasPartialProgress(item);
-    if (hasProgress) return exp ? "Hide details" : "Show details";
+    const hasRefs = !!(item.marketingEducation && String(item.marketingEducation).trim()) ||
+      (item.learningsLinks && item.learningsLinks.length);
+    if (hasProgress || hasRefs) return exp ? "Hide details" : "Show details";
     return exp ? "Hide notes" : "Questions & notes";
   }
 
@@ -546,6 +552,7 @@
 
   function ensureRequiredMaintenance() {
     state.retainer = true;
+    getMaintenanceProjects().forEach(p => state.projects.add(p.id));
   }
 
   function isInRecommendedPackage(item) {
@@ -746,7 +753,7 @@
     const f = getFilters();
     const classes = [];
     const id = isRetainer ? "RETAINER" : item.id;
-    const selected = isRetainer ? state.retainer : state.projects.has(id);
+    const selected = isRetainer ? state.retainer : (item.monthlyOnly || state.projects.has(item.id));
 
     if (!itemPassesCostPriorityFilter({ ...item, isRetainer }) && !selected) {
       if (f.hideNonMatching) classes.push("filtered-out");
@@ -776,6 +783,7 @@
     state.recommended = new Set();
     ensureRequiredMaintenance();
     state.recommended.add("RETAINER");
+    getMaintenanceProjects().forEach(p => state.recommended.add(p.id));
 
     if (goal) {
       const words = goal.toLowerCase().split(/\W+/).filter(Boolean);
@@ -932,34 +940,42 @@
   function cardHtml(item, isRetainer, isFirstSelected) {
     const id = item.id;
     const required = isRequiredMaintenance(item, isRetainer);
-    const sel = isRetainer ? state.retainer : state.projects.has(id);
+    const sel = required || state.projects.has(id);
     const exp = state.expanded.has(id);
     const extra = getItemFilterClasses(item, isRetainer);
     const pkgClass = isInRecommendedPackage({ ...item, isRetainer }) ? " package-included" : "";
+    const enablerBadge = item.enabler ? `<span class="badge badge-enabler">Foundation project</span>` : "";
     const iconMarkup = cardCornerIconsHtml(item, isRetainer);
     const iconsHtml = iconMarkup || "";
     const retainerClass = isRetainer ? " retainer-card required-retainer" : "";
-    const maintClass = item.monthlyOnly ? ` maintenance-card${required ? " required-maintenance" : ""}` : "";
+    const maintClass = item.monthlyOnly ? " maintenance-card required-maintenance" : "";
     const subClass = item.parentId ? " card-sub-related" : "";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const chkDisabled = required ? " disabled" : "";
+    const requiredBadge = "";
 
     return `
       <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}">
         <div class="card-header">
-          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled)}
+          <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled} ${sel ? "checked" : ""}>
             <div class="card-body">
               <div class="card-top-row">
-                <div class="card-title"><span>${escapeHtml(item.title)}</span></div>
+                <div class="card-title">${requiredMarkerHtml(item, isRetainer)}<span>${escapeHtml(item.title)}</span></div>
                 ${iconsHtml}
               </div>
-              ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
+              <div class="card-meta-row">
+                ${relatedSubHtml(item)}
+                ${statusBadge(item)}
+                ${enablerBadge}
+                ${requiredBadge}
+              </div>
               ${descriptionHtml(item)}
             <button type="button" class="expand-btn">${expandBtnLabel(item, exp)}</button>
           </div>
         </div>
         <div class="card-detail">
           ${progressHtml(item)}
+          ${marketingReferencesHtml(item)}
           <div class="detail-block">
             <h4>Questions or suggestions</h4>
             <textarea class="project-note" data-id="${id}" placeholder="Ask about scope, timing, or changes…">${escapeHtml(state.notes[id] || "")}</textarea>
@@ -1024,7 +1040,7 @@
 
     list.querySelectorAll(".card").forEach(card => {
       card.addEventListener("click", e => {
-        if (e.target.type === "checkbox" || e.target.classList.contains("expand-btn") || e.target.closest("a") || e.target.closest(".required-icon")) return;
+        if (e.target.type === "checkbox" || e.target.classList.contains("expand-btn") || e.target.closest("a")) return;
         if (card.classList.contains("over-budget")) return;
         const id = card.dataset.id;
         if (card.dataset.required === "true") return;
@@ -1092,7 +1108,7 @@
 
   function buildPayload() {
     const selected = getSelectedProjects();
-    const maintenance = getMaintenanceProjects().filter(p => state.projects.has(p.id));
+    const maintenance = getMaintenanceProjects();
     const projectTotal = selected.reduce((s, p) => s + itemSelectionCost(p), 0);
     const maintMonthly = requiredMaintenanceMonthly();
     const submitterEmail = (document.getElementById("submitted-email") || {}).value || "";
@@ -1305,18 +1321,20 @@
     return rows + `<div class="total-row grand total-row-single"><span>${label}</span><span>${fmt(total)}</span></div>`;
   }
 
+  function renderInvoiceSummary() {
+    const el = document.getElementById("invoice-summary-top");
+    if (el) el.innerHTML = buildTotalsHtml();
+  }
+
   function hideThankYou() {
     document.getElementById("thank-you").classList.remove("show");
     document.getElementById("thank-you").setAttribute("aria-hidden", "true");
     document.getElementById("main-app").classList.remove("hidden");
   }
 
-  function renderInvoiceSummary() {
-    renderPlanSummary();
-  }
-
   function renderSummary() {
-    renderPlanSummary();
+    renderInvoiceSummary();
+    renderSearchSuggestions();
     updateInvoiceScheduleAmount();
     updateSubmitButtons();
     renderProjectToc();
@@ -1403,8 +1421,8 @@
   loadState();
   ensureRequiredMaintenance();
   initPaviGuide();
-  document.getElementById("plan-summary")?.addEventListener("click", e => {
-    const link = e.target.closest(".invoice-item-link");
+  document.getElementById("search-suggestions")?.addEventListener("click", e => {
+    const link = e.target.closest(".search-suggestion-link, .invoice-item-link");
     if (!link) return;
     const id = (link.getAttribute("href") || "").replace("#project-", "");
     if (!id) return;
