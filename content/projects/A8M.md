@@ -26,14 +26,4 @@ After the lead-source dashboard is live (A8), this retainer keeps reports curren
 
 ## Marketing Education
 
-Reporting only stays useful when someone reviews it every month — validating tags, reconciling ad platforms to CRM, and noting when a channel’s numbers shift. HubSpot attribution guidance applies the same discipline to law firm lead tracking.
-
-- [HubSpot — attribution reporting](https://knowledge.hubspot.com/reports/understand-attribution-reporting)
-- [Google Analytics Academy](https://analytics.google.com/analytics/academy/)
-
-## Deliverables
-
-- Monthly lead-source report from dashboard fields
-- UTM and conversion pass/fail check each month
-- One review call or async summary for Andrew or Casey
-- Data break log when tags or integrations fail
+Reporting only stays useful when someone reviews it every month — validating tags, reconciling ad platforms to CRM, and noting when a channel’s numbers shift. HubSpot attribution guidance applies the same discipline to law firm lead tracking. See [HubSpot — attribution reporting](https://knowledge.hubspot.com/reports/understand-attribution-reporting) and [Google Analytics Academy](https://analytics.google.com/analytics/academy/).

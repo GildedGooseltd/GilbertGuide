@@ -24,14 +24,7 @@ Pav Law invests about $6,000/month in Google Ads media, but without a formal <a 
 
 ## Marketing Education
 
-Ongoing PPC management means watching campaigns weekly — pausing losers, scaling winners, and measuring cost per call. For law firms, Google and Clio both recommend tracking phone outcomes, not clicks alone, when judging paid search performance.
-
-- [Google Ads help — measure conversions](https://support.google.com/google-ads/answer/1722022)
-- [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/)
-- [Google Local Services Ads overview](https://support.google.com/localservices/answer/6224841)
-- [PPC management pricing (2026)](https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/) — $1,500–$5,000/mo typical for $5k–25k spend accounts.
-- [Law firm agency retainers](https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/) — Legal PPC flat fees vs percentage-of-spend models.
-- [Rocket Pilots PPC tiers](https://rocketpilots.com/ppc-for-lawyers/) — Published management fees by monthly ad spend band.
+Ongoing PPC management means watching campaigns weekly — pausing losers, scaling winners, and measuring cost per call. For law firms, Google and Clio both recommend tracking phone outcomes, not clicks alone, when judging paid search performance. See [Google Ads help — measure conversions](https://support.google.com/google-ads/answer/1722022), [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/), [Google Local Services Ads overview](https://support.google.com/localservices/answer/6224841), [PPC management pricing (2026)](https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/), [Law firm agency retainers](https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/), and [Rocket Pilots PPC tiers](https://rocketpilots.com/ppc-for-lawyers/).
 
 ## WIP
 
@@ -48,15 +41,6 @@ Ongoing PPC management means watching campaigns weekly — pausing losers, scali
 - Google Ads and Microsoft Ads campaign buildout
 - GBP content, hours, and service-area cleanup
 - Cross-platform paid search optimization
-
-## Deliverables
-
-- Google Ads monitoring with weekly bid and budget notes
-- LSA spend, lead-type, and CPL review
-- Microsoft Ads monitoring aligned with Google strategy
-- Monthly paid-media report — calls, spend, CPL by campaign
-- One strategy call per month on media performance
-- Call recording spot-checks on high-CPL campaigns
 
 ## Account Data & Marketing Principles Applied
 

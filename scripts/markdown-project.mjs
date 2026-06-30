@@ -159,7 +159,10 @@ export function parseProjectMarkdown(text, fallbackId) {
 
   if (sections["marketing education"]) {
     const body = sections["marketing education"].trim();
-    const linkLines = parseLearnings(body);
+    const linkLines = dedupeLinks([
+      ...parseLearnings(body),
+      ...parseInlineMarkdownLinks(body)
+    ]);
     const prose = body
       .split("\n")
       .filter(l => !/^-\s+\[/.test(l.trim()))
@@ -167,7 +170,7 @@ export function parseProjectMarkdown(text, fallbackId) {
       .trim();
     project.marketingEducation = applyProperCase(prose);
     if (linkLines.length) {
-      project.learningsLinks = dedupeLinks(linkLines);
+      project.learningsLinks = linkLines;
     }
   }
 
@@ -246,16 +249,36 @@ function dedupeLinks(links) {
   });
 }
 
-function buildMarketingEducation(p) {
-  let edu = p.marketingEducation || "";
-  const links = dedupeLinks([...(p.learningsLinks || []), ...(p.references || [])]);
-  if (links.length) {
-    const linkBlock = links
-      .map(l => `- [${l.label}](${l.url})${l.note ? ` — ${l.note}` : ""}`)
-      .join("\n");
-    edu = edu ? `${edu.trim()}\n\n${linkBlock}` : linkBlock;
+function parseInlineMarkdownLinks(text) {
+  const links = [];
+  const re = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let m;
+  while ((m = re.exec(text || "")) !== null) {
+    links.push({ label: m[1].trim(), url: m[2].trim() });
   }
-  return edu.trim();
+  return links;
+}
+
+function buildMarketingEducationB2(p) {
+  let edu = (p.marketingEducation || "").trim();
+  const links = dedupeLinks([...(p.learningsLinks || []), ...(p.references || [])]);
+  if (!links.length) return edu;
+
+  const phrases = links.map(l => `[${l.label}](${l.url})`);
+  const alreadyInline = phrases.every(ph => edu.includes(ph));
+  if (alreadyInline) return edu;
+
+  if (!edu) {
+    if (phrases.length === 1) return phrases[0] + ".";
+    if (phrases.length === 2) return `See ${phrases[0]} and ${phrases[1]}.`;
+    const last = phrases[phrases.length - 1];
+    return `See ${phrases.slice(0, -1).join(", ")}, and ${last}.`;
+  }
+
+  if (phrases.length === 1) return `${edu.replace(/\s+$/, "")} See ${phrases[0]}.`;
+  if (phrases.length === 2) return `${edu.replace(/\s+$/, "")} See ${phrases[0]} and ${phrases[1]}.`;
+  const last = phrases[phrases.length - 1];
+  return `${edu.replace(/\s+$/, "")} See ${phrases.slice(0, -1).join(", ")}, and ${last}.`;
 }
 
 function buildAccountSection(p) {
@@ -278,11 +301,10 @@ export function projectToMarkdown(p) {
 
   if (p.description) md += `## Description\n\n${applyProperCase(p.description.trim())}\n\n`;
   md += listSection("Value Added", p.valueAdded || []);
-  const edu = buildMarketingEducation(p);
+  const edu = buildMarketingEducationB2(p);
   if (edu) md += `## Marketing Education\n\n${edu}\n\n`;
   md += listSection("WIP", p.inProgressItems);
   md += listSection("Completed", p.completedItems);
-  md += listSection("Deliverables", p.deliverables);
   const account = buildAccountSection(p);
   if (account) md += `## Account Data & Marketing Principles Applied\n\n${account}\n\n`;
 
