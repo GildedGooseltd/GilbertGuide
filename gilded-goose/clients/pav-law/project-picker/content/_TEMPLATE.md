@@ -1,6 +1,5 @@
 # NEWID — Project Title
 
-
 |                   |                                                            |
 | ----------------- | ---------------------------------------------------------- |
 | **ID**            | NEWID                                                      |
@@ -22,28 +21,24 @@ Main card copy. Use proper case. HTML links OK.
 
 ## Value Added
 
-- First benefit (shown with ★ on the card)
+- First benefit
 - Second benefit
 - Third benefit
 
 ## Marketing Education
 
-Strategy context for the expand section — no pricing. Add reference links as markdown bullets below the paragraph if needed.
+Strategy context — embed reference links inline in the paragraph. See [Example reference](https://example.com) and [Second reference](https://example.com/page).
 
 ## WIP
 
-- Work in progress (amber box on card)
+- Work in progress
 
 ## Completed
 
-- Already finished work (✓ on card)
-
-## Deliverables
-
-Optional — key deliverables (shown in expanded card detail)
+- Already finished work
 
 ## Account Data & Marketing Principles Applied
 
-Verified metric or principle text. Tie to account data where possible.
+Verified metric or principle text with inline links where helpful.
 
 Source: Where the number or claim comes from

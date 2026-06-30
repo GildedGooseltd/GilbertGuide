@@ -20,13 +20,30 @@
     return isHotPriority(item) || !!item.enabler || item.status === "wip" || hasPartialProgress(item);
   }
 
+  function isRequiredProject(item, isRetainer) {
+    return isRetainer || item.id === "RETAINER" || item.category === "Retainer" || !!item.monthlyOnly;
+  }
+
+  const REQUIRED_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
+
+  const PAV_SHIELD_SVG = `<svg class="pav-shield-mark" viewBox="0 0 40 48" aria-hidden="true"><path class="shield-fill" d="M20 1.5 37.5 6.5V26.5 20 46.5 2.5 26.5V6.5 20 1.5z"/><path class="shield-cut" d="M12 12h7v3.5h-3v14.5h-4V12zm9.5 0h3.8l9.2 18.5h-4l-1.9-3.8h-8.6l-1.9 3.8h-4.1L21.5 12z"/></svg>`;
+
+  function requiredMarkerHtml(item, isRetainer) {
+    if (!isRequiredProject(item, isRetainer)) return "";
+    const isRet = isRetainer || item.id === "RETAINER" || item.category === "Retainer";
+    const tip = isRet
+      ? "Required retainer — ongoing digital ads management"
+      : "Required monthly maintenance";
+    return `<span class="required-icon" title="${escapeHtml(tip)}" aria-label="${escapeHtml(tip)}">${REQUIRED_ICON_SVG}</span>`;
+  }
+
   function priorityTocHtml(item) {
-    const required = item.isRetainer || item.id === "RETAINER" || item.monthlyOnly;
+    const required = isRequiredProject(item, !!item.isRetainer);
     const p = item.priority != null && item.priority !== "" ? Math.trunc(Number(item.priority)) : "—";
     const urgent = isPriorityUrgent(item) ? '<span class="priority-urgent" title="Urgent or fixing an active issue">!</span>' : "";
     const hot = isHotPriority(item) ? hotStarHtml(false) : "";
-    const req = required ? '<span class="badge badge-required table-required">Req</span>' : "";
-    return `<span class="toc-priority-inner">${urgent}${hot}${p}</span>${req}`;
+    const req = required ? requiredMarkerHtml(item, !!item.isRetainer) : "";
+    return `<span class="toc-priority-inner">${urgent}${hot}${p}</span>${req ? `<span class="toc-required-icon">${req}</span>` : ""}`;
   }
 
   const VALUE_ICON_SVGS = {
@@ -35,7 +52,7 @@
     leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4h4l2 5.5-2.5 1.8c1.2 2.4 3.2 4.4 5.6 5.6L17 14.5 22.5 16.5V20.5h-4C9.8 20.5 3.5 14.2 3.5 6V4h3z"/></svg>`,
     crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10H7z"/><path d="M4 10V4h6M14 20v-6h6"/></svg>`,
     seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
-    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM16 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M8 14c2.2 0 4 1.2 4.8 3M16 10c-2.2 0-4 1.2-4.8 3"/></svg>`,
+    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
     efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
     intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v9H8l-4 4V5z"/></svg>`,
     creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-9 5 5 9-12"/></svg>`,
@@ -43,16 +60,27 @@
   };
 
   const VALUE_ICON_DEFS = [
-    { id: "foundation", svgId: "foundation", cls: "icon-foundation", label: "Foundation — other marketing depends on this", match: item => !!item.enabler },
-    { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Ongoing paid media management", match: item => item.isRetainer || item.id === "RETAINER" || item.category === "Retainer" },
-    { id: "leads", svgId: "leads", cls: "icon-leads", label: "Lead generation — calls and paid media", match: item => /paid media|outbound|display|search|seasonal/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "crm", svgId: "crm", cls: "icon-crm", label: "Pipeline, CRM, and follow-up", match: item => /crm/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "seo", svgId: "seo", cls: "icon-seo", label: "Organic search and visibility", match: item => /seo|blog|local search|website ux/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "referrals", svgId: "referrals", cls: "icon-referrals", label: "Referrals and repeat clients", match: item => /referral|testimonial|social proof|direct mail|mailer|case win/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
-    { id: "efficiency", svgId: "efficiency", cls: "icon-efficiency", label: "Reporting, analytics, and spend control", match: item => /analytics|dashboard|strategy|audit|finance|operations/i.test((item.category || "") + (item.campaignType || "")) },
-    { id: "intake", svgId: "intake", cls: "icon-intake", label: "Intake, phone, and client experience", match: item => /intake|chat|after-hours|infrastructure|call infrastructure/i.test((item.category || "") + (item.campaignType || "") + (item.title || "")) },
-    { id: "creative", svgId: "creative", cls: "icon-creative", label: "Creative, email, and brand reach", match: item => /creative|email|social/i.test((item.category || "") + (item.campaignType || "")) }
+    { id: "foundation", svgId: "foundation", cls: "icon-foundation", label: "Foundation", match: item => !!item.enabler },
+    { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer", match: item => item.isRetainer || item.id === "RETAINER" || item.category === "Retainer" },
+    { id: "leads", svgId: "leads", cls: "icon-leads", label: "Leads", match: item => /paid media|outbound|display|search|seasonal|social proof|google ads|microsoft|lsa|ppc/i.test(iconMatchText(item)) },
+    { id: "crm", svgId: "crm", cls: "icon-crm", label: "CRM", match: item => /crm|hubspot|pipeline|contact import|landing page/i.test(iconMatchText(item)) },
+    { id: "seo", svgId: "seo", cls: "icon-seo", label: "SEO", match: item => /seo|blog|local search|website ux|website content|website speed|website module/i.test(iconMatchText(item)) },
+    { id: "referrals", svgId: "referrals", cls: "icon-referrals", label: "Referrals", match: item => /referral|testimonial|social proof|direct mail|mailer|case win|past client/i.test(iconMatchText(item)) },
+    { id: "efficiency", svgId: "efficiency", cls: "icon-efficiency", label: "Analytics", match: item => /analytics|dashboard|strategy|audit|finance|operations|kpi|reporting/i.test(iconMatchText(item)) },
+    { id: "intake", svgId: "intake", cls: "icon-intake", label: "Intake", match: item => /intake|chat|after-hours|infrastructure|call infrastructure|voip|phone/i.test(iconMatchText(item)) },
+    { id: "creative", svgId: "creative", cls: "icon-creative", label: "Creative", match: item => /creative|email|social media|display|repurpose/i.test(iconMatchText(item)) }
   ];
+
+  function iconMatchText(item) {
+    const desc = item.description ? String(item.description).replace(/<[^>]+>/g, " ") : "";
+    return [
+      item.category,
+      item.campaignType,
+      item.title,
+      desc,
+      item.valueAdd || ""
+    ].filter(Boolean).join(" ");
+  }
 
   function valueIconMarkup(def) {
     const svg = VALUE_ICON_SVGS[def.svgId || def.id] || VALUE_ICON_SVGS.general;
@@ -82,6 +110,46 @@
 
   const PERFORMANCE_PAY_IDS = new Set(["RETAINER", "A1", "A2", "A3", "A4", "A6", "A7", "A11"]);
 
+  function getProjectsInvoiceTotal() {
+    return getSelectedProjects().reduce((s, p) => s + itemSelectionCost(p), 0);
+  }
+
+  function updateInvoiceScheduleAmount() {
+    const monthsEl = document.getElementById("invoice-payment-months");
+    const amountEl = document.getElementById("invoice-payment-amount");
+    const hintEl = document.getElementById("invoice-schedule-hint");
+    if (!monthsEl || !amountEl) return;
+
+    const months = monthsEl.value !== "" ? Number(monthsEl.value) : null;
+    const projectTotal = getProjectsInvoiceTotal();
+    const baseHint = "Deposit is billed immediately. Project invoices are sent via QuickBooks on the schedule you choose. Retainer and maintenance bill separately each month.";
+
+    if (!months || months < 1) {
+      amountEl.value = "";
+      amountEl.placeholder = "Select invoices first";
+      if (hintEl) hintEl.textContent = baseHint;
+      syncPaymentTermsFromDom();
+      return;
+    }
+
+    if (projectTotal <= 0) {
+      amountEl.value = "";
+      amountEl.placeholder = "No project fees to invoice";
+      if (hintEl) {
+        hintEl.textContent = "No one-time project fees selected — only retainer/maintenance apply. " + baseHint;
+      }
+      syncPaymentTermsFromDom();
+      return;
+    }
+
+    const perInvoice = Math.round(projectTotal / months);
+    amountEl.value = String(perInvoice);
+    if (hintEl) {
+      hintEl.textContent = `${fmt(projectTotal)} in project fees split over ${months} invoice${months === 1 ? "" : "s"} (${fmt(perInvoice)} each). ${baseHint}`;
+    }
+    syncPaymentTermsFromDom();
+  }
+
   function getPaymentTermsPayload() {
     const monthsEl = document.getElementById("invoice-payment-months");
     const amountEl = document.getElementById("invoice-payment-amount");
@@ -89,15 +157,14 @@
     const amountRaw = amountEl ? amountEl.value : state.invoicePaymentMonthlyAmount;
     const months = monthsRaw !== "" && monthsRaw != null ? Number(monthsRaw) : null;
     const monthlyAmount = amountRaw !== "" && amountRaw != null ? Math.max(0, Number(amountRaw)) : null;
+    const projectTotal = getProjectsInvoiceTotal();
     let label = null;
     if (months && monthlyAmount != null) {
-      label = `${months} month${months === 1 ? "" : "s"} at ${fmt(monthlyAmount)}/mo (${fmt(monthlyAmount * months)} total)`;
+      label = `${months} QuickBooks invoice${months === 1 ? "" : "s"} of ${fmt(monthlyAmount)} (${fmt(monthlyAmount * months)} project fees; deposit billed immediately)`;
     } else if (months) {
-      label = `${months} month${months === 1 ? "" : "s"}`;
-    } else if (monthlyAmount != null) {
-      label = `${fmt(monthlyAmount)}/mo`;
+      label = `${months} invoice${months === 1 ? "" : "s"} — deposit billed immediately`;
     }
-    return { months, monthlyAmount, label };
+    return { months, monthlyAmount, projectTotal, label };
   }
 
   function syncPaymentTermsFromDom() {
@@ -116,14 +183,6 @@
     return "flat";
   }
 
-  function paymentBadgeHtml(item, isRetainer, compact) {
-    const t = getPaymentType(item, isRetainer);
-    if (t === "performance") {
-      return `<span class="badge badge-payment-perf" title="Eligible for performance-based pay when KPIs are met">${compact ? "Perf" : "Perf pay"}</span>`;
-    }
-    return `<span class="badge badge-payment-flat" title="Fixed fee — flat payment required">${compact ? "Flat" : "Flat fee"}</span>`;
-  }
-
   function visibleOptionalProjects(optional) {
     if (state.showAllProjects) return optional;
     const selected = optional.filter(p => state.projects.has(p.id));
@@ -138,18 +197,38 @@
   }
 
   function getValueIcons(item) {
+    if (item.isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
+      const def = VALUE_ICON_DEFS.find(d => d.id === "retainer");
+      return [def || { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer" }];
+    }
     const icons = [];
     for (const def of VALUE_ICON_DEFS) {
+      if (def.id === "retainer") continue;
       if (def.match(item) && !icons.some(i => i.id === def.id)) icons.push(def);
-      if (icons.length >= 3) break;
     }
-    if (!icons.length) icons.push({ id: "general", svgId: "general", cls: "icon-general", label: "Business growth project" });
-    return icons.slice(0, 3);
+    if (!icons.length) icons.push({ id: "general", svgId: "general", cls: "icon-general", label: "Growth" });
+    return icons;
   }
 
   function valueIconsHtml(item) {
     const icons = getValueIcons(item);
     return `<span class="value-icons">${icons.map(valueIconMarkup).join("")}</span>`;
+  }
+
+  function accountDataIconHtml(item) {
+    if (!item.backedMetric) return "";
+    const label = item.backedMetric.label || "Verified account data";
+    const src = item.backedMetric.source ? ` (${item.backedMetric.source})` : "";
+    const tip = escapeHtml(label + src);
+    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${PAV_SHIELD_SVG}</span>`;
+  }
+
+  function cardCornerIconsHtml(item, isRetainer, inline) {
+    const valueHtml = valueIconsHtml({ ...item, isRetainer });
+    const dataHtml = accountDataIconHtml(item);
+    if (!valueHtml && !dataHtml) return "";
+    const cls = inline ? "card-icons-inline" : "card-icons-corner";
+    return `<div class="${cls}">${valueHtml}${dataHtml}</div>`;
   }
 
   function renderValueIconKey() {
@@ -158,7 +237,8 @@
     el.innerHTML = `<span class="value-icon-key-title">Value icons key</span>` +
       VALUE_ICON_DEFS.map(d =>
         `<span class="key-item">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></span>`
-      ).join("");
+      ).join("") +
+      `<span class="key-item"><span class="account-data-shield key-shield">${PAV_SHIELD_SVG}</span><span class="key-item-label">Account data</span></span>`;
   }
 
   function isItemSelected(item) {
@@ -189,13 +269,13 @@
   function getInvoiceLineItems() {
     const rows = [];
     if (state.retainer) {
-      rows.push({ id: "RETAINER", title: RETAINER.title, fee: feeLabelFor(RETAINER, true) });
+      rows.push({ id: "RETAINER", title: RETAINER.title, fee: feeLabelFor(RETAINER) });
     }
     getMaintenanceProjects().forEach(p => {
-      rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p, false) });
+      rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p) });
     });
     getSelectedProjects().forEach(p => {
-      rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p, false) });
+      rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p) });
     });
     return rows;
   }
@@ -210,6 +290,59 @@
 
   function projectAnchor(id) {
     return `#project-${id}`;
+  }
+
+  function buildRecommendation() {
+    const selected = [];
+    if (state.retainer) selected.push({ ...RETAINER, isRetainer: true });
+    getMaintenanceProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
+    getSelectedProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
+
+    const f = getFilters();
+    const cost = getSelectionCost();
+    const hasGoal = !!state.goalText.trim();
+    const hasMaxFee = f.maxFee != null;
+
+    if (!selected.length && !hasGoal) return null;
+
+    const introParts = [];
+    if (hasGoal) {
+      const g = state.goalText.trim();
+      introParts.push(`Based on your goals: "${g.length > 140 ? g.slice(0, 140) + "…" : g}"`);
+    }
+    if (selected.length) {
+      if (hasMaxFee) {
+        introParts.push(`Estimated total ${fmt(cost)}${cost > f.maxFee ? " — above your max fee filter" : ` — within ${fmt(f.maxFee)} max`}.`);
+      } else {
+        introParts.push(`Estimated total ${fmt(cost)}.`);
+      }
+    }
+
+    if (!selected.length) {
+      return { intro: introParts.join(" ") };
+    }
+
+    const projectItems = selected.filter(i => !i.isRetainer && !i.monthlyOnly);
+    if (projectItems.length > 1) {
+      const hasEnabler = selected.some(i => i.enabler);
+      const hasLeads = selected.some(i => getValueIcons(i).some(v => v.id === "leads" || v.id === "retainer"));
+      const hasIntake = selected.some(i => getValueIcons(i).some(v => v.id === "intake" || v.id === "crm"));
+      if (hasEnabler && hasLeads) {
+        introParts.push("This mix fixes infrastructure and tracking first, then scales lead generation — the order that protects ad spend.");
+      } else if (hasEnabler && hasIntake) {
+        introParts.push("Foundation and intake work together so every lead is captured, routed, and followed up before you grow spend.");
+      } else if (hasLeads && hasIntake) {
+        introParts.push("Lead generation plus intake improvements mean more consults from the same marketing budget.");
+      } else if (hasLeads) {
+        introParts.push("These projects focus on measurable leads and calls that tie back to signed cases.");
+      } else {
+        introParts.push("These projects stack — each piece supports the others so marketing compounds instead of staying siloed.");
+      }
+    } else if (selected.length > 1) {
+      introParts.push("Retainer and maintenance keep performance steady while project work delivers the upgrades.");
+    }
+
+    return { intro: introParts.join(" ") };
   }
 
   function renderSearchSuggestions() {
@@ -227,21 +360,29 @@
       el.innerHTML = "";
       return;
     }
+    const rec = buildRecommendation();
+    let recHtml = "";
+    if (rec && rec.intro) {
+      recHtml = `<div class="recommendation-box"><h3>Why this combination</h3><p>${escapeHtml(rec.intro)}</p></div>`;
+    } else if (rec) {
+      recHtml = `<div class="recommendation-box empty"><h3>Why this combination</h3><p>Adjust your goal or pick projects below.</p></div>`;
+    }
     el.hidden = false;
     el.innerHTML = `
+      ${recHtml}
       <p class="search-suggestions-title">Suggested projects — click for full description</p>
       <ul class="search-suggestions-list">${items.map(item => {
         const id = item.isRetainer ? "RETAINER" : item.id;
-        const pri = item.priority != null ? `P${Math.trunc(item.priority)}` : "—";
-        return `<li>
-          <a href="${projectAnchor(id)}" class="search-suggestion-link">${pri} · ${escapeHtml(item.title)}</a>
-          <span class="search-suggestion-fee">${feeLabelFor(item, !!item.isRetainer)}</span>
+        const icons = cardCornerIconsHtml(item, !!item.isRetainer, true);
+        return `<li class="search-suggestion-item">
+          <a href="${projectAnchor(id)}" class="search-suggestion-link">${requiredMarkerHtml(item, !!item.isRetainer)}<span>${escapeHtml(item.title)}</span></a>
+          ${icons}
         </li>`;
       }).join("")}</ul>`;
   }
 
   function renderRecommendation() {
-    /* suggestions live under search panel */
+    renderSearchSuggestions();
   }
 
   function getAllItems() {
@@ -290,37 +431,52 @@
   }
 
   function descriptionHtml(item) {
-    const merged = conciseDescription(item);
-    if (!merged) return "";
-    return `<div class="card-description"><p>${escapeHtml(merged)}</p></div>`;
+    const desc = conciseDescription(item);
+    if (!desc) return "";
+    return `<div class="card-description"><p>${escapeHtml(desc)}</p></div>`;
   }
 
-  function cornerMetaHtml(item) {
-    const parts = [];
-    const cat = item.category;
-    const camp = item.campaignType;
-    if (cat) parts.push(`<span class="badge badge-cat-corner">${escapeHtml(cat)}</span>`);
-    if (camp && camp !== cat) parts.push(`<span class="badge badge-cat">${escapeHtml(camp)}</span>`);
-    if (item.backedMetric) {
-      const tip = escapeHtml(item.backedMetric.source || item.backedMetric.label || "Verified account data");
-      parts.push(`<span class="verified-data-badge" title="${tip}">Account data</span>`);
-    }
-    return parts.length ? `<div class="card-corner-meta">${parts.join("")}</div>` : "";
+  function marketingEducationToHtml(text) {
+    if (!text) return "";
+    return mdLinksToHtml(String(text))
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .split(/\n\n+/)
+      .map(p => `<p>${p.trim()}</p>`)
+      .join("");
   }
 
-  function valueCompactDetailHtml(item) {
-    const bullets = valueAddedBullets(item).slice(0, 4);
-    let html = "";
-    if (bullets.length) {
-      html += `<div class="detail-block"><h4>Value add</h4><ul class="deliverable-list compact">${bullets.map(b =>
-        `<li>${STAR} ${escapeHtml(String(b).replace(/^Deliverable:\s*/i, ""))}</li>`
-      ).join("")}</ul></div>`;
-    }
-    if (item.backedMetric) {
-      const src = item.backedMetric.source ? ` <span class="metric-source">(${escapeHtml(item.backedMetric.source)})</span>` : "";
-      html += `<div class="detail-block account-data-detail"><h4>Account data</h4><p>${escapeHtml(item.backedMetric.label)}${src}</p></div>`;
-    }
-    return html;
+  function marketingReferencesHtml(item) {
+    const edu = item.marketingEducation && String(item.marketingEducation).trim();
+    const links = item.learningsLinks;
+    if (!edu && (!links || !links.length)) return "";
+    const proseHtml = edu ? `<div class="marketing-ref-prose">${marketingEducationToHtml(edu)}</div>` : "";
+    const linkHtml = !edu && links && links.length
+      ? `<ul class="ref-list">${links.map(r =>
+          `<li><a href="${r.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(r.label)}</a></li>`
+        ).join("")}</ul>`
+      : "";
+    return `<div class="detail-block marketing-references">
+      <h4>Marketing references</h4>
+      ${proseHtml}${linkHtml}
+    </div>`;
+  }
+
+  function progressHtml(item) {
+    const done = (item.completedItems || []).map(t => `<li>${escapeHtml(t)}</li>`).join("");
+    const wip = (item.inProgressItems || []).map(t => `<li>${escapeHtml(t)}</li>`).join("");
+    if (!done && !wip) return "";
+    return `<div class="progress-split">
+      ${done ? `<div class="progress-col progress-completed"><h4>Completed</h4><ul class="progress-list">${done}</ul></div>` : ""}
+      ${wip ? `<div class="progress-col progress-wip"><h4>WIP</h4><ul class="progress-list">${wip}</ul></div>` : ""}
+    </div>`;
+  }
+
+  function expandBtnLabel(item, exp) {
+    const hasProgress = hasPartialProgress(item);
+    const hasRefs = !!(item.marketingEducation && String(item.marketingEducation).trim()) ||
+      (item.learningsLinks && item.learningsLinks.length);
+    if (hasProgress || hasRefs) return exp ? "Hide details" : "Show details";
+    return exp ? "Hide notes" : "Questions & notes";
   }
 
   function valueAddedBullets(item) {
@@ -390,42 +546,8 @@
     );
   }
 
-  function marketingLearningsHtml(item) {
-    const edu = item.marketingEducation;
-    const links = item.learningsLinks;
-    if (!edu && (!links || !links.length)) return "";
-    const linkHtml = links && links.length
-      ? `<ul class="ref-list">${links.map(r =>
-          `<li><a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.label}</a></li>`
-        ).join("")}</ul>`
-      : "";
-    return `<div class="detail-block marketing-learnings">
-      <h4>Marketing Education</h4>
-      ${edu ? `<p class="learnings-intro">${mdLinksToHtml(edu)}</p>` : ""}
-      ${linkHtml}
-    </div>`;
-  }
-
-  function progressHtml(item) {
-    const done = (item.completedItems || []).map(t => `<li class="done-item">✓ ${t}</li>`).join("");
-    const wip = (item.inProgressItems || []).map(t => `<li class="wip-item">⚙ ${t}</li>`).join("");
-    if (!done && !wip) return "";
-    return `<div class="progress-block">
-      ${done ? `<h4>Completed</h4><ul class="progress-list">${done}</ul>` : ""}
-      ${wip ? `<div class="in-progress-box"><h4>WIP</h4><ul class="progress-list">${wip}</ul></div>` : ""}
-    </div>`;
-  }
-
-  function deliverablesHtml(item) {
-    if (!item.deliverables || !item.deliverables.length) return "";
-    return `<div class="detail-block">
-      <h4>Key deliverables</h4>
-      <ul class="deliverable-list">${item.deliverables.map(d => `<li>${STAR} ${d}</li>`).join("")}</ul>
-    </div>`;
-  }
-
   function isRequiredMaintenance(item, isRetainer) {
-    return isRetainer || item.id === "RETAINER" || item.category === "Retainer" || !!item.monthlyOnly;
+    return isRequiredProject(item, isRetainer);
   }
 
   function ensureRequiredMaintenance() {
@@ -558,7 +680,7 @@
       const blurb = briefValueAdd(item);
       return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}" data-id="${item.id}">
         <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item)}</span></td>
-        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a> ${paymentBadgeHtml(item, !!item.isRetainer, true)}</td>
+        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${requiredMarkerHtml(item, !!item.isRetainer)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
         <td class="toc-col-blurb toc-blurb">${escapeHtml(blurb)}</td>
         <td class="toc-col-icons toc-value">${valueIconsHtml(item)}</td>
       </tr>`;
@@ -606,10 +728,8 @@
     return costFiltersActive() || !!state.goalText.trim();
   }
 
-  function feeLabelFor(item, isRetainer) {
-    if (isRetainer) return `${fmt(item.fee)} per month`;
-    if (item.monthlyOnly) return `${fmt(item.fee)} per month`;
-    if (item.ongoingFee) return `${fmt(item.fee)} setup + ${fmt(item.ongoingFee)}/mo`;
+  function feeLabelFor(item) {
+    if (item.ongoingFee) return `${fmt(item.fee)} + ${fmt(item.ongoingFee)}`;
     if (item.perCampaignFee) return `${fmt(item.fee)} per campaign`;
     return fmt(item.fee);
   }
@@ -737,11 +857,7 @@
         const monthsEl = document.getElementById("invoice-payment-months");
         if (monthsEl) monthsEl.value = saved.invoicePaymentMonths;
       }
-      if (saved.invoicePaymentMonthlyAmount != null) {
-        state.invoicePaymentMonthlyAmount = saved.invoicePaymentMonthlyAmount;
-        const amountEl = document.getElementById("invoice-payment-amount");
-        if (amountEl) amountEl.value = saved.invoicePaymentMonthlyAmount;
-      }
+      updateInvoiceScheduleAmount();
       if (saved.filters) {
         if (saved.filters.hideNonMatching != null) document.getElementById("filter-hide-nonmatching").checked = saved.filters.hideNonMatching;
         if (saved.filters.maxFee != null) document.getElementById("filter-max-fee").value = saved.filters.maxFee;
@@ -828,14 +944,15 @@
     const exp = state.expanded.has(id);
     const extra = getItemFilterClasses(item, isRetainer);
     const pkgClass = isInRecommendedPackage({ ...item, isRetainer }) ? " package-included" : "";
-    const valueBlurb = briefValueAdd(item);
     const enablerBadge = item.enabler ? `<span class="badge badge-enabler">Foundation project</span>` : "";
+    const iconMarkup = cardCornerIconsHtml(item, isRetainer);
+    const iconsHtml = iconMarkup || "";
     const retainerClass = isRetainer ? " retainer-card required-retainer" : "";
     const maintClass = item.monthlyOnly ? " maintenance-card required-maintenance" : "";
     const subClass = item.parentId ? " card-sub-related" : "";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const chkDisabled = required ? " disabled" : "";
-    const requiredBadge = item.monthlyOnly ? `<span class="badge badge-enabler">Required maintenance</span>` : "";
+    const requiredBadge = "";
 
     return `
       <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}">
@@ -843,29 +960,22 @@
           <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled} ${sel ? "checked" : ""}>
             <div class="card-body">
               <div class="card-top-row">
-                <div class="card-title">${escapeHtml(item.title)}</div>
-                <div class="card-value-slot">
-                  ${cornerMetaHtml(item)}
-                  ${valueIconsHtml(item)}
-                  <span class="card-value-blurb">${escapeHtml(valueBlurb)}</span>
-                </div>
+                <div class="card-title">${requiredMarkerHtml(item, isRetainer)}<span>${escapeHtml(item.title)}</span></div>
+                ${iconsHtml}
               </div>
               <div class="card-meta-row">
-                ${paymentBadgeHtml(item, isRetainer, false)}
                 ${relatedSubHtml(item)}
                 ${statusBadge(item)}
                 ${enablerBadge}
                 ${requiredBadge}
               </div>
               ${descriptionHtml(item)}
-            ${progressHtml(item)}
-            <button type="button" class="expand-btn">${exp ? "Hide details" : "Deliverables and learnings"}</button>
+            <button type="button" class="expand-btn">${expandBtnLabel(item, exp)}</button>
           </div>
         </div>
         <div class="card-detail">
-          ${valueCompactDetailHtml(item)}
-          ${deliverablesHtml(item)}
-          ${marketingLearningsHtml(item)}
+          ${progressHtml(item)}
+          ${marketingReferencesHtml(item)}
           <div class="detail-block">
             <h4>Questions or suggestions</h4>
             <textarea class="project-note" data-id="${id}" placeholder="Ask about scope, timing, or changes…">${escapeHtml(state.notes[id] || "")}</textarea>
@@ -959,6 +1069,10 @@
     return true;
   }
 
+  function canContinue() {
+    return getInvoiceLineItems().length > 0 || hasAnyNotes();
+  }
+
   function canSubmit() {
     const hasContent = hasSelection() || hasAnyNotes();
     if (!hasContent) return false;
@@ -970,7 +1084,26 @@
   }
 
   function updateSubmitButtons() {
-    document.getElementById("submit-selections").disabled = !canSubmit();
+    const cont = document.getElementById("continue-to-confirm");
+    if (cont) cont.disabled = !canContinue();
+    const submit = document.getElementById("submit-selections");
+    if (submit) submit.disabled = !canSubmit();
+  }
+
+  function showConfirmPage() {
+    if (!canContinue()) return;
+    const pavi = document.getElementById("confirm-pavi");
+    if (pavi) pavi.src = PAVI_IMG;
+    document.getElementById("confirm-page").classList.add("show");
+    document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
+    updateInvoiceScheduleAmount();
+    updateSubmitButtons();
+    document.getElementById("submitted-email")?.focus();
+  }
+
+  function hideConfirmPage() {
+    document.getElementById("confirm-page").classList.remove("show");
+    document.getElementById("confirm-page").setAttribute("aria-hidden", "true");
   }
 
   function buildPayload() {
@@ -983,7 +1116,7 @@
     const maintRows = maintenance.map(p => ({
       id: p.id,
       title: p.title,
-      fee: feeLabelFor(p, false),
+      fee: feeLabelFor(p),
       feeNum: p.fee,
       timeline: p.timeline || "",
       priority: p.priority ?? null,
@@ -994,7 +1127,7 @@
     const projectRows = selected.map(p => ({
       id: p.id,
       title: p.title,
-      fee: feeLabelFor(p, false),
+      fee: feeLabelFor(p),
       feeNum: itemSelectionCost(p),
       timeline: p.timeline || "",
       priority: p.priority ?? null,
@@ -1093,18 +1226,9 @@
     return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
   }
 
-  function showThankYou(payload) {
-    const guideImg = document.getElementById("pavi-guide-img");
-    if (guideImg && !guideImg.src.includes("pavi-full-body")) {
-      guideImg.src = "assets/pavi-full-body.png";
-    }
-  }
-
   function initPaviGuide() {
     const guideImg = document.getElementById("pavi-guide-img");
-    if (guideImg && !guideImg.src.includes("pavi-full-body")) {
-      guideImg.src = "assets/pavi-full-body.png";
-    }
+    if (guideImg) guideImg.src = PAVI_IMG;
   }
 
   function showThankYou(payload) {
@@ -1112,12 +1236,12 @@
     const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-pavi").src = "assets/pavi-full-body.png";
+    document.getElementById("thank-you-pavi").src = PAVI_IMG;
     document.getElementById("thank-you-sub").textContent =
       "Your selections set Pav Law up for stronger leads, better intake, and marketing you can measure.";
 
     const lines = [];
-    if (payload.retainer) lines.push(`<li><strong>${escapeHtml(RETAINER.title)}</strong> — ${fmt(RETAINER.fee)}/mo</li>`);
+    if (payload.retainer) lines.push(`<li><strong>${escapeHtml(RETAINER.title)}</strong> — ${fmt(RETAINER.fee)}</li>`);
     (payload.projects || []).forEach(p => lines.push(`<li><strong>${escapeHtml(p.title)}</strong> — ${p.fee}</li>`));
     if (!lines.length) lines.push("<li><em>Notes submitted — Gilded Goose will follow up</em></li>");
 
@@ -1159,7 +1283,7 @@
       <div class="thank-you-selection">
         <h3>Your consulting estimate</h3>
         <p class="thank-you-total-single">${itemCount} item${itemCount === 1 ? "" : "s"} · <strong>${totalLine}</strong></p>
-        <p class="thank-you-terms-line">Monthly payment terms: <strong>${termsLine}</strong></p>
+        <p class="thank-you-terms-line">Invoice schedule: <strong>${termsLine}</strong></p>
       </div>
       ${depositHtml}
       ${notesHtml}
@@ -1176,6 +1300,7 @@
 
     document.getElementById("thank-you").classList.add("show");
     document.getElementById("thank-you").setAttribute("aria-hidden", "false");
+    hideConfirmPage();
     document.getElementById("main-app").classList.add("hidden");
     window.scrollTo(0, 0);
   }
@@ -1186,9 +1311,12 @@
     if (!items.length) {
       return `<p class="empty-state">Selections appear here as you choose projects.</p>`;
     }
-    const rows = items.map(row =>
-      `<div class="total-row"><span><a href="${projectAnchor(row.id)}" class="invoice-item-link">${escapeHtml(row.title)}</a></span><span>${row.fee}</span></div>`
-    ).join("");
+    const rows = items.map(row => {
+      const req = row.id === "RETAINER"
+        ? requiredMarkerHtml(RETAINER, true)
+        : (() => { const p = PROJECTS.find(x => x.id === row.id); return p ? requiredMarkerHtml(p, false) : ""; })();
+      return `<div class="total-row"><span><a href="${projectAnchor(row.id)}" class="invoice-item-link">${req}<span>${escapeHtml(row.title)}</span></a></span><span>${row.fee}</span></div>`;
+    }).join("");
     const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;
     return rows + `<div class="total-row grand total-row-single"><span>${label}</span><span>${fmt(total)}</span></div>`;
   }
@@ -1207,6 +1335,7 @@
   function renderSummary() {
     renderInvoiceSummary();
     renderSearchSuggestions();
+    updateInvoiceScheduleAmount();
     updateSubmitButtons();
     renderProjectToc();
   }
@@ -1248,12 +1377,16 @@
     updateSubmitButtons();
   }
 
+  document.getElementById("continue-to-confirm").addEventListener("click", showConfirmPage);
+  document.getElementById("confirm-back").addEventListener("click", hideConfirmPage);
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
   document.getElementById("general-suggestions").addEventListener("input", saveState);
   document.getElementById("submitted-email").addEventListener("input", () => { saveState(); updateSubmitButtons(); });
-  document.getElementById("invoice-payment-months").addEventListener("change", saveState);
-  document.getElementById("invoice-payment-amount").addEventListener("input", saveState);
+  document.getElementById("invoice-payment-months").addEventListener("change", () => {
+    updateInvoiceScheduleAmount();
+    saveState();
+  });
   document.getElementById("goal-input").addEventListener("input", () => {
     state.goalText = document.getElementById("goal-input").value;
     saveState();
