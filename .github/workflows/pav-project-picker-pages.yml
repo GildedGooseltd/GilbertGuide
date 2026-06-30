@@ -37,13 +37,13 @@ jobs:
             DEP="${DEPOSIT_AMOUNT:-2500}"
             if [ -n "$QUICKBOOKS_URL" ]; then
               printf 'window.PAV_PICKER_CONFIG = {\n  webhookUrl: "%s",\n  depositAmount: %s,\n  quickbooksDepositUrl: "%s"\n};\n' \
-                "$WEBHOOK_URL" "$DEP" "$QUICKBOOKS_URL" > config.js
+                "$WEBHOOK_URL" "$DEP" "$QUICKBOOKS_URL" > pages-config.js
             else
               printf 'window.PAV_PICKER_CONFIG = {\n  webhookUrl: "%s",\n  depositAmount: %s,\n  quickbooksDepositUrl: ""\n};\n' \
-                "$WEBHOOK_URL" "$DEP" > config.js
+                "$WEBHOOK_URL" "$DEP" > pages-config.js
             fi
-          elif [ ! -f config.js ]; then
-            cp config.example.js config.js
+          elif [ ! -f pages-config.js ]; then
+            cp config.example.js pages-config.js
           fi
 
       - name: Deploy to gh-pages
