@@ -2,7 +2,9 @@
 
 | | |
 |---|---|
-| **Icon** | assets/pavi-icon.png |
+| **Icon** | assets/gigi-icon.png |
+| **Seal** | assets/gigi-seal.jpg |
+| **Logo** | assets/gigi-logo.jpg |
 
 ---
 

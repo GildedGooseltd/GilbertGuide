@@ -1,9 +1,13 @@
 (function () {
-  const CONFIG = Object.assign(
-    { webhookUrl: "", depositAmount: 2500, quickbooksDepositUrl: "" },
-    typeof window !== "undefined" && window.PAV_PICKER_CONFIG ? window.PAV_PICKER_CONFIG : {}
-  );
-  const PAVI_IMG = PROJECT_DATA.paviIcon || "assets/pavi-icon.png";
+  function getConfig() {
+    return Object.assign(
+      { webhookUrl: "", depositAmount: 2500, quickbooksDepositUrl: "" },
+      typeof window !== "undefined" && window.PAV_PICKER_CONFIG ? window.PAV_PICKER_CONFIG : {}
+    );
+  }
+  let CONFIG = getConfig();
+  const GIGI_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-icon.png";
+  const GIGI_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-seal.jpg";
 
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
@@ -15,10 +19,10 @@
 
   const REQUIRED_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
 
-  const PAV_LAW_SHIELD = "assets/pav-law-shield.svg";
+  const ACCOUNT_DATA_ICON = "assets/gilded-goose-account.svg";
 
-  function pavLawShieldHtml() {
-    return `<img class="pav-law-shield-img" src="${PAV_LAW_SHIELD}" alt="" width="24" height="29">`;
+  function accountDataIconHtml() {
+    return `<img class="pav-law-shield-img" src="${ACCOUNT_DATA_ICON}" alt="" width="24" height="29">`;
   }
 
   const VALUE_ICON_SVGS = {
@@ -213,7 +217,7 @@
     const label = item.backedMetric.label || "Verified account data";
     const src = item.backedMetric.source ? ` (${item.backedMetric.source})` : "";
     const tip = escapeHtml(label + src);
-    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${pavLawShieldHtml()}</span>`;
+    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${accountDataIconHtml()}</span>`;
   }
 
   function cardCornerIconsHtml(item, isRetainer, inline) {
@@ -231,7 +235,7 @@
       VALUE_ICON_DEFS.map(d =>
         `<span class="key-item">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></span>`
       ).join("") +
-      `<span class="key-item"><span class="account-data-shield key-shield">${pavLawShieldHtml()}</span><span class="key-item-label">Account data</span></span>`;
+      `<span class="key-item"><span class="account-data-shield key-shield">${accountDataIconHtml()}</span><span class="key-item-label">Account data</span></span>`;
   }
 
   function isItemSelected(item) {
@@ -251,13 +255,20 @@
     return n;
   }
 
-  function sortSelectedFirst(items) {
+  function sortCartFirst(items) {
     return [...items].sort((a, b) => {
       const aSel = isItemSelected(a);
       const bSel = isItemSelected(b);
       if (aSel !== bSel) return aSel ? -1 : 1;
+      const aRec = state.recommended.has(a.id);
+      const bRec = state.recommended.has(b.id);
+      if (aRec !== bRec) return aRec ? -1 : 1;
       return (a.priority ?? 99) - (b.priority ?? 99);
     });
+  }
+
+  function sortSelectedFirst(items) {
+    return sortCartFirst(items);
   }
 
   function getInvoiceLineItems() {
@@ -359,12 +370,13 @@
     }
 
     if (!items.length) {
-      parts.push(`<p class="empty-state">Selections appear here as you choose projects.</p>`);
+      parts.push(`<p class="empty-state">Your cart is empty — describe your goals above or pick projects below.</p>`);
     } else {
-      parts.push(`<div class="total-box">${buildTotalsHtml()}</div>`);
+      parts.push(`<div class="total-box cart-box">${buildTotalsHtml()}</div>`);
     }
 
     el.innerHTML = parts.join("");
+    updateGigiTip();
   }
 
   function renderRecommendation() {
@@ -772,10 +784,10 @@
     getFilters();
     const goal = document.getElementById("goal-input").value.trim();
     state.goalText = goal;
-    state.projects = new Set();
     state.recommended = new Set();
     ensureRequiredMaintenance();
     state.recommended.add("RETAINER");
+    let added = 0;
 
     if (goal) {
       const words = goal.toLowerCase().split(/\W+/).filter(Boolean);
@@ -786,11 +798,15 @@
       scored.slice(0, 6).forEach(({ item, isRetainer }) => {
         if (isRetainer || item.monthlyOnly) return;
         if (!itemPassesCostPriorityFilter({ ...item, isRetainer: false })) return;
+        if (!state.projects.has(item.id)) added += 1;
         state.projects.add(item.id);
         state.recommended.add(item.id);
       });
 
       if (!scored.length && !silent) showToast("No strong matches — try different keywords", true);
+      else if (added > 0 && !silent) {
+        showToast(`Added ${added} project${added === 1 ? "" : "s"} to your cart`);
+      }
     } else {
       const pkg = PROJECT_DATA.recommendedPackage;
       (pkg?.projectIds || []).forEach(id => {
@@ -970,8 +986,8 @@
 
   function renderAllCards() {
     const list = document.getElementById("project-list");
-    const maintenance = sortByPriority(getMaintenanceProjects());
-    const optional = sortSelectedFirst(orderedProjects().filter(p => !p.monthlyOnly));
+    const maintenance = sortCartFirst(getMaintenanceProjects());
+    const optional = sortCartFirst(orderedProjects().filter(p => !p.monthlyOnly));
     const visible = visibleOptionalProjects(optional);
     const hidden = hiddenOptionalCount(optional);
     let markedFirst = false;
@@ -1058,26 +1074,34 @@
   }
 
   function canSubmit() {
-    const hasContent = hasSelection() || hasAnyNotes();
-    if (!hasContent) return false;
-    if (CONFIG.webhookUrl) {
-      const email = (document.getElementById("submitted-email") || {}).value || "";
-      if (!email.trim()) return false;
-    }
-    return true;
+    const email = (document.getElementById("submitted-email") || {}).value || "";
+    if (!email.trim()) return false;
+    return getInvoiceLineItems().length > 0 || hasAnyNotes();
+  }
+
+  function updateWebhookWarning() {
+    const el = document.getElementById("webhook-warning");
+    if (!el) return;
+    const cfg = getConfig();
+    el.hidden = !!cfg.webhookUrl;
   }
 
   function updateSubmitButtons() {
+    CONFIG = getConfig();
     const cont = document.getElementById("continue-to-confirm");
     if (cont) cont.disabled = !canContinue();
     const submit = document.getElementById("submit-selections");
-    if (submit) submit.disabled = !canSubmit();
+    if (submit) {
+      submit.disabled = !canSubmit();
+      submit.title = CONFIG.webhookUrl ? "" : "Webhook not configured on live site — set PAV_PICKER_WEBHOOK_URL in GitHub Secrets";
+    }
+    updateWebhookWarning();
   }
 
   function showConfirmPage() {
     if (!canContinue()) return;
-    const pavi = document.getElementById("confirm-pavi");
-    if (pavi) pavi.src = PAVI_IMG;
+    const pavi = document.getElementById("confirm-gigi");
+    if (pavi) pavi.src = GIGI_ICON;
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
     updateInvoiceScheduleAmount();
@@ -1167,7 +1191,7 @@
     const hasFoundation = selected.some(p => p.enabler);
     const hasLeads = selected.some(p => /paid media|search|display|referral|seo/i.test((p.category || "") + (p.campaignType || "")));
     const parts = [];
-    parts.push(`You selected ${count} investment${count === 1 ? "" : "s"} that directly support how Pav Law wins and keeps clients.`);
+    parts.push(`You selected ${count} investment${count === 1 ? "" : "s"} that directly support measurable growth — leads, intake, and marketing you can track.`);
     if (hasFoundation) {
       parts.push("Starting with foundation work means every ad dollar and referral can be tracked, answered, and improved — not wasted on broken intake or blind spend.");
     }
@@ -1210,9 +1234,40 @@
     return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
   }
 
-  function initPaviGuide() {
-    const guideImg = document.getElementById("pavi-guide-img");
-    if (guideImg) guideImg.src = PAVI_IMG;
+  function pickGigiTip() {
+    const items = getInvoiceLineItems();
+    const goal = (state.goalText || "").trim();
+    const count = items.length;
+    if (!goal && !count) {
+      return "Describe your goals — I'll match projects to your cart.";
+    }
+    if (goal && !count) {
+      return "Good start. I'll suggest matches as you type — or pick projects below.";
+    }
+    if (count === 1) {
+      return "One in the cart. Add foundation or retainer work if you want a fuller stack.";
+    }
+    if (count >= 2 && count <= 4) {
+      return "Solid mix. Check “Why this combination” in your cart for how they fit.";
+    }
+    if (count > 4) {
+      return "Full cart — use invoice schedule on submit to spread project fees.";
+    }
+    if (state.retainer && count > 0) {
+      return "Retainer plus projects — ads stay managed while upgrades ship.";
+    }
+    return "Pick projects or refine your goal — I'm here to help you prioritize.";
+  }
+
+  function updateGigiTip() {
+    const bubble = document.getElementById("gigi-tip-bubble");
+    if (bubble) bubble.textContent = pickGigiTip();
+  }
+
+  function initGigiGuide() {
+    const guideImg = document.getElementById("gigi-guide-img");
+    if (guideImg) guideImg.src = GIGI_ICON;
+    updateGigiTip();
   }
 
   function showThankYou(payload) {
@@ -1220,9 +1275,9 @@
     const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-pavi").src = PAVI_IMG;
+    document.getElementById("thank-you-gigi").src = GIGI_SEAL;
     document.getElementById("thank-you-sub").textContent =
-      "Your selections set Pav Law up for stronger leads, better intake, and marketing you can measure.";
+      "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
 
     const lines = [];
     if (payload.retainer) lines.push(`<li><strong>${escapeHtml(RETAINER.title)}</strong> — ${fmt(RETAINER.fee)}</li>`);
@@ -1262,7 +1317,7 @@
       : `<p class="confirm-note">Confirmation sent to Gilded Goose.</p>`;
 
     document.getElementById("thank-you-body").innerHTML = `
-      <div class="thank-you-affirm"><strong>Why this is a strong choice for Pav Law</strong>${escapeHtml(buildThankYouAffirmation(payload, selected))}</div>
+      <div class="thank-you-affirm"><strong>Why this is a strong choice</strong>${escapeHtml(buildThankYouAffirmation(payload, selected))}</div>
       ${buildThankYouReturnsHtml(selected, payload.retainer)}
       <div class="thank-you-selection">
         <h3>Your consulting estimate</h3>
@@ -1331,27 +1386,31 @@
 
   async function submitSelections() {
     if (!canSubmit()) return;
+    CONFIG = getConfig();
     const payload = buildPayload();
     const btn = document.getElementById("submit-selections");
     btn.disabled = true;
     btn.textContent = "Submitting…";
     let ok = false;
 
-    if (CONFIG.webhookUrl) {
+    if (!CONFIG.webhookUrl) {
+      showToast("Submit backend not configured — add PAV_PICKER_WEBHOOK_URL in GitHub repo Secrets, then redeploy.", true);
+    } else {
       try {
         const res = await fetch(CONFIG.webhookUrl, {
-          method: "POST", mode: "cors",
-          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          mode: "cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload)
         });
-        const data = await res.json();
-        if (data.ok) ok = true;
-        else throw new Error(data.error || "Submit failed");
+        const text = await res.text();
+        let data = {};
+        try { data = JSON.parse(text); } catch (e) { /* GAS may return empty on some errors */ }
+        if (res.ok && (data.ok || text.includes('"ok":true'))) ok = true;
+        else throw new Error(data.error || text.slice(0, 120) || `HTTP ${res.status}`);
       } catch (err) {
-        showToast("Submit failed — try again or email Gilded Goose. " + err.message, true);
+        showToast("Submit failed — try again or email support@gildedgooselimited.com. " + err.message, true);
       }
-    } else {
-      showToast("Submit not configured yet — contact Gilded Goose.", true);
     }
 
     if (ok) showThankYou(payload);
@@ -1402,19 +1461,20 @@
 
   loadState();
   ensureRequiredMaintenance();
-  initPaviGuide();
+  initGigiGuide();
   document.getElementById("plan-summary")?.addEventListener("click", e => {
     const link = e.target.closest(".invoice-item-link");
     if (!link) return;
+    e.preventDefault();
     const id = (link.getAttribute("href") || "").replace("#project-", "");
     if (!id) return;
     state.expanded.add(id);
     saveState();
-    const card = document.getElementById("project-" + id);
-    if (card) {
-      card.classList.add("expanded");
-      card.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    renderAllCards();
+    requestAnimationFrame(() => {
+      const card = document.getElementById("project-" + id);
+      if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   });
   renderPackageIntro();
   renderValueIconKey();
