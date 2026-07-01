@@ -23,19 +23,19 @@
 
   const REQUIRED_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
 
-  const ACCOUNT_DATA_ICON = "assets/gilded-goose-account.svg";
+  const ACCOUNT_DATA_ICON = "assets/gg-shield-emblem.png";
 
   function accountDataBadgeImg() {
     return `<img class="pav-law-shield-img" src="${ACCOUNT_DATA_ICON}" alt="" width="24" height="29">`;
   }
 
   const VALUE_ICON_SVGS = {
-    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12l-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25L8.29 2.34a1 1 0 0 0-1.42 0l-2.76 2.76a1 1 0 0 0 0 1.42l10.42 10.42"/></svg>`,
-    retainer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>`,
+    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.8 2.2 22 6.4"/><path d="m20.8 4.2-5.8 5.8"/></svg>`,
+    retainer: REQUIRED_ICON_SVG,
     leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.5"/><path d="M2 20v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5V20"/><circle cx="17.5" cy="8.5" r="2.5"/><path d="M21 20v-1a3.5 3.5 0 0 0-2.5-3.35"/><circle cx="5" cy="10.5" r="2"/><path d="M1 20v-0.5a2.5 2.5 0 0 1 2-2.45"/></svg>`,
     crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/><path d="M13 13h5"/><path d="M13 17h5"/></svg>`,
     seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
-    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="3"/><path d="M3 20v-2a4 4 0 0 1 4-4h0"/><circle cx="17" cy="8" r="3"/><path d="M21 20v-2a4 4 0 0 0-4-4h0"/><path d="M10.5 10.5h3"/><path d="M12 10.5v2.5"/><path d="M11 13h2"/></svg>`,
+    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7-4 4 4 4"/><path d="M3 11h13"/><path d="m17 17 4-4-4-4"/><path d="M21 13H8"/></svg>`,
     efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
     intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v9H8l-4 4V5z"/></svg>`,
     creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.5 0-8 3.6-8 8.2 0 2.8 1.3 4.8 3 6 .6.4 1.2.6 1.8.6.9 0 1.6-.5 1.9-1.3.5-1 1.6-1.6 2.6-1.3 1.1.4 1.8 1.5 1.8 2.7 0 .3 0 .6-.1.9-.4 1.4 1 2.9 2.8 2.9 3.2 0 5.8-2.6 5.8-5.8C22 8.2 17.5 3 12 3z"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="12.5" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="13.5" r="1" fill="currentColor" stroke="none"/></svg>`,
@@ -103,6 +103,7 @@
     invoicePaymentMonthlyAmount: "",
     goalText: "",
     gilbertChat: [],
+    iconFilters: [],
     tocSort: { field: "priority", dir: "asc" },
     showAllProjects: false
   };
@@ -232,14 +233,52 @@
     return `<div class="${cls}">${valueHtml}${dataHtml}</div>`;
   }
 
+  function itemMatchesIconFilters(item) {
+    if (!state.iconFilters.length) return true;
+    if (state.iconFilters.includes("account-data") && item.backedMetric) return true;
+    const iconIds = getValueIcons(item).map(i => i.id);
+    return state.iconFilters.some(f => f !== "account-data" && iconIds.includes(f));
+  }
+
+  function toggleIconFilter(id) {
+    const idx = state.iconFilters.indexOf(id);
+    if (idx >= 0) state.iconFilters.splice(idx, 1);
+    else state.iconFilters.push(id);
+    saveState();
+    renderValueIconKey();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  }
+
+  function clearIconFilters() {
+    state.iconFilters = [];
+    saveState();
+    renderValueIconKey();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  }
+
   function renderValueIconKey() {
     const el = document.getElementById("value-icon-key");
     if (!el) return;
-    el.innerHTML = `<span class="value-icon-key-title">Value icons key</span>` +
-      VALUE_ICON_DEFS.map(d =>
-        `<span class="key-item">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></span>`
-      ).join("") +
-      `<span class="key-item"><span class="account-data-shield key-shield">${accountDataBadgeImg()}</span><span class="key-item-label">Account data</span></span>`;
+    const hint = state.iconFilters.length
+      ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear filters (${state.iconFilters.length})</button>`
+      : `<span class="icon-filter-hint">Click an icon to filter the project list</span>`;
+    el.innerHTML = `<span class="value-icon-key-title">Filter by value</span>${hint}` +
+      VALUE_ICON_DEFS.map(d => {
+        const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
+        return `<button type="button" class="key-item key-filter-btn${active}" data-icon-filter="${d.id}">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></button>`;
+      }).join("") +
+      (() => {
+        const active = state.iconFilters.includes("account-data") ? " filter-active" : "";
+        return `<button type="button" class="key-item key-filter-btn${active}" data-icon-filter="account-data"><span class="account-data-shield key-shield">${accountDataBadgeImg()}</span><span class="key-item-label">Account data</span></button>`;
+      })();
+    el.querySelectorAll(".key-filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => toggleIconFilter(btn.dataset.iconFilter));
+    });
+    el.querySelector("#icon-filter-clear")?.addEventListener("click", clearIconFilters);
   }
 
   function isItemSelected(item) {
@@ -354,26 +393,24 @@
     return { intro: introParts.join(" ") };
   }
 
-  function renderPlanSummary() {
-    const el = document.getElementById("plan-summary");
+  function renderWhyPanel() {
+    const el = document.getElementById("why-panel");
     if (!el) return;
-    const items = getInvoiceLineItems();
     const rec = buildRecommendation();
-    const parts = [];
-
     if (state.goalText.trim() && rec && rec.intro) {
-      parts.push(`<div class="recommendation-box"><h3>Why this combination</h3><p>${escapeHtml(rec.intro)}</p></div>`);
+      el.hidden = false;
+      el.innerHTML = `<div class="recommendation-box"><h3>Why this combination</h3><p>${escapeHtml(rec.intro)}</p></div>`;
     } else if (state.goalText.trim()) {
-      parts.push(`<div class="recommendation-box empty"><h3>Why this combination</h3><p>Adjust your goal or pick projects below.</p></div>`);
-    }
-
-    if (!items.length) {
-      parts.push(`<p class="empty-state">Your cart is empty — describe your goals above or pick projects below.</p>`);
+      el.hidden = false;
+      el.innerHTML = `<div class="recommendation-box empty"><h3>Why this combination</h3><p>Pick projects below or tell Gilbert more about the problem.</p></div>`;
     } else {
-      parts.push(`<div class="total-box cart-box">${buildTotalsHtml()}</div>`);
+      el.hidden = true;
+      el.innerHTML = "";
     }
+  }
 
-    el.innerHTML = parts.join("");
+  function renderPlanSummary() {
+    renderWhyPanel();
   }
 
   function renderRecommendation() {
@@ -673,7 +710,7 @@
     const statusEl = document.getElementById("table-filter-status");
     const hintEl = document.getElementById("toc-summary-hint");
     if (!listEl) return;
-    const items = sortTocItems(allItemsByPriority());
+    const items = sortTocItems(allItemsByPriority().filter(item => itemMatchesIconFilters(item)));
     listEl.innerHTML = items.map(item => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
@@ -689,7 +726,13 @@
       const selCount = items.filter(i => isItemSelected(i)).length;
       hintEl.textContent = selCount ? `${items.length} projects · ${selCount} selected` : `${items.length} projects`;
     }
-    if (statusEl) statusEl.textContent = "";
+    if (statusEl) {
+      const total = allItemsByPriority().length;
+      const shown = items.length;
+      statusEl.textContent = state.iconFilters.length && shown !== total
+        ? `Showing ${shown} of ${total} projects (icon filter)`
+        : "";
+    }
     updateTocSortUi();
   }
 
@@ -729,6 +772,8 @@
   function getItemFilterClasses(item, isRetainer) {
     const classes = [];
     const id = isRetainer ? "RETAINER" : item.id;
+    const selected = isRetainer ? state.retainer : state.projects.has(id);
+    if (!itemMatchesIconFilters(item) && !selected) classes.push("filtered-out");
     if (state.recommended.has(id)) classes.push("recommended");
     return classes.join(" ");
   }
@@ -797,10 +842,12 @@
     document.getElementById("goal-input").value = "";
     state.goalText = "";
     state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+    state.iconFilters = [];
     state.projects = new Set();
     state.recommended = new Set();
     ensureRequiredMaintenance();
     renderGilbertChat();
+    renderValueIconKey();
     suggestPlan(true);
   }
 
@@ -837,6 +884,9 @@
       if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.length) {
         state.gilbertChat = saved.gilbertChat;
       }
+      if (Array.isArray(saved.iconFilters)) {
+        state.iconFilters = saved.iconFilters;
+      }
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
     } catch (e) {}
@@ -859,7 +909,8 @@
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
       goalText: state.goalText,
-      gilbertChat: state.gilbertChat
+      gilbertChat: state.gilbertChat,
+      iconFilters: state.iconFilters
     }));
     updateSubmitButtons();
   }
@@ -1241,6 +1292,7 @@
     const text = (input?.value || "").trim();
     if (!text) return;
     state.goalText = text;
+    if (input) input.value = "";
     state.gilbertChat.push({ role: "user", text });
     state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(text) });
     renderGilbertChat();
@@ -1422,18 +1474,12 @@
     updateInvoiceScheduleAmount();
     saveState();
   });
-  document.getElementById("goal-input").addEventListener("input", () => {
-    state.goalText = document.getElementById("goal-input").value;
-    saveState();
-  });
-  document.getElementById("goal-input").addEventListener("keydown", e => {
-    if (e.key === "Enter" && !e.shiftKey) {
+  document.getElementById("goal-input")?.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
       e.preventDefault();
       sendGilbertMessage();
     }
   });
-  document.getElementById("gilbert-send").addEventListener("click", sendGilbertMessage);
-  document.getElementById("clear-filters").addEventListener("click", clearFilters);
   document.getElementById("expand-all-projects").addEventListener("change", e => setExpandAll(e.target.checked));
 
   document.querySelectorAll(".toc-sort-btn").forEach(btn => {
@@ -1447,20 +1493,6 @@
   loadState();
   ensureRequiredMaintenance();
   initGilbertGuide();
-  document.getElementById("plan-summary")?.addEventListener("click", e => {
-    const link = e.target.closest(".invoice-item-link");
-    if (!link) return;
-    e.preventDefault();
-    const id = (link.getAttribute("href") || "").replace("#project-", "");
-    if (!id) return;
-    state.expanded.add(id);
-    saveState();
-    renderAllCards();
-    requestAnimationFrame(() => {
-      const card = document.getElementById("project-" + id);
-      if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  });
   renderPackageIntro();
   renderValueIconKey();
   renderAllCards();
