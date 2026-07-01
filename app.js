@@ -1305,6 +1305,7 @@
     if (guideImg) {
       guideImg.src = GILBERT_HERO;
       guideImg.alt = `${GUIDE_NAME} — your Gilded Goose guide`;
+      guideImg.className = "gilbert-caricature";
     }
     if (!state.gilbertChat.length) {
       state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
