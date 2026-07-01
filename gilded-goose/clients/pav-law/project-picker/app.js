@@ -51,10 +51,18 @@
     return `<span class="required-icon" title="${escapeHtml(tip)}" aria-label="${escapeHtml(tip)}">${REQUIRED_ICON_SVG}</span>`;
   }
 
-  function priorityTocHtml(item) {
+  function uniqueTocPriority(item, usedPriorities) {
+    if (item.isRetainer || item.id === "RETAINER") return null;
+    if (item.priority == null || item.priority === "" || Number.isNaN(Number(item.priority))) return null;
+    let p = Math.trunc(Number(item.priority));
+    while (usedPriorities.has(p)) p += 1;
+    usedPriorities.add(p);
+    return p;
+  }
+
+  function priorityTocHtml(item, displayPriority) {
     const required = isRequiredProject(item, !!item.isRetainer);
-    const hasPriority = item.priority != null && item.priority !== "" && !Number.isNaN(Number(item.priority));
-    const p = hasPriority ? Math.trunc(Number(item.priority)) : "";
+    const p = displayPriority != null ? displayPriority : "";
     const urgent = isPriorityUrgent(item) ? '<span class="priority-urgent" title="Urgent or fixing an active issue">!</span>' : "";
     const req = required ? requiredMarkerHtml(item, !!item.isRetainer) : "";
     return `<span class="toc-priority-inner">${urgent}${p}</span>${req ? `<span class="toc-required-icon">${req}</span>` : ""}`;
@@ -711,13 +719,15 @@
     const hintEl = document.getElementById("toc-summary-hint");
     if (!listEl) return;
     const items = sortTocItems(allItemsByPriority().filter(item => itemMatchesIconFilters(item)));
+    const usedPriorities = new Set();
     listEl.innerHTML = items.map(item => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
       const blurb = briefValueAdd(item);
+      const displayPriority = uniqueTocPriority(item, usedPriorities);
       return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}" data-id="${item.id}">
-        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item)}</span></td>
-        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${requiredMarkerHtml(item, !!item.isRetainer)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
+        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span></td>
+        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
         <td class="toc-col-blurb toc-blurb">${escapeHtml(blurb)}</td>
         <td class="toc-col-icons toc-value">${valueIconsHtml(item)}</td>
       </tr>`;

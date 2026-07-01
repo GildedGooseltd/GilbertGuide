@@ -412,7 +412,7 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     if (!o) return item;
     const next = { ...item };
     if (o.title) next.title = o.title;
-    const pm = String(o.p || "").match(/^P(\d+)$/i);
+    const pm = String(o.p || "").match(/^P?(\d+)$/i);
     if (pm) next.priority = parseInt(pm[1], 10);
     return next;
   };

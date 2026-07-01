@@ -435,7 +435,7 @@ window.PROJECT_DATA = {
     },
     {
       "id": "B5",
-      "priority": 7,
+      "priority": 8,
       "fee": 1900,
       "status": "available",
       "category": "Direct Mail",
