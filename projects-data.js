@@ -3,13 +3,10 @@
  * Rebuild: npm run build
  */
 window.PROJECT_DATA = {
-  "guideName": "Lord Gilbert Granville",
-  "guideShortName": "Gilbert",
-  "guideIcon": "assets/gigi-goose-guide.svg",
-  "guideHero": "assets/gigi-goose-walk.png",
-  "guideSeal": "assets/gigi-logo-frame.png",
-  "guideLogo": "assets/gigi-logo-frame.png",
-  "paviIcon": "assets/gigi-goose-guide.svg",
+  "guideIcon": "assets/gigi-icon.png",
+  "guideSeal": "assets/gigi-seal.jpg",
+  "guideLogo": "assets/gigi-logo.jpg",
+  "paviIcon": "assets/gigi-icon.png",
   "recommendedPackage": {
     "label": "Recommended package (P1 B2 · P6 B1 · P10 B4 · P11 A4 · P3 A2 + Retainer)",
     "retainer": true,

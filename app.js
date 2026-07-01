@@ -6,11 +6,8 @@
     );
   }
   let CONFIG = getConfig();
-  const GILBERT_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-goose-guide.svg";
-  const GILBERT_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
-  const GILBERT_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-logo-frame.png";
-  const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
-  const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
+  const GIGI_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-icon.png";
+  const GIGI_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-seal.jpg";
 
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
@@ -379,7 +376,7 @@
     }
 
     el.innerHTML = parts.join("");
-    updateGilbertTip();
+    updateGigiTip();
   }
 
   function renderRecommendation() {
@@ -1103,8 +1100,8 @@
 
   function showConfirmPage() {
     if (!canContinue()) return;
-    const guideImg = document.getElementById("confirm-gilbert");
-    if (guideImg) guideImg.src = GILBERT_ICON;
+    const pavi = document.getElementById("confirm-gigi");
+    if (pavi) pavi.src = GIGI_ICON;
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
     updateInvoiceScheduleAmount();
@@ -1237,12 +1234,12 @@
     return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
   }
 
-  function pickGilbertTip() {
+  function pickGigiTip() {
     const items = getInvoiceLineItems();
     const goal = (state.goalText || "").trim();
     const count = items.length;
     if (!goal && !count) {
-      return `${GUIDE_SHORT} here — describe your goals and I'll match projects to your cart.`;
+      return "Describe your goals — I'll match projects to your cart.";
     }
     if (goal && !count) {
       return "Good start. I'll suggest matches as you type — or pick projects below.";
@@ -1262,18 +1259,15 @@
     return "Pick projects or refine your goal — I'm here to help you prioritize.";
   }
 
-  function updateGilbertTip() {
-    const bubble = document.getElementById("gilbert-tip-bubble");
-    if (bubble) bubble.textContent = pickGilbertTip();
+  function updateGigiTip() {
+    const bubble = document.getElementById("gigi-tip-bubble");
+    if (bubble) bubble.textContent = pickGigiTip();
   }
 
-  function initGilbertGuide() {
-    const guideImg = document.getElementById("gilbert-guide-img");
-    if (guideImg) {
-      guideImg.src = GILBERT_HERO;
-      guideImg.alt = `${GUIDE_NAME} — your Gilded Goose guide`;
-    }
-    updateGilbertTip();
+  function initGigiGuide() {
+    const guideImg = document.getElementById("gigi-guide-img");
+    if (guideImg) guideImg.src = GIGI_ICON;
+    updateGigiTip();
   }
 
   function showThankYou(payload) {
@@ -1281,7 +1275,7 @@
     const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-gilbert").src = GILBERT_SEAL;
+    document.getElementById("thank-you-gigi").src = GIGI_SEAL;
     document.getElementById("thank-you-sub").textContent =
       "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
 
@@ -1467,7 +1461,7 @@
 
   loadState();
   ensureRequiredMaintenance();
-  initGilbertGuide();
+  initGigiGuide();
   document.getElementById("plan-summary")?.addEventListener("click", e => {
     const link = e.target.closest(".invoice-item-link");
     if (!link) return;
