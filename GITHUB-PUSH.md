@@ -128,8 +128,6 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 | [Actions](https://github.com/GildedGooseltd/PickyPavi/actions) | Wait for green ✓ |
 | [Live site](https://gildedgooseltd.github.io/PickyPavi/) | Picker loads when deploy finishes |
 
-**Do not re-run old Actions runs** — [Actions](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) → **Run workflow** only (uses latest code). Re-running a run from an older commit redeploys that old build to `gh-pages` and overwrites the live site.
-
 ---
 
 ## Every time after — publish markdown edits

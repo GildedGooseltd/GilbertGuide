@@ -1,5 +1,5 @@
 /**
- * Parse / serialize Gilbert project picker markdown (B2 template format).
+ * Parse / serialize Picky Pavi project markdown (B2 template format).
  */
 import fs from "fs";
 import path from "path";
@@ -21,11 +21,8 @@ const META_KEYS = {
   "ongoing fee": "ongoingFee",
   "per campaign fee": "perCampaignFee",
   icon: "guideIcon",
-  "guide hero": "guideHero",
   seal: "guideSeal",
-  logo: "guideLogo",
-  "guide name": "guideName",
-  "guide short name": "guideShortName"
+  logo: "guideLogo"
 };
 
 const BRAND_FIXES = [
@@ -323,13 +320,10 @@ export function parseSettingsMarkdown(text) {
   const ids = parseListSection(sections["default package projects"] || "");
   const retainerLine = text.match(/Include retainer:\s*(yes|no)/i);
   return {
-    guideName: meta.guideName || "Lord Gilbert Granville",
-    guideShortName: meta.guideShortName || "Gilbert",
-    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
-    guideHero: meta.guideHero || "assets/gigi-goose-walk.png",
-    guideSeal: meta.guideSeal || "assets/gigi-logo-frame.png",
-    guideLogo: meta.guideLogo || "assets/gigi-logo-frame.png",
-    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
+    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-icon.png",
+    guideSeal: meta.guideSeal || "assets/gigi-seal.jpg",
+    guideLogo: meta.guideLogo || "assets/gigi-logo.jpg",
+    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-icon.png",
     recommendedPackage: {
       label,
       retainer: retainerLine ? /^yes/i.test(retainerLine[1]) : true,
