@@ -60,7 +60,7 @@ function buildInternalEmail(data, projects, noteBlock) {
     ? "$" + data.depositAmount + " (QuickBooks deposit link sent to client)"
     : "—";
   return [
-    "Picky Pavi — project picker (INTERNAL — create full invoice from this)",
+    "Gilbert — project picker (INTERNAL — create full invoice from this)",
     "",
     "Client: " + (data.submittedBy || "(not provided)"),
     "Email: " + (data.submitterEmail || "(not provided)"),
@@ -146,12 +146,12 @@ function doGet(e) {
   if (e && e.parameter && e.parameter.ping) {
     return ContentService.createTextOutput(JSON.stringify({
       ok: true,
-      service: "picky-pavi"
+      service: "gilbert-picker"
     })).setMimeType(ContentService.MimeType.JSON);
   }
   return ContentService.createTextOutput(JSON.stringify({
     ok: true,
-    message: "Picky Pavi webhook — POST JSON submissions here."
+    message: "Gilbert project picker webhook — POST JSON submissions here."
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -187,8 +187,8 @@ function doPost(e) {
     ]);
 
     var clientName = data.submittedBy || "Client";
-    var internalSubject = "Picky Pavi — invoice from this — " + clientName;
-    var clientSubject = "Picky Pavi — project selections received — Gilded Goose";
+    var internalSubject = "Gilbert — invoice from this — " + clientName;
+    var clientSubject = "Gilbert — project selections received — Gilded Goose";
 
     MailApp.sendEmail(
       NOTIFY_EMAIL,
