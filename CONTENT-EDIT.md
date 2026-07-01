@@ -1,4 +1,4 @@
-# Edit Gilbert Content
+# Edit Picky Pavi Content
 
 **Markdown only.** Your `.md` edits are the source of truth — build never overwrites project files.
 
