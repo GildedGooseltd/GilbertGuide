@@ -153,39 +153,60 @@
     .gilbert-chat-input::placeholder { color: var(--input-placeholder); }
     .gilbert-chat-input:focus { outline: 2px solid var(--gg-royal-mid); outline-offset: -2px; }
     .why-panel { margin-top: var(--space-md); }
-    .why-panel .recommendation-box {
-      padding: 1.25rem 1.5rem; margin: 0;
-      background: var(--gg-royal-dim); border: 2px solid var(--gg-royal-border);
+    .why-gilded-frame {
+      padding: 4px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--gg-gold-dark) 0%, var(--gg-gold-bright) 45%, var(--gg-gold) 70%, var(--gg-gold-dark) 100%);
+      box-shadow: 0 4px 22px rgba(184, 134, 11, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    .why-gilded-frame .recommendation-box {
+      padding: 1.35rem 1.6rem; margin: 0;
+      background: var(--gg-paper);
+      border: 2px solid var(--gg-gold);
+      border-radius: 10px;
     }
     .why-panel .recommendation-box h3 {
-      font-size: 0.95rem; margin: 0 0 0.65rem; letter-spacing: 0.08em;
+      font-size: 0.88rem; margin: 0 0 0.85rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gg-royal); font-weight: 800;
     }
     .why-panel .recommendation-box p {
-      margin: 0; font-size: 1.2rem; line-height: 1.65; color: var(--gg-brown); font-weight: 600;
+      margin: 0 0 0.85rem; font-size: 1.05rem; line-height: 1.7;
+      color: var(--gg-brown); font-weight: 400;
     }
-    .why-panel .recommendation-box.empty p { font-size: 1.05rem; font-weight: 500; color: var(--gg-brown-muted); }
+    .why-panel .recommendation-box p:last-child { margin-bottom: 0; }
     .gilbert-chat-head {
       display: none;
     }
     .gilbert-chat-messages {
       flex: 1; min-height: 8rem; max-height: 14rem; overflow-y: auto;
-      display: flex; flex-direction: column; gap: 0.45rem;
-      padding: 0.5rem;
+      display: flex; flex-direction: column; gap: 0.55rem;
+      padding: 0.65rem;
     }
     .gilbert-chat-msg {
-      font-size: 0.78rem; line-height: 1.45; border-radius: 8px; padding: 0.4rem 0.55rem;
+      font-size: 0.88rem; line-height: 1.5; border-radius: 14px; padding: 0.55rem 0.75rem;
+      max-width: 88%;
     }
-    .gilbert-chat-msg p { margin: 0.15rem 0 0; color: var(--gg-brown); }
+    .gilbert-chat-msg p { margin: 0; }
     .gilbert-chat-who {
-      font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+      display: block; font-size: 0.62rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.07em; margin-bottom: 0.2rem; opacity: 0.85;
     }
     .gilbert-chat-gilbert {
-      background: var(--gg-royal-dim); border: 1px solid var(--gg-royal-border);
+      align-self: flex-start;
+      background: var(--gg-royal);
+      border: 1px solid #3d1f6e;
+      color: #f8f5ef;
+      box-shadow: 0 2px 8px rgba(78, 42, 132, 0.25);
     }
-    .gilbert-chat-gilbert .gilbert-chat-who { color: var(--gg-royal); }
+    .gilbert-chat-gilbert p { color: #f8f5ef; }
+    .gilbert-chat-gilbert .gilbert-chat-who { color: var(--gg-gold-bright); }
     .gilbert-chat-user {
-      background: var(--surface-panel); border: 1px solid var(--border); align-self: flex-end; max-width: 95%;
+      align-self: flex-end;
+      background: var(--gg-cream-panel);
+      border: 1px solid var(--border-strong);
+      color: var(--gg-brown);
     }
+    .gilbert-chat-user p { color: var(--gg-brown); }
     .gilbert-chat-user .gilbert-chat-who { color: var(--gg-brown-muted); }
     .key-shield { width: 1.35rem; height: 1.6rem; filter: none; }
     .card-corner-meta { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
@@ -933,6 +954,6 @@
 
   <script src="pages-config.js?v=20260630"></script>
   <script src="projects-data.js?v=20260630"></script>
-  <script src="app.js?v=20260706"></script>
+  <script src="app.js?v=20260707"></script>
 </body>
 </html>

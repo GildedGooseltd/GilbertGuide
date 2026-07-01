@@ -360,57 +360,87 @@
     });
     getSelectedProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
 
-    const cost = getSelectionCost();
     const hasGoal = !!state.goalText.trim();
+    const projectItems = selected.filter(i => !i.isRetainer && !i.monthlyOnly);
+    const paragraphs = [];
 
     if (!selected.length && !hasGoal) return null;
 
-    const introParts = [];
     if (hasGoal) {
       const g = state.goalText.trim();
-      introParts.push(`Based on your goals: "${g.length > 140 ? g.slice(0, 140) + "…" : g}"`);
-    }
-    if (selected.length) {
-      introParts.push(`Estimated total ${fmt(cost)}.`);
-    }
-
-    if (!selected.length) {
-      return { intro: introParts.join(" ") };
+      paragraphs.push(
+        `You told Gilbert the core problem is: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below are chosen to close that gap — not as a random list, but as a sequenced marketing stack.`
+      );
     }
 
-    const projectItems = selected.filter(i => !i.isRetainer && !i.monthlyOnly);
-    if (projectItems.length > 1) {
+    if (!projectItems.length && selected.length) {
+      paragraphs.push(
+        "Your cart is retainer and required maintenance only — ongoing ads management and monthly upkeep so performance stays stable while you decide on upgrade projects."
+      );
+      return { paragraphs };
+    }
+
+    if (projectItems.length) {
+      const valueLines = projectItems.map(item => {
+        const blurb = briefValueAdd(item);
+        return blurb ? `${item.title} — ${blurb}` : item.title;
+      });
+      paragraphs.push(
+        "Value add by project: " + valueLines.join(" · ")
+      );
+
       const hasEnabler = selected.some(i => i.enabler);
-      const hasLeads = selected.some(i => getValueIcons(i).some(v => v.id === "leads" || v.id === "retainer"));
+      const hasLeads = selected.some(i => getValueIcons(i).some(v => v.id === "leads"));
       const hasIntake = selected.some(i => getValueIcons(i).some(v => v.id === "intake" || v.id === "crm"));
+      const hasSeo = selected.some(i => getValueIcons(i).some(v => v.id === "seo"));
+      const hasReferrals = selected.some(i => getValueIcons(i).some(v => v.id === "referrals"));
+      const hasRetainer = selected.some(i => i.isRetainer || i.id === "RETAINER");
+
+      let strategy = "";
       if (hasEnabler && hasLeads) {
-        introParts.push("This mix fixes infrastructure and tracking first, then scales lead generation — the order that protects ad spend.");
+        strategy = "Marketing strategy: fix tracking, phones, and CRM infrastructure first, then scale paid media. That order protects ad spend — you know which campaigns and keywords produce signed cases before you increase budget.";
       } else if (hasEnabler && hasIntake) {
-        introParts.push("Foundation and intake work together so every lead is captured, routed, and followed up before you grow spend.");
+        strategy = "Marketing strategy: build the foundation (calls, forms, routing) alongside intake improvements so every lead is captured and followed up before you push more traffic.";
       } else if (hasLeads && hasIntake) {
-        introParts.push("Lead generation plus intake improvements mean more consults from the same marketing budget.");
+        strategy = "Marketing strategy: pair lead generation with intake and follow-up work so consult volume rises without dropping response time or Romina's desk.";
+      } else if (hasLeads && hasSeo) {
+        strategy = "Marketing strategy: combine paid search/display with organic and site content so you own both high-intent clicks and long-tail discovery.";
+      } else if (hasReferrals && hasLeads) {
+        strategy = "Marketing strategy: balance outbound/paid leads with referral and past-client programs — lower CAC on the referral side, predictable volume from ads.";
       } else if (hasLeads) {
-        introParts.push("These projects focus on measurable leads and calls that tie back to signed cases.");
+        strategy = "Marketing strategy: focus spend on measurable calls and consults tied to account data, then optimize creative and landing pages against what actually converts.";
+      } else if (hasSeo) {
+        strategy = "Marketing strategy: strengthen owned channels (site, SEO, content) so the firm is less dependent on paid auction costs over time.";
+      } else if (projectItems.length > 1) {
+        strategy = "Marketing strategy: these projects stack — each unlocks or amplifies the next so the firm compounds results instead of running siloed one-offs.";
       } else {
-        introParts.push("These projects stack — each piece supports the others so marketing compounds instead of staying siloed.");
+        strategy = "Marketing strategy: this project targets a specific bottleneck; add foundation or retainer work if you want a fuller stack.";
       }
-    } else if (selected.length > 1) {
-      introParts.push("Retainer and maintenance keep performance steady while project work delivers the upgrades.");
+
+      if (hasRetainer && projectItems.length) {
+        strategy += " The retainer keeps campaigns managed and optimized while project fees deliver the structural upgrades.";
+      }
+
+      paragraphs.push(strategy);
+
+      const cost = getSelectionCost();
+      if (selected.length) {
+        paragraphs.push(`Estimated investment for this combination: ${fmt(cost)} in project fees (retainer and monthly maintenance bill separately).`);
+      }
+    } else if (hasGoal) {
+      paragraphs.push("Pick projects from the list below — Gilbert will explain how they fit together as you add them.");
     }
 
-    return { intro: introParts.join(" ") };
+    return paragraphs.length ? { paragraphs } : null;
   }
 
   function renderWhyPanel() {
     const el = document.getElementById("why-panel");
     if (!el) return;
     const rec = buildRecommendation();
-    if (state.goalText.trim() && rec && rec.intro) {
+    if (rec && rec.paragraphs && rec.paragraphs.length) {
       el.hidden = false;
-      el.innerHTML = `<div class="recommendation-box"><h3>Why this combination</h3><p>${escapeHtml(rec.intro)}</p></div>`;
-    } else if (state.goalText.trim()) {
-      el.hidden = false;
-      el.innerHTML = `<div class="recommendation-box empty"><h3>Why this combination</h3><p>Pick projects below or tell Gilbert more about the problem.</p></div>`;
+      el.innerHTML = `<div class="why-gilded-frame"><div class="recommendation-box"><h3>Why this combination</h3>${rec.paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join("")}</div></div>`;
     } else {
       el.hidden = true;
       el.innerHTML = "";
@@ -1270,10 +1300,17 @@
     el.scrollTop = el.scrollHeight;
   }
 
+  function userCursedGilbert(text) {
+    return /\b(fuck|shit|damn|asshole|bitch|bastard|cunt|dick|wtf)\b/i.test(text || "");
+  }
+
   function pickGilbertReply(userText) {
     const text = (userText || "").trim();
     const items = getInvoiceLineItems();
     const count = items.length;
+    if (userCursedGilbert(text)) {
+      return "Well fuck you too, Sparky. Now — what's actually broken in the business so we can fix it?";
+    }
     if (!text) {
       return "Tell me what's not working — leads, intake, ads, website, or CRM. We'll map projects to fix it.";
     }
