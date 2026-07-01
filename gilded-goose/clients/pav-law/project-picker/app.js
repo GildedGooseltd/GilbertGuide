@@ -113,8 +113,12 @@
     gilbertChat: [],
     iconFilters: [],
     tocSort: { field: "priority", dir: "asc" },
+    tocExpanded: false,
     showAllProjects: false
   };
+
+  const OMNI_CHANNEL_WHY =
+    "Pav Law grows when the same trusted message meets clients wherever they search — paid search, display, directories, email, referrals, and the website. Omnichannel works because each channel feeds the others: ads drive qualified visits; a fast site and clear intake convert them; phones and CRM route every lead; retargeting and mailers bring back prospects who did not book the first time. Connected channels produce signed cases you can trace to spend — not siloed clicks.";
 
   const PROJECT_LIST_LIMIT = 10;
 
@@ -362,32 +366,27 @@
 
     const hasGoal = !!state.goalText.trim();
     const projectItems = selected.filter(i => !i.isRetainer && !i.monthlyOnly);
-    const paragraphs = [];
 
     if (!selected.length && !hasGoal) return null;
 
+    const rec = { goalIntro: null, maintenanceOnly: false, projectBullets: [], omnichannel: OMNI_CHANNEL_WHY, strategy: null, pickPrompt: null };
+
     if (hasGoal) {
       const g = state.goalText.trim();
-      paragraphs.push(
-        `You told Gilbert the core problem is: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below are chosen to close that gap — not as a random list, but as a sequenced marketing stack.`
-      );
+      rec.goalIntro =
+        `You told Gilbert the core problem is: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below close that gap — not as a random list, but as a sequenced marketing stack.`;
     }
 
     if (!projectItems.length && selected.length) {
-      paragraphs.push(
-        "Your cart is retainer and required maintenance only — ongoing ads management and monthly upkeep so performance stays stable while you decide on upgrade projects."
-      );
-      return { paragraphs };
+      rec.maintenanceOnly = true;
+      return rec;
     }
 
     if (projectItems.length) {
-      const valueLines = projectItems.map(item => {
-        const blurb = briefValueAdd(item);
-        return blurb ? `${item.title} — ${blurb}` : item.title;
-      });
-      paragraphs.push(
-        "Value add by project: " + valueLines.join(" · ")
-      );
+      rec.projectBullets = projectItems.map(item => ({
+        title: item.title,
+        blurb: briefValueAdd(item)
+      }));
 
       const hasEnabler = selected.some(i => i.enabler);
       const hasLeads = selected.some(i => getValueIcons(i).some(v => v.id === "leads"));
@@ -398,53 +397,71 @@
 
       let strategy = "";
       if (hasEnabler && hasLeads) {
-        strategy = "Marketing strategy: fix tracking, phones, and CRM infrastructure first, then scale paid media. That order protects ad spend — you know which campaigns and keywords produce signed cases before you increase budget.";
+        strategy = "Fix tracking, phones, and CRM infrastructure first, then scale paid media. That order protects ad spend — you know which campaigns and keywords produce signed cases before you increase budget.";
       } else if (hasEnabler && hasIntake) {
-        strategy = "Marketing strategy: build the foundation (calls, forms, routing) alongside intake improvements so every lead is captured and followed up before you push more traffic.";
+        strategy = "Build the foundation (calls, forms, routing) alongside intake improvements so every lead is captured and followed up before you push more traffic.";
       } else if (hasLeads && hasIntake) {
-        strategy = "Marketing strategy: pair lead generation with intake and follow-up work so consult volume rises without dropping response time or Romina's desk.";
+        strategy = "Pair lead generation with intake and follow-up work so consult volume rises without dropping response time or Romina's desk.";
       } else if (hasLeads && hasSeo) {
-        strategy = "Marketing strategy: combine paid search/display with organic and site content so you own both high-intent clicks and long-tail discovery.";
+        strategy = "Combine paid search and display with organic and site content so you own both high-intent clicks and long-tail discovery.";
       } else if (hasReferrals && hasLeads) {
-        strategy = "Marketing strategy: balance outbound/paid leads with referral and past-client programs — lower CAC on the referral side, predictable volume from ads.";
+        strategy = "Balance outbound and paid leads with referral and past-client programs — lower CAC on the referral side, predictable volume from ads.";
       } else if (hasLeads) {
-        strategy = "Marketing strategy: focus spend on measurable calls and consults tied to account data, then optimize creative and landing pages against what actually converts.";
+        strategy = "Focus spend on measurable calls and consults tied to account data, then optimize creative and landing pages against what actually converts.";
       } else if (hasSeo) {
-        strategy = "Marketing strategy: strengthen owned channels (site, SEO, content) so the firm is less dependent on paid auction costs over time.";
+        strategy = "Strengthen owned channels (site, SEO, content) so the firm is less dependent on paid auction costs over time.";
       } else if (projectItems.length > 1) {
-        strategy = "Marketing strategy: these projects stack — each unlocks or amplifies the next so the firm compounds results instead of running siloed one-offs.";
+        strategy = "These projects stack — each unlocks or amplifies the next so the firm compounds results instead of running siloed one-offs.";
       } else {
-        strategy = "Marketing strategy: this project targets a specific bottleneck; add foundation or retainer work if you want a fuller stack.";
+        strategy = "This project targets a specific bottleneck; add foundation or retainer work if you want a fuller stack.";
       }
 
       if (hasRetainer && projectItems.length) {
-        strategy += " The retainer keeps campaigns managed and optimized while project fees deliver the structural upgrades.";
+        strategy += " The retainer keeps campaigns managed and optimized while project work delivers the structural upgrades.";
       }
 
-      paragraphs.push(strategy);
-
-      const cost = getSelectionCost();
-      if (selected.length) {
-        paragraphs.push(`Estimated investment for this combination: ${fmt(cost)} in project fees (retainer and monthly maintenance bill separately).`);
-      }
+      rec.strategy = strategy;
     } else if (hasGoal) {
-      paragraphs.push("Pick projects from the list below — Gilbert will explain how they fit together as you add them.");
+      rec.pickPrompt = "Pick projects from the list below — Gilbert will explain how they fit together as you add them.";
     }
 
-    return paragraphs.length ? { paragraphs } : null;
+    return rec;
   }
 
   function renderWhyPanel() {
     const el = document.getElementById("why-panel");
     if (!el) return;
     const rec = buildRecommendation();
-    if (rec && rec.paragraphs && rec.paragraphs.length) {
-      el.hidden = false;
-      el.innerHTML = `<div class="why-gilded-frame"><div class="recommendation-box"><h3>Why this combination</h3>${rec.paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join("")}</div></div>`;
-    } else {
+    if (!rec) {
       el.hidden = true;
       el.innerHTML = "";
+      return;
     }
+
+    let body = "";
+    if (rec.goalIntro) body += `<p class="why-lead">${escapeHtml(rec.goalIntro)}</p>`;
+    if (rec.maintenanceOnly) {
+      body += `<p>Your cart is retainer and required maintenance only — ongoing ads management and monthly upkeep so performance stays stable while you decide on upgrade projects.</p>`;
+    } else if (rec.projectBullets.length) {
+      body += `<h4 class="why-subhead">What each project adds</h4><ul class="why-project-list">${rec.projectBullets.map(b =>
+        `<li><strong>${escapeHtml(b.title)}</strong>${b.blurb ? ` — ${escapeHtml(b.blurb)}` : ""}</li>`
+      ).join("")}</ul>`;
+      body += `<h4 class="why-subhead">Why omnichannel marketing works</h4><p>${escapeHtml(rec.omnichannel)}</p>`;
+      if (rec.strategy) {
+        body += `<h4 class="why-subhead">How these fit together</h4><p>${escapeHtml(rec.strategy)}</p>`;
+      }
+    } else if (rec.pickPrompt) {
+      body += `<p>${escapeHtml(rec.pickPrompt)}</p>`;
+    }
+
+    if (!body) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+
+    el.hidden = false;
+    el.innerHTML = `<div class="why-gilded-frame"><div class="recommendation-box"><h3>Why this combination</h3>${body}</div></div>`;
   }
 
   function renderPlanSummary() {
@@ -743,14 +760,48 @@
     renderProjectToc();
   }
 
+  function renderCondensedToc() {
+    const el = document.getElementById("toc-condensed");
+    if (!el) return;
+    const hasRun = !!state.goalText.trim() || state.projects.size > 0 || state.recommended.size > 1;
+    const picked = sortByPriority(getAllItems().filter(item => {
+      const id = item.isRetainer ? "RETAINER" : item.id;
+      return state.recommended.has(id) || isItemSelected(item);
+    }));
+    if (!hasRun || !picked.length) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+    const top5 = picked.slice(0, 5);
+    el.hidden = false;
+    el.innerHTML = `<div class="toc-condensed-inner">
+      <h4 class="toc-condensed-title">Gilbert's picks — quick view</h4>
+      <ol class="toc-condensed-list">${top5.map(item =>
+        `<li><a href="#project-${item.id}">${escapeHtml(item.title)}</a><span class="toc-condensed-blurb">${escapeHtml(briefValueAdd(item))}</span></li>`
+      ).join("")}</ol>
+      ${picked.length > 5 ? `<p class="toc-condensed-more">+ ${picked.length - 5} more in the full table below</p>` : ""}
+      <button type="button" class="btn btn-secondary btn-sm" id="toc-condensed-open">Open full table of contents</button>
+    </div>`;
+    el.querySelector("#toc-condensed-open")?.addEventListener("click", () => {
+      const toc = document.getElementById("project-toc");
+      if (toc) {
+        toc.open = true;
+        toc.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
   function renderProjectToc() {
     const listEl = document.getElementById("toc-list");
     const statusEl = document.getElementById("table-filter-status");
     const hintEl = document.getElementById("toc-summary-hint");
+    const expandEl = document.getElementById("toc-expand-row");
     if (!listEl) return;
     const items = sortTocItems(allItemsByPriority().filter(item => itemMatchesIconFilters(item)));
+    const visibleItems = state.tocExpanded ? items : items.slice(0, 5);
     const usedPriorities = new Set();
-    listEl.innerHTML = items.map(item => {
+    listEl.innerHTML = visibleItems.map(item => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
       const blurb = briefValueAdd(item);
@@ -764,7 +815,8 @@
     }).join("");
     if (hintEl) {
       const selCount = items.filter(i => isItemSelected(i)).length;
-      hintEl.textContent = selCount ? `${items.length} projects · ${selCount} selected` : `${items.length} projects`;
+      const countLabel = state.tocExpanded || items.length <= 5 ? `${items.length} projects` : `Top 5 of ${items.length} projects`;
+      hintEl.textContent = selCount ? `${countLabel} · ${selCount} selected` : countLabel;
     }
     if (statusEl) {
       const total = allItemsByPriority().length;
@@ -772,6 +824,17 @@
       statusEl.textContent = state.iconFilters.length && shown !== total
         ? `Showing ${shown} of ${total} projects (icon filter)`
         : "";
+    }
+    if (expandEl) {
+      if (items.length > 5) {
+        expandEl.hidden = false;
+        expandEl.innerHTML = state.tocExpanded
+          ? `<button type="button" class="btn btn-secondary btn-sm toc-expand-btn" data-expand="top">Show top 5 only</button>`
+          : `<button type="button" class="btn btn-secondary btn-sm toc-expand-btn" data-expand="all">Show all ${items.length} projects</button>`;
+      } else {
+        expandEl.hidden = true;
+        expandEl.innerHTML = "";
+      }
     }
     updateTocSortUi();
   }
@@ -1136,7 +1199,12 @@
     const el = document.getElementById("webhook-warning");
     if (!el) return;
     const cfg = getConfig();
-    el.hidden = !!cfg.webhookUrl;
+    if (cfg.webhookUrl) {
+      el.hidden = true;
+      return;
+    }
+    el.hidden = false;
+    el.innerHTML = "Live webhook not configured yet — submit still works: your selections download as JSON and are saved in this browser. For automatic email + Sheet logging, add GitHub Secret <strong>PAV_PICKER_WEBHOOK_URL</strong> and redeploy.";
   }
 
   function updateSubmitButtons() {
@@ -1146,7 +1214,7 @@
     const submit = document.getElementById("submit-selections");
     if (submit) {
       submit.disabled = !canSubmit();
-      submit.title = CONFIG.webhookUrl ? "" : "Webhook not configured on live site — set PAV_PICKER_WEBHOOK_URL in GitHub Secrets";
+      submit.title = "";
     }
     updateWebhookWarning();
   }
@@ -1304,12 +1372,43 @@
     return /\b(fuck|shit|damn|asshole|bitch|bastard|cunt|dick|wtf)\b/i.test(text || "");
   }
 
+  function userThankedGilbert(text) {
+    return /\b(thanks|thank you|thank\s*u|tysm|thx|appreciate)\b/i.test(text || "");
+  }
+
+  function launchConfetti(count) {
+    const n = count || 90;
+    let layer = document.getElementById("confetti-layer");
+    if (!layer) {
+      layer = document.createElement("div");
+      layer.id = "confetti-layer";
+      layer.className = "confetti-layer";
+      layer.setAttribute("aria-hidden", "true");
+      document.body.appendChild(layer);
+    }
+    const colors = ["#7c3aed", "#b8860b", "#ffd700", "#4e2a84", "#f8f5ef", "#c4b5fd"];
+    for (let i = 0; i < n; i++) {
+      const piece = document.createElement("span");
+      const glitter = Math.random() > 0.45;
+      piece.className = "confetti-piece" + (glitter ? " glitter" : "");
+      piece.style.left = Math.random() * 100 + "vw";
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDuration = (1.1 + Math.random() * 1.9) + "s";
+      piece.style.animationDelay = Math.random() * 0.35 + "s";
+      layer.appendChild(piece);
+      piece.addEventListener("animationend", () => piece.remove());
+    }
+  }
+
   function pickGilbertReply(userText) {
     const text = (userText || "").trim();
     const items = getInvoiceLineItems();
     const count = items.length;
     if (userCursedGilbert(text)) {
       return "Well fuck you too, Sparky. Now — what's actually broken in the business so we can fix it?";
+    }
+    if (userThankedGilbert(text)) {
+      return "Anytime Sparklefarts!";
     }
     if (!text) {
       return "Tell me what's not working — leads, intake, ads, website, or CRM. We'll map projects to fix it.";
@@ -1342,6 +1441,7 @@
     if (input) input.value = "";
     state.gilbertChat.push({ role: "user", text });
     state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(text) });
+    if (userThankedGilbert(text)) launchConfetti();
     renderGilbertChat();
     saveState();
     suggestPlan(true);
@@ -1466,9 +1566,52 @@
 
   function renderSummary() {
     renderPlanSummary();
+    renderCondensedToc();
     updateInvoiceScheduleAmount();
     updateSubmitButtons();
     renderProjectToc();
+  }
+
+  function downloadSubmissionJson(payload) {
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `pav-law-selections-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function postToWebhook(url, payload) {
+    const body = JSON.stringify(payload);
+    let res;
+    try {
+      res = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body
+      });
+    } catch (err) {
+      await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body
+      });
+      return { ok: true, noCors: true };
+    }
+    const text = await res.text();
+    let data = {};
+    try { data = JSON.parse(text); } catch (e) { /* GAS may return empty on some errors */ }
+    if (res.ok && (data.ok || text.includes('"ok":true'))) return { ok: true };
+    throw new Error(data.error || text.slice(0, 120) || `HTTP ${res.status}`);
+  }
+
+  function saveSubmissionLocally(payload) {
+    localStorage.setItem("pav-picker-last-submission", JSON.stringify(payload));
+    const pending = JSON.parse(localStorage.getItem("pav-picker-pending-submissions") || "[]");
+    pending.push({ savedAt: new Date().toISOString(), payload });
+    localStorage.setItem("pav-picker-pending-submissions", JSON.stringify(pending.slice(-20)));
   }
 
   function showToast(msg, isError) {
@@ -1488,20 +1631,17 @@
     let ok = false;
 
     if (!CONFIG.webhookUrl) {
-      showToast("Submit backend not configured — add PAV_PICKER_WEBHOOK_URL in GitHub repo Secrets, then redeploy.", true);
+      try {
+        saveSubmissionLocally(payload);
+        downloadSubmissionJson(payload);
+        ok = true;
+      } catch (err) {
+        showToast("Could not save submission — try again or email support@gildedgooselimited.com", true);
+      }
     } else {
       try {
-        const res = await fetch(CONFIG.webhookUrl, {
-          method: "POST",
-          mode: "cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-        const text = await res.text();
-        let data = {};
-        try { data = JSON.parse(text); } catch (e) { /* GAS may return empty on some errors */ }
-        if (res.ok && (data.ok || text.includes('"ok":true'))) ok = true;
-        else throw new Error(data.error || text.slice(0, 120) || `HTTP ${res.status}`);
+        const result = await postToWebhook(CONFIG.webhookUrl, payload);
+        if (result.ok) ok = true;
       } catch (err) {
         showToast("Submit failed — try again or email support@gildedgooselimited.com. " + err.message, true);
       }
@@ -1529,6 +1669,13 @@
     }
   });
   document.getElementById("expand-all-projects").addEventListener("change", e => setExpandAll(e.target.checked));
+
+  document.getElementById("toc-expand-row")?.addEventListener("click", e => {
+    const btn = e.target.closest(".toc-expand-btn");
+    if (!btn) return;
+    state.tocExpanded = btn.dataset.expand === "all";
+    renderProjectToc();
+  });
 
   document.querySelectorAll(".toc-sort-btn").forEach(btn => {
     btn.addEventListener("click", e => {

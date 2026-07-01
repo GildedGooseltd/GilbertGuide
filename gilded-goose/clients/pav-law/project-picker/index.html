@@ -169,11 +169,62 @@
       font-size: 0.88rem; margin: 0 0 0.85rem; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--gg-royal); font-weight: 800;
     }
+    .why-panel .recommendation-box .why-lead {
+      margin: 0 0 1rem; font-size: 1.08rem; line-height: 1.65;
+      color: var(--gg-brown); font-weight: 500;
+    }
+    .why-panel .recommendation-box .why-subhead {
+      margin: 1.15rem 0 0.45rem; font-size: 0.78rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--gg-royal); font-weight: 800;
+    }
+    .why-panel .recommendation-box .why-subhead:first-of-type { margin-top: 0.25rem; }
     .why-panel .recommendation-box p {
-      margin: 0 0 0.85rem; font-size: 1.05rem; line-height: 1.7;
+      margin: 0 0 0.85rem; font-size: 1.02rem; line-height: 1.65;
       color: var(--gg-brown); font-weight: 400;
     }
+    .why-panel .recommendation-box .why-project-list {
+      margin: 0 0 0.5rem; padding-left: 1.25rem;
+      font-size: 1rem; line-height: 1.55; color: var(--gg-brown);
+    }
+    .why-panel .recommendation-box .why-project-list li { margin-bottom: 0.45rem; }
+    .why-panel .recommendation-box .why-project-list li:last-child { margin-bottom: 0; }
     .why-panel .recommendation-box p:last-child { margin-bottom: 0; }
+    .toc-condensed {
+      margin-top: var(--space-md);
+      border: 1px solid var(--gg-gold);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #fffdf8 0%, var(--gg-cream-panel) 100%);
+      padding: 0.85rem 1rem 1rem;
+    }
+    .toc-condensed-title {
+      margin: 0 0 0.55rem; font-size: 0.78rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--gg-royal); font-weight: 800;
+    }
+    .toc-condensed-list {
+      margin: 0; padding-left: 1.2rem; font-size: 0.92rem; line-height: 1.45;
+    }
+    .toc-condensed-list li { margin-bottom: 0.4rem; }
+    .toc-condensed-list a { color: var(--gg-royal); font-weight: 700; text-decoration: none; }
+    .toc-condensed-list a:hover { text-decoration: underline; }
+    .toc-condensed-blurb { display: block; font-size: 0.82rem; color: var(--secondary); font-weight: 500; margin-top: 0.1rem; }
+    .toc-condensed-more { margin: 0.35rem 0 0.65rem; font-size: 0.82rem; color: var(--secondary); }
+    .toc-condensed-inner .btn-sm { width: auto; margin-top: 0.25rem; font-size: 0.82rem; padding: 0.45rem 0.85rem; }
+    .toc-expand-row { text-align: center; padding: 0.65rem 0 0.15rem; }
+    .toc-expand-row .btn-sm { width: auto; min-width: 12rem; }
+    .confetti-layer {
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute; top: -16px; width: 9px; height: 14px; border-radius: 2px; opacity: 0.95;
+      animation: confetti-fall linear forwards;
+    }
+    .confetti-piece.glitter {
+      width: 7px; height: 7px; border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.85);
+    }
+    @keyframes confetti-fall {
+      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
     .gilbert-chat-head {
       display: none;
     }
@@ -647,8 +698,8 @@
     }
     .cart-box .total-row.grand { color: var(--green); font-size: 1.15rem; }
     .webhook-warning {
-      font-size: 0.82rem; color: #fca5a5; background: rgba(248, 113, 113, 0.12);
-      border: 1px solid #f87171; border-radius: 6px; padding: 0.55rem 0.65rem;
+      font-size: 0.82rem; color: #92400e; background: rgba(245, 158, 11, 0.12);
+      border: 1px solid #f59e0b; border-radius: 6px; padding: 0.55rem 0.65rem;
       margin-bottom: var(--space-md); line-height: 1.45;
     }
     .top-split-panel {
@@ -898,6 +949,7 @@
               </div>
             </div>
             <div id="why-panel" class="why-panel" hidden></div>
+            <div id="toc-condensed" class="toc-condensed" hidden></div>
           </div>
         </div>
       </div>
@@ -905,7 +957,7 @@
       <div class="invoice-summary-bar">
       <div style="max-width:1400px;margin:0 auto;padding:0 2rem">
 
-      <details class="project-toc" id="project-toc" open>
+      <details class="project-toc" id="project-toc">
         <summary class="project-toc-summary">
           <span class="project-toc-title">Recommended projects — table of contents</span>
           <span class="project-toc-hint" id="toc-summary-hint"></span>
@@ -928,6 +980,7 @@
               <tbody id="toc-list"></tbody>
             </table>
           </div>
+          <div id="toc-expand-row" class="toc-expand-row" hidden></div>
         </div>
       </details>
 
@@ -952,8 +1005,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260630"></script>
-  <script src="projects-data.js?v=20260630"></script>
-  <script src="app.js?v=20260707"></script>
+  <script src="pages-config.js?v=20260708"></script>
+  <script src="projects-data.js?v=20260708"></script>
+  <script src="app.js?v=20260708"></script>
 </body>
 </html>
