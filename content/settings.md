@@ -2,9 +2,12 @@
 
 | | |
 |---|---|
-| **Icon** | assets/gigi-icon.png |
-| **Seal** | assets/gigi-seal.jpg |
-| **Logo** | assets/gigi-logo.jpg |
+| **Guide name** | Lord Gilbert Granville |
+| **Guide short name** | Gilbert |
+| **Icon** | assets/gigi-goose-guide.svg |
+| **Guide hero** | assets/gigi-goose-walk.png |
+| **Seal** | assets/gigi-logo-frame.png |
+| **Logo** | assets/gigi-logo-frame.png |
 
 ---
 

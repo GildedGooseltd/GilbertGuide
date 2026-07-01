@@ -6,8 +6,12 @@
     );
   }
   let CONFIG = getConfig();
-  const GIGI_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-icon.png";
-  const GIGI_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-seal.jpg";
+  const GILBERT_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-goose-guide.svg";
+  const GILBERT_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
+  const GILBERT_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-logo-frame.png";
+  const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
+  const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
+  const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
 
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
@@ -21,7 +25,7 @@
 
   const ACCOUNT_DATA_ICON = "assets/gilded-goose-account.svg";
 
-  function accountDataIconHtml() {
+  function accountDataBadgeImg() {
     return `<img class="pav-law-shield-img" src="${ACCOUNT_DATA_ICON}" alt="" width="24" height="29">`;
   }
 
@@ -97,8 +101,8 @@
     submitterEmail: "",
     invoicePaymentMonths: "",
     invoicePaymentMonthlyAmount: "",
-    filters: { hideNonMatching: true, maxFee: null },
     goalText: "",
+    gilbertChat: [],
     tocSort: { field: "priority", dir: "asc" },
     showAllProjects: false
   };
@@ -217,7 +221,7 @@
     const label = item.backedMetric.label || "Verified account data";
     const src = item.backedMetric.source ? ` (${item.backedMetric.source})` : "";
     const tip = escapeHtml(label + src);
-    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${accountDataIconHtml()}</span>`;
+    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${accountDataBadgeImg()}</span>`;
   }
 
   function cardCornerIconsHtml(item, isRetainer, inline) {
@@ -235,7 +239,7 @@
       VALUE_ICON_DEFS.map(d =>
         `<span class="key-item">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></span>`
       ).join("") +
-      `<span class="key-item"><span class="account-data-shield key-shield">${accountDataIconHtml()}</span><span class="key-item-label">Account data</span></span>`;
+      `<span class="key-item"><span class="account-data-shield key-shield">${accountDataBadgeImg()}</span><span class="key-item-label">Account data</span></span>`;
   }
 
   function isItemSelected(item) {
@@ -309,10 +313,8 @@
     });
     getSelectedProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
 
-    const f = getFilters();
     const cost = getSelectionCost();
     const hasGoal = !!state.goalText.trim();
-    const hasMaxFee = f.maxFee != null;
 
     if (!selected.length && !hasGoal) return null;
 
@@ -322,11 +324,7 @@
       introParts.push(`Based on your goals: "${g.length > 140 ? g.slice(0, 140) + "…" : g}"`);
     }
     if (selected.length) {
-      if (hasMaxFee) {
-        introParts.push(`Estimated total ${fmt(cost)}${cost > f.maxFee ? " — above your max fee filter" : ` — within ${fmt(f.maxFee)} max`}.`);
-      } else {
-        introParts.push(`Estimated total ${fmt(cost)}.`);
-      }
+      introParts.push(`Estimated total ${fmt(cost)}.`);
     }
 
     if (!selected.length) {
@@ -376,7 +374,6 @@
     }
 
     el.innerHTML = parts.join("");
-    updateGigiTip();
   }
 
   function renderRecommendation() {
@@ -676,9 +673,7 @@
     const statusEl = document.getElementById("table-filter-status");
     const hintEl = document.getElementById("toc-summary-hint");
     if (!listEl) return;
-    const items = sortTocItems(
-      allItemsByPriority().filter(item => itemPassesCostPriorityFilter(item))
-    );
+    const items = sortTocItems(allItemsByPriority());
     listEl.innerHTML = items.map(item => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
@@ -694,43 +689,20 @@
       const selCount = items.filter(i => isItemSelected(i)).length;
       hintEl.textContent = selCount ? `${items.length} projects · ${selCount} selected` : `${items.length} projects`;
     }
-    if (statusEl) {
-      const total = allItemsByPriority().length;
-      const shown = items.length;
-      statusEl.textContent = costFiltersActive() && shown !== total
-        ? `Showing ${shown} of ${total} projects`
-        : "";
-    }
+    if (statusEl) statusEl.textContent = "";
     updateTocSortUi();
   }
 
   function getFilters() {
-    const maxFeeRaw = document.getElementById("filter-max-fee").value;
-    state.filters.maxFee = maxFeeRaw === "" ? null : Math.max(0, Number(maxFeeRaw));
-    state.filters.hideNonMatching = document.getElementById("filter-hide-nonmatching").checked;
-    return state.filters;
+    return state.filters || {};
   }
 
-  function costFiltersActive() {
-    const f = getFilters();
-    return f.maxFee != null;
-  }
-
-  function itemFeeForFilter(item, isRetainer) {
-    if (isRetainer) return item.fee;
-    return itemSelectionCost(item);
-  }
-
-  function itemPassesCostPriorityFilter(item) {
-    const f = getFilters();
-    const isRetainer = item.isRetainer || item.id === "RETAINER";
-    const cost = itemFeeForFilter(item, isRetainer);
-    if (f.maxFee != null && cost > f.maxFee) return false;
+  function itemPassesCostPriorityFilter() {
     return true;
   }
 
   function filtersActive() {
-    return costFiltersActive() || !!state.goalText.trim();
+    return !!state.goalText.trim();
   }
 
   function feeLabelFor(item) {
@@ -755,15 +727,8 @@
   }
 
   function getItemFilterClasses(item, isRetainer) {
-    const f = getFilters();
     const classes = [];
     const id = isRetainer ? "RETAINER" : item.id;
-    const selected = isRetainer ? state.retainer : state.projects.has(id);
-
-    if (!itemPassesCostPriorityFilter({ ...item, isRetainer }) && !selected) {
-      if (f.hideNonMatching) classes.push("filtered-out");
-    }
-
     if (state.recommended.has(id)) classes.push("recommended");
     return classes.join(" ");
   }
@@ -781,7 +746,6 @@
   }
 
   function suggestPlan(silent) {
-    getFilters();
     const goal = document.getElementById("goal-input").value.trim();
     state.goalText = goal;
     state.recommended = new Set();
@@ -832,11 +796,11 @@
   function clearFilters() {
     document.getElementById("goal-input").value = "";
     state.goalText = "";
-    document.getElementById("filter-max-fee").value = "";
-    state.filters = { hideNonMatching: true, maxFee: null };
+    state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
     state.projects = new Set();
     state.recommended = new Set();
     ensureRequiredMaintenance();
+    renderGilbertChat();
     suggestPlan(true);
   }
 
@@ -866,13 +830,12 @@
         if (monthsEl) monthsEl.value = saved.invoicePaymentMonths;
       }
       updateInvoiceScheduleAmount();
-      if (saved.filters) {
-        if (saved.filters.hideNonMatching != null) document.getElementById("filter-hide-nonmatching").checked = saved.filters.hideNonMatching;
-        if (saved.filters.maxFee != null) document.getElementById("filter-max-fee").value = saved.filters.maxFee;
-      }
       if (saved.goalText) {
         document.getElementById("goal-input").value = saved.goalText;
         state.goalText = saved.goalText;
+      }
+      if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.length) {
+        state.gilbertChat = saved.gilbertChat;
       }
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
@@ -882,7 +845,6 @@
 
   function saveState() {
     ensureRequiredMaintenance();
-    getFilters();
     state.generalSuggestions = document.getElementById("general-suggestions").value;
     state.submitterEmail = document.getElementById("submitted-email").value;
     syncPaymentTermsFromDom();
@@ -896,8 +858,8 @@
       submitterEmail: state.submitterEmail,
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
-      filters: state.filters,
-      goalText: state.goalText
+      goalText: state.goalText,
+      gilbertChat: state.gilbertChat
     }));
     updateSubmitButtons();
   }
@@ -1100,8 +1062,8 @@
 
   function showConfirmPage() {
     if (!canContinue()) return;
-    const pavi = document.getElementById("confirm-gigi");
-    if (pavi) pavi.src = GIGI_ICON;
+    const guideImg = document.getElementById("confirm-gilbert");
+    if (guideImg) guideImg.src = GILBERT_ICON;
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
     updateInvoiceScheduleAmount();
@@ -1234,40 +1196,72 @@
     return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
   }
 
-  function pickGigiTip() {
+  function renderGilbertChat() {
+    const el = document.getElementById("gilbert-chat-messages");
+    if (!el) return;
+    if (!state.gilbertChat.length) {
+      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+    }
+    el.innerHTML = state.gilbertChat.map(msg => {
+      const who = msg.role === "gilbert" ? GUIDE_SHORT : "You";
+      return `<div class="gilbert-chat-msg gilbert-chat-${msg.role}"><span class="gilbert-chat-who">${escapeHtml(who)}</span><p>${escapeHtml(msg.text)}</p></div>`;
+    }).join("");
+    el.scrollTop = el.scrollHeight;
+  }
+
+  function pickGilbertReply(userText) {
+    const text = (userText || "").trim();
     const items = getInvoiceLineItems();
-    const goal = (state.goalText || "").trim();
     const count = items.length;
-    if (!goal && !count) {
-      return "Describe your goals — I'll match projects to your cart.";
+    if (!text) {
+      return "Tell me what's not working — leads, intake, ads, website, or CRM. We'll map projects to fix it.";
     }
-    if (goal && !count) {
-      return "Good start. I'll suggest matches as you type — or pick projects below.";
+    const words = text.toLowerCase().split(/\W+/).filter(w => w.length > 2);
+    const scored = getAllItems()
+      .filter(item => !item.isRetainer && item.id !== "RETAINER")
+      .map(item => ({ item, score: scoreItemForGoal(item, words) }))
+      .filter(s => s.score > 0)
+      .sort((a, b) => b.score - a.score);
+    if (scored.length) {
+      const picks = scored.slice(0, 3).map(s => s.item.title);
+      const list = picks.length === 1 ? picks[0] : picks.slice(0, -1).join(", ") + " and " + picks[picks.length - 1];
+      if (count > 0) {
+        return `Understood. I'd prioritize ${list} — ${count} item${count === 1 ? "" : "s"} in your cart so far. Add more detail or pick from the list below.`;
+      }
+      return `I hear you. I'd start with ${list} — I'm matching those to your cart. What else should we fix?`;
     }
-    if (count === 1) {
-      return "One in the cart. Add foundation or retainer work if you want a fuller stack.";
+    if (count > 0) {
+      return `${count} project${count === 1 ? "" : "s"} in your cart. Tell me more about the problem and I'll refine the mix.`;
     }
-    if (count >= 2 && count <= 4) {
-      return "Solid mix. Check “Why this combination” in your cart for how they fit.";
-    }
-    if (count > 4) {
-      return "Full cart — use invoice schedule on submit to spread project fees.";
-    }
-    if (state.retainer && count > 0) {
-      return "Retainer plus projects — ads stay managed while upgrades ship.";
-    }
-    return "Pick projects or refine your goal — I'm here to help you prioritize.";
+    return "Got it. Browse the project list below, or tell me more — wasted ad spend, broken forms, slow intake — and I'll suggest matches.";
   }
 
-  function updateGigiTip() {
-    const bubble = document.getElementById("gigi-tip-bubble");
-    if (bubble) bubble.textContent = pickGigiTip();
+  function sendGilbertMessage() {
+    const input = document.getElementById("goal-input");
+    const text = (input?.value || "").trim();
+    if (!text) return;
+    state.goalText = text;
+    state.gilbertChat.push({ role: "user", text });
+    state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(text) });
+    renderGilbertChat();
+    saveState();
+    suggestPlan(true);
   }
 
-  function initGigiGuide() {
-    const guideImg = document.getElementById("gigi-guide-img");
-    if (guideImg) guideImg.src = GIGI_ICON;
-    updateGigiTip();
+  function initGilbertGuide() {
+    const guideImg = document.getElementById("gilbert-guide-img");
+    if (guideImg) {
+      guideImg.src = GILBERT_HERO;
+      guideImg.alt = `${GUIDE_NAME} — your Gilded Goose guide`;
+    }
+    if (!state.gilbertChat.length) {
+      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+      if (state.goalText.trim()) {
+        state.gilbertChat.push({ role: "user", text: state.goalText.trim() });
+        state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(state.goalText) });
+      }
+    }
+    renderGilbertChat();
   }
 
   function showThankYou(payload) {
@@ -1275,7 +1269,7 @@
     const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-gigi").src = GIGI_SEAL;
+    document.getElementById("thank-you-gilbert").src = GILBERT_SEAL;
     document.getElementById("thank-you-sub").textContent =
       "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
 
@@ -1431,24 +1425,15 @@
   document.getElementById("goal-input").addEventListener("input", () => {
     state.goalText = document.getElementById("goal-input").value;
     saveState();
-    scheduleSuggestPlan();
   });
-  document.getElementById("clear-filters").addEventListener("click", clearFilters);
-  document.getElementById("filter-max-fee").addEventListener("input", () => {
-    getFilters();
-    if (state.goalText.trim()) scheduleSuggestPlan();
-    else {
-      renderAllCards();
-      renderProjectToc();
-      renderSummary();
+  document.getElementById("goal-input").addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendGilbertMessage();
     }
   });
-  document.getElementById("filter-hide-nonmatching").addEventListener("change", () => {
-    getFilters();
-    renderAllCards();
-    renderProjectToc();
-    renderSummary();
-  });
+  document.getElementById("gilbert-send").addEventListener("click", sendGilbertMessage);
+  document.getElementById("clear-filters").addEventListener("click", clearFilters);
   document.getElementById("expand-all-projects").addEventListener("change", e => setExpandAll(e.target.checked));
 
   document.querySelectorAll(".toc-sort-btn").forEach(btn => {
@@ -1461,7 +1446,7 @@
 
   loadState();
   ensureRequiredMaintenance();
-  initGigiGuide();
+  initGilbertGuide();
   document.getElementById("plan-summary")?.addEventListener("click", e => {
     const link = e.target.closest(".invoice-item-link");
     if (!link) return;

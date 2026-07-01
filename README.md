@@ -1,4 +1,6 @@
-# Gilded Goose — project prioritizer
+# Gilbert — project prioritizer
+
+Guide character: **Lord Gilbert Granville** (Gilbert).
 
 GitHub: [GildedGooseltd/PickyPavi](https://github.com/GildedGooseltd/PickyPavi) · Live: `https://gildedgooseltd.github.io/PickyPavi/`
 
