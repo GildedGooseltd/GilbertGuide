@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gilded Goose — Project Prioritizer</title>
+  <title>Gilbert — Project Prioritizer</title>
   <style>
     :root {
       /* Gilded Goose — from GG Branding Files (cream, gold, brown) + royal purple highlighter */
@@ -123,16 +123,16 @@
       font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.12em;
       color: var(--gg-royal); font-weight: 700;
     }
-    .gigi-guide-col {
+    .gilbert-guide-col {
       display: flex; flex-direction: column; align-items: center; gap: 0.5rem; flex-shrink: 0;
     }
-    .gigi-tip-bubble {
+    .gilbert-tip-bubble {
       max-width: 10.5rem; padding: 0.5rem 0.65rem; border-radius: 10px;
       background: var(--gg-paper); border: 1px solid var(--gg-royal-border);
       font-size: 0.72rem; line-height: 1.45; color: var(--gg-brown-muted); text-align: center;
       position: relative; box-shadow: 0 2px 8px rgba(78, 42, 132, 0.08);
     }
-    .gigi-tip-bubble::before {
+    .gilbert-tip-bubble::before {
       content: ""; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
       border-left: 6px solid transparent; border-right: 6px solid transparent;
       border-bottom: 6px solid var(--gg-royal-border);
@@ -300,7 +300,7 @@
     }
     textarea::placeholder, input::placeholder { color: var(--input-placeholder); opacity: 1; }
     .goal-field textarea { min-height: 3.5rem; resize: vertical; }
-    .pavi-guide-strip {
+    .gilbert-guide-strip {
       max-width: 1400px; margin: 0 auto; padding: var(--space-md) 2rem 0;
     }
     .search-unified-panel {
@@ -311,8 +311,8 @@
     .search-unified-inner {
       display: flex; align-items: flex-end; gap: var(--space-md);
     }
-    .gigi-hero-wrap { flex-shrink: 0; line-height: 0; }
-    .gigi-hero {
+    .gilbert-hero-wrap { flex-shrink: 0; line-height: 0; }
+    .gilbert-hero {
       width: 96px; height: 96px; border-radius: 10px; object-fit: cover; object-position: center 20%;
       display: block; background: var(--gg-paper);
       border: 2px solid var(--gg-gold);
@@ -367,7 +367,7 @@
       .card-icons-corner { top: 0; right: 0; }
       .search-unified-inner { flex-direction: column; align-items: center; }
       .search-unified-body { width: 100%; }
-      .gigi-hero { width: 80px; height: 80px; }
+      .gilbert-hero { width: 80px; height: 80px; }
     }
     .project-note { color: var(--input-text); background: var(--gg-paper); border-color: var(--border-strong); min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
     .general-note { min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
@@ -483,8 +483,8 @@
       content: "✦ ✦ ✦"; position: absolute; top: 0.65rem; left: 50%; transform: translateX(-50%);
       font-size: 0.75rem; color: rgba(255, 255, 255, 0.45); letter-spacing: 0.5rem;
     }
-    .gigi-celebrate-wrap { position: relative; display: inline-block; margin: 0.5rem 0 0.75rem; }
-    .thank-you-gigi {
+    .gilbert-celebrate-wrap { position: relative; display: inline-block; margin: 0.5rem 0 0.75rem; }
+    .thank-you-gilbert {
       width: 120px; height: auto; border-radius: 8px; object-fit: contain; display: block; margin: 0 auto;
       border: none; box-shadow: 0 4px 16px rgba(78, 42, 132, 0.15);
       background: transparent;
@@ -605,7 +605,7 @@
     }
     .confirm-header { display: flex; align-items: center; gap: 0.85rem; margin-bottom: var(--space-md); }
     .confirm-header h2 { font-size: 1.1rem; margin: 0; font-weight: 800; color: var(--gg-brown); }
-    .confirm-gigi {
+    .confirm-gilbert {
       width: 56px; height: 56px; border-radius: 10px; object-fit: contain; flex-shrink: 0;
       background: var(--gg-paper); padding: 2px;
       border: 2px solid var(--gg-gold); box-shadow: 0 2px 10px rgba(78, 42, 132, 0.1);
@@ -711,7 +711,7 @@
   <div id="confirm-page" class="confirm-page" aria-hidden="true">
     <div class="confirm-panel">
       <div class="confirm-header">
-        <img class="confirm-gigi" id="confirm-gigi" src="assets/gigi-goose-guide.svg" alt="Gilded Goose guide">
+        <img class="confirm-gilbert" id="confirm-gilbert" src="assets/gigi-goose-guide.svg" alt="Lord Gilbert Granville">
         <h2>Confirm &amp; submit</h2>
       </div>
       <p class="confirm-intro">Add your email and choose how project fees are invoiced. Deposit is separate and billed right away.</p>
@@ -763,8 +763,8 @@
   <div id="thank-you" class="thank-you" aria-hidden="true">
     <div class="thank-you-panel">
       <div class="thank-you-hero">
-        <div class="gigi-celebrate-wrap">
-          <img class="thank-you-gigi" id="thank-you-gigi" src="assets/gigi-logo-frame.png" alt="Gilded Goose celebrating">
+        <div class="gilbert-celebrate-wrap">
+          <img class="thank-you-gilbert" id="thank-you-gilbert" src="assets/gigi-logo-frame.png" alt="Lord Gilbert Granville celebrating">
         </div>
         <h2 class="thank-you-headline">Excellent choices — you're on your way!</h2>
         <p class="thank-you-sub" id="thank-you-sub">Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.</p>
@@ -782,18 +782,18 @@
   <div id="main-app">
     <header class="gg-header">
       <img class="gg-wordmark" src="assets/gigi-logo-frame.png" alt="Gilded Goose Ltd.">
-      <span class="gg-app-title">Project Prioritizer</span>
+      <span class="gg-app-title">Gilbert · Project Prioritizer</span>
     </header>
     <section class="finder-panel" aria-label="Find projects and submit">
       <div class="top-unified-panel">
         <div class="top-unified-card">
           <div class="search-unified-panel">
             <div class="search-unified-inner">
-              <div class="gigi-guide-col">
-                <div class="gigi-hero-wrap">
-                  <img class="gigi-hero" id="gigi-guide-img" src="assets/gigi-goose-walk.png" alt="GiGi — your Gilded Goose guide">
+              <div class="gilbert-guide-col">
+                <div class="gilbert-hero-wrap">
+                  <img class="gilbert-hero" id="gilbert-guide-img" src="assets/gigi-goose-walk.png" alt="Lord Gilbert Granville — your Gilded Goose guide">
                 </div>
-                <div class="gigi-tip-bubble" id="gigi-tip-bubble" role="status">Describe your goals — I'll match projects to your cart.</div>
+                <div class="gilbert-tip-bubble" id="gilbert-tip-bubble" role="status">Gilbert here — describe your goals and I'll match projects to your cart.</div>
               </div>
               <div class="search-unified-body">
                 <label for="goal-input">Share your <em>goals</em> and <em>problems</em> you're fixing — matching projects go in your cart.</label>
@@ -874,6 +874,6 @@
 
   <script src="pages-config.js?v=20260630"></script>
   <script src="projects-data.js?v=20260630"></script>
-  <script src="app.js?v=20260630"></script>
+  <script src="app.js?v=20260701"></script>
 </body>
 </html>

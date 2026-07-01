@@ -1,5 +1,5 @@
 /**
- * Parse / serialize Picky Pavi project markdown (B2 template format).
+ * Parse / serialize Gilbert project picker markdown (B2 template format).
  */
 import fs from "fs";
 import path from "path";
@@ -23,7 +23,9 @@ const META_KEYS = {
   icon: "guideIcon",
   "guide hero": "guideHero",
   seal: "guideSeal",
-  logo: "guideLogo"
+  logo: "guideLogo",
+  "guide name": "guideName",
+  "guide short name": "guideShortName"
 };
 
 const BRAND_FIXES = [
@@ -321,6 +323,8 @@ export function parseSettingsMarkdown(text) {
   const ids = parseListSection(sections["default package projects"] || "");
   const retainerLine = text.match(/Include retainer:\s*(yes|no)/i);
   return {
+    guideName: meta.guideName || "Lord Gilbert Granville",
+    guideShortName: meta.guideShortName || "Gilbert",
     guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
     guideHero: meta.guideHero || "assets/gigi-goose-walk.png",
     guideSeal: meta.guideSeal || "assets/gigi-logo-frame.png",
