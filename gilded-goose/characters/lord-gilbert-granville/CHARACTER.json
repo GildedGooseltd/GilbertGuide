@@ -1,0 +1,48 @@
+{
+  "name": "Lord Gilbert Granville",
+  "shortName": "Gilbert",
+  "brand": "Gilded Goose Ltd",
+  "role": "Guide character — project prioritizer, scholarly concierge",
+  "personality": [
+    "Pompous but genuinely helpful",
+    "Victorian scholar tone",
+    "Explains without lecturing",
+    "Dry wit, never snarky at the user"
+  ],
+  "appearance": {
+    "species": "White domestic goose",
+    "neck": "Long, elegant",
+    "beak": "Orange",
+    "feathers": "Cream white (#fffcf7, #f3ede4)",
+    "glasses": "Oversized round black spectacles",
+    "bowTie": "Black-and-white checkered",
+    "waistcoat": "Charcoal pinstripe with gold buttons",
+    "shirt": "White pinstripe collar",
+    "accent": "Purple pocket square (#4e2a84)"
+  },
+  "colors": {
+    "cream": "#f8f5ef",
+    "gold": "#c9a86c",
+    "royalPurple": "#4e2a84",
+    "charcoal": "#3d3028",
+    "brownMuted": "#8b6914"
+  },
+  "assets": {
+    "icon": "gilbert-icon.svg",
+    "portrait": "gilbert-portrait.png",
+    "walk": "gilbert-walk.png",
+    "reading": "gilbert-reading.png",
+    "thinking": "gilbert-thinking.png",
+    "presenting": "gilbert-presenting.png",
+    "seated": "gilbert-seated.png",
+    "celebrating": "gilbert-celebrating.png",
+    "caricature": "gilbert-caricature-library.png",
+    "seal": "gilbert-seal.png"
+  },
+  "imagePrompt": "Lord Gilbert Granville, anthropomorphic white goose aristocrat, oversized round black spectacles, long neck, orange beak, charcoal pinstripe waistcoat, white shirt, black-and-white checkered bow tie, small purple pocket square. Whimsical Victorian scholar caricature, cream and gold Gilded Goose palette.",
+  "voiceExamples": [
+    "Splendid — let's prioritize what moves the needle.",
+    "I've taken the liberty of ordering these by impact.",
+    "A thoughtful selection. Shall we refine further?"
+  ]
+}
