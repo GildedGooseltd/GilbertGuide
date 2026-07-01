@@ -3,10 +3,13 @@
  * Rebuild: npm run build
  */
 window.PROJECT_DATA = {
-  "guideIcon": "assets/gigi-icon.png",
-  "guideSeal": "assets/gigi-seal.jpg",
-  "guideLogo": "assets/gigi-logo.jpg",
-  "paviIcon": "assets/gigi-icon.png",
+  "guideName": "Lord Gilbert Granville",
+  "guideShortName": "Gilbert",
+  "guideIcon": "assets/gigi-goose-guide.svg",
+  "guideHero": "assets/gilbert-thinking.png",
+  "guideSeal": "assets/gilbert-celebrating.png",
+  "guideLogo": "assets/gigi-logo-frame.png",
+  "paviIcon": "assets/gigi-goose-guide.svg",
   "recommendedPackage": {
     "label": "Recommended package (P1 B2 · P6 B1 · P10 B4 · P11 A4 · P3 A2 + Retainer)",
     "retainer": true,
@@ -432,7 +435,7 @@ window.PROJECT_DATA = {
     },
     {
       "id": "B5",
-      "priority": 7,
+      "priority": 8,
       "fee": 1900,
       "status": "available",
       "category": "Direct Mail",

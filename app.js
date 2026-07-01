@@ -6,8 +6,12 @@
     );
   }
   let CONFIG = getConfig();
-  const GIGI_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-icon.png";
-  const GIGI_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-seal.jpg";
+  const GILBERT_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-goose-guide.svg";
+  const GILBERT_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
+  const GILBERT_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-logo-frame.png";
+  const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
+  const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
+  const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
 
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
@@ -19,19 +23,19 @@
 
   const REQUIRED_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
 
-  const ACCOUNT_DATA_ICON = "assets/gilded-goose-account.svg";
+  const ACCOUNT_DATA_ICON = "assets/gg-shield-emblem.png";
 
-  function accountDataIconHtml() {
+  function accountDataBadgeImg() {
     return `<img class="pav-law-shield-img" src="${ACCOUNT_DATA_ICON}" alt="" width="24" height="29">`;
   }
 
   const VALUE_ICON_SVGS = {
-    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12l-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25L8.29 2.34a1 1 0 0 0-1.42 0l-2.76 2.76a1 1 0 0 0 0 1.42l10.42 10.42"/></svg>`,
-    retainer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>`,
+    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.8 2.2 22 6.4"/><path d="m20.8 4.2-5.8 5.8"/></svg>`,
+    retainer: REQUIRED_ICON_SVG,
     leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.5"/><path d="M2 20v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5V20"/><circle cx="17.5" cy="8.5" r="2.5"/><path d="M21 20v-1a3.5 3.5 0 0 0-2.5-3.35"/><circle cx="5" cy="10.5" r="2"/><path d="M1 20v-0.5a2.5 2.5 0 0 1 2-2.45"/></svg>`,
     crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/><path d="M13 13h5"/><path d="M13 17h5"/></svg>`,
     seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
-    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="3"/><path d="M3 20v-2a4 4 0 0 1 4-4h0"/><circle cx="17" cy="8" r="3"/><path d="M21 20v-2a4 4 0 0 0-4-4h0"/><path d="M10.5 10.5h3"/><path d="M12 10.5v2.5"/><path d="M11 13h2"/></svg>`,
+    referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7-4 4 4 4"/><path d="M3 11h13"/><path d="m17 17 4-4-4-4"/><path d="M21 13H8"/></svg>`,
     efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
     intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v9H8l-4 4V5z"/></svg>`,
     creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.5 0-8 3.6-8 8.2 0 2.8 1.3 4.8 3 6 .6.4 1.2.6 1.8.6.9 0 1.6-.5 1.9-1.3.5-1 1.6-1.6 2.6-1.3 1.1.4 1.8 1.5 1.8 2.7 0 .3 0 .6-.1.9-.4 1.4 1 2.9 2.8 2.9 3.2 0 5.8-2.6 5.8-5.8C22 8.2 17.5 3 12 3z"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="12.5" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="13.5" r="1" fill="currentColor" stroke="none"/></svg>`,
@@ -47,10 +51,18 @@
     return `<span class="required-icon" title="${escapeHtml(tip)}" aria-label="${escapeHtml(tip)}">${REQUIRED_ICON_SVG}</span>`;
   }
 
-  function priorityTocHtml(item) {
+  function uniqueTocPriority(item, usedPriorities) {
+    if (item.isRetainer || item.id === "RETAINER") return null;
+    if (item.priority == null || item.priority === "" || Number.isNaN(Number(item.priority))) return null;
+    let p = Math.trunc(Number(item.priority));
+    while (usedPriorities.has(p)) p += 1;
+    usedPriorities.add(p);
+    return p;
+  }
+
+  function priorityTocHtml(item, displayPriority) {
     const required = isRequiredProject(item, !!item.isRetainer);
-    const hasPriority = item.priority != null && item.priority !== "" && !Number.isNaN(Number(item.priority));
-    const p = hasPriority ? Math.trunc(Number(item.priority)) : "";
+    const p = displayPriority != null ? displayPriority : "";
     const urgent = isPriorityUrgent(item) ? '<span class="priority-urgent" title="Urgent or fixing an active issue">!</span>' : "";
     const req = required ? requiredMarkerHtml(item, !!item.isRetainer) : "";
     return `<span class="toc-priority-inner">${urgent}${p}</span>${req ? `<span class="toc-required-icon">${req}</span>` : ""}`;
@@ -97,11 +109,16 @@
     submitterEmail: "",
     invoicePaymentMonths: "",
     invoicePaymentMonthlyAmount: "",
-    filters: { hideNonMatching: true, maxFee: null },
     goalText: "",
+    gilbertChat: [],
+    iconFilters: [],
     tocSort: { field: "priority", dir: "asc" },
+    tocExpanded: false,
     showAllProjects: false
   };
+
+  const OMNI_CHANNEL_WHY =
+    "Pav Law grows when the same trusted message meets clients wherever they search — paid search, display, directories, email, referrals, and the website. Omnichannel works because each channel feeds the others: ads drive qualified visits; a fast site and clear intake convert them; phones and CRM route every lead; retargeting and mailers bring back prospects who did not book the first time. Connected channels produce signed cases you can trace to spend — not siloed clicks.";
 
   const PROJECT_LIST_LIMIT = 10;
 
@@ -217,7 +234,7 @@
     const label = item.backedMetric.label || "Verified account data";
     const src = item.backedMetric.source ? ` (${item.backedMetric.source})` : "";
     const tip = escapeHtml(label + src);
-    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${accountDataIconHtml()}</span>`;
+    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${accountDataBadgeImg()}</span>`;
   }
 
   function cardCornerIconsHtml(item, isRetainer, inline) {
@@ -228,14 +245,52 @@
     return `<div class="${cls}">${valueHtml}${dataHtml}</div>`;
   }
 
+  function itemMatchesIconFilters(item) {
+    if (!state.iconFilters.length) return true;
+    if (state.iconFilters.includes("account-data") && item.backedMetric) return true;
+    const iconIds = getValueIcons(item).map(i => i.id);
+    return state.iconFilters.some(f => f !== "account-data" && iconIds.includes(f));
+  }
+
+  function toggleIconFilter(id) {
+    const idx = state.iconFilters.indexOf(id);
+    if (idx >= 0) state.iconFilters.splice(idx, 1);
+    else state.iconFilters.push(id);
+    saveState();
+    renderValueIconKey();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  }
+
+  function clearIconFilters() {
+    state.iconFilters = [];
+    saveState();
+    renderValueIconKey();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  }
+
   function renderValueIconKey() {
     const el = document.getElementById("value-icon-key");
     if (!el) return;
-    el.innerHTML = `<span class="value-icon-key-title">Value icons key</span>` +
-      VALUE_ICON_DEFS.map(d =>
-        `<span class="key-item">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></span>`
-      ).join("") +
-      `<span class="key-item"><span class="account-data-shield key-shield">${accountDataIconHtml()}</span><span class="key-item-label">Account data</span></span>`;
+    const hint = state.iconFilters.length
+      ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear filters (${state.iconFilters.length})</button>`
+      : `<span class="icon-filter-hint">Click an icon to filter the project list</span>`;
+    el.innerHTML = `<span class="value-icon-key-title">Filter by value</span>${hint}` +
+      VALUE_ICON_DEFS.map(d => {
+        const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
+        return `<button type="button" class="key-item key-filter-btn${active}" data-icon-filter="${d.id}">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></button>`;
+      }).join("") +
+      (() => {
+        const active = state.iconFilters.includes("account-data") ? " filter-active" : "";
+        return `<button type="button" class="key-item key-filter-btn${active}" data-icon-filter="account-data"><span class="account-data-shield key-shield">${accountDataBadgeImg()}</span><span class="key-item-label">Account data</span></button>`;
+      })();
+    el.querySelectorAll(".key-filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => toggleIconFilter(btn.dataset.iconFilter));
+    });
+    el.querySelector("#icon-filter-clear")?.addEventListener("click", clearIconFilters);
   }
 
   function isItemSelected(item) {
@@ -309,74 +364,108 @@
     });
     getSelectedProjects().forEach(p => selected.push({ ...p, isRetainer: false }));
 
-    const f = getFilters();
-    const cost = getSelectionCost();
     const hasGoal = !!state.goalText.trim();
-    const hasMaxFee = f.maxFee != null;
+    const projectItems = selected.filter(i => !i.isRetainer && !i.monthlyOnly);
 
     if (!selected.length && !hasGoal) return null;
 
-    const introParts = [];
+    const rec = { goalIntro: null, maintenanceOnly: false, projectBullets: [], omnichannel: OMNI_CHANNEL_WHY, strategy: null, pickPrompt: null };
+
     if (hasGoal) {
       const g = state.goalText.trim();
-      introParts.push(`Based on your goals: "${g.length > 140 ? g.slice(0, 140) + "…" : g}"`);
-    }
-    if (selected.length) {
-      if (hasMaxFee) {
-        introParts.push(`Estimated total ${fmt(cost)}${cost > f.maxFee ? " — above your max fee filter" : ` — within ${fmt(f.maxFee)} max`}.`);
-      } else {
-        introParts.push(`Estimated total ${fmt(cost)}.`);
-      }
+      rec.goalIntro =
+        `You told Gilbert the core problem is: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below close that gap — not as a random list, but as a sequenced marketing stack.`;
     }
 
-    if (!selected.length) {
-      return { intro: introParts.join(" ") };
+    if (!projectItems.length && selected.length) {
+      rec.maintenanceOnly = true;
+      return rec;
     }
 
-    const projectItems = selected.filter(i => !i.isRetainer && !i.monthlyOnly);
-    if (projectItems.length > 1) {
+    if (projectItems.length) {
+      rec.projectBullets = projectItems.map(item => ({
+        title: item.title,
+        blurb: briefValueAdd(item)
+      }));
+
       const hasEnabler = selected.some(i => i.enabler);
-      const hasLeads = selected.some(i => getValueIcons(i).some(v => v.id === "leads" || v.id === "retainer"));
+      const hasLeads = selected.some(i => getValueIcons(i).some(v => v.id === "leads"));
       const hasIntake = selected.some(i => getValueIcons(i).some(v => v.id === "intake" || v.id === "crm"));
+      const hasSeo = selected.some(i => getValueIcons(i).some(v => v.id === "seo"));
+      const hasReferrals = selected.some(i => getValueIcons(i).some(v => v.id === "referrals"));
+      const hasRetainer = selected.some(i => i.isRetainer || i.id === "RETAINER");
+
+      let strategy = "";
       if (hasEnabler && hasLeads) {
-        introParts.push("This mix fixes infrastructure and tracking first, then scales lead generation — the order that protects ad spend.");
+        strategy = "Fix tracking, phones, and CRM infrastructure first, then scale paid media. That order protects ad spend — you know which campaigns and keywords produce signed cases before you increase budget.";
       } else if (hasEnabler && hasIntake) {
-        introParts.push("Foundation and intake work together so every lead is captured, routed, and followed up before you grow spend.");
+        strategy = "Build the foundation (calls, forms, routing) alongside intake improvements so every lead is captured and followed up before you push more traffic.";
       } else if (hasLeads && hasIntake) {
-        introParts.push("Lead generation plus intake improvements mean more consults from the same marketing budget.");
+        strategy = "Pair lead generation with intake and follow-up work so consult volume rises without dropping response time or Romina's desk.";
+      } else if (hasLeads && hasSeo) {
+        strategy = "Combine paid search and display with organic and site content so you own both high-intent clicks and long-tail discovery.";
+      } else if (hasReferrals && hasLeads) {
+        strategy = "Balance outbound and paid leads with referral and past-client programs — lower CAC on the referral side, predictable volume from ads.";
       } else if (hasLeads) {
-        introParts.push("These projects focus on measurable leads and calls that tie back to signed cases.");
+        strategy = "Focus spend on measurable calls and consults tied to account data, then optimize creative and landing pages against what actually converts.";
+      } else if (hasSeo) {
+        strategy = "Strengthen owned channels (site, SEO, content) so the firm is less dependent on paid auction costs over time.";
+      } else if (projectItems.length > 1) {
+        strategy = "These projects stack — each unlocks or amplifies the next so the firm compounds results instead of running siloed one-offs.";
       } else {
-        introParts.push("These projects stack — each piece supports the others so marketing compounds instead of staying siloed.");
+        strategy = "This project targets a specific bottleneck; add foundation or retainer work if you want a fuller stack.";
       }
-    } else if (selected.length > 1) {
-      introParts.push("Retainer and maintenance keep performance steady while project work delivers the upgrades.");
+
+      if (hasRetainer && projectItems.length) {
+        strategy += " The retainer keeps campaigns managed and optimized while project work delivers the structural upgrades.";
+      }
+
+      rec.strategy = strategy;
+    } else if (hasGoal) {
+      rec.pickPrompt = "Pick projects from the list below — Gilbert will explain how they fit together as you add them.";
     }
 
-    return { intro: introParts.join(" ") };
+    return rec;
+  }
+
+  function renderWhyPanel() {
+    const el = document.getElementById("why-panel");
+    if (!el) return;
+    const rec = buildRecommendation();
+    if (!rec) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+
+    let body = "";
+    if (rec.goalIntro) body += `<p class="why-lead">${escapeHtml(rec.goalIntro)}</p>`;
+    if (rec.maintenanceOnly) {
+      body += `<p>Your cart is retainer and required maintenance only — ongoing ads management and monthly upkeep so performance stays stable while you decide on upgrade projects.</p>`;
+    } else if (rec.projectBullets.length) {
+      body += `<h4 class="why-subhead">What each project adds</h4><ul class="why-project-list">${rec.projectBullets.map(b =>
+        `<li><strong>${escapeHtml(b.title)}</strong>${b.blurb ? ` — ${escapeHtml(b.blurb)}` : ""}</li>`
+      ).join("")}</ul>`;
+      body += `<h4 class="why-subhead">Why omnichannel marketing works</h4><p>${escapeHtml(rec.omnichannel)}</p>`;
+      if (rec.strategy) {
+        body += `<h4 class="why-subhead">How these fit together</h4><p>${escapeHtml(rec.strategy)}</p>`;
+      }
+    } else if (rec.pickPrompt) {
+      body += `<p>${escapeHtml(rec.pickPrompt)}</p>`;
+    }
+
+    if (!body) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+
+    el.hidden = false;
+    el.innerHTML = `<div class="why-gilded-frame"><div class="recommendation-box"><h3>Why this combination</h3>${body}</div></div>`;
   }
 
   function renderPlanSummary() {
-    const el = document.getElementById("plan-summary");
-    if (!el) return;
-    const items = getInvoiceLineItems();
-    const rec = buildRecommendation();
-    const parts = [];
-
-    if (state.goalText.trim() && rec && rec.intro) {
-      parts.push(`<div class="recommendation-box"><h3>Why this combination</h3><p>${escapeHtml(rec.intro)}</p></div>`);
-    } else if (state.goalText.trim()) {
-      parts.push(`<div class="recommendation-box empty"><h3>Why this combination</h3><p>Adjust your goal or pick projects below.</p></div>`);
-    }
-
-    if (!items.length) {
-      parts.push(`<p class="empty-state">Your cart is empty — describe your goals above or pick projects below.</p>`);
-    } else {
-      parts.push(`<div class="total-box cart-box">${buildTotalsHtml()}</div>`);
-    }
-
-    el.innerHTML = parts.join("");
-    updateGigiTip();
+    renderWhyPanel();
   }
 
   function renderRecommendation() {
@@ -671,66 +760,95 @@
     renderProjectToc();
   }
 
+  function renderCondensedToc() {
+    const el = document.getElementById("toc-condensed");
+    if (!el) return;
+    const hasRun = !!state.goalText.trim() || state.projects.size > 0 || state.recommended.size > 1;
+    const picked = sortByPriority(getAllItems().filter(item => {
+      const id = item.isRetainer ? "RETAINER" : item.id;
+      return state.recommended.has(id) || isItemSelected(item);
+    }));
+    if (!hasRun || !picked.length) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+    const top5 = picked.slice(0, 5);
+    el.hidden = false;
+    el.innerHTML = `<div class="toc-condensed-inner">
+      <h4 class="toc-condensed-title">Gilbert's picks — quick view</h4>
+      <ol class="toc-condensed-list">${top5.map(item =>
+        `<li><a href="#project-${item.id}">${escapeHtml(item.title)}</a><span class="toc-condensed-blurb">${escapeHtml(briefValueAdd(item))}</span></li>`
+      ).join("")}</ol>
+      ${picked.length > 5 ? `<p class="toc-condensed-more">+ ${picked.length - 5} more in the full table below</p>` : ""}
+      <button type="button" class="btn btn-secondary btn-sm" id="toc-condensed-open">Open full table of contents</button>
+    </div>`;
+    el.querySelector("#toc-condensed-open")?.addEventListener("click", () => {
+      const toc = document.getElementById("project-toc");
+      if (toc) {
+        toc.open = true;
+        toc.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
   function renderProjectToc() {
     const listEl = document.getElementById("toc-list");
     const statusEl = document.getElementById("table-filter-status");
     const hintEl = document.getElementById("toc-summary-hint");
+    const expandEl = document.getElementById("toc-expand-row");
     if (!listEl) return;
-    const items = sortTocItems(
-      allItemsByPriority().filter(item => itemPassesCostPriorityFilter(item))
-    );
-    listEl.innerHTML = items.map(item => {
+    const items = sortTocItems(allItemsByPriority().filter(item => itemMatchesIconFilters(item)));
+    const visibleItems = state.tocExpanded ? items : items.slice(0, 5);
+    const usedPriorities = new Set();
+    listEl.innerHTML = visibleItems.map(item => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
       const blurb = briefValueAdd(item);
+      const displayPriority = uniqueTocPriority(item, usedPriorities);
       return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}" data-id="${item.id}">
-        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item)}</span></td>
-        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${requiredMarkerHtml(item, !!item.isRetainer)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
+        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span></td>
+        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
         <td class="toc-col-blurb toc-blurb">${escapeHtml(blurb)}</td>
         <td class="toc-col-icons toc-value">${valueIconsHtml(item)}</td>
       </tr>`;
     }).join("");
     if (hintEl) {
       const selCount = items.filter(i => isItemSelected(i)).length;
-      hintEl.textContent = selCount ? `${items.length} projects · ${selCount} selected` : `${items.length} projects`;
+      const countLabel = state.tocExpanded || items.length <= 5 ? `${items.length} projects` : `Top 5 of ${items.length} projects`;
+      hintEl.textContent = selCount ? `${countLabel} · ${selCount} selected` : countLabel;
     }
     if (statusEl) {
       const total = allItemsByPriority().length;
       const shown = items.length;
-      statusEl.textContent = costFiltersActive() && shown !== total
-        ? `Showing ${shown} of ${total} projects`
+      statusEl.textContent = state.iconFilters.length && shown !== total
+        ? `Showing ${shown} of ${total} projects (icon filter)`
         : "";
+    }
+    if (expandEl) {
+      if (items.length > 5) {
+        expandEl.hidden = false;
+        expandEl.innerHTML = state.tocExpanded
+          ? `<button type="button" class="btn btn-secondary btn-sm toc-expand-btn" data-expand="top">Show top 5 only</button>`
+          : `<button type="button" class="btn btn-secondary btn-sm toc-expand-btn" data-expand="all">Show all ${items.length} projects</button>`;
+      } else {
+        expandEl.hidden = true;
+        expandEl.innerHTML = "";
+      }
     }
     updateTocSortUi();
   }
 
   function getFilters() {
-    const maxFeeRaw = document.getElementById("filter-max-fee").value;
-    state.filters.maxFee = maxFeeRaw === "" ? null : Math.max(0, Number(maxFeeRaw));
-    state.filters.hideNonMatching = document.getElementById("filter-hide-nonmatching").checked;
-    return state.filters;
+    return state.filters || {};
   }
 
-  function costFiltersActive() {
-    const f = getFilters();
-    return f.maxFee != null;
-  }
-
-  function itemFeeForFilter(item, isRetainer) {
-    if (isRetainer) return item.fee;
-    return itemSelectionCost(item);
-  }
-
-  function itemPassesCostPriorityFilter(item) {
-    const f = getFilters();
-    const isRetainer = item.isRetainer || item.id === "RETAINER";
-    const cost = itemFeeForFilter(item, isRetainer);
-    if (f.maxFee != null && cost > f.maxFee) return false;
+  function itemPassesCostPriorityFilter() {
     return true;
   }
 
   function filtersActive() {
-    return costFiltersActive() || !!state.goalText.trim();
+    return !!state.goalText.trim();
   }
 
   function feeLabelFor(item) {
@@ -755,15 +873,10 @@
   }
 
   function getItemFilterClasses(item, isRetainer) {
-    const f = getFilters();
     const classes = [];
     const id = isRetainer ? "RETAINER" : item.id;
     const selected = isRetainer ? state.retainer : state.projects.has(id);
-
-    if (!itemPassesCostPriorityFilter({ ...item, isRetainer }) && !selected) {
-      if (f.hideNonMatching) classes.push("filtered-out");
-    }
-
+    if (!itemMatchesIconFilters(item) && !selected) classes.push("filtered-out");
     if (state.recommended.has(id)) classes.push("recommended");
     return classes.join(" ");
   }
@@ -781,7 +894,6 @@
   }
 
   function suggestPlan(silent) {
-    getFilters();
     const goal = document.getElementById("goal-input").value.trim();
     state.goalText = goal;
     state.recommended = new Set();
@@ -832,11 +944,13 @@
   function clearFilters() {
     document.getElementById("goal-input").value = "";
     state.goalText = "";
-    document.getElementById("filter-max-fee").value = "";
-    state.filters = { hideNonMatching: true, maxFee: null };
+    state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+    state.iconFilters = [];
     state.projects = new Set();
     state.recommended = new Set();
     ensureRequiredMaintenance();
+    renderGilbertChat();
+    renderValueIconKey();
     suggestPlan(true);
   }
 
@@ -866,13 +980,15 @@
         if (monthsEl) monthsEl.value = saved.invoicePaymentMonths;
       }
       updateInvoiceScheduleAmount();
-      if (saved.filters) {
-        if (saved.filters.hideNonMatching != null) document.getElementById("filter-hide-nonmatching").checked = saved.filters.hideNonMatching;
-        if (saved.filters.maxFee != null) document.getElementById("filter-max-fee").value = saved.filters.maxFee;
-      }
       if (saved.goalText) {
         document.getElementById("goal-input").value = saved.goalText;
         state.goalText = saved.goalText;
+      }
+      if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.length) {
+        state.gilbertChat = saved.gilbertChat;
+      }
+      if (Array.isArray(saved.iconFilters)) {
+        state.iconFilters = saved.iconFilters;
       }
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
@@ -882,7 +998,6 @@
 
   function saveState() {
     ensureRequiredMaintenance();
-    getFilters();
     state.generalSuggestions = document.getElementById("general-suggestions").value;
     state.submitterEmail = document.getElementById("submitted-email").value;
     syncPaymentTermsFromDom();
@@ -896,8 +1011,9 @@
       submitterEmail: state.submitterEmail,
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
-      filters: state.filters,
-      goalText: state.goalText
+      goalText: state.goalText,
+      gilbertChat: state.gilbertChat,
+      iconFilters: state.iconFilters
     }));
     updateSubmitButtons();
   }
@@ -1083,7 +1199,12 @@
     const el = document.getElementById("webhook-warning");
     if (!el) return;
     const cfg = getConfig();
-    el.hidden = !!cfg.webhookUrl;
+    if (cfg.webhookUrl) {
+      el.hidden = true;
+      return;
+    }
+    el.hidden = false;
+    el.innerHTML = "Live webhook not configured yet — submit still works: your selections download as JSON and are saved in this browser. For automatic email + Sheet logging, add GitHub Secret <strong>PAV_PICKER_WEBHOOK_URL</strong> and redeploy.";
   }
 
   function updateSubmitButtons() {
@@ -1093,15 +1214,15 @@
     const submit = document.getElementById("submit-selections");
     if (submit) {
       submit.disabled = !canSubmit();
-      submit.title = CONFIG.webhookUrl ? "" : "Webhook not configured on live site — set PAV_PICKER_WEBHOOK_URL in GitHub Secrets";
+      submit.title = "";
     }
     updateWebhookWarning();
   }
 
   function showConfirmPage() {
     if (!canContinue()) return;
-    const pavi = document.getElementById("confirm-gigi");
-    if (pavi) pavi.src = GIGI_ICON;
+    const guideImg = document.getElementById("confirm-gilbert");
+    if (guideImg) guideImg.src = GILBERT_ICON;
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
     updateInvoiceScheduleAmount();
@@ -1234,40 +1355,113 @@
     return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
   }
 
-  function pickGigiTip() {
+  function renderGilbertChat() {
+    const el = document.getElementById("gilbert-chat-messages");
+    if (!el) return;
+    if (!state.gilbertChat.length) {
+      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+    }
+    el.innerHTML = state.gilbertChat.map(msg => {
+      const who = msg.role === "gilbert" ? GUIDE_SHORT : "You";
+      return `<div class="gilbert-chat-msg gilbert-chat-${msg.role}"><span class="gilbert-chat-who">${escapeHtml(who)}</span><p>${escapeHtml(msg.text)}</p></div>`;
+    }).join("");
+    el.scrollTop = el.scrollHeight;
+  }
+
+  function userCursedGilbert(text) {
+    return /\b(fuck|shit|damn|asshole|bitch|bastard|cunt|dick|wtf)\b/i.test(text || "");
+  }
+
+  function userThankedGilbert(text) {
+    return /\b(thanks|thank you|thank\s*u|tysm|thx|appreciate)\b/i.test(text || "");
+  }
+
+  function launchConfetti(count) {
+    const n = count || 90;
+    let layer = document.getElementById("confetti-layer");
+    if (!layer) {
+      layer = document.createElement("div");
+      layer.id = "confetti-layer";
+      layer.className = "confetti-layer";
+      layer.setAttribute("aria-hidden", "true");
+      document.body.appendChild(layer);
+    }
+    const colors = ["#7c3aed", "#b8860b", "#ffd700", "#4e2a84", "#f8f5ef", "#c4b5fd"];
+    for (let i = 0; i < n; i++) {
+      const piece = document.createElement("span");
+      const glitter = Math.random() > 0.45;
+      piece.className = "confetti-piece" + (glitter ? " glitter" : "");
+      piece.style.left = Math.random() * 100 + "vw";
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDuration = (1.1 + Math.random() * 1.9) + "s";
+      piece.style.animationDelay = Math.random() * 0.35 + "s";
+      layer.appendChild(piece);
+      piece.addEventListener("animationend", () => piece.remove());
+    }
+  }
+
+  function pickGilbertReply(userText) {
+    const text = (userText || "").trim();
     const items = getInvoiceLineItems();
-    const goal = (state.goalText || "").trim();
     const count = items.length;
-    if (!goal && !count) {
-      return "Describe your goals — I'll match projects to your cart.";
+    if (userCursedGilbert(text)) {
+      return "Well fuck you too, Sparky. Now — what's actually broken in the business so we can fix it?";
     }
-    if (goal && !count) {
-      return "Good start. I'll suggest matches as you type — or pick projects below.";
+    if (userThankedGilbert(text)) {
+      return "Anytime Sparklefarts!";
     }
-    if (count === 1) {
-      return "One in the cart. Add foundation or retainer work if you want a fuller stack.";
+    if (!text) {
+      return "Tell me what's not working — leads, intake, ads, website, or CRM. We'll map projects to fix it.";
     }
-    if (count >= 2 && count <= 4) {
-      return "Solid mix. Check “Why this combination” in your cart for how they fit.";
+    const words = text.toLowerCase().split(/\W+/).filter(w => w.length > 2);
+    const scored = getAllItems()
+      .filter(item => !item.isRetainer && item.id !== "RETAINER")
+      .map(item => ({ item, score: scoreItemForGoal(item, words) }))
+      .filter(s => s.score > 0)
+      .sort((a, b) => b.score - a.score);
+    if (scored.length) {
+      const picks = scored.slice(0, 3).map(s => s.item.title);
+      const list = picks.length === 1 ? picks[0] : picks.slice(0, -1).join(", ") + " and " + picks[picks.length - 1];
+      if (count > 0) {
+        return `Understood. I'd prioritize ${list} — ${count} item${count === 1 ? "" : "s"} in your cart so far. Add more detail or pick from the list below.`;
+      }
+      return `I hear you. I'd start with ${list} — I'm matching those to your cart. What else should we fix?`;
     }
-    if (count > 4) {
-      return "Full cart — use invoice schedule on submit to spread project fees.";
+    if (count > 0) {
+      return `${count} project${count === 1 ? "" : "s"} in your cart. Tell me more about the problem and I'll refine the mix.`;
     }
-    if (state.retainer && count > 0) {
-      return "Retainer plus projects — ads stay managed while upgrades ship.";
-    }
-    return "Pick projects or refine your goal — I'm here to help you prioritize.";
+    return "Got it. Browse the project list below, or tell me more — wasted ad spend, broken forms, slow intake — and I'll suggest matches.";
   }
 
-  function updateGigiTip() {
-    const bubble = document.getElementById("gigi-tip-bubble");
-    if (bubble) bubble.textContent = pickGigiTip();
+  function sendGilbertMessage() {
+    const input = document.getElementById("goal-input");
+    const text = (input?.value || "").trim();
+    if (!text) return;
+    state.goalText = text;
+    if (input) input.value = "";
+    state.gilbertChat.push({ role: "user", text });
+    state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(text) });
+    if (userThankedGilbert(text)) launchConfetti();
+    renderGilbertChat();
+    saveState();
+    suggestPlan(true);
   }
 
-  function initGigiGuide() {
-    const guideImg = document.getElementById("gigi-guide-img");
-    if (guideImg) guideImg.src = GIGI_ICON;
-    updateGigiTip();
+  function initGilbertGuide() {
+    const guideImg = document.getElementById("gilbert-guide-img");
+    if (guideImg) {
+      guideImg.src = GILBERT_HERO;
+      guideImg.alt = `${GUIDE_NAME} — your Gilded Goose guide`;
+      guideImg.className = "gilbert-caricature";
+    }
+    if (!state.gilbertChat.length) {
+      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+      if (state.goalText.trim()) {
+        state.gilbertChat.push({ role: "user", text: state.goalText.trim() });
+        state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(state.goalText) });
+      }
+    }
+    renderGilbertChat();
   }
 
   function showThankYou(payload) {
@@ -1275,7 +1469,7 @@
     const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-gigi").src = GIGI_SEAL;
+    document.getElementById("thank-you-gilbert").src = GILBERT_SEAL;
     document.getElementById("thank-you-sub").textContent =
       "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
 
@@ -1372,9 +1566,52 @@
 
   function renderSummary() {
     renderPlanSummary();
+    renderCondensedToc();
     updateInvoiceScheduleAmount();
     updateSubmitButtons();
     renderProjectToc();
+  }
+
+  function downloadSubmissionJson(payload) {
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `pav-law-selections-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function postToWebhook(url, payload) {
+    const body = JSON.stringify(payload);
+    let res;
+    try {
+      res = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body
+      });
+    } catch (err) {
+      await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body
+      });
+      return { ok: true, noCors: true };
+    }
+    const text = await res.text();
+    let data = {};
+    try { data = JSON.parse(text); } catch (e) { /* GAS may return empty on some errors */ }
+    if (res.ok && (data.ok || text.includes('"ok":true'))) return { ok: true };
+    throw new Error(data.error || text.slice(0, 120) || `HTTP ${res.status}`);
+  }
+
+  function saveSubmissionLocally(payload) {
+    localStorage.setItem("pav-picker-last-submission", JSON.stringify(payload));
+    const pending = JSON.parse(localStorage.getItem("pav-picker-pending-submissions") || "[]");
+    pending.push({ savedAt: new Date().toISOString(), payload });
+    localStorage.setItem("pav-picker-pending-submissions", JSON.stringify(pending.slice(-20)));
   }
 
   function showToast(msg, isError) {
@@ -1394,20 +1631,17 @@
     let ok = false;
 
     if (!CONFIG.webhookUrl) {
-      showToast("Submit backend not configured — add PAV_PICKER_WEBHOOK_URL in GitHub repo Secrets, then redeploy.", true);
+      try {
+        saveSubmissionLocally(payload);
+        downloadSubmissionJson(payload);
+        ok = true;
+      } catch (err) {
+        showToast("Could not save submission — try again or email support@gildedgooselimited.com", true);
+      }
     } else {
       try {
-        const res = await fetch(CONFIG.webhookUrl, {
-          method: "POST",
-          mode: "cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-        const text = await res.text();
-        let data = {};
-        try { data = JSON.parse(text); } catch (e) { /* GAS may return empty on some errors */ }
-        if (res.ok && (data.ok || text.includes('"ok":true'))) ok = true;
-        else throw new Error(data.error || text.slice(0, 120) || `HTTP ${res.status}`);
+        const result = await postToWebhook(CONFIG.webhookUrl, payload);
+        if (result.ok) ok = true;
       } catch (err) {
         showToast("Submit failed — try again or email support@gildedgooselimited.com. " + err.message, true);
       }
@@ -1428,28 +1662,20 @@
     updateInvoiceScheduleAmount();
     saveState();
   });
-  document.getElementById("goal-input").addEventListener("input", () => {
-    state.goalText = document.getElementById("goal-input").value;
-    saveState();
-    scheduleSuggestPlan();
-  });
-  document.getElementById("clear-filters").addEventListener("click", clearFilters);
-  document.getElementById("filter-max-fee").addEventListener("input", () => {
-    getFilters();
-    if (state.goalText.trim()) scheduleSuggestPlan();
-    else {
-      renderAllCards();
-      renderProjectToc();
-      renderSummary();
+  document.getElementById("goal-input")?.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendGilbertMessage();
     }
   });
-  document.getElementById("filter-hide-nonmatching").addEventListener("change", () => {
-    getFilters();
-    renderAllCards();
-    renderProjectToc();
-    renderSummary();
-  });
   document.getElementById("expand-all-projects").addEventListener("change", e => setExpandAll(e.target.checked));
+
+  document.getElementById("toc-expand-row")?.addEventListener("click", e => {
+    const btn = e.target.closest(".toc-expand-btn");
+    if (!btn) return;
+    state.tocExpanded = btn.dataset.expand === "all";
+    renderProjectToc();
+  });
 
   document.querySelectorAll(".toc-sort-btn").forEach(btn => {
     btn.addEventListener("click", e => {
@@ -1461,21 +1687,7 @@
 
   loadState();
   ensureRequiredMaintenance();
-  initGigiGuide();
-  document.getElementById("plan-summary")?.addEventListener("click", e => {
-    const link = e.target.closest(".invoice-item-link");
-    if (!link) return;
-    e.preventDefault();
-    const id = (link.getAttribute("href") || "").replace("#project-", "");
-    if (!id) return;
-    state.expanded.add(id);
-    saveState();
-    renderAllCards();
-    requestAnimationFrame(() => {
-      const card = document.getElementById("project-" + id);
-      if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  });
+  initGilbertGuide();
   renderPackageIntro();
   renderValueIconKey();
   renderAllCards();
