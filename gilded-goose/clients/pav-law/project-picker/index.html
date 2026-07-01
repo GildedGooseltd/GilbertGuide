@@ -124,8 +124,22 @@
       color: var(--gg-royal); font-weight: 700;
     }
     .gilbert-guide-col {
-      display: flex; flex-direction: column; flex: 1; min-width: 0; width: 100%;
+      display: flex; flex-direction: row; flex: 1; min-width: 0; width: 100%;
+      gap: var(--space-md); align-items: flex-start;
     }
+    .gilbert-portrait-col {
+      flex: 0 0 auto; text-align: center; max-width: 12rem;
+    }
+    .gilbert-caricature {
+      width: 11rem; height: auto; display: block; margin: 0 auto;
+      border-radius: 8px; object-fit: contain;
+      filter: drop-shadow(0 6px 18px rgba(78, 42, 132, 0.18));
+    }
+    .gilbert-name {
+      margin: 0.5rem 0 0; font-size: 0.82rem; font-weight: 800;
+      color: var(--gg-royal); letter-spacing: 0.03em; line-height: 1.35;
+    }
+    .gilbert-chat-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
     .search-unified-gilbert-only { align-items: stretch; }
     .gilbert-chat-wrap {
       display: flex; flex-direction: column; flex: 1;
@@ -151,10 +165,7 @@
     }
     .why-panel .recommendation-box.empty p { font-size: 1.05rem; font-weight: 500; color: var(--gg-brown-muted); }
     .gilbert-chat-head {
-      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.45rem;
-    }
-    .gilbert-chat-head strong {
-      font-size: 0.78rem; color: var(--gg-royal); letter-spacing: 0.04em;
+      display: none;
     }
     .gilbert-chat-messages {
       flex: 1; min-height: 8rem; max-height: 14rem; overflow-y: auto;
@@ -407,7 +418,9 @@
       .card-icons-corner { top: 0; right: 0; }
       .search-unified-inner { flex-direction: column; align-items: center; }
       .search-unified-body { width: 100%; }
-      .gilbert-hero { width: 80px; height: 80px; }
+      .gilbert-guide-col { flex-direction: column; align-items: center; }
+      .gilbert-portrait-col { max-width: 100%; }
+      .gilbert-caricature { width: 9rem; }
     }
     .project-note { color: var(--input-text); background: var(--gg-paper); border-color: var(--border-strong); min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
     .general-note { min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
@@ -851,13 +864,15 @@
           <div class="search-unified-panel">
             <div class="search-unified-inner search-unified-gilbert-only">
               <div class="gilbert-guide-col">
-                <div class="gilbert-chat-head">
-                  <img class="gilbert-hero" id="gilbert-guide-img" src="assets/gigi-goose-walk.png" alt="Lord Gilbert Granville">
-                  <strong>Lord Gilbert Granville</strong>
+                <div class="gilbert-portrait-col">
+                  <img class="gilbert-caricature" id="gilbert-guide-img" src="assets/gigi-goose-walk.png" alt="Lord Gilbert Granville">
+                  <p class="gilbert-name">Lord Gilbert Granville</p>
                 </div>
-                <div class="gilbert-chat-wrap">
-                  <div class="gilbert-chat-messages" id="gilbert-chat-messages" aria-live="polite"></div>
-                  <input type="text" id="goal-input" class="gilbert-chat-input" placeholder="Type here, press Enter…" autocomplete="off">
+                <div class="gilbert-chat-col">
+                  <div class="gilbert-chat-wrap">
+                    <div class="gilbert-chat-messages" id="gilbert-chat-messages" aria-live="polite"></div>
+                    <input type="text" id="goal-input" class="gilbert-chat-input" placeholder="Type here, press Enter…" autocomplete="off">
+                  </div>
                 </div>
               </div>
             </div>
@@ -918,6 +933,6 @@
 
   <script src="pages-config.js?v=20260630"></script>
   <script src="projects-data.js?v=20260630"></script>
-  <script src="app.js?v=20260704"></script>
+  <script src="app.js?v=20260705"></script>
 </body>
 </html>
