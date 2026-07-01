@@ -21,8 +21,7 @@ Columns: `id | program | score | config | entity | payout | deadline | status | 
 
 **Zero tax owed:** Credit is **refundable** — e.g. $10k equip → ~$7,500 state check if you owe $0 CO tax.
 
-**Next:** Send LOE email (`OP-01-SUBMISSION.md` §1) · attach quotes · mercantile permission  
-**Submit package:** `OP-01-SUBMISSION.md` · **Brainstorm:** `OP-01-FOOD-BRAINSTORM.md` · **Prompts:** `GRANT-WRITING-PROMPTS.md`
+**Next:** `OP-01-HOW-TO-APPLY.md` (where + both forms) · copy in `OP-01-SUBMISSION.md`
 
 ---
 
