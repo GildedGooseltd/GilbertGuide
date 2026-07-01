@@ -21,6 +21,7 @@ const META_KEYS = {
   "ongoing fee": "ongoingFee",
   "per campaign fee": "perCampaignFee",
   icon: "guideIcon",
+  "guide hero": "guideHero",
   seal: "guideSeal",
   logo: "guideLogo"
 };
@@ -320,10 +321,11 @@ export function parseSettingsMarkdown(text) {
   const ids = parseListSection(sections["default package projects"] || "");
   const retainerLine = text.match(/Include retainer:\s*(yes|no)/i);
   return {
-    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-icon.png",
-    guideSeal: meta.guideSeal || "assets/gigi-seal.jpg",
-    guideLogo: meta.guideLogo || "assets/gigi-logo.jpg",
-    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-icon.png",
+    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
+    guideHero: meta.guideHero || "assets/gigi-goose-walk.png",
+    guideSeal: meta.guideSeal || "assets/gigi-logo-frame.png",
+    guideLogo: meta.guideLogo || "assets/gigi-logo-frame.png",
+    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
     recommendedPackage: {
       label,
       retainer: retainerLine ? /^yes/i.test(retainerLine[1]) : true,

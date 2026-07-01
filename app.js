@@ -6,8 +6,9 @@
     );
   }
   let CONFIG = getConfig();
-  const GIGI_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-icon.png";
-  const GIGI_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-seal.jpg";
+  const GIGI_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-goose-guide.svg";
+  const GIGI_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
+  const GIGI_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-logo-frame.png";
 
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
@@ -1266,7 +1267,7 @@
 
   function initGigiGuide() {
     const guideImg = document.getElementById("gigi-guide-img");
-    if (guideImg) guideImg.src = GIGI_ICON;
+    if (guideImg) guideImg.src = GIGI_HERO;
     updateGigiTip();
   }
 

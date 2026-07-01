@@ -52,6 +52,7 @@ function build() {
 
   const data = {
     guideIcon: settings.guideIcon,
+    guideHero: settings.guideHero,
     guideSeal: settings.guideSeal,
     guideLogo: settings.guideLogo,
     paviIcon: settings.guideIcon,
