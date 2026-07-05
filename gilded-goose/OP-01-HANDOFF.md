@@ -15,7 +15,7 @@
 | Priority | #1 in attack order (OP-01) |
 | Deadline | **Aug 31, 2026** batch (Dec 31, 2026 second batch) |
 | Payout | **75% refundable** state income tax credit on eligible equipment purchased in **2026** |
-| Fit | Huerfano County = LILA; Walsenburg mercantile + farm healthy-food story |
+| Fit | Huerfano County = LILA; **Raymond Aguirre CC, 28 CR 632 Gardner** pickup model |
 | Risk | Low if narrative stays **healthy food** — candy-only is **ineligible** |
 | Capital | Credit is **refundable even if $0 CO tax owed** (e.g. $10k equip → ~$7,500 state check) |
 
@@ -34,15 +34,12 @@
 | FSA farm number | On file (Jun 2026) |
 | NRCS | Intake map + paperwork submitted; Garrett Quintana visit after **Jul 1, 2026** |
 
-### Mercantile (launch pad only — you do not own)
+### Mercantile — **dropped Jul 2026**
 
 | Field | Value |
 |-------|--------|
-| Location | Walsenburg Mercantile, **408 Russell Ave**, Walsenburg, CO |
-| Relationship | **Tenant/partner use** — pop-up, consignment, ship-to, vending placement with owner permission |
-| Candy machines | **Wind down** — not the long-term or grant narrative |
-| Direction | Healthy-food access via wholesale + vending + trading — see `OP-01-FOOD-BRAINSTORM.md` |
-| County | Huerfano ~**56% low-access** food population (USDA LILA) |
+| Status | **Do not use** — owners deemed unethical · T044 cancelled |
+| Direction | **Raymond Aguirre CC, 28 CR 632 Gardner** + corridor partners · see `MOBILE-GROCERY-PLAN.md` |
 
 ### Entity question for agent to resolve
 

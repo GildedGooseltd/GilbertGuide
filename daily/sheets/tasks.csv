@@ -1,0 +1,115 @@
+task_id,project_id,task,status,due_date,est_min,outdoor,task_kind,checklist_id,owner,notes
+
+T001,P006,Pay Walsenburg PD ticket,done,2026-06-19,15,N,one-off,,Kate,Paid 2026-06-19
+
+T002,P001,Submit June Pav invoice + hard costs,done,2026-06-19,60,N,one-off,,Kate,Submitted 2026-06-19 · ntguilt/ · daily/2026-06-andrew-pricing-menu.md
+
+T003,P004,Fund Valon + HOA for Jul 24,todo,2026-07-20,15,N,recurring,,Kate,~$1300 Valon + ~$600 HOA · fund by 20th · daily/sheets/mortgages.csv
+
+T004,P004,Fund HELOC for Jul 24,todo,2026-07-20,15,N,recurring,,Kate,~$1500 · fund by 20th · daily/sheets/mortgages.csv
+
+T005,P003,Get Andrew social passwords before vacation,done,2026-06-19,60,N,one-off,,Kate,Done · ntguilt/
+
+T006,P005,Reschedule STD test to Denver or Springs,todo,2026-06-30,30,N,one-off,,Kate,Paid Cañon City · personal/README.md · Todoist: Operations
+
+T007,P013,Deliver painting to Walsenburg art museum,holding,2026-07-18,45,Y,one-off,,Kate,holding 2026-07-04 · was due 2026-06-27 · P013 art · gilded-goose/ART-OPPORTUNITY-FINDER.md
+
+T008,P010,Photograph building materials batch,todo,2026-07-15,120,Y,one-off,,Kate,Seasonal window · ebay-listings/README.md
+
+T009,P011,Locate trailer hitch — buy new ball/hitch by Mon if not found,done,2026-06-23,120,Y,one-off,,Kate,Hitch on hand — personal/AVION-SALE-NOTES.md
+
+T010,P011,Find iPad locker key,todo,2026-07-01,30,N,one-off,,Kate,personal/README.md
+
+T011,P002,HubSpot form test + Workflow 1,todo,2026-07-07,45,N,one-off,,Kate,No ad spend if trust LOCKED · ntguilt/hubspot/SHOW-VALUE-SPRINT.md · Todoist: Operations
+
+T012,P009,sync grants — next action from GRANTS-TRACKER,todo,2026-07-05,30,N,one-off,,Kate,lazy-goose-acres/README.md · gilded-goose/GRANTS-TRACKER.md · Todoist: Operations
+
+T013,P010,Pack table + fan for drop-off,holding,2026-07-18,45,N,one-off,,Kate,holding 2026-07-04 · was due 2026-06-21 · ebay-listings/README.md
+
+T014,P010,Find all sales + package shipments,holding,2026-07-18,90,N,one-off,,Kate,holding 2026-07-04 · was due 2026-06-21 · eBay pending
+
+T015,P010,Drop off table + fan,holding,2026-07-18,60,Y,one-off,,Kate,holding 2026-07-04 · was due 2026-06-22 · ebay-listings/README.md
+
+T016,P005,Empty toilet,done,2026-06-12,10,N,trip_prep,TRIP_PREP,Kate,Denver trip prep done
+
+T017,P005,Pack comforter + dirty laundry bag,done,2026-06-12,20,N,trip_prep,TRIP_PREP,Kate,Denver trip prep done
+
+T018,P005,Pack art / fragile if museum or drop en route,done,2026-06-12,15,Y,trip_prep,TRIP_PREP,Kate,Denver trip prep done
+
+T019,P005,Charge phone iPad backup hotspot,done,2026-06-12,15,Y,trip_prep,TRIP_PREP,Kate,Denver trip prep done
+
+T020,P005,Run Skout for route cities,done,2026-06-12,20,Y,trip_prep,TRIP_PREP,Kate,Denver trip prep done
+
+T021,P005,Confirm ticket registration museum hours,done,2026-06-12,10,Y,trip_prep,TRIP_PREP,Kate,Denver trip prep done
+
+T022,P005,Weather check — defer outdoor if windy,done,2026-06-12,5,Y,trip_prep,TRIP_PREP,Kate,Denver trip prep done
+
+T023,P005,Mortgage transfer if travel crosses the 20th,done,2026-06-20,15,Y,trip_prep,TRIP_PREP,Kate,Denver trip prep done
+
+T024,P008,Finish building candy stands,todo,2026-07-07,240,N,one-off,,Kate,Vending launch · gilded-goose/INDEX.md
+
+T025,P008,Hook up air conditioning,todo,2026-07-15,120,N,one-off,,Kate,Candy stand setup · gilded-goose/INDEX.md
+
+T026,P008,Remove products with less than 4-star reviews,done,2026-06-19,60,N,one-off,,Kate,Done
+
+T027,P011,Empty waters / drain water containers,holding,2026-07-18,15,Y,trip_prep,TRIP_PREP,Kate,holding 2026-07-04 · was due 2026-06-27 · Gardner leave prep
+
+T028,P011,Lock trailer,holding,2026-07-18,10,Y,trip_prep,TRIP_PREP,Kate,holding 2026-07-04 · was due 2026-06-27 · personal/AVION-SALE-NOTES.md
+
+T029,P011,Secure outdoors (equipment furniture gates),holding,2026-07-18,20,Y,trip_prep,TRIP_PREP,Kate,holding 2026-07-04 · was due 2026-06-27
+
+T030,P011,Lock garage / outbuildings,holding,2026-07-18,10,Y,trip_prep,TRIP_PREP,Kate,holding 2026-07-04 · was due 2026-06-27
+
+T031,P011,Set thermostat / secure windows before leave,holding,2026-07-18,10,N,trip_prep,TRIP_PREP,Kate,holding 2026-07-04 · was due 2026-06-27
+
+T032,P013,Research art shows — free/grant-sponsored · oil · no mail-in,todo,2026-07-01,60,N,one-off,,Kate,gilded-goose/ART-OPPORTUNITY-FINDER.md · scripts/art_opportunity_hunt.py
+
+T033,P013,Apply to 1–2 free group shows,todo,2026-08-15,90,N,one-off,,Kate,After T032 + T040 · gilded-goose/GRANTS-TRACKER.md
+
+T034,P011,1969 Avion 36ft — livable Jul (AC) · sell 2027 min $26k,todo,2026-07-31,480,Y,one-off,,Kate,personal/AVION-SALE-NOTES.md · T047 T048
+
+T035,P011,Clear + sell shed contents (local pickup),todo,2026-08-01,240,Y,one-off,,Kate,Before T036 · personal/README.md
+
+T036,P011,Drywall work,todo,2026-09-15,480,N,one-off,,Kate,Blocked until T035 · personal/README.md
+
+T037,P009,Contact local kid — dirt/manure pickup + farm dirtwork,todo,2026-07-10,30,Y,one-off,,Kate,lazy-goose-acres/README.md · Todoist: Operations
+
+T040,P013,Portfolio pages on GildedGooseLimited.com — Art + Coloring book,todo,2026-07-15,120,N,one-off,,Kate,/art /coloring-book · gilded-goose/ART-OPPORTUNITY-FINDER.md
+
+T041,P010,Cross-list inventory — Vendoo or List Perfectly,todo,2026-07-01,60,N,one-off,,Kate,ebay-listings/README.md · FB Marketplace
+
+T042,P005,Sign up Shoppers View + Market Force (not TrendSource),holding,2026-07-18,30,N,one-off,,Kate,holding 2026-07-04 · was due 2026-06-25 · daily/KATE-CONTEXT.md
+
+T043,P005,Try PingPong + dscout research profiles,holding,2026-07-18,45,N,one-off,,Kate,holding 2026-07-04 · was due 2026-06-25 · daily/KATE-CONTEXT.md
+
+T044,P008,Mercantile chocolate sales — setup with owner,cancelled,2026-07-01,60,N,one-off,,Kate,Dropped Jul 2026 — owners unethical · was 719-890-1240
+
+T058,P008,Candy machine placement — find host stores (not Mercantile),todo,2026-07-15,120,N,one-off,,Kate,Art museums · craft stores · gift shops · Pueblo/Walsenburg/Springs · ntguilt/events/VENDING-STAND-BUILD.md · T044 cancelled
+
+T045,P008,Walsenburg area flyer mail — women,todo,2026-08-01,120,N,one-off,,Kate,Surrounding towns · gilded-goose/INDEX.md
+
+T046,P009,Rural Jump-Start — HCED intake if easy,todo,2026-07-15,90,N,one-off,,Kate,GG-023 · lazy-goose-acres/README.md · Todoist: Operations
+
+T047,P011,Avion — fridge stove waterline for livable use,todo,2026-07-15,240,N,one-off,,Kate,personal/AVION-SALE-NOTES.md
+
+T048,P011,Auto Skout — scan tow trucks + export compare CSV,todo,2026-07-31,30,N,recurring,,Kate,personal/vehicle-market/ · SKOUT_PROFILE=kate-vehicles · Todoist: Operations (Find Truck)
+
+T049,P013,Get more coloring book photos,todo,2026-07-10,60,N,one-off,,Kate,GIL-16 · portfolio /coloring-book
+
+T038,P005,Denver apartment secret shops — mid-July,todo,2026-07-15,180,N,one-off,,Kate,~$200 income · daily/sheets/income.csv · Todoist: Operations
+
+T039,P007,QuickBooks export → monthly cash forecast,todo,2026-08-15,90,N,one-off,,Kate,After 2024 QB reconcile · daily/FORECAST-2026.md · gilded-goose/INDEX.md
+
+T050,P007,Build financial forecaster — income + mortgages + floor,todo,2026-08-31,240,N,one-off,,Kate,After T039 · daily/FORECAST-2026.md · daily/sheets/income.csv · daily/FINANCE-OPTIONS.md · Todoist: Operations
+
+T051,P011,Car deal scoring web app — dad regression spreadsheet,todo,2026-09-30,480,N,one-off,,Kate,personal/vehicle-market/ · daily/KATE-CONTEXT.md · Todoist: Operations
+T052,P009,Gardner property insurance — Country Home WIP,wip,2026-07-05,120,N,one-off,,Kate,lazy-goose-acres/GARDNER-PROPERTY-INSURANCE.md · T053–T057
+T053,P009,Call Janice Salapich — Country Home quote (719-738-1612),todo,2026-06-30,30,N,one-off,,Kate,No farm income · Gardner 36ac · lazy-goose-acres/GARDNER-PROPERTY-INSURANCE.md · blocks T054–T055
+T054,P009,Call Pam Williams — backup quote (719-676-2482 ext 3),todo,2026-07-02,30,N,one-off,,Kate,Skip if T053 quotes and binds · lazy-goose-acres/GARDNER-PROPERTY-INSURANCE.md
+T055,P009,Bind Gardner dwelling + outbuildings policy,todo,2026-07-04,30,N,one-off,,Kate,After T053 or T054 · replacement cost + other structures · lazy-goose-acres/GARDNER-PROPERTY-INSURANCE.md
+T056,P009,File dec page + verify dwelling/structures/fire limits,todo,2026-07-05,15,N,one-off,,Kate,After T055 · save PDF in lazy-goose-acres/ · lazy-goose-acres/GARDNER-PROPERTY-INSURANCE.md
+T057,P011,USAA — verify Avion limit + fire/stationary coverage,todo,2026-07-05,15,N,one-off,,Kate,After T055 · personal/AVION-SALE-NOTES.md · lazy-goose-acres/GARDNER-PROPERTY-INSURANCE.md
+
+T059,P004,Vine rental — pet deposit + rent update + HOA forms,todo,2026-07-15,45,N,one-off,,Kate,Collect pet deposit from renters · set new monthly rent in QB + rental.csv · email HOA for tenant/pet docs to complete · daily/sheets/rental.csv · T059
+T060,P009,Apply for retail food license — LA-H plan review after DOR,todo,2026-07-15,60,N,one-off,,Kate,GG-037 · DOR #96288442 first · 719-846-2213 Robin Sykes ext 623 · gilded-goose/GRANT-APPLICATION-PROFILE.md § Apply for · OP-01 prerequisite
+

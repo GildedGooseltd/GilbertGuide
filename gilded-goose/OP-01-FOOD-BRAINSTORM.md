@@ -4,7 +4,7 @@
 **Entity:** Gilded Goose LLC (lead) · Lazy Goose Acres (optional low-labor supply)  
 **Tracker:** `GRANTS-TRACKER.md` · **Submit:** `OP-01-SUBMISSION.md`
 
-**Constraints:** Mercantile (408 Russell) = launch pad with owner permission, not owned. Confectionery (candy machines, chocolate shelf) = separate retail line at mercantile. PO box only — need street ship-to. Wholesale distributor model, not full-time farmer.
+**Constraints:** Hub = **Gardner farm** (mercantile dropped Jul 2026). Full ops plan: **`MOBILE-GROCERY-PLAN.md`**. PO box only — need street ship-to at Gardner. Wholesale distributor model, not full-time farmer.
 
 ---
 

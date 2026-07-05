@@ -1,0 +1,18 @@
+---
+description: Grant form fields — GRANT-APPLICATION-PROFILE.md is canonical; preserve Kate's edits
+alwaysApply: true
+---
+
+# Grant application master profile
+
+Before grant Q&A, LOE drafts, or profile fills:
+
+1. **Read** `gilded-goose/GRANT-APPLICATION-PROFILE.md` (TOC at top) and `GRANT-GOOSE-MASTER.md` for index.
+2. **Kate edits Section H + I** (checklist + questionnaires) — her answers are **source of truth**.
+3. **Do not re-ask** fields marked ✅ in Section A or filled in Section H/I.
+4. **Do not bulk-replace** Section A–J — merge new answers only; copy H/I → A when confirmed.
+5. **Sync outward** to `KATE-CONTEXT.md`, `PROJECT-BUSINESS-PLAN.md`, submission docs when Kate asks or submit is imminent.
+6. Missing ❌ fields: point Kate to **Section H** row — ask once, write into H/I first.
+7. Business-grant narratives → `gilded-goose/PROJECT-BUSINESS-PLAN.md` §13.
+
+User should not need to restate this preference.

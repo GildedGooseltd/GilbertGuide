@@ -10,7 +10,7 @@ GG-G03,0 — Done,P0,Done,Prioritized practice list aligned with map,NRCS packet
 GG-G04,0 — Done,P0,Done,Site photos / problem areas documented,Lazy Goose Acres,Kate,photo folder,Photos ready for visit,Garrett visit prep item 4,P009
 GG-G05,0 — Done,P0,Done,Material-participation hours documented for beginning farmer,FSA records,Kate,beginning farmer docs,Hours on file,Garrett visit prep item 5,P009
 GG-Q01,3 — Garrett prep,P1,Open,EQIP applicant entity: Lazy Goose Acres LLC or Gilded Goose Limited?,Field visit,Kate,GG-007,Answer recorded in GRANTS-TRACKER,Ask Garrett at first site walk,P009
-GG-Q02,3 — Garrett prep,P1,Open,Top resource concerns given no well — cistern + haul water only?,Field visit,Kate,GG-005,Answer recorded,Water drives practice ranking,P009
+GG-Q02,3 — Garrett prep,P1,Open,Top resource concerns given no well — cistern + haul water only?,Field visit,Kate,GRANT-APPLICATION-PROFILE.md H3 #16,Answer recorded in GRANTS-TRACKER,"Money · water · soil quality · sun/wind · erosion · rocky terrain",P009
 GG-Q03,3 — Garrett prep,P1,Open,Realistic year-1 practices: fencing access/drainage cover crop high tunnel livestock water cistern/storage?,Field visit,Kate,site map,Short list agreed with Garrett,Align with map + water constraint,P009
 GG-Q04,3 — Garrett prep,P1,Open,Qualify for beginning farmer / HU set-aside and EQIP advance payment?,Field visit,Kate,GG-G05,Yes/no + docs needed,May affect payment timing,P009
 GG-Q05,3 — Garrett prep,P1,Open,Any 2026 EQIP ranking batch we still fit or path strictly FY2027 funding ~Jun 2027?,Field visit,Kate,GG-020,Answer logged,Colorado extra batches e.g. Jun 8 2026,P009
@@ -20,7 +20,7 @@ GG-Q08,3 — Garrett prep,P1,Open,Does 36 ac with cistern-only water affect irri
 GG-Q09,3 — Garrett prep,P2,Open,FSA contact at Walsenburg if farm records need updating before contract?,Field visit / phone,Kate,719-738-1171,Contact name + email saved,Before EQIP contract,P009
 GG-Q10,3 — Garrett prep,P1,Open,What docs to bring to first field visit: deed LLC articles photo printouts?,Field visit,Kate,GG-W01,Checklist packed,Bring deed legal description; parcel ID not required now,P009
 GG-006,1 — Foundation,P2,Deferred,Assessor parcel ID — deed has legal description not labeled parcel ID; county account # before EQIP contract or Land Use CUP,Huerfano Assessor / deed,Kate,719-738-2380,Account # or N/A in GRANTS-TRACKER,Not blocking Garrett visit Galaxy Startup or IFundWomen,P009
-GG-007,1 — Foundation,P1,Open,File Lazy Goose Acres LLC if not already filed,CO SOS,Kate,GG-Q01,Articles filed + EIN if needed,Before Garrett field visit; confirms EQIP entity,P009
+GG-007,1 — Foundation,P1,Deferred,File Lazy Goose Acres LLC if not already filed,CO SOS,Kate,GG-Q01,Articles filed + EIN if needed,Week of Jul 7 — deferred Jul 4 area fire,P009
 GG-008,1 — Foundation,P1,Done,Create GRANTS-TRACKER.md + GRANT-SEARCH.md with GG-IDs on every row,gilded-goose/,Kate,GRANTS-TRACKER.md GRANT-SEARCH.md,Both files in repo,Jun 19 2026 deep sweep added 40+ programs,P009
 GG-009,1 — Foundation,P1,Done,Grant search sweep: query bundles B E A-LILA C; score; hold below 50,GRANT-SEARCH.md,Kate,GRANTS-TRACKER.md,Sweep logged Jun 19 2026,Web + plan master list; email mining pending Gmail export,P009
 GG-010,1 — Foundation,P2,Open,Subscribe CDA CFA Startup CO OEDIT CCI Hello Alice CaFE Artwork Archive Western SARE,Email / web,Kate,GRANT-SEARCH.md portals table,Alerts active,Once setup — see GRANT-SEARCH.md portal list,P009
@@ -35,7 +35,7 @@ GG-017,4 — Research,P3,Open,Land Use CUP research + infrastructure cost estima
 GG-018,4 — Research,P2,Open,CNDC nonprofit path inquiry,CNDC,Kate,Week 2,Inquiry sent + response filed,Config N nonprofit path,P009
 GG-019,2 — Apply queue,P3,Open,Draft and score Amber Grant / HerRise; pay $15 fee only if score 75+,Web,Kate,After GG-011 test,Draft scored; paid only if 75+,Config E C art consulting,P009
 GG-020,3 — Garrett prep,P1,Canceled,Ask Garrett: Jun 8 2026 EQIP batch — does 36 ac Gardner fit any 2026 funding pool?,Field visit / Garrett,Kate,GG-Q05 Garrett.Quintana@usda.gov,Removed per Kate,Jun 8 batch question dropped,P009
-GG-021,2 — Apply now,P1,Open,Women Founders Grant — submit essay ($25 fee Stage 2 only),Web,Kate,womenfoundersgrant.com,Submitted before Jun 30 2026,Score 68; pay $25 only after Galaxy narrative test passes,P009
+GG-021,7 — Later,P3,Later,Women Founders Grant — removed ($25 fee),Web,Kate,womenfoundersgrant.com,Excluded per free-only rule,LATER-06; $25 Stage 2 fee,P009
 GG-022,2 — Apply now,P1,Skipped,Hello Alice — Allstate Main Street — skipped per Kate Jun 2026,Hello Alice,Kate,helloalice.com,Skipped,Jun 23 passed; user chose skip,P009
 GG-023,2 — Apply queue,P1,Open,Huerfano Rural Jump-Start — HCED intake call + export plan,HCED Walsenburg,Kate,huerfano.org/support,MOU path confirmed with county,Up to $20K + tax credits; needs jobs/export story,P009
 GG-024,1 — Foundation,P2,Open,Register OEDIT Grant Portal + subscribe CCI newsletter,OEDIT,Kate,oedit.colorado.gov/colorado-creative-industries,Account ready before next CCI deadline,Username = email.oeditcc per CCI instructions,P009
@@ -49,7 +49,7 @@ GG-035,2 — Apply queue,P3,Open,Gottlieb Individual Support Grant — rolling f
 GG-028,7 — Later,P3,Later,NASE Growth Grant — defer to later round,NASE,Kate,https://www.nase.org/become-a-member/member-benefits/business-resources/growth-grants,Revisit when pursuing business grants,$4K; membership cost; not ag/conservation round,P009
 GG-029,3 — Garrett prep,P1,Open,Ask Garrett about CSP eligibility alongside EQIP on 36 ac Gardner,Field visit,Kate,GG-W01 CSP Colorado,Answer recorded,CSP annual stewardship payments; stacks with EQIP,P009
 GG-030,1 — Foundation,P1,Open,Email grant mining — run Gmail searches per EMAIL-GRANT-MINING.md,Gmail,Kate,gilded-goose/EMAIL-GRANT-MINING.md,Leads forwarded or exported to repo,Cannot auto-read inbox; user runs 5 search queries,P009
-GG-W01,5 — Wait,P1,Wait,Garrett Quintana field visit scheduled,NRCS Walsenburg,Kate,Garrett.Quintana@usda.gov 719-738-1171,Visit completed,After Jul 1 2026 per Sammie,P009
+GG-W01,5 — Wait,P1,Deferred,Garrett Quintana field visit scheduled,NRCS Walsenburg,Kate,Garrett.Quintana@usda.gov 719-738-1171,Call + visit week of Jul 7,Deferred Jul 4 area fire; OP-02/03,P009
 GG-W02,5 — Wait,P1,Wait,Conservation plan + EQIP contract drafting,NRCS,Kate,GG-W01,Plan + contract draft received,Follows Garrett visits,P009
 GG-W03,5 — Wait,P1,Wait,EQIP funding decision,NRCS,Kate,Sammie timeline,Funding letter or denial,~Jun 2027 FY2027 per Sammie,P009
 GG-W04,5 — Wait,P1,Open,Email grant mining — run Gmail queries; forward GRANT-LEADS to agent,Email,Kate,EMAIL-GRANT-MINING.md,Inbox leads in GRANTS-TRACKER,Unblocks personalized art/farm/USDA leads from newsletters,P009
@@ -60,3 +60,5 @@ GG-H02,6 — Hold,P3,Hold,C-Commercial coloring book grants — sex-positive kin
 GG-H03,6 — Hold,P2,Hold,USDA REAP grants — federal grant awards paused Mar 2026,USDA REAP,Kate,Config I,Revisit when grants reopen,Loans only for now,P009
 GG-H04,6 — Hold,P3,Hold,Camp/RV Jump-Start until Land Use CUP resolved,HCED,Kate,GG-017,HOLD_PERMIT lifted,CUP + infra cost first,P009
 GG-H05,6 — Hold,P3,Hold,Arts in Society grant until nonprofit path established,CNDC / arts,Kate,GG-018,HOLD_PARTNER until Config N,Needs nonprofit partner path,P009
+GG-H06,6 — Hold,P3,Canceled,Gallagher Software Engineering Graduate Programme 2027 — not qualified,Kate individual,https://careers.gallagher.com/jobs/7735121-software-engineering-graduate-programme-2027,Removed,Corporate UK grad job not grant; exclude careers.* schemes from sweeps,P009
+GG-037,2 — Apply now,P1,Open,Apply for retail food license — LA-H plan review after DOR sales tax #96288442,Las Animas–Huerfano Health,Kate,GRANT-APPLICATION-PROFILE.md § Apply for · MOBILE-GROCERY-PREP-SEQUENCE Step 5,Plan review scheduled or application submitted,DOR first ✅ · $155 plan review · 28 CR 632 Gardner · Robin Sykes ext 623 719-846-2213 · OP-01 prerequisite,P009

@@ -1,7 +1,7 @@
 # OP-01 — Submission package (ready to edit & send)
 
 **Program:** CDA Community Food Access Equipment Tax Credit  
-**Batch:** Aug 31, 2026 (purchase must occur in 2026, paid in full)  
+**Batch:** **Dec 31, 2026** (purchase must occur in 2026, paid in full)  
 **Applicant (recommended):** Gilded Goose LLC — woman-owned small food retailer  
 **Support:** Lazy Goose Acres (local supply / letters where useful)  
 **Brainstorm IDs:** `OP-01-FOOD-BRAINSTORM.md` (FOOD-01+)
@@ -24,14 +24,14 @@ before purchasing equipment in 2026.
 
 Applicant
   Legal name:     Gilded Goose LLC
-  Owner:          Kate [Last name] — 51%+ woman-owned
-  EIN:            [___]
+  Owner:          Kate Stannard — 100% woman-owned
+  EIN:            [___ — see GRANT-APPLICATION-PROFILE A2]
   Role:           Small food retailer — wholesale distributor expanding healthy food access 
                   in a LILA county
 
 Project location & service area
-  Primary hub:    Walsenburg Mercantile, 408 Russell Ave, Walsenburg, CO 81089 
-                  (tenant/partner use with owner permission — ship-to, pop-up, vending)
+  Primary site:   Raymond Aguirre Community Center, 28 CR 632, Gardner, CO 81040
+                  (county permission via Lester Berry — pickup + cold staging)
   Service area:   Huerfano County LILA tracts including Walsenburg (81089) and Gardner (81040)
   County:         Huerfano — USDA low-income, low-access food area
 
@@ -55,7 +55,7 @@ Excluded from this request
   excavation/root cellar construction, office equipment, food inventory.
 
 Questions
-  1. Confirm Gilded Goose LLC qualifies as small food retailer at mercantile partner site.
+  1. Confirm Gilded Goose LLC qualifies as small food retailer at Raymond Aguirre CC with county permission letter.
   2. Confirm unattended healthy vending (smart fridge) is eligible with attached vendor quote.
   3. Confirm used equipment is eligible for each line item above.
   4. We are first-time CFA credit applicants — confirm Group 2 priority grouping.
@@ -63,12 +63,12 @@ Questions
 Attachments (add before send)
   — Vendor quotes (make/model, price, new or used)
   — One-page Healthy Food Access Plan (Section 2 below)
-  — LILA map screenshot: Huerfano County / 408 Russell Ave
+  — LILA map screenshot: Huerfano County / 28 CR 632 Gardner
 
 Thank you,
-Kate [Last name]
+Kate Stannard
 Gilded Goose LLC
-[phone] · [email]
+720-701-2646 · support@gildedgooselimited.com
 ```
 
 ---
@@ -106,7 +106,7 @@ A **three-part system**:
 **In scope:** Fresh and frozen produce, dairy, eggs, meat, bread, rice, beans, oats, frozen vegetables, water.  
 **Out of scope:** Candy, soda, energy drinks, tobacco, non-food items in vending nodes.
 
-Existing coin candy machines at the mercantile are **being wound down** and are **not** part of this project or credit request.
+Prior confectionery vending is **being wound down** and is **not** part of this project or credit request.
 
 ### Equipment → impact map
 
@@ -125,16 +125,16 @@ Existing coin candy machines at the mercantile are **being wound down** and are 
 
 | When                  | Milestone                                                       |
 | --------------------- | --------------------------------------------------------------- |
-| Jun–Jul 2026          | LOE request; mercantile permission for ship-to / node placement |
+| Jun–Jul 2026          | LOE request; **Lester Berry** county permission for Gardner CC pickup + staging |
 | Jul–Aug 2026          | FOOD-07 pre-order pilot; SNAP path (FOOD-01)                    |
 | Aug–Oct 2026          | Stage 1 purchase: freezer + generator + POS + one smart fridge  |
 | Nov 2026–Mar 2027     | Stage 2 purchase if LOE approved: reefer trailer/truck          |
-| By Aug 31, 2026 batch | Submit tax credit application with purchase proof               |
+| By Dec 31, 2026 batch | Submit tax credit application with purchase proof               |
 
 
-### Mercantile partner note
+### Operating site note
 
-408 Russell Ave is used **with owner permission** as launch pad (ship-to, pop-up, vending placement). Gilded Goose does **not** own the building. Long-term nodes may also sit on Gardner pad (FOOD-22) to serve corridor residents.
+**Raymond Aguirre Community Center, 28 CR 632, Gardner** is the primary licensed pickup and cold-staging address with **written permission from Huerfano County** (Lester Berry, Parks & Recreation). Gilded Goose does **not** own the building. Optional corridor pop-ups and future parked nodes (FOOD-22) use partner MOUs — not farmers-market vending.
 
 ---
 
@@ -147,7 +147,7 @@ Use these in the CDA portal “impact” and description fields. Edit bracketed 
 ```
 Gilded Goose LLC, a woman-owned small food retailer in Huerfano County, is expanding 
 healthy food access for LILA residents through a wholesale cold hub and unattended 
-refrigerated retail nodes in Walsenburg and Gardner. We will stock produce, dairy, eggs, 
+staffed pickup and refrigerated retail nodes in Gardner and the Huerfano corridor. We will stock produce, dairy, eggs, 
 bread, frozen vegetables, and staple grains — purchased wholesale and sold at lower 
 effective prices than convenience-store alternatives, with 24/7 card and SNAP access 
 where authorized. Equipment purchased in 2026 includes commercial freezers, a backup 
@@ -172,7 +172,7 @@ sustainable. Operator Kate brings technology operations experience to inventory,
 cold-chain, and route reliability.
 
 The project has three components: (1) a wholesale cold staging hub with commercial 
-freezers at an approved street address in Walsenburg; (2) unattended smart refrigerated 
+freezers at **Raymond Aguirre Community Center, 28 CR 632 Gardner** (with county permission); (2) unattended smart refrigerated 
 units stocked with at least 70% eligible staples — produce, dairy, eggs, bread, frozen 
 vegetables, and grains — with card and SNAP payment where authorized; and (3) scheduled 
 restock routes using a refrigerated commercial truck or trailer to maintain food safety 
@@ -202,9 +202,9 @@ Fill `[brackets]` before submit.
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Legal name of applicant                          | Gilded Goose LLC                                                                                                                                                                           |
 | Applicant type                                   | Small food retailer                                                                                                                                                                        |
-| Woman/minority owned?                            | Yes — 51%+ woman-owned                                                                                                                                                                     |
+| Woman/minority owned?                            | Yes — 100% woman-owned                                                                                                                                                                     |
 | First-time CFA credit?                           | Yes                                                                                                                                                                                        |
-| LILA location                                    | Huerfano County, CO — service at 408 Russell Ave, Walsenburg and Gardner corridor                                                                                                          |
+| LILA location                                    | Huerfano County, CO — service at **28 CR 632 Gardner** (Raymond Aguirre CC) and corridor partners                                                                                          |
 | Describe equipment purchased                     | Used commercial freezer(s); backup generator; SNAP-capable POS/micro-market kiosk; smart healthy vending refrigerator; used refrigerated commercial truck or reefer trailer (see invoices) |
 | Purchase date(s)                                 | [MM/DD/2026]                                                                                                                                                                               |
 | Total eligible purchase amount                   | $[___]                                                                                                                                                                                     |
@@ -251,9 +251,9 @@ Fill `[brackets]` before submit.
 
 ---
 
-## 6. Retailer letter of support (Lazy Goose → Gilded Goose / mercantile)
+## 6. Permission / support letters
 
-Use if farm entity participates or mercantile owner signs for hub address.
+Use **county permission** for hub address; optional Lazy Goose consignment letter.
 
 ```
 [Date]
@@ -262,7 +262,7 @@ To: Colorado Department of Agriculture — Community Food Access Program
 
 Re: Letter of support — healthy food access in Huerfano County LILA
 
-I, [Name], [title/relationship] of [Lazy Goose Acres / Walsenburg Mercantile / grower name], 
+I, [Name], [title] of [Huerfano County Parks & Recreation / Lazy Goose Acres / grower name], 
 support Gilded Goose LLC's project to expand healthy food access in Huerfano County.
 
 [Choose one or combine:]
@@ -271,9 +271,9 @@ support Gilded Goose LLC's project to expand healthy food access in Huerfano Cou
     to Gilded Goose for retail through their hub and unattended nodes, subject to 
     availability.
 
-  — Walsenburg Mercantile agrees to host ship-to delivery, pop-up healthy-food sales, 
-    and/or placement of an unattended refrigerated unit on the property at 
-    408 Russell Ave, Walsenburg, CO 81089, per our written agreement.
+  — Huerfano County (Lester Berry, Director of Parks & Recreation) grants Gilded Goose 
+    permission to operate weekly pre-order food pickup and stage approved cold equipment at 
+    Raymond Aguirre Community Center, 28 CR 632, Gardner, CO 81040, per our written agreement.
 
 This project will help rural residents access produce, dairy, eggs, bread, and frozen 
 staples in an area with limited grocery options.
@@ -292,12 +292,12 @@ Phone / email:
 | Date                       | Action                                                                          | Owner      |
 | -------------------------- | ------------------------------------------------------------------------------- | ---------- |
 | This week                  | Send LOE email (Section 1) with quotes                                          | Kate       |
-| This week                  | Mercantile owner conversation: ship-to + node permission (FOOD-05 / PROJECT-05) | Kate       |
+| This week                  | **Lester Berry** email: Gardner CC pickup + storage permission                  | Kate       |
 | Jul 2026                   | Run FOOD-07 pre-order pilot 4–6 weeks                                           | Kate       |
 | Jul 2026                   | Start FOOD-01 SNAP retailer app once address confirmed                          | Kate       |
 | After LOE OK               | Purchase Stage 1 equipment; pay in full 2026                                    | Kate       |
 | Within 30 days of purchase | Photo equipment stocked with healthy food                                       | Kate       |
-| **Aug 31, 2026**           | Submit CFA tax credit application (Batch 1)                                     | Kate       |
+| **Dec 31, 2026**           | Submit CFA tax credit application (Dec batch)                                   | Kate       |
 | 2027 tax season            | Attach certificate to CO return; receive refund                                 | Kate / CPA |
 
 
@@ -312,7 +312,7 @@ Phone / email:
 | Installation / labor only      | Separate equipment invoice from install bid; prefab equipment OK, excavation not |
 | Wrong vehicle class            | Commercial reefer + LOE with VIN; not personal vehicle                           |
 | No LILA proof                  | Attach USDA/HFFI map for Huerfano + service ZIP list                             |
-| PO box only                    | Use mercantile street address or freight hold with permission                    |
+| PO box only                    | Use **28 CR 632 Gardner** with county permission letter — not PO box alone         |
 | Inventory / food product costs | Equipment only — not wholesale food purchase                                     |
 | Pool cap ($10M statewide)      | Apply in first batch; first-time priority helps                                  |
 | Weak impact story              | FOOD-07 data: orders, ZIPs, SNAP interest before big spend                       |
@@ -326,7 +326,7 @@ Phone / email:
 - [ ] EIN and legal name match CO business records
 - [ ] LILA map screenshot attached
 - [ ] Healthy Food Access Plan attached (Section 2)
-- [ ] Mercantile permission email or LOI (if claiming that site)
+- [ ] **County permission letter** from Lester Berry / Huerfano County
 - [ ] No candy equipment on LOE list
 - [ ] Stage 1 budget ≤ net exposure Kate can carry if denied
 

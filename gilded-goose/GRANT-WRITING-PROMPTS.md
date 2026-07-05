@@ -7,7 +7,7 @@ Sources: `GRANTS-TRACKER.md` · `BUSINESS-BIO.md` · `OP-01-FOOD-BRAINSTORM.md` 
 
 - Woman-owned · Huerfano / rural SE Colorado · free applications only unless user approves fee
 - **No candy narrative** for OP-01 — healthy food wholesale + unattended retail
-- Mercantile = **partner site**, not owned (408 Russell Ave)
+- **Hub:** **Raymond Aguirre CC, 28 CR 632 Gardner** (county permission via Lester Berry) — mercantile **dropped Jul 2026**
 - Not a full-time farmer — wholesale distributor model
 - Output: paste-ready prose, not meta-commentary about the prompt
 - Do not recap what the user asked
@@ -27,12 +27,12 @@ Read before writing:
 Task: [PICK ONE]
   A) Finalize Letter of Eligibility email for cda_cfa@state.co.us with [equipment list + quotes]
   B) Shorten or expand application narrative to [word limit] words
-  C) Draft mercantile owner permission email for ship-to + smart fridge pad
+  C) Draft **county permission** email for Lester Berry — pickup + reefer staging at 28 CR 632
   D) Fill Section 4 portal Q&A with values: [purchase dates, amounts]
   E) Revise Healthy Food Access Plan after FOOD-07 pilot data: [paste results]
 
 Model we are building (use this, not old "mobile grocery truck" only):
-  — Wholesale cold hub (FOOD-14) at mercantile partner address
+  — Wholesale cold hub (FOOD-14) at **Gardner community center** (with county letter)
   — Unattended smart fridge nodes (FOOD-13, FOOD-22) — Japan-style 24/7, card/SNAP
   — Restock routes (FOOD-08, FOOD-24) — parked selling, not staffed rolling store
   — Pre-order demand test (FOOD-07) before big spend

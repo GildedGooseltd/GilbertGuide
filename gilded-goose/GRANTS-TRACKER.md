@@ -37,7 +37,7 @@ Columns: `id | program | score | config | entity | payout | deadline | status | 
 
 **Payout timing:** Usually **after** practice built and NRCS signs off. Beginning farmer / historically underserved: ask for **50% advance payment** upfront.
 
-**Next:** Jul 1+ field visit · bring GG-Q01–Q10 · do not start work before signed contract
+**Next:** **Week of Jul 7** (deferred Jul 4 — area fire) · call Garrett · file Lazy Goose LLC (GG-007) · bring GG-Q01–Q10 · do not start work before signed contract
 
 ---
 
@@ -174,7 +174,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 
 ---
 
-## LATER-01 — NASE · **LATER-02** — Allstate/eBay · **LATER-03** — Galaxy/Startup/IFundWomen · **LATER-04** — Art residencies · **LATER-05** — GOCO RESTORE + 501(c)(3) path (when nonprofit exists; unused land habitat)
+## LATER-01 — NASE · **LATER-02** — Allstate/eBay · **LATER-03** — Galaxy/Startup/IFundWomen · **LATER-04** — Art residencies · **LATER-05** — GOCO RESTORE + 501(c)(3) · **LATER-06** — Women Founders Grant ($25 fee — excluded)
 
 501 pushed here intentionally. RESTORE needs nonprofit lead + ~$100K min project — revisit when 501 exists.
 
@@ -202,7 +202,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 | **JUL-ACT** | Late Jul | OP-05 DIC map go/no-go | — | **High** — before Aug 7 pre-app | Run EnviroScreen map |
 | **JUL-ACT** | All July | OP-01 prep | 75% credit | **High** — **Aug 31** batch | Letter of Eligibility + quotes |
 
-**Closed before July:** VAPG Apr 22 · Agrivoltaics Jun 15 · Allstate Jun 23 · NextGen Apr 24 · PLAYA/Women Founders Jun 30
+**Closed before July:** VAPG Apr 22 · Agrivoltaics Jun 15 · Allstate Jun 23 · NextGen Apr 24 · PLAYA Jun 30
 
 **August next:** OP-05 pre-app **Aug 7** · OP-01 batch **Aug 31**
 
@@ -239,7 +239,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 | GG-011 | Galaxy Grant | ~$4,250 | https://galaxyofstars.org/galaxy-grants/ |
 | GG-013 | Startup Colorado Entrepreneur Grant | $2,500 | https://startupcolorado.org/ |
 | GG-012 | IFundWomen | $10K–25K | https://www.ifundwomen.com/ |
-| GG-021 | Women Founders Grant ($25 fee) | $5,000 | https://womenfoundersgrant.com/ |
+| GG-021 | Women Founders Grant | $5,000 | **Removed** — $25 fee · free-only rule |
 | GG-027 | RedLine AiR | Studio 2 yr | https://www.redlineart.org/apply |
 | GG-033 | Green Box AiR | $9K | https://greenboxarts.org/year-round-programs/artists-in-residence/apply/ |
 
@@ -255,7 +255,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 | GG-012 | [IFundWomen Universal App](https://www.ifundwomen.com/) | 65 | E | Gilded Goose | $10K–25K | Rolling | apply | Complete profile; watch branded cycles |
 | GG-003 | NRCS EQIP intake (map + paperwork) | 80 | B | Lazy Goose | Cost-share $10K–50K+ | Rolling | done | Garrett visit after Jul 1 |
 | GG-020 | EQIP **Jun 8, 2026** batch (Area pools) | 80 | B | Lazy Goose | Cost-share | **Jun 8, 2026** | apply | Ask Garrett if Gardner ranks in 2026 pool |
-| GG-021 | [Women Founders Grant](https://womenfoundersgrant.com/) | 68 | E | Gilded Goose | $5,000 | **Jun 30, 2026** | apply | Stage 2: $25 fee after Galaxy narrative test |
+| GG-021 | [Women Founders Grant](https://womenfoundersgrant.com/) | 68 | E | Gilded Goose | $5,000 | Jun 30, 2026 | **later** | **LATER-06** — $25 fee excluded |
 | GG-022 | [Allstate Main Street](https://helloalice.com/funding/grants/) via Hello Alice | 62 | E,A | Gilded Goose | $20,000 | **Jun 23, 2026** | apply | Create Hello Alice profile + apply |
 | GG-014 | [CDA CFA Equipment Tax Credit](https://ag.colorado.gov/markets/markets-funding/community-food-access-program/community-food-access-equipment-tax-credit) | **85** | A-LILA | Gilded Goose / Lazy Goose | **75%** equipment & delivery vehicles | **Aug 31, 2026** | **apply** | **PRIORITY:** confirm LILA + healthy-food plan; buy equip in 2026; [FAQ](https://ag.colorado.gov/markets/markets-funding/community-food-access-program/frequently-asked-questions) · [8 CCR 1204-10](https://www.sos.state.co.us/CCR/GenerateRulePdf.do?ruleVersionId=11365) |
 | GG-031 | [CDPHE Environmental Justice Grant](https://cdphe.colorado.gov/ej/grants) Cycle 4 | 55–70 | B,G | Lazy Goose / partner | Up to ~10 projects/cycle | **Aug 7, 2026** pre-app | apply | Confirm DIC via EnviroScreen; pre-app due Aug 7 |
@@ -316,6 +316,8 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 | GG-H02 | C-Commercial coloring book | — | Self-funded; not grant-viable | Never |
 | GG-H04 | Camp/RV Jump-Start | — | HOLD_PERMIT until CUP | GG-017 done |
 | GG-H05 | Arts in Society | 35 | HOLD_PARTNER | Nonprofit path (GG-018) |
+| GG-H06 | Gallagher SWE Graduate Programme 2027 | — | **Not qualified** — corporate UK job not grant | [careers.gallagher.com/jobs/7735121](https://careers.gallagher.com/jobs/7735121-software-engineering-graduate-programme-2027) |
+| *(pattern)* | `careers.*` graduate schemes / rotations | — | Employment — exclude from sweeps |
 | — | [Cartier Women's Initiative](https://cartierwomensinitiative.com/) | 20 | $50K+ revenue; 5+ employees | Revenue grows |
 | — | [Telluride Arts exhibition](https://telluridearts.org/) | 30 | Telluride region only | If working Telluride |
 | — | [Adolph Gottlieb Emergency](https://www.gottliebfoundation.org/emergency-grant) | — | Catastrophic incident only | If emergency |
@@ -363,6 +365,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 | GG-032 | PLAYA 2027 Art/Sci | [playasummerlake.org/2027-artsci](https://playasummerlake.org/2027-artsci/) | **Jun 30, 2026** | Free (waiver granted on request) | apply |
 | — | Artist Grant | [artistgrant.org/apply](https://artistgrant.org/apply) | Jul/Nov 2026 | **$30** | excluded |
 | GG-026 | ~~Pollock-Krasner~~ | — | — | **canceled** | Not qualified |
+| GG-H06 | ~~Gallagher SWE Graduate Programme 2027~~ | — | — | **canceled** | Not qualified — UK corporate job |
 | GG-035 | Gottlieb Individual Support | [gottliebfoundation.org/grant](https://www.gottliebfoundation.org/grant) | Rolling | Free | queue |
 | GG-033 | Green Box AiR 2027 | [greenboxarts.org/…/apply](https://greenboxarts.org/year-round-programs/artists-in-residence/apply/) | Opens **Sep 2026** | Free | wait |
 | GG-027 | RedLine Denver AiR | [redlineart.org/apply](https://www.redlineart.org/apply) | **~Jun 2027** | Free | wait (score 35; skip 2026–28) |
@@ -372,7 +375,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 | — | Artwork Archive CFE | [artworkarchive.com/call-for-entry](https://www.artworkarchive.com/call-for-entry/) | Ongoing | Free browse | monitor (GG-025) |
 | — | EntryThingy CO free | [entrythingy.com/calls_list/?region=3&state=CO](https://app.entrythingy.com/calls_list/?region=3&state=CO) | Ongoing | Filter FREE | weekly scan |
 
-**Excluded (inbox but not on list):** ZAPP/Cherry Creek/Pearl Street/Holiday Market (festivals/booths) · PlatteForum/Evergreen/CSU Spur ($35–$40 fees) · Amber/HerRise ($15 paid grants)
+**Excluded (inbox but not on list):** ZAPP/Cherry Creek/Pearl Street/Holiday Market (festivals/booths) · PlatteForum/Evergreen/CSU Spur ($35–$40 fees) · Amber/HerRise ($15 paid grants) · **Corporate grad jobs** (Gallagher GG-H06 · any `careers.*` graduate programme)
 
 ---
 
@@ -383,7 +386,7 @@ Closed or next calendar year — keep in plan; say *update NEXT-YR-01* to refres
 | Startup Colorado | $2,500 | Free | Rolling rural |
 | IFundWomen | $10K–25K | Free | Profile + matches |
 | Hello Alice (Allstate, etc.) | $10K–20K | Free | Branded cycles |
-| Women Founders Grant | $5K | $25 | Periodic (Jun 30, 2026) |
+| Women Founders Grant | $5K | $25 | **LATER-06 — excluded** |
 | NASE Growth Grant | $4K | Membership | Quarterly review |
 | HerRise | $1K/mo | $15 | Monthly |
 | Rural Jump-Start | $20K + tax credits | Free | Rolling via HCED |
