@@ -365,6 +365,33 @@ export function isValidProjectId(id) {
   return /^(RETAINER|[AB]\d+M?)$/i.test(String(id || "").trim());
 }
 
+function indexHeaderColumnMap(cells) {
+  const lower = cells.map(c => c.toLowerCase());
+  if (!lower.includes("id")) return null;
+  const pick = key => {
+    const i = lower.findIndex(c => c === key || c.replace(/\s+/g, "") === key.replace(/\s+/g, ""));
+    return i >= 0 ? i : null;
+  };
+  return {
+    priority: pick("priority") ?? pick("p") ?? 0,
+    id: pick("id") ?? 1,
+    status: pick("status"),
+    title: pick("project") ?? 2,
+    file: pick("file") ?? 3
+  };
+}
+
+function normalizeIndexStatus(raw) {
+  if (!raw) return null;
+  const s = String(raw).toLowerCase().trim();
+  if (s.includes("completed")) return "completed";
+  if (s.includes("ongoing")) return "ongoing";
+  if (s.includes("wip")) return "wip";
+  if (s.includes("available")) return "available";
+  const first = s.split(/[·•|/]/)[0].trim().replace(/\s+/g, "");
+  return first || null;
+}
+
 export function parseIndexMarkdown(text) {
   const result = {
     intro: "",
@@ -381,22 +408,37 @@ export function parseIndexMarkdown(text) {
   }
 
   const lines = text.split("\n");
-  const tableLines = lines.filter(l => /^\|/.test(l) && !/^\|[\s\-:|]+\|$/.test(l.replace(/\s/g, "")));
-  for (const line of tableLines) {
+  let colMap = null;
+  for (const line of lines) {
+    if (!/^\|/.test(line)) continue;
     const cells = line.split("|").map(c => c.trim()).filter(Boolean);
-    if (cells.length < 4 || cells[0] === "P") continue;
-    const id = cells[1];
-    if (!id || id === "ID" || !isValidProjectId(id)) continue;
+    if (!cells.length) continue;
+    if (/^[\-:\s|]+$/.test(line.replace(/\s/g, ""))) continue;
+
+    if (cells.some(c => /^id$/i.test(c))) {
+      colMap = indexHeaderColumnMap(cells);
+      continue;
+    }
+
+    if (!colMap) {
+      colMap = { priority: 0, id: 1, status: cells.length >= 5 ? 2 : null, title: cells.length >= 5 ? 3 : 2, file: cells.length >= 5 ? 4 : 3 };
+    }
+
+    const id = cells[colMap.id];
+    if (!id || !isValidProjectId(id)) continue;
     if (result.rowsById[id]) continue;
-    result.rowsById[id] = {
-      p: cells[0],
-      title: cells[2],
-      file: cells[3]
+
+    const row = {
+      p: cells[colMap.priority] ?? "",
+      title: cells[colMap.title] ?? "",
+      file: cells[colMap.file] ?? ""
     };
+    if (colMap.status != null && cells[colMap.status]) row.status = cells[colMap.status];
+    result.rowsById[id] = row;
   }
 
-  const introEnd = text.indexOf("| P |");
-  if (introEnd > 0) result.intro = text.slice(0, introEnd).trim();
+  const tableStart = text.search(/\|[^\n]*\bID\b[^\n]*\|/i);
+  if (tableStart > 0) result.intro = text.slice(0, tableStart).trim();
 
   const footerStart = text.indexOf("**Retainer");
   if (footerStart > 0) result.footer = text.slice(footerStart).trim();
@@ -404,7 +446,7 @@ export function parseIndexMarkdown(text) {
   return result;
 }
 
-/** INDEX table titles + P column → picker data (INDEX wins over project .md H1). */
+/** INDEX table titles, priority, status → picker data (INDEX wins over project .md). */
 export function applyIndexOverrides(projects, retainer, existingText) {
   const { rowsById } = parseIndexMarkdown(existingText || "");
   const applyTo = item => {
@@ -414,6 +456,8 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     if (o.title) next.title = o.title;
     const pm = String(o.p || "").match(/^P?(\d+)$/i);
     if (pm) next.priority = parseInt(pm[1], 10);
+    const status = normalizeIndexStatus(o.status);
+    if (status) next.status = status;
     return next;
   };
   const merged = projects.map(applyTo);
@@ -428,11 +472,11 @@ export function buildIndex(projects, retainer, existingText) {
 
   let md = overrides.intro || `# Project Index
 
-Open a file below to edit. Sorted by priority (P). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
+Open a file below to edit. Sorted by priority (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
 
-Edit **Project** titles and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
+Edit **Project** titles, **Status**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
-  md += `\n\n| P | ID | Project | File |\n|---|-----|---------|------|\n`;
+  md += `\n\n| Priority | ID | Status | Project | File |\n| -------- | -- | ------ | ------- | ---- |\n`;
 
   const seen = new Set();
   for (const p of all) {
@@ -441,14 +485,15 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
     const file = id === "RETAINER" ? "retainer.md" : `projects/${id}.md`;
     const fileCell = `[${file}](${file})`;
     const o = overrides.rowsById[id];
-    const pri = o?.p ?? (p.priority != null ? `P${p.priority}` : "—");
+    const pri = o?.p ?? (p.priority != null ? String(p.priority) : "—");
     const title = o?.title || p.title;
-    md += `| ${pri} | ${id} | ${title} | ${fileCell} |\n`;
+    const status = o?.status || p.status || "available";
+    md += `| ${pri} | ${id} | ${status} | ${title} | ${fileCell} |\n`;
   }
 
   for (const [id, o] of Object.entries(overrides.rowsById)) {
     if (seen.has(id) || !isValidProjectId(id)) continue;
-    md += `| ${o.p} | ${id} | ${o.title} | ${o.file} |\n`;
+    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${o.title} | ${o.file} |\n`;
   }
 
   md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Priority** row (shows as —)."}\n`;
