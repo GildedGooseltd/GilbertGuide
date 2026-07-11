@@ -194,9 +194,9 @@ window.PROJECT_DATA = {
       "timeline": "2–4 weeks (mail wave + list prep)",
       "category": "Direct Mail",
       "campaignType": "Past Client Mailer",
-      "status": "available",
-      "estimatedLeads": "1–2 retained matters per wave (long-tail warm list)",
-      "clientTouchpoints": "Physical mail, Past-client glovebox",
+      "status": "wip",
+      "estimatedLeads": "~200 households per wave (confirm sleeve order qty); 1–2 retained matters long-tail",
+      "clientTouchpoints": "Physical mail, past-client glovebox, cold database list",
       "keywords": [
         "mailer",
         "envelope",
@@ -207,19 +207,24 @@ window.PROJECT_DATA = {
         "postcard"
       ],
       "title": "Insurance Envelope Mailer - Client Re-engagement",
-      "description": "Snailmail Postcard campaign using the Insurance Sleeves as the postcard. This will enable us to get infront of previous clinets increasing the possiblity for referral and repeat customers. Summer is a very active time for drivers and tickets placing a physical reminder in cars will help to increase the liklihood of incoming cases for a very long tail campaign. Sleeves are faily low cost as well as the cost of postage making the total per customer under $3 for a campaign whos value will last as long as the sleeve remains in the prospects car. When's the last time you cleaned out your glovebox?\n\n- add research on what the value of long tail marketing is. Position high level information for the client to understand the longer term value and minimal short term gains. \n- Reengaging with past clients is one of the easiest cheapest ways to build up refenue with refereals and repeats. Ensure his audience is taken care of and you're top of mind for all. add research to confirm. position makreting education section less on executional for me and more for clent information and knowlwede growth. use citations and references.",
-      "tldr": "Physical touchpoint that is more likely to stay in a clients car as a good reminder for the next accident.",
+      "description": "Snailmail postcard campaign using the insurance sleeves as the mailer. Puts Pav Law in front of previous clients and increases referral and repeat potential. Summer is peak driving and ticket season — a physical reminder in the car supports a long-tail campaign. Sleeves plus postage keep cost under ~$3 per piece while the reminder stays in the glovebox.\n\n**Still to add:** long-tail direct-mail research with citations for Andrew (minimal short-term gains vs. sustained top-of-mind value; past-client re-engagement benchmarks). See [Clio — law firm marketing](https://www.clio.com/blog/law-firm-marketing/) and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
+      "tldr": "Insurance-sleeve mailer keeps Pav's number in the glovebox — an under-$5 touchpoint for onboarding thank-yous, past clients, and cold database re-engagement.",
       "valueAdded": [
-        "Physical touchpoint that is more likely to stay in a clients car as a good reminder for the next accident",
-        "One retained matter from a warm list covers project fee"
+        "Pav's phone number in the car at site of accident or ticket",
+        "Can function as a thank-you for onboarding new customers",
+        "Can use as a cold mailing campaign for the old database for a touchpoint under $5"
       ],
       "completedItems": [
-        "Campaign Revamp",
-        "Mailer print materials purchased"
+        "Campaign revamp",
+        "Mailer print materials purchased",
+        "Gather addresses",
+        "Mini beta test — sample envelopes mailed; held up at reasonable postage"
       ],
       "inProgressItems": [
-        "Gather addresses",
-        "Research mini beta testing. Mailed out a few envelopes to see if they would mail and not get destroyed seemed to work well for a reasonable fee."
+        "Confirm sleeve inventory from order email (~200 units — verify)",
+        "$1.40–$1.70 postage per mailer",
+        "Design insert for emergency numbers to be written in",
+        "Long-tail marketing research + client-facing citations for description"
       ]
     },
     {

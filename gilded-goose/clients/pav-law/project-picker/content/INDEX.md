@@ -14,7 +14,7 @@ Edit **Project** titles, **Status**, and add **## Notes** at the bottom — buil
 | 7        | A13      | available               | Adult Site(s) Ad Campaign                                        | [projects/A13.md](projects/A13.md) |
 | 2        | B1       | available               | HubSpot Pipeline Sprint                                          | [projects/B1.md](projects/B1.md)   |
 | 11       | A12      | available               | Enable Pavi Chat QA for After-Hours Support                      | [projects/A12.md](projects/A12.md) |
-| 2        | B5       | available               | Insurance Envelope Mailer - Client Re-engagement                 | [projects/B5.md](projects/B5.md)   |
+| 2        | B5       | wip                     | Insurance Envelope Mailer - Client Re-engagement                 | [projects/B5.md](projects/B5.md)   |
 | 9        | A8       | wip                     | Lead & KPI Dashboard                                             | [projects/A8.md](projects/A8.md)   |
 | 5        | B4       | available               | Website Content Overhaul - SEO, linking, referrals etc.          | [projects/B4.md](projects/B4.md)   |
 | 6        | A4       | ongoing                 | Client Referral Program — Setup and Ongoing Maintenance          | [projects/A4.md](projects/A4.md)   |
