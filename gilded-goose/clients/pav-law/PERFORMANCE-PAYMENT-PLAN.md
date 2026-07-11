@@ -85,27 +85,80 @@ From pricing menu — **core lane only** (HubSpot, referral ops, ads stewardship
 
 *Detail: [2026-06-andrew-pricing-menu.md](../../../daily/2026-06-andrew-pricing-menu.md)*
 
-### 3.2 Performance bonus pool (fixed $ — tiered, not % of fees)
+### 3.2 Kate — vendor bonuses (Track B)
 
-Bonuses use **three tiers per KPI** (T1 meet · T2 exceed · T3 outstanding). **Highest tier met** pays that row’s flat amount. Full tier gates, person scorecards, and charts: **[KPI-DASHBOARD-SPEC.md](KPI-DASHBOARD-SPEC.md)** § Team performance · § Tiered bonuses.
+**Rules:** Flat $ only · **highest tier met** per row pays that amount · not % of fees or case outcomes · disputes within **5 business days** · KPI definitions: [`kpi-list.md`](kpi-list.md) · counsel: [INCENTIVE-COMP-PLAN.md](../../../ntguilt/operations/INCENTIVE-COMP-PLAN.md)
 
-Verified from **HubSpot export** + Google Ads / LSA exports + Romina scheduling log.
+Verified from HubSpot export + Google Ads / LSA exports + MyCase.
 
+| ID | KPI # | T1 (meet) | T2 (exceed) | T3 (outstanding) | Bonus T1 / T2 / T3 |
+|----|-------|-----------|-------------|------------------|-------------------|
+| **P1** | 01, 06, 15 | ≥ **[___]** | ≥ **[___]** | ≥ **[___]** | **$[___]** / **$[___]** / **$[___]** |
+| **P2** | 02 | ≥ **[___]** | ≥ **[___]** | ≥ **[___]** | **$[___]** / **$[___]** / **$[___]** |
+| **P3** | 15 | ≤ **$[___]** | ≤ 90% target | ≤ 80% target | **$[___]** / **$[___]** / **$[___]** |
+| **P4** | 16 | Phase met | + engagement | + 2nd send | **$[___]** / phase |
+| **P5** | 21 | ≤ 30% | ≤ 25% | ≤ 20% | **$[___]** / **$[___]** / **$[___]** |
+| **P6** | 19 | Flagged + reviewed | Down MoM | Down MoM + action log | **$[___]** / **$[___]** / **$[___]** |
 
-| ID | KPI (dashboard #) | T1 (meet) | T2 (exceed) | T3 (outstanding) | Bonus T1 / T2 / T3 |
-|----|-------------------|-----------|-------------|------------------|-------------------|
-| **P1** | Qualified leads (01, 07, 21) | ≥ **[___]** | ≥ **[___]** | ≥ **[___]** | **$[___]** / **$[___]** / **$[___]** |
-| **P2** | New cases (02) | ≥ **[___]** | ≥ **[___]** | ≥ **[___]** | **$[___]** / **$[___]** / **$[___]** |
-| **P3** | CPL (21) | ≤ **$[___]** | ≤ 90% target | ≤ 80% target | **$[___]** / **$[___]** / **$[___]** |
-| **P4** | Referral milestone (22) | Phase met | + engagement | + second send | **$[___]** per phase tier |
-| **P5** | Report on time (43) | On time | + weekly 4/4 | + API reconciled | **$[___]** / **$[___]** / **$[___]** |
-| **P6** | Military missed (28) | ≤ 30% | ≤ 25% | ≤ 20% | **$[___]** / **$[___]** / **$[___]** |
-| **P7** | LSA missed cleared (29, 34) | <10% · ≤3 open | <5% · 0 open | 0% · 0 open | **$[___]** / **$[___]** / **$[___]** |
+**Removed after KPI lock (2026-07-11):** P5 report on time · P6 Military missed · P7 LSA missed — KPIs deleted from [`kpi-list.md`](kpi-list.md). Re-add when rows return.
 
+**Monthly bonus cap (Kate):** **$[___]** — sum of P1–P6 cannot exceed.
 
-**Monthly bonus cap (Kate):** **$[___]** — sum of P1–P7 tiers paid cannot exceed.
+**Optional ads add-on (inside cap):**
 
-**Staff intake / outbound tiers** (Romina, Casey, Gabriel, Jack): separate payroll bonuses in KPI spec — not part of Gilded Goose cap.
+| Tier | Gates | Bonus |
+|------|-------|-------|
+| T1 | 12 **< $120** | **$[___]** |
+| T2 | 12 **< $100** + 14 up MoM | **$[___]** |
+| T3 | 12 **< $80** + 15 at T3 | **$[___]** |
+
+### 3.3 Staff bonuses (firm payroll)
+
+**One tier per person per month** — highest tier fully met wins. Paid from firm payroll, not Gilded Goose.
+
+#### Romina — intake
+
+| Tier | Gates (all required) | Bonus |
+|------|----------------------|-------|
+| **T1** | 02 ≥ **[___]** · 22 **< 10 min** median | **$[___]** |
+| **T2** | 02 ≥ **[___]** · 22 **< 5 min** · 21 **≤ 25%** | **$[___]** |
+| **T3** | T2 · 05 up MoM · 23 **100%** | **$[___]** |
+
+#### Casey — phone & LSA
+
+*Pending — granular LSA/phone KPIs removed from locked list. Interim gate: KPI **21** only.*
+
+| Tier | Gates (all required) | Bonus |
+|------|----------------------|-------|
+| **T1** | 21 **≤ 30%** | **$[___]** |
+| **T2** | 21 **≤ 25%** | **$[___]** |
+| **T3** | 21 **≤ 20%** | **$[___]** |
+
+#### Gabriel — outbound
+
+| Tier | Gates (all required) | Bonus |
+|------|----------------------|-------|
+| **T1** | 24 ≥ **[___]** · 25 **≥ 15%** | **$[___]** |
+| **T2** | 24 ≥ **[___]** · 20 ≥ **[___]** · 25 **≥ 15%** | **$[___]** |
+| **T3** | T2 · 20 ≥ **[___]** · 26 **100%** | **$[___]** |
+
+#### Jack — ops
+
+| Tier | Gates (all required) | Bonus |
+|------|----------------------|-------|
+| **T1** | 27 **< 10**/wk avg | **$[___]** |
+| **T2** | 27 **< 5**/wk | **$[___]** |
+| **T3** | 27 **0** at month-end | **$[___]** |
+
+### 3.4 Firm pool (quarterly · optional)
+
+Only if Romina + Casey ≥ T1. Not tied to attorney fees.
+
+| Tier | Gates | Pool |
+|------|-------|------|
+| **T1** | 01 up QoQ · 02 ≥ **[___]**/mo avg | **$[___]** — Romina 40% · Casey 25% · Gabriel 25% · Jack 10% |
+| **T2** | T1 + 05 ≥ **[___]%** | **$[___]** — same split |
+| **T3** | T2 + 03 ≥ **[___]** avg active cases | **$[___]** — same split |
 
 **Not eligible for bonus:**
 
@@ -113,7 +166,7 @@ Verified from **HubSpot export** + Google Ads / LSA exports + Romina scheduling 
 - Per signed retainer or case outcome  
 - Event attendance unless separate paid SOW
 
-### 3.3 À la carte projects (fixed fee — outside bonus pool)
+### 3.5 À la carte projects (fixed fee — outside bonus pool)
 
 Selected monthly from menu **A1–A10**. Each requires a signed **[STANDARD-SOW.md](STANDARD-SOW.md)** or SOW exhibit.
 
