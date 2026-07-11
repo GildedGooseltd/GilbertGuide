@@ -27,6 +27,12 @@ One sentence — the primary value add (shown at top of card).
 - Second benefit
 - Third benefit
 
+## AB - Q
+
+Questions for Andrew Brown — picker blocks cart until answered in **Comment**.
+
+- AB - Q: Your question for Andrew here?
+
 ## Description
 
 Full scope and strategy context — include reference links inline in the paragraph. Marketing education lives here (not a separate section). Card shows TLDR + bullets; client expands to read this block.

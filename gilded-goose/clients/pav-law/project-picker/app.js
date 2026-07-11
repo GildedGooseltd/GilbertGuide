@@ -17,6 +17,95 @@
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
   }
 
+  function findProjectById(id) {
+    if (id === "RETAINER") return { ...RETAINER, isRetainer: true };
+    const p = PROJECTS.find(x => x.id === id);
+    return p ? { ...p, isRetainer: false } : null;
+  }
+
+  function hasAbQuestions(item) {
+    return !!(item && item.abQuestions && item.abQuestions.length);
+  }
+
+  function abQuestionAnswered(id) {
+    return !!(state.notes[id] || "").trim();
+  }
+
+  function canSelectProject(item, isRetainer) {
+    if (!item || isRetainer || item.isRetainer || item.monthlyOnly) return true;
+    if (!hasAbQuestions(item)) return true;
+    return abQuestionAnswered(item.id);
+  }
+
+  function sanitizeCartForAbQ() {
+    [...state.projects].forEach(id => {
+      const item = findProjectById(id);
+      if (item && !canSelectProject(item, false)) state.projects.delete(id);
+    });
+  }
+
+  function openAbQComment(id, root) {
+    const scope = root || document;
+    toggleCommentPopover(id, scope);
+    const card = document.getElementById(`project-${id}`) || scope.querySelector(`.research-row[data-id="${id}"]`);
+    card?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function gilbertAbQNoticeText(item) {
+    const qs = (item.abQuestions || []).map((q, i) => `${i + 1}. ${q}`).join(" ");
+    return `${item.title} has AB – Q (question for Andrew Brown): ${qs} — add Andrew's answer in Comment on that card before it can go in the cart.`;
+  }
+
+  function announceGilbertAbQ(item) {
+    if (!hasAbQuestions(item) || abQuestionAnswered(item.id)) return;
+    const msg = gilbertAbQNoticeText(item);
+    const dup = state.gilbertChat.some(m => m.role === "gilbert" && m.text === msg);
+    if (!dup) {
+      state.gilbertChat.push({ role: "gilbert", text: msg });
+      renderGilbertChat();
+    }
+    openGilbertChat();
+  }
+
+  function projectsWithPendingAbQ() {
+    return PROJECTS.filter(p => hasAbQuestions(p) && !abQuestionAnswered(p.id));
+  }
+
+  function trySetProjectInCart(id, add, opts) {
+    const item = findProjectById(id);
+    if (!item) return false;
+    const isRetainer = !!item.isRetainer;
+    if (add && !canSelectProject(item, isRetainer)) {
+      if (!opts?.silent) {
+        showToast("AB – Q: answer Andrew's question in Comment before adding to cart", true);
+        openAbQComment(id);
+        announceGilbertAbQ(item);
+      }
+      return false;
+    }
+    if (isRetainer) {
+      if (add) state.retainer = true;
+      else if (!isRequiredProject(item, true)) state.retainer = false;
+    } else {
+      if (add) state.projects.add(id);
+      else state.projects.delete(id);
+    }
+    return true;
+  }
+
+  function abQuestionsBannerHtml(item) {
+    if (!hasAbQuestions(item)) return "";
+    const answered = abQuestionAnswered(item.id);
+    const qs = item.abQuestions.map(q => `<li>${escapeHtml(q)}</li>`).join("");
+    return `<div class="ab-q-flag${answered ? " ab-q-flag--answered" : ""}" role="note">
+      <div class="ab-q-flag-head"><span class="ab-q-badge">AB – Q</span> Question for Andrew Brown</div>
+      <ul class="ab-q-list">${qs}</ul>
+      <p class="ab-q-hint">${answered
+        ? "Answer recorded in Comment — you can add this to the cart."
+        : `${GUIDE_SHORT}: reply in Comment before this goes in the cart.`}</p>
+    </div>`;
+  }
+
   function isPriorityUrgent(item) {
     return !!item.enabler || item.status === "wip" || hasPartialProgress(item);
   }
@@ -253,15 +342,19 @@
     const id = item.id;
     const sel = state.projects.has(id);
     const note = (state.notes[id] || "").trim();
-    return `<div class="research-row${sel ? " selected" : ""}" data-id="${id}">
-      <input type="checkbox" class="proj-chk research-chk" data-id="${id}" ${sel ? "checked" : ""}>
+    const abQ = hasAbQuestions(item);
+    const answered = abQuestionAnswered(id);
+    const tagLabel = abQ && !answered ? "Comment — AB-Q" : (note ? "Comment ✓" : "+ Comment");
+    return `<div class="research-row${sel ? " selected" : ""}${abQ && !answered ? " ab-q-pending" : ""}" data-id="${id}">
+      <input type="checkbox" class="proj-chk research-chk" data-id="${id}" ${sel ? "checked" : ""}${abQ && !answered ? ' title="Answer AB – Q in Comment first"' : ""}>
       <div>
         <span class="research-row-id">${escapeHtml(id)}</span>
         <div class="research-row-title">${escapeHtml(item.title)}</div>
+        ${abQ ? abQuestionsBannerHtml(item) : ""}
       </div>
-      <button type="button" class="research-comment-tag${note ? " has-note" : ""}" data-id="${id}">${note ? "Comment ✓" : "+ Comment"}</button>
+      <button type="button" class="research-comment-tag${note ? " has-note" : ""}${abQ && !answered ? " needs-ab-q" : ""}" data-id="${id}">${tagLabel}</button>
       <div class="research-comment-popover" data-id="${id}" hidden>
-        <textarea class="project-note" data-id="${id}" placeholder="Planning notes for Gilded Goose…">${escapeHtml(state.notes[id] || "")}</textarea>
+        <textarea class="project-note" data-id="${id}" placeholder="${abQ ? "Answer for Andrew Brown (AB – Q)…" : "Planning notes for Gilded Goose…"}">${escapeHtml(state.notes[id] || "")}</textarea>
         <button type="button" class="comment-popover-done" data-id="${id}">Done</button>
       </div>
     </div>`;
@@ -697,11 +790,12 @@
     return "";
   }
 
-  function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled) {
+  function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending) {
     const id = item.id;
     const reqMark = required ? requiredMarkerHtml(item, isRetainer) : "";
+    const abTitle = abPending ? ' title="AB – Q: answer in Comment before cart"' : "";
     return `<div class="card-check-col">
-      <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled} ${sel ? "checked" : ""}>
+      <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled}${abTitle} ${sel ? "checked" : ""}>
       ${reqMark}
       ${wipBadgeUnderCheckbox(item)}
     </div>`;
@@ -879,12 +973,19 @@
     return `<a class="card-ref-link" href="${escapeHtml(ref.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} ↗</a>`;
   }
 
-  function cardCommentUiHtml(id) {
+  function cardCommentUiHtml(id, item) {
     const note = (state.notes[id] || "").trim();
-    return `<button type="button" class="card-comment-tag${note ? " has-note" : ""}" data-id="${id}" aria-expanded="false">${note ? "Comment ✓" : "+ Comment"}</button>
+    const abQ = item && hasAbQuestions(item);
+    const answered = abQuestionAnswered(id);
+    const tagLabel = abQ && !answered ? "Comment — AB-Q" : (note ? "Comment ✓" : "+ Comment");
+    const tagClass = `card-comment-tag${note ? " has-note" : ""}${abQ && !answered ? " needs-ab-q" : ""}${abQ && answered ? " ab-q-answered" : ""}`;
+    const placeholder = abQ
+      ? "Answer for Andrew Brown (AB – Q) — required before cart…"
+      : "Scope, timing, or questions…";
+    return `<button type="button" class="${tagClass}" data-id="${id}" aria-expanded="false">${tagLabel}</button>
       <div class="card-comment-popover" data-id="${id}" hidden>
-        <label for="comment-${id}">Comment for Gilded Goose</label>
-        <textarea id="comment-${id}" class="project-note" data-id="${id}" placeholder="Scope, timing, or questions…">${escapeHtml(state.notes[id] || "")}</textarea>
+        <label for="comment-${id}">${abQ ? "AB – Q — reply for Andrew Brown" : "Comment for Gilded Goose"}</label>
+        <textarea id="comment-${id}" class="project-note" data-id="${id}" placeholder="${escapeHtml(placeholder)}">${escapeHtml(state.notes[id] || "")}</textarea>
         <button type="button" class="comment-popover-done" data-id="${id}">Done</button>
       </div>`;
   }
@@ -1049,8 +1150,8 @@
       state.recommended.add("RETAINER");
     }
     (pkg.projectIds || []).forEach(id => {
-      state.projects.add(id);
-      state.recommended.add(id);
+      trySetProjectInCart(id, true, { silent: true });
+      if (state.projects.has(id)) state.recommended.add(id);
     });
     ensureRequiredMaintenance();
   }
@@ -1323,9 +1424,8 @@
       scored.slice(0, 6).forEach(({ item, isRetainer }) => {
         if (isRetainer || item.monthlyOnly) return;
         if (!itemPassesCostPriorityFilter({ ...item, isRetainer: false })) return;
-        if (!state.projects.has(item.id)) added += 1;
-        state.projects.add(item.id);
-        state.recommended.add(item.id);
+        if (!state.projects.has(item.id) && trySetProjectInCart(item.id, true, { silent: true })) added += 1;
+        else if (state.projects.has(item.id)) state.recommended.add(item.id);
       });
 
       if (!scored.length && !silent) showToast("No strong matches — try different keywords", true);
@@ -1337,8 +1437,8 @@
       (pkg?.projectIds || []).forEach(id => {
         const p = PROJECTS.find(x => x.id === id);
         if (p && itemPassesCostPriorityFilter({ ...p, isRetainer: false })) {
-          state.projects.add(id);
-          state.recommended.add(id);
+          trySetProjectInCart(id, true, { silent: true });
+          if (state.projects.has(id)) state.recommended.add(id);
         }
       });
     }
@@ -1383,6 +1483,7 @@
       state.retainer = !!saved.retainer;
       state.projects = new Set(saved.projects || []);
       state.notes = saved.notes || {};
+      sanitizeCartForAbQ();
       state.submitterEmail = saved.submitterEmail || "";
       if (state.submitterEmail) document.getElementById("submitted-email").value = state.submitterEmail;
       if (saved.invoicePaymentMonths != null) {
@@ -1488,12 +1589,14 @@
     const selFirst = isFirstSelected ? " selected-first" : "";
     const chkDisabled = required ? " disabled" : "";
     const mutedClass = isResearchStatus(item) || isCompletedStatus(item) ? " status-muted" : "";
+    const abPending = hasAbQuestions(item) && !abQuestionAnswered(id);
+    const abClass = abPending ? " ab-q-pending" : (hasAbQuestions(item) ? " ab-q-cleared" : "");
 
     return `
-      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}">
-        ${cardCommentUiHtml(id)}
+      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${abClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}">
+        ${cardCommentUiHtml(id, item)}
         <div class="card-header">
-          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled)}
+          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
               ${cardFeaturedImageHtml(item)}
               ${cardReferenceLinkHtml(item)}
@@ -1502,6 +1605,7 @@
                 ${iconsHtml}
               </div>
               ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
+              ${abQuestionsBannerHtml(item)}
               ${descriptionHtml(item)}
             <button type="button" class="expand-btn">${expandBtnLabel(item, exp)}</button>
           </div>
@@ -1560,10 +1664,18 @@
       ta.dataset.noteBound = "1";
       ta.addEventListener("click", e => e.stopPropagation());
       ta.addEventListener("input", e => {
-        state.notes[ta.dataset.id] = e.target.value;
-        syncCommentTag(ta.dataset.id, root);
+        const pid = ta.dataset.id;
+        state.notes[pid] = e.target.value;
+        const item = findProjectById(pid);
+        if (item && hasAbQuestions(item) && !abQuestionAnswered(pid) && state.projects.has(pid)) {
+          state.projects.delete(pid);
+          showToast("Removed from cart — AB – Q needs an answer in Comment", true);
+        }
+        syncCommentTag(pid, root);
         saveState();
         updateSubmitButtons();
+        renderAllCards();
+        renderSummary();
       });
     });
 
@@ -1593,8 +1705,11 @@
         const id = chk.dataset.id;
         const card = chk.closest(".card");
         if (card && card.dataset.required === "true") return;
-        if (chk.checked) state.projects.add(id);
-        else state.projects.delete(id);
+        const wantAdd = chk.checked;
+        if (!trySetProjectInCart(id, wantAdd)) {
+          chk.checked = !wantAdd;
+          return;
+        }
         saveState();
         renderAllCards();
         renderSummary();
@@ -1609,8 +1724,15 @@
         if (card.classList.contains("over-budget")) return;
         const id = card.dataset.id;
         if (card.dataset.required === "true") return;
-        if (state.projects.has(id)) state.projects.delete(id);
-        else state.projects.add(id);
+        const isRetainer = card.dataset.retainer === "true";
+        if (isRetainer) {
+          if (state.retainer) state.retainer = false;
+          else state.retainer = true;
+        } else if (state.projects.has(id)) {
+          trySetProjectInCart(id, false);
+        } else if (!trySetProjectInCart(id, true)) {
+          return;
+        }
         saveState();
         renderAllCards();
         renderSummary();
@@ -1878,6 +2000,11 @@
     if (scored.length) {
       const picks = scored.slice(0, 3).map(s => s.item.title);
       const list = picks.length === 1 ? picks[0] : picks.slice(0, -1).join(", ") + " and " + picks[picks.length - 1];
+      const abBlocked = scored.filter(s => hasAbQuestions(s.item) && !abQuestionAnswered(s.item.id));
+      if (abBlocked.length) {
+        const names = abBlocked.slice(0, 2).map(s => s.item.title).join(", ");
+        return `I'd look at ${list} — but ${names} ${abBlocked.length === 1 ? "has" : "have"} AB – Q for Andrew. Answer in Comment on ${abBlocked.length === 1 ? "that card" : "those cards"} before cart.`;
+      }
       if (count > 0) {
         return `Understood. I'd prioritize ${list} — ${count} item${count === 1 ? "" : "s"} in your cart so far. Add more detail or pick from the list below.`;
       }
@@ -1937,7 +2064,12 @@
       }
     });
     if (!state.gilbertChat.length) {
-      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+      let greeting = GILBERT_GREETING;
+      const pending = projectsWithPendingAbQ();
+      if (pending.length) {
+        greeting += ` ${pending.length} project${pending.length === 1 ? "" : "s"} flagged AB – Q for Andrew — comment before cart.`;
+      }
+      state.gilbertChat = [{ role: "gilbert", text: greeting }];
       if (state.goalText.trim()) {
         state.gilbertChat.push({ role: "user", text: state.goalText.trim() });
         state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(state.goalText) });

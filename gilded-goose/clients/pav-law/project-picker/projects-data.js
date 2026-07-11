@@ -72,7 +72,8 @@ window.PROJECT_DATA = {
     "backedMetric": {
       "label": "Military Search averaged about 36 calls per month at roughly $67 per call in May 2026 account data",
       "source": "Pav Law Google Ads audit, May 2026"
-    }
+    },
+    "abQuestions": []
   },
   "projects": [
     {
@@ -103,7 +104,8 @@ window.PROJECT_DATA = {
         "Reaches past clients when DUI and ticket volume spikes around July 4",
         "Pre-holiday safety message plus post-holiday ‘what to do if charged’ guide",
         "Direct path to book with Romina in every send"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A1",
@@ -129,13 +131,7 @@ window.PROJECT_DATA = {
         "fix"
       ],
       "title": "Digital Ad Enhancements",
-      "description": "Your May 2026 account audit showed paid search budget flowing to the wrong places: <a href=\"https://support.google.com/google-ads/answer/1703646\" target=\"_blank\" rel=\"noopener\">call-only campaigns</a> still collecting form leads, Mountain DUI clicks at about $76 each, and domestic violence calls near $526 each — while Military Search delivers calls at roughly $67. This fix realigns the account so spend follows proven performance.\n\nCall-focused Search campaigns should route people to the phone, not a form. Google’s call-only ad guidance explains why mixed objectives inflate cost per call — especially for criminal defense firms where the consult starts with a conversation. See [Google — call-only Search ads](https://support.google.com/google-ads/answer/1703646), [Clio — law firm PPC measurement](https://www.clio.com/blog/law-firm-marketing/), [Google — responsive search ads](https://support.google.com/google-ads/answer/10724897), and [Search campaign structure](https://www.youtube.com/watch?v=9yLzVO3L130).",
-      "tldr": "Stops spend on $526/call and $76/click lanes that bleed budget.",
-      "valueAdded": [
-        "Stops spend on $526/call and $76/click lanes that bleed budget",
-        "Reallocates toward Military Search at ~$67 per call",
-        "Two-week performance check against May audit baseline"
-      ],
+      "valueAdded": [],
       "completedItems": [
         "Search campaign planning across practice areas",
         "Keyword and description rewrite for ad strength",
@@ -149,7 +145,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "Shift spend away from $526 per call domestic violence and $76 per click Mountain DUI toward Military Search at about $67 per call",
         "source": "May 2026 Google Ads audit"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "B1",
@@ -185,7 +182,8 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Dashboard and reporting planning",
         "Find correct CRM tool evaluation"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B5",
@@ -194,7 +192,7 @@ window.PROJECT_DATA = {
       "timeline": "2–4 weeks (mail wave + list prep)",
       "category": "Direct Mail",
       "campaignType": "Past Client Mailer",
-      "status": "wip",
+      "status": "available",
       "estimatedLeads": "~200 households per wave (confirm sleeve order qty); 1–2 retained matters long-tail",
       "clientTouchpoints": "Physical mail, past-client glovebox, cold database list",
       "keywords": [
@@ -207,7 +205,7 @@ window.PROJECT_DATA = {
         "postcard"
       ],
       "title": "Insurance Envelope Mailer - Client Re-engagement",
-      "description": "Snailmail postcard campaign using the insurance sleeves as the mailer. Puts Pav Law in front of previous clients and increases referral and repeat potential. Summer is peak driving and ticket season — a physical reminder in the car supports a long-tail campaign. Sleeves plus postage keep cost under ~$3 per piece while the reminder stays in the glovebox.\n\n**Still to add:** long-tail direct-mail research with citations for Andrew (minimal short-term gains vs. sustained top-of-mind value; past-client re-engagement benchmarks). See [Clio — law firm marketing](https://www.clio.com/blog/law-firm-marketing/) and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
+      "description": "Snailmail postcard campaign using the insurance sleeves as the mailer. Puts Pav Law in front of previous clients and increases referral and repeat potential. Summer is peak driving and ticket season — a physical reminder in the car supports a long-tail campaign. Sleeves plus postage keep cost under ~$3 per piece while the reminder stays in the glovebox.\n\n**Note: Tracking the ROI for this campaign is going to be very difficult.**",
       "tldr": "Insurance-sleeve mailer keeps Pav's number in the glovebox — an under-$5 touchpoint for onboarding thank-yous, past clients, and cold database re-engagement.",
       "valueAdded": [
         "Pav's phone number in the car at site of accident or ticket",
@@ -215,16 +213,19 @@ window.PROJECT_DATA = {
         "Can use as a cold mailing campaign for the old database for a touchpoint under $5"
       ],
       "completedItems": [
-        "Campaign revamp",
-        "Mailer print materials purchased",
-        "Gather addresses",
+        "Campaign revamp from event to post & digital",
+        "Mailer sleeves designed",
+        "Validated & cleansed addresses",
         "Mini beta test — sample envelopes mailed; held up at reasonable postage"
       ],
       "inProgressItems": [
-        "Confirm sleeve inventory from order email (~200 units — verify)",
         "$1.40–$1.70 postage per mailer",
         "Design insert for emergency numbers to be written in",
-        "Long-tail marketing research + client-facing citations for description"
+        "Define P1 target audience. AB - Q: Newest or Oldest first?"
+      ],
+      "abQuestions": [
+        "Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
+        "Newest or Oldest first?"
       ]
     },
     {
@@ -263,12 +264,13 @@ window.PROJECT_DATA = {
         "Promo video concept",
         "Giveaway and lead magnet ideas",
         "Event sponsorship outreach"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B10",
       "priority": 3,
-      "fee": 2400,
+      "fee": 1400,
       "timeline": "2–3 weeks",
       "category": "Brand / Local Presence",
       "campaignType": "Profile Audit & Refresh",
@@ -300,14 +302,14 @@ window.PROJECT_DATA = {
         "traffic"
       ],
       "title": "Social & Directory Profile Refresh & Tracking",
-      "description": "Prospects check more than pav.law before they call — they also look up **Andrew Brown**, **Casey**, and **Pav Law** separately on Facebook, Instagram, Yelp, LinkedIn, Avvo, and other directories. Firm pages and personal attorney profiles often show stale bios, old logos, mismatched phone numbers, or practice areas that no longer match how the firm actually works. This project runs a full <a href=\"https://moz.com/learn/seo/local-business-listings\" target=\"_blank\" rel=\"noopener\">NAP and profile audit</a> at **three levels — Pav Law (company), Andrew Brown (personal), and Casey (personal)** — discovers listings you may have forgotten, then refreshes copy, photos, categories, and links so every touchpoint matches current branding and intake paths (call, text, HubSpot booking). Complements website SEO (B4) and HubSpot social posting (B8) — this is the **profile layer**, not the posting calendar.\n\n**Known outdated (client-reported):** Pav Law Facebook, Yelp, Instagram, plus several legal directory profiles (firm and attorney).\n\n**Scope — company + personal (Andrew + Casey):**\n\n| Level | What we audit and refresh |\n|-------|---------------------------|\n| **Pav Law (firm)** | Company pages and firm listings — social, GBP, Yelp, Bing/Apple, BBB, firm rows on Avvo/Justia/FindLaw/Martindale where applicable |\n| **Andrew Brown (personal)** | Individual attorney profiles — LinkedIn, Avvo, Justia, state bar directory, any personal Facebook/Instagram/X used for firm visibility; bios and headshots aligned to pav.law/team |\n| **Casey (personal)** | Same pass for Casey — personal LinkedIn, Avvo/Justia attorney pages, bar directory, GBP attorney verification support (per prior tracker note), social accounts tied to traffic-case lead role |\n\n**Also audit (research — common for CO criminal defense firms):**\n\n| Bucket | Platforms to find, claim, or refresh |\n|--------|--------------------------------------|\n| **Social (firm + personal)** | Facebook Page (firm), Instagram (firm), LinkedIn company showcase **and** Andrew + Casey personal profiles, X/Twitter, YouTube — confirm active vs. archive |\n| **Reviews & local** | Google Business Profile (firm + attorney attributions, photos, services, Q&A), Yelp (firm and any attorney-linked pages), Bing Places, Apple Business Connect, Nextdoor Business |\n| **Major legal directories** | Avvo, Justia, FindLaw, Martindale-Hubbell, LawInfo, Lawyers.com, HG.org, Nolo — **firm listing plus individual attorney profiles for Andrew and Casey** |\n| **Bar & trust** | Colorado Bar Association public directory (each attorney), El Paso County Bar (if listed), BBB profile |\n| **Aggregators & misc.** | Foursquare, MapQuest, YellowPages, Manta, Expertise.com, Thumbtack, LegalRank and similar auto-generated pages (firm or attorney name searches) |\n| **Bilingual / niche** | Abogado.com (Spanish-speaking intake), Super Lawyers / Best Lawyers (only if already listed or eligible — no paid vanity buys without approval) |\n\nDiscovery uses **firm name, Andrew Brown, Casey, address, and phone** searches — not just logins you already have — so orphaned or duplicate firm *and* personal listings surface before updates go live.\n\n**UTM routing — see which profiles send traffic:**\n\nEvery profile website link that allows a custom URL gets a unique tagged link to pav.law (contact page or homepage — one landing target, documented in handoff). That lets GA4 and HubSpot show which directory or social profile drove the visit instead of lumping everything under “direct” or “referral.”\n\n| UTM field | Convention (example) |\n|-----------|----------------------|\n| `utm_source` | Platform slug: `facebook`, `instagram`, `yelp`, `avvo`, `linkedin`, `gbp`, `justia`, `findlaw`, etc. |\n| `utm_medium` | `social`, `directory`, or `local` |\n| `utm_campaign` | `profile-2026` (stable campaign name for all profile links this round) |\n| `utm_content` | Owner + level: `firm`, `andrew`, `casey` — so firm Avvo vs. Andrew Avvo vs. Casey Avvo split cleanly |\n\nExample: `https://pav.law/contact?utm_source=avvo&utm_medium=directory&utm_campaign=profile-2026&utm_content=andrew`\n\nDeliverables include a **UTM link sheet** (profile name → tagged URL → where to paste it) and a quick GA4/HubSpot check that sessions land with the expected source/medium. Feeds the lead-source dashboard (A8) — without unique UTMs, profile traffic stays invisible next to paid ads.\n\nConsistent name-address-phone data across directories and social profiles still drives local search and AI citation trust — models and Google both lean on Avvo, Justia, FindLaw, Martindale, GBP, and bar directories when recommending lawyers. **UTM parameters** on each profile’s website link are the only practical way to attribute organic profile clicks in GA4 and HubSpot — otherwise Yelp, Avvo, and LinkedIn all look like generic referral traffic. See [Google — UTM parameters](https://support.google.com/analytics/answer/10917952), [HubSpot — track traffic with UTMs](https://knowledge.hubspot.com/settings/add-utm-parameters-to-a-page-url), [Moz — local business listings](https://moz.com/learn/seo/local-business-listings), [FindLaw — optimize directory profiles](https://www.findlaw.com/lawyer-marketing/blog/how-to-optimize-your-findlaw-directory-profile-top-3-data-driven-tactics/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
-      "tldr": "Single inventory of every live profile (**firm, Andrew, Casey**): URL, login owner, last updated, match/mismatch vs. current NAP and branding.",
+      "description": "Prospects check more than pav.law before they call — they also look up **Andrew Brown**, **Casey**, and **Pav Law** separately on Facebook, Instagram, Yelp, LinkedIn, Avvo, and other directories. Firm pages and personal attorney profiles often show stale bios, old logos, mismatched phone numbers, or practice areas that no longer match how the firm actually works. This project runs a full [NAP and profile audit](https://moz.com/learn/seo/local-business-listings) at **three levels — Pav Law (company), Andrew Brown (personal), and Casey (personal)** — discovers listings you may have forgotten, then refreshes copy, photos, categories, and links so every touchpoint matches current branding and intake paths (call, text, HubSpot booking). Complements website SEO (B4) and HubSpot social posting (B8) — this is the **profile layer**, not the posting calendar.\n\n**Known outdated (client-reported):** Pav Law Facebook, Yelp, Instagram, plus several legal directory profiles (firm and attorney).\n\n**Scope — company + personal (Andrew + Casey):**\n\n\n| Level                       | What we audit and refresh                                                                                                                                                                      |\n| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| **Pav Law (firm)**          | Company pages and firm listings — social, GBP, Yelp, Bing/Apple, BBB, firm rows on Avvo/Justia/FindLaw/Martindale where applicable                                                             |\n| **Andrew Brown (personal)** | Individual attorney profiles — LinkedIn, Avvo, Justia, state bar directory, any personal Facebook/Instagram/X used for firm visibility; bios and headshots aligned to pav.law/team             |\n| **Casey (personal)**        | Same pass for Casey — personal LinkedIn, Avvo/Justia attorney pages, bar directory, GBP attorney verification support (per prior tracker note), social accounts tied to traffic-case lead role |\n\n\n**Also audit (research — common for CO criminal defense firms):**\n\n\n| Bucket                       | Platforms to find, claim, or refresh                                                                                                                                             |\n| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| **Social (firm + personal)** | Facebook Page (firm), Instagram (firm), LinkedIn company showcase **and** Andrew + Casey personal profiles, X/Twitter, YouTube — confirm active vs. archive                      |\n| **Reviews & local**          | Google Business Profile (firm + attorney attributions, photos, services, Q&A), Yelp (firm and any attorney-linked pages), Bing Places, Apple Business Connect, Nextdoor Business |\n| **Major legal directories**  | Avvo, Justia, FindLaw, Martindale-Hubbell, LawInfo, Lawyers.com, HG.org, Nolo — **firm listing plus individual attorney profiles for Andrew and Casey**                          |\n| **Bar & trust**              | Colorado Bar Association public directory (each attorney), El Paso County Bar (if listed), BBB profile                                                                           |\n| **Aggregators & misc.**      | Foursquare, MapQuest, YellowPages, Manta, Expertise.com, Thumbtack, LegalRank and similar auto-generated pages (firm or attorney name searches)                                  |\n| **Bilingual / niche**        | Abogado.com (Spanish-speaking intake), Super Lawyers / Best Lawyers (only if already listed or eligible — no paid vanity buys without approval)                                  |\n\n\nDiscovery uses **firm name, Andrew Brown, Casey, address, and phone** searches — not just logins you already have — so orphaned or duplicate firm *and* personal listings surface before updates go live.\n\n**UTM routing — see which profiles send traffic:**\n\nEvery profile website link that allows a custom URL gets a unique tagged link to pav.law (contact page or homepage — one landing target, documented in handoff). That lets GA4 and HubSpot show which directory or social profile drove the visit instead of lumping everything under “direct” or “referral.”\n\n\n| UTM field      | Convention (example)                                                                                 |\n| -------------- | ---------------------------------------------------------------------------------------------------- |\n| `utm_source`   | Platform slug: `facebook`, `instagram`, `yelp`, `avvo`, `linkedin`, `gbp`, `justia`, `findlaw`, etc. |\n| `utm_medium`   | `social`, `directory`, or `local`                                                                    |\n| `utm_campaign` | `profile-2026` (stable campaign name for all profile links this round)                               |\n| `utm_content`  | Owner + level: `firm`, `andrew`, `casey` — so firm Avvo vs. Andrew Avvo vs. Casey Avvo split cleanly |\n\n\nExample: `https://pav.law/contact?utm_source=avvo&utm_medium=directory&utm_campaign=profile-2026&utm_content=andrew`\n\nDeliverables include a **UTM link sheet** (profile name → tagged URL → where to paste it) and a quick GA4/HubSpot check that sessions land with the expected source/medium. Feeds the lead-source dashboard (A8) — without unique UTMs, profile traffic stays invisible next to paid ads.\n\nConsistent name-address-phone data across directories and social profiles still drives local search and AI citation trust — models and Google both lean on Avvo, Justia, FindLaw, Martindale, GBP, and bar directories when recommending lawyers. **UTM parameters** on each profile’s website link are the only practical way to attribute organic profile clicks in GA4 and HubSpot — otherwise Yelp, Avvo, and LinkedIn all look like generic referral traffic. See [Google — UTM parameters](https://support.google.com/analytics/answer/10917952), [HubSpot — track traffic with UTMs](https://knowledge.hubspot.com/settings/add-utm-parameters-to-a-page-url), [Moz — local business listings](https://moz.com/learn/seo/local-business-listings), [FindLaw — optimize directory profiles](https://www.findlaw.com/lawyer-marketing/blog/how-to-optimize-your-findlaw-directory-profile-top-3-data-driven-tactics/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
+      "tldr": "A lot of the websites with Pav Law information are outdated and could use a refresh. The more intake channels updated and imporved the better.",
       "valueAdded": [
-        "Single inventory of every live profile (**firm, Andrew, Casey**): URL, login owner, last updated, match/mismatch vs. current NAP and branding",
+        "Inventory of every live profile",
         "Refreshed bios, practice areas, photos, and CTAs for company and both attorneys — aligned to current positioning and ABA advertising rules",
-        "**Unique UTM-tagged website links per profile** — link sheet + validation in GA4/HubSpot so you can rank which platforms drive the most site traffic",
-        "Duplicate or abandoned listings flagged for merge, claim, or suppress — fewer wrong-number or wrong-address paths",
-        "Handoff doc: who owns each login (firm vs. Andrew vs. Casey), tagged URLs, what changed, and a quarterly re-check checklist"
+        "**Unique UTM-tagged website links per profile** — link sheet + validation in GA4/HubSpot so you can rank which platforms drive the most site traffic. Most of the legal sites have paid advertising or upgrades now that we can track traffic we'll be able to test out if any are worth purchasing.",
+        "Merge Andrew Brown and Pav Law profiles",
+        "-"
       ],
       "completedItems": [
         "(None — discovery starts on kickoff)"
@@ -322,7 +324,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "LinkedIn showcase page and third-party aggregator (e.g. LegalRank) already surface firm NAP and positioning — worth aligning with pav.law and GBP before next paid campaign push",
         "source": "Public web search + client report, Jun 2026"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "B2",
@@ -366,7 +369,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "About 36 Military Search calls per month depend on a verified phone line. Reported volume is likely understated because call-only tracking misses some mobile and cross-device conversions — a common issue when phone setup is incomplete. Firms that respond within five minutes are far more likely to qualify a lead than those that wait hours, so routing, logging, and speed-to-lead must work before scaling spend ([HubSpot speed-to-lead research](https://blog.hubspot.com/sales/inbound-sales); [Google call extensions](https://support.google.com/google-ads/answer/2454052)).",
         "source": "May 2026 Google Ads Audit"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "B4",
@@ -407,7 +411,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "Organic search on pav.law averaged position 45 to 58 in early 2025 Search Console export",
         "source": "Google Search Console via Downloads export, Jan 2025"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "A4",
@@ -443,7 +448,8 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Traffic intake script for Romina"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A13",
@@ -474,7 +480,8 @@ window.PROJECT_DATA = {
         "Adds a testable awareness lane beyond Google Search and LSA",
         "Keeps adult-site spend isolated in its own campaign with clear UTMs",
         "Policy-safe creative and landing paths reviewed before launch"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B6",
@@ -511,7 +518,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "Organic search on pav.law averaged position 45 to 58 in early 2025 Search Console export",
         "source": "Google Search Console via Downloads export, Jan 2025"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "A8",
@@ -550,7 +558,8 @@ window.PROJECT_DATA = {
         "UTM tracking setup on contact URLs",
         "Dashboard and reporting planning",
         "Conversion actions flagged but not yet in client-facing reports"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B3",
@@ -589,7 +598,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "Prior optimization pass improved site performance about 200 percent",
         "source": "Pav Law project tracker"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "A12",
@@ -620,7 +630,8 @@ window.PROJECT_DATA = {
         "After-hours and weekend visitors get answers instead of a dead end",
         "Chat Q&A reviewed for firm-safe, ABA-aligned responses before go-live",
         "HubSpot (or site) logging so morning intake sees overnight conversations"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B7",
@@ -661,7 +672,8 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "America referral list import (partial — needs full marketing contact pass)",
         "MyCase field cleanup noted in tracker but not finished"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A7",
@@ -695,7 +707,8 @@ window.PROJECT_DATA = {
       "completedItems": [
         "NTGUILT visual prompt library",
         "Policy-safe ad creative prompt rework"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A11",
@@ -731,7 +744,8 @@ window.PROJECT_DATA = {
         "One focus area per build: structure, creative, UTMs, and conversion tracking",
         "Topic chosen for the season (holiday DUI, military push, summer NTGUILT, etc.)",
         "Mirrored setup on Google Ads and Microsoft Ads where account allows"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B8",
@@ -772,7 +786,8 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Romina event social support role defined in summer campaign doc — not yet HubSpot-connected"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A5",
@@ -803,7 +818,8 @@ window.PROJECT_DATA = {
       "completedItems": [
         "Referral landing page setup documentation",
         "HubSpot form and workflow foundation"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A6",
@@ -830,7 +846,8 @@ window.PROJECT_DATA = {
         "Adds phone conversations without increasing ad spend",
         "Ready-to-dial list and script approved by Andrew",
         "Every outcome logged in HubSpot for reporting"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A9",
@@ -856,7 +873,8 @@ window.PROJECT_DATA = {
         "Real outcomes become reusable ad copy the team approves once",
         "Privacy-safe snippets — outcome type and jurisdiction only",
         "Typically lifts click-through 10–25% over generic lines"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A10",
@@ -886,17 +904,18 @@ window.PROJECT_DATA = {
       "completedItems": [
         "Marketing strategy shift recommendation",
         "Revenue-channel planning framework"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B9",
       "priority": 22,
-      "fee": 1400,
-      "timeline": "1 week",
+      "fee": 2400,
+      "timeline": "2 week",
       "category": "Finance / Operations",
       "campaignType": "Spend Audit",
       "status": "available",
-      "clientTouchpoints": "Andrew review, Intake team",
+      "clientTouchpoints": "",
       "keywords": [
         "credit card",
         "subscription",
@@ -910,13 +929,13 @@ window.PROJECT_DATA = {
         "budget"
       ],
       "title": "Credit Card & Subscription Leak Spend Audit",
-      "description": "Marketing and ops subscriptions stack up fast — HubSpot seats, ad tools, phone/VoIP, listing services, and forgotten trials can drain budget without a single line item on the ads dashboard. This project audits Pav Law card and bank charges for duplicate, unused, or over-tier subscriptions, maps each to a business purpose, and flags leaks with cancel-or-downgrade recommendations.\n\nSaaS and vendor creep is common when multiple people add tools over time. A recurring subscription review — matching each charge to an active user or campaign — is standard ops hygiene for small firms running paid media and CRM together. See [HubSpot — manage your account and billing](https://knowledge.hubspot.com/account/manage-your-account), [Google Workspace — admin billing overview](https://support.google.com/a/answer/1227361), and [Clio — law firm overhead and tech spend](https://www.clio.com/blog/law-firm-overhead/).",
-      "tldr": "Full pass on recurring charges tied to marketing, CRM, phone, and ops.",
+      "tldr": "Full account and finance cycle audit to track path from spend to earn to spend.",
       "valueAdded": [
-        "Full pass on recurring charges tied to marketing, CRM, phone, and ops",
-        "Each subscription tagged: keep, downgrade, cancel, or needs owner decision",
-        "Simple subscription checker checklist for monthly review so leaks do not return"
-      ]
+        "Full pass on recurring charges tied to marketing, CRM, phone, and ops. Bills keep showing up for tools that we do not need or use running Rocketor another app on the records will help to clean this up and save money.",
+        "Implement budget(s)",
+        "-"
+      ],
+      "abQuestions": []
     },
     {
       "id": "A8M",
@@ -945,7 +964,8 @@ window.PROJECT_DATA = {
         "Monthly lead-source report published from live dashboard data",
         "UTM and conversion flags checked — issues flagged before month-end",
         "Google Ads and LSA tie-ins updated where integrations allow"
-      ]
+      ],
+      "abQuestions": []
     }
   ]
 };

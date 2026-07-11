@@ -24,6 +24,7 @@
 Meta table: Estimated leads · Client touchpoints (optional rows)
 ## TLDR                  ← one-sentence value (top of card)
 ## Value Added           ← bullets on card
+## AB - Q                  ← Question for Andrew Brown; cart blocked until Comment answered
 ## Description           ← full scope + marketing education (expand to read)
 ## WIP                   ← amber box
 ## Completed             ← ✓ items
@@ -34,6 +35,7 @@ Meta table: Estimated leads · Client touchpoints (optional rows)
 
 - **Marketing education** goes inside **Description** — not a separate section.
 - **TLDR** optional in markdown; if omitted, first Value Added bullet is used.
+- **AB – Q** (`AB - Q:`) — question for Andrew Brown; Gilbert flags it; **Comment required before cart**.
 - Card shows **TLDR → bullets → est. leads / touchpoints**; **Read full description** expands Description.
 
 - **Proper case** in all text (HubSpot, VoIP, Google Ads).

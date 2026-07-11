@@ -118,6 +118,27 @@ function parseLearnings(body) {
   return links;
 }
 
+function parseAbQuestions(fullText, sections) {
+  const questions = [];
+  const sectionBody = sections["ab - q"] || sections["ab-q"] || sections["ab q"];
+  if (sectionBody) {
+    for (const line of sectionBody.split("\n")) {
+      const t = line.replace(/^-\s+/, "").trim();
+      if (t) questions.push(t.replace(/^AB\s*[-–]\s*Q:\s*/i, "").trim());
+    }
+  }
+  const re = /^(?:[-•]\s*)?AB\s*[-–]\s*Q:\s*(.+)$/gim;
+  let m;
+  while ((m = re.exec(fullText)) !== null) {
+    questions.push(m[1].trim());
+  }
+  const inlineRe = /AB\s*[-–]\s*Q:\s*([^\n]+)/gi;
+  while ((m = inlineRe.exec(fullText)) !== null) {
+    questions.push(m[1].trim());
+  }
+  return [...new Set(questions.filter(Boolean))];
+}
+
 function parseAccountSection(body) {
   const lines = body.split("\n").map(l => l.trim()).filter(Boolean);
   if (!lines.length) return null;
@@ -225,6 +246,8 @@ export function parseProjectMarkdown(text, fallbackId) {
     const bm = parseAccountSection(accountKey);
     if (bm?.label) project.backedMetric = bm;
   }
+
+  project.abQuestions = parseAbQuestions(text, sections);
 
   return project;
 }
@@ -416,6 +439,9 @@ export function projectToMarkdown(p) {
 
   if (p.tldr) md += `## TLDR\n\n${applyProperCase(p.tldr.trim())}\n\n`;
   md += listSection("Value Added", p.valueAdded || []);
+  if (p.abQuestions?.length) {
+    md += `## AB - Q\n\n${p.abQuestions.map(q => `- AB - Q: ${q}`).join("\n")}\n\n`;
+  }
   const fullDesc = mergeDescriptionAndEducation(p);
   if (fullDesc) md += `## Description\n\n${applyProperCase(fullDesc.trim())}\n\n`;
   md += listSection("WIP", p.inProgressItems);
