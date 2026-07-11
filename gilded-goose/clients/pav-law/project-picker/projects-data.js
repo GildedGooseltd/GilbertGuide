@@ -168,7 +168,6 @@ window.PROJECT_DATA = {
       ],
       "title": "HubSpot Pipeline Sprint",
       "description": "A web lead only becomes revenue if intake moves fast. Research on [speed to lead](https://blog.hubspot.com/sales/inbound-sales) shows response within five minutes dramatically improves qualification rates — yet Pav Law's HubSpot workflows, Romina booking link, and referral import path are not fully connected. This sprint proves the full path: form submit → task → bookable consult.\n\nSpeed to lead matters — firms that respond within minutes qualify far more inquiries than those that wait hours. HubSpot workflow automation routes form fills to tasks and booking links so intake is consistent, not ad hoc. See [HubSpot Academy — automation](https://academy.hubspot.com/courses/automation), [HubSpot — speed to lead statistics](https://blog.hubspot.com/sales/inbound-sales), and [Law firm CRM setup](https://www.youtube.com/watch?v=4yM_GJPHB8E).",
-      "tldr": "Proves web lead → HubSpot task → Romina booking without handoffs.",
       "valueAdded": [
         "Proves web lead → HubSpot task → Romina booking without handoffs",
         "Faster follow-up recovers leads that would have gone cold",
@@ -552,12 +551,17 @@ window.PROJECT_DATA = {
       ],
       "completedItems": [
         "Systems audit and access documentation",
-        "UTM tracking logic drafted for contact URLs"
+        "UTM tracking logic drafted for contact URLs",
+        "KPI master table drafted (KPI-01–35)",
+        "Google Ads API setup doc drafted (Gilbert A8 deliverable)"
       ],
       "inProgressItems": [
         "UTM tracking setup on contact URLs",
         "Dashboard and reporting planning",
-        "Conversion actions flagged but not yet in client-facing reports"
+        "Conversion actions flagged but not yet in client-facing reports",
+        "**Google Ads API** — credentials, monthly pull script, LSA `local_services_lead` backfill (see [`GOOGLE-ADS-API-SETUP.md`](../../../../../../pav-law-analytics/google-ads/GOOGLE-ADS-API-SETUP.md))",
+        "KPI master table + cockpit spec (see [`KPI-DASHBOARD-SPEC.md`](../../../KPI-DASHBOARD-SPEC.md) · edit [`kpi-list.md`](../../../kpi-list.md))",
+        "HubSpot **Integrations → Google Ads** connect (CRM attribution layer — separate from API secrets)"
       ],
       "abQuestions": []
     },
@@ -963,7 +967,8 @@ window.PROJECT_DATA = {
       "valueAdded": [
         "Monthly lead-source report published from live dashboard data",
         "UTM and conversion flags checked — issues flagged before month-end",
-        "Google Ads and LSA tie-ins updated where integrations allow"
+        "Google Ads and LSA tie-ins updated where integrations allow",
+        "Google Ads API monthly pull reconciled to manual CSV archive (KPI spec § Export checklist)"
       ],
       "abQuestions": []
     }

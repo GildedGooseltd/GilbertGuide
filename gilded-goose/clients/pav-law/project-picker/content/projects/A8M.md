@@ -25,6 +25,7 @@ Monthly lead-source report published from live dashboard data.
 - Monthly lead-source report published from live dashboard data
 - UTM and conversion flags checked — issues flagged before month-end
 - Google Ads and LSA tie-ins updated where integrations allow
+- Google Ads API monthly pull reconciled to manual CSV archive (KPI spec § Export checklist)
 
 ## Description
 
