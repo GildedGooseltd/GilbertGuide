@@ -21,14 +21,20 @@
 ## B2 Section Layout
 
 ```
-## Description
-## Value Added          ← ★ bullets on card
-## Marketing Education  ← expand section (+ link bullets OK)
-## WIP                  ← amber box
-## Completed            ← ✓ items
+Meta table: Estimated leads · Client touchpoints (optional rows)
+## TLDR                  ← one-sentence value (top of card)
+## Value Added           ← bullets on card
+## Description           ← full scope + marketing education (expand to read)
+## WIP                   ← amber box
+## Completed             ← ✓ items
+## Results               ← outcome metrics (optional)
 ## Account Data & Marketing Principles Applied
    Source: …
 ```
+
+- **Marketing education** goes inside **Description** — not a separate section.
+- **TLDR** optional in markdown; if omitted, first Value Added bullet is used.
+- Card shows **TLDR → bullets → est. leads / touchpoints**; **Read full description** expands Description.
 
 - **Proper case** in all text (HubSpot, VoIP, Google Ads).
 - **Priority:** whole numbers only; omit row for retainer / monthly-only.

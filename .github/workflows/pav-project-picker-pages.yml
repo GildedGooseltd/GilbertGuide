@@ -1,10 +1,10 @@
-# Deploy Picky Pavi to GitHub Pages (gh-pages branch)
-# Repo: https://github.com/GildedGooseltd/PickyPavi
+# Deploy Gilbert Guide to GitHub Pages (gh-pages branch)
+# Repo: https://github.com/GildedGooseltd/GilbertGuide
 # Enable: repo Settings → Pages → Deploy from branch gh-pages / root
 # Secret: PAV_PICKER_WEBHOOK_URL = Apps Script web app /exec URL
 # Optional: PAV_PICKER_DEPOSIT_AMOUNT (default 2500), PAV_PICKER_QUICKBOOKS_DEPOSIT_URL
 
-name: Deploy Picky Pavi
+name: Deploy Gilbert Guide
 
 on:
   push:

@@ -2,5 +2,6 @@
 window.PAV_PICKER_CONFIG = {
   webhookUrl: "",
   depositAmount: 2500,
-  quickbooksDepositUrl: ""
+  quickbooksDepositUrl: "",
+  notifyEmail: "support@gildedgooselimited.com"
 };

@@ -4,7 +4,9 @@
 
 **Where it goes:** GitHub repo → Action builds → public picker on GitHub Pages
 
-**Live site:** `https://gildedgooseltd.github.io/PickyPavi/`
+**Live site:** `https://gildedgooseltd.github.io/GilbertGuide/`
+
+**Repo rename:** If GitHub still shows `PickyPavi`, rename to **GilbertGuide** (Settings → General → Repository name) so URLs below work.
 
 ---
 
@@ -30,8 +32,8 @@ You never upload files manually in the browser. **Push from Terminal** (or Curso
 
 | Where | Do this |
 |--------|---------|
-| Browser → [github.com/GildedGooseltd/PickyPavi](https://github.com/GildedGooseltd/PickyPavi) | Repo for this picker |
-| HTTPS URL to save | `https://github.com/GildedGooseltd/PickyPavi.git` |
+| Browser → [github.com/GildedGooseltd/GilbertGuide](https://github.com/GildedGooseltd/GilbertGuide) | Repo for this picker |
+| HTTPS URL to save | `https://github.com/GildedGooseltd/GilbertGuide.git` |
 
 ### Step 2 — Commit picker files on your Mac
 
@@ -60,12 +62,12 @@ If `git commit` says "nothing to commit", files may already be committed — con
 | Same Terminal | Replace `YOUR_USERNAME` and `YOUR_REPO` with yours, then run: |
 
 ```bash
-git remote add origin https://github.com/GildedGooseltd/PickyPavi.git
+git remote add origin https://github.com/GildedGooseltd/GilbertGuide.git
 
 git push -u origin HEAD:main
 ```
 
-*(If `remote origin already exists`: `git remote set-url origin https://github.com/GildedGooseltd/PickyPavi.git` then push.)*
+*(If `remote origin already exists`: `git remote set-url origin https://github.com/GildedGooseltd/GilbertGuide.git` then push.)*
 **If asked to log in:** GitHub username + Personal Access Token (not password) — create at GitHub → **Settings** → **Developer settings** → **Personal access tokens**
 
 **If HTTPS auth fails once** (can't paste token, "Device not configured", repeated password prompts) → **stop retrying the same Terminal flow.** Switch immediately to **GitHub Desktop** (recommended) or SSH — do not send the user through token paste again.
@@ -75,7 +77,7 @@ git push -u origin HEAD:main
 1. Install: https://desktop.github.com  
 2. Sign in via browser in the app  
 3. **File → Add Local Repository** → `/Users/gildedgoose/Documents/1 Cursor Helper`  
-4. **Publish branch** / **Push origin** → `GildedGooseltd/PickyPavi`, branch **main**
+4. **Publish branch** / **Push origin** → `GildedGooseltd/GilbertGuide`, branch **main**
 
 No token paste in Terminal.
 
@@ -95,7 +97,7 @@ No token paste in Terminal.
 
 Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
-**Secret 1:** [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+**Secret 1:** [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
 
 | Field | Paste this |
 |-------|------------|
@@ -104,7 +106,7 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 → **Add secret**
 
-**Secret 2:** [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) again
+**Secret 2:** [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new) again
 
 | Field | Paste this |
 |-------|------------|
@@ -113,7 +115,7 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 → **Add secret**
 
-**Check:** [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) — both names appear.
+**Check:** [Secrets list](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions) — both names appear.
 
 **Wrong value?** Remove secret → add again (GitHub cannot edit secrets).
 
@@ -123,12 +125,12 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 | Link | Do this |
 |------|---------|
-| [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | Branch **`gh-pages`** / **`/ (root)`** → **Save** |
-| [Run Deploy Picky Pavi](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** |
-| [Actions](https://github.com/GildedGooseltd/PickyPavi/actions) | Wait for green ✓ |
-| [Live site](https://gildedgooseltd.github.io/PickyPavi/) | Picker loads when deploy finishes |
+| [Pages settings](https://github.com/GildedGooseltd/GilbertGuide/settings/pages) | Branch **`gh-pages`** / **`/ (root)`** → **Save** |
+| [Run Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** |
+| [Actions](https://github.com/GildedGooseltd/GilbertGuide/actions) | Wait for green ✓ |
+| [Live site](https://gildedgooseltd.github.io/GilbertGuide/) | Picker loads when deploy finishes |
 
-**Do not re-run old Actions runs** — [Actions](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) → **Run workflow** only (uses latest code). Re-running a run from an older commit redeploys that old build to `gh-pages` and overwrites the live site.
+**Do not re-run old Actions runs** — [Actions](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) → **Run workflow** only (uses latest code). Re-running a run from an older commit redeploys that old build to `gh-pages` and overwrites the live site.
 
 ---
 
