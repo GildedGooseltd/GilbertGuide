@@ -240,25 +240,27 @@ After editing Apps Script so it opens this Sheet ID: **Paste full `apps-script-w
 
 ### Secret 1 only — before you share the picker URL for feedback
 
-Do these steps once. **Do not** involve Secret 2 / QuickBooks for metrics gather.
+Do these steps once. **Do not** involve Secret 2 / QuickBooks for metrics gather. **Do not** use a Google Form.
+
+**Owner one-pager (bookmark):** [owner-webhook-setup.html](https://gildedgooseltd.github.io/PickyPavi/owner-webhook-setup.html)
 
 1. Confirm live config has a real webhook: open [pages-config.js on live site](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) — look at `webhookUrl`.
    - **Must be:** a real `https://script.google.com/.../exec` URL  
    - **Not empty** / not `YOUR_DEPLOYMENT_ID`  
    - **Not** a `docs.google.com/spreadsheets/...` link
-2. If empty — set Secret 1:
-   1. **Copy from:** Apps Script → **Deploy → Manage deployments** → **Web app URL** (Part A16; ends in `/exec`)
-   2. **Paste into:** GitHub → [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+2. If empty — set Secret 1 on **PickyPavi only** (wrong repo = empty live config forever):
+   1. **Copy from:** Sheet → **Extensions → Apps Script** → **Deploy → Manage deployments** → **Web app URL** (ends in `/exec`). If no deploy yet: paste full `apps-script-webhook.gs` → Save → New deployment → Web app → Execute as Me → Anyone → Deploy.
+   2. **Paste into:** GitHub → [New repository secret on PickyPavi](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
       - **Name:** `PAV_PICKER_WEBHOOK_URL`
       - **Secret:** the `/exec` URL only (nothing else — not the Sheet URL)
    3. If the secret already exists with a wrong/empty value: [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) → **Remove** `PAV_PICKER_WEBHOOK_URL` → add again (secrets are not editable in place)
-   4. Re-run [Deploy workflow](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) → wait for green
+   4. Re-run [Deploy workflow](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) → branch **`cursor/op01-submission-updates`** (or latest) → wait for green
    5. **Verify webhook not empty:** refresh [pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) — `webhookUrl` must show the real `/exec` URL
 3. After updating webhook code on Mac (`apps-script-webhook.gs`): **Copy from** that file → **Paste into** Apps Script **Code.gs** → **Deploy → Manage deployments → Edit → New version → Deploy** (same URL; do not create a second web app). Secret 1 does not change unless you deployed a brand-new web app.
 
-**Verify gather:** Feedback mode → rate one metric → **Save** → open [the Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client).
+**Verify gather:** Feedback mode → rate one metric → **Save** → open [the Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client). No JSON download.
 
-The status bar shows **Not saved to sheet — webhook missing/failed** when `webhookUrl` is empty or the POST fails — do not share for multi-person review until Secret 1 is set and [pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) shows a real `/exec` URL.
+The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook missing/failed** when `webhookUrl` is empty or the POST fails — do not share for multi-person review until Secret 1 is set and [pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) shows a real `/exec` URL.
 
 ---
 

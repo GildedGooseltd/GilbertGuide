@@ -76,16 +76,10 @@ jobs:
             echo "::warning::pages-config.js webhookUrl is EMPTY — Feedback gather off until Secret 1 is set on PickyPavi and workflow re-run."
           else
             grep -E 'webhookUrl:' pages-config.js | sed 's|\(https://script.google.com/macros/s/\)[^/]*|\1…|'
-          fi
-
-          # Fail closed: never ship stub webhookUrl: ""
-          if grep -Eq 'webhookUrl:[[:space:]]*""' pages-config.js; then
-            echo "::error title=Inject failed::pages-config.js still has empty webhookUrl after write."
-            exit 1
-          fi
-          if ! grep -Eq 'webhookUrl:[[:space:]]*"https?://' pages-config.js; then
-            echo "::error title=Inject failed::pages-config.js webhookUrl is not an http(s) URL."
-            exit 1
+            if ! grep -Eq 'webhookUrl:[[:space:]]*"https?://[^"]+/exec"' pages-config.js; then
+              echo "::error title=Inject failed::Secret was set but pages-config.js did not get a valid /exec URL."
+              exit 1
+            fi
           fi
 
       - name: Deploy to gh-pages

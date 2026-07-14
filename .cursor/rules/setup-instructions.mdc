@@ -1,0 +1,38 @@
+---
+description: Backend, deploy, and integration setup — precise steps only
+alwaysApply: true
+---
+
+# Setup instructions
+
+When the user asks to set up, deploy, configure, wire secrets, or integrate a backend:
+
+## Before replying
+
+1. **Read the project setup doc** (e.g. `BACKEND-SETUP.md`, `WHERE-TO-GET-LINKS.md`, `GITHUB-PUSH.md`).
+2. **Identify each system** (Google, GitHub, QuickBooks, etc.) and **where each value is saved** — copy-from and save-in must not be conflated.
+3. **Answer only what was asked** — Secret 2 instructions must not include Secret 1 or webhook steps unless she asked for both.
+
+See `clarity-accuracy-first.mdc` for non-negotiable clarity rules. See `fail-assess-switch.mdc` when a step already failed — **switch method, don’t repeat**.
+
+## After a reported failure
+
+1. Diagnose (push landed? auth? wrong app?) before next steps.
+2. If Kate said auth/deploy “doesn’t work” / “still fails” → **GitHub Desktop first**, not Terminal token again.
+3. If repo still shows “Quick setup” → do not mention Run workflow until push succeeds.
+
+## Step format
+
+1. **Numbered steps** — one action per step; exact UI/menu path; what to copy/paste; **verify** before continuing.
+2. **No "steps 1–3" hand-waving.** Use doc step IDs (A1, A2, …) or walk the doc line by line — do not replace with a vague outline.
+3. **Every paste step:** **Copy from** (app, file path, field) → **Paste into** (app, field, tab).
+4. **Secrets / credentials:** always state **Name** field vs **Secret** field; URL shape; **which GitHub secret name**; explicitly **what NOT to paste** (e.g. Apps Script URL is not Secret 2).
+5. **Not editable:** if values can’t be changed in place (GitHub secrets, Apps Script deploy URL), say **remove + re-add** or **redeploy new version** in the same answer — don’t wait for her to discover it.
+
+## Product-specific
+
+6. **Verify UI paths** for Google, QuickBooks, GitHub before writing — do not guess.
+7. **Pav Law project picker:** repo **`GildedGooseltd/PickyPavi`** → GitHub Actions → `gh-pages` → live `https://gildedgooseltd.github.io/PickyPavi/`. Secrets live in **PickyPavi** only (never GilbertGuide). Injected file is **`pages-config.js`** (not `config.js`). Webhook = Apps Script `/exec`; deposit = QuickBooks — never swap. Owner one-pager: `owner-webhook-setup.html`.
+8. **Backend vs content:** setup → `*-SETUP.md` only; copy edits → `content/**/*.md` only (not `projects-data.js`).
+
+When she corrects a workflow, update the project `*-SETUP.md` in the same session.

@@ -32,4 +32,4 @@ To get feedback into Cursor after reviewers finish:
 
 ## Before sharing the live URL
 
-See **BACKEND-SETUP.md → Metrics feedback** — confirm [live config.js](https://gildedgooseltd.github.io/PickyPavi/config.js) has a non-empty `webhookUrl`.
+See **BACKEND-SETUP.md → Metrics feedback** — confirm [live pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) has a non-empty `webhookUrl`.

@@ -589,3 +589,5 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   font-size: var(--font-min-rem); font-weight: 600;
 }
 .feedback-remote-warn code { font-size: 0.85em; }
+.metrics-remote-status a,
+.feedback-remote-warn a { color: inherit; font-weight: 700; text-decoration: underline; }
