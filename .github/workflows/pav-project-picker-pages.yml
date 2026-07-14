@@ -41,21 +41,23 @@ jobs:
           NOTIFY="support@gildedgooselimited.com"
 
           if [ -z "$WEBHOOK_TRIM" ]; then
-            echo "::error title=Missing PAV_PICKER_WEBHOOK_URL::Secret PAV_PICKER_WEBHOOK_URL is empty or unset on GildedGooseltd/PickyPavi. Live Feedback Save cannot reach the Sheet until this is set."
+            echo "::error title=Missing PAV_PICKER_WEBHOOK_URL::Secret PAV_PICKER_WEBHOOK_URL is empty or unset on GildedGooseltd/PickyPavi. Feedback Save cannot reach the Sheet until this is set."
             echo ""
             echo "Fix (browser — one time):"
             echo "  1. Copy Apps Script Web app URL ending in /exec"
             echo "  2. Paste as secret Name=PAV_PICKER_WEBHOOK_URL at:"
             echo "     https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new"
-            echo "  3. Re-run this workflow, then verify:"
+            echo "  3. Re-run this workflow on branch cursor/op01-submission-updates, then verify:"
             echo "     https://gildedgooseltd.github.io/PickyPavi/pages-config.js"
             echo "     (webhookUrl must be the /exec URL — not empty)"
             echo ""
             echo "Do NOT set this secret on GilbertGuide — deploy runs on PickyPavi only."
-            echo "Deploy continues so owner-webhook-setup.html stays reachable — but webhookUrl will stay empty until Secret 1 is set and this job is re-run."
-            WEBHOOK_TRIM=""
-          elif [[ "$WEBHOOK_TRIM" != *"/exec" ]]; then
-            echo "::warning title=Unexpected webhook shape::PAV_PICKER_WEBHOOK_URL should end in /exec. Continuing — verify pages-config.js after deploy."
+            exit 1
+          fi
+
+          if [[ "$WEBHOOK_TRIM" != *"/exec" ]]; then
+            echo "::error title=Bad webhook shape::PAV_PICKER_WEBHOOK_URL must end in /exec (Apps Script Web app URL). Got a value without /exec — remove+re-add the secret."
+            exit 1
           fi
 
           # Escape for JS double-quoted string
@@ -72,14 +74,15 @@ jobs:
           } > pages-config.js
 
           echo "Wrote pages-config.js (webhookUrl length=${#WEBHOOK_TRIM}, depositAmount=$DEP, qb=$([ -n "$QB" ] && echo set || echo empty))"
-          if [ -z "$WEBHOOK_TRIM" ]; then
-            echo "::warning::pages-config.js webhookUrl is EMPTY — Feedback gather off until Secret 1 is set on PickyPavi and workflow re-run."
-          else
-            grep -E 'webhookUrl:' pages-config.js | sed 's|\(https://script.google.com/macros/s/\)[^/]*|\1…|'
-            if ! grep -Eq 'webhookUrl:[[:space:]]*"https?://[^"]+/exec"' pages-config.js; then
-              echo "::error title=Inject failed::Secret was set but pages-config.js did not get a valid /exec URL."
-              exit 1
-            fi
+          grep -E 'webhookUrl:' pages-config.js | sed 's|\(https://script.google.com/macros/s/\)[^/]*|\1…|'
+
+          if grep -Eq 'webhookUrl:[[:space:]]*""' pages-config.js; then
+            echo "::error title=Inject failed::pages-config.js still has empty webhookUrl after write."
+            exit 1
+          fi
+          if ! grep -Eq 'webhookUrl:[[:space:]]*"https?://[^"]+/exec"' pages-config.js; then
+            echo "::error title=Inject failed::pages-config.js webhookUrl is not a valid /exec URL."
+            exit 1
           fi
 
       - name: Deploy to gh-pages
