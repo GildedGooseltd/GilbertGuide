@@ -2412,7 +2412,8 @@
         </label>
         <input type="email" id="metrics-email" class="cockpit-feedback-email" placeholder="Email (optional)" autocomplete="email" aria-label="Your email optional">
         <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Save all to sheet</button>
-        <p class="cockpit-feedback-hint">Works on KPIs, Impact, and Project Guide. Magenta ON → click → <strong>Save</strong> writes Google Sheet tab <strong>MetricsFeedback</strong> (when webhook is live). Email is optional — not required.</p>
+        <button type="button" class="btn" data-metrics-download-backup>Download backup (optional)</button>
+        <p class="cockpit-feedback-hint">Works on KPIs, Impact, and Project Guide. Magenta ON → click → <strong>Save</strong> / <strong>Save all</strong> write Google Sheet tab <strong>MetricsFeedback</strong> (when webhook is live) — no file download. Email is optional. Use <strong>Download backup</strong> only if you want a local JSON copy.</p>
         <p class="metrics-status metrics-remote-status" id="metrics-remote-status" aria-live="polite"></p>
         <p class="metrics-status" id="metrics-submit-status" aria-live="polite" hidden></p>
       </div>
@@ -2547,8 +2548,8 @@
 
   <script src="pages-config.js?v=20260712i"></script>
   <script src="projects-data.js?v=20260713u"></script>
-  <script src="kpi-report.js?v=20260714m"></script>
-  <script src="app.js?v=20260714m"></script>
-  <script src="metrics-feedback.js?v=20260714m"></script>
+  <script src="kpi-report.js?v=20260714n"></script>
+  <script src="app.js?v=20260714n"></script>
+  <script src="metrics-feedback.js?v=20260714n"></script>
 </body>
 </html>
