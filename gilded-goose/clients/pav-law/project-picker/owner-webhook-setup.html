@@ -26,7 +26,7 @@
     <p class="lead">One-time. Makes live Feedback mode Save write to the shared <strong>MetricsFeedback</strong> sheet for every reviewer on the public URL. Not a Google Form.</p>
 
     <div class="box warn">
-      <strong>Wrong repo causes empty webhook.</strong> Secrets must be on <strong>PickyPavi</strong> only — not GilbertGuide. Live config is <a href="pages-config.js"><code>pages-config.js</code></a> (not <code>config.js</code>).
+      <strong>Secret updates do nothing until Deploy is green.</strong> Live <a href="pages-config.js"><code>pages-config.js</code></a> only changes after a successful <strong>Deploy Gilbert Guide</strong> run. If Actions shows <code>Missing PAV_PICKER_WEBHOOK_URL</code>, the secret is still empty to GitHub — stop re-pasting secrets; use the committed bypass below.
     </div>
 
     <h2>1 — Get the Apps Script <code>/exec</code> URL</h2>
@@ -39,23 +39,21 @@
       <li>Copy the <strong>Web app URL</strong> ending in <code>/exec</code></li>
     </ol>
 
-    <h2>2 — Save Secret 1 on PickyPavi (GitHub browser)</h2>
+    <h2>2 — Bypass (preferred): committed <code>pages-config.defaults.js</code></h2>
     <ol>
-      <li>Open <a href="https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new" target="_blank" rel="noopener">New repository secret (PickyPavi)</a></li>
-      <li><span class="name">Name</span> field (exact): <code>PAV_PICKER_WEBHOOK_URL</code></li>
-      <li><span class="name">Secret</span> field: paste <strong>only</strong> the <code>/exec</code> URL — not the Sheet link, not the secret name</li>
-      <li><strong>Add secret</strong>. Already exists? <a href="https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions" target="_blank" rel="noopener">Secrets list</a> → <strong>Remove</strong> → add again (not editable in place)</li>
+      <li>Webhook is public on Pages anyway. Deploy reads committed <code>pages-config.defaults.js</code> when the GitHub secret is empty.</li>
+      <li>Kate: paste the <code>/exec</code> URL in Cursor chat if it needs updating — agent commits that file. Do <strong>not</strong> keep looping on Secrets.</li>
     </ol>
 
-    <h2>3 — Deploy + verify before testing Save</h2>
+    <h2>3 — Deploy + verify</h2>
     <ol>
-      <li><a href="https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml" target="_blank" rel="noopener">Deploy Gilbert Guide</a> → <strong>Run workflow</strong> → branch <code>cursor/op01-submission-updates</code> (or the branch you pushed) → wait for green</li>
+      <li><a href="https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml" target="_blank" rel="noopener">Deploy Gilbert Guide</a> → <strong>Run workflow</strong> → branch <code>cursor/op01-submission-updates</code> → wait for <strong>green</strong></li>
       <li>Open <a href="https://gildedgooseltd.github.io/PickyPavi/pages-config.js" target="_blank" rel="noopener">live pages-config.js</a></li>
       <li class="ok"><strong>Must see</strong> <code>webhookUrl: "https://script.google.com/.../exec"</code> — not <code>""</code></li>
-      <li>Only then: live site → Metrics → Feedback mode → rate one card → <strong>Save</strong> → Sheet tab <strong>MetricsFeedback</strong> new row</li>
+      <li>Only then: Metrics → Feedback mode → rate one card → <strong>Save</strong> → Sheet tab <strong>MetricsFeedback</strong> new row</li>
     </ol>
 
-    <p class="box">Local preview alone cannot gather for other users. Shared gather needs a non-empty live <code>pages-config.js</code>. For Mac-only tests, copy <code>config.example.js</code> → <code>config.js</code> and paste your <code>/exec</code> (gitignored).</p>
+    <p class="box">Local Mac-only tests: copy <code>config.example.js</code> → <code>config.js</code> (gitignored) with your <code>/exec</code>.</p>
 
     <p><a href="metrics.html">← Metrics</a> · <a href="index.html">Project guide</a> · <a href="WHERE-TO-GET-LINKS.md">WHERE-TO-GET-LINKS.md</a></p>
   </main>
