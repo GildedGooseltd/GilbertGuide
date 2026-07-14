@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pav Law — Metrics &amp; Feedback</title>
+  <link rel="stylesheet" href="metrics.css?v=20260713c">
+</head>
+<body class="metrics-page">
+  <header class="metrics-header">
+    <div class="metrics-header-inner">
+      <div>
+        <a class="metrics-back" href="index.html">← Back to project picker</a>
+        <h1>Metrics &amp; charts</h1>
+        <p class="metrics-header-sub">Turn on magenta <strong>Feedback mode</strong>, then click a KPI or chart — Gilbert opens for your notes. Submit emails everything to <strong>support@gildedgooselimited.com</strong>.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="metrics-toolbar" role="toolbar" aria-label="Feedback tools">
+    <p class="metrics-toolbar-progress" id="feedback-progress"><strong>0</strong> <span>of 0 rated</span></p>
+    <div class="metrics-toolbar-actions">
+      <button type="button" class="btn btn-toggle" id="feedback-filter-pending" title="Show only items you have not rated">Unrated only</button>
+    </div>
+  </div>
+
+  <div class="metrics-main metrics-main-solo">
+    <div class="metrics-report-stack">
+      <div class="kpi-report-root" id="kpi-report-kpis" aria-label="KPI metrics"></div>
+      <div class="kpi-report-root" id="kpi-report-dashboards" aria-label="KPI charts and dashboards"></div>
+    </div>
+
+    <aside class="metrics-saved-bar" aria-label="Saved ratings">
+      <h2>Saved ratings</h2>
+      <ul class="feedback-summary-list" id="feedback-summary-list">
+        <li><em>None yet — turn on Feedback mode, then click a KPI or chart</em></li>
+      </ul>
+    </aside>
+
+    <section class="metrics-submit-bar" aria-label="Submit feedback">
+      <h3>Send all feedback to support@gildedgooselimited.com</h3>
+      <div class="feedback-field">
+        <label for="metrics-email">Your email (optional, for reply)</label>
+        <input type="email" id="metrics-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Email all comments to support</button>
+      <p class="metrics-submit-note">Each rating saves in this browser. Submit sends the full list to support@gildedgooselimited.com (webhook when live, or opens your mail app).</p>
+      <p class="metrics-status" id="metrics-submit-status" aria-live="polite"></p>
+    </section>
+  </div>
+
+  <div id="gilbert-feedback-backdrop" class="gilbert-chat-backdrop" hidden></div>
+  <aside id="gilbert-feedback-popup" class="gilbert-chat-popup gilbert-feedback-popup" hidden aria-label="Gilbert metric feedback">
+    <div class="gilbert-chat-popup-head">
+      <img class="gilbert-popup-portrait" src="assets/gilbert-lightbulb-idea.png" alt="">
+      <div class="gilbert-popup-head-title">Gilbert<small id="gilbert-feedback-subtitle">Comment on this metric</small></div>
+      <button type="button" class="gilbert-chat-close" id="gilbert-feedback-close" aria-label="Close">×</button>
+    </div>
+    <div class="gilbert-chat-wrap gilbert-feedback-body" id="gilbert-feedback-body"></div>
+  </aside>
+
+  <script src="pages-config.js?v=20260713b"></script>
+  <script src="kpi-report.js?v=20260713r"></script>
+  <script src="metrics-feedback.js?v=20260713c"></script>
+</body>
+</html>

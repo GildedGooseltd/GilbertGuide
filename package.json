@@ -1,5 +1,5 @@
 {
-  "name": "picky-pavi",
+  "name": "gilbert-guide",
   "private": true,
   "scripts": {
     "build": "node scripts/build-picker-data.mjs",

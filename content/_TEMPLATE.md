@@ -9,25 +9,35 @@
 | **Category**      | Category                                                   |
 | **Campaign type** | Campaign Type                                              |
 | **Status**        | available                                                  |
+| **Estimated leads** | e.g. 10–20 calls/month                                   |
+| **Client touchpoints** | e.g. HubSpot form, Romina phone, LSA dashboard          |
 | **Keywords**      | keyword1, keyword2                                         |
 
-Optional rows (delete if unused): **Parent**, **Enabler**, **Monthly only**, **Payment type** (`performance` or `flat`), **Ongoing fee**, **Per campaign fee**. Omit **Priority** for retainer / monthly-only projects.
+Optional rows (delete if unused): **Parent**, **Enabler**, **Monthly only**, **Payment type** (`performance` or `flat`), **Ongoing fee**, **Per campaign fee**, **Featured image** (path under `assets/`, e.g. `assets/projects/NEWID.jpg`), **Reference link** (`https://…` or `[Label](https://…)`). Omit **Priority** for retainer / monthly-only projects.
 
 ---
 
-## Description
+## TLDR
 
-Main card copy. Use proper case. HTML links OK.
+One sentence — the primary value add (shown at top of card).
 
 ## Value Added
 
-- First benefit
+- First benefit (bullet on card)
 - Second benefit
 - Third benefit
 
-## Marketing Education
+## AB - Q
 
-Strategy context — embed reference links inline in the paragraph. See [Example reference](https://example.com) and [Second reference](https://example.com/page).
+Questions for Andrew Brown — picker blocks cart until answered in **Comment**.
+
+- AB - Q: Your question for Andrew here?
+
+## Description
+
+Full scope and strategy context — include reference links inline in the paragraph. Marketing education lives here (not a separate section). Card shows TLDR + bullets; client expands to read this block.
+
+See [Example reference](https://example.com) and [Second reference](https://example.com/page).
 
 ## WIP
 
@@ -36,6 +46,10 @@ Strategy context — embed reference links inline in the paragraph. See [Example
 ## Completed
 
 - Already finished work
+
+## Results
+
+- Outcome metric or business result (placeholder until live KPIs)
 
 ## Account Data & Marketing Principles Applied
 

@@ -1,7 +1,7 @@
 (function () {
   function getConfig() {
     return Object.assign(
-      { webhookUrl: "", depositAmount: 2500, quickbooksDepositUrl: "" },
+      { webhookUrl: "", depositAmount: 2500, quickbooksDepositUrl: "", notifyEmail: "support@gildedgooselimited.com" },
       typeof window !== "undefined" && window.PAV_PICKER_CONFIG ? window.PAV_PICKER_CONFIG : {}
     );
   }
@@ -17,6 +17,95 @@
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
   }
 
+  function findProjectById(id) {
+    if (id === "RETAINER") return { ...RETAINER, isRetainer: true };
+    const p = PROJECTS.find(x => x.id === id);
+    return p ? { ...p, isRetainer: false } : null;
+  }
+
+  function hasAbQuestions(item) {
+    return !!(item && item.abQuestions && item.abQuestions.length);
+  }
+
+  function abQuestionAnswered(id) {
+    return !!(state.notes[id] || "").trim();
+  }
+
+  function canSelectProject(item, isRetainer) {
+    if (!item || isRetainer || item.isRetainer || item.monthlyOnly) return true;
+    if (!hasAbQuestions(item)) return true;
+    return abQuestionAnswered(item.id);
+  }
+
+  function sanitizeCartForAbQ() {
+    [...state.projects].forEach(id => {
+      const item = findProjectById(id);
+      if (item && !canSelectProject(item, false)) state.projects.delete(id);
+    });
+  }
+
+  function openAbQComment(id, root) {
+    const scope = root || document;
+    toggleCommentPopover(id, scope);
+    const card = document.getElementById(`project-${id}`) || scope.querySelector(`.research-row[data-id="${id}"]`);
+    card?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function gilbertAbQNoticeText(item) {
+    const qs = (item.abQuestions || []).map((q, i) => `${i + 1}. ${q}`).join(" ");
+    return `${item.title} has AB – Q (question for Andrew Brown): ${qs} — add Andrew's answer in Comment on that card before it can go in the cart.`;
+  }
+
+  function announceGilbertAbQ(item) {
+    if (!hasAbQuestions(item) || abQuestionAnswered(item.id)) return;
+    const msg = gilbertAbQNoticeText(item);
+    const dup = state.gilbertChat.some(m => m.role === "gilbert" && m.text === msg);
+    if (!dup) {
+      state.gilbertChat.push({ role: "gilbert", text: msg });
+      renderGilbertChat();
+    }
+    openGilbertChat();
+  }
+
+  function projectsWithPendingAbQ() {
+    return PROJECTS.filter(p => hasAbQuestions(p) && !abQuestionAnswered(p.id));
+  }
+
+  function trySetProjectInCart(id, add, opts) {
+    const item = findProjectById(id);
+    if (!item) return false;
+    const isRetainer = !!item.isRetainer;
+    if (add && !canSelectProject(item, isRetainer)) {
+      if (!opts?.silent) {
+        showToast("AB – Q: answer Andrew's question in Comment before adding to cart", true);
+        openAbQComment(id);
+        announceGilbertAbQ(item);
+      }
+      return false;
+    }
+    if (isRetainer) {
+      if (add) state.retainer = true;
+      else if (!isRequiredProject(item, true)) state.retainer = false;
+    } else {
+      if (add) state.projects.add(id);
+      else state.projects.delete(id);
+    }
+    return true;
+  }
+
+  function abQuestionsBannerHtml(item) {
+    if (!hasAbQuestions(item)) return "";
+    const answered = abQuestionAnswered(item.id);
+    const qs = item.abQuestions.map(q => `<li>${escapeHtml(q)}</li>`).join("");
+    return `<div class="ab-q-flag${answered ? " ab-q-flag--answered" : ""}" role="note">
+      <div class="ab-q-flag-head"><span class="ab-q-badge">AB – Q</span> Question for Andrew Brown</div>
+      <ul class="ab-q-list">${qs}</ul>
+      <p class="ab-q-hint">${answered
+        ? "Answer recorded in Comment — you can add this to the cart."
+        : `${GUIDE_SHORT}: reply in Comment before this goes in the cart.`}</p>
+    </div>`;
+  }
+
   function isPriorityUrgent(item) {
     return !!item.enabler || item.status === "wip" || hasPartialProgress(item);
   }
@@ -30,14 +119,14 @@
   }
 
   const VALUE_ICON_SVGS = {
-    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.8 2.2 22 6.4"/><path d="m20.8 4.2-5.8 5.8"/></svg>`,
+    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="17" width="7" height="4.5" rx="0.5"/><rect x="9.5" y="17" width="7" height="4.5" rx="0.5"/><rect x="17" y="17" width="6" height="4.5" rx="0.5"/><rect x="5" y="11.5" width="7" height="4.5" rx="0.5"/><rect x="13.5" y="11.5" width="7" height="4.5" rx="0.5"/><rect x="1" y="6" width="7" height="4.5" rx="0.5"/><rect x="9.5" y="6" width="7" height="4.5" rx="0.5"/><path d="M18 2.5 21.5 6"/><path d="M14.5 6.5 20 12"/><path d="M17.5 3.5h4v4"/></svg>`,
     retainer: REQUIRED_ICON_SVG,
     leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.5"/><path d="M2 20v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5V20"/><circle cx="17.5" cy="8.5" r="2.5"/><path d="M21 20v-1a3.5 3.5 0 0 0-2.5-3.35"/><circle cx="5" cy="10.5" r="2"/><path d="M1 20v-0.5a2.5 2.5 0 0 1 2-2.45"/></svg>`,
     crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/><path d="M13 13h5"/><path d="M13 17h5"/></svg>`,
     seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
     referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7-4 4 4 4"/><path d="M3 11h13"/><path d="m17 17 4-4-4-4"/><path d="M21 13H8"/></svg>`,
     efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
-    intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v9H8l-4 4V5z"/></svg>`,
+    intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
     creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.5 0-8 3.6-8 8.2 0 2.8 1.3 4.8 3 6 .6.4 1.2.6 1.8.6.9 0 1.6-.5 1.9-1.3.5-1 1.6-1.6 2.6-1.3 1.1.4 1.8 1.5 1.8 2.7 0 .3 0 .6-.1.9-.4 1.4 1 2.9 2.8 2.9 3.2 0 5.8-2.6 5.8-5.8C22 8.2 17.5 3 12 3z"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="12.5" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="13.5" r="1" fill="currentColor" stroke="none"/></svg>`,
     general: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 6.8H21l-5.5 4 2.1 6.7L12 17.8 6.4 20.5l2.1-6.7L3 9.8h6.6L12 3z"/></svg>`
   };
@@ -105,7 +194,6 @@
     expanded: new Set(),
     recommended: new Set(),
     notes: {},
-    generalSuggestions: "",
     submitterEmail: "",
     invoicePaymentMonths: "",
     invoicePaymentMonthlyAmount: "",
@@ -114,8 +202,219 @@
     iconFilters: [],
     tocSort: { field: "priority", dir: "asc" },
     tocExpanded: false,
-    showAllProjects: false
+    showAllProjects: false,
+    activeViewTab: "outlines"
   };
+
+  const KPI_PLACEHOLDERS = [
+    { id: "calls", label: "Qualified calls", value: "—", hint: "Add KPI in settings later" },
+    { id: "consults", label: "Consults booked", value: "—", hint: "Add KPI in settings later" },
+    { id: "signed", label: "Signed cases (attributed)", value: "—", hint: "Add KPI in settings later" },
+    { id: "cac", label: "Cost per consult", value: "—", hint: "Add KPI in settings later" },
+    { id: "completed", label: "Projects delivered", value: "—", hint: "Auto when KPIs wired" },
+    { id: "stack", label: "Stack health", value: "—", hint: "Foundation + intake score" }
+  ];
+
+  function normalizeStatus(item) {
+    const s = String(item.status || "available").toLowerCase();
+    if (s.includes("completed")) return "completed";
+    if (s.includes("research")) return "research";
+    if (s.includes("draft") || s.includes("outline")) return "draft";
+    if (s.includes("ongoing")) return "ongoing";
+    if (s.includes("wip")) return "wip";
+    return "available";
+  }
+
+  function isCompletedStatus(item) {
+    return normalizeStatus(item) === "completed";
+  }
+
+  function isResearchStatus(item) {
+    const s = normalizeStatus(item);
+    return s === "research" || s === "draft";
+  }
+
+  function activeOptionalProjects() {
+    return orderedProjects().filter(p => !p.monthlyOnly && !isCompletedStatus(p) && !isResearchStatus(p));
+  }
+
+  function researchProjects() {
+    return sortByPriority(orderedProjects().filter(p => !p.monthlyOnly && isResearchStatus(p)));
+  }
+
+  function completedProjects() {
+    return sortByPriority(orderedProjects().filter(p => !p.monthlyOnly && isCompletedStatus(p)));
+  }
+
+  function maxProjectFee() {
+    return Math.max(500, ...PROJECTS.filter(p => !p.monthlyOnly).map(p => itemSelectionCost(p)));
+  }
+
+  function computeProjectScore(item) {
+    if (isCompletedStatus(item) || item.monthlyOnly) return -999;
+    let score = 0;
+    const pri = item.priority ?? 50;
+    score += Math.max(0, 32 - pri);
+    if (item.enabler) score += 22;
+    if (state.goalText.trim()) {
+      const words = state.goalText.toLowerCase().split(/\W+/).filter(w => w.length > 2);
+      score += Math.min(28, scoreItemForGoal(item, words) * 3);
+    }
+    const fee = itemSelectionCost(item);
+    score += Math.max(0, 16 * (1 - fee / maxProjectFee()));
+    if (item.backedMetric && item.backedMetric.label) score += 14;
+    if (item.returnEstimate) score += 10;
+    if (state.projects.size && item.enabler) score += 8;
+    const st = normalizeStatus(item);
+    if (st === "research" || st === "draft") score -= 45;
+    if (st === "wip") score -= 4;
+    return Math.round(score * 10) / 10;
+  }
+
+  function topScoredProjects(limit) {
+    return activeOptionalProjects()
+      .map(item => ({ item, score: computeProjectScore(item) }))
+      .filter(x => x.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit || 3);
+  }
+
+  function renderKpiDashboard() {
+    const el = document.getElementById("kpi-dashboard");
+    if (!el) return;
+    const completedCount = completedProjects().length;
+    const tiles = KPI_PLACEHOLDERS.map(k => {
+      const value = k.id === "completed" && completedCount ? String(completedCount) : k.value;
+      return `<div class="kpi-tile"><div class="kpi-tile-label">${escapeHtml(k.label)}</div><div class="kpi-tile-value">${escapeHtml(value)}</div><div class="kpi-tile-hint">${escapeHtml(k.hint)}</div></div>`;
+    }).join("");
+    el.innerHTML = `<div class="kpi-dashboard-head"><h2>Marketing results — cumulative</h2><p class="kpi-dashboard-note">Placeholder metrics — you’ll wire live KPIs later.</p></div><div class="kpi-grid">${tiles}</div>`;
+  }
+
+  function renderDoNextPanel() {
+    const el = document.getElementById("do-next-panel");
+    if (!el) return;
+    const top = topScoredProjects(3);
+    if (!top.length) {
+      el.innerHTML = `<h3>Best to do next</h3><p class="kpi-dashboard-note">Tell Gilbert your goal or pick projects — scores appear here.</p>`;
+      return;
+    }
+    el.innerHTML = `<h3>Best to do next</h3><ol class="do-next-list">${top.map(({ item, score }, i) =>
+      `<li><span class="do-next-rank">${i + 1}.</span><a href="#project-${item.id}">${escapeHtml(item.title)}</a><span class="do-next-score">score ${score}</span></li>`
+    ).join("")}</ol>`;
+  }
+
+  function resultsBlockHtml(item) {
+    const results = item.resultsItems || [];
+    const auto = [...(item.completedItems || []), ...(item.inProgressItems || [])];
+    let html = "";
+    if (results.length) {
+      html += `<div class="results-block"><h4>Results</h4><ul class="results-list">${results.map(r => `<li>${escapeHtml(r)}</li>`).join("")}</ul></div>`;
+    } else {
+      html += `<div class="results-block"><h4>Results</h4><p class="results-placeholder">Outcomes to track — add a ## Results section in ${escapeHtml(item.id)}.md</p></div>`;
+    }
+    if (auto.length) {
+      html += `<div class="completed-auto"><h4>Work logged</h4><ul>${auto.map(r => `<li>${escapeHtml(r)}</li>`).join("")}</ul></div>`;
+    }
+    if (item.backedMetric && item.backedMetric.label) {
+      html += `<div class="completed-auto"><h4>Verified data</h4><p>${escapeHtml(item.backedMetric.label)}</p></div>`;
+    }
+    return html;
+  }
+
+  function completedCardHtml(item) {
+    return `<article class="completed-card" id="completed-${item.id}">
+      <h3>${escapeHtml(item.title)}</h3>
+      <p class="completed-card-meta">${escapeHtml(item.id)} · ${escapeHtml(normalizeStatus(item))}${item.timeline ? ` · ${escapeHtml(item.timeline)}` : ""}</p>
+      ${resultsBlockHtml(item)}
+    </article>`;
+  }
+
+  function renderCompletedList() {
+    const el = document.getElementById("completed-list");
+    if (!el) return;
+    const items = completedProjects();
+    el.innerHTML = items.length
+      ? items.map(completedCardHtml).join("")
+      : `<p class="kpi-dashboard-note">No completed projects in INDEX yet — set Status to <strong>completed</strong>.</p>`;
+  }
+
+  function researchRowHtml(item) {
+    const id = item.id;
+    const sel = state.projects.has(id);
+    const note = (state.notes[id] || "").trim();
+    const abQ = hasAbQuestions(item);
+    const answered = abQuestionAnswered(id);
+    const tagLabel = abQ && !answered ? "Comment — AB-Q" : (note ? "Comment ✓" : "+ Comment");
+    return `<div class="research-row${sel ? " selected" : ""}${abQ && !answered ? " ab-q-pending" : ""}" data-id="${id}">
+      <input type="checkbox" class="proj-chk research-chk" data-id="${id}" ${sel ? "checked" : ""}${abQ && !answered ? ' title="Answer AB – Q in Comment first"' : ""}>
+      <div>
+        <span class="research-row-id">${escapeHtml(id)}</span>
+        <div class="research-row-title">${escapeHtml(item.title)}</div>
+        ${abQ ? abQuestionsBannerHtml(item) : ""}
+      </div>
+      <button type="button" class="research-comment-tag${note ? " has-note" : ""}${abQ && !answered ? " needs-ab-q" : ""}" data-id="${id}">${tagLabel}</button>
+      <div class="research-comment-popover" data-id="${id}" hidden>
+        <textarea class="project-note" data-id="${id}" placeholder="${abQ ? "Answer for Andrew Brown (AB – Q)…" : "Planning notes for Gilded Goose…"}">${escapeHtml(state.notes[id] || "")}</textarea>
+        <button type="button" class="comment-popover-done" data-id="${id}">Done</button>
+      </div>
+    </div>`;
+  }
+
+  function renderResearchSection() {
+    const wrap = document.getElementById("research-section-wrap");
+    if (!wrap) return;
+    const items = researchProjects();
+    if (!items.length || state.activeViewTab !== "outlines") {
+      wrap.innerHTML = "";
+      return;
+    }
+    wrap.innerHTML = `<details class="research-section">
+      <summary>Research &amp; planning <span class="research-row-id">(${items.length})</span></summary>
+      <p class="research-section-note">Titles only — still selectable. Full card copy coming later.</p>
+      ${items.map(researchRowHtml).join("")}
+    </details>`;
+  }
+
+  function syncViewTabs() {
+    document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
+      const on = btn.dataset.view === state.activeViewTab;
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    const activeCount = activeOptionalProjects().length + researchProjects().length;
+    const doneCount = completedProjects().length;
+    document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
+      const view = btn.dataset.view;
+      if (view === "reporting") {
+        const badge = btn.querySelector(".tab-count");
+        if (badge) badge.remove();
+        return;
+      }
+      const count = view === "completed" ? doneCount : activeCount;
+      let badge = btn.querySelector(".tab-count");
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "tab-count";
+        btn.appendChild(badge);
+      }
+      badge.textContent = String(count);
+    });
+  }
+
+  function renderViewLayout() {
+    const isReporting = state.activeViewTab === "reporting";
+    const isOutlines = state.activeViewTab === "outlines";
+    const isCompleted = state.activeViewTab === "completed";
+    const reportingPanel = document.getElementById("cockpit-panel-reporting");
+    const outlinesPanel = document.getElementById("cockpit-panel-outlines");
+    const completedPanel = document.getElementById("cockpit-panel-completed");
+    if (reportingPanel) reportingPanel.hidden = !isReporting;
+    if (outlinesPanel) outlinesPanel.hidden = !isOutlines;
+    if (completedPanel) completedPanel.hidden = !isCompleted;
+    syncViewTabs();
+    renderResearchSection();
+    if (isCompleted) renderCompletedList();
+  }
 
   const OMNI_CHANNEL_WHY =
     "Pav Law grows when the same trusted message meets clients wherever they search — paid search, display, directories, email, referrals, and the website. Omnichannel works because each channel feeds the others: ads drive qualified visits; a fast site and clear intake convert them; phones and CRM route every lead; retargeting and mailers bring back prospects who did not book the first time. Connected channels produce signed cases you can trace to spend — not siloed clicks.";
@@ -277,15 +576,15 @@
     if (!el) return;
     const hint = state.iconFilters.length
       ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear filters (${state.iconFilters.length})</button>`
-      : `<span class="icon-filter-hint">Click an icon to filter the project list</span>`;
+      : "";
     el.innerHTML = `<span class="value-icon-key-title">Filter by value</span>${hint}` +
       VALUE_ICON_DEFS.map(d => {
         const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
-        return `<button type="button" class="key-item key-filter-btn${active}" data-icon-filter="${d.id}">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></button>`;
+        return `<button type="button" class="key-item key-filter-btn key-filter-${d.id}${active}" data-icon-filter="${d.id}">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></button>`;
       }).join("") +
       (() => {
         const active = state.iconFilters.includes("account-data") ? " filter-active" : "";
-        return `<button type="button" class="key-item key-filter-btn${active}" data-icon-filter="account-data"><span class="account-data-shield key-shield">${accountDataBadgeImg()}</span><span class="key-item-label">Account data</span></button>`;
+        return `<button type="button" class="key-item key-filter-btn key-filter-account-data${active}" data-icon-filter="account-data"><span class="account-data-shield key-shield">${accountDataBadgeImg()}</span><span class="key-item-label">Account data</span></button>`;
       })();
     el.querySelectorAll(".key-filter-btn").forEach(btn => {
       btn.addEventListener("click", () => toggleIconFilter(btn.dataset.iconFilter));
@@ -385,7 +684,8 @@
     if (projectItems.length) {
       rec.projectBullets = projectItems.map(item => ({
         title: item.title,
-        blurb: briefValueAdd(item)
+        blurb: briefValueAdd(item),
+        pitch: elevatorPitch(item)
       }));
 
       const hasEnabler = selected.some(i => i.enabler);
@@ -444,7 +744,7 @@
       body += `<p>Your cart is retainer and required maintenance only — ongoing ads management and monthly upkeep so performance stays stable while you decide on upgrade projects.</p>`;
     } else if (rec.projectBullets.length) {
       body += `<h4 class="why-subhead">What each project adds</h4><ul class="why-project-list">${rec.projectBullets.map(b =>
-        `<li><strong>${escapeHtml(b.title)}</strong>${b.blurb ? ` — ${escapeHtml(b.blurb)}` : ""}</li>`
+        `<li><strong>${escapeHtml(b.title)}</strong>${b.pitch ? ` — ${escapeHtml(b.pitch)}` : ""}</li>`
       ).join("")}</ul>`;
       body += `<h4 class="why-subhead">Why omnichannel marketing works</h4><p>${escapeHtml(rec.omnichannel)}</p>`;
       if (rec.strategy) {
@@ -465,7 +765,9 @@
   }
 
   function renderPlanSummary() {
-    renderWhyPanel();
+    const el = document.getElementById("plan-summary");
+    if (!el) return;
+    el.innerHTML = buildTotalsHtml();
   }
 
   function renderRecommendation() {
@@ -488,11 +790,12 @@
     return "";
   }
 
-  function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled) {
+  function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending) {
     const id = item.id;
     const reqMark = required ? requiredMarkerHtml(item, isRetainer) : "";
+    const abTitle = abPending ? ' title="AB – Q: answer in Comment before cart"' : "";
     return `<div class="card-check-col">
-      <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled} ${sel ? "checked" : ""}>
+      <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled}${abTitle} ${sel ? "checked" : ""}>
       ${reqMark}
       ${wipBadgeUnderCheckbox(item)}
     </div>`;
@@ -513,36 +816,117 @@
     return text.length > 160 ? text.slice(0, 157).trim() + "…" : text;
   }
 
-  function briefValueAdd(item) {
+  function elevatorPitch(item) {
     const bullets = valueAddedBullets(item);
     if (bullets.length) {
-      const b = String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim();
-      return b.length > 110 ? b.slice(0, 107).trim() + "…" : b;
+      let b = String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim().replace(/^[-•]\s*/, "");
+      if (!/[.!?]$/.test(b)) b += ".";
+      if (/^(builds?|creates?|adds?|delivers?|launches?|fixes?|improves?|enables?|reduces?|increases?|pairs?|combines?|strengthens?)/i.test(b)) {
+        return `For Pav Law, this project ${b.charAt(0).toLowerCase()}${b.slice(1)}`;
+      }
+      return `For Pav Law, this means ${b.charAt(0).toLowerCase()}${b.slice(1)}`;
     }
-    const v = buildBusinessValue(item);
-    if (v.why) return v.why.length > 110 ? v.why.slice(0, 107).trim() + "…" : v.why;
-    return conciseDescription(item);
+    if (item.enabler) {
+      return "Foundation work that connects phones, forms, and ad tracking — so every marketing dollar ties to a qualified consult, not a dead lead.";
+    }
+    const iconIds = getValueIcons(item).map(i => i.id);
+    if (iconIds.includes("leads")) {
+      return "More qualified calls and consults from paid media — with spend tied to signed cases, not vanity clicks.";
+    }
+    if (iconIds.includes("intake")) {
+      return "Faster, more reliable intake — so leads that arrive after hours or from referrals convert to booked consults.";
+    }
+    if (iconIds.includes("seo")) {
+      return "Stronger organic visibility — so Pav Law earns discovery traffic beyond paid auction costs.";
+    }
+    if (iconIds.includes("referrals")) {
+      return "Structured referral and past-client outreach — lower acquisition cost than cold paid leads alone.";
+    }
+    if (iconIds.includes("crm")) {
+      return "A tighter CRM and pipeline — so Romina's desk sees every lead, every follow-up, and every consult in one place.";
+    }
+    if (item.isRetainer || item.id === "RETAINER") {
+      return "Ongoing ads management and optimization — campaigns stay live, measured, and adjusted month over month.";
+    }
+    const r = item.returnEstimate;
+    if (r && r.summary) return r.summary;
+    const desc = stripInlineLinks(item.description || "");
+    const first = desc.match(/[^.!?]+[.!?]+/);
+    if (first) {
+      let s = first[0].trim();
+      if (s.length > 200) s = s.slice(0, 197).trim() + "…";
+      return s;
+    }
+    return `${item.title} — scoped deliverables, clear timeline, and marketing tied to consult volume and signed cases.`;
+  }
+
+  function briefValueAdd(item) {
+    return itemTldr(item);
+  }
+
+  function fullDescriptionText(item) {
+    const desc = item.description ? String(item.description).trim() : "";
+    const edu = item.marketingEducation ? String(item.marketingEducation).trim() : "";
+    if (!edu) return desc;
+    if (desc && desc.toLowerCase().includes(edu.slice(0, Math.min(48, edu.length)).toLowerCase())) return desc;
+    return [desc, edu].filter(Boolean).join("\n\n");
+  }
+
+  function itemTldr(item) {
+    if (item.tldr && String(item.tldr).trim()) return String(item.tldr).trim();
+    const bullets = valueAddedBullets(item);
+    if (bullets.length) {
+      let b = String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim().replace(/^[-•]\s*/, "");
+      if (!/[.!?]$/.test(b)) b += ".";
+      return b;
+    }
+    return elevatorPitch(item);
+  }
+
+  function valueAddedListHtml(item) {
+    const bullets = valueAddedBullets(item);
+    if (!bullets.length) return "";
+    return `<ul class="card-objectives card-summary-bullets">${bullets.map(b =>
+      `<li>${escapeHtml(String(b).replace(/^Deliverable:\s*/i, "").trim())}</li>`
+    ).join("")}</ul>`;
+  }
+
+  function cardMetaFieldsHtml(item) {
+    const leads = item.estimatedLeads && String(item.estimatedLeads).trim();
+    const touch = item.clientTouchpoints && String(item.clientTouchpoints).trim();
+    if (!leads && !touch) return "";
+    const parts = [];
+    if (leads) parts.push(`<span class="card-meta-chip"><strong>Est. leads:</strong> ${escapeHtml(leads)}</span>`);
+    if (touch) parts.push(`<span class="card-meta-chip"><strong>Touchpoints:</strong> ${escapeHtml(touch)}</span>`);
+    return `<div class="card-meta-fields">${parts.join("")}</div>`;
+  }
+
+  function cardSummaryHtml(item) {
+    const tldr = itemTldr(item);
+    return `<div class="card-summary">
+      <p class="card-tldr"><strong>TLDR:</strong> ${escapeHtml(tldr)}</p>
+      ${valueAddedListHtml(item)}
+      ${cardMetaFieldsHtml(item)}
+    </div>`;
+  }
+
+  function fullDescriptionHtml(item) {
+    const combined = fullDescriptionText(item);
+    if (!combined) return "";
+    const body = combined.includes("<a ")
+      ? combined
+      : marketingEducationToHtml(combined);
+    return `<div class="card-description">${body}</div>`;
+  }
+
+  function cardDetailBodyHtml(item) {
+    const full = fullDescriptionHtml(item);
+    if (!full) return "";
+    return `<div class="detail-block detail-full-description"><h4>Full description</h4>${full}</div>`;
   }
 
   function descriptionHtml(item) {
-    const parts = [];
-    const desc = item.description ? String(item.description).trim() : "";
-    if (desc) {
-      const descHtml = desc.includes("<a ") ? desc : mdLinksToHtml(escapeHtml(desc));
-      parts.push(`<p>${descHtml}</p>`);
-    }
-    const bullets = valueAddedBullets(item);
-    if (bullets.length) {
-      parts.push(`<ul class="card-objectives">${bullets.map(b =>
-        `<li>${escapeHtml(String(b).replace(/^Deliverable:\s*/i, "").trim())}</li>`
-      ).join("")}</ul>`);
-    }
-    const edu = item.marketingEducation && String(item.marketingEducation).trim();
-    if (edu) {
-      parts.push(`<div class="card-principles">${marketingEducationToHtml(edu)}</div>`);
-    }
-    if (!parts.length) return "";
-    return `<div class="card-description">${parts.join("")}</div>`;
+    return cardSummaryHtml(item);
   }
 
   function marketingEducationToHtml(text) {
@@ -570,8 +954,110 @@
 
   function expandBtnLabel(item, exp) {
     const hasProgress = hasPartialProgress(item);
+    const hasFullDesc = !!fullDescriptionText(item);
+    if (hasFullDesc) return exp ? "Hide full description" : "Read full description";
     if (hasProgress) return exp ? "Hide details" : "Show details";
-    return exp ? "Hide notes" : "Questions & notes";
+    return exp ? "Hide scope" : "Show scope";
+  }
+
+  function cardFeaturedImageHtml(item) {
+    const src = item.featuredImage && String(item.featuredImage).trim();
+    if (!src) return "";
+    return `<img class="card-featured-image" src="${escapeHtml(src)}" alt="" loading="lazy">`;
+  }
+
+  function cardReferenceLinkHtml(item) {
+    const ref = item.referenceLink;
+    if (!ref?.url) return "";
+    const label = ref.label || "Project reference";
+    return `<a class="card-ref-link" href="${escapeHtml(ref.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} ↗</a>`;
+  }
+
+  function cardCommentUiHtml(id, item) {
+    const note = (state.notes[id] || "").trim();
+    const abQ = item && hasAbQuestions(item);
+    const answered = abQuestionAnswered(id);
+    const tagLabel = abQ && !answered ? "Comment — AB-Q" : (note ? "Comment ✓" : "+ Comment");
+    const tagClass = `card-comment-tag${note ? " has-note" : ""}${abQ && !answered ? " needs-ab-q" : ""}${abQ && answered ? " ab-q-answered" : ""}`;
+    const placeholder = abQ
+      ? "Answer for Andrew Brown (AB – Q) — required before cart…"
+      : "Scope, timing, or questions…";
+    return `<button type="button" class="${tagClass}" data-id="${id}" aria-expanded="false">${tagLabel}</button>
+      <div class="card-comment-popover" data-id="${id}" hidden>
+        <label for="comment-${id}">${abQ ? "AB – Q — reply for Andrew Brown" : "Comment for Gilded Goose"}</label>
+        <textarea id="comment-${id}" class="project-note" data-id="${id}" placeholder="${escapeHtml(placeholder)}">${escapeHtml(state.notes[id] || "")}</textarea>
+        <button type="button" class="comment-popover-done" data-id="${id}">Done</button>
+      </div>`;
+  }
+
+  function closeAllCommentPopovers() {
+    document.querySelectorAll(".card-comment-popover, .research-comment-popover").forEach(el => {
+      el.hidden = true;
+    });
+    document.querySelectorAll(".card-comment-tag").forEach(btn => btn.setAttribute("aria-expanded", "false"));
+  }
+
+  function toggleCommentPopover(id, root) {
+    const scope = root || document;
+    const pop = scope.querySelector(`.card-comment-popover[data-id="${id}"], .research-comment-popover[data-id="${id}"]`);
+    const btn = scope.querySelector(`.card-comment-tag[data-id="${id}"], .research-comment-tag[data-id="${id}"]`);
+    if (!pop) return;
+    const willOpen = pop.hidden;
+    closeAllCommentPopovers();
+    if (willOpen) {
+      pop.hidden = false;
+      if (btn) btn.setAttribute("aria-expanded", "true");
+      const ta = pop.querySelector(".project-note");
+      if (ta) ta.focus();
+    }
+  }
+
+  function syncCommentTag(id, root) {
+    const scope = root || document;
+    const note = (state.notes[id] || "").trim();
+    scope.querySelectorAll(`.card-comment-tag[data-id="${id}"], .research-comment-tag[data-id="${id}"]`).forEach(btn => {
+      btn.textContent = note ? "Comment ✓" : "+ Comment";
+      btn.classList.toggle("has-note", !!note);
+    });
+  }
+
+  function formatGilbertChatText(chat) {
+    if (!Array.isArray(chat) || !chat.length) return "(none)";
+    return chat.map(msg => {
+      const who = msg.role === "gilbert" ? GUIDE_SHORT : "Client";
+      return `${who}: ${msg.text || ""}`;
+    }).join("\n");
+  }
+
+  function formatActivityEmailBody(payload) {
+    const lines = [
+      "Gilbert project picker — activity log",
+      "",
+      "Submitted: " + (payload.submittedAt || new Date().toISOString()),
+      "Email: " + (payload.submitterEmail || "(not provided)"),
+      "",
+      "Gilbert chat:",
+      formatGilbertChatText(payload.gilbertChat),
+      "",
+      "Per-project comments:"
+    ];
+    const noteEntries = Object.entries(payload.projectNotes || {});
+    if (noteEntries.length) {
+      noteEntries.forEach(([id, text]) => lines.push(`  ${id}: ${text}`));
+    } else {
+      lines.push("  (none)");
+    }
+    lines.push("", "Projects selected:");
+    (payload.projects || []).forEach(p => lines.push(`  • ${p.id} — ${p.title} — ${p.fee}`));
+    if (payload.retainer) lines.unshift("Retainer: YES — " + (payload.retainerFee || ""));
+    return lines.join("\n");
+  }
+
+  function emailActivityLog(payload) {
+    const to = CONFIG.notifyEmail || "support@gildedgooselimited.com";
+    const subject = encodeURIComponent("Gilbert picker — chat & comments — " + (payload.submitterEmail || "submission"));
+    const body = encodeURIComponent(formatActivityEmailBody(payload));
+    window.location.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
   }
 
   function valueAddedBullets(item) {
@@ -664,8 +1150,8 @@
       state.recommended.add("RETAINER");
     }
     (pkg.projectIds || []).forEach(id => {
-      state.projects.add(id);
-      state.recommended.add(id);
+      trySetProjectInCart(id, true, { silent: true });
+      if (state.projects.has(id)) state.recommended.add(id);
     });
     ensureRequiredMaintenance();
   }
@@ -760,36 +1246,61 @@
     renderProjectToc();
   }
 
-  function renderCondensedToc() {
-    const el = document.getElementById("toc-condensed");
-    if (!el) return;
-    const hasRun = !!state.goalText.trim() || state.projects.size > 0 || state.recommended.size > 1;
-    const picked = sortByPriority(getAllItems().filter(item => {
+  function gilbertRankedPicks(limit) {
+    const goal = state.goalText.trim();
+    const pool = getAllItems().filter(item => {
+      if (isCompletedStatus(item)) return false;
+      if (item.monthlyOnly && !isItemSelected(item)) return false;
+      if (item.isRetainer) return true;
+      return !isResearchStatus(item) || isItemSelected(item);
+    });
+
+    if (goal) {
+      const words = goal.toLowerCase().split(/\W+/).filter(w => w.length > 2);
+      const ranked = pool
+        .map(item => {
+          let score = scoreItemForGoal(item, words) * 5;
+          score += Math.max(0, computeProjectScore(item)) * 0.4;
+          const id = item.isRetainer ? "RETAINER" : item.id;
+          if (isItemSelected(item)) score += 18;
+          if (state.recommended.has(id)) score += 10;
+          return { item, score };
+        })
+        .filter(x => x.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, limit || 5)
+        .map(x => x.item);
+      if (ranked.length) return ranked;
+    }
+
+    const fallback = sortByPriority(pool.filter(item => {
       const id = item.isRetainer ? "RETAINER" : item.id;
       return state.recommended.has(id) || isItemSelected(item);
     }));
-    if (!hasRun || !picked.length) {
-      el.hidden = true;
-      el.innerHTML = "";
+    return fallback.slice(0, limit || 5);
+  }
+
+  function renderCondensedToc() {
+    const el = document.getElementById("toc-condensed");
+    if (!el) return;
+    const goal = state.goalText.trim();
+    const picked = gilbertRankedPicks(5);
+    el.hidden = false;
+
+    if (!picked.length) {
+      el.innerHTML = `<div class="toc-condensed-inner">
+        <h4 class="toc-condensed-title">Gilbert's picks</h4>
+        <p class="toc-condensed-empty">${goal ? "No strong matches yet — try different keywords or browse the list below." : "Tell Gilbert what's not working — matched projects rank here as you chat."}</p>
+      </div>`;
       return;
     }
-    const top5 = picked.slice(0, 5);
-    el.hidden = false;
+
     el.innerHTML = `<div class="toc-condensed-inner">
-      <h4 class="toc-condensed-title">Gilbert's picks — quick view</h4>
-      <ol class="toc-condensed-list">${top5.map(item =>
-        `<li><a href="#project-${item.id}">${escapeHtml(item.title)}</a><span class="toc-condensed-blurb">${escapeHtml(briefValueAdd(item))}</span></li>`
+      <h4 class="toc-condensed-title">Gilbert's picks${goal ? "" : " — your cart"}</h4>
+      <ol class="toc-condensed-list">${picked.map(item =>
+        `<li><a href="#project-${item.id}">${escapeHtml(item.title)}</a><span class="toc-condensed-blurb">${escapeHtml(elevatorPitch(item))}</span></li>`
       ).join("")}</ol>
-      ${picked.length > 5 ? `<p class="toc-condensed-more">+ ${picked.length - 5} more in the full table below</p>` : ""}
-      <button type="button" class="btn btn-secondary btn-sm" id="toc-condensed-open">Open full table of contents</button>
     </div>`;
-    el.querySelector("#toc-condensed-open")?.addEventListener("click", () => {
-      const toc = document.getElementById("project-toc");
-      if (toc) {
-        toc.open = true;
-        toc.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    });
   }
 
   function renderProjectToc() {
@@ -798,7 +1309,10 @@
     const hintEl = document.getElementById("toc-summary-hint");
     const expandEl = document.getElementById("toc-expand-row");
     if (!listEl) return;
-    const items = sortTocItems(allItemsByPriority().filter(item => itemMatchesIconFilters(item)));
+    const items = sortTocItems(allItemsByPriority().filter(item => {
+      if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return true;
+      return !isCompletedStatus(item);
+    }).filter(item => itemMatchesIconFilters(item)));
     const visibleItems = state.tocExpanded ? items : items.slice(0, 5);
     const usedPriorities = new Set();
     listEl.innerHTML = visibleItems.map(item => {
@@ -910,9 +1424,8 @@
       scored.slice(0, 6).forEach(({ item, isRetainer }) => {
         if (isRetainer || item.monthlyOnly) return;
         if (!itemPassesCostPriorityFilter({ ...item, isRetainer: false })) return;
-        if (!state.projects.has(item.id)) added += 1;
-        state.projects.add(item.id);
-        state.recommended.add(item.id);
+        if (!state.projects.has(item.id) && trySetProjectInCart(item.id, true, { silent: true })) added += 1;
+        else if (state.projects.has(item.id)) state.recommended.add(item.id);
       });
 
       if (!scored.length && !silent) showToast("No strong matches — try different keywords", true);
@@ -924,8 +1437,8 @@
       (pkg?.projectIds || []).forEach(id => {
         const p = PROJECTS.find(x => x.id === id);
         if (p && itemPassesCostPriorityFilter({ ...p, isRetainer: false })) {
-          state.projects.add(id);
-          state.recommended.add(id);
+          trySetProjectInCart(id, true, { silent: true });
+          if (state.projects.has(id)) state.recommended.add(id);
         }
       });
     }
@@ -970,9 +1483,8 @@
       state.retainer = !!saved.retainer;
       state.projects = new Set(saved.projects || []);
       state.notes = saved.notes || {};
-      state.generalSuggestions = saved.generalSuggestions || "";
+      sanitizeCartForAbQ();
       state.submitterEmail = saved.submitterEmail || "";
-      if (state.generalSuggestions) document.getElementById("general-suggestions").value = state.generalSuggestions;
       if (state.submitterEmail) document.getElementById("submitted-email").value = state.submitterEmail;
       if (saved.invoicePaymentMonths != null) {
         state.invoicePaymentMonths = saved.invoicePaymentMonths;
@@ -998,7 +1510,6 @@
 
   function saveState() {
     ensureRequiredMaintenance();
-    state.generalSuggestions = document.getElementById("general-suggestions").value;
     state.submitterEmail = document.getElementById("submitted-email").value;
     syncPaymentTermsFromDom();
     localStorage.setItem("pav-project-picker", JSON.stringify({
@@ -1007,7 +1518,6 @@
       expanded: [...state.expanded],
       expandAll: isExpandAll(),
       notes: state.notes,
-      generalSuggestions: state.generalSuggestions,
       submitterEmail: state.submitterEmail,
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
@@ -1025,8 +1535,11 @@
   }
 
   function hasAnyNotes() {
-    if (state.generalSuggestions || document.getElementById("general-suggestions").value.trim()) return true;
     return Object.values(state.notes).some(n => n && String(n).trim());
+  }
+
+  function hasGilbertActivity() {
+    return state.gilbertChat.some(m => m.role === "user" && String(m.text || "").trim());
   }
 
   function getNotesPayload() {
@@ -1075,35 +1588,44 @@
     const subClass = item.parentId ? " card-sub-related" : "";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const chkDisabled = required ? " disabled" : "";
+    const mutedClass = isResearchStatus(item) || isCompletedStatus(item) ? " status-muted" : "";
+    const abPending = hasAbQuestions(item) && !abQuestionAnswered(id);
+    const abClass = abPending ? " ab-q-pending" : (hasAbQuestions(item) ? " ab-q-cleared" : "");
 
     return `
-      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}">
+      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${abClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}">
+        ${cardCommentUiHtml(id, item)}
         <div class="card-header">
-          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled)}
+          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
+              ${cardFeaturedImageHtml(item)}
+              ${cardReferenceLinkHtml(item)}
               <div class="card-top-row">
                 <div class="card-title"><span>${escapeHtml(item.title)}</span></div>
                 ${iconsHtml}
               </div>
               ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
+              ${abQuestionsBannerHtml(item)}
               ${descriptionHtml(item)}
             <button type="button" class="expand-btn">${expandBtnLabel(item, exp)}</button>
           </div>
         </div>
         <div class="card-detail">
           ${progressHtml(item)}
-          <div class="detail-block">
-            <h4>Questions or suggestions</h4>
-            <textarea class="project-note" data-id="${id}" placeholder="Ask about scope, timing, or changes…">${escapeHtml(state.notes[id] || "")}</textarea>
-          </div>
+          ${cardDetailBodyHtml(item)}
         </div>
       </div>`;
   }
 
   function renderAllCards() {
+    renderViewLayout();
     const list = document.getElementById("project-list");
+    if (!list || state.activeViewTab !== "outlines") {
+      if (state.activeViewTab === "completed") renderCompletedList();
+      return;
+    }
     const maintenance = sortCartFirst(getMaintenanceProjects());
-    const optional = sortCartFirst(orderedProjects().filter(p => !p.monthlyOnly));
+    const optional = sortCartFirst(activeOptionalProjects());
     const visible = visibleOptionalProjects(optional);
     const hidden = hiddenOptionalCount(optional);
     let markedFirst = false;
@@ -1121,9 +1643,15 @@
         : "";
     list.innerHTML = cardHtml(RETAINER, true, true) + maintCards + projectCards + showMoreBtn;
     syncExpandAllCheckbox();
+    attachProjectListListeners(list);
+    attachProjectListListeners(document.getElementById("research-section-wrap"));
+  }
 
-    const showMoreEl = document.getElementById("show-more-projects");
-    if (showMoreEl) {
+  function attachProjectListListeners(root) {
+    if (!root) return;
+    const showMoreEl = root.querySelector("#show-more-projects") || document.getElementById("show-more-projects");
+    if (showMoreEl && !showMoreEl.dataset.bound) {
+      showMoreEl.dataset.bound = "1";
       showMoreEl.addEventListener("click", e => {
         e.preventDefault();
         state.showAllProjects = !state.showAllProjects;
@@ -1131,49 +1659,95 @@
       });
     }
 
-    list.querySelectorAll(".project-note").forEach(ta => {
+    root.querySelectorAll(".project-note").forEach(ta => {
+      if (ta.dataset.noteBound) return;
+      ta.dataset.noteBound = "1";
       ta.addEventListener("click", e => e.stopPropagation());
       ta.addEventListener("input", e => {
-        state.notes[ta.dataset.id] = e.target.value;
+        const pid = ta.dataset.id;
+        state.notes[pid] = e.target.value;
+        const item = findProjectById(pid);
+        if (item && hasAbQuestions(item) && !abQuestionAnswered(pid) && state.projects.has(pid)) {
+          state.projects.delete(pid);
+          showToast("Removed from cart — AB – Q needs an answer in Comment", true);
+        }
+        syncCommentTag(pid, root);
         saveState();
         updateSubmitButtons();
+        renderAllCards();
+        renderSummary();
       });
     });
 
-    list.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+    root.querySelectorAll(".card-comment-tag, .research-comment-tag").forEach(btn => {
+      if (btn.dataset.commentBound) return;
+      btn.dataset.commentBound = "1";
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        toggleCommentPopover(btn.dataset.id, root);
+      });
+    });
+
+    root.querySelectorAll(".comment-popover-done").forEach(btn => {
+      if (btn.dataset.doneBound) return;
+      btn.dataset.doneBound = "1";
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        closeAllCommentPopovers();
+      });
+    });
+
+    root.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+      if (chk.dataset.chkBound) return;
+      chk.dataset.chkBound = "1";
       chk.addEventListener("change", e => {
         e.stopPropagation();
         const id = chk.dataset.id;
         const card = chk.closest(".card");
         if (card && card.dataset.required === "true") return;
-        if (chk.checked) state.projects.add(id);
-        else state.projects.delete(id);
+        const wantAdd = chk.checked;
+        if (!trySetProjectInCart(id, wantAdd)) {
+          chk.checked = !wantAdd;
+          return;
+        }
         saveState();
         renderAllCards();
         renderSummary();
       });
     });
 
-    list.querySelectorAll(".card").forEach(card => {
+    root.querySelectorAll(".card").forEach(card => {
+      if (card.dataset.cardBound) return;
+      card.dataset.cardBound = "1";
       card.addEventListener("click", e => {
-        if (e.target.type === "checkbox" || e.target.classList.contains("expand-btn") || e.target.closest("a") || e.target.closest(".required-icon")) return;
+        if (e.target.type === "checkbox" || e.target.classList.contains("expand-btn") || e.target.closest("a") || e.target.closest(".required-icon") || e.target.closest(".card-comment-tag") || e.target.closest(".card-comment-popover") || e.target.closest(".research-comment-tag") || e.target.closest(".research-comment-popover")) return;
         if (card.classList.contains("over-budget")) return;
         const id = card.dataset.id;
         if (card.dataset.required === "true") return;
-        if (state.projects.has(id)) state.projects.delete(id);
-        else state.projects.add(id);
+        const isRetainer = card.dataset.retainer === "true";
+        if (isRetainer) {
+          if (state.retainer) state.retainer = false;
+          else state.retainer = true;
+        } else if (state.projects.has(id)) {
+          trySetProjectInCart(id, false);
+        } else if (!trySetProjectInCart(id, true)) {
+          return;
+        }
         saveState();
         renderAllCards();
         renderSummary();
       });
-      card.querySelector(".expand-btn").addEventListener("click", e => {
-        e.stopPropagation();
-        const id = card.dataset.id;
-        if (state.expanded.has(id)) state.expanded.delete(id);
-        else state.expanded.add(id);
-        saveState();
-        renderAllCards();
-      });
+      const expandBtn = card.querySelector(".expand-btn");
+      if (expandBtn) {
+        expandBtn.addEventListener("click", e => {
+          e.stopPropagation();
+          const id = card.dataset.id;
+          if (state.expanded.has(id)) state.expanded.delete(id);
+          else state.expanded.add(id);
+          saveState();
+          renderAllCards();
+        });
+      }
     });
   }
 
@@ -1186,13 +1760,13 @@
   }
 
   function canContinue() {
-    return getInvoiceLineItems().length > 0 || hasAnyNotes();
+    return getInvoiceLineItems().length > 0 || hasAnyNotes() || hasGilbertActivity();
   }
 
   function canSubmit() {
     const email = (document.getElementById("submitted-email") || {}).value || "";
     if (!email.trim()) return false;
-    return getInvoiceLineItems().length > 0 || hasAnyNotes();
+    return getInvoiceLineItems().length > 0 || hasAnyNotes() || hasGilbertActivity();
   }
 
   function updateWebhookWarning() {
@@ -1223,8 +1797,11 @@
     if (!canContinue()) return;
     const guideImg = document.getElementById("confirm-gilbert");
     if (guideImg) guideImg.src = GILBERT_ICON;
+    renderWhyPanel();
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
+    closeGilbertChat();
+    document.getElementById("gilbert-chat-launcher")?.setAttribute("hidden", "");
     updateInvoiceScheduleAmount();
     updateSubmitButtons();
     document.getElementById("submitted-email")?.focus();
@@ -1233,6 +1810,7 @@
   function hideConfirmPage() {
     document.getElementById("confirm-page").classList.remove("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "true");
+    document.getElementById("gilbert-chat-launcher")?.removeAttribute("hidden");
   }
 
   function buildPayload() {
@@ -1290,7 +1868,7 @@
       projectsSubtotal: fmt(projectTotal),
       projectsSubtotalNum: projectTotal,
       grandTotalNote: fmt(getSelectionCost()),
-      generalSuggestions: document.getElementById("general-suggestions").value.trim(),
+      gilbertChat: state.gilbertChat.slice(),
       projectNotes: getNotesPayload()
     };
   }
@@ -1422,6 +2000,11 @@
     if (scored.length) {
       const picks = scored.slice(0, 3).map(s => s.item.title);
       const list = picks.length === 1 ? picks[0] : picks.slice(0, -1).join(", ") + " and " + picks[picks.length - 1];
+      const abBlocked = scored.filter(s => hasAbQuestions(s.item) && !abQuestionAnswered(s.item.id));
+      if (abBlocked.length) {
+        const names = abBlocked.slice(0, 2).map(s => s.item.title).join(", ");
+        return `I'd look at ${list} — but ${names} ${abBlocked.length === 1 ? "has" : "have"} AB – Q for Andrew. Answer in Comment on ${abBlocked.length === 1 ? "that card" : "those cards"} before cart.`;
+      }
       if (count > 0) {
         return `Understood. I'd prioritize ${list} — ${count} item${count === 1 ? "" : "s"} in your cart so far. Add more detail or pick from the list below.`;
       }
@@ -1445,17 +2028,48 @@
     renderGilbertChat();
     saveState();
     suggestPlan(true);
+    renderCondensedToc();
+    renderDoNextPanel();
+  }
+
+  function openGilbertChat() {
+    const popup = document.getElementById("gilbert-chat-popup");
+    const backdrop = document.getElementById("gilbert-chat-backdrop");
+    const launcher = document.getElementById("gilbert-chat-launcher");
+    if (!popup || !backdrop) return;
+    popup.hidden = false;
+    backdrop.hidden = false;
+    if (launcher) launcher.setAttribute("aria-expanded", "true");
+    renderGilbertChat();
+    document.getElementById("goal-input")?.focus();
+  }
+
+  function closeGilbertChat() {
+    const popup = document.getElementById("gilbert-chat-popup");
+    const backdrop = document.getElementById("gilbert-chat-backdrop");
+    const launcher = document.getElementById("gilbert-chat-launcher");
+    if (!popup || !backdrop) return;
+    popup.hidden = true;
+    backdrop.hidden = true;
+    if (launcher) launcher.setAttribute("aria-expanded", "false");
   }
 
   function initGilbertGuide() {
-    const guideImg = document.getElementById("gilbert-guide-img");
-    if (guideImg) {
-      guideImg.src = GILBERT_HERO;
-      guideImg.alt = `${GUIDE_NAME} — your Gilded Goose guide`;
-      guideImg.className = "gilbert-caricature";
-    }
+    const heroSrc = "assets/gilbert-thinking.png";
+    ["gilbert-launcher-img", "gilbert-popup-img"].forEach(id => {
+      const img = document.getElementById(id);
+      if (img) {
+        img.src = heroSrc;
+        img.alt = `${GUIDE_NAME} — your guide`;
+      }
+    });
     if (!state.gilbertChat.length) {
-      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+      let greeting = GILBERT_GREETING;
+      const pending = projectsWithPendingAbQ();
+      if (pending.length) {
+        greeting += ` ${pending.length} project${pending.length === 1 ? "" : "s"} flagged AB – Q for Andrew — comment before cart.`;
+      }
+      state.gilbertChat = [{ role: "gilbert", text: greeting }];
       if (state.goalText.trim()) {
         state.gilbertChat.push({ role: "user", text: state.goalText.trim() });
         state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(state.goalText) });
@@ -1485,13 +2099,16 @@
       : "Not specified";
 
     let notesHtml = "";
-    if (payload.generalSuggestions) {
-      notesHtml += `<p style="margin-top:0.75rem;font-size:0.88rem;color:var(--secondary)"><strong>Your notes:</strong> ${escapeHtml(payload.generalSuggestions)}</p>`;
+    const chatLines = (payload.gilbertChat || []).filter(m => m.role === "user" || (m.role === "gilbert" && payload.gilbertChat.indexOf(m) > 0));
+    if (chatLines.length) {
+      notesHtml += `<div class="thank-you-chat-log"><h3>Gilbert chat</h3><ul class="thank-you-list">${chatLines.map(m =>
+        `<li><strong>${escapeHtml(m.role === "gilbert" ? GUIDE_SHORT : "You")}:</strong> ${escapeHtml(m.text)}</li>`
+      ).join("")}</ul></div>`;
     }
     const noteEntries = Object.entries(payload.projectNotes || {});
     if (noteEntries.length) {
-      notesHtml += "<ul class=\"thank-you-list\" style=\"margin-top:0.5rem\">" +
-        noteEntries.map(([id, text]) => `<li><strong>${escapeHtml(id)}:</strong> ${escapeHtml(text)}</li>`).join("") + "</ul>";
+      notesHtml += `<div class="thank-you-comments"><h3>Your comments</h3><ul class="thank-you-list">` +
+        noteEntries.map(([id, text]) => `<li><strong>${escapeHtml(id)}:</strong> ${escapeHtml(text)}</li>`).join("") + "</ul></div>";
     }
 
     let depositHtml = "";
@@ -1535,6 +2152,8 @@
     document.getElementById("thank-you").setAttribute("aria-hidden", "false");
     hideConfirmPage();
     document.getElementById("main-app").classList.add("hidden");
+    document.getElementById("gilbert-chat-launcher")?.setAttribute("hidden", "");
+    closeGilbertChat();
     window.scrollTo(0, 0);
   }
 
@@ -1558,6 +2177,7 @@
     document.getElementById("thank-you").classList.remove("show");
     document.getElementById("thank-you").setAttribute("aria-hidden", "true");
     document.getElementById("main-app").classList.remove("hidden");
+    document.getElementById("gilbert-chat-launcher")?.removeAttribute("hidden");
   }
 
   function renderInvoiceSummary() {
@@ -1565,11 +2185,14 @@
   }
 
   function renderSummary() {
+    renderKpiDashboard();
+    renderDoNextPanel();
     renderPlanSummary();
     renderCondensedToc();
     updateInvoiceScheduleAmount();
     updateSubmitButtons();
     renderProjectToc();
+    renderViewLayout();
   }
 
   function downloadSubmissionJson(payload) {
@@ -1634,6 +2257,7 @@
       try {
         saveSubmissionLocally(payload);
         downloadSubmissionJson(payload);
+        emailActivityLog(payload);
         ok = true;
       } catch (err) {
         showToast("Could not save submission — try again or email support@gildedgooselimited.com", true);
@@ -1656,7 +2280,6 @@
   document.getElementById("confirm-back").addEventListener("click", hideConfirmPage);
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
-  document.getElementById("general-suggestions").addEventListener("input", saveState);
   document.getElementById("submitted-email").addEventListener("input", () => { saveState(); updateSubmitButtons(); });
   document.getElementById("invoice-payment-months").addEventListener("change", () => {
     updateInvoiceScheduleAmount();
@@ -1668,7 +2291,31 @@
       sendGilbertMessage();
     }
   });
+  document.getElementById("gilbert-chat-launcher")?.addEventListener("click", () => {
+    const popup = document.getElementById("gilbert-chat-popup");
+    if (popup?.hidden) openGilbertChat();
+    else closeGilbertChat();
+  });
+  document.getElementById("gilbert-chat-close")?.addEventListener("click", closeGilbertChat);
+  document.getElementById("gilbert-chat-backdrop")?.addEventListener("click", closeGilbertChat);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeGilbertChat();
+  });
   document.getElementById("expand-all-projects").addEventListener("change", e => setExpandAll(e.target.checked));
+
+  document.addEventListener("click", e => {
+    if (e.target.closest(".card-comment-tag") || e.target.closest(".card-comment-popover")
+      || e.target.closest(".research-comment-tag") || e.target.closest(".research-comment-popover")) return;
+    closeAllCommentPopovers();
+  });
+
+  document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.activeViewTab = btn.dataset.view || "outlines";
+      renderAllCards();
+      renderSummary();
+    });
+  });
 
   document.getElementById("toc-expand-row")?.addEventListener("click", e => {
     const btn = e.target.closest(".toc-expand-btn");
@@ -1690,6 +2337,9 @@
   initGilbertGuide();
   renderPackageIntro();
   renderValueIconKey();
+  renderKpiDashboard();
+  renderDoNextPanel();
+  renderCondensedToc();
   renderAllCards();
   if (state.goalText.trim()) suggestPlan(true);
   else {

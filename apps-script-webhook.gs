@@ -32,7 +32,7 @@ function setup() {
       "Grand total note",
       "Deposit amount",
       "Invoice schedule",
-      "General suggestions",
+      "Gilbert chat (JSON)",
       "Per-project notes (JSON)",
       "Raw JSON"
     ]);
@@ -43,6 +43,14 @@ function setup() {
 function formatNotes(notes) {
   if (!notes || typeof notes !== "object") return "";
   return Object.keys(notes).map(function(k) { return k + ": " + notes[k]; }).join("\n");
+}
+
+function formatGilbertChat(chat) {
+  if (!chat || !chat.length) return "(none)";
+  return chat.map(function(m) {
+    var who = m.role === "gilbert" ? "Gilbert" : "Client";
+    return who + ": " + (m.text || "");
+  }).join("\n");
 }
 
 function formatProjectsList(projects) {
@@ -70,6 +78,9 @@ function buildInternalEmail(data, projects, noteBlock) {
     "Consulting budget filter: " + (data.filterConsultingBudget != null ? "$" + data.filterConsultingBudget : "—"),
     "Media budget filter: " + (data.filterMediaBudget != null ? "$" + data.filterMediaBudget : "—"),
     "",
+    "Gilbert chat transcript:",
+    formatGilbertChat(data.gilbertChat),
+    "",
     "Retainer: " + (data.retainer ? "YES — " + data.retainerFee + "/mo (" + (data.retainerTitle || "Digital Ads") + ")" : "NO"),
     "",
     "Projects selected (bill on full invoice):",
@@ -82,10 +93,7 @@ function buildInternalEmail(data, projects, noteBlock) {
     "",
     "Standard deposit collected separately: " + depositLine,
     "",
-    "General suggestions:",
-    data.generalSuggestions || "(none)",
-    "",
-    "Per-project notes:",
+    "Per-project comments:",
     noteBlock || "(none)"
   ].join("\n");
 }
@@ -130,10 +138,10 @@ function buildClientEmail(data, projects, noteBlock) {
     "Invoice schedule: " + (data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "—"),
     depositSection,
     "",
-    "Your notes:",
-    data.generalSuggestions || "(none)",
+    "Gilbert chat:",
+    formatGilbertChat(data.gilbertChat),
     "",
-    "Per-project notes:",
+    "Your comments:",
     noteBlock || "(none)",
     "",
     "Questions? Reply to this email or contact Gilded Goose.",
@@ -146,7 +154,7 @@ function doGet(e) {
   if (e && e.parameter && e.parameter.ping) {
     return ContentService.createTextOutput(JSON.stringify({
       ok: true,
-      service: "gilbert-picker"
+      service: "gilbert-guide"
     })).setMimeType(ContentService.MimeType.JSON);
   }
   return ContentService.createTextOutput(JSON.stringify({
@@ -181,7 +189,7 @@ function doPost(e) {
       data.grandTotalNote || "",
       data.depositAmount != null ? data.depositAmount : "",
       data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "",
-      data.generalSuggestions || "",
+      JSON.stringify(data.gilbertChat || []),
       JSON.stringify(data.projectNotes || {}),
       JSON.stringify(data)
     ]);

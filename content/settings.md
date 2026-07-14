@@ -5,7 +5,7 @@
 | **Guide name** | Lord Gilbert Granville |
 | **Guide short name** | Gilbert |
 | **Icon** | assets/gigi-goose-guide.svg |
-| **Guide hero** | assets/gilbert-thinking.png |
+| **Guide hero** | assets/gilbert-lightbulb-idea.png |
 | **Seal** | assets/gilbert-celebrating.png |
 | **Logo** | assets/gigi-logo-frame.png |
 

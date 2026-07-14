@@ -6,7 +6,7 @@ window.PROJECT_DATA = {
   "guideName": "Lord Gilbert Granville",
   "guideShortName": "Gilbert",
   "guideIcon": "assets/gigi-goose-guide.svg",
-  "guideHero": "assets/gilbert-thinking.png",
+  "guideHero": "assets/gilbert-lightbulb-idea.png",
   "guideSeal": "assets/gilbert-celebrating.png",
   "guideLogo": "assets/gigi-logo-frame.png",
   "paviIcon": "assets/gigi-goose-guide.svg",
@@ -29,6 +29,8 @@ window.PROJECT_DATA = {
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
     "status": "ongoing",
+    "estimatedLeads": "~36 calls/month baseline (Military Search)",
+    "clientTouchpoints": "Google Ads, LSA, Microsoft Ads, Romina intake, Monthly reports to Andrew",
     "keywords": [
       "ongoing",
       "monthly",
@@ -43,38 +45,14 @@ window.PROJECT_DATA = {
       "lsa"
     ],
     "title": "Digital Ads Maintenance Retainer",
-    "description": "Pav Law invests about $6,000/month in Google Ads media, but without a formal <a href=\"https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/\" target=\"_blank\" rel=\"noopener\">PPC management</a> retainer, campaigns drift between one-off fixes. This project provides ongoing oversight of Google Ads, <a href=\"https://support.google.com/localservices/answer/6224841\" target=\"_blank\" rel=\"noopener\">Local Services Ads</a>, and Microsoft Ads — monitoring spend, tuning bids, reviewing call quality, and reporting <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">cost per call</a> by campaign each month.",
+    "description": "Pav Law invests about $6,000/month in Google Ads media, but without a formal <a href=\"https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/\" target=\"_blank\" rel=\"noopener\">PPC management</a> retainer, campaigns drift between one-off fixes. This project provides ongoing oversight of Google Ads, <a href=\"https://support.google.com/localservices/answer/6224841\" target=\"_blank\" rel=\"noopener\">Local Services Ads</a>, and Microsoft Ads — monitoring spend, tuning bids, reviewing call quality, and reporting <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">cost per call</a> by campaign each month.\n\nOngoing PPC management means watching campaigns weekly — pausing losers, scaling winners, and measuring cost per call. For law firms, Google and Clio both recommend tracking phone outcomes, not clicks alone, when judging paid search performance. See [Google Ads help — measure conversions](https://support.google.com/google-ads/answer/1722022), [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/), [Google Local Services Ads overview](https://support.google.com/localservices/answer/6224841), [PPC management pricing (2026)](https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/), [Law firm agency retainers](https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/), and [Rocket Pilots PPC tiers](https://rocketpilots.com/ppc-for-lawyers/).",
+    "tldr": "Protects Military Search at roughly $67 per call (~36 calls/month in May 2026 data).",
     "valueAdded": [
       "Protects Military Search at roughly $67 per call (~36 calls/month in May 2026 data)",
       "Monthly reporting catches waste before it runs another month",
-      "Keeps Google Ads, LSA, and Microsoft Ads aligned under one scope"
-    ],
-    "marketingEducation": "Ongoing PPC management means watching campaigns weekly — pausing losers, scaling winners, and measuring cost per call. For law firms, Google and Clio both recommend tracking phone outcomes, not clicks alone, when judging paid search performance. See [Google Ads help — measure conversions](https://support.google.com/google-ads/answer/1722022), [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/), [Google Local Services Ads overview](https://support.google.com/localservices/answer/6224841), [PPC management pricing (2026)](https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/), [Law firm agency retainers](https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/), and [Rocket Pilots PPC tiers](https://rocketpilots.com/ppc-for-lawyers/).",
-    "learningsLinks": [
-      {
-        "label": "Google Ads help — measure conversions",
-        "url": "https://support.google.com/google-ads/answer/1722022"
-      },
-      {
-        "label": "Clio — law firm marketing overview",
-        "url": "https://www.clio.com/blog/law-firm-marketing/"
-      },
-      {
-        "label": "Google Local Services Ads overview",
-        "url": "https://support.google.com/localservices/answer/6224841"
-      },
-      {
-        "label": "PPC management pricing (2026)",
-        "url": "https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/"
-      },
-      {
-        "label": "Law firm agency retainers",
-        "url": "https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/"
-      },
-      {
-        "label": "Rocket Pilots PPC tiers",
-        "url": "https://rocketpilots.com/ppc-for-lawyers/"
-      }
+      "Keeps Google Ads, LSA, and Microsoft Ads aligned under one scope",
+      "LSA lead-status SOP so booked, spam, and follow-up leads stay accurate for billing and reporting",
+      "Casey trained via call review before live intake — learns practice talk tracks from recordings, then covers phones on a fixed schedule so Romina gets uninterrupted time for pipeline and admin"
     ],
     "completedItems": [
       "Systems access audit",
@@ -88,12 +66,14 @@ window.PROJECT_DATA = {
       "UTM tracking on contact URLs",
       "Ad extension and sitelink rollout",
       "LSA performance summaries",
-      "Speed-to-lead intake recommendations"
+      "Speed-to-lead intake recommendations",
+      "**LSA documenting & training** — handout: `LSA-DOCUMENTING-TRAINING.md` (repo: `gilded-goose/clients/pav-law/`): update LSA lead info; Casey call review + status updates; phone coverage ramp (2–3 hrs/day or one day/week); HubSpot alignment for LSA leads"
     ],
     "backedMetric": {
       "label": "Military Search averaged about 36 calls per month at roughly $67 per call in May 2026 account data",
       "source": "Pav Law Google Ads audit, May 2026"
-    }
+    },
+    "abQuestions": []
   },
   "projects": [
     {
@@ -103,7 +83,9 @@ window.PROJECT_DATA = {
       "timeline": "1 week before and after July 4",
       "category": "Email",
       "campaignType": "Holiday Email",
-      "status": "wip",
+      "status": "completed",
+      "estimatedLeads": "Past-client and prospect email list",
+      "clientTouchpoints": "HubSpot email, Past-client lists",
       "keywords": [
         "july",
         "holiday",
@@ -116,23 +98,14 @@ window.PROJECT_DATA = {
         "past client"
       ],
       "title": "Summer Safety Email Campaign",
-      "description": "DUI and traffic ticket volume spikes around July 4 — exactly when past clients and their networks are most likely to need you again. <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">Seasonal email nurture</a> reaches people who already trust Pav Law: a pre-holiday safety message, then a post-holiday guide on what to do if pulled over, ticketed, or charged.",
+      "description": "DUI and traffic ticket volume spikes around July 4 — exactly when past clients and their networks are most likely to need you again. <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">Seasonal email nurture</a> reaches people who already trust Pav Law: a pre-holiday safety message, then a post-holiday guide on what to do if pulled over, ticketed, or charged.\n\nSeasonal email nurture works best when the message is useful at the moment of need — not a generic promotion. HubSpot’s law firm marketing content covers timing, segmentation, and compliance basics for professional services email. See [HubSpot — law firm marketing](https://www.clio.com/blog/law-firm-marketing/) and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).\n\n**Market differentiation & attention:** The legal space, especially for traffic and criminal defense, is saturated with serious, formal, and frankly boring advertising. Our approach immediately cuts through that noise. An email subject line like “Don't forget to pull out this summer!” is impossible to ignore. It creates a pattern interrupt that forces engagement, which is the first and most difficult step in any marketing funnel.",
+      "tldr": "Reaches past clients when DUI and ticket volume spikes around July 4.",
       "valueAdded": [
         "Reaches past clients when DUI and ticket volume spikes around July 4",
         "Pre-holiday safety message plus post-holiday ‘what to do if charged’ guide",
         "Direct path to book with Romina in every send"
       ],
-      "marketingEducation": "Seasonal email nurture works best when the message is useful at the moment of need — not a generic promotion. HubSpot’s law firm marketing content covers timing, segmentation, and compliance basics for professional services email. See [HubSpot — law firm marketing](https://www.clio.com/blog/law-firm-marketing/) and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).\n\n**Market differentiation & attention:** The legal space, especially for traffic and criminal defense, is saturated with serious, formal, and frankly boring advertising. Our approach immediately cuts through that noise. An email subject line like “Don't forget to pull out this summer!” is impossible to ignore. It creates a pattern interrupt that forces engagement, which is the first and most difficult step in any marketing funnel.",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — law firm marketing",
-          "url": "https://www.clio.com/blog/law-firm-marketing/"
-        },
-        {
-          "label": "ABA Model Rule 7.2 — advertising",
-          "url": "https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/"
-        }
-      ]
+      "abQuestions": []
     },
     {
       "id": "A1",
@@ -142,6 +115,8 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Paid Search",
       "status": "available",
+      "estimatedLeads": "~36 calls/month baseline (Military Search)",
+      "clientTouchpoints": "Google Ads call extensions, Landing pages",
       "keywords": [
         "search",
         "google",
@@ -156,31 +131,7 @@ window.PROJECT_DATA = {
         "fix"
       ],
       "title": "Digital Ad Enhancements",
-      "description": "Your May 2026 account audit showed paid search budget flowing to the wrong places: <a href=\"https://support.google.com/google-ads/answer/1703646\" target=\"_blank\" rel=\"noopener\">call-only campaigns</a> still collecting form leads, Mountain DUI clicks at about $76 each, and domestic violence calls near $526 each — while Military Search delivers calls at roughly $67. This fix realigns the account so spend follows proven performance.",
-      "valueAdded": [
-        "Stops spend on $526/call and $76/click lanes that bleed budget",
-        "Reallocates toward Military Search at ~$67 per call",
-        "Two-week performance check against May audit baseline"
-      ],
-      "marketingEducation": "Call-focused Search campaigns should route people to the phone, not a form. Google’s call-only ad guidance explains why mixed objectives inflate cost per call — especially for criminal defense firms where the consult starts with a conversation. See [Google — call-only Search ads](https://support.google.com/google-ads/answer/1703646), [Clio — law firm PPC measurement](https://www.clio.com/blog/law-firm-marketing/), [Google — responsive search ads](https://support.google.com/google-ads/answer/10724897), and [Search campaign structure](https://www.youtube.com/watch?v=9yLzVO3L130).",
-      "learningsLinks": [
-        {
-          "label": "Google — call-only Search ads",
-          "url": "https://support.google.com/google-ads/answer/1703646"
-        },
-        {
-          "label": "Clio — law firm PPC measurement",
-          "url": "https://www.clio.com/blog/law-firm-marketing/"
-        },
-        {
-          "label": "Google — responsive search ads",
-          "url": "https://support.google.com/google-ads/answer/10724897"
-        },
-        {
-          "label": "Search campaign structure",
-          "url": "https://www.youtube.com/watch?v=9yLzVO3L130"
-        }
-      ],
+      "valueAdded": [],
       "completedItems": [
         "Search campaign planning across practice areas",
         "Keyword and description rewrite for ad strength",
@@ -194,7 +145,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "Shift spend away from $526 per call domestic violence and $76 per click Mountain DUI toward Military Search at about $67 per call",
         "source": "May 2026 Google Ads audit"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "B1",
@@ -204,6 +156,8 @@ window.PROJECT_DATA = {
       "category": "CRM",
       "campaignType": "CRM Automation",
       "status": "available",
+      "estimatedLeads": "All inbound web leads and form fills",
+      "clientTouchpoints": "HubSpot CRM, Romina booking link",
       "keywords": [
         "hubspot",
         "workflow",
@@ -213,26 +167,12 @@ window.PROJECT_DATA = {
         "crm"
       ],
       "title": "HubSpot Pipeline Sprint",
-      "description": "A web lead only becomes revenue if intake moves fast. Research on [speed to lead](https://blog.hubspot.com/sales/inbound-sales) shows response within five minutes dramatically improves qualification rates — yet Pav Law's HubSpot workflows, Romina booking link, and referral import path are not fully connected. This sprint proves the full path: form submit → task → bookable consult.",
+      "description": "A web lead only becomes revenue if intake moves fast. Research on [speed to lead](https://blog.hubspot.com/sales/inbound-sales) shows response within five minutes dramatically improves qualification rates — yet Pav Law's HubSpot workflows, Romina booking link, and referral import path are not fully connected. This sprint proves the full path: form submit → task → bookable consult.\n\nSpeed to lead matters — firms that respond within minutes qualify far more inquiries than those that wait hours. HubSpot workflow automation routes form fills to tasks and booking links so intake is consistent, not ad hoc. See [HubSpot Academy — automation](https://academy.hubspot.com/courses/automation), [HubSpot — speed to lead statistics](https://blog.hubspot.com/sales/inbound-sales), and [Law firm CRM setup](https://www.youtube.com/watch?v=4yM_GJPHB8E).",
+      "tldr": "Proves web lead → HubSpot task → Romina booking without handoffs.",
       "valueAdded": [
         "Proves web lead → HubSpot task → Romina booking without handoffs",
         "Faster follow-up recovers leads that would have gone cold",
         "Foundation before scaling paid spend further"
-      ],
-      "marketingEducation": "Speed to lead matters — firms that respond within minutes qualify far more inquiries than those that wait hours. HubSpot workflow automation routes form fills to tasks and booking links so intake is consistent, not ad hoc. See [HubSpot Academy — automation](https://academy.hubspot.com/courses/automation), [HubSpot — speed to lead statistics](https://blog.hubspot.com/sales/inbound-sales), and [Law firm CRM setup](https://www.youtube.com/watch?v=4yM_GJPHB8E).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot Academy — automation",
-          "url": "https://academy.hubspot.com/courses/automation"
-        },
-        {
-          "label": "HubSpot — speed to lead statistics",
-          "url": "https://blog.hubspot.com/sales/inbound-sales"
-        },
-        {
-          "label": "Law firm CRM setup",
-          "url": "https://www.youtube.com/watch?v=4yM_GJPHB8E"
-        }
       ],
       "completedItems": [
         "Lead flow optimization",
@@ -242,15 +182,19 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Dashboard and reporting planning",
         "Find correct CRM tool evaluation"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B5",
       "priority": 2,
       "fee": 1900,
-      "status": "research",
+      "timeline": "2–4 weeks (mail wave + list prep)",
       "category": "Direct Mail",
       "campaignType": "Past Client Mailer",
+      "status": "available",
+      "estimatedLeads": "~200 households per wave (confirm sleeve order qty); 1–2 retained matters long-tail",
+      "clientTouchpoints": "Physical mail, past-client glovebox, cold database list",
       "keywords": [
         "mailer",
         "envelope",
@@ -261,29 +205,27 @@ window.PROJECT_DATA = {
         "postcard"
       ],
       "title": "Insurance Envelope Mailer - Client Re-engagement",
-      "description": "Snailmail Postcard campaign using the Insurance Sleeves as the postcard. This will enable us to get infront of previous clinets increasing the possiblity for referral and repeat customers. Summer is a very active time for drivers and tickets placing a physical reminder in cars will help to increase the liklihood of incoming cases for a very long tail campaign. Sleeves are faily low cost as well as the cost of postage making the total per customer under $3 for a campaign whos value will last as long as the sleeve remains in the prospects car. When's the last time you cleaned out your glovebox?",
+      "description": "Snailmail postcard campaign using the insurance sleeves as the mailer. Puts Pav Law in front of previous clients and increases referral and repeat potential. Summer is peak driving and ticket season — a physical reminder in the car supports a long-tail campaign. Sleeves plus postage keep cost under ~$3 per piece while the reminder stays in the glovebox.\n\n**Note: Tracking the ROI for this campaign is going to be very difficult.**",
+      "tldr": "Insurance-sleeve mailer keeps Pav's number in the glovebox — an under-$5 touchpoint for onboarding thank-yous, past clients, and cold database re-engagement.",
       "valueAdded": [
-        "Physical touchpoint that is more likely to stay in a clients car as a good reminder for the next accident",
-        "One retained matter from a warm list covers project fee"
-      ],
-      "marketingEducation": "- add research on what the value of long tail marketing is. Position high level information for the client to understand the longer term value and minimal short term gains. \n- Reengaging with past clients is one of the easiest cheapest ways to build up refenue with refereals and repeats. Ensure his audience is taken care of and you're top of mind for all. add research to confirm. position makreting education section less on executional for me and more for clent information and knowlwede growth. use citations and references.",
-      "learningsLinks": [
-        {
-          "label": "Direct mail to past clients",
-          "url": "https://www.clio.com/blog/law-firm-marketing/"
-        },
-        {
-          "label": "ABA advertising guidelines",
-          "url": "https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/"
-        }
+        "Pav's phone number in the car at site of accident or ticket",
+        "Can function as a thank-you for onboarding new customers",
+        "Can use as a cold mailing campaign for the old database for a touchpoint under $5"
       ],
       "completedItems": [
-        "Campaign Revamp",
-        "Mailer print materials purchased"
+        "Campaign revamp from event to post & digital",
+        "Mailer sleeves designed",
+        "Validated & cleansed addresses",
+        "Mini beta test — sample envelopes mailed; held up at reasonable postage"
       ],
       "inProgressItems": [
-        "Gather addresses",
-        "-"
+        "$1.40–$1.70 postage per mailer",
+        "Design insert for emergency numbers to be written in",
+        "Define P1 target audience. AB - Q: Newest or Oldest first?"
+      ],
+      "abQuestions": [
+        "Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
+        "Newest or Oldest first?"
       ]
     },
     {
@@ -294,6 +236,8 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "status": "wip",
+      "estimatedLeads": "~36 calls/month baseline (Military Search)",
+      "clientTouchpoints": "Google Ads call extensions, Landing pages",
       "keywords": [
         "display",
         "ntguilt",
@@ -305,30 +249,12 @@ window.PROJECT_DATA = {
         "racing"
       ],
       "title": "NTGUILT Display & Search Campaign Launch",
-      "description": "Most people do not search for a criminal defense lawyer until they need one. A <a href=\"https://skillshop.exceedlms.com/student/path/508763-display-ads\" target=\"_blank\" rel=\"noopener\">marketing funnel</a> starts with awareness — and <a href=\"https://support.google.com/google-ads/answer/2404190\" target=\"_blank\" rel=\"noopener\">Google Display</a> puts NTGUILT car and racing creative in front of drivers before they search. This project launches that upper-funnel layer with proper <a href=\"https://support.google.com/analytics/answer/10917952\" target=\"_blank\" rel=\"noopener\">UTM tracking</a> and conversion measurement on NTGUILT.com.",
+      "description": "Most people do not search for a criminal defense lawyer until they need one. A <a href=\"https://skillshop.exceedlms.com/student/path/508763-display-ads\" target=\"_blank\" rel=\"noopener\">marketing funnel</a> starts with awareness — and <a href=\"https://support.google.com/google-ads/answer/2404190\" target=\"_blank\" rel=\"noopener\">Google Display</a> puts NTGUILT car and racing creative in front of drivers before they search. This project launches that upper-funnel layer with proper <a href=\"https://support.google.com/analytics/answer/10917952\" target=\"_blank\" rel=\"noopener\">UTM tracking</a> and conversion measurement on NTGUILT.com.\n\nDisplay advertising sits at the top of the marketing funnel — awareness first, then retargeting and Search capture later. HubSpot’s funnel overview and Google’s Display campaign guide explain why upper-funnel spend pays off over weeks, not days. See [HubSpot — marketing funnel explained](https://skillshop.exceedlms.com/student/path/508763-display-ads), [Google — about Display campaigns](https://support.google.com/google-ads/answer/2404190), [HubSpot — UTM parameters guide](https://support.google.com/analytics/answer/10917952), and [Google Display overview](https://www.youtube.com/watch?v=240QbuaLi8g).",
+      "tldr": "Builds brand recognition before high-intent Search.",
       "valueAdded": [
         "Builds brand recognition before high-intent Search",
         "Creates a retargetable audience for summer NTGUILT creative",
         "UTM and conversion tracking on NTGUILT.com from day one"
-      ],
-      "marketingEducation": "Display advertising sits at the top of the marketing funnel — awareness first, then retargeting and Search capture later. HubSpot’s funnel overview and Google’s Display campaign guide explain why upper-funnel spend pays off over weeks, not days. See [HubSpot — marketing funnel explained](https://skillshop.exceedlms.com/student/path/508763-display-ads), [Google — about Display campaigns](https://support.google.com/google-ads/answer/2404190), [HubSpot — UTM parameters guide](https://support.google.com/analytics/answer/10917952), and [Google Display overview](https://www.youtube.com/watch?v=240QbuaLi8g).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — marketing funnel explained",
-          "url": "https://skillshop.exceedlms.com/student/path/508763-display-ads"
-        },
-        {
-          "label": "Google — about Display campaigns",
-          "url": "https://support.google.com/google-ads/answer/2404190"
-        },
-        {
-          "label": "HubSpot — UTM parameters guide",
-          "url": "https://support.google.com/analytics/answer/10917952"
-        },
-        {
-          "label": "Google Display overview",
-          "url": "https://www.youtube.com/watch?v=240QbuaLi8g"
-        }
       ],
       "completedItems": [
         "NTGUILT campaign concept and brand direction",
@@ -338,16 +264,18 @@ window.PROJECT_DATA = {
         "Promo video concept",
         "Giveaway and lead magnet ideas",
         "Event sponsorship outreach"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B10",
       "priority": 3,
-      "fee": 2400,
+      "fee": 1400,
       "timeline": "2–3 weeks",
       "category": "Brand / Local Presence",
       "campaignType": "Profile Audit & Refresh",
       "status": "available",
+      "clientTouchpoints": "GBP, Directory profiles, Social bios",
       "keywords": [
         "social",
         "facebook",
@@ -374,36 +302,14 @@ window.PROJECT_DATA = {
         "traffic"
       ],
       "title": "Social & Directory Profile Refresh & Tracking",
-      "description": "Prospects check more than pav.law before they call — they also look up **Andrew Brown**, **Casey**, and **Pav Law** separately on Facebook, Instagram, Yelp, LinkedIn, Avvo, and other directories. Firm pages and personal attorney profiles often show stale bios, old logos, mismatched phone numbers, or practice areas that no longer match how the firm actually works. This project runs a full <a href=\"https://moz.com/learn/seo/local-business-listings\" target=\"_blank\" rel=\"noopener\">NAP and profile audit</a> at **three levels — Pav Law (company), Andrew Brown (personal), and Casey (personal)** — discovers listings you may have forgotten, then refreshes copy, photos, categories, and links so every touchpoint matches current branding and intake paths (call, text, HubSpot booking). Complements website SEO (B4) and HubSpot social posting (B8) — this is the **profile layer**, not the posting calendar.\n\n**Known outdated (client-reported):** Pav Law Facebook, Yelp, Instagram, plus several legal directory profiles (firm and attorney).\n\n**Scope — company + personal (Andrew + Casey):**\n\n| Level | What we audit and refresh |\n|-------|---------------------------|\n| **Pav Law (firm)** | Company pages and firm listings — social, GBP, Yelp, Bing/Apple, BBB, firm rows on Avvo/Justia/FindLaw/Martindale where applicable |\n| **Andrew Brown (personal)** | Individual attorney profiles — LinkedIn, Avvo, Justia, state bar directory, any personal Facebook/Instagram/X used for firm visibility; bios and headshots aligned to pav.law/team |\n| **Casey (personal)** | Same pass for Casey — personal LinkedIn, Avvo/Justia attorney pages, bar directory, GBP attorney verification support (per prior tracker note), social accounts tied to traffic-case lead role |\n\n**Also audit (research — common for CO criminal defense firms):**\n\n| Bucket | Platforms to find, claim, or refresh |\n|--------|--------------------------------------|\n| **Social (firm + personal)** | Facebook Page (firm), Instagram (firm), LinkedIn company showcase **and** Andrew + Casey personal profiles, X/Twitter, YouTube — confirm active vs. archive |\n| **Reviews & local** | Google Business Profile (firm + attorney attributions, photos, services, Q&A), Yelp (firm and any attorney-linked pages), Bing Places, Apple Business Connect, Nextdoor Business |\n| **Major legal directories** | Avvo, Justia, FindLaw, Martindale-Hubbell, LawInfo, Lawyers.com, HG.org, Nolo — **firm listing plus individual attorney profiles for Andrew and Casey** |\n| **Bar & trust** | Colorado Bar Association public directory (each attorney), El Paso County Bar (if listed), BBB profile |\n| **Aggregators & misc.** | Foursquare, MapQuest, YellowPages, Manta, Expertise.com, Thumbtack, LegalRank and similar auto-generated pages (firm or attorney name searches) |\n| **Bilingual / niche** | Abogado.com (Spanish-speaking intake), Super Lawyers / Best Lawyers (only if already listed or eligible — no paid vanity buys without approval) |\n\nDiscovery uses **firm name, Andrew Brown, Casey, address, and phone** searches — not just logins you already have — so orphaned or duplicate firm *and* personal listings surface before updates go live.\n\n**UTM routing — see which profiles send traffic:**\n\nEvery profile website link that allows a custom URL gets a unique tagged link to pav.law (contact page or homepage — one landing target, documented in handoff). That lets GA4 and HubSpot show which directory or social profile drove the visit instead of lumping everything under “direct” or “referral.”\n\n| UTM field | Convention (example) |\n|-----------|----------------------|\n| `utm_source` | Platform slug: `facebook`, `instagram`, `yelp`, `avvo`, `linkedin`, `gbp`, `justia`, `findlaw`, etc. |\n| `utm_medium` | `social`, `directory`, or `local` |\n| `utm_campaign` | `profile-2026` (stable campaign name for all profile links this round) |\n| `utm_content` | Owner + level: `firm`, `andrew`, `casey` — so firm Avvo vs. Andrew Avvo vs. Casey Avvo split cleanly |\n\nExample: `https://pav.law/contact?utm_source=avvo&utm_medium=directory&utm_campaign=profile-2026&utm_content=andrew`\n\nDeliverables include a **UTM link sheet** (profile name → tagged URL → where to paste it) and a quick GA4/HubSpot check that sessions land with the expected source/medium. Feeds the lead-source dashboard (A8) — without unique UTMs, profile traffic stays invisible next to paid ads.",
+      "description": "Prospects check more than pav.law before they call — they also look up **Andrew Brown**, **Casey**, and **Pav Law** separately on Facebook, Instagram, Yelp, LinkedIn, Avvo, and other directories. Firm pages and personal attorney profiles often show stale bios, old logos, mismatched phone numbers, or practice areas that no longer match how the firm actually works. This project runs a full [NAP and profile audit](https://moz.com/learn/seo/local-business-listings) at **three levels — Pav Law (company), Andrew Brown (personal), and Casey (personal)** — discovers listings you may have forgotten, then refreshes copy, photos, categories, and links so every touchpoint matches current branding and intake paths (call, text, HubSpot booking). Complements website SEO (B4) and HubSpot social posting (B8) — this is the **profile layer**, not the posting calendar.\n\n**Known outdated (client-reported):** Pav Law Facebook, Yelp, Instagram, plus several legal directory profiles (firm and attorney).\n\n**Scope — company + personal (Andrew + Casey):**\n\n\n| Level                       | What we audit and refresh                                                                                                                                                                      |\n| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| **Pav Law (firm)**          | Company pages and firm listings — social, GBP, Yelp, Bing/Apple, BBB, firm rows on Avvo/Justia/FindLaw/Martindale where applicable                                                             |\n| **Andrew Brown (personal)** | Individual attorney profiles — LinkedIn, Avvo, Justia, state bar directory, any personal Facebook/Instagram/X used for firm visibility; bios and headshots aligned to pav.law/team             |\n| **Casey (personal)**        | Same pass for Casey — personal LinkedIn, Avvo/Justia attorney pages, bar directory, GBP attorney verification support (per prior tracker note), social accounts tied to traffic-case lead role |\n\n\n**Also audit (research — common for CO criminal defense firms):**\n\n\n| Bucket                       | Platforms to find, claim, or refresh                                                                                                                                             |\n| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| **Social (firm + personal)** | Facebook Page (firm), Instagram (firm), LinkedIn company showcase **and** Andrew + Casey personal profiles, X/Twitter, YouTube — confirm active vs. archive                      |\n| **Reviews & local**          | Google Business Profile (firm + attorney attributions, photos, services, Q&A), Yelp (firm and any attorney-linked pages), Bing Places, Apple Business Connect, Nextdoor Business |\n| **Major legal directories**  | Avvo, Justia, FindLaw, Martindale-Hubbell, LawInfo, Lawyers.com, HG.org, Nolo — **firm listing plus individual attorney profiles for Andrew and Casey**                          |\n| **Bar & trust**              | Colorado Bar Association public directory (each attorney), El Paso County Bar (if listed), BBB profile                                                                           |\n| **Aggregators & misc.**      | Foursquare, MapQuest, YellowPages, Manta, Expertise.com, Thumbtack, LegalRank and similar auto-generated pages (firm or attorney name searches)                                  |\n| **Bilingual / niche**        | Abogado.com (Spanish-speaking intake), Super Lawyers / Best Lawyers (only if already listed or eligible — no paid vanity buys without approval)                                  |\n\n\nDiscovery uses **firm name, Andrew Brown, Casey, address, and phone** searches — not just logins you already have — so orphaned or duplicate firm *and* personal listings surface before updates go live.\n\n**UTM routing — see which profiles send traffic:**\n\nEvery profile website link that allows a custom URL gets a unique tagged link to pav.law (contact page or homepage — one landing target, documented in handoff). That lets GA4 and HubSpot show which directory or social profile drove the visit instead of lumping everything under “direct” or “referral.”\n\n\n| UTM field      | Convention (example)                                                                                 |\n| -------------- | ---------------------------------------------------------------------------------------------------- |\n| `utm_source`   | Platform slug: `facebook`, `instagram`, `yelp`, `avvo`, `linkedin`, `gbp`, `justia`, `findlaw`, etc. |\n| `utm_medium`   | `social`, `directory`, or `local`                                                                    |\n| `utm_campaign` | `profile-2026` (stable campaign name for all profile links this round)                               |\n| `utm_content`  | Owner + level: `firm`, `andrew`, `casey` — so firm Avvo vs. Andrew Avvo vs. Casey Avvo split cleanly |\n\n\nExample: `https://pav.law/contact?utm_source=avvo&utm_medium=directory&utm_campaign=profile-2026&utm_content=andrew`\n\nDeliverables include a **UTM link sheet** (profile name → tagged URL → where to paste it) and a quick GA4/HubSpot check that sessions land with the expected source/medium. Feeds the lead-source dashboard (A8) — without unique UTMs, profile traffic stays invisible next to paid ads.\n\nConsistent name-address-phone data across directories and social profiles still drives local search and AI citation trust — models and Google both lean on Avvo, Justia, FindLaw, Martindale, GBP, and bar directories when recommending lawyers. **UTM parameters** on each profile’s website link are the only practical way to attribute organic profile clicks in GA4 and HubSpot — otherwise Yelp, Avvo, and LinkedIn all look like generic referral traffic. See [Google — UTM parameters](https://support.google.com/analytics/answer/10917952), [HubSpot — track traffic with UTMs](https://knowledge.hubspot.com/settings/add-utm-parameters-to-a-page-url), [Moz — local business listings](https://moz.com/learn/seo/local-business-listings), [FindLaw — optimize directory profiles](https://www.findlaw.com/lawyer-marketing/blog/how-to-optimize-your-findlaw-directory-profile-top-3-data-driven-tactics/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
+      "tldr": "A lot of the websites with Pav Law information are outdated and could use a refresh. The more intake channels updated and imporved the better.",
       "valueAdded": [
-        "Single inventory of every live profile (**firm, Andrew, Casey**): URL, login owner, last updated, match/mismatch vs. current NAP and branding",
+        "Inventory of every live profile",
         "Refreshed bios, practice areas, photos, and CTAs for company and both attorneys — aligned to current positioning and ABA advertising rules",
-        "**Unique UTM-tagged website links per profile** — link sheet + validation in GA4/HubSpot so you can rank which platforms drive the most site traffic",
-        "Duplicate or abandoned listings flagged for merge, claim, or suppress — fewer wrong-number or wrong-address paths",
-        "Handoff doc: who owns each login (firm vs. Andrew vs. Casey), tagged URLs, what changed, and a quarterly re-check checklist"
-      ],
-      "marketingEducation": "Consistent name-address-phone data across directories and social profiles still drives local search and AI citation trust — models and Google both lean on Avvo, Justia, FindLaw, Martindale, GBP, and bar directories when recommending lawyers. **UTM parameters** on each profile’s website link are the only practical way to attribute organic profile clicks in GA4 and HubSpot — otherwise Yelp, Avvo, and LinkedIn all look like generic referral traffic. See [Google — UTM parameters](https://support.google.com/analytics/answer/10917952), [HubSpot — track traffic with UTMs](https://knowledge.hubspot.com/settings/add-utm-parameters-to-a-page-url), [Moz — local business listings](https://moz.com/learn/seo/local-business-listings), [FindLaw — optimize directory profiles](https://www.findlaw.com/lawyer-marketing/blog/how-to-optimize-your-findlaw-directory-profile-top-3-data-driven-tactics/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
-      "learningsLinks": [
-        {
-          "label": "Google — UTM parameters",
-          "url": "https://support.google.com/analytics/answer/10917952"
-        },
-        {
-          "label": "HubSpot — track traffic with UTMs",
-          "url": "https://knowledge.hubspot.com/settings/add-utm-parameters-to-a-page-url"
-        },
-        {
-          "label": "Moz — local business listings",
-          "url": "https://moz.com/learn/seo/local-business-listings"
-        },
-        {
-          "label": "FindLaw — optimize directory profiles",
-          "url": "https://www.findlaw.com/lawyer-marketing/blog/how-to-optimize-your-findlaw-directory-profile-top-3-data-driven-tactics/"
-        },
-        {
-          "label": "ABA Model Rule 7.2 — advertising",
-          "url": "https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/"
-        }
+        "**Unique UTM-tagged website links per profile** — link sheet + validation in GA4/HubSpot so you can rank which platforms drive the most site traffic. Most of the legal sites have paid advertising or upgrades now that we can track traffic we'll be able to test out if any are worth purchasing.",
+        "Merge Andrew Brown and Pav Law profiles",
+        "-"
       ],
       "completedItems": [
         "(None — discovery starts on kickoff)"
@@ -418,7 +324,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "LinkedIn showcase page and third-party aggregator (e.g. LegalRank) already surface firm NAP and positioning — worth aligning with pav.law and GBP before next paid campaign push",
         "source": "Public web search + client report, Jun 2026"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "B2",
@@ -429,6 +336,8 @@ window.PROJECT_DATA = {
       "campaignType": "Call Infrastructure",
       "status": "wip",
       "enabler": true,
+      "estimatedLeads": "30–40 calls/month (Military Search baseline)",
+      "clientTouchpoints": "HubSpot phone, Romina desk, LSA lead dashboard, Google call extensions",
       "keywords": [
         "phone",
         "VoIP",
@@ -438,22 +347,13 @@ window.PROJECT_DATA = {
         "infrastructure"
       ],
       "title": "Hubspot Phone/ VoIP Setup",
-      "description": "Transfer phone numbers into HubSpot to get started with phone menus, call tracking, call logging, and stronger overall metrics.",
+      "description": "Transfer phone numbers into HubSpot to get started with phone menus, call tracking, call logging, and stronger overall metrics.\n\nFor law firms running call-heavy Search campaigns, call tracking must be in place before you increase budget. The ability to track and record calls also improves training and accountability. See [Google — call reporting in Google Ads](https://support.google.com/google-ads/answer/2454052) and [HubSpot — speed to lead](https://blog.hubspot.com/sales/inbound-sales).",
+      "tldr": "Verified phone routing and call tracking so paid clicks tie to qualified consults — not dropped leads.",
       "valueAdded": [
         "Verified call extensions so paid clicks can be tracked with more accuracy",
         "Fewer dropped calls and lost cases due to routing and response-time issues",
-        "Intake and Romina training on day and night call routing once the carrier transfer completes"
-      ],
-      "marketingEducation": "For law firms running call-heavy Search campaigns, call tracking must be in place before you increase budget. The ability to track and record calls also improves training and accountability. See [Google — call reporting in Google Ads](https://support.google.com/google-ads/answer/2454052) and [HubSpot — speed to lead](https://blog.hubspot.com/sales/inbound-sales).",
-      "learningsLinks": [
-        {
-          "label": "Google — call reporting in Google Ads",
-          "url": "https://support.google.com/google-ads/answer/2454052"
-        },
-        {
-          "label": "HubSpot — speed to lead",
-          "url": "https://blog.hubspot.com/sales/inbound-sales"
-        }
+        "Intake training on day and night call routing once the carrier transfer completes",
+        "**Casey coverage model** (see retainer LSA training doc): dedicated phone blocks so Romina can work off-phone — ramp from a few hours daily to one full day per week as Casey proves script and LSA status discipline"
       ],
       "completedItems": [
         "Phone setup documentation in HubSpot/PHONE-SETUP.md",
@@ -462,12 +362,15 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Waiting on phone company number transfer",
         "VoIP live verification with Google",
-        "Team training and routing documentation"
+        "Team training and routing documentation",
+        "Casey ↔ Romina schedule: who owns **all calls** during which hours (align with HubSpot menus when live)",
+        "Casey shadow: LSA call review + status updates before live answering (retainer `LSA-DOCUMENTING-TRAINING.md`)"
       ],
       "backedMetric": {
         "label": "About 36 Military Search calls per month depend on a verified phone line. Reported volume is likely understated because call-only tracking misses some mobile and cross-device conversions — a common issue when phone setup is incomplete. Firms that respond within five minutes are far more likely to qualify a lead than those that wait hours, so routing, logging, and speed-to-lead must work before scaling spend ([HubSpot speed-to-lead research](https://blog.hubspot.com/sales/inbound-sales); [Google call extensions](https://support.google.com/google-ads/answer/2454052)).",
         "source": "May 2026 Google Ads Audit"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "B4",
@@ -477,6 +380,8 @@ window.PROJECT_DATA = {
       "category": "SEO",
       "campaignType": "Local SEO",
       "status": "available",
+      "estimatedLeads": "Organic search discovery traffic",
+      "clientTouchpoints": "Google Ads call extensions, Landing pages, pav.law website, Organic search",
       "keywords": [
         "seo",
         "schema",
@@ -488,30 +393,12 @@ window.PROJECT_DATA = {
         "local"
       ],
       "title": "Website Content Overhaul - SEO, linking, referrals etc.",
-      "description": "Pav Law's organic search averaged position 45–58 in early 2025 — meaning most searchers never see you without paid ads. <a href=\"https://developers.google.com/search/docs/appearance/structured-data/local-business\" target=\"_blank\" rel=\"noopener\">Local business schema</a>, consistent <a href=\"https://moz.com/learn/seo/local-business-listings\" target=\"_blank\" rel=\"noopener\">NAP data</a>, and attorney attribution build the <a href=\"https://www.clio.com/blog/law-firm-seo/\" target=\"_blank\" rel=\"noopener\">local SEO</a> foundation that earns free visibility over time.",
+      "description": "Pav Law's organic search averaged position 45–58 in early 2025 — meaning most searchers never see you without paid ads. <a href=\"https://developers.google.com/search/docs/appearance/structured-data/local-business\" target=\"_blank\" rel=\"noopener\">Local business schema</a>, consistent <a href=\"https://moz.com/learn/seo/local-business-listings\" target=\"_blank\" rel=\"noopener\">NAP data</a>, and attorney attribution build the <a href=\"https://www.clio.com/blog/law-firm-seo/\" target=\"_blank\" rel=\"noopener\">local SEO</a> foundation that earns free visibility over time.\n\nLocal SEO combines structured data, consistent name-address-phone listings, and attorney attribution so Google can match Pav Law to local criminal defense searches. Google’s local business schema docs and Clio’s law firm SEO guide are the standard references. See [Google — local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business), [Moz — local business listings](https://moz.com/learn/seo/local-business-listings), [Clio — law firm SEO](https://www.clio.com/blog/law-firm-seo/), and [Semrush site audit overview](https://www.semrush.com/).",
+      "tldr": "Organic consults compound — less reliance on paid ads over time.",
       "valueAdded": [
         "Organic consults compound — less reliance on paid ads over time",
         "Local schema and NAP fix barriers from May Semrush audit",
         "Baseline avg position 45–58 in early 2025 Search Console data"
-      ],
-      "marketingEducation": "Local SEO combines structured data, consistent name-address-phone listings, and attorney attribution so Google can match Pav Law to local criminal defense searches. Google’s local business schema docs and Clio’s law firm SEO guide are the standard references. See [Google — local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business), [Moz — local business listings](https://moz.com/learn/seo/local-business-listings), [Clio — law firm SEO](https://www.clio.com/blog/law-firm-seo/), and [Semrush site audit overview](https://www.semrush.com/).",
-      "learningsLinks": [
-        {
-          "label": "Google — local business structured data",
-          "url": "https://developers.google.com/search/docs/appearance/structured-data/local-business"
-        },
-        {
-          "label": "Moz — local business listings",
-          "url": "https://moz.com/learn/seo/local-business-listings"
-        },
-        {
-          "label": "Clio — law firm SEO",
-          "url": "https://www.clio.com/blog/law-firm-seo/"
-        },
-        {
-          "label": "Semrush site audit overview",
-          "url": "https://www.semrush.com/"
-        }
       ],
       "completedItems": [
         "Website issue review with backlink and deep-link notes",
@@ -524,7 +411,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "Organic search on pav.law averaged position 45 to 58 in early 2025 Search Console export",
         "source": "Google Search Console via Downloads export, Jan 2025"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "A4",
@@ -535,6 +423,8 @@ window.PROJECT_DATA = {
       "campaignType": "Referral Program",
       "status": "ongoing",
       "ongoingFee": 500,
+      "estimatedLeads": "Past clients and referral network outreach",
+      "clientTouchpoints": "HubSpot email, Past-client lists, Past clients, Referral ask workflows",
       "keywords": [
         "referral",
         "referrals",
@@ -545,22 +435,12 @@ window.PROJECT_DATA = {
         "email"
       ],
       "title": "Client Referral Program — Setup and Ongoing Maintenance",
-      "description": "<a href=\"https://blog.hubspot.com/service/customer-referral-program\" target=\"_blank\" rel=\"noopener\">Referral marketing</a> consistently outperforms cold paid channels because trust is already established. Pav Law has past clients, friends-and-family contacts, and America list prospects — but no structured program to ask for referrals or make booking easy. This project builds the HubSpot foundation and keeps it running month to month.",
+      "description": "<a href=\"https://blog.hubspot.com/service/customer-referral-program\" target=\"_blank\" rel=\"noopener\">Referral marketing</a> consistently outperforms cold paid channels because trust is already established. Pav Law has past clients, friends-and-family contacts, and America list prospects — but no structured program to ask for referrals or make booking easy. This project builds the HubSpot foundation and keeps it running month to month.\n\nReferral programs work when asking is structured and booking is frictionless. HubSpot’s referral program guide covers segmentation and follow-up; the ABA publishes ethical guidance on attorney referral relationships. See [HubSpot — customer referral programs](https://blog.hubspot.com/service/customer-referral-program) and [ABA — referral fees and relationships](https://www.americanbar.org/groups/law_practice/publications/law_practice_magazine/2020/may-june/referral-fees-and-relationships/).",
+      "tldr": "Highest-trust lead channel — one signed referral often covers project fee.",
       "valueAdded": [
         "Highest-trust lead channel — one signed referral often covers project fee",
         "Setup plus monthly upkeep so the program stays active",
         "Past-client, friends-and-family, and America list paths in HubSpot"
-      ],
-      "marketingEducation": "Referral programs work when asking is structured and booking is frictionless. HubSpot’s referral program guide covers segmentation and follow-up; the ABA publishes ethical guidance on attorney referral relationships. See [HubSpot — customer referral programs](https://blog.hubspot.com/service/customer-referral-program) and [ABA — referral fees and relationships](https://www.americanbar.org/groups/law_practice/publications/law_practice_magazine/2020/may-june/referral-fees-and-relationships/).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — customer referral programs",
-          "url": "https://blog.hubspot.com/service/customer-referral-program"
-        },
-        {
-          "label": "ABA — referral fees and relationships",
-          "url": "https://www.americanbar.org/groups/law_practice/publications/law_practice_magazine/2020/may-june/referral-fees-and-relationships/"
-        }
       ],
       "completedItems": [
         "Missed-call follow-up text templates",
@@ -568,7 +448,8 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Traffic intake script for Romina"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A13",
@@ -578,6 +459,8 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "status": "available",
+      "estimatedLeads": "~36 calls/month baseline (Military Search)",
+      "clientTouchpoints": "Google Ads call extensions, Landing pages",
       "keywords": [
         "display",
         "adult",
@@ -591,27 +474,14 @@ window.PROJECT_DATA = {
         "retargeting"
       ],
       "title": "Adult Site(s) Ad Campaign",
-      "description": "Upper-funnel <a href=\"https://support.google.com/google-ads/answer/2404190\" target=\"_blank\" rel=\"noopener\">Display</a> and partner placements on adult-content sites can reach drivers in the DUI and traffic-ticket audience before they search for a lawyer — a lane separate from Military Search and call-only Search. This project scopes compliant creative, placement lists, frequency caps, and conversion tracking so Pav Law can test the channel without polluting core Search performance or brand safety rules.",
+      "description": "Upper-funnel <a href=\"https://support.google.com/google-ads/answer/2404190\" target=\"_blank\" rel=\"noopener\">Display</a> and partner placements on adult-content sites can reach drivers in the DUI and traffic-ticket audience before they search for a lawyer — a lane separate from Military Search and call-only Search. This project scopes compliant creative, placement lists, frequency caps, and conversion tracking so Pav Law can test the channel without polluting core Search performance or brand safety rules.\n\nDisplay campaigns on third-party site categories work as top-of-funnel awareness — not direct-response Search. Google’s Display campaign guide and Clio’s law firm marketing overview explain why separate campaign structure, placement controls, and remarketing tags matter when testing non-search inventory. See [Google — about Display campaigns](https://support.google.com/google-ads/answer/2404190), [Google — placement targeting](https://support.google.com/google-ads/answer/2453994), and [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/).",
+      "tldr": "Adds a testable awareness lane beyond Google Search and LSA.",
       "valueAdded": [
         "Adds a testable awareness lane beyond Google Search and LSA",
         "Keeps adult-site spend isolated in its own campaign with clear UTMs",
         "Policy-safe creative and landing paths reviewed before launch"
       ],
-      "marketingEducation": "Display campaigns on third-party site categories work as top-of-funnel awareness — not direct-response Search. Google’s Display campaign guide and Clio’s law firm marketing overview explain why separate campaign structure, placement controls, and remarketing tags matter when testing non-search inventory. See [Google — about Display campaigns](https://support.google.com/google-ads/answer/2404190), [Google — placement targeting](https://support.google.com/google-ads/answer/2453994), and [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/).",
-      "learningsLinks": [
-        {
-          "label": "Google — about Display campaigns",
-          "url": "https://support.google.com/google-ads/answer/2404190"
-        },
-        {
-          "label": "Google — placement targeting",
-          "url": "https://support.google.com/google-ads/answer/2453994"
-        },
-        {
-          "label": "Clio — law firm marketing overview",
-          "url": "https://www.clio.com/blog/law-firm-marketing/"
-        }
-      ]
+      "abQuestions": []
     },
     {
       "id": "B6",
@@ -621,6 +491,8 @@ window.PROJECT_DATA = {
       "category": "SEO",
       "campaignType": "Blog / Content SEO",
       "status": "available",
+      "estimatedLeads": "Organic search discovery traffic",
+      "clientTouchpoints": "pav.law website, Organic search",
       "keywords": [
         "blog",
         "content",
@@ -633,30 +505,12 @@ window.PROJECT_DATA = {
         "internal links"
       ],
       "title": "Blog Revamp",
-      "description": "People search specific questions before they call a lawyer — \"what happens after a DUI stop,\" military traffic rules, and similar long-tail queries. Existing blog posts can rank for those searches if titles, meta descriptions, and <a href=\"https://moz.com/learn/seo/internal-link\" target=\"_blank\" rel=\"noopener\">internal links</a> point readers to practice pages. This is the <a href=\"https://www.clio.com/blog/law-firm-seo/\" target=\"_blank\" rel=\"noopener\">content SEO</a> layer on top of technical site work.",
+      "description": "People search specific questions before they call a lawyer — \"what happens after a DUI stop,\" military traffic rules, and similar long-tail queries. Existing blog posts can rank for those searches if titles, meta descriptions, and <a href=\"https://moz.com/learn/seo/internal-link\" target=\"_blank\" rel=\"noopener\">internal links</a> point readers to practice pages. This is the <a href=\"https://www.clio.com/blog/law-firm-seo/\" target=\"_blank\" rel=\"noopener\">content SEO</a> layer on top of technical site work.\n\nContent SEO targets questions people search before they call a lawyer — blog posts with clear titles, meta descriptions, and internal links pass authority to practice pages. Clio’s SEO guide and Google’s article structured data docs explain the pattern. See [Clio — law firm SEO](https://www.clio.com/blog/law-firm-seo/), [Moz — internal links for SEO](https://moz.com/learn/seo/internal-link), [Google — article structured data](https://developers.google.com/search/docs/appearance/structured-data/article), and [12AM Agency content tiers](https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/).",
+      "tldr": "Long-tail questions become organic consult paths.",
       "valueAdded": [
         "Long-tail questions become organic consult paths",
         "Internal links from posts to DUI, military, and traffic pages",
         "Results compound over 8–12 weeks"
-      ],
-      "marketingEducation": "Content SEO targets questions people search before they call a lawyer — blog posts with clear titles, meta descriptions, and internal links pass authority to practice pages. Clio’s SEO guide and Google’s article structured data docs explain the pattern. See [Clio — law firm SEO](https://www.clio.com/blog/law-firm-seo/), [Moz — internal links for SEO](https://moz.com/learn/seo/internal-link), [Google — article structured data](https://developers.google.com/search/docs/appearance/structured-data/article), and [12AM Agency content tiers](https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/).",
-      "learningsLinks": [
-        {
-          "label": "Clio — law firm SEO",
-          "url": "https://www.clio.com/blog/law-firm-seo/"
-        },
-        {
-          "label": "Moz — internal links for SEO",
-          "url": "https://moz.com/learn/seo/internal-link"
-        },
-        {
-          "label": "Google — article structured data",
-          "url": "https://developers.google.com/search/docs/appearance/structured-data/article"
-        },
-        {
-          "label": "12AM Agency content tiers",
-          "url": "https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/"
-        }
       ],
       "completedItems": [
         "Website issue review with content and deep-link notes"
@@ -664,7 +518,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "Organic search on pav.law averaged position 45 to 58 in early 2025 Search Console export",
         "source": "Google Search Console via Downloads export, Jan 2025"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "A8",
@@ -674,6 +529,8 @@ window.PROJECT_DATA = {
       "category": "Analytics",
       "campaignType": "Dashboard / Reporting",
       "status": "wip",
+      "estimatedLeads": "All tracked lead sources (calls, forms, referrals)",
+      "clientTouchpoints": "Andrew review, Intake team",
       "keywords": [
         "analytics",
         "tracking",
@@ -686,36 +543,28 @@ window.PROJECT_DATA = {
         "conversion"
       ],
       "title": "Lead & KPI Dashboard",
-      "description": "You cannot optimize what you cannot see. Partial <a href=\"https://support.google.com/analytics/answer/10917952\" target=\"_blank\" rel=\"noopener\">UTM tracking</a> and conversion flags exist, but there is no client-facing dashboard tying calls, forms, and ad spend together. <a href=\"https://knowledge.hubspot.com/reports/understand-attribution-reporting\" target=\"_blank\" rel=\"noopener\">Marketing attribution</a> requires one reliable view of which channels produce consults.",
+      "description": "You cannot optimize what you cannot see. Partial <a href=\"https://support.google.com/analytics/answer/10917952\" target=\"_blank\" rel=\"noopener\">UTM tracking</a> and conversion flags exist, but there is no client-facing dashboard tying calls, forms, and ad spend together. <a href=\"https://knowledge.hubspot.com/reports/understand-attribution-reporting\" target=\"_blank\" rel=\"noopener\">Marketing attribution</a> requires one reliable view of which channels produce consults.\n\nMarketing attribution only works when tags, UTMs, and CRM fields agree. HubSpot’s attribution overview and Google’s conversion measurement docs explain how to tie ad spend to consult requests instead of guessing from incomplete exports. See [HubSpot — marketing attribution](https://knowledge.hubspot.com/reports/understand-attribution-reporting), [HubSpot — connect Google Ads](https://knowledge.hubspot.com/ads/connect-your-google-ads-account-to-hubspot), and [Google Analytics Academy](https://analytics.google.com/analytics/academy/).",
+      "tldr": "One dashboard for calls, forms, and spend by channel.",
       "valueAdded": [
         "One dashboard for calls, forms, and spend by channel",
         "Faster decisions on where the media budget should go",
         "UTM and conversion status documented — pass or fail"
       ],
-      "marketingEducation": "Marketing attribution only works when tags, UTMs, and CRM fields agree. HubSpot’s attribution overview and Google’s conversion measurement docs explain how to tie ad spend to consult requests instead of guessing from incomplete exports. See [HubSpot — marketing attribution](https://knowledge.hubspot.com/reports/understand-attribution-reporting), [HubSpot — connect Google Ads](https://knowledge.hubspot.com/ads/connect-your-google-ads-account-to-hubspot), and [Google Analytics Academy](https://analytics.google.com/analytics/academy/).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — marketing attribution",
-          "url": "https://knowledge.hubspot.com/reports/understand-attribution-reporting"
-        },
-        {
-          "label": "HubSpot — connect Google Ads",
-          "url": "https://knowledge.hubspot.com/ads/connect-your-google-ads-account-to-hubspot"
-        },
-        {
-          "label": "Google Analytics Academy",
-          "url": "https://analytics.google.com/analytics/academy/"
-        }
-      ],
       "completedItems": [
         "Systems audit and access documentation",
-        "UTM tracking logic drafted for contact URLs"
+        "UTM tracking logic drafted for contact URLs",
+        "KPI master table drafted (KPI-01–35)",
+        "Google Ads API setup doc drafted (Gilbert A8 deliverable)"
       ],
       "inProgressItems": [
         "UTM tracking setup on contact URLs",
         "Dashboard and reporting planning",
-        "Conversion actions flagged but not yet in client-facing reports"
-      ]
+        "Conversion actions flagged but not yet in client-facing reports",
+        "**Google Ads API** — credentials, monthly pull script, LSA `local_services_lead` backfill (see [`GOOGLE-ADS-API-SETUP.md`](../../../../../../pav-law-analytics/google-ads/GOOGLE-ADS-API-SETUP.md))",
+        "KPI master table + cockpit spec (see [`KPI-DASHBOARD-SPEC.md`](../../../KPI-DASHBOARD-SPEC.md) · edit [`kpi-list.md`](../../../kpi-list.md))",
+        "HubSpot **Integrations → Google Ads** connect (CRM attribution layer — separate from API secrets)"
+      ],
+      "abQuestions": []
     },
     {
       "id": "B3",
@@ -725,6 +574,7 @@ window.PROJECT_DATA = {
       "category": "Website",
       "campaignType": "Website UX",
       "status": "wip",
+      "clientTouchpoints": "pav.law website, Organic search",
       "keywords": [
         "website",
         "speed",
@@ -736,22 +586,12 @@ window.PROJECT_DATA = {
         "links"
       ],
       "title": "Website Speed and Navigation — Multi-Phase Cleanup",
-      "description": "Traffic already reaches pav.law from ads and search — but confusing navigation, dead links, and slow pages cause people to leave before contacting you. Google ties <a href=\"https://web.dev/vitals/\" target=\"_blank\" rel=\"noopener\">Core Web Vitals</a> to user experience and conversion; prior work cut load times roughly in half, yet friction still blocks form submissions.",
+      "description": "Traffic already reaches pav.law from ads and search — but confusing navigation, dead links, and slow pages cause people to leave before contacting you. Google ties <a href=\"https://web.dev/vitals/\" target=\"_blank\" rel=\"noopener\">Core Web Vitals</a> to user experience and conversion; prior work cut load times roughly in half, yet friction still blocks form submissions.\n\nCore Web Vitals measure page speed and stability — Google ties them to user experience and conversion on mobile and desktop. Clio’s law firm website guide covers navigation and intake paths that reduce drop-off between click and contact form. See [Google web.dev — Core Web Vitals](https://web.dev/vitals/) and [Clio — law firm website UX](https://www.clio.com/blog/law-firm-website/).",
+      "tldr": "Converts more of the traffic you already pay for.",
       "valueAdded": [
         "Converts more of the traffic you already pay for",
         "Phased nav, speed, and form-path fixes — not a one-day patch",
         "Prior work cut load times ~200%; this finishes conversion blockers"
-      ],
-      "marketingEducation": "Core Web Vitals measure page speed and stability — Google ties them to user experience and conversion on mobile and desktop. Clio’s law firm website guide covers navigation and intake paths that reduce drop-off between click and contact form. See [Google web.dev — Core Web Vitals](https://web.dev/vitals/) and [Clio — law firm website UX](https://www.clio.com/blog/law-firm-website/).",
-      "learningsLinks": [
-        {
-          "label": "Google web.dev — Core Web Vitals",
-          "url": "https://web.dev/vitals/"
-        },
-        {
-          "label": "Clio — law firm website UX",
-          "url": "https://www.clio.com/blog/law-firm-website/"
-        }
       ],
       "completedItems": [
         "Website issue review completed",
@@ -763,7 +603,8 @@ window.PROJECT_DATA = {
       "backedMetric": {
         "label": "Prior optimization pass improved site performance about 200 percent",
         "source": "Pav Law project tracker"
-      }
+      },
+      "abQuestions": []
     },
     {
       "id": "A12",
@@ -773,6 +614,8 @@ window.PROJECT_DATA = {
       "category": "Intake / AI",
       "campaignType": "After-Hours Chat",
       "status": "available",
+      "estimatedLeads": "All inbound web leads and form fills",
+      "clientTouchpoints": "HubSpot CRM, Romina booking link, Google Ads call extensions, Landing pages, Website chat",
       "keywords": [
         "pavi",
         "chat",
@@ -786,27 +629,14 @@ window.PROJECT_DATA = {
         "weekends"
       ],
       "title": "Enable Pavi Chat QA for After-Hours Support",
-      "description": "Calls and form fills drop sharply after business hours — but DUI, traffic, and military-related searches do not. **Picky Pavi** (Smart Pavi) chat on the site can answer common questions, capture contact details, and route urgent intake when Romina and the desk are offline. This project enables, tests, and documents the chat QA flow so after-hours visitors get a consistent, firm-safe response path instead of silence.",
+      "description": "Calls and form fills drop sharply after business hours — but DUI, traffic, and military-related searches do not. **Picky Pavi** (Smart Pavi) chat on the site can answer common questions, capture contact details, and route urgent intake when Romina and the desk are offline. This project enables, tests, and documents the chat QA flow so after-hours visitors get a consistent, firm-safe response path instead of silence.\n\nLaw firm chat should qualify and capture — not give legal advice. HubSpot conversational tools and Clio’s intake guidance both emphasize clear disclaimers, human handoff, and logging every after-hours touch so nothing sits unread Monday morning. See [HubSpot — set up chat](https://knowledge.hubspot.com/chatflows/create-a-live-chat), [Clio — law firm client intake](https://www.clio.com/blog/law-firm-client-intake/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
+      "tldr": "After-hours and weekend visitors get answers instead of a dead end.",
       "valueAdded": [
         "After-hours and weekend visitors get answers instead of a dead end",
         "Chat Q&A reviewed for firm-safe, ABA-aligned responses before go-live",
         "HubSpot (or site) logging so morning intake sees overnight conversations"
       ],
-      "marketingEducation": "Law firm chat should qualify and capture — not give legal advice. HubSpot conversational tools and Clio’s intake guidance both emphasize clear disclaimers, human handoff, and logging every after-hours touch so nothing sits unread Monday morning. See [HubSpot — set up chat](https://knowledge.hubspot.com/chatflows/create-a-live-chat), [Clio — law firm client intake](https://www.clio.com/blog/law-firm-client-intake/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — set up chat",
-          "url": "https://knowledge.hubspot.com/chatflows/create-a-live-chat"
-        },
-        {
-          "label": "Clio — law firm client intake",
-          "url": "https://www.clio.com/blog/law-firm-client-intake/"
-        },
-        {
-          "label": "ABA Model Rule 7.2 — advertising",
-          "url": "https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/"
-        }
-      ]
+      "abQuestions": []
     },
     {
       "id": "B7",
@@ -816,6 +646,8 @@ window.PROJECT_DATA = {
       "category": "CRM",
       "campaignType": "Contact Import",
       "status": "available",
+      "estimatedLeads": "All inbound web leads and form fills",
+      "clientTouchpoints": "HubSpot CRM, Romina booking link, Past clients, Referral ask workflows",
       "keywords": [
         "hubspot",
         "import",
@@ -831,22 +663,12 @@ window.PROJECT_DATA = {
         "referral"
       ],
       "title": "HubSpot Marketing Contacts Upload",
-      "description": "Holiday emails, referral sends, and mailers cannot run until contacts live in HubSpot as clean, segmented <a href=\"https://knowledge.hubspot.com/crm-setup/import-objects\" target=\"_blank\" rel=\"noopener\">marketing contacts</a>. MyCase exports, America lists, and spreadsheets need field mapping, deduplication, and lifecycle tags before any warm-channel campaign can target the right people.",
+      "description": "Holiday emails, referral sends, and mailers cannot run until contacts live in HubSpot as clean, segmented <a href=\"https://knowledge.hubspot.com/crm-setup/import-objects\" target=\"_blank\" rel=\"noopener\">marketing contacts</a>. MyCase exports, America lists, and spreadsheets need field mapping, deduplication, and lifecycle tags before any warm-channel campaign can target the right people.\n\nHubSpot marketing contacts must be correctly tagged before email, referral, or mail campaigns can target the right people. HubSpot’s import and marketing-contact docs cover deduplication, lifecycle stages, and email eligibility. See [HubSpot — import contacts](https://knowledge.hubspot.com/crm-setup/import-objects) and [Referral program setup](https://blog.hubspot.com/service/customer-referral-program).",
+      "tldr": "Unlocks holiday email, referral sends, and mailers.",
       "valueAdded": [
         "Unlocks holiday email, referral sends, and mailers",
         "Deduped segments: past clients, referral, friends-and-family",
         "Import guide for future CSV uploads"
-      ],
-      "marketingEducation": "HubSpot marketing contacts must be correctly tagged before email, referral, or mail campaigns can target the right people. HubSpot’s import and marketing-contact docs cover deduplication, lifecycle stages, and email eligibility. See [HubSpot — import contacts](https://knowledge.hubspot.com/crm-setup/import-objects) and [Referral program setup](https://blog.hubspot.com/service/customer-referral-program).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — import contacts",
-          "url": "https://knowledge.hubspot.com/crm-setup/import-objects"
-        },
-        {
-          "label": "Referral program setup",
-          "url": "https://blog.hubspot.com/service/customer-referral-program"
-        }
       ],
       "completedItems": [
         "Missed-call follow-up text templates",
@@ -855,7 +677,8 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "America referral list import (partial — needs full marketing contact pass)",
         "MyCase field cleanup noted in tracker but not finished"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A7",
@@ -865,6 +688,8 @@ window.PROJECT_DATA = {
       "category": "Creative",
       "campaignType": "Creative Repurpose",
       "status": "available",
+      "estimatedLeads": "Upper-funnel traffic → site and remarketing pool",
+      "clientTouchpoints": "Google Ads call extensions, Landing pages",
       "keywords": [
         "creative",
         "copy",
@@ -877,31 +702,18 @@ window.PROJECT_DATA = {
         "ad strength"
       ],
       "title": "NTGUILT Social Ad Campaign(s)",
-      "description": "NTGUILT event creative is already paid for — but sitting unused in paid channels means that investment generates no calls. <a href=\"https://support.google.com/google-ads/answer/7684791\" target=\"_blank\" rel=\"noopener\">Ad strength</a> and fresh <a href=\"https://support.google.com/google-ads/answer/10724897\" target=\"_blank\" rel=\"noopener\">responsive search ads</a> directly affect click-through rate; fatigued creative quietly raises cost per click.",
+      "description": "NTGUILT event creative is already paid for — but sitting unused in paid channels means that investment generates no calls. <a href=\"https://support.google.com/google-ads/answer/7684791\" target=\"_blank\" rel=\"noopener\">Ad strength</a> and fresh <a href=\"https://support.google.com/google-ads/answer/10724897\" target=\"_blank\" rel=\"noopener\">responsive search ads</a> directly affect click-through rate; fatigued creative quietly raises cost per click.\n\nAd creative fatigues over time — Google’s ad strength guidance shows how fresh responsive search ads and Display assets improve click-through at the same budget. Repurposing existing creative is a standard way to refresh without a full redesign. See [Google — ad strength in Search](https://support.google.com/google-ads/answer/7684791), [Google — responsive search ads](https://support.google.com/google-ads/answer/10724897), and [Responsive search ads](https://www.youtube.com/watch?v=OvrQEx2-UYY).",
+      "tldr": "Puts sunk NTGUILT event creative to work in paid channels.",
       "valueAdded": [
         "Puts sunk NTGUILT event creative to work in paid channels",
         "Fresh Display and RSA assets often lift CTR 15–30%",
         "Policy-safe review for criminal defense ad rules"
       ],
-      "marketingEducation": "Ad creative fatigues over time — Google’s ad strength guidance shows how fresh responsive search ads and Display assets improve click-through at the same budget. Repurposing existing creative is a standard way to refresh without a full redesign. See [Google — ad strength in Search](https://support.google.com/google-ads/answer/7684791), [Google — responsive search ads](https://support.google.com/google-ads/answer/10724897), and [Responsive search ads](https://www.youtube.com/watch?v=OvrQEx2-UYY).",
-      "learningsLinks": [
-        {
-          "label": "Google — ad strength in Search",
-          "url": "https://support.google.com/google-ads/answer/7684791"
-        },
-        {
-          "label": "Google — responsive search ads",
-          "url": "https://support.google.com/google-ads/answer/10724897"
-        },
-        {
-          "label": "Responsive search ads",
-          "url": "https://www.youtube.com/watch?v=OvrQEx2-UYY"
-        }
-      ],
       "completedItems": [
         "NTGUILT visual prompt library",
         "Policy-safe ad creative prompt rework"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A11",
@@ -911,6 +723,8 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display",
       "status": "available",
+      "estimatedLeads": "~36 calls/month baseline (Military Search)",
+      "clientTouchpoints": "Google LSA lead dashboard, Google Ads call extensions, Landing pages",
       "keywords": [
         "seasonal",
         "campaign",
@@ -928,28 +742,15 @@ window.PROJECT_DATA = {
         "bilingual"
       ],
       "title": "Seasonal Google and Microsoft Ads Campaign — Focus Area",
-      "description": "Build and launch one focused Google Ads and Microsoft Ads campaign for a single practice or seasonal topic. Potential focus areas include: military and veterans search, DUI and traffic (including mountain and rural corridors), holiday driving windows (July 4, Thanksgiving, New Year's), Local Services Ads geo targets in El Paso County and surrounding areas, NTGUILT and summer event tie-ins, record sealing and post-conviction relief, domestic violence defense (budget-controlled), and bilingual search where intake supports it. The specific topic is selected based on the season and what Pav Law wants to push that quarter — not all areas at once.",
+      "description": "Build and launch one focused Google Ads and Microsoft Ads campaign for a single practice or seasonal topic. Potential focus areas include: military and veterans search, DUI and traffic (including mountain and rural corridors), holiday driving windows (July 4, Thanksgiving, New Year's), Local Services Ads geo targets in El Paso County and surrounding areas, NTGUILT and summer event tie-ins, record sealing and post-conviction relief, domestic violence defense (budget-controlled), and bilingual search where intake supports it. The specific topic is selected based on the season and what Pav Law wants to push that quarter — not all areas at once.\n\nSeasonal legal marketing works when the message matches what people are searching for that month — holiday DUI warnings in July, military themes around deployment cycles, event creative in summer. Google’s campaign structure docs and Clio’s law firm marketing overview explain why single-topic campaigns outperform catch-all account structures. See [Google — Search campaign types](https://support.google.com/google-ads/answer/1703646), [Google — about Display campaigns](https://support.google.com/google-ads/answer/2404190), and [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/).",
+      "tldr": "$2,000 consulting fee per campaign — same price each time one is added.",
       "valueAdded": [
         "$2,000 consulting fee per campaign — same price each time one is added",
         "One focus area per build: structure, creative, UTMs, and conversion tracking",
         "Topic chosen for the season (holiday DUI, military push, summer NTGUILT, etc.)",
         "Mirrored setup on Google Ads and Microsoft Ads where account allows"
       ],
-      "marketingEducation": "Seasonal legal marketing works when the message matches what people are searching for that month — holiday DUI warnings in July, military themes around deployment cycles, event creative in summer. Google’s campaign structure docs and Clio’s law firm marketing overview explain why single-topic campaigns outperform catch-all account structures. See [Google — Search campaign types](https://support.google.com/google-ads/answer/1703646), [Google — about Display campaigns](https://support.google.com/google-ads/answer/2404190), and [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/).",
-      "learningsLinks": [
-        {
-          "label": "Google — Search campaign types",
-          "url": "https://support.google.com/google-ads/answer/1703646"
-        },
-        {
-          "label": "Google — about Display campaigns",
-          "url": "https://support.google.com/google-ads/answer/2404190"
-        },
-        {
-          "label": "Clio — law firm marketing overview",
-          "url": "https://www.clio.com/blog/law-firm-marketing/"
-        }
-      ]
+      "abQuestions": []
     },
     {
       "id": "B8",
@@ -960,6 +761,8 @@ window.PROJECT_DATA = {
       "campaignType": "Social / HubSpot",
       "status": "available",
       "ongoingFee": 500,
+      "estimatedLeads": "All inbound web leads and form fills",
+      "clientTouchpoints": "HubSpot CRM, Romina booking link, GBP, Directory profiles, Social bios",
       "keywords": [
         "social",
         "social media",
@@ -975,26 +778,12 @@ window.PROJECT_DATA = {
         "publish"
       ],
       "title": "HubSpot Social Media Marketing",
-      "description": "Social media is a free touchpoint between paid campaigns — but only if posting is consistent, on-brand, and tracked. HubSpot Marketing connects Facebook, Instagram, and LinkedIn so Pav Law can publish firm-safe content (safety tips, NTGUILT creative, consult CTAs) with approval before go-live, following <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">law firm social media</a> best practices and <a href=\"https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/\" target=\"_blank\" rel=\"noopener\">ABA advertising rules</a>.",
+      "description": "Social media is a free touchpoint between paid campaigns — but only if posting is consistent, on-brand, and tracked. HubSpot Marketing connects Facebook, Instagram, and LinkedIn so Pav Law can publish firm-safe content (safety tips, NTGUILT creative, consult CTAs) with approval before go-live, following <a href=\"https://www.clio.com/blog/law-firm-marketing/\" target=\"_blank\" rel=\"noopener\">law firm social media</a> best practices and <a href=\"https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/\" target=\"_blank\" rel=\"noopener\">ABA advertising rules</a>.\n\nLaw firm social content should be consistent, ethical, and measurable. HubSpot’s social publishing tools and Clio’s law firm social media guide cover scheduling, approvals, and what firms should share under attorney advertising rules. See [HubSpot — schedule social posts](https://business.facebook.com/business/help), [Clio — law firm social media](https://www.clio.com/blog/law-firm-marketing/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
+      "tldr": "Organic social between paid touches — no extra ad spend per post.",
       "valueAdded": [
         "Organic social between paid touches — no extra ad spend per post",
         "Romina, Casey, and Andrew trained inside HubSpot",
         "Approval workflow before anything goes live"
-      ],
-      "marketingEducation": "Law firm social content should be consistent, ethical, and measurable. HubSpot’s social publishing tools and Clio’s law firm social media guide cover scheduling, approvals, and what firms should share under attorney advertising rules. See [HubSpot — schedule social posts](https://business.facebook.com/business/help), [Clio — law firm social media](https://www.clio.com/blog/law-firm-marketing/), and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — schedule social posts",
-          "url": "https://business.facebook.com/business/help"
-        },
-        {
-          "label": "Clio — law firm social media",
-          "url": "https://www.clio.com/blog/law-firm-marketing/"
-        },
-        {
-          "label": "ABA Model Rule 7.2 — advertising",
-          "url": "https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/"
-        }
       ],
       "completedItems": [
         "GBP social-link cleanup — inactive links removed; focus on call/text CTAs",
@@ -1002,7 +791,8 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Romina event social support role defined in summer campaign doc — not yet HubSpot-connected"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A5",
@@ -1012,6 +802,8 @@ window.PROJECT_DATA = {
       "category": "CRM / Web",
       "campaignType": "Landing Page",
       "status": "available",
+      "estimatedLeads": "All inbound web leads and form fills",
+      "clientTouchpoints": "HubSpot CRM, Romina booking link, pav.law website, Organic search",
       "keywords": [
         "landing",
         "page",
@@ -1021,27 +813,18 @@ window.PROJECT_DATA = {
         "web"
       ],
       "title": "HubSpot Landing Page or Website Module",
-      "description": "Sending paid traffic to your homepage spreads attention across every practice area — which typically lowers <a href=\"https://blog.hubspot.com/marketing/landing-page-best-practices\" target=\"_blank\" rel=\"noopener\">landing page conversion rate</a>. A single-offer page (referral signup, resources QR, or intake variant) gives each campaign one message, one form, and one path into HubSpot.",
+      "description": "Sending paid traffic to your homepage spreads attention across every practice area — which typically lowers <a href=\"https://blog.hubspot.com/marketing/landing-page-best-practices\" target=\"_blank\" rel=\"noopener\">landing page conversion rate</a>. A single-offer page (referral signup, resources QR, or intake variant) gives each campaign one message, one form, and one path into HubSpot.\n\nLanding pages convert best with one offer, one message, and one call to action. HubSpot’s landing page best practices and Academy course cover form placement, page length, and testing — the same principles Google uses in landing page experience guidance. See [HubSpot — landing page best practices](https://blog.hubspot.com/marketing/landing-page-best-practices) and [HubSpot Academy — landing pages](https://academy.hubspot.com/courses/landing-pages).",
+      "tldr": "Single-offer pages typically convert better than a general homepage.",
       "valueAdded": [
         "Single-offer pages typically convert better than a general homepage",
         "One form path tested into HubSpot for each campaign",
         "Mobile and desktop QA before ads or QR codes go live"
       ],
-      "marketingEducation": "Landing pages convert best with one offer, one message, and one call to action. HubSpot’s landing page best practices and Academy course cover form placement, page length, and testing — the same principles Google uses in landing page experience guidance. See [HubSpot — landing page best practices](https://blog.hubspot.com/marketing/landing-page-best-practices) and [HubSpot Academy — landing pages](https://academy.hubspot.com/courses/landing-pages).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — landing page best practices",
-          "url": "https://blog.hubspot.com/marketing/landing-page-best-practices"
-        },
-        {
-          "label": "HubSpot Academy — landing pages",
-          "url": "https://academy.hubspot.com/courses/landing-pages"
-        }
-      ],
       "completedItems": [
         "Referral landing page setup documentation",
         "HubSpot form and workflow foundation"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "A6",
@@ -1051,6 +834,8 @@ window.PROJECT_DATA = {
       "category": "Outbound",
       "campaignType": "Outbound Calls",
       "status": "available",
+      "estimatedLeads": "30–40 calls/month (paid search dependency)",
+      "clientTouchpoints": "HubSpot phone, Romina desk line",
       "keywords": [
         "gabriel",
         "outbound",
@@ -1059,28 +844,15 @@ window.PROJECT_DATA = {
         "dial",
         "script"
       ],
-      "title": "Gabriel Outbound Sales Calling Campaign",
-      "description": "Not every consult will come from Google Ads. <a href=\"https://blog.hubspot.com/sales/inbound-sales\" target=\"_blank\" rel=\"noopener\">Outbound calling</a> to a targeted list — with a clear script and CRM logging — lets Gabriel add phone conversations without increasing media spend.",
+      "title": "Gabriel Outbound Sales Calling",
+      "description": "Not every consult will come from Google Ads. <a href=\"https://blog.hubspot.com/sales/inbound-sales\" target=\"_blank\" rel=\"noopener\">Outbound calling</a> to a targeted list — with a clear script and CRM logging — lets Gabriel add phone conversations without increasing media spend.\n\nOutbound calling complements paid media when lists are targeted and every dial is logged in CRM. HubSpot’s outbound guidance covers list quality, call structure, and why professional services firms track conversations — not just ad clicks. See [HubSpot — cold calling tips for services](https://blog.hubspot.com/sales/inbound-sales), [HubSpot — log calls in CRM](https://academy.hubspot.com/courses/automation), and [CRM call logging](https://www.youtube.com/watch?v=9GzOEe4-G10).",
+      "tldr": "Adds phone conversations without increasing ad spend.",
       "valueAdded": [
         "Adds phone conversations without increasing ad spend",
         "Ready-to-dial list and script approved by Andrew",
         "Every outcome logged in HubSpot for reporting"
       ],
-      "marketingEducation": "Outbound calling complements paid media when lists are targeted and every dial is logged in CRM. HubSpot’s outbound guidance covers list quality, call structure, and why professional services firms track conversations — not just ad clicks. See [HubSpot — cold calling tips for services](https://blog.hubspot.com/sales/inbound-sales), [HubSpot — log calls in CRM](https://academy.hubspot.com/courses/automation), and [CRM call logging](https://www.youtube.com/watch?v=9GzOEe4-G10).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — cold calling tips for services",
-          "url": "https://blog.hubspot.com/sales/inbound-sales"
-        },
-        {
-          "label": "HubSpot — log calls in CRM",
-          "url": "https://academy.hubspot.com/courses/automation"
-        },
-        {
-          "label": "CRM call logging",
-          "url": "https://www.youtube.com/watch?v=9GzOEe4-G10"
-        }
-      ]
+      "abQuestions": []
     },
     {
       "id": "A9",
@@ -1090,6 +862,8 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Social Proof Ads",
       "status": "available",
+      "estimatedLeads": "~36 calls/month baseline (Military Search)",
+      "clientTouchpoints": "Google Ads call extensions, Landing pages, GBP, Directory profiles, Social bios",
       "keywords": [
         "case win",
         "social proof",
@@ -1098,23 +872,14 @@ window.PROJECT_DATA = {
         "trust"
       ],
       "title": "Case Win Log and Testimonials",
-      "description": "Generic ad copy underperforms because it does not prove results. [Social proof](https://blog.hubspot.com/marketing/social-proof-examples) — outcome type and jurisdiction, never client names — builds trust within [ABA advertising rules](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/). This project creates an approved win log and rotating ad snippets.",
+      "description": "Generic ad copy underperforms because it does not prove results. [Social proof](https://blog.hubspot.com/marketing/social-proof-examples) — outcome type and jurisdiction, never client names — builds trust within [ABA advertising rules](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/). This project creates an approved win log and rotating ad snippets.\n\nSocial proof — outcome language without client names — builds trust in professional services ads. HubSpot’s social proof research and ABA Rule 7.2 set the boundary between persuasive copy and impermissible advertising claims. See [HubSpot — social proof examples](https://blog.hubspot.com/marketing/social-proof-examples) and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
+      "tldr": "Real outcomes become reusable ad copy the team approves once.",
       "valueAdded": [
         "Real outcomes become reusable ad copy the team approves once",
         "Privacy-safe snippets — outcome type and jurisdiction only",
         "Typically lifts click-through 10–25% over generic lines"
       ],
-      "marketingEducation": "Social proof — outcome language without client names — builds trust in professional services ads. HubSpot’s social proof research and ABA Rule 7.2 set the boundary between persuasive copy and impermissible advertising claims. See [HubSpot — social proof examples](https://blog.hubspot.com/marketing/social-proof-examples) and [ABA Model Rule 7.2 — advertising](https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — social proof examples",
-          "url": "https://blog.hubspot.com/marketing/social-proof-examples"
-        },
-        {
-          "label": "ABA Model Rule 7.2 — advertising",
-          "url": "https://www.americanbar.org/groups/professional_responsibility/publications/model_rules_of_professional_conduct/rule_7_2_advertising/"
-        }
-      ]
+      "abQuestions": []
     },
     {
       "id": "A10",
@@ -1124,6 +889,7 @@ window.PROJECT_DATA = {
       "category": "Strategy",
       "campaignType": "Strategy Audit",
       "status": "completed",
+      "clientTouchpoints": "Andrew review, Intake team",
       "keywords": [
         "strategy",
         "audit",
@@ -1133,36 +899,28 @@ window.PROJECT_DATA = {
         "plan"
       ],
       "title": "Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone",
-      "description": "Pav Law is running Google Ads, LSA, HubSpot, referral, outbound, website, and SEO work simultaneously — without a ranked plan, consulting spend scatters. A focused <a href=\"https://blog.hubspot.com/marketing/marketing-audit\" target=\"_blank\" rel=\"noopener\">marketing audit</a> session ranks every channel by ROI, effort, and what depends on what else.",
+      "description": "Pav Law is running Google Ads, LSA, HubSpot, referral, outbound, website, and SEO work simultaneously — without a ranked plan, consulting spend scatters. A focused <a href=\"https://blog.hubspot.com/marketing/marketing-audit\" target=\"_blank\" rel=\"noopener\">marketing audit</a> session ranks every channel by ROI, effort, and what depends on what else.\n\nA marketing audit ranks channels by what is working, what is leaking, and what should wait. HubSpot’s audit checklist is a practical framework for professional services firms juggling paid, organic, CRM, and referral at once. See [HubSpot — marketing audit checklist](https://blog.hubspot.com/marketing/marketing-audit) and [Prioritization frameworks](https://www.youtube.com/watch?v=QZJ1cAfR1P0).",
+      "tldr": "One agreed 30-day action list across all channels.",
       "valueAdded": [
         "One agreed 30-day action list across all channels",
         "Defer/cut list so spend does not scatter",
         "Ranked by ROI, effort, and dependencies"
       ],
-      "marketingEducation": "A marketing audit ranks channels by what is working, what is leaking, and what should wait. HubSpot’s audit checklist is a practical framework for professional services firms juggling paid, organic, CRM, and referral at once. See [HubSpot — marketing audit checklist](https://blog.hubspot.com/marketing/marketing-audit) and [Prioritization frameworks](https://www.youtube.com/watch?v=QZJ1cAfR1P0).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — marketing audit checklist",
-          "url": "https://blog.hubspot.com/marketing/marketing-audit"
-        },
-        {
-          "label": "Prioritization frameworks",
-          "url": "https://www.youtube.com/watch?v=QZJ1cAfR1P0"
-        }
-      ],
       "completedItems": [
         "Marketing strategy shift recommendation",
         "Revenue-channel planning framework"
-      ]
+      ],
+      "abQuestions": []
     },
     {
       "id": "B9",
       "priority": 22,
-      "fee": 1400,
-      "timeline": "1 week",
+      "fee": 2400,
+      "timeline": "2 week",
       "category": "Finance / Operations",
       "campaignType": "Spend Audit",
       "status": "available",
+      "clientTouchpoints": "",
       "keywords": [
         "credit card",
         "subscription",
@@ -1176,27 +934,13 @@ window.PROJECT_DATA = {
         "budget"
       ],
       "title": "Credit Card & Subscription Leak Spend Audit",
-      "description": "Marketing and ops subscriptions stack up fast — HubSpot seats, ad tools, phone/VoIP, listing services, and forgotten trials can drain budget without a single line item on the ads dashboard. This project audits Pav Law card and bank charges for duplicate, unused, or over-tier subscriptions, maps each to a business purpose, and flags leaks with cancel-or-downgrade recommendations.",
+      "tldr": "Full account and finance cycle audit to track path from spend to earn to spend.",
       "valueAdded": [
-        "Full pass on recurring charges tied to marketing, CRM, phone, and ops",
-        "Each subscription tagged: keep, downgrade, cancel, or needs owner decision",
-        "Simple subscription checker checklist for monthly review so leaks do not return"
+        "Full pass on recurring charges tied to marketing, CRM, phone, and ops. Bills keep showing up for tools that we do not need or use running Rocketor another app on the records will help to clean this up and save money.",
+        "Implement budget(s)",
+        "-"
       ],
-      "marketingEducation": "SaaS and vendor creep is common when multiple people add tools over time. A recurring subscription review — matching each charge to an active user or campaign — is standard ops hygiene for small firms running paid media and CRM together. See [HubSpot — manage your account and billing](https://knowledge.hubspot.com/account/manage-your-account), [Google Workspace — admin billing overview](https://support.google.com/a/answer/1227361), and [Clio — law firm overhead and tech spend](https://www.clio.com/blog/law-firm-overhead/).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — manage your account and billing",
-          "url": "https://knowledge.hubspot.com/account/manage-your-account"
-        },
-        {
-          "label": "Google Workspace — admin billing overview",
-          "url": "https://support.google.com/a/answer/1227361"
-        },
-        {
-          "label": "Clio — law firm overhead and tech spend",
-          "url": "https://www.clio.com/blog/law-firm-overhead/"
-        }
-      ]
+      "abQuestions": []
     },
     {
       "id": "A8M",
@@ -1207,6 +951,8 @@ window.PROJECT_DATA = {
       "status": "ongoing",
       "parentId": "A8",
       "monthlyOnly": true,
+      "estimatedLeads": "All tracked lead sources (calls, forms, referrals)",
+      "clientTouchpoints": "Andrew review, Intake team",
       "keywords": [
         "dashboard",
         "reporting",
@@ -1217,23 +963,15 @@ window.PROJECT_DATA = {
         "attribution"
       ],
       "title": "Lead Source Dashboard — Retainer",
-      "description": "After the lead-source dashboard is live (A8), this retainer keeps reports current each month — refreshing HubSpot views, checking UTM and conversion flags, publishing the monthly lead-source report, and flagging data breaks before they skew decisions.",
+      "description": "After the lead-source dashboard is live (A8), this retainer keeps reports current each month — refreshing HubSpot views, checking UTM and conversion flags, publishing the monthly lead-source report, and flagging data breaks before they skew decisions.\n\nReporting only stays useful when someone reviews it every month — validating tags, reconciling ad platforms to CRM, and noting when a channel’s numbers shift. HubSpot attribution guidance applies the same discipline to law firm lead tracking. See [HubSpot — attribution reporting](https://knowledge.hubspot.com/reports/understand-attribution-reporting) and [Google Analytics Academy](https://analytics.google.com/analytics/academy/).",
+      "tldr": "Monthly lead-source report published from live dashboard data.",
       "valueAdded": [
         "Monthly lead-source report published from live dashboard data",
         "UTM and conversion flags checked — issues flagged before month-end",
-        "Google Ads and LSA tie-ins updated where integrations allow"
+        "Google Ads and LSA tie-ins updated where integrations allow",
+        "Google Ads API monthly pull reconciled to manual CSV archive (KPI spec § Export checklist)"
       ],
-      "marketingEducation": "Reporting only stays useful when someone reviews it every month — validating tags, reconciling ad platforms to CRM, and noting when a channel’s numbers shift. HubSpot attribution guidance applies the same discipline to law firm lead tracking. See [HubSpot — attribution reporting](https://knowledge.hubspot.com/reports/understand-attribution-reporting) and [Google Analytics Academy](https://analytics.google.com/analytics/academy/).",
-      "learningsLinks": [
-        {
-          "label": "HubSpot — attribution reporting",
-          "url": "https://knowledge.hubspot.com/reports/understand-attribution-reporting"
-        },
-        {
-          "label": "Google Analytics Academy",
-          "url": "https://analytics.google.com/analytics/academy/"
-        }
-      ]
+      "abQuestions": []
     }
   ]
 };

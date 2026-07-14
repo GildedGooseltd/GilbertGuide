@@ -61,7 +61,7 @@ You should see ~210 lines in Code.gs starting with `const NOTIFY_EMAIL = "suppor
 
 **Verify A:** Browser address bar → paste `WEBHOOK_URL` + `?ping=1` → Enter.
 
-Expected on screen: `{"ok":true,"service":"picky-pavi"}`
+Expected on screen: `{"ok":true,"service":"gilbert-guide"}`
 
 ---
 
@@ -80,7 +80,7 @@ Expected on screen: `{"ok":true,"service":"picky-pavi"}`
 
 **Verify B:** Browser → paste `QB_DEPOSIT_URL` → checkout shows **$2,500**.
 
-**Save for picker:** Part C Secret 2 → [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) — name `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`, Secret = `QB_DEPOSIT_URL`.
+**Save for picker:** Part C Secret 2 → [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new) — name `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`, Secret = `QB_DEPOSIT_URL`.
 
 ---
 
@@ -105,13 +105,13 @@ Summary below assumes files are already on GitHub.
 
 **Do not** put both names in the **Secret** box. GitHub wants **one secret per save** — a **Name** (label) and a **Secret** (the actual URL only).
 
-**Cannot edit a secret later** — [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) → **Remove** → [New secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) again.
+**Cannot edit a secret later** — [Secrets list](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions) → **Remove** → [New secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new) again.
 
 ---
 
 #### Secret 1 of 2 — webhook
 
-1. Open: [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+1. Open: [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
 2. **Name** field — type exactly (copy/paste):
 
    `PAV_PICKER_WEBHOOK_URL`
@@ -128,7 +128,7 @@ Summary below assumes files are already on GitHub.
 
 #### Secret 2 of 2 — QuickBooks deposit (NOT Apps Script)
 
-1. Open again: [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+1. Open again: [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
 2. **Name** field:
 
    `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`
@@ -147,7 +147,7 @@ Summary below assumes files are already on GitHub.
 
 Only if you need something other than $2,500:
 
-- [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+- [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
 - **Name:** `PAV_PICKER_DEPOSIT_AMOUNT`
 - **Secret:** `2500`
 
@@ -155,7 +155,7 @@ Only if you need something other than $2,500:
 
 #### Verify secrets saved
 
-Open: [Actions secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions)
+Open: [Actions secrets list](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions)
 
 Under **Repository secrets** you should see at least:
 
@@ -172,13 +172,13 @@ Under **Repository secrets** you should see at least:
 
 Full link guide: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
-**No Settings tab?** You need **Admin** on [PickyPavi](https://github.com/GildedGooseltd/PickyPavi).
+**No Settings tab?** You need **Admin** on [GilbertGuide](https://github.com/GildedGooseltd/GilbertGuide).
 
 **Terminal alternative:**
 
 ```bash
-gh secret set PAV_PICKER_WEBHOOK_URL --repo GildedGooseltd/PickyPavi
-gh secret set PAV_PICKER_QUICKBOOKS_DEPOSIT_URL --repo GildedGooseltd/PickyPavi
+gh secret set PAV_PICKER_WEBHOOK_URL --repo GildedGooseltd/GilbertGuide
+gh secret set PAV_PICKER_QUICKBOOKS_DEPOSIT_URL --repo GildedGooseltd/GilbertGuide
 ```
 
 Paste each URL when prompted — not the secret name.
@@ -187,12 +187,12 @@ Paste each URL when prompted — not the secret name.
 
 | Step | Link | Do this |
 |------|------|---------|
-| **C6** | [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | **Build and deployment** → Source: **Deploy from a branch** → Branch: **`gh-pages`** / **`/ (root)`** → **Save** |
-| **C7** | [Actions — Deploy Picky Pavi](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** → **Run workflow** |
-| **C8** | [Actions tab](https://github.com/GildedGooseltd/PickyPavi/actions) | Wait for green ✓ on latest run |
-| **C9** | [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | Copy **Your site is live at** → `https://gildedgooseltd.github.io/PickyPavi/` |
+| **C6** | [Pages settings](https://github.com/GildedGooseltd/GilbertGuide/settings/pages) | **Build and deployment** → Source: **Deploy from a branch** → Branch: **`gh-pages`** / **`/ (root)`** → **Save** |
+| **C7** | [Actions — Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** → **Run workflow** |
+| **C8** | [Actions tab](https://github.com/GildedGooseltd/GilbertGuide/actions) | Wait for green ✓ on latest run |
+| **C9** | [Pages settings](https://github.com/GildedGooseltd/GilbertGuide/settings/pages) | Copy **Your site is live at** → `https://gildedgooseltd.github.io/GilbertGuide/` |
 
-**Verify C:** [Live picker](https://gildedgooseltd.github.io/PickyPavi/) loads → then [config.js](https://gildedgooseltd.github.io/PickyPavi/config.js) shows real URLs (not `YOUR_DEPLOYMENT_ID`).
+**Verify C:** [Live picker](https://gildedgooseltd.github.io/GilbertGuide/) loads → then [config.js](https://gildedgooseltd.github.io/GilbertGuide/config.js) shows real URLs (not `YOUR_DEPLOYMENT_ID`).
 
 ---
 

@@ -8,21 +8,27 @@
 | **Category**      | Retainer                                                   |
 | **Campaign type** | Paid Media Mgmt                                            |
 | **Status**        | ongoing                                                    |
+| **Estimated leads** | ~36 calls/month baseline (Military Search)                 |
+| **Client touchpoints** | Google Ads, LSA, Microsoft Ads, Romina intake, Monthly reports to Andrew |
 | **Keywords**      | ongoing, monthly, steady, maintain, retainer, report, crm, hubspot, referral, routine, lsa |
 
 ---
 
-## Description
+## TLDR
 
-Pav Law invests about $6,000/month in Google Ads media, but without a formal <a href="https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/" target="_blank" rel="noopener">PPC management</a> retainer, campaigns drift between one-off fixes. This project provides ongoing oversight of Google Ads, <a href="https://support.google.com/localservices/answer/6224841" target="_blank" rel="noopener">Local Services Ads</a>, and Microsoft Ads — monitoring spend, tuning bids, reviewing call quality, and reporting <a href="https://www.clio.com/blog/law-firm-marketing/" target="_blank" rel="noopener">cost per call</a> by campaign each month.
+Protects Military Search at roughly $67 per call (~36 calls/month in May 2026 data).
 
 ## Value Added
 
 - Protects Military Search at roughly $67 per call (~36 calls/month in May 2026 data)
 - Monthly reporting catches waste before it runs another month
 - Keeps Google Ads, LSA, and Microsoft Ads aligned under one scope
+- LSA lead-status SOP so booked, spam, and follow-up leads stay accurate for billing and reporting
+- Casey trained via call review before live intake — learns practice talk tracks from recordings, then covers phones on a fixed schedule so Romina gets uninterrupted time for pipeline and admin
 
-## Marketing Education
+## Description
+
+Pav Law invests about $6,000/month in Google Ads media, but without a formal <a href="https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/" target="_blank" rel="noopener">PPC management</a> retainer, campaigns drift between one-off fixes. This project provides ongoing oversight of Google Ads, <a href="https://support.google.com/localservices/answer/6224841" target="_blank" rel="noopener">Local Services Ads</a>, and Microsoft Ads — monitoring spend, tuning bids, reviewing call quality, and reporting <a href="https://www.clio.com/blog/law-firm-marketing/" target="_blank" rel="noopener">cost per call</a> by campaign each month.
 
 Ongoing PPC management means watching campaigns weekly — pausing losers, scaling winners, and measuring cost per call. For law firms, Google and Clio both recommend tracking phone outcomes, not clicks alone, when judging paid search performance. See [Google Ads help — measure conversions](https://support.google.com/google-ads/answer/1722022), [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/), [Google Local Services Ads overview](https://support.google.com/localservices/answer/6224841), [PPC management pricing (2026)](https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/), [Law firm agency retainers](https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/), and [Rocket Pilots PPC tiers](https://rocketpilots.com/ppc-for-lawyers/).
 
@@ -32,6 +38,7 @@ Ongoing PPC management means watching campaigns weekly — pausing losers, scali
 - Ad extension and sitelink rollout
 - LSA performance summaries
 - Speed-to-lead intake recommendations
+- **LSA documenting & training** — handout: `LSA-DOCUMENTING-TRAINING.md` (repo: `gilded-goose/clients/pav-law/`): update LSA lead info; Casey call review + status updates; phone coverage ramp (2–3 hrs/day or one day/week); HubSpot alignment for LSA leads
 
 ## Completed
 
