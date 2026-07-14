@@ -70,11 +70,15 @@ window.PROJECT_DATA = {
       "**LSA Phase 2** — see B11: Casey call review + phone coverage calendar for another attempt at improving the calling process"
     ],
     "resultsItems": [
-      "May 2026: $2,421 Military spend · 36 calls · ~$67/call",
-      "Jun 11–Jul 10: $3,983 Military spend · 330 clicks · primary call engine",
-      "NTGUILT Search launched — $1,924 spend · 282 clicks · ~$6.82/click",
-      "Mountain DUI + Demand Gen remain paused — waste stopped",
-      "The military campaign spend is very strong because it has a lot of DV content in it that was performing well but may not have been specifically military. This has since been divided out into a new campaign and segment to improve the data quality and expand target audiences further."
+      "Period: May 2026 · Jun 11, 2026 – Jul 10, 2026 · May 1–18 email snapshot",
+      "Source: Ad Reports exports · May 19, 2026 client email",
+      "Consulting fee charged: $2,700/mo retainer",
+      "Media / partner spend: May 1–18 ~$11,650 platform · pace ~$20k month · Military May $2,421 · Military Jun 11–Jul 10 $3,983 · NTGUILT Search $1,924",
+      "Volume: May Military 36 calls · May 1–18: 628 clicks · 19 phone calls · 21 LSA charged leads · NTGUILT Search 282 clicks",
+      "Efficiency: ~$67/call Military (May) · ~$6.82/click NTGUILT Search · message leads converted 0 (Andrew note)",
+      "Outcome: Andrew approved ~20% spend increase · trust &gt;$67k toward $100k month · Mountain DUI + Demand Gen paused · DV content split from Military for cleaner data",
+      "Status vs goal: Primary call engine = Military · NTGUILT Search live · LSA Phase 2 still open (B11)",
+      "Fee note: $2,700/mo is mid–upper vs Cos Springs PPC-only (~$1k–$2k) and mid vs Denver law PPC management ($1.5k–$5k). Includes Google + LSA + Microsoft ops. See FEE-BENCHMARK-CO-SPRINGS.md."
     ],
     "goal": "Current metrics, goals and trends for 2026 digital ads",
     "informationNeeded": [
@@ -100,7 +104,7 @@ window.PROJECT_DATA = {
         "focus": "Measure & optimize",
         "status": "wip",
         "target": "May 2026: $2,421 Military spend · 36 calls · ~$67/call",
-        "notes": "May 2026: $2,421 Military spend · 36 calls · ~$67/c… (+4 more)"
+        "notes": "Period: May 2026 · Jun 11, 2026 – Jul 10, 2026 · Ma… (+8 more)"
       }
     ],
     "blockers": [
@@ -164,6 +168,7 @@ window.PROJECT_DATA = {
       "campaignType": "Holiday Email",
       "status": "completed",
       "publishStatus": "published",
+      "parentId": "B13",
       "estimatedLeads": "Past-client and prospect email list",
       "clientTouchpoints": "HubSpot email, Past-client lists",
       "keywords": [
@@ -177,7 +182,7 @@ window.PROJECT_DATA = {
         "warning",
         "past client"
       ],
-      "title": "Summer Safety Email Campaign",
+      "title": "Summer Safety Email Campaign (child of B13)",
       "description": "DUI and traffic ticket volume spikes around July 4 — exactly when past clients and their networks are most likely to need you again. Seasonal email nurture reaches people who already trust Pav Law: a pre-holiday safety message, then a post-holiday guide on what to do if pulled over, ticketed, or charged.\n\nSeasonal email nurture works best when the message is useful at the moment of need — not a generic promotion. HubSpot’s law firm marketing content covers timing, segmentation, and compliance basics for professional services email. See HubSpot — law firm marketing and ABA Model Rule 7.2 — advertising.\n\n**Market differentiation & attention:** The legal space, especially for traffic and criminal defense, is saturated with serious, formal, and frankly boring advertising. Our approach immediately cuts through that noise. An email subject line like “Don't forget to pull out this summer!” is impossible to ignore. It creates a pattern interrupt that forces engagement, which is the first and most difficult step in any marketing funnel.",
       "tldr": "Reaches past clients when DUI and ticket volume spikes around July 4.",
       "valueAdded": [
@@ -190,9 +195,14 @@ window.PROJECT_DATA = {
         "intake"
       ],
       "resultsItems": [
-        "Campaign completed for July 4 window",
-        "Pre-holiday safety + post-holiday charge guide sequence defined",
-        "HubSpot send path to Romina booking in every email"
+        "Period: July 4, 2026 holiday window",
+        "Source: A3 campaign send · HubSpot",
+        "Consulting fee charged: $1,200 (packaged under B13 HubSpot Marketing Setup)",
+        "Media / partner spend: —",
+        "Volume: ~850 list · ~120 connected / wave (impact estimates)",
+        "Efficiency: Target &lt;$50 cost per booked consult",
+        "Outcome: Pre-holiday safety + post-holiday charge guide shipped · Romina booking path in every email",
+        "Status vs goal: Completed campaign · ROI logging still weak without full UTM→consult chain"
       ],
       "goal": "Drive 2–4 re-engaged consults from past-client list around July 4 window at <$50 cost per booked consult.",
       "informationNeeded": [
@@ -217,7 +227,7 @@ window.PROJECT_DATA = {
           "phase": "3",
           "focus": "Measure & optimize",
           "status": "completed",
-          "target": "Campaign completed for July 4 window (+2 more)",
+          "target": "Period: July 4, 2026 holiday window (+7 more)",
           "notes": ""
         }
       ],
@@ -519,6 +529,208 @@ window.PROJECT_DATA = {
       "kpiRefs": []
     },
     {
+      "id": "A17",
+      "priority": 2,
+      "fee": 1500,
+      "timeline": "1–2 weeks playbook, then weekly calling",
+      "category": "Referral / Outbound",
+      "campaignType": "Past-Client Reengagement",
+      "status": "wip",
+      "publishStatus": "published",
+      "parentId": "A4",
+      "enabler": false,
+      "estimatedLeads": "Target 20 resigns per program wave (PDF KPI)",
+      "clientTouchpoints": "100 connects · 200 emails per wave (PDF KPI)",
+      "keywords": [
+        "sealing",
+        "probation",
+        "deferred",
+        "judgment",
+        "reengagement",
+        "gabriel",
+        "mycase",
+        "nurture track"
+      ],
+      "title": "Sealing & Probation Client Reengagement",
+      "description": "June Client Reengagement PDF defines Track 2: call past clients for Colorado simplified sealing after deferred judgment dismissal, and motions for early termination / lift supervised probation. MyCase updates required: Outcome, Status = Prospecting - Returning Client, Client Disposition, Nurture Track. Daily ops KPIs: 20 client updates/day, 20 calls/day. Wave KPIs: 100 connects @ 40% target, 200 emails, 20 resigns. Pricing schedule in PDF: full-pay discounts and plans from about $900–$1,500 depending on offer. Gabriel call scripts included. Parent A4 owns referral Track 1; this card owns sealing/probation Track 2. A6 can execute dials once lists and fields are ready. B7 unlocks email follow-up at scale.",
+      "tldr": "Past clients who finished deferred judgment or probation get a clear next legal offer — sealing or early termination — while cleaning MyCase data.",
+      "valueAdded": [
+        "Second track beside A4 referral asks (same MyCase hygiene)",
+        "Uses case file Pav already owns — faster than new-firm shopping",
+        "Scripts + pricing already drafted in June Client Reengagement PDF"
+      ],
+      "valueIcons": [
+        "referrals",
+        "intake",
+        "leads"
+      ],
+      "completedItems": [
+        "Playbook PDF with KPIs, scripts, email template, pricing schedule"
+      ],
+      "inProgressItems": [
+        "MyCase field update pass on easy/memorable closed cases",
+        "Tag Nurture Track for sealing vs probation offers",
+        "Load scripts into A6 / HubSpot call outcomes",
+        "Automated follow-up email for tagged tracks"
+      ],
+      "resultsItems": [
+        "Period: Playbook dated June 2026 · ops not yet measured in Guide",
+        "Source: Downloads/June_ Client Reengagement.pdf · May 29 Time Sensitive email (campaign fields doc)",
+        "Consulting fee charged: $1,500 listed (playbook + launch)",
+        "Media / partner spend: —",
+        "Volume: Targets only — 20 updates/day · 20 calls/day · 100 connects · 200 emails · 20 resigns",
+        "Efficiency: Offer menu ~$900–$1,500 DJ/probation schedules (client fees, not GGL)",
+        "Outcome: Documentation complete; dial volume not confirmed",
+        "Status vs goal: Active (wip) — playbook ready · execution in progress"
+      ],
+      "goal": "Book 20 resigns (or signed sealing/probation matters) per wave at PDF connect/email targets with Nurture Track logged on every touched contact.",
+      "informationNeeded": [
+        "Confirm MyCase field names match PDF (Outcome · Status · Disposition · Nurture Track)",
+        "AB - Q: Start with Gabriel volume target of 20 calls/day or softer ramp?"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "Jun 2026",
+          "notes": "PDF playbook · scripts · pricing"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "wip",
+          "target": "MyCase fields · list · Gabriel dials · HubSpot nurture",
+          "notes": ""
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "not started",
+          "target": "Connect rate · resigns · revenue",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "B7 contacts not fully in HubSpot",
+        "MyCase AR/outcome quality uneven for list builds"
+      ],
+      "recommendedMetrics": [
+        "Connect rate vs 40% target",
+        "Resigns vs 20 target",
+        "Revenue from sealing/probation offers"
+      ],
+      "insightsImprovements": [
+        "Prioritize positive-outcome closed cases; exclude hostile/open matters (PDF)",
+        "Flag high-potential sealing/parole candidates into A4 referral track when fit"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [
+        "Start with Gabriel volume target of 20 calls/day or softer ramp?"
+      ],
+      "kpiRefs": []
+    },
+    {
+      "id": "B13",
+      "priority": 2,
+      "fee": 4500,
+      "timeline": "Multi-sprint parent (Apr–Jul 2026 build + ongoing ops)",
+      "category": "CRM",
+      "campaignType": "HubSpot Foundation",
+      "status": "wip",
+      "publishStatus": "published",
+      "estimatedLeads": "Unlocks email, referral, mailer, and form→consult paths",
+      "clientTouchpoints": "All HubSpot contacts, forms, booking links",
+      "keywords": [
+        "hubspot",
+        "setup",
+        "foundation",
+        "email",
+        "contacts",
+        "nurture",
+        "pipeline",
+        "onboarding"
+      ],
+      "title": "HubSpot Marketing Setup",
+      "description": "April–May emails moved Pav from ad-account triage into CRM: nurture templates, client onboarding ownership for Romina/paralegals, HubSpot invoice/payment, and holiday email. This parent tracks that HubSpot marketing setup as one program. Child cards keep sprint detail; this card owns sequence, packaging, and what’s still blocking full automation.\n\nComparable Cos Springs shops usually sell HubSpot/email as a $500–$1,500/mo add-on inside a larger package — not as disconnected one-offs. See FEE-BENCHMARK-CO-SPRINGS.md.",
+      "tldr": "One HubSpot foundation so email, referrals, forms, and booking share the same contacts, stages, and reporting.",
+      "valueAdded": [
+        "Packages holiday email (A3), contact upload (B7), pipeline (B1), and LPs (A5) under one CRM build",
+        "Stops duplicate fees looking like separate “email agencies”",
+        "Makes A8 dashboard HubSpot rows possible once contacts export cleanly"
+      ],
+      "valueIcons": [
+        "crm",
+        "intake",
+        "foundation"
+      ],
+      "completedItems": [
+        "Client onboarding / lead nurture templates direction (Apr 26 email)",
+        "Romina HubSpot activation documentation (B1)",
+        "A3 Summer Safety Email campaign (July 4 window)",
+        "HubSpot invoice path sent to Andrew (May 29 Time Sensitive email)"
+      ],
+      "inProgressItems": [
+        "B7 America / MyCase marketing contact pass",
+        "B1 speed-to-lead workflows live and measured",
+        "A5 paid-traffic landing module if homepage still dilutes offer"
+      ],
+      "resultsItems": [
+        "Period: Apr 19, 2026 – Jul 14, 2026 (program to date)",
+        "Source: Client emails (Systems Audit · Nurture pivot · Time Sensitive) · A3 card",
+        "Consulting fee charged: B13 package $4,500 listed · A3 $1,200 child · confirm invoice split",
+        "Media / partner spend: —",
+        "Volume: A3 impact estimates ~850 list · ~120 connected · ~2 retained / wave (see A3)",
+        "Efficiency: —",
+        "Outcome: Holiday email shipped under HubSpot path; contacts upload and pipeline still open",
+        "Status vs goal: Partial — send capability proven; full CRM foundation not complete"
+      ],
+      "goal": "HubSpot owns marketable contacts, nurture stages, holiday/referral sends, and form→task→Romina booking with exportable source data for A8.",
+      "informationNeeded": [
+        "Confirm whether B13 $4,500 is package price or sum of children already invoiced",
+        "HubSpot contacts export still missing from Downloads (see Ad Reports/DATA-PULL-LIST.md)"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "Apr 2026",
+          "notes": "Nurture + onboarding pivot; Romina ownership"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "wip",
+          "target": "Contacts upload (B7) · pipeline (B1) · LP (A5) · holiday send (A3 done)",
+          "notes": ""
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "wip",
+          "target": "Source hygiene + A8 HubSpot channel row",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "No HubSpot contacts export in Downloads",
+        "MyCase field cleanup unfinished for nurture tracks"
+      ],
+      "recommendedMetrics": [
+        "Marketing contacts uploaded · bounce &lt;2%",
+        "Median form → first task minutes",
+        "Email → consult attributed count"
+      ],
+      "insightsImprovements": [
+        "Keep selling B13 + children as one package so A3 isn’t re-quoted as a separate agency",
+        "Pair A4 / A17 reengagement with B7 before scaling email volume"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [],
+      "kpiRefs": []
+    },
+    {
       "id": "A4",
       "priority": 2,
       "fee": 1700,
@@ -540,7 +752,7 @@ window.PROJECT_DATA = {
         "email"
       ],
       "title": "Client Referral Program",
-      "description": "Referral marketing consistently outperforms cold paid channels because trust is already established. Pav Law has past clients, friends-and-family contacts, and America list prospects — but no structured program to ask for referrals or make booking easy. This project builds the HubSpot foundation and keeps it running month to month.\n\nReferral programs work when asking is structured and booking is frictionless. HubSpot’s referral program guide covers segmentation and follow-up; the ABA publishes ethical guidance on attorney referral relationships. See HubSpot — customer referral programs and ABA — referral fees and relationships.",
+      "description": "Referral marketing consistently outperforms cold paid channels because trust is already established. Pav Law has past clients, friends-and-family contacts, and America list prospects — but no structured program to ask for referrals or make booking easy. This project builds the HubSpot foundation and keeps it running month to month.\n\nTrack 1 (this card): past-client referral asks. Track 2 sealing & probation reengagement lives on child A17 (scripts, pricing, MyCase fields from June Client Reengagement PDF). B7 unlocks list scale; A6 can dial.\n\nReferral programs work when asking is structured and booking is frictionless. HubSpot’s referral program guide covers segmentation and follow-up; the ABA publishes ethical guidance on attorney referral relationships. See HubSpot — customer referral programs and ABA — referral fees and relationships.",
       "tldr": "Highest-trust lead channel — one signed referral often covers project fee.",
       "valueAdded": [
         "Highest-trust lead channel — one signed referral often covers project fee",
@@ -559,9 +771,14 @@ window.PROJECT_DATA = {
         "Traffic intake script for Romina"
       ],
       "resultsItems": [
-        "HubSpot referral foundation scoped",
-        "America list and past-client segments identified",
-        "Performance-based payment model documented"
+        "Period: Program to date through Jul 14, 2026",
+        "Source: A4 card · Client Referral ops · June reengagement PDF (Track 1)",
+        "Consulting fee charged: $1,700 setup · $500/mo ongoing",
+        "Media / partner spend: —",
+        "Volume: —",
+        "Efficiency: Goal 3–5 referral consults/mo vs ~$67/call paid baseline",
+        "Outcome: HubSpot referral foundation scoped · America + past-client segments identified · performance payout model documented · Track 2 split to A17",
+        "Status vs goal: Foundation partial · monthly referral volume not yet logged"
       ],
       "goal": "Generate 3–5 referral-sourced consults/month at lower CPL than paid Search (~$67/call baseline).",
       "informationNeeded": [
@@ -586,7 +803,7 @@ window.PROJECT_DATA = {
           "phase": "3",
           "focus": "Measure & optimize",
           "status": "wip",
-          "target": "HubSpot referral foundation scoped (+2 more)",
+          "target": "Period: Program to date through Jul 14, 2026 (+7 more)",
           "notes": ""
         }
       ],
@@ -633,6 +850,109 @@ window.PROJECT_DATA = {
         }
       ],
       "abQuestions": [],
+      "kpiRefs": []
+    },
+    {
+      "id": "A15",
+      "priority": 3,
+      "fee": 2500,
+      "timeline": "Per event window (inventory + activation + follow-up)",
+      "category": "Events",
+      "campaignType": "Event Activation",
+      "status": "available",
+      "publishStatus": "published",
+      "estimatedLeads": "Onsite QR / booth captures tied to NTGUILT + Pav Law",
+      "clientTouchpoints": "PPIR / ASCEND / car-show attendees at activated booths",
+      "keywords": [
+        "events",
+        "ascend",
+        "ppir",
+        "booth",
+        "inventory",
+        "tents",
+        "qr",
+        "activation",
+        "ntguilt",
+        "summer"
+      ],
+      "title": "Summer Event Activation & Lead Capture",
+      "description": "May strategy emails proposed shifting budget toward NTGUILT car-community events (Corvette, plate, PPIR) while keeping focused end-funnel digital. May 16 plan reserved roughly $3,000–$6,000 of the $20,000 monthly marketing mix for event activation (materials, design, comfort items, giveaways, signage, QR, follow-up). May 29 Time Sensitive email asked for weekend inventory count and tent setup. This card owns activation ops; A2 owns NTGUILT creative/campaign; A16 owns partner co-host asks.",
+      "tldr": "Turns paid PPIR/ASCEND access into lead capture — not just brand presence.",
+      "valueAdded": [
+        "Inventory, booth setup, QR, and follow-up tools inside the existing ~$20k monthly mix",
+        "Protects ~$20k PPIR sponsorship from awareness-only waste",
+        "Pairs with A16 partner staff when Andrew is away"
+      ],
+      "valueIcons": [
+        "leads",
+        "creative",
+        "intake"
+      ],
+      "completedItems": [
+        "Strategy approval path for conservative event spend inside existing budget (May emails)",
+        "ASCEND flagged as priority when Andrew absent (partner email)"
+      ],
+      "inProgressItems": [
+        "Event supply inventory count",
+        "Tent setup / hose-off checklist",
+        "QR + HubSpot capture path",
+        "Follow-up toolkit for Romina/Casey"
+      ],
+      "resultsItems": [
+        "Period: —",
+        "Source: May 10–29, 2026 emails · NTGUILT Partnerships.eml",
+        "Consulting fee charged: $2,500 listed (activation ops)",
+        "Media / partner spend: Client reserved ~$3,000–$6,000 activation inside ~$20,000 monthly plan · PPIR sponsorship ~$20,000 season (client)",
+        "Volume: —",
+        "Efficiency: —",
+        "Outcome: Strategy and checklist issued; lead capture not logged as complete",
+        "Status vs goal: Not started on measurement"
+      ],
+      "goal": "Each activated event produces logged leads in HubSpot within 48 hours with source = event/UTM, not anonymous booth traffic.",
+      "informationNeeded": [
+        "Confirm remaining 2026 event calendar and which weekends need full activation",
+        "AB - Q: Cap event activation at $3k or $6k for next event?"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "May 2026",
+          "notes": "Budget mix + Ascend priority while Andrew away"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "not started",
+          "target": "Inventory · tents · QR · giveaways · follow-up",
+          "notes": ""
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "not started",
+          "target": "Lead count · CPL vs Search",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "Partner staff (A16) still open for ASCEND coverage",
+        "HubSpot event source field not confirmed"
+      ],
+      "recommendedMetrics": [
+        "Leads captured / event",
+        "Cost per event lead vs Search cost/call",
+        "% leads with phone + email"
+      ],
+      "insightsImprovements": [
+        "Do not treat events as awareness-only after PPIR spend",
+        "Turn down LSA slightly on event weekends if Romina phone capacity is the constraint (May 16 note)"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [
+        "Cap event activation at $3k or $6k for next event?"
+      ],
       "kpiRefs": []
     },
     {
@@ -1329,6 +1649,7 @@ window.PROJECT_DATA = {
       "campaignType": "CRM Automation",
       "status": "available",
       "publishStatus": "published",
+      "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
       "clientTouchpoints": "HubSpot CRM, Romina booking link",
       "keywords": [
@@ -2096,6 +2417,7 @@ window.PROJECT_DATA = {
       "campaignType": "Contact Import",
       "status": "available",
       "publishStatus": "published",
+      "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
       "clientTouchpoints": "HubSpot CRM, Romina booking link, Past clients, Referral ask workflows",
       "keywords": [
@@ -2203,6 +2525,100 @@ window.PROJECT_DATA = {
         }
       ],
       "abQuestions": [],
+      "kpiRefs": []
+    },
+    {
+      "id": "A18",
+      "priority": 12,
+      "fee": 600,
+      "timeline": "1–2 weeks setup + 30-day test",
+      "category": "Paid Social",
+      "campaignType": "Reddit Ads Test",
+      "status": "available",
+      "publishStatus": "published",
+      "parentId": "A2",
+      "estimatedLeads": "Awareness / retargeting pool for NTGUILT events",
+      "clientTouchpoints": "Car, racing, Colorado Springs Reddit audiences",
+      "keywords": [
+        "reddit",
+        "ntguilt",
+        "retargeting",
+        "promo credit",
+        "events",
+        "car"
+      ],
+      "title": "Reddit NTGUILT Ads Test",
+      "description": "May 16 budget mix reserved Reddit Ads $500 + $500 promo credit for NTGUILT recognition and retargeting around car/racing/COS audiences. Parent A2 owns broader NTGUILT launch; this card is the Reddit test only.",
+      "tldr": "Low-risk Reddit test ($500 + $500 promo credit) to keep NTGUILT visible between PPIR/event touches.",
+      "valueAdded": [
+        "Uses platform credit to stretch budget",
+        "Supports event frequency without heavy Search CPC",
+        "UTM-ready for A8 if landing is NTGuilt.com / tagged pav.law"
+      ],
+      "valueIcons": [
+        "creative",
+        "leads"
+      ],
+      "completedItems": [
+        "Budget slot defined in May 16 mix ($500 + $500 credit)"
+      ],
+      "inProgressItems": [
+        "Reddit Ads account + pixel/UTM",
+        "Creative from A2 prompt library",
+        "Landing destination (NTGuilt.com vs pav.law contact)"
+      ],
+      "resultsItems": [
+        "Period: —",
+        "Source: May 16, 2026 strategy email",
+        "Consulting fee charged: $600 listed",
+        "Media / partner spend: $500 client + $500 promo credit (proposed)",
+        "Volume: —",
+        "Efficiency: —",
+        "Outcome: Proposed; launch not confirmed",
+        "Status vs goal: Not started"
+      ],
+      "goal": "Complete one 30-day Reddit flight with UTMs and ≥10 site sessions per $100 combined spend+credit without policy rejection.",
+      "informationNeeded": [
+        "AB - Q: Run Reddit before or after next PPIR/ASCEND weekend?"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "May 2026",
+          "notes": "Budget line approved in mix proposal"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "not started",
+          "target": "Account · creatives · UTMs",
+          "notes": ""
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "not started",
+          "target": "Sessions · CPA · policy flags",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "NTGuilt.com lightweight site mentioned in May 10 strategy — confirm live"
+      ],
+      "recommendedMetrics": [
+        "Site sessions with UTM",
+        "Cost per session (spend + credit)",
+        "Policy disapprovals"
+      ],
+      "insightsImprovements": [
+        "Best as post-event retargeting, not primary intake"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [
+        "Run Reddit before or after next PPIR/ASCEND weekend?"
+      ],
       "kpiRefs": []
     },
     {
@@ -2559,6 +2975,7 @@ window.PROJECT_DATA = {
       "campaignType": "Landing Page",
       "status": "available",
       "publishStatus": "published",
+      "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
       "clientTouchpoints": "HubSpot CRM, Romina booking link, pav.law website, Organic search",
       "keywords": [
@@ -3080,6 +3497,287 @@ window.PROJECT_DATA = {
         }
       ],
       "abQuestions": [],
+      "kpiRefs": []
+    },
+    {
+      "id": "C1",
+      "priority": 30,
+      "fee": 2000,
+      "timeline": "Apr 2026 triage week",
+      "category": "Systems",
+      "campaignType": "Access & Security",
+      "status": "completed",
+      "publishStatus": "published",
+      "estimatedLeads": "Indirect — unlocks Ads/LSA/GBP/MyCase ops",
+      "clientTouchpoints": "Marketing stack admins and intake owners",
+      "keywords": [
+        "systems",
+        "access",
+        "audit",
+        "google ads",
+        "lsa",
+        "gbp",
+        "analytics",
+        "bluehost",
+        "wordpress",
+        "mycase"
+      ],
+      "title": "Systems Access Audit & Cleanse",
+      "description": "Apr 19–21, 2026 kickoff email: Full Systems Access Audit & Cleanse as priority #1 for a $2,000 triage week (with email outage docs and LSA lite). Andrew approved start. Tracker lists this Completed. Keep on Guide as archive + proof of foundation fee.",
+      "tldr": "Clean admin access across every marketing and intake tool so campaigns and reporting are not blocked by logins.",
+      "valueAdded": [
+        "Documented access across Ads, LSA, GBP, GA4, Bluehost, WordPress, MyCase",
+        "Reduced security / orphaned-user risk after prior marketing personnel",
+        "Prerequisite for retainer and LSA work"
+      ],
+      "valueIcons": [
+        "foundation",
+        "efficiency"
+      ],
+      "completedItems": [
+        "Systems access audit across marketing stack",
+        "Security / permission review as scoped in Apr ops outline"
+      ],
+      "inProgressItems": [
+        "_"
+      ],
+      "resultsItems": [
+        "Period: Apr 19, 2026 – Apr 26, 2026 window",
+        "Source: Next Steps Systems Audit emails · PAV-LAW-PROJECT-TRACKER-SHEET.csv",
+        "Consulting fee charged: $2,000 (triage fee quoted Apr 19)",
+        "Media / partner spend: —",
+        "Volume: —",
+        "Efficiency: Tracker fee band also lists $1,500–$2,500 for access audit line",
+        "Outcome: Access path in place for Ads/LSA/GBP/GA/MyCase work",
+        "Status vs goal: Completed"
+      ],
+      "goal": "Admin access documented and cleansed for Google Ads/LSA, GBP, Analytics, Bluehost, WordPress, MyCase with risks flagged.",
+      "informationNeeded": [
+        "_"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "Apr 2026",
+          "notes": "Kickoff outline"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "completed",
+          "target": "Apr 2026",
+          "notes": "Access + cleanse"
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "completed",
+          "target": "Handed into retainer ops",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "_"
+      ],
+      "recommendedMetrics": [
+        "Open access tickets = 0 for critical tools"
+      ],
+      "insightsImprovements": [
+        "Re-audit when staffing changes or new tools (VoIP, HubSpot seats)"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [],
+      "kpiRefs": []
+    },
+    {
+      "id": "C2",
+      "priority": 31,
+      "fee": 1500,
+      "timeline": "Apr 2026",
+      "category": "Systems",
+      "campaignType": "Email / DNS Incident",
+      "status": "completed",
+      "publishStatus": "published",
+      "estimatedLeads": "Risk recovery — inbound email restored",
+      "clientTouchpoints": "All pav.law inboxes",
+      "keywords": [
+        "email",
+        "outage",
+        "dns",
+        "mx",
+        "google workspace",
+        "bluehost",
+        "runbook"
+      ],
+      "title": "Email Outage Triage & DNS Runbook",
+      "description": "Apr 14 urgent email to Andrew requested triage status, prior incidents, marketing tool map, DNS/MX changes. Apr 19 ops outline item #2: Document Email Outage Triage. Tracker marks DNS/email outage triage and email recovery documentation Completed. Fee uses mid of tracker bands when flat invoice not isolated.",
+      "tldr": "Diagnosed and documented the pav.law inbound email outage so the next DNS/MX failure is faster to fix.",
+      "valueAdded": [
+        "Incoming mail failure triaged (accounts could send; inbound broken firm-wide)",
+        "Root-cause / resolution documentation for Carrie coordination",
+        "Maintenance log pattern for future incidents"
+      ],
+      "valueIcons": [
+        "foundation",
+        "efficiency"
+      ],
+      "completedItems": [
+        "Outage triage coordination",
+        "Email recovery documentation / runbook"
+      ],
+      "inProgressItems": [
+        "_"
+      ],
+      "resultsItems": [
+        "Period: Apr 14, 2026 – Apr 2026 resolution window",
+        "Source: Urgent Email Outage Resolution.eml · Systems Audit outline · tracker",
+        "Consulting fee charged: $1,500 listed (tracker bands $1,500–$3,000 triage · $750–$1,500 docs)",
+        "Media / partner spend: —",
+        "Volume: Firm-wide inbound impact (all employees)",
+        "Efficiency: —",
+        "Outcome: Documented resolution path; similar prior outages noted in intake email",
+        "Status vs goal: Completed"
+      ],
+      "goal": "Inbound mail restored and a reusable runbook exists for MX/DNS / Workspace routing failures.",
+      "informationNeeded": [
+        "_"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "Apr 14, 2026",
+          "notes": "Symptom list to Andrew"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "completed",
+          "target": "Apr 2026",
+          "notes": "Triage with Carrie · DNS/MX"
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "completed",
+          "target": "Recovery docs",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "_"
+      ],
+      "recommendedMetrics": [
+        "Time-to-restore on next email incident"
+      ],
+      "insightsImprovements": [
+        "Keep marketing tool integration map updated after every stack change (VoIP, HubSpot, DNS)"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [],
+      "kpiRefs": []
+    },
+    {
+      "id": "A16",
+      "priority": 40,
+      "fee": 800,
+      "timeline": "Seasonal — reopen summer 2027 event window",
+      "category": "Partnerships",
+      "campaignType": "Garage Partnership",
+      "status": "archived",
+      "publishStatus": "published",
+      "parentId": "A15",
+      "estimatedLeads": "Shared booth leads + shop appointments from giveaways",
+      "clientTouchpoints": "ASCEND / PPIR attendees engaged by partner hosts",
+      "keywords": [
+        "garage",
+        "partnership",
+        "bailey",
+        "ascend",
+        "partner",
+        "co-host",
+        "giveaway",
+        "interlock",
+        "ntguilt",
+        "seasonal"
+      ],
+      "title": "Garage Partnership",
+      "description": "May 16 NTGUILT Partnerships email proposed Bailey’s Garage co-host ASCEND at PPIR June 26–27, 2026. Pav already covers primary sponsorship (~$20k season). Ask of Bailey’s: staff with Mo and/or Bailey, driving-safety display, 3+ shop-visit giveaways valued $600–$1,000, help route legal questions to Pav and service to Bailey’s. Co-host contribution framed as $600–$1,000 minimum + two days staffing. This consulting fee covers packaging, ask document, and lead-split rules — not the partner’s prize cost.",
+      "tldr": "Garage partnership for event co-hosts — archived for summer 2027 (was Bailey’s / ASCEND 2026 ask).",
+      "valueAdded": [
+        "Reusable partner template when summer events return",
+        "Giveaways require shop visit — partner ROI is clear",
+        "Shared leads within 48 hours of event close"
+      ],
+      "valueIcons": [
+        "leads",
+        "creative",
+        "referrals"
+      ],
+      "completedItems": [
+        "Bare-minimum ASCEND co-host proposal written and mailed to Andrew"
+      ],
+      "inProgressItems": [
+        "Close partner commitment",
+        "Lead-share workflow into HubSpot within 48 hours",
+        "Giveaway entry form fields"
+      ],
+      "resultsItems": [
+        "Period: May 16, 2026 proposal date",
+        "Source: NTGUILT Partnerships.eml",
+        "Consulting fee charged: $800 listed",
+        "Media / partner spend: Partner giveaways $600–$1,000 (Bailey’s) · Pav PPIR sponsorship already sunk (~$20k)",
+        "Volume: —",
+        "Efficiency: —",
+        "Outcome: Proposal delivered for 2026 ASCEND; archived seasonal — reopen as Garage Partnership summer 2027",
+        "Status vs goal: Archived · next summer"
+      ],
+      "goal": "Signed partner contribution before ASCEND (or next equivalent event) with written giveaway + lead-share rules.",
+      "informationNeeded": [
+        "AB - Q: Did Bailey’s accept, decline, or counter the $600–$1,000 ask?",
+        "Confirm ASCEND staffing names (Mo / Bailey)"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "May 16, 2026",
+          "notes": "Proposal drafted for Bailey’s / ASCEND"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "not started",
+          "target": "Summer 2027",
+          "notes": "Reopen when next event calendar is set"
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "not started",
+          "target": "Summer 2027",
+          "notes": "Leads shared · shop visits · Pav consults"
+        }
+      ],
+      "blockers": [
+        "No written acceptance on file in this review set"
+      ],
+      "recommendedMetrics": [
+        "Partner accepted Y/N",
+        "Leads shared within 48h",
+        "Shop visits from giveaway · Pav consults from same leads"
+      ],
+      "insightsImprovements": [
+        "Repeat co-host template for future events even if Bailey’s only supplies prizes"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [
+        "Did Bailey’s accept, decline, or counter the $600–$1,000 ask?"
+      ],
       "kpiRefs": []
     },
     {
