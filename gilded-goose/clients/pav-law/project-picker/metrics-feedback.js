@@ -298,7 +298,7 @@
       return "Saved to Google Sheet tab MetricsFeedback.";
     }
     if (state.lastRemoteStatus === "outdated") {
-      return `${SHEET_ERR} — live Apps Script is outdated (no MetricsFeedback handler). Paste <code>apps-script-webhook.gs</code> → Deploy → New version. See <a href="${SETUP_HREF}">owner webhook setup</a>.`;
+      return `${SHEET_ERR} — live Apps Script is outdated. Copy Mac <code>apps-script-webhook.gs</code> → Code.gs → <strong>Deploy → Manage deployments → pencil → New version → Deploy</strong>, then confirm ping shows <code>metricsFeedback:true</code>. See <a href="${SETUP_HREF}">owner webhook setup</a>.`;
     }
     if (state.lastRemoteStatus === "err") {
       return `${SHEET_ERR}. Check Apps Script deploy (Anyone + /exec). See <a href="${SETUP_HREF}">owner webhook setup</a>.`;
@@ -420,7 +420,7 @@
 
   function sheetSaveErrorText(result) {
     if (result?.reason === "outdated_script") {
-      return "Not saved to MetricsFeedback — live Apps Script is outdated. Paste apps-script-webhook.gs → Deploy → New version (not GitHub Secret).";
+      return "Not saved to MetricsFeedback — live Apps Script outdated. Paste Mac apps-script-webhook.gs → Manage deployments → New version (not GitHub Secret). Confirm ping metricsFeedback:true before Save.";
     }
     if (result?.reason === "missing") return SHEET_ERR;
     return `${SHEET_ERR}. Check Apps Script deploy (Anyone + /exec).`;
