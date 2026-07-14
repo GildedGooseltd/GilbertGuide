@@ -1,15 +1,14 @@
 /**
  * Magenta Feedback mode: click a KPI or chart to leave Gilbert comments.
- * Each Save → localStorage + POST to webhook → Google Sheet tab MetricsFeedback (primary).
- * Full “Save all to sheet” = same Sheet destination. No automatic JSON download.
- * Optional “Download backup” is opt-in only. Email/mailto is not required for success.
+ * Each Save → localStorage + POST to webhook → Google Sheet tab MetricsFeedback only.
+ * No JSON download, no mailto required. Webhook missing/fail → clear error (never a file).
  */
 (function () {
   const STORAGE_KEY = "pav-metrics-feedback-v1";
   const REVIEWER_KEY = "pav-metrics-reviewer-v1";
   const SESSION_KEY = "pav-metrics-session-v1";
-  const BACKUP_FILENAME = "pav-metrics-feedback.json";
   const SUPPORT_EMAIL = "support@gildedgooselimited.com";
+  const SHEET_ERR = "Not saved to sheet — webhook missing/failed";
   const VERDICTS = [
     { id: "ok", label: "Looks right", chipClass: "done-ok" },
     { id: "confusing", label: "Confusing / needs context", chipClass: "done-flag" },
@@ -284,15 +283,15 @@
 
   function remoteStatusMessage() {
     if (!webhookConfigured()) {
-      return "Remote gather OFF — webhook not configured. Ratings stay on this device only until Secret 1 (PAV_PICKER_WEBHOOK_URL) is set and redeployed.";
+      return SHEET_ERR + ". Set Secret 1 (PAV_PICKER_WEBHOOK_URL = Apps Script /exec) and redeploy.";
     }
     if (state.lastRemoteStatus === "ok") {
-      return "Remote: saved to Google Sheet tab MetricsFeedback.";
+      return "Saved to Google Sheet tab MetricsFeedback.";
     }
     if (state.lastRemoteStatus === "err") {
-      return "Remote send failed — kept locally. Check webhook / Apps Script deploy.";
+      return SHEET_ERR + ". Check webhook / Apps Script deploy.";
     }
-    return "Remote: each Save posts to MetricsFeedback sheet.";
+    return "Each Save posts to MetricsFeedback sheet (plus a local copy).";
   }
 
   function openGilbertPopup(id) {
@@ -315,7 +314,7 @@
 
     const remoteHint = webhookConfigured()
       ? `<p class="feedback-remote-ok">Save sends this note to the shared <strong>MetricsFeedback</strong> sheet (plus a copy on this device).</p>`
-      : `<p class="feedback-remote-warn">Webhook missing — Save stays on <em>this browser only</em>. Other people’s comments won’t reach Kate until <code>PAV_PICKER_WEBHOOK_URL</code> is set in GitHub and the site is redeployed.</p>`;
+      : `<p class="feedback-remote-warn">${SHEET_ERR}. Set <code>PAV_PICKER_WEBHOOK_URL</code> (Apps Script <code>/exec</code>) in GitHub and redeploy.</p>`;
 
     body.innerHTML = `
       <div class="gilbert-feedback-msg gilbert-chat-gilbert">
@@ -435,8 +434,8 @@
     if (!webhookConfigured()) {
       state.lastRemoteStatus = "missing";
       updateRemoteBanner();
-      if (toast) toast.textContent = "Saved on this device only — remote gather OFF (no webhook).";
-      setTimeout(() => closeGilbertPopup(), 700);
+      if (toast) toast.textContent = SHEET_ERR;
+      setTimeout(() => closeGilbertPopup(), 900);
       return;
     }
 
@@ -447,9 +446,9 @@
     if (toast) {
       toast.textContent = result.ok
         ? "Saved to MetricsFeedback sheet (+ local copy)."
-        : "Saved locally — remote send failed.";
+        : SHEET_ERR;
     }
-    setTimeout(() => closeGilbertPopup(), 450);
+    setTimeout(() => closeGilbertPopup(), result.ok ? 450 : 900);
   }
 
   function updateProgress() {
@@ -510,27 +509,6 @@
     };
   }
 
-  /** Opt-in only — never called from Save / Save all. */
-  function downloadJsonBackup() {
-    const items = feedbackItems();
-    if (!items.length) {
-      const statusEl = document.getElementById("metrics-submit-status");
-      if (statusEl) {
-        statusEl.hidden = false;
-        statusEl.textContent = "Nothing to download — rate at least one metric first.";
-        statusEl.className = "metrics-status err";
-      }
-      return;
-    }
-    const payload = buildPayload("local_backup");
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = BACKUP_FILENAME;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
-  }
-
   async function submitAll() {
     const statusEl = document.getElementById("metrics-submit-status");
     const items = feedbackItems();
@@ -543,6 +521,7 @@
       return;
     }
 
+    persistFeedbackLocal();
     const payload = buildPayload("full_submit");
     const btn = document.getElementById("metrics-submit-btn");
     if (btn) btn.disabled = true;
@@ -552,7 +531,7 @@
       updateRemoteBanner();
       if (statusEl) {
         statusEl.hidden = false;
-        statusEl.textContent = "Saved on this device only — Sheet gather OFF. Set GitHub Secret 1 (PAV_PICKER_WEBHOOK_URL) and redeploy before sharing.";
+        statusEl.textContent = SHEET_ERR;
         statusEl.className = "metrics-status err";
       }
       if (btn) btn.disabled = false;
@@ -576,7 +555,7 @@
         statusEl.textContent = "Saved to sheet — tab MetricsFeedback. Email not required.";
         statusEl.className = "metrics-status ok";
       } else {
-        statusEl.textContent = "Saved locally — Sheet post failed. Check webhook / Apps Script deploy. Use Download backup only if you need a local file.";
+        statusEl.textContent = SHEET_ERR;
         statusEl.className = "metrics-status err";
       }
     }
@@ -650,12 +629,6 @@
     });
 
     document.getElementById("metrics-submit-btn")?.addEventListener("click", submitAll);
-    document.querySelectorAll("[data-metrics-download-backup]").forEach(el => {
-      el.addEventListener("click", e => {
-        e.preventDefault();
-        downloadJsonBackup();
-      });
-    });
   }
 
   function onReady() {
