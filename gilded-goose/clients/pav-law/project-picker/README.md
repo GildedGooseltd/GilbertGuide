@@ -8,7 +8,7 @@ Static project picker: budget filters, cards, notes, submit → Sheet + email.
 
 ## Edit content
 
-**Layout & branding:** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
+**Branding & formatting (colors, type, layout — edit tokens here first):** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
 **All text by page:** [CONTENT-INDEX.md](CONTENT-INDEX.md)  
 **Project markdown:** [CONTENT-EDIT.md](CONTENT-EDIT.md) · start at [`content/INDEX.md`](content/INDEX.md)
 
