@@ -2,7 +2,7 @@
  * Inline Pav Law KPI report — no iframe. Renders into #kpi-report-kpis and #kpi-report-dashboards.
  */
 (function () {
-  const RENDER_VER = "20260714-status-v14";
+  const RENDER_VER = "20260714-status-v15";
   const DATA = {
     period: "June 2026",
     asOf: "2026-07-11",
@@ -665,9 +665,6 @@
       <div>
         <h2 class="kpi-report-title">Pav Law KPI Report</h2>
       </div>
-      <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Turn on to leave comments on metrics and charts">
-        Feedback mode
-      </button>
     </header>
     ${reportKey()}`;
   }
