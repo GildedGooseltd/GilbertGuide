@@ -34,16 +34,33 @@ Meta table: Estimated leads gained · Estimated customer touchpoints (optional r
 ## Information needed     ← gaps, AB-Q, blockers, _Add:_ placeholders
 ## WIP                   ← Phase 2 work in progress
 ## Completed             ← Phase 1 shipped
-## Results               ← outcome metrics (optional)
+## Results               ← standardized outline (required fields; use — if n/a)
 ## Account Data & Marketing Principles Applied
    Source: …
 ```
+
+### Results outline (required)
+
+Copy into every project — leave `—` when unknown:
+
+```
+- Period:
+- Source:
+- Consulting fee charged:
+- Media / partner spend:
+- Volume:
+- Efficiency:
+- Outcome:
+- Status vs goal:
+```
+
+See [`_TEMPLATE.md`](content/_TEMPLATE.md). Fee market context: [`FEE-BENCHMARK-CO-SPRINGS.md`](FEE-BENCHMARK-CO-SPRINGS.md).
 
 - **Marketing education** goes inside **Description** — not a separate section.
 - **TLDR** optional in markdown; if omitted, first Value Added bullet is used.
 - **AB – Q** (`AB - Q:`) — question for Andrew Brown; Gilbert flags it; **Comment required before cart**.
 - **Value icons** — `## Value icons` list in each project file (`foundation` · `leads` · `crm` · `seo` · `referrals` · `efficiency` · `intake` · `creative`); overrides auto-detect when set
-- **KPI links** — `## KPI links` lists dashboard metrics (`01`, `21`, …). External reference URLs are stripped on build; only **KPI #NN** links in the picker (opens KPIs / Dashboards tab).
+- **KPI links** — `## KPI links` lists dashboard metrics (`01`, `21`, …). External reference URLs are stripped on build; only **KPI #NN** links in the picker (opens KPIs tab).
 - **Estimated leads gained** = incremental leads expected from that campaign, not existing lead volume.
 - **Estimated customer touchpoints** = numeric estimate of customers contacted or impacted, not a list of channels.
 - Card shows **TLDR → bullets → leads gained / customer touchpoints**; **Current Status** expands Description.

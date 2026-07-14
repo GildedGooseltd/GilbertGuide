@@ -256,8 +256,6 @@
     "account-data": ["#01", "#12", "#15", "#21"]
   };
 
-  const KPI_DASHBOARD_IDS = new Set(["#01", "#02", "#04", "#05", "#08", "#10", "#19", "#21"]);
-
   function iconMatchText(item) {
     const desc = item.description ? String(item.description).replace(/<[^>]+>/g, " ") : "";
     return [
@@ -301,7 +299,8 @@
   function normalizeViewTab(tab) {
     const t = String(tab || "picker").toLowerCase().trim();
     if (t === "revenue" || t === "completed") return "impact";
-    if (t === "kpis" || t === "picker" || t === "dashboards" || t === "impact") return t;
+    if (t === "dashboards") return "kpis";
+    if (t === "kpis" || t === "picker" || t === "impact") return t;
     return "picker";
   }
 
@@ -391,9 +390,7 @@
   function renderKpiDashboard() {
     if (!window.KPI_REPORT) return;
     const kpis = document.getElementById("kpi-report-kpis");
-    const dash = document.getElementById("kpi-report-dashboards");
     if (kpis) KPI_REPORT.renderKpis(kpis);
-    if (dash) KPI_REPORT.renderDashboards(dash);
   }
 
   function renderDoNextPanel() {
@@ -644,7 +641,7 @@
     const doneCount = completedProjects().length;
     document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
       const view = btn.dataset.view;
-      if (view === "kpis" || view === "dashboards") {
+      if (view === "kpis") {
         const badge = btn.querySelector(".tab-count");
         if (badge) badge.remove();
         return;
@@ -664,15 +661,12 @@
     state.activeViewTab = normalizeViewTab(state.activeViewTab);
     const isKpis = state.activeViewTab === "kpis";
     const isPicker = state.activeViewTab === "picker";
-    const isDashboards = state.activeViewTab === "dashboards";
     const isImpact = state.activeViewTab === "impact";
     const kpisPanel = document.getElementById("cockpit-panel-kpis");
     const pickerPanel = document.getElementById("cockpit-panel-picker");
-    const dashboardsPanel = document.getElementById("cockpit-panel-dashboards");
     const impactPanel = document.getElementById("cockpit-panel-impact");
     if (kpisPanel) kpisPanel.hidden = !isKpis;
     if (pickerPanel) pickerPanel.hidden = !isPicker;
-    if (dashboardsPanel) dashboardsPanel.hidden = !isDashboards;
     if (impactPanel) impactPanel.hidden = !isImpact;
     syncViewTabs();
     renderResearchSection();
@@ -892,7 +886,7 @@
       if (!kpis.length) return "";
       return `<span class="key-kpi-hint">${kpis.slice(0, 4).map(id => {
         const label = String(id).replace(/^#/, "");
-        return `<a href="#" class="kpi-ref-link" data-kpi="${id}" title="Open ${id} in dashboard">${escapeHtml(label)}</a>`;
+        return `<a href="#" class="kpi-ref-link" data-kpi="${id}" title="Open ${id} in KPIs">${escapeHtml(label)}</a>`;
       }).join("")}</span>`;
     };
     el.innerHTML = `<span class="value-icon-key-title">Filter by value</span>${hint}` +
@@ -924,8 +918,7 @@
   function focusKpi(kpiId) {
     const id = normalizeKpiId(kpiId);
     if (!id) return;
-    const tab = KPI_DASHBOARD_IDS.has(id) ? "dashboards" : "kpis";
-    setActiveViewTab(tab);
+    setActiveViewTab("kpis");
     renderViewLayout();
     requestAnimationFrame(() => {
       window.KPI_REPORT?.focusKpi?.(id);
@@ -946,7 +939,7 @@
   function projectKpiRefsHtml(item) {
     const ids = getProjectKpiIds(item);
     if (!ids.length) return "";
-    return `<div class="card-kpi-refs" aria-label="Related dashboard KPIs">${ids.map(id =>
+    return `<div class="card-kpi-refs" aria-label="Related KPIs">${ids.map(id =>
       `<a href="#" class="kpi-ref-link" data-kpi="${id}">${id}</a>`
     ).join("")}</div>`;
   }

@@ -1,8 +1,9 @@
 /**
- * Inline Pav Law KPI report — no iframe. Renders into #kpi-report-kpis and #kpi-report-dashboards.
+ * Inline Pav Law KPI report — no iframe. Renders into #kpi-report-kpis
+ * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260714-status-v15";
+  const RENDER_VER = "20260714-status-v16";
   const DATA = {
     period: "June 2026",
     asOf: "2026-07-11",
@@ -843,18 +844,18 @@
             </div>
           </div>
         </div>
-      </section>`;
+      </section>
+      ${dashboardSectionsHtml()}`;
     el.dataset.rendered = RENDER_VER;
     bindKpiInteractions(el);
+    bindDashboardInteractions(el);
     dispatchRendered(el, "kpis");
   }
 
-  function renderDashboards(el) {
-    if (!el || el.dataset.rendered === RENDER_VER) return;
+  /** Unique former-Dashboards visuals (dupes of #01 / #08 already on KPIs are omitted). */
+  function dashboardSectionsHtml() {
     const depositPct = DATA.avgDeposit.current / DATA.avgDeposit.target;
-
-    el.innerHTML = `${reportHeader()}
-      <section class="kpi-section kpi-section-static">
+    return `<section class="kpi-section kpi-section-static" data-feedback-id="section-business-health" data-feedback-label="Business health & pipeline">
         ${kpiSectionStaticHead("Business health & pipeline")}
         <div class="kpi-section-body">
           <div class="kpi-dash-grid-2">
@@ -890,39 +891,26 @@
           })}
         </div>
       </section>
-      <section class="kpi-section kpi-section-static kpi-section-leads">
+      <section class="kpi-section kpi-section-static kpi-section-leads" data-feedback-id="section-lead-expansion" data-feedback-label="Lead channel expansion">
         ${kpiSectionStaticHead("Lead channel expansion")}
         <div class="kpi-section-body">
-          ${kpiSectionIntro("Pav Law should not depend on a single intake channel. LSA delivers volume today, but high cost per lead and limited control over lead quality make diversification essential. This section tracks Search, web forms, referrals, and emerging paths — the goal is to keep adding reliable channels so total lead flow stays strong even when one source underperforms.")}
+          ${kpiSectionIntro("Pav Law should not depend on a single intake channel. LSA delivers volume today, but high cost per lead and limited control over lead quality make diversification essential. Diversification keeps total lead flow strong when one source underperforms. Channel and campaign stacks are above under Key metrics / leads.")}
           ${chartBlock({
-            focus: "#01",
+            focus: "#10",
             verified: true,
-            head: `<strong>#01 Total leads by channel</strong> <span class="kpi-mom-up">↑ +18% MoM</span>`,
-            chart: channelBarChart(DATA.channels),
-            legend: channelLegend(DATA.channels),
-            table: channelsDetailTable(DATA.channels)
+            head: `<strong>#10 Source mix</strong>`,
+            chart: donutChart(DATA.sourceMix),
+            table: sourceMixDetailTable(DATA.sourceMix)
           })}
-          <div class="kpi-dash-grid-2">
-            ${chartBlock({
-              focus: "#10",
-              verified: true,
-              head: `<strong>#10 Source mix</strong>`,
-              chart: donutChart(DATA.sourceMix),
-              table: sourceMixDetailTable(DATA.sourceMix)
-            })}
-            ${chartBlock({
-              focus: "#08",
-              verified: true,
-              head: `<strong>#08 Search calls by campaign</strong> <span class="kpi-mom-up">↑ +74% MoM</span>`,
-              chart: horizontalBarChart(DATA.searchCallsByCampaign),
-              legend: channelLegend(DATA.searchCallsByCampaign),
-              table: campaignDetailTable(DATA.searchCallsByCampaign)
-            })}
-          </div>
         </div>
       </section>`;
-    el.dataset.rendered = RENDER_VER;
-    bindDashboardInteractions(el);
+  }
+
+  /** @deprecated Dashboards tab removed — content is in renderKpis(). Kept for callers. */
+  function renderDashboards(el) {
+    if (!el) return;
+    el.innerHTML = "";
+    delete el.dataset.rendered;
     dispatchRendered(el, "dashboards");
   }
 
@@ -930,9 +918,8 @@
     window.dispatchEvent(new CustomEvent("kpi-report-rendered", { detail: { root: el, kind } }));
   }
 
-  function renderAll(kpisEl, dashboardsEl) {
+  function renderAll(kpisEl) {
     if (kpisEl) renderKpis(kpisEl);
-    if (dashboardsEl) renderDashboards(dashboardsEl);
     window.dispatchEvent(new CustomEvent("kpi-report-ready"));
   }
 
@@ -984,21 +971,17 @@
 
   function focusKpi(kpiId) {
     const id = kpiId && String(kpiId).startsWith("#") ? kpiId : `#${String(kpiId || "").replace(/\D/g, "").padStart(2, "0")}`;
-    for (const rootId of ["kpi-report-dashboards", "kpi-report-kpis"]) {
-      const root = document.getElementById(rootId);
-      if (!root) continue;
-      const btn = root.querySelector(`[data-kpi-focus="${id}"]`);
-      if (btn) {
-        const section = btn.closest("details");
-        if (section) section.open = true;
-        if (btn.classList.contains("kpi-stat-card") || btn.classList.contains("kpi-goal-card")) btn.click();
-        btn.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        btn.classList.add("kpi-stat-active");
-        setTimeout(() => btn.classList.remove("kpi-stat-active"), 2400);
-        return true;
-      }
-    }
-    return false;
+    const root = document.getElementById("kpi-report-kpis");
+    if (!root) return false;
+    const btn = root.querySelector(`[data-kpi-focus="${id}"]`);
+    if (!btn) return false;
+    const section = btn.closest("details");
+    if (section) section.open = true;
+    if (btn.classList.contains("kpi-stat-card") || btn.classList.contains("kpi-goal-card")) btn.click();
+    btn.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    btn.classList.add("kpi-stat-active");
+    setTimeout(() => btn.classList.remove("kpi-stat-active"), 2400);
+    return true;
   }
 
   window.KPI_REPORT = {
