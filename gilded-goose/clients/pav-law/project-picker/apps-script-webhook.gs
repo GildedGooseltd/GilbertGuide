@@ -241,49 +241,49 @@ function handleMetricsFeedback(data) {
     JSON.stringify(data)
   ]);
 
-  // Per-Save posts land in the Sheet only (no email flood). Full submit emails support.
-  if (event === "item_save") {
-    return ContentService.createTextOutput(JSON.stringify({
-      ok: true,
-      type: "metrics_feedback",
-      event: event,
-      sheet: "MetricsFeedback",
-      emailsSent: { internal: false, client: false }
-    })).setMimeType(ContentService.MimeType.JSON);
-  }
+  // Sheet row is the success path. Optional notify emails must never block Sheet writes.
+  var emailsSent = { internal: false, client: false };
+  if (event !== "item_save") {
+    try {
+      const lines = (data.feedback || []).map(function(item) {
+        return "• " + (item.label || item.id) + " — " + (item.verdict || "") +
+            (item.comment ? "\n  " + item.comment : "") +
+            (item.suggestedTarget ? "\n  Suggested: " + item.suggestedTarget : "");
+      });
+      const who = (data.submitterName || "") +
+        (data.submitterName && data.submitterEmail ? " · " : "") +
+        (data.submitterEmail || "(no email)");
+      const body = [
+        "Metrics feedback from " + who,
+        "Session: " + (data.sessionId || ""),
+        "Period: " + (data.period || "") + " · as of " + (data.asOf || ""),
+        "Source: " + (data.source || ""),
+        "",
+        lines.join("\n"),
+        "",
+        "— Gilbert metrics page (Sheet tab MetricsFeedback is source of truth)"
+      ].join("\n");
 
-  const lines = (data.feedback || []).map(function(item) {
-  return "• " + (item.label || item.id) + " — " + (item.verdict || "") +
-      (item.comment ? "\n  " + item.comment : "") +
-      (item.suggestedTarget ? "\n  Suggested: " + item.suggestedTarget : "");
-  });
-  const who = (data.submitterName || "") +
-    (data.submitterName && data.submitterEmail ? " · " : "") +
-    (data.submitterEmail || "(no email)");
-  const body = [
-    "Metrics feedback from " + who,
-    "Session: " + (data.sessionId || ""),
-    "Period: " + (data.period || "") + " · as of " + (data.asOf || ""),
-    "Source: " + (data.source || ""),
-    "",
-    lines.join("\n"),
-    "",
-    "— Gilbert metrics page"
-  ].join("\n");
+      MailApp.sendEmail(
+        NOTIFY_EMAIL,
+        "Gilbert — metrics feedback — " + (data.submitterName || data.submitterEmail || "review"),
+        body
+      );
+      emailsSent.internal = true;
 
-  MailApp.sendEmail(
-    NOTIFY_EMAIL,
-    "Gilbert — metrics feedback — " + (data.submitterName || data.submitterEmail || "review"),
-    body
-  );
-
-  if (data.submitterEmail) {
-    MailApp.sendEmail(
-      data.submitterEmail,
-      "Gilbert — we received your metric feedback",
-      "Thanks — Gilded Goose received your ratings on " + (data.feedbackCount || 0) + " metrics/charts.\n\nWe'll use this to tune targets and chart types for the next report.\n\n— Gilded Goose Limited",
-      { name: "Gilded Goose Limited", replyTo: NOTIFY_EMAIL }
-    );
+      if (data.submitterEmail) {
+        MailApp.sendEmail(
+          data.submitterEmail,
+          "Gilbert — we received your metric feedback",
+          "Thanks — Gilded Goose received your ratings on " + (data.feedbackCount || 0) + " metrics/charts.\n\nWe'll use this to tune targets and chart types for the next report.\n\n— Gilded Goose Limited",
+          { name: "Gilded Goose Limited", replyTo: NOTIFY_EMAIL }
+        );
+        emailsSent.client = true;
+      }
+    } catch (mailErr) {
+      // Keep ok:true — Sheet already has the row.
+      emailsSent.error = String(mailErr);
+    }
   }
 
   return ContentService.createTextOutput(JSON.stringify({
@@ -291,7 +291,7 @@ function handleMetricsFeedback(data) {
     type: "metrics_feedback",
     event: event,
     sheet: "MetricsFeedback",
-    emailsSent: { internal: true, client: !!data.submitterEmail }
+    emailsSent: emailsSent
   })).setMimeType(ContentService.MimeType.JSON);
 }
 

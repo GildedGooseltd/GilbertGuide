@@ -212,26 +212,38 @@ Paste each URL when prompted — not the secret name.
 
 ## Metrics feedback (shared reviewers) — where rows land
 
-When someone rates a KPI/chart and clicks **Save**, the picker POSTs to the **same** Apps Script webhook (Secret 1 / `PAV_PICKER_WEBHOOK_URL`). No second `/exec` URL.
+**Primary destination = Google Sheet.** Email is optional notify only — not required for reviewer success. Mailto is not used by the cockpit feedback buttons.
+
+When someone rates a KPI/chart and clicks **Save** (or **Save all to sheet**), the picker POSTs to the **same** Apps Script webhook (Secret 1 / `PAV_PICKER_WEBHOOK_URL`). No second `/exec` URL.
 
 | | Detail |
 |---|--------|
 | **Google Sheet** | Same spreadsheet as Part A — title `Pav Law Project Picker Submissions` (or whatever you named in A2) |
 | **Tab name** | **`MetricsFeedback`** (created automatically on first metrics feedback POST, or when you re-paste `apps-script-webhook.gs` and run anything that hits `setupMetricsFeedbackSheet`) |
-| **What lands** | One row per Save (and again on full “Email comments” submit) — reviewer name, email, session id, verdict/comment JSON |
+| **What lands** | One row per **Save**, and again on **Save all to sheet** — reviewer name, optional email, session id, event (`item_save` / `full_submit`), verdict/comment JSON |
+| **Email** | Optional Apps Script notify to support after Sheet write; failure/absent email does **not** undo the Sheet row. Reviewer email field is optional in the UI. |
+| **Cursor / local files** | Other reviewers’ ratings are **not** in the repo or Cursor — only on the Sheet (and each reviewer’s own browser `localStorage`). See `feedback/README.md`. |
 
-### Before you share the picker URL for feedback
+### Secret 1 only — before you share the picker URL for feedback
 
-1. Confirm live config has a real webhook: open [config.js on live site](https://gildedgooseltd.github.io/GilbertGuide/config.js) — `webhookUrl` must be a real `https://script.google.com/.../exec` (not empty / not `YOUR_DEPLOYMENT_ID`).
-2. If empty:
-   - **Copy from:** Apps Script → **Deploy → Manage deployments** → Web app URL (Part A16)
-   - **Paste into:** GitHub → [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new) → **Name:** `PAV_PICKER_WEBHOOK_URL` → **Secret:** the `/exec` URL only
-   - Re-run [Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml)
+Do these steps once. **Do not** involve Secret 2 / QuickBooks for metrics gather.
+
+1. Confirm live config has a real webhook: open [config.js on live site](https://gildedgooseltd.github.io/GilbertGuide/config.js) — look at `webhookUrl`.
+   - **Must be:** a real `https://script.google.com/.../exec` URL  
+   - **Not empty** / not `YOUR_DEPLOYMENT_ID`
+2. If empty — set Secret 1:
+   1. **Copy from:** Apps Script → **Deploy → Manage deployments** → **Web app URL** (Part A16; ends in `/exec`)
+   2. **Paste into:** GitHub → [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
+      - **Name:** `PAV_PICKER_WEBHOOK_URL`
+      - **Secret:** the `/exec` URL only (nothing else)
+   3. If the secret already exists with a wrong/empty value: [Secrets list](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions) → **Remove** `PAV_PICKER_WEBHOOK_URL` → add again (secrets are not editable in place)
+   4. Re-run [Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) → wait for green
+   5. **Verify webhook not empty:** refresh [config.js](https://gildedgooseltd.github.io/GilbertGuide/config.js) — `webhookUrl` must show the real `/exec` URL
 3. After updating webhook code on Mac (`apps-script-webhook.gs`): **Copy from** that file → **Paste into** Apps Script **Code.gs** → **Deploy → Manage deployments → Edit → New version → Deploy** (same URL; do not create a second web app).
 
-**Verify gather:** Feedback mode → rate one metric → Save → open the spreadsheet → tab **MetricsFeedback** → newest row.
+**Verify gather:** Feedback mode → rate one metric → **Save** → open the spreadsheet → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client).
 
-The magenta status bar on the live site says **Remote gather OFF** when `webhookUrl` is missing — do not share for multi-person review until that is green/ok.
+The status bar says **Remote gather OFF** when `webhookUrl` is missing — do not share for multi-person review until Secret 1 is set and config.js shows a real URL.
 
 ---
 
