@@ -38,6 +38,7 @@ function setup() {
     ]);
     sh.getRange(1, 1, 1, 18).setFontWeight("bold");
   }
+  setupMetricsFeedbackSheet();
 }
 
 function formatNotes(notes) {
@@ -190,18 +191,33 @@ function setupMetricsFeedbackSheet() {
   if (!sh) {
     sh = ss.insertSheet("MetricsFeedback");
   }
+  var headers = [
+    "Timestamp",
+    "Reviewer name",
+    "Email",
+    "Session ID",
+    "Event",
+    "Period",
+    "As of",
+    "Source",
+    "Feedback count",
+    "Feedback JSON",
+    "Raw JSON"
+  ];
   if (sh.getLastRow() === 0) {
-    sh.appendRow([
-      "Timestamp",
-      "Email",
-      "Period",
-      "As of",
-      "Source",
-      "Feedback count",
-      "Feedback JSON",
-      "Raw JSON"
-    ]);
-    sh.getRange(1, 1, 1, 8).setFontWeight("bold");
+    sh.appendRow(headers);
+    sh.getRange(1, 1, 1, headers.length).setFontWeight("bold");
+    return sh;
+  }
+  // Upgrade legacy 8-col header (Email was col B) without scrambling existing Email data.
+  var b1 = String(sh.getRange(1, 2).getValue() || "");
+  if (b1 === "Email") {
+    sh.insertColumnsAfter(1, 1); // Timestamp | (new) | Email | Period…
+    sh.getRange(1, 2).setValue("Reviewer name");
+    sh.insertColumnsAfter(3, 2); // … Email | (new) | (new) | Period…
+    sh.getRange(1, 4).setValue("Session ID");
+    sh.getRange(1, 5).setValue("Event");
+    sh.getRange(1, 1, 1, headers.length).setFontWeight("bold");
   }
   return sh;
 }
@@ -209,9 +225,14 @@ function setupMetricsFeedbackSheet() {
 function handleMetricsFeedback(data) {
   setup();
   const sh = setupMetricsFeedbackSheet();
+  var event = data.event || "full_submit";
+  var reviewerLabel = data.submitterName || "";
   sh.appendRow([
     new Date(),
+    reviewerLabel,
     data.submitterEmail || "",
+    data.sessionId || "",
+    event,
     data.period || "",
     data.asOf || "",
     data.source || "",
@@ -220,13 +241,28 @@ function handleMetricsFeedback(data) {
     JSON.stringify(data)
   ]);
 
+  // Per-Save posts land in the Sheet only (no email flood). Full submit emails support.
+  if (event === "item_save") {
+    return ContentService.createTextOutput(JSON.stringify({
+      ok: true,
+      type: "metrics_feedback",
+      event: event,
+      sheet: "MetricsFeedback",
+      emailsSent: { internal: false, client: false }
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+
   const lines = (data.feedback || []).map(function(item) {
   return "• " + (item.label || item.id) + " — " + (item.verdict || "") +
       (item.comment ? "\n  " + item.comment : "") +
       (item.suggestedTarget ? "\n  Suggested: " + item.suggestedTarget : "");
   });
+  const who = (data.submitterName || "") +
+    (data.submitterName && data.submitterEmail ? " · " : "") +
+    (data.submitterEmail || "(no email)");
   const body = [
-    "Metrics feedback from " + (data.submitterEmail || "(no email)"),
+    "Metrics feedback from " + who,
+    "Session: " + (data.sessionId || ""),
     "Period: " + (data.period || "") + " · as of " + (data.asOf || ""),
     "Source: " + (data.source || ""),
     "",
@@ -237,7 +273,7 @@ function handleMetricsFeedback(data) {
 
   MailApp.sendEmail(
     NOTIFY_EMAIL,
-    "Gilbert — metrics feedback — " + (data.submitterEmail || "review"),
+    "Gilbert — metrics feedback — " + (data.submitterName || data.submitterEmail || "review"),
     body
   );
 
@@ -253,6 +289,8 @@ function handleMetricsFeedback(data) {
   return ContentService.createTextOutput(JSON.stringify({
     ok: true,
     type: "metrics_feedback",
+    event: event,
+    sheet: "MetricsFeedback",
     emailsSent: { internal: true, client: !!data.submitterEmail }
   })).setMimeType(ContentService.MimeType.JSON);
 }

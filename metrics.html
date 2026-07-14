@@ -12,7 +12,7 @@
       <div>
         <a class="metrics-back" href="index.html">← Back to project guide</a>
         <h1>Metrics &amp; charts</h1>
-        <p class="metrics-header-sub">Turn on magenta <strong>Feedback mode</strong>, then click a KPI or chart — Gilbert opens for your notes. Each Save downloads <strong>pav-metrics-feedback.json</strong> to your Downloads folder. Submit emails everything to <strong>support@gildedgooselimited.com</strong>.</p>
+        <p class="metrics-header-sub">Turn on magenta <strong>Feedback mode</strong>, then click a KPI or chart — Gilbert opens for your notes. Each <strong>Save</strong> posts to the shared Google Sheet tab <strong>MetricsFeedback</strong> (when the webhook is live). Optional email submit still mails <strong>support@gildedgooselimited.com</strong>.</p>
       </div>
     </div>
   </header>
@@ -26,6 +26,7 @@
       <button type="button" class="btn btn-toggle" id="feedback-filter-pending" title="Show only items you have not rated">Unrated only</button>
     </div>
   </div>
+  <p class="metrics-status metrics-remote-status" id="metrics-remote-status" aria-live="polite"></p>
 
   <div class="metrics-main metrics-main-solo">
     <div class="metrics-report-stack">
@@ -41,13 +42,17 @@
     </aside>
 
     <section class="metrics-submit-bar" aria-label="Submit feedback">
-      <h3>Send all feedback to support@gildedgooselimited.com</h3>
+      <h3>Reviewer + optional email to support</h3>
+      <div class="feedback-field">
+        <label for="metrics-reviewer-name">Your name (optional — helps Kate tell reviewers apart)</label>
+        <input type="text" id="metrics-reviewer-name" placeholder="Name" autocomplete="name">
+      </div>
       <div class="feedback-field">
         <label for="metrics-email">Your email (optional, for reply)</label>
         <input type="email" id="metrics-email" placeholder="you@example.com" autocomplete="email">
       </div>
       <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Email all comments to support</button>
-      <p class="metrics-submit-note">Each Save also downloads <strong>pav-metrics-feedback.json</strong> to your Downloads folder (same file overwritten each time). Submit emails the full list to support@gildedgooselimited.com (webhook when live, or opens your mail app).</p>
+      <p class="metrics-submit-note">Each Save already posts to Sheet tab <strong>MetricsFeedback</strong> when the webhook is configured. Email submit also opens mail + downloads a JSON backup.</p>
       <p class="metrics-status" id="metrics-submit-status" aria-live="polite"></p>
     </section>
   </div>
@@ -64,6 +69,6 @@
 
   <script src="pages-config.js?v=20260713b"></script>
   <script src="kpi-report.js?v=20260714k"></script>
-  <script src="metrics-feedback.js?v=20260714m"></script>
+  <script src="metrics-feedback.js?v=20260714n"></script>
 </body>
 </html>

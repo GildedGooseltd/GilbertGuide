@@ -572,3 +572,20 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
 .metrics-status { margin-top: 0.5rem; font-size: var(--font-min-rem); font-weight: 700; }
 .metrics-status.ok { color: var(--gg-positive); }
 .metrics-status.err { color: var(--gg-negative); }
+.metrics-remote-status {
+  max-width: 1100px;
+  margin: 0.5rem auto 0;
+  padding: 0 1.25rem;
+  width: 100%;
+}
+.feedback-remote-ok {
+  margin: 0 0 0.65rem; padding: 0.45rem 0.55rem; border-radius: 6px;
+  background: rgba(46, 125, 50, 0.08); color: var(--gg-positive);
+  font-size: var(--font-min-rem); font-weight: 600;
+}
+.feedback-remote-warn {
+  margin: 0 0 0.65rem; padding: 0.45rem 0.55rem; border-radius: 6px;
+  background: rgba(198, 40, 40, 0.08); color: var(--gg-negative);
+  font-size: var(--font-min-rem); font-weight: 600;
+}
+.feedback-remote-warn code { font-size: 0.85em; }
