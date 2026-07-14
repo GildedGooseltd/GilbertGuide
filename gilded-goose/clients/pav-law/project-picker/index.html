@@ -460,6 +460,30 @@
     .cockpit-feedback-hint {
       margin: 0; flex: 1 1 12rem; font-size: var(--font-min-rem); color: var(--gg-brown-muted);
     }
+    .cockpit-feedback-name {
+      display: flex; align-items: center; gap: 0.35rem;
+      margin: 0; font-size: var(--font-min-rem); font-weight: 700; color: var(--gg-brown);
+    }
+    .cockpit-feedback-name input,
+    .cockpit-feedback-email {
+      width: 8.5rem; padding: 0.35rem 0.45rem; border-radius: 6px;
+      border: 1px solid var(--border); font: inherit; font-size: var(--font-min-rem);
+      background: var(--gg-paper); color: var(--text);
+    }
+    .cockpit-feedback-bar .metrics-remote-status {
+      flex: 1 1 100%; margin: 0; font-size: var(--font-min-rem);
+    }
+    .feedback-remote-ok {
+      margin: 0 0 0.65rem; padding: 0.45rem 0.55rem; border-radius: 6px;
+      background: rgba(46, 125, 50, 0.08); color: var(--gg-positive);
+      font-size: var(--font-min-rem); font-weight: 600;
+    }
+    .feedback-remote-warn {
+      margin: 0 0 0.65rem; padding: 0.45rem 0.55rem; border-radius: 6px;
+      background: rgba(198, 40, 40, 0.08); color: var(--gg-negative);
+      font-size: var(--font-min-rem); font-weight: 600;
+    }
+    .feedback-remote-warn code { font-size: 0.85em; }
     .gilbert-chat-popup-head {
       display: flex; align-items: center; gap: 0.65rem;
       padding: 0.65rem 0.75rem;
@@ -2386,8 +2410,13 @@
           Feedback mode
         </button>
         <p class="cockpit-feedback-progress" id="feedback-progress"><strong>0</strong> <span>of 0 rated</span></p>
+        <label class="cockpit-feedback-name" for="metrics-reviewer-name">Name
+          <input type="text" id="metrics-reviewer-name" placeholder="Optional" autocomplete="name">
+        </label>
+        <input type="email" id="metrics-email" class="cockpit-feedback-email" placeholder="Email (optional)" autocomplete="email" aria-label="Your email optional">
         <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Email comments to support</button>
-        <p class="cockpit-feedback-hint">Works on KPIs, Dashboards, Impact, and Project Guide. Magenta ON → click → Save downloads <strong>pav-metrics-feedback.json</strong> to Downloads → Email when done.</p>
+        <p class="cockpit-feedback-hint">Works on KPIs, Dashboards, Impact, and Project Guide. Magenta ON → click → <strong>Save</strong> posts to Sheet tab <strong>MetricsFeedback</strong> (when webhook is live).</p>
+        <p class="metrics-status metrics-remote-status" id="metrics-remote-status" aria-live="polite"></p>
         <p class="metrics-status" id="metrics-submit-status" aria-live="polite" hidden></p>
       </div>
     </div>
@@ -2528,6 +2557,6 @@
   <script src="projects-data.js?v=20260713u"></script>
   <script src="kpi-report.js?v=20260714k"></script>
   <script src="app.js?v=20260714l"></script>
-  <script src="metrics-feedback.js?v=20260714m"></script>
+  <script src="metrics-feedback.js?v=20260714n"></script>
 </body>
 </html>

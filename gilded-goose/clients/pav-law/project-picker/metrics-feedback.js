@@ -1,9 +1,12 @@
 /**
  * Magenta Feedback mode: click a KPI or chart to leave Gilbert comments.
- * Saves to localStorage + Downloads/pav-metrics-feedback.json; Email submit still mails support.
+ * Each Save → localStorage cache + POST to webhook (MetricsFeedback sheet) when configured.
+ * Email submit still mails support + optional JSON download.
  */
 (function () {
   const STORAGE_KEY = "pav-metrics-feedback-v1";
+  const REVIEWER_KEY = "pav-metrics-reviewer-v1";
+  const SESSION_KEY = "pav-metrics-session-v1";
   const BACKUP_FILENAME = "pav-metrics-feedback.json";
   const SUPPORT_EMAIL = "support@gildedgooselimited.com";
   const VERDICTS = [
@@ -19,7 +22,9 @@
     activeId: null,
     feedback: loadFeedback(),
     filterPending: false,
-    feedbackMode: false
+    feedbackMode: false,
+    sessionId: getOrCreateSessionId(),
+    lastRemoteStatus: null
   };
 
   function loadFeedback() {
@@ -30,9 +35,50 @@
     }
   }
 
-  function saveFeedback() {
+  function getOrCreateSessionId() {
+    try {
+      let id = sessionStorage.getItem(SESSION_KEY);
+      if (!id) {
+        id = "s-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8);
+        sessionStorage.setItem(SESSION_KEY, id);
+      }
+      return id;
+    } catch {
+      return "s-anon-" + Date.now().toString(36);
+    }
+  }
+
+  function loadReviewer() {
+    try {
+      return JSON.parse(localStorage.getItem(REVIEWER_KEY) || "{}");
+    } catch {
+      return {};
+    }
+  }
+
+  function saveReviewer(name, email) {
+    const next = {
+      name: (name || "").trim(),
+      email: (email || "").trim()
+    };
+    try {
+      localStorage.setItem(REVIEWER_KEY, JSON.stringify(next));
+    } catch { /* ignore */ }
+    return next;
+  }
+
+  function readReviewerFromUi() {
+    const nameEl = document.getElementById("metrics-reviewer-name");
+    const emailEl = document.getElementById("metrics-email");
+    const stored = loadReviewer();
+    return saveReviewer(
+      nameEl ? nameEl.value : stored.name,
+      emailEl ? emailEl.value : stored.email
+    );
+  }
+
+  function persistFeedbackLocal() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.feedback));
-    downloadFeedbackBackup();
     updateProgress();
     renderSummary();
     syncChipStates();
@@ -40,6 +86,10 @@
 
   function getConfig() {
     return (typeof window !== "undefined" && window.PAV_PICKER_CONFIG) ? window.PAV_PICKER_CONFIG : {};
+  }
+
+  function webhookConfigured() {
+    return !!(getConfig().webhookUrl || "").trim();
   }
 
   function escapeHtml(s) {
@@ -108,7 +158,6 @@
         el.dataset.feedbackId = id;
       }
       if (!id || seen.has(id)) return;
-      // Prefer leaf cards over wrapping sections when both share an id.
       if (el.classList.contains("kpi-section") && el.querySelector("[data-kpi-focus], .kpi-chart-card, .kpi-split-panel")) {
         return;
       }
@@ -119,7 +168,6 @@
     document.querySelectorAll(".kpi-report-root").forEach(root => {
       root.querySelectorAll(selectors).forEach(addTarget);
     });
-    // Cockpit Impact / Project Guide surfaces that opt into metric-style feedback.
     document.querySelectorAll(
       "#cockpit-panel-impact [data-feedback-id], #cockpit-panel-picker [data-feedback-id]"
     ).forEach(addTarget);
@@ -128,11 +176,6 @@
 
   function verdictMeta(id) {
     return VERDICTS.find(v => v.id === id) || VERDICTS[0];
-  }
-
-  function chipClassFor(entry) {
-    if (!entry?.verdict) return "";
-    return verdictMeta(entry.verdict).chipClass;
   }
 
   function markTargets() {
@@ -151,7 +194,6 @@
     if (!state.feedbackMode) return;
     const el = e.currentTarget;
     if (el.classList.contains("kpi-section")) return;
-    // Nested feedback targets (e.g. report-out inside completed) own the click.
     const nested = e.target.closest(".feedback-target");
     if (nested && nested !== el) return;
     const id = el.dataset.feedbackFor || targetId(el);
@@ -239,6 +281,19 @@
     syncChipStates();
   }
 
+  function remoteStatusMessage() {
+    if (!webhookConfigured()) {
+      return "Remote gather OFF — webhook not configured. Ratings stay on this device only until Secret 1 (PAV_PICKER_WEBHOOK_URL) is set and redeployed.";
+    }
+    if (state.lastRemoteStatus === "ok") {
+      return "Remote: saved to Google Sheet tab MetricsFeedback.";
+    }
+    if (state.lastRemoteStatus === "err") {
+      return "Remote send failed — kept locally. Check webhook / Apps Script deploy.";
+    }
+    return "Remote: each Save posts to MetricsFeedback sheet.";
+  }
+
   function openGilbertPopup(id) {
     if (!state.feedbackMode) return;
     state.activeId = id;
@@ -248,6 +303,7 @@
     if (!popup || !body || !t) return;
 
     const entry = state.feedback[id] || {};
+    const reviewer = loadReviewer();
     if (subtitle) subtitle.textContent = t.label;
     const verdicts = VERDICTS.map(
       v => `<label class="feedback-verdict">
@@ -256,12 +312,21 @@
       </label>`
     ).join("");
 
+    const remoteHint = webhookConfigured()
+      ? `<p class="feedback-remote-ok">Save sends this note to the shared <strong>MetricsFeedback</strong> sheet (plus a copy on this device).</p>`
+      : `<p class="feedback-remote-warn">Webhook missing — Save stays on <em>this browser only</em>. Other people’s comments won’t reach Kate until <code>PAV_PICKER_WEBHOOK_URL</code> is set in GitHub and the site is redeployed.</p>`;
+
     body.innerHTML = `
       <div class="gilbert-feedback-msg gilbert-chat-gilbert">
         <span class="gilbert-chat-who">Gilbert</span>
-        <p>How does <strong>${escapeHtml(t.label)}</strong> look? Your note goes to support when you submit all ratings.</p>
+        <p>How does <strong>${escapeHtml(t.label)}</strong> look?</p>
       </div>
       <p class="feedback-panel-target">${escapeHtml(t.type)} · ${escapeHtml(t.id)}</p>
+      ${remoteHint}
+      <div class="feedback-field">
+        <label for="feedback-popup-name">Your name (optional)</label>
+        <input type="text" id="feedback-popup-name" value="${escapeHtml(reviewer.name || "")}" placeholder="So Kate can tell reviewers apart" autocomplete="name">
+      </div>
       <div class="feedback-verdicts" role="group" aria-label="Your verdict">${verdicts}</div>
       <div class="feedback-field">
         <label for="feedback-comment">Your comment</label>
@@ -280,8 +345,14 @@
     document.getElementById("feedback-save-btn")?.addEventListener("click", () => saveActive(id));
     document.getElementById("feedback-clear-btn")?.addEventListener("click", () => {
       delete state.feedback[id];
-      saveFeedback();
+      persistFeedbackLocal();
       openGilbertPopup(id);
+    });
+    document.getElementById("feedback-popup-name")?.addEventListener("change", e => {
+      const email = document.getElementById("metrics-email")?.value || loadReviewer().email || "";
+      saveReviewer(e.target.value, email);
+      const barName = document.getElementById("metrics-reviewer-name");
+      if (barName) barName.value = e.target.value;
     });
 
     popup.hidden = false;
@@ -291,22 +362,91 @@
     document.getElementById("feedback-comment")?.focus();
   }
 
-  function saveActive(id) {
+  async function postToWebhook(payload) {
+    const url = (getConfig().webhookUrl || "").trim();
+    if (!url) return { ok: false, reason: "missing" };
+    try {
+      await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+      // no-cors: opaque response — treat fire-and-forget as ok if fetch did not throw
+      return { ok: true };
+    } catch {
+      return { ok: false, reason: "network" };
+    }
+  }
+
+  function buildItemPayload(id, entry, event) {
+    const t = state.targets.find(x => x.id === id);
+    const reviewer = readReviewerFromUi();
+    const popupName = document.getElementById("feedback-popup-name")?.value;
+    if (popupName != null) saveReviewer(popupName, reviewer.email);
+    const who = loadReviewer();
+    const data = window.KPI_REPORT?.getData?.() || {};
+    const item = {
+      id,
+      label: t?.label || id,
+      type: t?.type || "other",
+      ...entry
+    };
+    return {
+      type: "metrics_feedback",
+      event: event || "item_save",
+      notifyEmail: SUPPORT_EMAIL,
+      submittedAt: new Date().toISOString(),
+      submitterName: who.name || "",
+      submitterEmail: who.email || "",
+      sessionId: state.sessionId,
+      period: data.period || "",
+      asOf: data.asOf || "",
+      source: data.source || (document.body.classList.contains("metrics-page") ? "metrics.html" : "index.html"),
+      feedbackCount: 1,
+      feedback: [item]
+    };
+  }
+
+  async function saveActive(id) {
     const verdict = document.querySelector('input[name="feedback-verdict"]:checked')?.value;
     const toast = document.getElementById("feedback-saved-toast");
     if (!verdict) {
       if (toast) toast.textContent = "Pick a verdict first.";
       return;
     }
-    state.feedback[id] = {
+
+    const popupName = document.getElementById("feedback-popup-name")?.value || "";
+    const email = document.getElementById("metrics-email")?.value || loadReviewer().email || "";
+    saveReviewer(popupName, email);
+    const barName = document.getElementById("metrics-reviewer-name");
+    if (barName) barName.value = popupName;
+
+    const entry = {
       verdict,
       comment: (document.getElementById("feedback-comment")?.value || "").trim(),
       suggestedTarget: (document.getElementById("feedback-target-suggest")?.value || "").trim(),
       updatedAt: new Date().toISOString()
     };
-    saveFeedback();
+    state.feedback[id] = entry;
+    persistFeedbackLocal();
+
+    if (!webhookConfigured()) {
+      state.lastRemoteStatus = "missing";
+      updateRemoteBanner();
+      if (toast) toast.textContent = "Saved on this device only — remote gather OFF (no webhook).";
+      setTimeout(() => closeGilbertPopup(), 700);
+      return;
+    }
+
+    if (toast) toast.textContent = "Saving to shared sheet…";
+    const result = await postToWebhook(buildItemPayload(id, entry, "item_save"));
+    state.lastRemoteStatus = result.ok ? "ok" : "err";
+    updateRemoteBanner();
     if (toast) {
-      toast.textContent = "Saved — Downloads/" + BACKUP_FILENAME;
+      toast.textContent = result.ok
+        ? "Saved to MetricsFeedback sheet (+ local copy)."
+        : "Saved locally — remote send failed.";
     }
     setTimeout(() => closeGilbertPopup(), 450);
   }
@@ -349,17 +489,21 @@
       }));
   }
 
-  function buildPayload(email) {
+  function buildPayload(event) {
     const data = window.KPI_REPORT?.getData?.() || {};
+    const who = readReviewerFromUi();
     const items = feedbackItems();
     return {
       type: "metrics_feedback",
+      event: event || "full_submit",
       notifyEmail: SUPPORT_EMAIL,
       submittedAt: new Date().toISOString(),
-      submitterEmail: (email || "").trim(),
+      submitterName: who.name || "",
+      submitterEmail: who.email || "",
+      sessionId: state.sessionId,
       period: data.period || "",
       asOf: data.asOf || "",
-      source: data.source || "",
+      source: data.source || (document.body.classList.contains("metrics-page") ? "metrics.html" : "index.html"),
       feedbackCount: items.length,
       feedback: items
     };
@@ -369,7 +513,8 @@
     const lines = [
       "Pav Law metrics feedback",
       "To: " + SUPPORT_EMAIL,
-      "From: " + (payload.submitterEmail || "(not provided)"),
+      "From: " + (payload.submitterName || "(no name)") + " · " + (payload.submitterEmail || "(no email)"),
+      "Session: " + (payload.sessionId || ""),
       "Period: " + (payload.period || "") + " · as of " + (payload.asOf || ""),
       "Source: " + (payload.source || ""),
       "Submitted: " + payload.submittedAt,
@@ -390,7 +535,7 @@
 
   function openMailto(payload) {
     const subject = encodeURIComponent(
-      "Gilbert metrics feedback — " + (payload.submitterEmail || payload.asOf || "review")
+      "Gilbert metrics feedback — " + (payload.submitterName || payload.submitterEmail || payload.asOf || "review")
     );
     const body = encodeURIComponent(formatEmailBody(payload));
     const mailto = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
@@ -406,62 +551,83 @@
     setTimeout(() => URL.revokeObjectURL(a.href), 1500);
   }
 
-  /** Regenerates the same Downloads filename so Kate always has the latest backup. */
-  function downloadFeedbackBackup() {
-    const payload = buildPayload("");
-    payload.savedAt = new Date().toISOString();
-    payload.backupFile = BACKUP_FILENAME;
-    downloadJson(payload, BACKUP_FILENAME);
-  }
-
   async function submitAll() {
-    const emailEl = document.getElementById("metrics-email");
     const statusEl = document.getElementById("metrics-submit-status");
-    const email = emailEl?.value || "";
     const items = feedbackItems();
     if (!items.length) {
       if (statusEl) {
+        statusEl.hidden = false;
         statusEl.textContent = "Rate at least one metric first.";
         statusEl.className = "metrics-status err";
       }
       return;
     }
 
-    const payload = buildPayload(email);
-    const cfg = getConfig();
+    const payload = buildPayload("full_submit");
     const btn = document.getElementById("metrics-submit-btn");
     if (btn) btn.disabled = true;
     if (statusEl) {
-      statusEl.textContent = "Sending to " + SUPPORT_EMAIL + "…";
+      statusEl.hidden = false;
+      statusEl.textContent = webhookConfigured()
+        ? "Sending full set to MetricsFeedback + " + SUPPORT_EMAIL + "…"
+        : "Opening mail to " + SUPPORT_EMAIL + " (webhook not configured — Sheet gather OFF)…";
       statusEl.className = "metrics-status";
     }
 
     let webhookOk = false;
-    if (cfg.webhookUrl) {
-      try {
-        await fetch(cfg.webhookUrl, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-        webhookOk = true;
-      } catch {
-        webhookOk = false;
-      }
+    if (webhookConfigured()) {
+      const result = await postToWebhook(payload);
+      webhookOk = result.ok;
+      state.lastRemoteStatus = webhookOk ? "ok" : "err";
+      updateRemoteBanner();
     }
 
-    // Always open mail to support with full comment list (and download backup).
     downloadJson(payload);
     openMailto(payload);
 
     if (statusEl) {
-      statusEl.textContent = webhookOk
-        ? "Sent to " + SUPPORT_EMAIL + " — mail app also opened with your comments."
-        : "Mail app opened to " + SUPPORT_EMAIL + " with all comments (JSON downloaded as backup).";
-      statusEl.className = "metrics-status ok";
+      statusEl.hidden = false;
+      if (webhookOk) {
+        statusEl.textContent = "Posted to MetricsFeedback sheet — mail app also opened.";
+        statusEl.className = "metrics-status ok";
+      } else if (webhookConfigured()) {
+        statusEl.textContent = "Mail opened + JSON downloaded; remote Sheet post may have failed.";
+        statusEl.className = "metrics-status err";
+      } else {
+        statusEl.textContent = "Mail opened + JSON downloaded. Sheet gather OFF until webhook is configured.";
+        statusEl.className = "metrics-status err";
+      }
     }
     if (btn) btn.disabled = false;
+  }
+
+  function updateRemoteBanner() {
+    const els = document.querySelectorAll("#metrics-remote-status, .metrics-remote-status");
+    const msg = remoteStatusMessage();
+    const cls = !webhookConfigured()
+      ? "metrics-status err metrics-remote-status"
+      : state.lastRemoteStatus === "err"
+        ? "metrics-status err metrics-remote-status"
+        : "metrics-status ok metrics-remote-status";
+    els.forEach(el => {
+      el.hidden = false;
+      el.className = cls;
+      el.textContent = msg;
+    });
+  }
+
+  function hydrateReviewerFields() {
+    const who = loadReviewer();
+    const nameEl = document.getElementById("metrics-reviewer-name");
+    const emailEl = document.getElementById("metrics-email");
+    if (nameEl && !nameEl.value && who.name) nameEl.value = who.name;
+    if (emailEl && !emailEl.value && who.email) emailEl.value = who.email;
+    nameEl?.addEventListener("change", () => {
+      saveReviewer(nameEl.value, emailEl?.value || loadReviewer().email || "");
+    });
+    emailEl?.addEventListener("change", () => {
+      saveReviewer(nameEl?.value || loadReviewer().name || "", emailEl.value);
+    });
   }
 
   function bindPopupChrome() {
@@ -490,6 +656,8 @@
     setFeedbackMode(false);
     updateProgress();
     renderSummary();
+    hydrateReviewerFields();
+    updateRemoteBanner();
     bindPopupChrome();
     bindFeedbackModeToggle();
 

@@ -210,6 +210,31 @@ Paste each URL when prompted — not the secret name.
 
 ---
 
+## Metrics feedback (shared reviewers) — where rows land
+
+When someone rates a KPI/chart and clicks **Save**, the picker POSTs to the **same** Apps Script webhook (Secret 1 / `PAV_PICKER_WEBHOOK_URL`). No second `/exec` URL.
+
+| | Detail |
+|---|--------|
+| **Google Sheet** | Same spreadsheet as Part A — title `Pav Law Project Picker Submissions` (or whatever you named in A2) |
+| **Tab name** | **`MetricsFeedback`** (created automatically on first metrics feedback POST, or when you re-paste `apps-script-webhook.gs` and run anything that hits `setupMetricsFeedbackSheet`) |
+| **What lands** | One row per Save (and again on full “Email comments” submit) — reviewer name, email, session id, verdict/comment JSON |
+
+### Before you share the picker URL for feedback
+
+1. Confirm live config has a real webhook: open [config.js on live site](https://gildedgooseltd.github.io/GilbertGuide/config.js) — `webhookUrl` must be a real `https://script.google.com/.../exec` (not empty / not `YOUR_DEPLOYMENT_ID`).
+2. If empty:
+   - **Copy from:** Apps Script → **Deploy → Manage deployments** → Web app URL (Part A16)
+   - **Paste into:** GitHub → [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new) → **Name:** `PAV_PICKER_WEBHOOK_URL` → **Secret:** the `/exec` URL only
+   - Re-run [Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml)
+3. After updating webhook code on Mac (`apps-script-webhook.gs`): **Copy from** that file → **Paste into** Apps Script **Code.gs** → **Deploy → Manage deployments → Edit → New version → Deploy** (same URL; do not create a second web app).
+
+**Verify gather:** Feedback mode → rate one metric → Save → open the spreadsheet → tab **MetricsFeedback** → newest row.
+
+The magenta status bar on the live site says **Remote gather OFF** when `webhookUrl` is missing — do not share for multi-person review until that is green/ok.
+
+---
+
 ## After go-live
 
 | Change | Where to edit |

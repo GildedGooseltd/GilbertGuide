@@ -27,7 +27,7 @@ Add each at [New repository secret](https://github.com/GildedGooseltd/GilbertGui
 
 ## Secret 1 — webhook (Google → GitHub)
 
-**What it does:** Picker POSTs JSON → Google Sheet row + emails.
+**What it does:** Picker POSTs JSON → Google Sheet row + emails. Same URL also receives **metrics feedback** (Save on each KPI) → Sheet tab **`MetricsFeedback`**.
 
 ### If you are on Apps Script “New deployment” (Web app)
 
