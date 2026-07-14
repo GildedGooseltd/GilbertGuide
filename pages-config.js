@@ -1,8 +1,4 @@
-/**
- * Live/static PAV_PICKER_CONFIG. Deploy may overwrite from secret; if secret empty,
- * workflow falls back to pages-config.defaults.js (same webhookUrl).
- * Public on Pages by design for this architecture.
- */
+/** Written to gh-pages directly — bypass empty Actions secret. */
 window.PAV_PICKER_CONFIG = {
   webhookUrl: "https://script.google.com/macros/s/AKfycbyXinGO9Tnh0XlI9pKRD2sp7z3ruY6ZvFZU3yIjtxMW2HTRyak94q1g7ixbFA2DTfiAXw/exec",
   depositAmount: 2500,
