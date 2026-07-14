@@ -51,7 +51,8 @@
         <input type="email" id="metrics-email" placeholder="you@example.com" autocomplete="email">
       </div>
       <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Save all to sheet</button>
-      <p class="metrics-submit-note">Each <strong>Save</strong> already posts to Sheet tab <strong>MetricsFeedback</strong> when the webhook is live. <strong>Save all to sheet</strong> posts the full set again. Success = Sheet row — email is not required. JSON downloads only if Sheet gather is OFF or the post fails.</p>
+      <button type="button" class="btn" data-metrics-download-backup>Download backup (optional)</button>
+      <p class="metrics-submit-note">Each <strong>Save</strong> / <strong>Save all to sheet</strong> writes localStorage + Sheet tab <strong>MetricsFeedback</strong> when the webhook is live. Success = Sheet row — no file download. Email is not required. Use <strong>Download backup</strong> only if you explicitly want a local JSON copy.</p>
       <p class="metrics-status" id="metrics-submit-status" aria-live="polite"></p>
     </section>
   </div>
@@ -67,7 +68,7 @@
   </aside>
 
   <script src="pages-config.js?v=20260713b"></script>
-  <script src="kpi-report.js?v=20260714m"></script>
-  <script src="metrics-feedback.js?v=20260714m"></script>
+  <script src="kpi-report.js?v=20260714n"></script>
+  <script src="metrics-feedback.js?v=20260714n"></script>
 </body>
 </html>

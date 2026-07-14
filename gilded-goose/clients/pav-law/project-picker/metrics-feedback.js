@@ -1,7 +1,8 @@
 /**
  * Magenta Feedback mode: click a KPI or chart to leave Gilbert comments.
  * Each Save → localStorage + POST to webhook → Google Sheet tab MetricsFeedback (primary).
- * Full “Save all to sheet” = same Sheet destination. Email/mailto is not required for success.
+ * Full “Save all to sheet” = same Sheet destination. No automatic JSON download.
+ * Optional “Download backup” is opt-in only. Email/mailto is not required for success.
  */
 (function () {
   const STORAGE_KEY = "pav-metrics-feedback-v1";
@@ -509,11 +510,23 @@
     };
   }
 
-  function downloadJson(payload, filename) {
+  /** Opt-in only — never called from Save / Save all. */
+  function downloadJsonBackup() {
+    const items = feedbackItems();
+    if (!items.length) {
+      const statusEl = document.getElementById("metrics-submit-status");
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Nothing to download — rate at least one metric first.";
+        statusEl.className = "metrics-status err";
+      }
+      return;
+    }
+    const payload = buildPayload("local_backup");
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = filename || BACKUP_FILENAME;
+    a.download = BACKUP_FILENAME;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1500);
   }
@@ -535,12 +548,11 @@
     if (btn) btn.disabled = true;
 
     if (!webhookConfigured()) {
-      downloadJson(payload);
       state.lastRemoteStatus = "missing";
       updateRemoteBanner();
       if (statusEl) {
         statusEl.hidden = false;
-        statusEl.textContent = "Sheet gather OFF — JSON downloaded to this device only. Set GitHub Secret 1 (PAV_PICKER_WEBHOOK_URL) and redeploy before sharing.";
+        statusEl.textContent = "Saved on this device only — Sheet gather OFF. Set GitHub Secret 1 (PAV_PICKER_WEBHOOK_URL) and redeploy before sharing.";
         statusEl.className = "metrics-status err";
       }
       if (btn) btn.disabled = false;
@@ -564,8 +576,7 @@
         statusEl.textContent = "Saved to sheet — tab MetricsFeedback. Email not required.";
         statusEl.className = "metrics-status ok";
       } else {
-        downloadJson(payload);
-        statusEl.textContent = "Sheet post failed — JSON downloaded as backup. Check webhook / Apps Script deploy.";
+        statusEl.textContent = "Saved locally — Sheet post failed. Check webhook / Apps Script deploy. Use Download backup only if you need a local file.";
         statusEl.className = "metrics-status err";
       }
     }
@@ -639,6 +650,12 @@
     });
 
     document.getElementById("metrics-submit-btn")?.addEventListener("click", submitAll);
+    document.querySelectorAll("[data-metrics-download-backup]").forEach(el => {
+      el.addEventListener("click", e => {
+        e.preventDefault();
+        downloadJsonBackup();
+      });
+    });
   }
 
   function onReady() {
