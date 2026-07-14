@@ -292,7 +292,7 @@
 
   function remoteStatusHtml() {
     if (!webhookConfigured()) {
-      return `Remote gather OFF — ${SHEET_ERR}. <a href="${SETUP_HREF}">Open owner webhook setup</a> (Secret 1 on <strong>PickyPavi</strong> only), then verify <a href="${LIVE_CONFIG_HREF}" target="_blank" rel="noopener">live pages-config.js</a> shows a real <code>/exec</code> before Save.`;
+      return `Remote gather OFF — ${SHEET_ERR}. Verify <a href="${LIVE_CONFIG_HREF}" target="_blank" rel="noopener">live pages-config.js</a> shows a real <code>/exec</code>, then hard-refresh Metrics and Save.`;
     }
     if (state.lastRemoteStatus === "ok") {
       return "Saved to Google Sheet tab MetricsFeedback.";
@@ -323,7 +323,7 @@
 
     const remoteHint = webhookConfigured()
       ? `<p class="feedback-remote-ok">Save sends this note to the shared <strong>MetricsFeedback</strong> sheet (plus a copy on this device).</p>`
-      : `<p class="feedback-remote-warn">Remote gather OFF — ${SHEET_ERR}. <a href="${SETUP_HREF}">Open owner webhook setup</a> (paste <code>/exec</code> into PickyPavi Secret <code>PAV_PICKER_WEBHOOK_URL</code>, redeploy, verify <a href="${LIVE_CONFIG_HREF}" target="_blank" rel="noopener">pages-config.js</a>).</p>`;
+      : `<p class="feedback-remote-warn">Remote gather OFF — ${SHEET_ERR}. Check <a href="${LIVE_CONFIG_HREF}" target="_blank" rel="noopener">pages-config.js</a> has a non-empty <code>webhookUrl</code> ending in <code>/exec</code>, then hard-refresh.</p>`;
 
     body.innerHTML = `
       <div class="gilbert-feedback-msg gilbert-chat-gilbert">
