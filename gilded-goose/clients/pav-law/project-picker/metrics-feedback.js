@@ -1,9 +1,10 @@
 /**
  * Magenta Feedback mode: click a KPI or chart to leave Gilbert comments.
- * Saves to localStorage; emails all comments to support@gildedgooselimited.com.
+ * Saves to localStorage + Downloads/pav-metrics-feedback.json; Email submit still mails support.
  */
 (function () {
   const STORAGE_KEY = "pav-metrics-feedback-v1";
+  const BACKUP_FILENAME = "pav-metrics-feedback.json";
   const SUPPORT_EMAIL = "support@gildedgooselimited.com";
   const VERDICTS = [
     { id: "ok", label: "Looks right", chipClass: "done-ok" },
@@ -31,6 +32,7 @@
 
   function saveFeedback() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.feedback));
+    downloadFeedbackBackup();
     updateProgress();
     renderSummary();
     syncChipStates();
@@ -303,7 +305,9 @@
       updatedAt: new Date().toISOString()
     };
     saveFeedback();
-    if (toast) toast.textContent = "Saved.";
+    if (toast) {
+      toast.textContent = "Saved — Downloads/" + BACKUP_FILENAME;
+    }
     setTimeout(() => closeGilbertPopup(), 450);
   }
 
@@ -393,13 +397,21 @@
     window.location.href = mailto;
   }
 
-  function downloadJson(payload) {
+  function downloadJson(payload, filename) {
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `pav-metrics-feedback-${payload.submittedAt.slice(0, 10)}.json`;
+    a.download = filename || BACKUP_FILENAME;
     a.click();
-    URL.revokeObjectURL(a.href);
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  }
+
+  /** Regenerates the same Downloads filename so Kate always has the latest backup. */
+  function downloadFeedbackBackup() {
+    const payload = buildPayload("");
+    payload.savedAt = new Date().toISOString();
+    payload.backupFile = BACKUP_FILENAME;
+    downloadJson(payload, BACKUP_FILENAME);
   }
 
   async function submitAll() {
