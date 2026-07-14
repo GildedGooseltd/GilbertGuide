@@ -297,6 +297,9 @@
     if (state.lastRemoteStatus === "ok") {
       return "Saved to Google Sheet tab MetricsFeedback.";
     }
+    if (state.lastRemoteStatus === "outdated") {
+      return `${SHEET_ERR} — live Apps Script is outdated (no MetricsFeedback handler). Paste <code>apps-script-webhook.gs</code> → Deploy → New version. See <a href="${SETUP_HREF}">owner webhook setup</a>.`;
+    }
     if (state.lastRemoteStatus === "err") {
       return `${SHEET_ERR}. Check Apps Script deploy (Anyone + /exec). See <a href="${SETUP_HREF}">owner webhook setup</a>.`;
     }
@@ -371,21 +374,56 @@
     document.getElementById("feedback-comment")?.focus();
   }
 
+  /**
+   * CORS POST only — never treat opaque no-cors as Sheet success.
+   * Live Apps Script must return JSON with type/sheet metrics_feedback.
+   * Outdated deploys return picker shape { ok, emailsSent } and must fail in UI.
+   */
   async function postToWebhook(payload) {
     const url = (getConfig().webhookUrl || "").trim();
     if (!url) return { ok: false, reason: "missing" };
     try {
-      await fetch(url, {
+      const res = await fetch(url, {
         method: "POST",
-        mode: "no-cors",
+        mode: "cors",
+        redirect: "follow",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
       });
-      // no-cors: opaque response — treat fire-and-forget as ok if fetch did not throw
-      return { ok: true };
+      const text = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(text);
+      } catch {
+        /* GAS may return HTML on some failures */
+      }
+      if (
+        res.ok &&
+        data.ok === true &&
+        (data.type === "metrics_feedback" || data.sheet === "MetricsFeedback")
+      ) {
+        return { ok: true, data };
+      }
+      // Outdated Code.gs: metrics payload hit Submissions path, not MetricsFeedback.
+      if (res.ok && data.ok === true && data.emailsSent && !data.type && !data.sheet) {
+        return { ok: false, reason: "outdated_script", data };
+      }
+      return {
+        ok: false,
+        reason: data.error || (res.ok ? "bad_response" : `HTTP ${res.status}`),
+        data
+      };
     } catch {
       return { ok: false, reason: "network" };
     }
+  }
+
+  function sheetSaveErrorText(result) {
+    if (result?.reason === "outdated_script") {
+      return "Not saved to MetricsFeedback — live Apps Script is outdated. Paste apps-script-webhook.gs → Deploy → New version (not GitHub Secret).";
+    }
+    if (result?.reason === "missing") return SHEET_ERR;
+    return `${SHEET_ERR}. Check Apps Script deploy (Anyone + /exec).`;
   }
 
   function buildItemPayload(id, entry, event) {
@@ -450,12 +488,16 @@
 
     if (toast) toast.textContent = "Saving to shared sheet…";
     const result = await postToWebhook(buildItemPayload(id, entry, "item_save"));
-    state.lastRemoteStatus = result.ok ? "ok" : "err";
+    state.lastRemoteStatus = result.ok
+      ? "ok"
+      : result.reason === "outdated_script"
+        ? "outdated"
+        : "err";
     updateRemoteBanner();
     if (toast) {
       toast.textContent = result.ok
         ? "Saved to MetricsFeedback sheet (+ local copy)."
-        : SHEET_ERR;
+        : sheetSaveErrorText(result);
     }
     setTimeout(() => closeGilbertPopup(), result.ok ? 450 : 900);
   }
@@ -568,7 +610,11 @@
 
     const result = await postToWebhook(payload);
     const webhookOk = result.ok;
-    state.lastRemoteStatus = webhookOk ? "ok" : "err";
+    state.lastRemoteStatus = webhookOk
+      ? "ok"
+      : result.reason === "outdated_script"
+        ? "outdated"
+        : "err";
     updateRemoteBanner();
 
     if (webhookOk) {
@@ -579,7 +625,7 @@
         "ok"
       );
     } else {
-      setSubmitStatus(SHEET_ERR, "err");
+      setSubmitStatus(sheetSaveErrorText(result), "err");
     }
     if (btn) btn.disabled = false;
     return result;
@@ -599,7 +645,7 @@
     const html = remoteStatusHtml();
     const cls = !webhookConfigured()
       ? "metrics-status err metrics-remote-status"
-      : state.lastRemoteStatus === "err"
+      : state.lastRemoteStatus === "err" || state.lastRemoteStatus === "outdated"
         ? "metrics-status err metrics-remote-status"
         : "metrics-status ok metrics-remote-status";
     els.forEach(el => {

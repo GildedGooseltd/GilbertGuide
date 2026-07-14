@@ -26,17 +26,16 @@
     <p class="lead">One-time. Makes live Feedback mode Save write to the shared <strong>MetricsFeedback</strong> sheet for every reviewer on the public URL. Not a Google Form.</p>
 
     <div class="box warn">
-      <strong>Secret updates do nothing until Deploy is green.</strong> Live <a href="pages-config.js"><code>pages-config.js</code></a> only changes after a successful <strong>Deploy Gilbert Guide</strong> run. If Actions shows <code>Missing PAV_PICKER_WEBHOOK_URL</code>, the secret is still empty to GitHub — stop re-pasting secrets; use the committed bypass below.
+      <strong>If Save says OK but MetricsFeedback has no row:</strong> do <strong>not</strong> touch GitHub Secret. Live Apps Script is outdated (metrics POST was treated as a picker submission). Fix with the one Apps Script step below only.
     </div>
 
-    <h2>1 — Get the Apps Script <code>/exec</code> URL</h2>
+    <h2>1 — ONE Apps Script step (fix outdated MetricsFeedback)</h2>
     <ol>
       <li>Open the Sheet: <a href="https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit" target="_blank" rel="noopener">Feedback / submissions spreadsheet</a></li>
       <li><strong>Extensions → Apps Script</strong></li>
-      <li>Paste full <code>apps-script-webhook.gs</code> from this repo into <code>Code.gs</code> → <strong>Save</strong></li>
-      <li><strong>Deploy → New deployment</strong> (or <strong>Manage deployments → Edit → New version</strong> if one exists)</li>
-      <li>Type <strong>Web app</strong> · Execute as <strong>Me</strong> · Who has access <strong>Anyone</strong> → <strong>Deploy</strong></li>
-      <li>Copy the <strong>Web app URL</strong> ending in <code>/exec</code></li>
+      <li>Replace all of <code>Code.gs</code> with the full repo file <code>apps-script-webhook.gs</code> → <strong>Save</strong></li>
+      <li><strong>Deploy → Manage deployments → Edit (pencil) → New version → Deploy</strong> (same <code>/exec</code> URL — do not create a second web app; do not change GitHub Secret)</li>
+      <li><strong>Verify:</strong> browser open <code>…/exec?ping=1</code> → must show <code>"metricsFeedback":true</code> and your spreadsheet ID. Then Metrics → Save → tab <strong>MetricsFeedback</strong> gains a row.</li>
     </ol>
 
     <h2>2 — Bypass (preferred): committed <code>pages-config.defaults.js</code></h2>
