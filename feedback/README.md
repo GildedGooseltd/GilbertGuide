@@ -7,7 +7,7 @@
 | **Sheet (open this)** | [Pav Law feedback spreadsheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit?gid=0#gid=0) |
 | **Spreadsheet ID** | `1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM` (wired in `apps-script-webhook.gs` as `SPREADSHEET_ID`) |
 | **Tab** | **`MetricsFeedback`** |
-| **How it gets there** | Live site POSTs via Apps Script webhook (`PAV_PICKER_WEBHOOK_URL` / Secret 1) on each **Save** and on **Save all to sheet** |
+| **How it gets there** | Live site POSTs via Apps Script webhook (`PAV_PICKER_WEBHOOK_URL` / Secret 1) on each **Save**, on **Save all to sheet**, and when **Feedback mode** toggles **OFF** (flush all rated items) |
 
 Email is **not** required. Mailto is **not** the success path.
 
