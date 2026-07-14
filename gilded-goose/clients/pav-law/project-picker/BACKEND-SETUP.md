@@ -285,6 +285,7 @@ The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook mi
 | “Nowhere to save deposit link” | GitHub Secret 2 only — not Google |
 | Two `/exec` URLs | Archive spare deployment; one URL in Secret 1 |
 | CORS / failed to fetch | A14 must be **Anyone**; URL must end `/exec` |
+| UI says saved, MetricsFeedback empty | Live Code.gs lacks `handleMetricsFeedback` — paste full `apps-script-webhook.gs` → **Deploy → New version** (do **not** change GitHub Secret). `?ping=1` must show `"metricsFeedback":true` |
 | Sheet empty | Confirm Code.gs has `SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM"` → Run **`setup`** → check [destination Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) tabs **Submissions** / **MetricsFeedback** → then **Deploy → New version** |
 | Rows on wrong sheet | Old code used `getActiveSpreadsheet()` — re-paste Mac `apps-script-webhook.gs` (uses `openById`) → New version deploy |
 | Code.gs wrong after edit | Always copy full file from Mac path in A5 — do not paste fragments |

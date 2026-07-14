@@ -187,12 +187,15 @@ function doGet(e) {
   if (e && e.parameter && e.parameter.ping) {
     return ContentService.createTextOutput(JSON.stringify({
       ok: true,
-      service: "gilbert-guide"
+      service: "picky-pavi",
+      metricsFeedback: true,
+      spreadsheetId: SPREADSHEET_ID
     })).setMimeType(ContentService.MimeType.JSON);
   }
   return ContentService.createTextOutput(JSON.stringify({
     ok: true,
-    message: "Gilbert project picker webhook — POST JSON submissions here."
+    message: "Gilbert project picker webhook — POST JSON submissions here.",
+    metricsFeedback: true
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
