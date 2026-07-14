@@ -65,7 +65,9 @@ You should see `const SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T
 
 **Verify A:** Browser address bar → paste `WEBHOOK_URL` + `?ping=1` → Enter.
 
-Expected on screen: `{"ok":true,"service":"gilbert-guide"}`
+Expected on screen (must include metricsFeedback):  
+`{"ok":true,"service":"picky-pavi","metricsFeedback":true,"spreadsheetId":"1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM"}`  
+If you only see `{"ok":true,"service":"picky-pavi"}` → Code.gs was saved but **New version was not deployed** — do **Deploy → Manage deployments → pencil → Version: New version → Deploy**, then recheck ping before testing Save.
 
 ---
 
@@ -285,7 +287,7 @@ The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook mi
 | “Nowhere to save deposit link” | GitHub Secret 2 only — not Google |
 | Two `/exec` URLs | Archive spare deployment; one URL in Secret 1 |
 | CORS / failed to fetch | A14 must be **Anyone**; URL must end `/exec` |
-| UI says saved, MetricsFeedback empty | Live Code.gs lacks `handleMetricsFeedback` — paste full `apps-script-webhook.gs` → **Deploy → New version** (do **not** change GitHub Secret). `?ping=1` must show `"metricsFeedback":true` |
+| UI says saved / “nothing in sheet” | Live ping is still `{"ok":true,"service":"picky-pavi"}` **without** `"metricsFeedback":true` → script not on New version. **Switch:** open Mac path from A5 → Cmd+A → Cmd+C → paste Code.gs → Save → **Deploy → Manage deployments → pencil → Version: New version → Deploy**. Recheck ping (or [owner-webhook-setup](owner-webhook-setup.html) status box) **before** Save. Look at tab **MetricsFeedback**, not Form Responses / Submissions. Do **not** change GitHub Secret. |
 | Sheet empty | Confirm Code.gs has `SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM"` → Run **`setup`** → check [destination Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) tabs **Submissions** / **MetricsFeedback** → then **Deploy → New version** |
 | Rows on wrong sheet | Old code used `getActiveSpreadsheet()` — re-paste Mac `apps-script-webhook.gs` (uses `openById`) → New version deploy |
 | Code.gs wrong after edit | Always copy full file from Mac path in A5 — do not paste fragments |
