@@ -1,7 +1,7 @@
 /**
  * Magenta Feedback mode: click a KPI or chart to leave Gilbert comments.
- * Each Save → localStorage cache + POST to webhook (MetricsFeedback sheet) when configured.
- * Email submit still mails support + optional JSON download.
+ * Each Save → localStorage + POST to webhook → Google Sheet tab MetricsFeedback (primary).
+ * Full “Save all to sheet” = same Sheet destination. Email/mailto is not required for success.
  */
 (function () {
   const STORAGE_KEY = "pav-metrics-feedback-v1";
@@ -509,39 +509,6 @@
     };
   }
 
-  function formatEmailBody(payload) {
-    const lines = [
-      "Pav Law metrics feedback",
-      "To: " + SUPPORT_EMAIL,
-      "From: " + (payload.submitterName || "(no name)") + " · " + (payload.submitterEmail || "(no email)"),
-      "Session: " + (payload.sessionId || ""),
-      "Period: " + (payload.period || "") + " · as of " + (payload.asOf || ""),
-      "Source: " + (payload.source || ""),
-      "Submitted: " + payload.submittedAt,
-      "",
-      "Ratings (" + payload.feedbackCount + "):",
-      ""
-    ];
-    (payload.feedback || []).forEach(item => {
-      lines.push("• " + (item.label || item.id) + " [" + (item.type || "") + "]");
-      lines.push("  Verdict: " + (verdictMeta(item.verdict).label || item.verdict));
-      if (item.comment) lines.push("  Comment: " + item.comment);
-      if (item.suggestedTarget) lines.push("  Suggested: " + item.suggestedTarget);
-      lines.push("");
-    });
-    lines.push("— Gilbert metrics page");
-    return lines.join("\n");
-  }
-
-  function openMailto(payload) {
-    const subject = encodeURIComponent(
-      "Gilbert metrics feedback — " + (payload.submitterName || payload.submitterEmail || payload.asOf || "review")
-    );
-    const body = encodeURIComponent(formatEmailBody(payload));
-    const mailto = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
-    window.location.href = mailto;
-  }
-
   function downloadJson(payload, filename) {
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
@@ -566,35 +533,39 @@
     const payload = buildPayload("full_submit");
     const btn = document.getElementById("metrics-submit-btn");
     if (btn) btn.disabled = true;
+
+    if (!webhookConfigured()) {
+      downloadJson(payload);
+      state.lastRemoteStatus = "missing";
+      updateRemoteBanner();
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Sheet gather OFF — JSON downloaded to this device only. Set GitHub Secret 1 (PAV_PICKER_WEBHOOK_URL) and redeploy before sharing.";
+        statusEl.className = "metrics-status err";
+      }
+      if (btn) btn.disabled = false;
+      return;
+    }
+
     if (statusEl) {
       statusEl.hidden = false;
-      statusEl.textContent = webhookConfigured()
-        ? "Sending full set to MetricsFeedback + " + SUPPORT_EMAIL + "…"
-        : "Opening mail to " + SUPPORT_EMAIL + " (webhook not configured — Sheet gather OFF)…";
+      statusEl.textContent = "Saving full set to MetricsFeedback sheet…";
       statusEl.className = "metrics-status";
     }
 
-    let webhookOk = false;
-    if (webhookConfigured()) {
-      const result = await postToWebhook(payload);
-      webhookOk = result.ok;
-      state.lastRemoteStatus = webhookOk ? "ok" : "err";
-      updateRemoteBanner();
-    }
-
-    downloadJson(payload);
-    openMailto(payload);
+    const result = await postToWebhook(payload);
+    const webhookOk = result.ok;
+    state.lastRemoteStatus = webhookOk ? "ok" : "err";
+    updateRemoteBanner();
 
     if (statusEl) {
       statusEl.hidden = false;
       if (webhookOk) {
-        statusEl.textContent = "Posted to MetricsFeedback sheet — mail app also opened.";
+        statusEl.textContent = "Saved to sheet — tab MetricsFeedback. Email not required.";
         statusEl.className = "metrics-status ok";
-      } else if (webhookConfigured()) {
-        statusEl.textContent = "Mail opened + JSON downloaded; remote Sheet post may have failed.";
-        statusEl.className = "metrics-status err";
       } else {
-        statusEl.textContent = "Mail opened + JSON downloaded. Sheet gather OFF until webhook is configured.";
+        downloadJson(payload);
+        statusEl.textContent = "Sheet post failed — JSON downloaded as backup. Check webhook / Apps Script deploy.";
         statusEl.className = "metrics-status err";
       }
     }

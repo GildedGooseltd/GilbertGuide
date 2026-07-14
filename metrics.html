@@ -42,17 +42,17 @@
     </aside>
 
     <section class="metrics-submit-bar" aria-label="Submit feedback">
-      <h3>Reviewer + optional email to support</h3>
+      <h3>Save ratings to Google Sheet</h3>
       <div class="feedback-field">
         <label for="metrics-reviewer-name">Your name (optional — helps Kate tell reviewers apart)</label>
         <input type="text" id="metrics-reviewer-name" placeholder="Name" autocomplete="name">
       </div>
       <div class="feedback-field">
-        <label for="metrics-email">Your email (optional, for reply)</label>
+        <label for="metrics-email">Your email (optional — not required for success)</label>
         <input type="email" id="metrics-email" placeholder="you@example.com" autocomplete="email">
       </div>
-      <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Email all comments to support</button>
-      <p class="metrics-submit-note">Each Save already posts to Sheet tab <strong>MetricsFeedback</strong> when the webhook is configured. Email submit also opens mail + downloads a JSON backup.</p>
+      <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Save all to sheet</button>
+      <p class="metrics-submit-note">Each <strong>Save</strong> already posts to Sheet tab <strong>MetricsFeedback</strong> when the webhook is live. <strong>Save all to sheet</strong> posts the full set again. Success = Sheet row — email is not required. JSON downloads only if Sheet gather is OFF or the post fails.</p>
       <p class="metrics-status" id="metrics-submit-status" aria-live="polite"></p>
     </section>
   </div>
@@ -69,6 +69,6 @@
 
   <script src="pages-config.js?v=20260713b"></script>
   <script src="kpi-report.js?v=20260714k"></script>
-  <script src="metrics-feedback.js?v=20260714n"></script>
+  <script src="metrics-feedback.js?v=20260714o"></script>
 </body>
 </html>
