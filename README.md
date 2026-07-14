@@ -2,13 +2,13 @@
 
 Guide character: **Lord Gilbert Granville** (Gilbert).
 
-GitHub: [GildedGooseltd/GilbertGuide](https://github.com/GildedGooseltd/GilbertGuide) · Live: `https://gildedgooseltd.github.io/GilbertGuide/`
+GitHub: [GildedGooseltd/PickyPavi](https://github.com/GildedGooseltd/PickyPavi) · Live: `https://gildedgooseltd.github.io/PickyPavi/`
 
 Static project picker: budget filters, cards, notes, submit → Sheet + email.
 
 ## Edit content
 
-**Layout & branding:** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
+**Branding & formatting (colors, type, layout — edit tokens here first):** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
 **All text by page:** [CONTENT-INDEX.md](CONTENT-INDEX.md)  
 **Project markdown:** [CONTENT-EDIT.md](CONTENT-EDIT.md) · start at [`content/INDEX.md`](content/INDEX.md)
 
@@ -28,7 +28,7 @@ Raw CSVs stay in `Ad Reports/exports/` — gitignored; not deployed with Gilbert
 ## Deploy (Option 2 — monorepo)
 
 **Mac → GitHub → live site:** [GITHUB-PUSH.md](GITHUB-PUSH.md)  
-**Webhook + email + QuickBooks:** [BACKEND-SETUP.md](BACKEND-SETUP.md)
+**Webhook + email + QuickBooks:** [BACKEND-SETUP.md](BACKEND-SETUP.md) · **Feedback gather (owner):** [owner-webhook-setup.html](owner-webhook-setup.html) · [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 ## Backend
 

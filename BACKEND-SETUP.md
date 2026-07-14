@@ -84,7 +84,7 @@ Expected on screen: `{"ok":true,"service":"gilbert-guide"}`
 
 **Verify B:** Browser → paste `QB_DEPOSIT_URL` → checkout shows **$2,500**.
 
-**Save for picker:** Part C Secret 2 → [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new) — name `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`, Secret = `QB_DEPOSIT_URL`.
+**Save for picker:** Part C Secret 2 → [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) — name `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`, Secret = `QB_DEPOSIT_URL`.
 
 ---
 
@@ -109,13 +109,13 @@ Summary below assumes files are already on GitHub.
 
 **Do not** put both names in the **Secret** box. GitHub wants **one secret per save** — a **Name** (label) and a **Secret** (the actual URL only).
 
-**Cannot edit a secret later** — [Secrets list](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions) → **Remove** → [New secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new) again.
+**Cannot edit a secret later** — [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) → **Remove** → [New secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) again.
 
 ---
 
 #### Secret 1 of 2 — webhook
 
-1. Open: [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
+1. Open: [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
 2. **Name** field — type exactly (copy/paste):
 
    `PAV_PICKER_WEBHOOK_URL`
@@ -132,7 +132,7 @@ Summary below assumes files are already on GitHub.
 
 #### Secret 2 of 2 — QuickBooks deposit (NOT Apps Script)
 
-1. Open again: [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
+1. Open again: [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
 2. **Name** field:
 
    `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`
@@ -151,7 +151,7 @@ Summary below assumes files are already on GitHub.
 
 Only if you need something other than $2,500:
 
-- [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
+- [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
 - **Name:** `PAV_PICKER_DEPOSIT_AMOUNT`
 - **Secret:** `2500`
 
@@ -159,7 +159,7 @@ Only if you need something other than $2,500:
 
 #### Verify secrets saved
 
-Open: [Actions secrets list](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions)
+Open: [Actions secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions)
 
 Under **Repository secrets** you should see at least:
 
@@ -176,13 +176,13 @@ Under **Repository secrets** you should see at least:
 
 Full link guide: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
-**No Settings tab?** You need **Admin** on [GilbertGuide](https://github.com/GildedGooseltd/GilbertGuide).
+**No Settings tab?** You need **Admin** on [PickyPavi](https://github.com/GildedGooseltd/PickyPavi).
 
 **Terminal alternative:**
 
 ```bash
-gh secret set PAV_PICKER_WEBHOOK_URL --repo GildedGooseltd/GilbertGuide
-gh secret set PAV_PICKER_QUICKBOOKS_DEPOSIT_URL --repo GildedGooseltd/GilbertGuide
+gh secret set PAV_PICKER_WEBHOOK_URL --repo GildedGooseltd/PickyPavi
+gh secret set PAV_PICKER_QUICKBOOKS_DEPOSIT_URL --repo GildedGooseltd/PickyPavi
 ```
 
 Paste each URL when prompted — not the secret name.
@@ -191,12 +191,12 @@ Paste each URL when prompted — not the secret name.
 
 | Step | Link | Do this |
 |------|------|---------|
-| **C6** | [Pages settings](https://github.com/GildedGooseltd/GilbertGuide/settings/pages) | **Build and deployment** → Source: **Deploy from a branch** → Branch: **`gh-pages`** / **`/ (root)`** → **Save** |
-| **C7** | [Actions — Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** → **Run workflow** |
-| **C8** | [Actions tab](https://github.com/GildedGooseltd/GilbertGuide/actions) | Wait for green ✓ on latest run |
-| **C9** | [Pages settings](https://github.com/GildedGooseltd/GilbertGuide/settings/pages) | Copy **Your site is live at** → `https://gildedgooseltd.github.io/GilbertGuide/` |
+| **C6** | [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | **Build and deployment** → Source: **Deploy from a branch** → Branch: **`gh-pages`** / **`/ (root)`** → **Save** |
+| **C7** | [Actions — Deploy Gilbert Guide](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** → **Run workflow** |
+| **C8** | [Actions tab](https://github.com/GildedGooseltd/PickyPavi/actions) | Wait for green ✓ on latest run |
+| **C9** | [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | Copy **Your site is live at** → `https://gildedgooseltd.github.io/PickyPavi/` |
 
-**Verify C:** [Live picker](https://gildedgooseltd.github.io/GilbertGuide/) loads → then [config.js](https://gildedgooseltd.github.io/GilbertGuide/config.js) shows real URLs (not `YOUR_DEPLOYMENT_ID`).
+**Verify C:** [Live picker](https://gildedgooseltd.github.io/PickyPavi/) loads → then [pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) shows real URLs (not `YOUR_DEPLOYMENT_ID`).
 
 ---
 
@@ -240,25 +240,27 @@ After editing Apps Script so it opens this Sheet ID: **Paste full `apps-script-w
 
 ### Secret 1 only — before you share the picker URL for feedback
 
-Do these steps once. **Do not** involve Secret 2 / QuickBooks for metrics gather.
+Do these steps once. **Do not** involve Secret 2 / QuickBooks for metrics gather. **Do not** use a Google Form.
 
-1. Confirm live config has a real webhook: open [config.js on live site](https://gildedgooseltd.github.io/PickyPavi/config.js) — look at `webhookUrl`.
+**Owner one-pager (bookmark):** [owner-webhook-setup.html](https://gildedgooseltd.github.io/PickyPavi/owner-webhook-setup.html)
+
+1. Confirm live config has a real webhook: open [pages-config.js on live site](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) — look at `webhookUrl`.
    - **Must be:** a real `https://script.google.com/.../exec` URL  
    - **Not empty** / not `YOUR_DEPLOYMENT_ID`  
    - **Not** a `docs.google.com/spreadsheets/...` link
-2. If empty — set Secret 1:
-   1. **Copy from:** Apps Script → **Deploy → Manage deployments** → **Web app URL** (Part A16; ends in `/exec`)
-   2. **Paste into:** GitHub → [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
+2. If empty — set Secret 1 on **PickyPavi only** (wrong repo = empty live config forever):
+   1. **Copy from:** Sheet → **Extensions → Apps Script** → **Deploy → Manage deployments** → **Web app URL** (ends in `/exec`). If no deploy yet: paste full `apps-script-webhook.gs` → Save → New deployment → Web app → Execute as Me → Anyone → Deploy.
+   2. **Paste into:** GitHub → [New repository secret on PickyPavi](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
       - **Name:** `PAV_PICKER_WEBHOOK_URL`
       - **Secret:** the `/exec` URL only (nothing else — not the Sheet URL)
    3. If the secret already exists with a wrong/empty value: [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) → **Remove** `PAV_PICKER_WEBHOOK_URL` → add again (secrets are not editable in place)
-   4. Re-run [Deploy workflow](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) → wait for green
-   5. **Verify webhook not empty:** refresh [config.js](https://gildedgooseltd.github.io/PickyPavi/config.js) — `webhookUrl` must show the real `/exec` URL
+   4. Re-run [Deploy workflow](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) → branch **`cursor/op01-submission-updates`** (or latest) → wait for green
+   5. **Verify webhook not empty:** refresh [pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) — `webhookUrl` must show the real `/exec` URL
 3. After updating webhook code on Mac (`apps-script-webhook.gs`): **Copy from** that file → **Paste into** Apps Script **Code.gs** → **Deploy → Manage deployments → Edit → New version → Deploy** (same URL; do not create a second web app). Secret 1 does not change unless you deployed a brand-new web app.
 
-**Verify gather:** Feedback mode → rate one metric → **Save** → open [the Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client).
+**Verify gather:** Feedback mode → rate one metric → **Save** → open [the Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client). No JSON download.
 
-The status bar shows **Not saved to sheet — webhook missing/failed** when `webhookUrl` is empty or the POST fails — do not share for multi-person review until Secret 1 is set and [pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) shows a real `/exec` URL.
+The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook missing/failed** when `webhookUrl` is empty or the POST fails — do not share for multi-person review until Secret 1 is set and [pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) shows a real `/exec` URL.
 
 ---
 
@@ -277,7 +279,7 @@ The status bar shows **Not saved to sheet — webhook missing/failed** when `web
 
 | Symptom | Fix |
 |---------|-----|
-| CSV download, no thank-you | `PAGES_URL/config.js` has empty webhook — redo C3, C7 |
+| CSV download, no thank-you | `PAGES_URL/pages-config.js` has empty webhook — redo C3, C7 |
 | **Script function not found: doGet** | Deployed code is incomplete — copy **entire** `apps-script-webhook.gs` from Mac (includes `doGet` + `doPost`) → Save → **Deploy → Manage deployments → Edit → New version → Deploy** |
 | Apps Script URL in Secret 2 | Remove Secret 2 → re-add with QuickBooks `connect.intuit.com` link only |
 | “Nowhere to save deposit link” | GitHub Secret 2 only — not Google |

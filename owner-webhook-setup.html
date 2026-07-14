@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Owner — webhook setup (Feedback → Sheet)</title>
+  <style>
+    :root { --ink: #1a1a1a; --muted: #555; --err: #8b1a1a; --ok: #1a5c2e; --bg: #f7f4ef; --card: #fff; }
+    body { margin: 0; font-family: Georgia, "Times New Roman", serif; background: var(--bg); color: var(--ink); line-height: 1.45; }
+    main { max-width: 40rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-size: 1.65rem; margin: 0 0 0.5rem; }
+    .lead { color: var(--muted); margin: 0 0 1.5rem; }
+    ol { padding-left: 1.25rem; }
+    li { margin: 0.75rem 0; }
+    a { color: #0b4f8a; }
+    code, .url { font-family: ui-monospace, Menlo, monospace; font-size: 0.88em; word-break: break-all; }
+    .box { background: var(--card); border: 1px solid #ddd; padding: 1rem 1.1rem; margin: 1rem 0; }
+    .warn { border-color: #e0b4b4; background: #fff5f5; color: var(--err); }
+    .ok { border-color: #b4d4be; background: #f3faf5; color: var(--ok); }
+    .name { font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Owner webhook setup</h1>
+    <p class="lead">One-time. Makes live Feedback mode Save write to the shared <strong>MetricsFeedback</strong> sheet for every reviewer on the public URL. Not a Google Form.</p>
+
+    <div class="box warn">
+      <strong>Secret updates do nothing until Deploy is green.</strong> Live <a href="pages-config.js"><code>pages-config.js</code></a> only changes after a successful <strong>Deploy Gilbert Guide</strong> run. If Actions shows <code>Missing PAV_PICKER_WEBHOOK_URL</code>, the secret is still empty to GitHub — stop re-pasting secrets; use the committed bypass below.
+    </div>
+
+    <h2>1 — Get the Apps Script <code>/exec</code> URL</h2>
+    <ol>
+      <li>Open the Sheet: <a href="https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit" target="_blank" rel="noopener">Feedback / submissions spreadsheet</a></li>
+      <li><strong>Extensions → Apps Script</strong></li>
+      <li>Paste full <code>apps-script-webhook.gs</code> from this repo into <code>Code.gs</code> → <strong>Save</strong></li>
+      <li><strong>Deploy → New deployment</strong> (or <strong>Manage deployments → Edit → New version</strong> if one exists)</li>
+      <li>Type <strong>Web app</strong> · Execute as <strong>Me</strong> · Who has access <strong>Anyone</strong> → <strong>Deploy</strong></li>
+      <li>Copy the <strong>Web app URL</strong> ending in <code>/exec</code></li>
+    </ol>
+
+    <h2>2 — Bypass (preferred): committed <code>pages-config.defaults.js</code></h2>
+    <ol>
+      <li>Webhook is public on Pages anyway. Deploy reads committed <code>pages-config.defaults.js</code> when the GitHub secret is empty.</li>
+      <li>Kate: paste the <code>/exec</code> URL in Cursor chat if it needs updating — agent commits that file. Do <strong>not</strong> keep looping on Secrets.</li>
+    </ol>
+
+    <h2>3 — Deploy + verify</h2>
+    <ol>
+      <li><a href="https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml" target="_blank" rel="noopener">Deploy Gilbert Guide</a> → <strong>Run workflow</strong> → branch <code>cursor/op01-submission-updates</code> → wait for <strong>green</strong></li>
+      <li>Open <a href="https://gildedgooseltd.github.io/PickyPavi/pages-config.js" target="_blank" rel="noopener">live pages-config.js</a></li>
+      <li class="ok"><strong>Must see</strong> <code>webhookUrl: "https://script.google.com/.../exec"</code> — not <code>""</code></li>
+      <li>Only then: Metrics → Feedback mode → rate one card → <strong>Save</strong> → Sheet tab <strong>MetricsFeedback</strong> new row</li>
+    </ol>
+
+    <p class="box">Local Mac-only tests: copy <code>config.example.js</code> → <code>config.js</code> (gitignored) with your <code>/exec</code>.</p>
+
+    <p><a href="metrics.html">← Metrics</a> · <a href="index.html">Project guide</a> · <a href="WHERE-TO-GET-LINKS.md">WHERE-TO-GET-LINKS.md</a></p>
+  </main>
+</body>
+</html>

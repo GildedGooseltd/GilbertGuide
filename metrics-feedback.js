@@ -10,6 +10,8 @@
   const SESSION_KEY = "pav-metrics-session-v1";
   const SUPPORT_EMAIL = "support@gildedgooselimited.com";
   const SHEET_ERR = "Not saved to sheet — webhook missing/failed";
+  const SETUP_HREF = "owner-webhook-setup.html";
+  const LIVE_CONFIG_HREF = "https://gildedgooseltd.github.io/PickyPavi/pages-config.js";
   const VERDICTS = [
     { id: "ok", label: "Looks right", chipClass: "done-ok" },
     { id: "confusing", label: "Confusing / needs context", chipClass: "done-flag" },
@@ -288,17 +290,17 @@
     syncChipStates();
   }
 
-  function remoteStatusMessage() {
+  function remoteStatusHtml() {
     if (!webhookConfigured()) {
-      return SHEET_ERR + ". Set Secret 1 (PAV_PICKER_WEBHOOK_URL = Apps Script /exec) and redeploy.";
+      return `Remote gather OFF — ${SHEET_ERR}. Verify <a href="${LIVE_CONFIG_HREF}" target="_blank" rel="noopener">live pages-config.js</a> shows a real <code>/exec</code>, then hard-refresh Metrics and Save.`;
     }
     if (state.lastRemoteStatus === "ok") {
       return "Saved to Google Sheet tab MetricsFeedback.";
     }
     if (state.lastRemoteStatus === "err") {
-      return SHEET_ERR + ". Check webhook / Apps Script deploy.";
+      return `${SHEET_ERR}. Check Apps Script deploy (Anyone + /exec). See <a href="${SETUP_HREF}">owner webhook setup</a>.`;
     }
-    return "Each Save posts to MetricsFeedback sheet (plus a local copy).";
+    return "Remote gather ON — each Save posts to MetricsFeedback (plus a local copy).";
   }
 
   function openGilbertPopup(id) {
@@ -321,7 +323,7 @@
 
     const remoteHint = webhookConfigured()
       ? `<p class="feedback-remote-ok">Save sends this note to the shared <strong>MetricsFeedback</strong> sheet (plus a copy on this device).</p>`
-      : `<p class="feedback-remote-warn">${SHEET_ERR}. Set <code>PAV_PICKER_WEBHOOK_URL</code> (Apps Script <code>/exec</code>) in GitHub and redeploy.</p>`;
+      : `<p class="feedback-remote-warn">Remote gather OFF — ${SHEET_ERR}. Check <a href="${LIVE_CONFIG_HREF}" target="_blank" rel="noopener">pages-config.js</a> has a non-empty <code>webhookUrl</code> ending in <code>/exec</code>, then hard-refresh.</p>`;
 
     body.innerHTML = `
       <div class="gilbert-feedback-msg gilbert-chat-gilbert">
@@ -594,7 +596,7 @@
 
   function updateRemoteBanner() {
     const els = document.querySelectorAll("#metrics-remote-status, .metrics-remote-status");
-    const msg = remoteStatusMessage();
+    const html = remoteStatusHtml();
     const cls = !webhookConfigured()
       ? "metrics-status err metrics-remote-status"
       : state.lastRemoteStatus === "err"
@@ -603,7 +605,7 @@
     els.forEach(el => {
       el.hidden = false;
       el.className = cls;
-      el.textContent = msg;
+      el.innerHTML = html;
     });
   }
 
