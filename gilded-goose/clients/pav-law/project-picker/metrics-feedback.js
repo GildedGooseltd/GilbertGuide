@@ -1,6 +1,7 @@
 /**
  * Magenta Feedback mode: click a KPI or chart to leave Gilbert comments.
  * Each Save → localStorage + POST to webhook → Google Sheet tab MetricsFeedback only.
+ * Feedback mode OFF → flushes all rated items to the same Sheet (item_save batch, no email).
  * No JSON download, no mailto required. Webhook missing/fail → clear error (never a file).
  */
 (function () {
@@ -203,8 +204,10 @@
     openGilbertPopup(id);
   }
 
-  function setFeedbackMode(on) {
-    state.feedbackMode = !!on;
+  function setFeedbackMode(on, opts) {
+    const wasOn = state.feedbackMode;
+    const next = !!on;
+    state.feedbackMode = next;
     document.body.classList.toggle("feedback-mode-on", state.feedbackMode);
     document.querySelectorAll(".kpi-feedback-mode-toggle").forEach(btn => {
       btn.setAttribute("aria-pressed", state.feedbackMode ? "true" : "false");
@@ -212,6 +215,10 @@
     });
     syncTargetStates();
     if (!state.feedbackMode) closeGilbertPopup();
+    // User toggle OFF → flush all rated items to MetricsFeedback (sheet only; no email event).
+    if (wasOn && !next && !opts?.silent) {
+      flushOnModeExit();
+    }
   }
 
   function syncTargetStates() {
@@ -509,57 +516,80 @@
     };
   }
 
-  async function submitAll() {
+  function setSubmitStatus(text, kind) {
+    const statusEl = document.getElementById("metrics-submit-status");
+    if (!statusEl) return;
+    statusEl.hidden = false;
+    statusEl.textContent = text;
+    statusEl.className = kind === "ok"
+      ? "metrics-status ok"
+      : kind === "err"
+        ? "metrics-status err"
+        : "metrics-status";
+  }
+
+  /**
+   * POST all rated items to MetricsFeedback.
+   * event "item_save" → Sheet row only (Apps Script skips MailApp for item_save).
+   * event "full_submit" → Sheet + optional notify email (manual Save all).
+   */
+  async function postAllRated(event, opts) {
+    const silentEmpty = !!(opts && opts.silentEmpty);
     const statusEl = document.getElementById("metrics-submit-status");
     const items = feedbackItems();
     if (!items.length) {
-      if (statusEl) {
-        statusEl.hidden = false;
-        statusEl.textContent = "Rate at least one metric first.";
-        statusEl.className = "metrics-status err";
+      if (!silentEmpty && statusEl) {
+        setSubmitStatus("Rate at least one metric first.", "err");
       }
-      return;
+      return { ok: false, reason: "empty" };
     }
 
     persistFeedbackLocal();
-    const payload = buildPayload("full_submit");
+    const payload = buildPayload(event || "full_submit");
     const btn = document.getElementById("metrics-submit-btn");
     if (btn) btn.disabled = true;
 
     if (!webhookConfigured()) {
       state.lastRemoteStatus = "missing";
       updateRemoteBanner();
-      if (statusEl) {
-        statusEl.hidden = false;
-        statusEl.textContent = SHEET_ERR;
-        statusEl.className = "metrics-status err";
-      }
+      setSubmitStatus(SHEET_ERR, "err");
       if (btn) btn.disabled = false;
-      return;
+      return { ok: false, reason: "missing" };
     }
 
-    if (statusEl) {
-      statusEl.hidden = false;
-      statusEl.textContent = "Saving full set to MetricsFeedback sheet…";
-      statusEl.className = "metrics-status";
-    }
+    setSubmitStatus(
+      event === "item_save"
+        ? "Feedback mode off — saving ratings to MetricsFeedback…"
+        : "Saving full set to MetricsFeedback sheet…",
+      ""
+    );
 
     const result = await postToWebhook(payload);
     const webhookOk = result.ok;
     state.lastRemoteStatus = webhookOk ? "ok" : "err";
     updateRemoteBanner();
 
-    if (statusEl) {
-      statusEl.hidden = false;
-      if (webhookOk) {
-        statusEl.textContent = "Saved to sheet — tab MetricsFeedback. Email not required.";
-        statusEl.className = "metrics-status ok";
-      } else {
-        statusEl.textContent = SHEET_ERR;
-        statusEl.className = "metrics-status err";
-      }
+    if (webhookOk) {
+      setSubmitStatus(
+        event === "item_save"
+          ? "Feedback mode off — saved to sheet (MetricsFeedback)."
+          : "Saved to sheet — tab MetricsFeedback. Email not required.",
+        "ok"
+      );
+    } else {
+      setSubmitStatus(SHEET_ERR, "err");
     }
     if (btn) btn.disabled = false;
+    return result;
+  }
+
+  async function submitAll() {
+    return postAllRated("full_submit");
+  }
+
+  /** When Feedback mode turns OFF: one batch Sheet write, no email flood (item_save). */
+  async function flushOnModeExit() {
+    return postAllRated("item_save", { silentEmpty: true });
   }
 
   function updateRemoteBanner() {
@@ -614,7 +644,7 @@
     ensureFeedbackPopup();
     state.targets = discoverTargets();
     injectChips();
-    setFeedbackMode(false);
+    setFeedbackMode(false, { silent: true });
     updateProgress();
     renderSummary();
     hydrateReviewerFields();
@@ -650,7 +680,7 @@
   window.addEventListener("kpi-report-rendered", () => {
     state.targets = discoverTargets();
     injectChips();
-    setFeedbackMode(state.feedbackMode);
+    setFeedbackMode(state.feedbackMode, { silent: true });
     updateProgress();
     renderSummary();
   });

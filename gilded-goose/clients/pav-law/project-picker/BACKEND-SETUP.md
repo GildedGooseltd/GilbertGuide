@@ -218,14 +218,14 @@ Paste each URL when prompted — not the secret name.
 
 **Primary destination = Google Sheet.** Email is optional notify only — not required for reviewer success. Mailto is not used by the cockpit feedback buttons.
 
-When someone rates a KPI/chart and clicks **Save** (or **Save all to sheet**), the picker POSTs to the **same** Apps Script webhook (Secret 1 / `PAV_PICKER_WEBHOOK_URL`). No second `/exec` URL.
+When someone rates a KPI/chart and clicks **Save** (or **Save all to sheet**, or turns **Feedback mode OFF**), the picker POSTs to the **same** Apps Script webhook (Secret 1 / `PAV_PICKER_WEBHOOK_URL`). No second `/exec` URL.
 
 | | Detail |
 |---|--------|
 | **Google Sheet (Kate opens)** | [docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit?gid=0#gid=0) |
 | **Spreadsheet ID** | `1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM` (`SPREADSHEET_ID` in Apps Script) |
 | **Tab name** | **`MetricsFeedback`** (created by `setup()` / `setupMetricsFeedbackSheet`, or on first metrics feedback POST) |
-| **What lands** | One row per **Save**, and again on **Save all to sheet** — reviewer name, optional email, session id, event (`item_save` / `full_submit`), verdict/comment JSON |
+| **What lands** | One row per **Save**, on **Save all to sheet**, and when Feedback mode turns **OFF** — reviewer name, optional email, session id, event (`item_save` / `full_submit`), verdict/comment JSON. Mode-off flush uses `item_save` (Sheet only, no MailApp). |
 | **Email** | Optional Apps Script notify to support after Sheet write; failure/absent email does **not** undo the Sheet row. Reviewer email field is optional in the UI. |
 | **Cursor / local files** | Other reviewers’ ratings are **not** in the repo or Cursor — only on the Sheet (and each reviewer’s own browser `localStorage`). See `feedback/README.md`. |
 
