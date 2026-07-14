@@ -460,6 +460,19 @@
     };
   }
 
+  function gilbertMetricNotesHtml(item) {
+    const notes = item?.gilbertMetricNotes || [];
+    if (!notes.length) return "";
+    return `<div class="gilbert-metric-notes">
+      <h4>Gilbert on metrics</h4>
+      <ul class="gilbert-metric-notes-list">${notes.map(n => {
+        const date = escapeHtml(n.date || "");
+        const field = n.field ? ` · ${escapeHtml(n.field)}` : "";
+        return `<li><strong>${date}${field}</strong> — ${escapeHtml(n.text || "")}</li>`;
+      }).join("")}</ul>
+    </div>`;
+  }
+
   function impactEstimatesHtml(item) {
     const imp = resolveImpactEstimates(item);
     const asOf = imp.asOf ? `<span class="impact-as-of">As of ${escapeHtml(imp.asOf)}</span>` : "";
