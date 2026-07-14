@@ -41,7 +41,7 @@ Current metrics, goals and trends for 2026 digital ads
 | ----- | ----- | ------ | ----------- | ----- |
 | 1 | Discovery & scope | completed |  | Systems access audit; UTM tracking on contact form URLs, media, ads etc. (+6 more) |
 | 2 | Build & execute | wip |  | Ad extension and sitelink rollout; LSA performance metrics - Missed call rate shows no… (+2 more) |
-| 3 | Measure & optimize | wip | May 2026: $2,421 Military spend · 36 calls · ~$67/call | May 2026: $2,421 Military spend · 36 calls · ~$67/c… (+4 more) |
+| 3 | Measure & optimize | wip | May 2026: $2,421 Military spend · 36 calls · ~$67/call | Period: May 2026 · Jun 11, 2026 – Jul 10, 2026 · Ma… (+8 more) |
 
 ## Information needed
 
@@ -67,11 +67,15 @@ Current metrics, goals and trends for 2026 digital ads
 
 ## Results
 
-- May 2026: $2,421 Military spend · 36 calls · ~$67/call
-- Jun 11–Jul 10: $3,983 Military spend · 330 clicks · primary call engine
-- NTGUILT Search launched — $1,924 spend · 282 clicks · ~$6.82/click
-- Mountain DUI + Demand Gen remain paused — waste stopped
-- The military campaign spend is very strong because it has a lot of DV content in it that was performing well but may not have been specifically military. This has since been divided out into a new campaign and segment to improve the data quality and expand target audiences further.
+- Period: May 2026 · Jun 11, 2026 – Jul 10, 2026 · May 1–18 email snapshot
+- Source: Ad Reports exports · May 19, 2026 client email
+- Consulting fee charged: $2,700/mo retainer
+- Media / partner spend: May 1–18 ~$11,650 platform · pace ~$20k month · Military May $2,421 · Military Jun 11–Jul 10 $3,983 · NTGUILT Search $1,924
+- Volume: May Military 36 calls · May 1–18: 628 clicks · 19 phone calls · 21 LSA charged leads · NTGUILT Search 282 clicks
+- Efficiency: ~$67/call Military (May) · ~$6.82/click NTGUILT Search · message leads converted 0 (Andrew note)
+- Outcome: Andrew approved ~20% spend increase · trust &gt;$67k toward $100k month · Mountain DUI + Demand Gen paused · DV content split from Military for cleaner data
+- Status vs goal: Primary call engine = Military · NTGUILT Search live · LSA Phase 2 still open (B11)
+- Fee note: $2,700/mo is mid–upper vs Cos Springs PPC-only (~$1k–$2k) and mid vs Denver law PPC management ($1.5k–$5k). Includes Google + LSA + Microsoft ops. See FEE-BENCHMARK-CO-SPRINGS.md.
 
 ## Recommended metrics
 

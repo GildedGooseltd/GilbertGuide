@@ -71,15 +71,35 @@ Open items for Kate / Andrew — not execution blockers (those go in Blockers).
 
 ## WIP
 
-- Work in progress (Phase 2)
+- Work in progress (Phase 2) — one deliverable per bullet
 
 ## Completed
 
-- Already finished work (Phase 1)
+- Already finished work (Phase 1) — one deliverable per bullet
 
 ## Results
 
-- Outcome metric with numbers — e.g. 36 calls · ~$67/call · Jul 2026 export
+Fill every line. Use `—` if not applicable. Keep numbers dated.
+
+- Period:
+- Source:
+- Consulting fee charged:
+- Media / partner spend:
+- Volume:
+- Efficiency:
+- Outcome:
+- Status vs goal:
+
+Example:
+
+- Period: May 1, 2026 – May 18, 2026
+- Source: Client email May 19, 2026 · Google Ads + LSA
+- Consulting fee charged: Covered under RETAINER
+- Media / partner spend: $11,650 (client platform spend)
+- Volume: 628 clicks · 19 phone calls · 21 LSA charged leads
+- Efficiency: ~$67/call Military baseline (May full month sample elsewhere)
+- Outcome: Andrew approved ~20% spend increase; trust >$67k toward $100k month
+- Status vs goal: On pace for ~$20k month ad spend
 
 ## Recommended metrics
 
@@ -110,3 +130,7 @@ Open items for Kate / Andrew — not execution blockers (those go in Blockers).
 Verified metric or principle text with inline links where helpful.
 
 Source: Where the number or claim comes from
+
+## Fee note (optional)
+
+Market context vs Colorado Springs / Front Range norms — see [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md).
