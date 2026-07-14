@@ -21,32 +21,36 @@ Quick reference: **[WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)**
 
 ## Part A — Google Sheet + Apps Script webhook
 
-### A1–A2 — Create the spreadsheet
+**Locked spreadsheet** (Submissions + MetricsFeedback):  
+https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit  
+ID: `1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM` — constant `SPREADSHEET_ID` in `apps-script-webhook.gs` (`openById`).
+
+### A1–A2 — Open the destination spreadsheet
 
 | Step | Where | Do this |
 |------|--------|---------|
-| **A1** | Browser → [sheets.google.com](https://sheets.google.com) | Click **Blank spreadsheet** |
-| **A2** | Top-left title of the new sheet | Click title → type `Pav Law Project Picker Submissions` → Enter |
+| **A1** | Browser | Open [the Pav Law feedback Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit?gid=0#gid=0) (must be signed in with an account that can edit it) |
+| **A2** | That Sheet | Confirm you can edit — do **not** create a new blank sheet for production writes |
 
 ### A3–A7 — Paste webhook code into Apps Script
 
 | Step | Copy from | Paste into | Do this |
 |------|-----------|------------|---------|
-| **A3** | The spreadsheet tab from A1–A2 | — | Menu bar **Extensions** → **Apps Script** → a **new browser tab** opens (`script.google.com`) |
+| **A3** | The spreadsheet from A1 | — | Menu bar **Extensions** → **Apps Script** → a **new browser tab** opens (`script.google.com`) |
 | **A4** | — | **Apps Script tab** → left file **Code.gs** → large code panel on the right | Click inside the code panel → **Cmd+A** → **Delete** (panel must be empty) |
 | **A5** | **Mac — Cursor** → open file:<br>`/Users/gildedgoose/Documents/1 Cursor Helper/gilded-goose/clients/pav-law/project-picker/apps-script-webhook.gs` | — | **Cmd+A** → **Cmd+C** (entire file copied to clipboard) |
 | **A6** | **Clipboard** (from A5) | **Apps Script tab** → **Code.gs** empty panel | Click in panel → **Cmd+V** |
 | **A7** | — | **Apps Script tab** → top-left project name ("Untitled project") | Click name → type `Pav Law Picker Webhook` → Enter → click **Save** (disk icon) |
 
-You should see ~210 lines in Code.gs starting with `const NOTIFY_EMAIL = "support@gildedgooselimited.com";`
+You should see `const SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM";` near the top of Code.gs.
 
-### A8–A10 — Create Submissions sheet tab
+### A8–A10 — Create Submissions + MetricsFeedback tabs
 
 | Step | Where | Do this |
 |------|--------|---------|
 | **A8** | **Apps Script tab** → toolbar function dropdown (says `setup` or `doGet`) | Select **`setup`** |
 | **A9** | Same toolbar | Click **Run** (▶) |
-| **A10** | Permission prompt → then **spreadsheet tab** from A1 | Authorize: **Review permissions** → your Google account → **Advanced** → **Go to Pav Law Picker Webhook (unsafe)** → **Allow** → switch back to spreadsheet → confirm tab **Submissions** with header row |
+| **A10** | Permission prompt → then [destination Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) | Authorize: **Review permissions** → your Google account → **Advanced** → **Go to Pav Law Picker Webhook (unsafe)** → **Allow** → confirm tabs **Submissions** and **MetricsFeedback** with header rows |
 
 ### A11–A16 — Deploy web app URL
 
@@ -218,30 +222,41 @@ When someone rates a KPI/chart and clicks **Save** (or **Save all to sheet**), t
 
 | | Detail |
 |---|--------|
-| **Google Sheet** | Same spreadsheet as Part A — title `Pav Law Project Picker Submissions` (or whatever you named in A2) |
-| **Tab name** | **`MetricsFeedback`** (created automatically on first metrics feedback POST, or when you re-paste `apps-script-webhook.gs` and run anything that hits `setupMetricsFeedbackSheet`) |
+| **Google Sheet (Kate opens)** | [docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit?gid=0#gid=0) |
+| **Spreadsheet ID** | `1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM` (`SPREADSHEET_ID` in Apps Script) |
+| **Tab name** | **`MetricsFeedback`** (created by `setup()` / `setupMetricsFeedbackSheet`, or on first metrics feedback POST) |
 | **What lands** | One row per **Save**, and again on **Save all to sheet** — reviewer name, optional email, session id, event (`item_save` / `full_submit`), verdict/comment JSON |
 | **Email** | Optional Apps Script notify to support after Sheet write; failure/absent email does **not** undo the Sheet row. Reviewer email field is optional in the UI. |
 | **Cursor / local files** | Other reviewers’ ratings are **not** in the repo or Cursor — only on the Sheet (and each reviewer’s own browser `localStorage`). See `feedback/README.md`. |
+
+### Sheet URL ≠ Secret 1
+
+| | Correct value |
+|---|--------|
+| **Secret 1** `PAV_PICKER_WEBHOOK_URL` | Apps Script **Web app** `/exec` URL only |
+| **Do not paste into Secret 1** | The Google Sheet link or spreadsheet ID above |
+
+After editing Apps Script so it opens this Sheet ID: **Paste full `apps-script-webhook.gs` → Save → Deploy → Manage deployments → Edit → New version → Deploy**. Secret 1 stays the webhook `/exec` URL (do not replace it with the Sheet URL).
 
 ### Secret 1 only — before you share the picker URL for feedback
 
 Do these steps once. **Do not** involve Secret 2 / QuickBooks for metrics gather.
 
-1. Confirm live config has a real webhook: open [config.js on live site](https://gildedgooseltd.github.io/GilbertGuide/config.js) — look at `webhookUrl`.
+1. Confirm live config has a real webhook: open [config.js on live site](https://gildedgooseltd.github.io/PickyPavi/config.js) — look at `webhookUrl`.
    - **Must be:** a real `https://script.google.com/.../exec` URL  
-   - **Not empty** / not `YOUR_DEPLOYMENT_ID`
+   - **Not empty** / not `YOUR_DEPLOYMENT_ID`  
+   - **Not** a `docs.google.com/spreadsheets/...` link
 2. If empty — set Secret 1:
    1. **Copy from:** Apps Script → **Deploy → Manage deployments** → **Web app URL** (Part A16; ends in `/exec`)
-   2. **Paste into:** GitHub → [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
+   2. **Paste into:** GitHub → [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
       - **Name:** `PAV_PICKER_WEBHOOK_URL`
-      - **Secret:** the `/exec` URL only (nothing else)
-   3. If the secret already exists with a wrong/empty value: [Secrets list](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions) → **Remove** `PAV_PICKER_WEBHOOK_URL` → add again (secrets are not editable in place)
-   4. Re-run [Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) → wait for green
-   5. **Verify webhook not empty:** refresh [config.js](https://gildedgooseltd.github.io/GilbertGuide/config.js) — `webhookUrl` must show the real `/exec` URL
-3. After updating webhook code on Mac (`apps-script-webhook.gs`): **Copy from** that file → **Paste into** Apps Script **Code.gs** → **Deploy → Manage deployments → Edit → New version → Deploy** (same URL; do not create a second web app).
+      - **Secret:** the `/exec` URL only (nothing else — not the Sheet URL)
+   3. If the secret already exists with a wrong/empty value: [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) → **Remove** `PAV_PICKER_WEBHOOK_URL` → add again (secrets are not editable in place)
+   4. Re-run [Deploy workflow](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) → wait for green
+   5. **Verify webhook not empty:** refresh [config.js](https://gildedgooseltd.github.io/PickyPavi/config.js) — `webhookUrl` must show the real `/exec` URL
+3. After updating webhook code on Mac (`apps-script-webhook.gs`): **Copy from** that file → **Paste into** Apps Script **Code.gs** → **Deploy → Manage deployments → Edit → New version → Deploy** (same URL; do not create a second web app). Secret 1 does not change unless you deployed a brand-new web app.
 
-**Verify gather:** Feedback mode → rate one metric → **Save** → open the spreadsheet → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client).
+**Verify gather:** Feedback mode → rate one metric → **Save** → open [the Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client).
 
 The status bar says **Remote gather OFF** when `webhookUrl` is missing — do not share for multi-person review until Secret 1 is set and config.js shows a real URL.
 
@@ -268,5 +283,6 @@ The status bar says **Remote gather OFF** when `webhookUrl` is missing — do no
 | “Nowhere to save deposit link” | GitHub Secret 2 only — not Google |
 | Two `/exec` URLs | Archive spare deployment; one URL in Secret 1 |
 | CORS / failed to fetch | A14 must be **Anyone**; URL must end `/exec` |
-| Sheet empty | Run `setup` from Apps Script bound to this spreadsheet (open via **Extensions → Apps Script** on the sheet, not a standalone script project) |
+| Sheet empty | Confirm Code.gs has `SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM"` → Run **`setup`** → check [destination Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) tabs **Submissions** / **MetricsFeedback** → then **Deploy → New version** |
+| Rows on wrong sheet | Old code used `getActiveSpreadsheet()` — re-paste Mac `apps-script-webhook.gs` (uses `openById`) → New version deploy |
 | Code.gs wrong after edit | Always copy full file from Mac path in A5 — do not paste fragments |
