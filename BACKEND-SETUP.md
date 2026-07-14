@@ -258,7 +258,7 @@ Do these steps once. **Do not** involve Secret 2 / QuickBooks for metrics gather
 
 **Verify gather:** Feedback mode → rate one metric → **Save** → open [the Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client).
 
-The status bar says **Remote gather OFF** when `webhookUrl` is missing — do not share for multi-person review until Secret 1 is set and config.js shows a real URL.
+The status bar shows **Not saved to sheet — webhook missing/failed** when `webhookUrl` is empty or the POST fails — do not share for multi-person review until Secret 1 is set and [pages-config.js](https://gildedgooseltd.github.io/PickyPavi/pages-config.js) shows a real `/exec` URL.
 
 ---
 
