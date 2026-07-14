@@ -1,16 +1,27 @@
 /**
  * Pav Law Project Picker — submission webhook
  *
- * 1. New Google Sheet → Extensions → Apps Script → paste this file
- * 2. Run setup() once (authorize)
- * 3. Deploy → New deployment → Web app → Execute as: Me → Anyone
- * 4. Copy web app URL into config.js → webhookUrl
+ * Destination Sheet (Submissions + MetricsFeedback):
+ *   https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit
+ *
+ * 1. Open that Sheet → Extensions → Apps Script → paste this file (or re-paste after edits)
+ * 2. Run setup() once (authorize) — creates Submissions + MetricsFeedback tabs on SPREADSHEET_ID
+ * 3. Deploy → New deployment (first time) or Manage deployments → Edit → New version (updates)
+ *    → Web app → Execute as: Me → Anyone
+ * 4. Copy web app /exec URL into GitHub Secret PAV_PICKER_WEBHOOK_URL (Secret 1) — NOT the Sheet URL
  */
 const NOTIFY_EMAIL = "support@gildedgooselimited.com";
 const SHEET_NAME = "Submissions";
 
+/** Locked destination for Submissions + MetricsFeedback — do not use getActiveSpreadsheet for writes. */
+const SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM";
+
+function getPickerSpreadsheet() {
+  return SpreadsheetApp.openById(SPREADSHEET_ID);
+}
+
 function setup() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getPickerSpreadsheet();
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
@@ -186,7 +197,7 @@ function doGet(e) {
 }
 
 function setupMetricsFeedbackSheet() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getPickerSpreadsheet();
   let sh = ss.getSheetByName("MetricsFeedback");
   if (!sh) {
     sh = ss.insertSheet("MetricsFeedback");
@@ -302,7 +313,7 @@ function doPost(e) {
       return handleMetricsFeedback(data);
     }
     setup();
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = getPickerSpreadsheet();
     const sh = ss.getSheetByName(SHEET_NAME);
 
     const projects = data.projects || [];

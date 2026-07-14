@@ -27,7 +27,9 @@ Add each at [New repository secret](https://github.com/GildedGooseltd/GilbertGui
 
 ## Secret 1 — webhook (Google → GitHub)
 
-**What it does:** Picker POSTs JSON → Google Sheet row (+ optional emails). Same URL also receives **metrics feedback** (Save / Save all to sheet) → Sheet tab **`MetricsFeedback`**. Sheet write = success for feedback; email is not required.
+**What it does:** Picker POSTs JSON → Google Sheet row (+ optional emails). Same URL also receives **metrics feedback** (Save / Save all to sheet) → tab **`MetricsFeedback`** on spreadsheet `1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM` ([open Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit)). Sheet write = success for feedback; email is not required.
+
+**Secret 1 is never the Sheet URL** — only the Apps Script `/exec` link. After you change Sheet ID in Apps Script, deploy a **new version**; leave Secret 1 as the webhook.
 
 ### If you are on Apps Script “New deployment” (Web app)
 
@@ -111,5 +113,6 @@ GitHub never shows secret values again — only names.
 
 ## After both secrets → deploy
 
-1. [Run Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml)
-2. [config.js on live site](https://gildedgooseltd.github.io/GilbertGuide/config.js) — real webhook + QuickBooks URLs (not placeholders)
+1. [Run Deploy workflow](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml)
+2. [config.js on live site](https://gildedgooseltd.github.io/PickyPavi/config.js) — real webhook + QuickBooks URLs (not placeholders)
+3. [Feedback Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) — tab **MetricsFeedback** after a test Save
