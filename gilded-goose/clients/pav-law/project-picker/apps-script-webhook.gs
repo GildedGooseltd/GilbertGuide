@@ -63,6 +63,15 @@ function formatProjectsList(projects) {
   }).join("\n");
 }
 
+function formatActionItems(actionItems) {
+  if (!actionItems || !actionItems.length) return "  (none)";
+  return actionItems.map(function(a) {
+    var prefix = a.kpi || "";
+    if (a.projectTitle && a.source === "blocker") prefix += " · " + a.projectTitle;
+    return "  " + prefix + ": " + (a.text || "");
+  }).join("\n");
+}
+
 function buildInternalEmail(data, projects, noteBlock) {
   var depositLine = data.depositAmount != null
     ? "$" + data.depositAmount + " (QuickBooks deposit link sent to client)"
@@ -85,6 +94,12 @@ function buildInternalEmail(data, projects, noteBlock) {
     "",
     "Projects selected (bill on full invoice):",
     formatProjectsList(projects),
+    "",
+    "Action items (from selections):",
+    formatActionItems(data.actionItems),
+    "",
+    "Next steps:",
+    data.nextStepsText || "(none)",
     "",
     "First month consulting subtotal: " + (data.projectsSubtotal || "$0"),
     "Grand total note: " + (data.grandTotalNote || "—"),
@@ -133,6 +148,12 @@ function buildClientEmail(data, projects, noteBlock) {
     "Projects:",
     formatProjectsList(projects),
     "",
+    "Action items (from your selections):",
+    formatActionItems(data.actionItems),
+    "",
+    "Next steps:",
+    data.nextStepsText || "(none)",
+    "",
     "Estimated consulting (first month projects): " + (data.projectsSubtotal || "—"),
     "Note: " + (data.grandTotalNote || "—"),
     "Invoice schedule: " + (data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "—"),
@@ -163,10 +184,86 @@ function doGet(e) {
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
+function setupMetricsFeedbackSheet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName("MetricsFeedback");
+  if (!sh) {
+    sh = ss.insertSheet("MetricsFeedback");
+  }
+  if (sh.getLastRow() === 0) {
+    sh.appendRow([
+      "Timestamp",
+      "Email",
+      "Period",
+      "As of",
+      "Source",
+      "Feedback count",
+      "Feedback JSON",
+      "Raw JSON"
+    ]);
+    sh.getRange(1, 1, 1, 8).setFontWeight("bold");
+  }
+  return sh;
+}
+
+function handleMetricsFeedback(data) {
+  setup();
+  const sh = setupMetricsFeedbackSheet();
+  sh.appendRow([
+    new Date(),
+    data.submitterEmail || "",
+    data.period || "",
+    data.asOf || "",
+    data.source || "",
+    data.feedbackCount != null ? data.feedbackCount : (data.feedback || []).length,
+    JSON.stringify(data.feedback || []),
+    JSON.stringify(data)
+  ]);
+
+  const lines = (data.feedback || []).map(function(item) {
+  return "• " + (item.label || item.id) + " — " + (item.verdict || "") +
+      (item.comment ? "\n  " + item.comment : "") +
+      (item.suggestedTarget ? "\n  Suggested: " + item.suggestedTarget : "");
+  });
+  const body = [
+    "Metrics feedback from " + (data.submitterEmail || "(no email)"),
+    "Period: " + (data.period || "") + " · as of " + (data.asOf || ""),
+    "Source: " + (data.source || ""),
+    "",
+    lines.join("\n"),
+    "",
+    "— Gilbert metrics page"
+  ].join("\n");
+
+  MailApp.sendEmail(
+    NOTIFY_EMAIL,
+    "Gilbert — metrics feedback — " + (data.submitterEmail || "review"),
+    body
+  );
+
+  if (data.submitterEmail) {
+    MailApp.sendEmail(
+      data.submitterEmail,
+      "Gilbert — we received your metric feedback",
+      "Thanks — Gilded Goose received your ratings on " + (data.feedbackCount || 0) + " metrics/charts.\n\nWe'll use this to tune targets and chart types for the next report.\n\n— Gilded Goose Limited",
+      { name: "Gilded Goose Limited", replyTo: NOTIFY_EMAIL }
+    );
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({
+    ok: true,
+    type: "metrics_feedback",
+    emailsSent: { internal: true, client: !!data.submitterEmail }
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   try {
-    setup();
     const data = JSON.parse(e.postData.contents);
+    if (data.type === "metrics_feedback") {
+      return handleMetricsFeedback(data);
+    }
+    setup();
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     const sh = ss.getSheetByName(SHEET_NAME);
 

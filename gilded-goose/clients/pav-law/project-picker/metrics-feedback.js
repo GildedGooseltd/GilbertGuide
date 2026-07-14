@@ -68,31 +68,59 @@
   }
 
   function targetType(el) {
-    if (el.classList.contains("kpi-stat-card")) return "metric";
+    if (el.classList.contains("kpi-stat-card") || el.classList.contains("kpi-goal-card")) return "metric";
     if (el.classList.contains("kpi-chart-card") || el.querySelector(".kpi-chart-svg")) return "chart";
     if (el.classList.contains("kpi-section")) return "section";
-    if (el.classList.contains("kpi-dash-card") || el.classList.contains("kpi-mini-card")) return "widget";
+    if (
+      el.classList.contains("kpi-dash-card") ||
+      el.classList.contains("kpi-mini-card") ||
+      el.classList.contains("kpi-split-panel")
+    ) return "widget";
+    if (el.id === "completed-report-out" || el.classList.contains("completed-report-out")) return "impact";
+    if (el.classList.contains("impact-section") || el.classList.contains("picker-zone") || el.classList.contains("pav-guide-ask-section")) {
+      return "page";
+    }
     return "other";
   }
 
   function discoverTargets() {
     const seen = new Set();
     const out = [];
+    const selectors = [
+      ".kpi-stat-card[data-kpi-focus]",
+      ".kpi-goal-card[data-kpi-focus]:not([disabled])",
+      ".kpi-mini-card[data-kpi-focus]",
+      ".kpi-dash-card[data-kpi-focus]",
+      ".kpi-split-panel[data-feedback-id]",
+      ".kpi-chart-card[data-kpi-focus]",
+      ".kpi-chart-card",
+      "[data-feedback-id]"
+    ].join(", ");
+
+    function addTarget(el) {
+      if (el.closest(".kpi-detail-panel")) return;
+      let id = targetId(el);
+      if (!id && el.classList.contains("kpi-chart-card")) {
+        const head = el.querySelector(".kpi-chart-head strong");
+        id = "chart-" + (head ? head.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") : "untitled");
+        el.dataset.feedbackId = id;
+      }
+      if (!id || seen.has(id)) return;
+      // Prefer leaf cards over wrapping sections when both share an id.
+      if (el.classList.contains("kpi-section") && el.querySelector("[data-kpi-focus], .kpi-chart-card, .kpi-split-panel")) {
+        return;
+      }
+      seen.add(id);
+      out.push({ id, el, label: targetLabel(el), type: targetType(el) });
+    }
+
     document.querySelectorAll(".kpi-report-root").forEach(root => {
-      root.querySelectorAll(
-        ".kpi-stat-card[data-kpi-focus], .kpi-chart-card[data-kpi-focus], .kpi-dash-card[data-kpi-focus], .kpi-chart-card"
-      ).forEach(el => {
-        let id = targetId(el);
-        if (!id && el.classList.contains("kpi-chart-card")) {
-          const head = el.querySelector(".kpi-chart-head strong");
-          id = "chart-" + (head ? head.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") : "untitled");
-          el.dataset.feedbackId = id;
-        }
-        if (!id || seen.has(id)) return;
-        seen.add(id);
-        out.push({ id, el, label: targetLabel(el), type: targetType(el) });
-      });
+      root.querySelectorAll(selectors).forEach(addTarget);
     });
+    // Cockpit Impact / Project Guide surfaces that opt into metric-style feedback.
+    document.querySelectorAll(
+      "#cockpit-panel-impact [data-feedback-id], #cockpit-panel-picker [data-feedback-id]"
+    ).forEach(addTarget);
     return out;
   }
 
@@ -121,6 +149,9 @@
     if (!state.feedbackMode) return;
     const el = e.currentTarget;
     if (el.classList.contains("kpi-section")) return;
+    // Nested feedback targets (e.g. report-out inside completed) own the click.
+    const nested = e.target.closest(".feedback-target");
+    if (nested && nested !== el) return;
     const id = el.dataset.feedbackFor || targetId(el);
     if (!id) return;
     e.preventDefault();
@@ -188,7 +219,7 @@
     aside.setAttribute("aria-label", "Gilbert metric feedback");
     aside.innerHTML = `
       <div class="gilbert-chat-popup-head">
-        <img class="gilbert-popup-portrait" src="assets/gilbert-lightbulb-idea.png" alt="">
+        <img class="gilbert-popup-portrait" src="assets/gilbert-thinking.png?v=20260714h" alt="">
         <div class="gilbert-popup-head-title">Gilbert<small id="gilbert-feedback-subtitle">Comment on this metric</small></div>
         <button type="button" class="gilbert-chat-close" id="gilbert-feedback-close" aria-label="Close">×</button>
       </div>

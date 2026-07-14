@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pav Law — Metrics &amp; Feedback</title>
-  <link rel="stylesheet" href="metrics.css?v=20260713c">
+  <link rel="stylesheet" href="metrics.css?v=20260714h">
 </head>
 <body class="metrics-page">
   <header class="metrics-header">
     <div class="metrics-header-inner">
       <div>
-        <a class="metrics-back" href="index.html">← Back to project picker</a>
+        <a class="metrics-back" href="index.html">← Back to project guide</a>
         <h1>Metrics &amp; charts</h1>
         <p class="metrics-header-sub">Turn on magenta <strong>Feedback mode</strong>, then click a KPI or chart — Gilbert opens for your notes. Submit emails everything to <strong>support@gildedgooselimited.com</strong>.</p>
       </div>
@@ -18,6 +18,9 @@
   </header>
 
   <div class="metrics-toolbar" role="toolbar" aria-label="Feedback tools">
+    <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Turn on to leave comments on metrics and charts">
+      Feedback mode
+    </button>
     <p class="metrics-toolbar-progress" id="feedback-progress"><strong>0</strong> <span>of 0 rated</span></p>
     <div class="metrics-toolbar-actions">
       <button type="button" class="btn btn-toggle" id="feedback-filter-pending" title="Show only items you have not rated">Unrated only</button>
@@ -52,7 +55,7 @@
   <div id="gilbert-feedback-backdrop" class="gilbert-chat-backdrop" hidden></div>
   <aside id="gilbert-feedback-popup" class="gilbert-chat-popup gilbert-feedback-popup" hidden aria-label="Gilbert metric feedback">
     <div class="gilbert-chat-popup-head">
-      <img class="gilbert-popup-portrait" src="assets/gilbert-lightbulb-idea.png" alt="">
+      <img class="gilbert-popup-portrait" src="assets/gilbert-thinking.png?v=20260714h" alt="">
       <div class="gilbert-popup-head-title">Gilbert<small id="gilbert-feedback-subtitle">Comment on this metric</small></div>
       <button type="button" class="gilbert-chat-close" id="gilbert-feedback-close" aria-label="Close">×</button>
     </div>
@@ -60,7 +63,7 @@
   </aside>
 
   <script src="pages-config.js?v=20260713b"></script>
-  <script src="kpi-report.js?v=20260713r"></script>
-  <script src="metrics-feedback.js?v=20260713c"></script>
+  <script src="kpi-report.js?v=20260714j"></script>
+  <script src="metrics-feedback.js?v=20260714j"></script>
 </body>
 </html>
