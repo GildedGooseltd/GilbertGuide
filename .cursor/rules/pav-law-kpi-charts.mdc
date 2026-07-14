@@ -1,0 +1,39 @@
+---
+description: Pav Law KPI charts — unique series colors, legend, detail table under every graph
+globs: gilded-goose/clients/pav-law/project-picker/**/{kpi-report.js,metrics.css,metrics.html,index.html,BRANDING-LAYOUT.md}
+alwaysApply: false
+---
+
+# Pav Law KPI charts
+
+When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
+
+## Required structure
+
+1. **Use `chartBlock()`** (or the same HTML shape) for every graph card:
+   - optional head / title
+   - plot (SVG or placeholder)
+   - color legend when there are 2+ series
+   - **detail table always visible below the graph** — never hide behind “Show table” alone
+2. **Stacked / multi-series bars** — unique, high-contrast series colors (do not use two similar purples next to each other). Locked palette for lead channels:
+   - Search calls → `#3a1a6e` (royal)
+   - LSA inbox → `#00d4c4` (teal)
+   - HubSpot forms → `#b8860b` (gold)
+   Locked palette for search campaigns (#08):
+   - Military → `#3a1a6e` (royal)
+   - Core DV → `#00d4c4` (teal)
+   - NTGUILT → `#b8860b` (gold)
+3. **Normal chart formatting** — labeled axes/ticks, plot background, baseline, totals above columns (not colliding with y-axis labels), month/category labels under bars, explicit legend with swatches.
+4. **Positive counts** never red/magenta. Red only for negative MoM / negative metric values.
+5. Keep `BRANDING-LAYOUT.md` chart notes in sync when palette or chart conventions change.
+
+## Detail tables
+
+- Include May/Jun (or period) columns, deltas, MoM, and spend/share when the data exists.
+- Swatch + series name in the first column when the chart is multi-color.
+- Totals row when summing adds clarity.
+
+## Channel classification
+
+- **#17 Referrals** — people/partner referral paths only (past-client, friend/family, attorney cross-referral, directory referral programs). **Do not** list Google Business Profile as a referral — GBP is a **lead** source.
+- GBP may still appear under **#16 Reviews** (review presence), not under referrals.

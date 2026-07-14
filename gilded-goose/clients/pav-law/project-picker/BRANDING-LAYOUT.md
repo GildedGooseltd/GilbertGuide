@@ -12,7 +12,7 @@
 | Colors, fonts, spacing, borders, card shape | `index.html` → `<style>` → `:root { … }` and class rules below |
 | Page title in browser tab | `index.html` → `<title>` |
 | Cockpit headline + subtitle | `index.html` → `.cockpit-header` |
-| Tab names (KPIs, Project Guide, Dashboards, Impact) | `index.html` → `.cockpit-tabs .view-tab` buttons |
+| Tab names (KPIs, Project Guide, Impact) | `index.html` → `.cockpit-tabs .view-tab` buttons |
 | Section labels in Project Picker (“Your selection”, …) | `index.html` → `.picker-zone-label` |
 | Confirm / thank-you page chrome | `index.html` → `#confirm-page`, `#thank-you` |
 | KPI & dashboard charts / metrics layout | `kpi-report.js` + KPI CSS block in `index.html` |
@@ -95,10 +95,11 @@ Links on light surfaces: `--gg-royal` + underline. Interactive elements: `:focus
 
 ```
 ┌─ cockpit-header ───────────── title + subtitle
-├─ cockpit-tabs ─────────────── KPIs | Project Guide | Dashboards | Impact
+├─ cockpit-tabs ─────────────── KPIs | Project Guide | Impact
 │
 ├─ [KPIs tab] ───────────────── kpi-report.js → #kpi-report-kpis
-├─ [Dashboards tab] ─────────── kpi-report.js → #kpi-report-dashboards
+│                                 (goals, key metrics, channels, reputation,
+│                                  then BHI / Cases MoM / source mix at bottom)
 ├─ [Impact tab] ─────────────── #completed-list + #revenue-calculator
 │
 └─ [Project Guide tab]

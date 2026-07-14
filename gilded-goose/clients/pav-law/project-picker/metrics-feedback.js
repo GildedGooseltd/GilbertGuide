@@ -644,10 +644,9 @@
   function onReady() {
     if (!window.KPI_REPORT) return;
     const kpis = document.getElementById("kpi-report-kpis");
-    const dash = document.getElementById("kpi-report-dashboards");
     const isMetricsPage = document.body.classList.contains("metrics-page");
     if (isMetricsPage) {
-      KPI_REPORT.renderAll(kpis, dash);
+      KPI_REPORT.renderAll(kpis);
     }
     init();
   }

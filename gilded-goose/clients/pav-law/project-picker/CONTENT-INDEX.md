@@ -31,9 +31,8 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Browser tab title | `index.html` | `<title>Pav Law Cockpit</title>` |
 | Main headline | `index.html` | `.cockpit-title span` — navy `#0d1b2a`, no gradient |
 | Subtitle + how-to intro | `index.html` | `.cockpit-subtitle`, `.cockpit-intro` |
-| Tab: KPIs | `index.html` | `button[data-view="kpis"]` |
+| Tab: KPIs | `index.html` | `button[data-view="kpis"]` — includes former Dashboards charts at bottom |
 | Tab: Project Guide | `index.html` | `button[data-view="picker"]` |
-| Tab: Dashboards | `index.html` | `button[data-view="dashboards"]` |
 | Tab: Impact | `index.html` | `button[data-view="impact"]` — completed results + revenue calculator |
 
 ### Project Picker tab
@@ -116,17 +115,11 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Report title / period / source | `kpi-report.js` | `DATA.period`, `DATA.asOf`, `DATA.source`, `reportHeader()` |
 | Metric cards (#01, #21, …) | `kpi-report.js` | `DATA.kpis` |
 | Card detail on click | `kpi-report.js` | `KPI_DETAIL` |
-| Leads-by-channel table | `kpi-report.js` | `DATA.channels` |
-| Legend ★ / ✕ | `kpi-report.js` | `renderKpis()` footer |
-
-### Dashboards tab
-
-| What users see | File | Field / location |
-|----------------|------|------------------|
-| Cockpit cards (#19 missed revenue, verticals, DUI goal) | `kpi-report.js` | `renderDashboards()` + `DATA` |
-| Channel charts (#01, #10, #08) | `kpi-report.js` | `DATA.channels`, `sourceMix`, `searchCallsByCampaign` |
-| #21 missed % / revenue lost / YTD | `kpi-report.js` | `DATA.phoneIntake`, `missedRevenuePanel()` |
-| Pipeline placeholders (#04, #05) | `kpi-report.js` | `renderDashboards()` |
+| Leads-by-channel / campaign charts | `kpi-report.js` | `DATA.channels`, `leadsByCampaign` |
+| Reputation (#16 / #17) | `kpi-report.js` | `DATA.reviews`, `DATA.referrals` |
+| BHI · avg deposit · Cases MoM (#04/#05) | `kpi-report.js` | `dashboardSectionsHtml()` + `DATA.bhi`, `avgDeposit`, `casesMom` |
+| #10 Source mix | `kpi-report.js` | `DATA.sourceMix` |
+| Legend ★ / ✕ | `kpi-report.js` | `renderKpis()` header |
 
 ### Impact tab
 

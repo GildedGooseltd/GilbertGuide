@@ -1100,10 +1100,10 @@
       background: linear-gradient(180deg, var(--bg) 70%, transparent);
     }
     .cockpit-tabs {
-      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem;
       align-items: stretch;
     }
-    @media (max-width: 900px) { .cockpit-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 900px) { .cockpit-tabs { grid-template-columns: 1fr; } }
     .cockpit-tabs .view-tab {
       border: 2px solid var(--border-strong); background: var(--gg-paper); color: var(--gg-brown);
       border-radius: var(--radius); padding: 0.7rem 0.85rem; font-size: 0.92rem; font-weight: 800;
@@ -1363,8 +1363,7 @@
       margin: 0 0 0.75rem; font-size: var(--font-min-rem); font-weight: 700;
     }
     .metrics-page-link a { color: var(--gg-royal); }
-    #cockpit-panel-kpis .kpi-report-root,
-    #cockpit-panel-dashboards .kpi-report-root {
+    #cockpit-panel-kpis .kpi-report-root {
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background: var(--gg-paper);
@@ -2387,9 +2386,8 @@
           <summary>How to use it <span class="cockpit-howto-chevron" aria-hidden="true">▾</span></summary>
           <div class="cockpit-howto-body">
             <ol>
-              <li><strong>KPIs</strong> — key metrics from the latest Ad Reports export; tap a card for context. Turn on magenta Feedback mode to leave comments. <a href="metrics.html">Open full metrics page →</a></li>
+              <li><strong>KPIs</strong> — key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export; tap a card for context. Turn on magenta Feedback mode to leave comments. <a href="metrics.html">Open full metrics page →</a></li>
               <li><strong>Project Guide</strong> — filter by value icon, check projects into your cart, read details, then <strong>Continue to submit</strong> for estimated results, action items, and next steps.</li>
-              <li><strong>Dashboards</strong> — charts for leads by channel, source mix, search calls, and missed-phone revenue. <a href="metrics.html">Feedback mode on metrics page →</a></li>
               <li><strong>Impact</strong> — completed project results, plus leads impacted / connected and estimated revenue for projects in your cart.</li>
               <li><strong>Ask Gilbert</strong> (left column, always open) — describe your business problem; Recommended Priority Projects on the right updates as you chat.</li>
             </ol>
@@ -2402,11 +2400,10 @@
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
         <button type="button" class="view-tab" data-view="kpis" role="tab" aria-selected="false">KPIs</button>
         <button type="button" class="view-tab active" data-view="picker" role="tab" aria-selected="true">Project Guide</button>
-        <button type="button" class="view-tab" data-view="dashboards" role="tab" aria-selected="false">Dashboards</button>
         <button type="button" class="view-tab" data-view="impact" role="tab" aria-selected="false">Impact</button>
       </div>
       <div class="cockpit-feedback-bar" role="toolbar" aria-label="Feedback on all cockpit views">
-        <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Leave comments on KPIs, charts, Impact, and Guide sections">
+        <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Leave comments on KPIs, Impact, and Guide sections">
           Feedback mode
         </button>
         <p class="cockpit-feedback-progress" id="feedback-progress"><strong>0</strong> <span>of 0 rated</span></p>
@@ -2415,7 +2412,7 @@
         </label>
         <input type="email" id="metrics-email" class="cockpit-feedback-email" placeholder="Email (optional)" autocomplete="email" aria-label="Your email optional">
         <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Save all to sheet</button>
-        <p class="cockpit-feedback-hint">Works on KPIs, Dashboards, Impact, and Project Guide. Magenta ON → click → <strong>Save</strong> writes Google Sheet tab <strong>MetricsFeedback</strong> (when webhook is live). Email is optional — not required.</p>
+        <p class="cockpit-feedback-hint">Works on KPIs, Impact, and Project Guide. Magenta ON → click → <strong>Save</strong> writes Google Sheet tab <strong>MetricsFeedback</strong> (when webhook is live). Email is optional — not required.</p>
         <p class="metrics-status metrics-remote-status" id="metrics-remote-status" aria-live="polite"></p>
         <p class="metrics-status" id="metrics-submit-status" aria-live="polite" hidden></p>
       </div>
@@ -2501,11 +2498,6 @@
       </div>
     </section>
 
-    <section class="cockpit-panel dashboards-panel" id="cockpit-panel-dashboards" aria-label="Dashboards" hidden>
-      <p class="metrics-page-link"><a href="metrics.html">Open metrics-only page — Feedback mode + submit to support →</a></p>
-      <div class="kpi-report-root" id="kpi-report-dashboards"></div>
-    </section>
-
     <section class="cockpit-panel impact-panel" id="cockpit-panel-impact" aria-label="Impact" hidden>
       <div class="impact-section impact-section-completed" id="impact-completed" data-feedback-id="impact-completed" data-feedback-label="Completed projects report-out">
         <p class="completed-panel-head">Completed</p>
@@ -2555,8 +2547,8 @@
 
   <script src="pages-config.js?v=20260712i"></script>
   <script src="projects-data.js?v=20260713u"></script>
-  <script src="kpi-report.js?v=20260714k"></script>
-  <script src="app.js?v=20260714l"></script>
-  <script src="metrics-feedback.js?v=20260714o"></script>
+  <script src="kpi-report.js?v=20260714m"></script>
+  <script src="app.js?v=20260714m"></script>
+  <script src="metrics-feedback.js?v=20260714m"></script>
 </body>
 </html>
