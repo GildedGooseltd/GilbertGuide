@@ -8,17 +8,9 @@ Static project picker: budget filters, cards, notes, submit → Sheet + email.
 
 ## Edit content
 
-**Start here:** [`content/INDEX.md`](content/INDEX.md) — links to every project file.
-
-| File | Purpose |
-|------|---------|
-| `content/INDEX.md` | Master list by priority |
-| `content/_TEMPLATE.md` | Standard layout for new projects |
-| `content/settings.md` | Default package |
-| `content/retainer.md` | Retainer card |
-| `content/projects/{ID}.md` | One readable markdown file per project |
-
-Guide: **[CONTENT-EDIT.md](CONTENT-EDIT.md)**
+**Layout & branding:** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
+**All text by page:** [CONTENT-INDEX.md](CONTENT-INDEX.md)  
+**Project markdown:** [CONTENT-EDIT.md](CONTENT-EDIT.md) · start at [`content/INDEX.md`](content/INDEX.md)
 
 ```bash
 cd gilded-goose/clients/pav-law/project-picker
@@ -26,6 +18,12 @@ npm run watch    # rebuild on save while editing
 ```
 
 Do not edit `projects-data.js` — edit `content/**/*.md` only; build regenerates the JS from your markdown.
+
+## Data pulls (local only)
+
+**Click paths:** [DATA-EXPORT-CLICKPATHS.md](DATA-EXPORT-CLICKPATHS.md)  
+**Validate:** `npm run validate-data` → [DATA-VALIDATION.md](DATA-VALIDATION.md) (aggregates only — no phones in report)  
+Raw CSVs stay in `Ad Reports/exports/` — gitignored; not deployed with Gilbert Guide.
 
 ## Deploy (Option 2 — monorepo)
 
