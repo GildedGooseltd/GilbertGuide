@@ -25,14 +25,7 @@ const META_KEYS = {
   seal: "guideSeal",
   logo: "guideLogo",
   "guide name": "guideName",
-  "guide short name": "guideShortName",
-  "featured image": "featuredImage",
-  "reference link": "referenceLink",
-  "estimated leads": "estimatedLeads",
-  "estimated leads gained": "estimatedLeads",
-  "client touchpoints": "clientTouchpoints",
-  "estimated customer touchpoints": "clientTouchpoints",
-  "publish status": "publishStatus"
+  "guide short name": "guideShortName"
 };
 
 const BRAND_FIXES = [
@@ -54,26 +47,6 @@ function applyProperCase(text) {
   });
   for (const [re, rep] of BRAND_FIXES) safe = safe.replace(re, rep);
   return safe.replace(/\x00(\d+)\x00/g, (_, i) => preserved[Number(i)]);
-}
-
-function parseReferenceLinkValue(val) {
-  if (!val || val === "—" || val === "-") return null;
-  const md = val.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-  if (md) return { label: md[1].trim(), url: md[2].trim() };
-  if (/^https?:\/\//i.test(val.trim())) return { label: "Project reference", url: val.trim() };
-  return null;
-}
-
-function formatReferenceLinkValue(link) {
-  if (!link?.url) return "";
-  const label = (link.label || "Project reference").trim();
-  return `[${label}](${link.url})`;
-}
-
-function normalizePublishStatus(raw) {
-  const s = String(raw || "published").toLowerCase().trim();
-  if (s === "planning" || s === "plan" || s === "draft" || s === "outline") return "planning";
-  return "published";
 }
 
 function parseMetaTable(text) {
@@ -102,118 +75,16 @@ function parseMetaTable(text) {
       meta.keywords = val.split(/,\s*/).filter(Boolean);
     else if (field === "status")
       meta[field] = val.toLowerCase();
-    else if (field === "publishStatus")
-      meta.publishStatus = normalizePublishStatus(val);
-    else if (field === "referenceLink")
-      meta.referenceLink = parseReferenceLinkValue(val);
-    else if (field === "featuredImage")
-      meta.featuredImage = val && val !== "—" && val !== "-" ? val.trim() : "";
     else meta[field] = val;
   }
   return meta;
-}
-
-const VALID_VALUE_ICON_IDS = new Set([
-  "foundation", "retainer", "leads", "crm", "seo", "referrals",
-  "efficiency", "intake", "creative", "general"
-]);
-
-function normalizeValueIconId(raw) {
-  return String(raw || "").trim().toLowerCase().replace(/\s+/g, "-");
 }
 
 function parseListSection(body) {
   return body
     .split("\n")
     .map(l => l.replace(/^-\s+/, "").trim())
-    .filter(l => l && l !== "-" && !l.startsWith("|"));
-}
-
-function parseImpactMetricBullet(text) {
-  const asOf = text.match(/as of\s*(\d{4}-\d{2}-\d{2})/i);
-  const cleaned = text
-    .replace(/\(as of\s*\d{4}-\d{2}-\d{2}\)/gi, "")
-    .replace(/as of\s*\d{4}-\d{2}-\d{2}/gi, "")
-    .trim();
-  const range = cleaned.match(/~?(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)(?!\d)/);
-  const single = cleaned.match(/~?(\d+(?:\.\d+)?)/);
-  const period = /\/wave/i.test(text) ? "wave" : /\/mo/i.test(text) ? "mo" : null;
-  const value = range
-    ? (Number(range[1]) + Number(range[2])) / 2
-    : single
-      ? Number(single[1])
-      : null;
-  return { label: text.trim(), value, period, asOf: asOf ? asOf[1] : null };
-}
-
-function parseImpactEstimatesSection(body) {
-  const est = { period: "mo", asOf: null, source: "", note: "" };
-  for (const line of body.split("\n")) {
-    const t = line.trim();
-    if (!t.startsWith("-")) continue;
-    const m = t.match(/^-\s*(.+?):\s*(.+)$/);
-    if (!m) continue;
-    const key = m[1].toLowerCase();
-    const val = m[2].trim();
-    if (key.includes("leads impacted")) {
-      const p = parseImpactMetricBullet(val);
-      est.leadsImpacted = p.value;
-      if (p.period) est.period = p.period;
-      if (p.asOf) est.asOf = p.asOf;
-    } else if (key.includes("leads connected")) {
-      est.leadsConnected = parseImpactMetricBullet(val).value;
-    } else if (key.includes("clients retained")) {
-      est.clientsRetained = parseImpactMetricBullet(val).value;
-    } else if (key === "source") {
-      est.source = val;
-    } else if (key === "note") {
-      est.note = val;
-    }
-  }
-  if (est.leadsImpacted == null && est.leadsConnected == null && est.clientsRetained == null) return null;
-  return est;
-}
-
-function parseGilbertMetricNotes(body) {
-  const notes = [];
-  for (const line of body.split("\n")) {
-    const m = line.match(/^-\s*\*\*(\d{4}-\d{2}-\d{2})\s*·\s*([^*]+)\*\*\s*[—–-]\s*(.+)$/);
-    if (m) notes.push({ date: m[1], field: m[2].trim(), text: m[3].trim() });
-  }
-  return notes;
-}
-
-function formatImpactEstimatesSection(p) {
-  const e = p.impactEstimates;
-  if (!e) return "";
-  const period = e.period === "wave" ? "/wave" : "/mo";
-  const fmt = v => {
-    if (v == null) return "—";
-    const n = Number(v);
-    return n < 1 && n > 0 ? `~${n.toFixed(1)}${period}` : `~${n}${period}`;
-  };
-  let md = `## Impact estimates\n\n`;
-  md += `- Leads impacted: ${fmt(e.leadsImpacted)} (as of ${e.asOf || "—"})\n`;
-  md += `- Leads connected: ${fmt(e.leadsConnected)}\n`;
-  md += `- Clients retained: ${fmt(e.clientsRetained)}\n`;
-  if (e.source) md += `- Source: ${e.source}\n`;
-  if (e.note) md += `- Note: ${e.note}\n`;
-  return md + "\n";
-}
-
-function formatGilbertMetricNotesSection(p) {
-  if (!p.gilbertMetricNotes?.length) return "";
-  let md = `## Gilbert on metrics\n\n`;
-  md += p.gilbertMetricNotes
-    .map(n => `- **${n.date} · ${n.field}** — ${n.text}`)
-    .join("\n");
-  return md + "\n\n";
-}
-
-function parseValueIconsSection(body) {
-  return parseListSection(body)
-    .map(normalizeValueIconId)
-    .filter(id => VALID_VALUE_ICON_IDS.has(id));
+    .filter(l => l && !l.startsWith("|"));
 }
 
 function parseLearnings(body) {
@@ -223,193 +94,6 @@ function parseLearnings(body) {
     if (m) links.push({ label: m[1], url: m[2], ...(m[3] ? { note: m[3] } : {}) });
   }
   return links;
-}
-
-function parseAbQuestions(fullText, sections) {
-  const questions = [];
-  const sectionBody = sections["ab - q"] || sections["ab-q"] || sections["ab q"];
-  if (sectionBody) {
-    for (const line of sectionBody.split("\n")) {
-      const t = line.replace(/^-\s+/, "").trim();
-      if (t) questions.push(t.replace(/^AB\s*[-–]\s*Q:\s*/i, "").trim());
-    }
-  }
-  const re = /^(?:[-•]\s*)?AB\s*[-–]\s*Q:\s*(.+)$/gim;
-  let m;
-  while ((m = re.exec(fullText)) !== null) {
-    questions.push(m[1].trim());
-  }
-  const inlineRe = /AB\s*[-–]\s*Q:\s*([^\n]+)/gi;
-  while ((m = inlineRe.exec(fullText)) !== null) {
-    questions.push(m[1].trim());
-  }
-  return [...new Set(questions.filter(Boolean))];
-}
-
-function findSectionBody(sections, baseName) {
-  if (!sections) return "";
-  if (sections[baseName]) return sections[baseName];
-  const key = Object.keys(sections).find(k => {
-    const kl = k.toLowerCase();
-    const b = baseName.toLowerCase();
-    return kl === b || kl.startsWith(`${b} `) || kl.startsWith(`${b}—`) || kl.startsWith(`${b} —`);
-  });
-  return key ? sections[key] : "";
-}
-
-function parsePlanningPhasesTable(body) {
-  if (!body?.trim()) return null;
-  const rows = [];
-  for (const line of body.split("\n")) {
-    const trimmed = line.trim();
-    if (!trimmed.startsWith("|")) continue;
-    if (/^[\|\s:\-]+$/.test(trimmed.replace(/\s/g, ""))) continue;
-    const cells = trimmed.split("|").map(c => c.trim()).filter(Boolean);
-    if (!cells.length || /^phase$/i.test(cells[0])) continue;
-    rows.push({
-      phase: cells[0] || "",
-      focus: cells[1] || "",
-      status: cells[2] || "not started",
-      target: cells[3] || "",
-      notes: cells[4] || ""
-    });
-  }
-  return rows.length ? rows : null;
-}
-
-const DEFAULT_PLANNING_PHASES = [
-  { phase: "1", focus: "Discovery & scope", status: "not started", target: "", notes: "" },
-  { phase: "2", focus: "Build & execute", status: "not started", target: "", notes: "" },
-  { phase: "3", focus: "Measure & optimize", status: "not started", target: "", notes: "" }
-];
-
-function projectStatusBucket(status) {
-  const s = String(status || "available").toLowerCase();
-  if (s.includes("completed")) return "completed";
-  if (s.includes("wip")) return "wip";
-  if (s.includes("ongoing")) return "ongoing";
-  if (s.includes("research") || s.includes("draft")) return "research";
-  return "available";
-}
-
-function truncatePhaseNote(text, max = 52) {
-  let s = String(text || "")
-    .replace(/^Deliverable:\s*/i, "")
-    .replace(/^[-•*]\s*/, "")
-    .replace(/\*\*/g, "")
-    .trim();
-  if (!s) return "";
-  if (s.length > max) s = `${s.slice(0, max - 1).trim()}…`;
-  return s;
-}
-
-function phaseNoteSummary(items, maxItems = 2) {
-  if (!items?.length) return "";
-  const parts = items.slice(0, maxItems).map(item => truncatePhaseNote(item)).filter(Boolean);
-  if (!parts.length) return "";
-  const suffix = items.length > maxItems ? ` (+${items.length - maxItems} more)` : "";
-  return `${parts.join("; ")}${suffix}`;
-}
-
-function inferPlanningPhases(p) {
-  const phases = DEFAULT_PLANNING_PHASES.map(x => ({ ...x }));
-  const saved = p.planningPhases || [];
-  for (let i = 0; i < 3; i++) {
-    const t = saved[i]?.target;
-    if (t && /^\d{4}|^Q[1-4]|^TBD|^Jan|^Feb|^Mar|^Apr|^May|^Jun|^Jul|^Aug|^Sep|^Oct|^Nov|^Dec/i.test(String(t).trim()))
-      phases[i].target = String(t).trim();
-  }
-  const bucket = projectStatusBucket(p.status);
-  const hasCompleted = (p.completedItems || []).length > 0;
-  const hasWip = (p.inProgressItems || []).length > 0;
-  const hasResults = (p.resultsItems || []).length > 0;
-
-  if (hasCompleted) {
-    phases[0].status = "completed";
-    phases[0].notes = phaseNoteSummary(p.completedItems) || "";
-  } else if (bucket === "research" || bucket === "wip") {
-    phases[0].status = "wip";
-  }
-
-  if (hasWip) {
-    phases[1].status = "wip";
-    phases[1].notes = phaseNoteSummary(p.inProgressItems) || "";
-  } else if (hasCompleted && bucket !== "available") {
-    phases[1].status = bucket === "completed" ? "completed" : "not started";
-  }
-
-  if (hasResults) {
-    phases[2].status = bucket === "completed" ? "completed" : "wip";
-    phases[2].notes = phaseNoteSummary(p.resultsItems, 1) || "Results logged";
-  } else if (bucket === "completed") {
-    phases[2].status = "completed";
-  } else if (bucket === "ongoing") {
-    phases[2].status = "wip";
-    phases[2].notes = "Ongoing measurement";
-  }
-
-  return phases;
-}
-
-function isInfoPlaceholder(item) {
-  return /^_Add:_?$/i.test(String(item || "").trim());
-}
-
-function inferInformationNeeded(p) {
-  const bucket = projectStatusBucket(p.status);
-  const items = [];
-  for (const q of p.abQuestions || []) items.push(`Answer AB – Q: ${q}`);
-  if (!p.goal?.trim()) items.push("Define measurable Goal");
-  if (!(p.resultsItems || []).length && bucket !== "available")
-    items.push("Add Results — baseline vs current metrics");
-  if (!p.impactEstimates && p.id !== "RETAINER") items.push("Fill Impact estimates");
-  if (p.estimatedLeads === "Estimate pending") items.push("Confirm estimated leads gained");
-  if (p.clientTouchpoints === "Estimate pending") items.push("Confirm customer touchpoints");
-  if (!(p.recommendedMetrics || []).length && /wip|research|ongoing/i.test(String(p.status || "")))
-    items.push("List Recommended metrics");
-  if (!(p.kpiRefs || []).length && /dashboard|kpi|metric/i.test(`${p.category} ${p.title}`))
-    items.push("Link KPI dashboard rows");
-
-  const manual = (p.informationNeeded || [])
-    .map(s => String(s || "").trim())
-    .filter(Boolean)
-    .filter(item => !isInfoPlaceholder(item))
-    .filter(item => !/^Resolve blocker:/i.test(item))
-    .filter(item => !/^Answer AB – Q:/i.test(item))
-    .filter(item => !items.includes(item));
-
-  items.push(...manual);
-
-  const deduped = [];
-  for (const item of items) {
-    const norm = item.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-    if (deduped.some(x => x.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim() === norm)) continue;
-    if (/fill impact/i.test(item) && deduped.some(x => /fill impact/i.test(x))) continue;
-    deduped.push(item);
-  }
-  if (!deduped.length) deduped.push("_Add:_");
-  else if (deduped.length < 3 && /wip|research|draft/i.test(String(p.status || "")) && !deduped.some(isInfoPlaceholder))
-    deduped.push("_Add:_");
-
-  return deduped.slice(0, 8);
-}
-
-function formatPlanningPhasesSection(p) {
-  const phases = inferPlanningPhases(p);
-  let md = `## Planning phases\n\n`;
-  md += `| Phase | Focus | Status | Target date | Notes |\n`;
-  md += `| ----- | ----- | ------ | ----------- | ----- |\n`;
-  for (const row of phases) {
-    md += `| ${row.phase} | ${row.focus} | ${row.status} | ${row.target || ""} | ${row.notes || ""} |\n`;
-  }
-  return md + "\n";
-}
-
-function formatInformationNeededSection(p) {
-  const items = inferInformationNeeded(p);
-  let md = `## Information needed\n\n`;
-  md += items.map(i => `- ${i}`).join("\n");
-  return md + "\n\n";
 }
 
 function parseAccountSection(body) {
@@ -457,7 +141,6 @@ export function parseProjectMarkdown(text, fallbackId) {
   const project = { ...meta };
 
   if (sections.description) project.description = applyProperCase(sections.description.trim());
-  if (sections.tldr) project.tldr = applyProperCase(sections.tldr.trim());
 
   const valueAdded = [];
   if (sections["value added"]) valueAdded.push(...parseListSection(sections["value added"]));
@@ -478,10 +161,6 @@ export function parseProjectMarkdown(text, fallbackId) {
   }
   project.valueAdded = cleanValue;
   if (deliverables.length) project.deliverables = deliverables;
-
-  if (sections["value icons"]) {
-    project.valueIcons = parseValueIconsSection(sections["value icons"]);
-  }
 
   if (sections["marketing education"]) {
     const body = sections["marketing education"].trim();
@@ -506,35 +185,10 @@ export function parseProjectMarkdown(text, fallbackId) {
       ...parseListSection(sections.deliverables)
     ];
   }
-  const completedBody = findSectionBody(sections, "completed") || findSectionBody(sections, "done");
-  if (completedBody) project.completedItems = parseListSection(completedBody);
-  const wipBody = findSectionBody(sections, "wip") || findSectionBody(sections, "in progress");
-  if (wipBody) project.inProgressItems = parseListSection(wipBody);
-  if (sections.results)
-    project.resultsItems = parseListSection(sections.results);
-  if (sections.goal) project.goal = applyProperCase(sections.goal.trim());
-  if (sections["information needed"])
-    project.informationNeeded = parseListSection(sections["information needed"]);
-  const phasesBody = findSectionBody(sections, "planning phases");
-  if (phasesBody) {
-    const parsed = parsePlanningPhasesTable(phasesBody);
-    if (parsed) project.planningPhases = parsed;
-  }
-  if (sections.blockers || sections["blockers (next round)"])
-    project.blockers = parseListSection(sections.blockers || sections["blockers (next round)"]);
-  if (sections["recommended metrics"])
-    project.recommendedMetrics = parseListSection(sections["recommended metrics"]);
-  const insightsKey =
-    sections["insights & improvements"] ||
-    sections["insights and improvements"] ||
-    sections.insights;
-  if (insightsKey) project.insightsImprovements = parseListSection(insightsKey);
-  if (sections["impact estimates"]) {
-    project.impactEstimates = parseImpactEstimatesSection(sections["impact estimates"]);
-  }
-  if (sections["gilbert on metrics"]) {
-    project.gilbertMetricNotes = parseGilbertMetricNotes(sections["gilbert on metrics"]);
-  }
+  if (sections.completed || sections.done)
+    project.completedItems = parseListSection(sections.completed || sections.done);
+  if (sections.wip || sections["in progress"])
+    project.inProgressItems = parseListSection(sections.wip || sections["in progress"]);
 
   if (sections.learnings) project.learningsLinks = parseLearnings(sections.learnings);
   if (sections.references) project.references = parseLearnings(sections.references);
@@ -547,17 +201,7 @@ export function parseProjectMarkdown(text, fallbackId) {
     if (bm?.label) project.backedMetric = bm;
   }
 
-  project.abQuestions = parseAbQuestions(text, sections);
-
-  if (sections["kpi links"]) {
-    const ids = parseValueIconsSection(sections["kpi links"]).map(id => {
-      const n = String(id).replace(/\D/g, "");
-      return n.length === 2 ? `#${n}` : id.startsWith("#") ? id : `#${id}`;
-    });
-    project.kpiRefs = [...new Set([...(project.kpiRefs || []), ...ids])];
-  }
-
-  return sanitizeProjectRecord(project);
+  return project;
 }
 
 function isRetainerPhase(p) {
@@ -579,21 +223,16 @@ function metaTableRows(p) {
     ["ID", p.id],
     ...(isRetainerPhase(p) || p.priority == null ? [] : [["Priority", p.priority]]),
     ["Fee", p.fee],
-    ...(p.timeline && String(p.timeline) !== "undefined" ? [["Timeline", p.timeline]] : []),
+    ["Timeline", p.timeline],
     ["Category", p.category],
     ["Campaign type", p.campaignType],
     ["Status", p.status || "available"],
-    ["Publish status", normalizePublishStatus(p.publishStatus)],
     ...(p.parentId ? [["Parent", p.parentId]] : []),
     ...(p.enabler ? [["Enabler", "yes"]] : []),
     ...(p.monthlyOnly ? [["Monthly only", "yes"]] : []),
     ...(p.paymentType ? [["Payment type", p.paymentType === "performance" ? "performance" : "flat"]] : []),
     ...(p.ongoingFee ? [["Ongoing fee", p.ongoingFee]] : []),
     ...(p.perCampaignFee ? [["Per campaign fee", p.perCampaignFee]] : []),
-    ...(p.featuredImage ? [["Featured image", p.featuredImage]] : []),
-    ...(p.referenceLink?.url ? [["Reference link", formatReferenceLinkValue(p.referenceLink)]] : []),
-    ...(p.estimatedLeads ? [["Estimated leads gained", p.estimatedLeads]] : []),
-    ...(p.clientTouchpoints ? [["Estimated customer touchpoints", p.clientTouchpoints]] : []),
     ["Keywords", (p.keywords || []).join(", ")]
   ];
   return rows.map(([l, v]) => padMetaRow(l, v));
@@ -613,100 +252,6 @@ function dedupeLinks(links) {
     seen.add(key);
     return true;
   });
-}
-
-function extractKpiId(label, url) {
-  const blob = `${label || ""} ${url || ""}`;
-  const m = blob.match(/#(\d{2})\b/);
-  return m ? `#${m[1]}` : null;
-}
-
-function isKpiUrl(url) {
-  if (!url) return false;
-  const u = String(url).toLowerCase().trim();
-  return (
-    u.includes("kpi-wireframe") ||
-    u.includes("kpi-report") ||
-    u.includes("kpi-list") ||
-    u.startsWith("#kpi") ||
-    /^#?\d{2}$/.test(u)
-  );
-}
-
-/** Strip external and cross-project links; keep KPI refs as plain "KPI #NN" text. */
-export function sanitizeProjectText(text) {
-  if (!text) return text;
-  let out = String(text);
-  out = out.replace(/<a\s+[^>]*href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi, (_m, url, label) => {
-    if (isKpiUrl(url)) {
-      const id = extractKpiId(label, url);
-      return id ? `KPI ${id}` : String(label).trim();
-    }
-    return String(label).trim();
-  });
-  out = out.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label, url) => {
-    const u = String(url).trim();
-    if (isKpiUrl(u) || /#\d{2}/.test(label)) {
-      const id = extractKpiId(label, u);
-      return id ? `KPI ${id}` : String(label).trim();
-    }
-    return String(label).trim();
-  });
-  out = out.replace(/\s*See\s+(?:[^.\n]*\[([^\]]+)\]\(https?:\/\/[^)]+\)[^.\n]*)+\./gi, ".");
-  out = out.replace(/\s*See\s+[^.\n]*https?:\/\/[^.\n]+\./gi, ".");
-  return out.replace(/\n{3,}/g, "\n\n").trim();
-}
-
-function collectKpiRefs(p) {
-  const refs = new Set(p.kpiRefs || []);
-  const blob = [
-    p.tldr,
-    p.description,
-    p.goal,
-    ...(p.valueAdded || []),
-    ...(p.recommendedMetrics || []),
-    ...(p.blockers || []),
-    ...(p.resultsItems || [])
-  ]
-    .filter(Boolean)
-    .join(" ");
-  const re = /KPI\s+#(\d{2})|(?<![\w/])#(\d{2})(?![\w/])/g;
-  let m;
-  while ((m = re.exec(blob)) !== null) {
-    refs.add(`#${m[1] || m[2]}`);
-  }
-  return [...refs].sort((a, b) => parseInt(a.slice(1), 10) - parseInt(b.slice(1), 10));
-}
-
-export function sanitizeProjectRecord(p) {
-  if (!p) return p;
-  for (const key of ["tldr", "description", "goal", "marketingEducation"]) {
-    if (p[key]) p[key] = sanitizeProjectText(p[key]);
-  }
-  for (const key of [
-    "valueAdded",
-    "completedItems",
-    "inProgressItems",
-    "blockers",
-    "resultsItems",
-    "recommendedMetrics",
-    "insightsImprovements",
-    "deliverables"
-  ]) {
-    if (Array.isArray(p[key])) p[key] = p[key].map(sanitizeProjectText).filter(Boolean);
-  }
-  if (p.referenceLink) delete p.referenceLink;
-  delete p.learningsLinks;
-  delete p.references;
-  if (p.backedMetric?.label) {
-    p.backedMetric = {
-      ...p.backedMetric,
-      label: sanitizeProjectText(p.backedMetric.label)
-    };
-  }
-  p.kpiRefs = collectKpiRefs(p);
-  p.publishStatus = normalizePublishStatus(p.publishStatus);
-  return p;
 }
 
 function parseInlineMarkdownLinks(text) {
@@ -749,76 +294,6 @@ function buildAccountSection(p) {
   return body;
 }
 
-function mergeDescriptionAndEducation(p) {
-  const desc = (p.description || "").trim();
-  const edu = (p.marketingEducation || "").trim();
-  if (!edu) return desc;
-  if (desc && desc.toLowerCase().includes(edu.slice(0, Math.min(48, edu.length)).toLowerCase())) return desc;
-  return [desc, edu].filter(Boolean).join("\n\n");
-}
-
-function sentenceFromBullet(text) {
-  let b = String(text).replace(/^Deliverable:\s*/i, "").trim().replace(/^[-•]\s*/, "");
-  if (!b) return "";
-  if (!/[.!?]$/.test(b)) b += ".";
-  return b;
-}
-
-function inferTldr(p) {
-  if (p.tldr && String(p.tldr).trim()) return String(p.tldr).trim();
-  if (p.valueAdded && p.valueAdded.length) return sentenceFromBullet(p.valueAdded[0]);
-  const desc = String(p.description || "").replace(/<[^>]+>/g, " ");
-  const m = desc.match(/[^.!?]+[.!?]+/);
-  return m ? m[0].trim() : "";
-}
-
-function inferEstimatedLeads(p) {
-  if (p.estimatedLeads && String(p.estimatedLeads).trim()) return String(p.estimatedLeads).trim();
-  if (p.id === "RETAINER") return "No direct leads";
-  const blob = `${p.category || ""} ${p.campaignType || ""} ${(p.keywords || []).join(" ")}`.toLowerCase();
-  if (/direct mail|mailer|postcard|envelope/.test(blob)) return "1–2 leads gained per wave";
-  return "Estimate pending";
-}
-
-function inferClientTouchpoints(p) {
-  if (p.clientTouchpoints && String(p.clientTouchpoints).trim()) return String(p.clientTouchpoints).trim();
-  const kw = `${(p.keywords || []).join(" ")} ${p.category || ""} ${p.campaignType || ""}`.toLowerCase();
-  if (/mailer|direct mail|postcard|envelope|insurance sleeve/.test(kw)) return "~200 customers/wave";
-  if (/display|brand|ntguilt|awareness|upper.funnel/.test(kw)) return "NTGUILT.com, Google Display, remarketing audiences";
-  if (/phone|voip|call extension|888|719|paid media|lsa/.test(kw)) return "~36 customers/month";
-  if (/hubspot|crm|pipeline|workflow|booking|dashboard|kpi/.test(kw)) return "~124 customers/month";
-  return "Estimate pending";
-}
-
-const GILBERT_BOILERPLATE = [
-  "Everyone this campaign reached — calls, clicks, opens, mail, or profile views.",
-  "Prospects who actually connected with intake (answered, booked, or submitted).",
-  "Signed matters at historical lead→case rate (7.3% · Jun 2026) unless noted otherwise."
-];
-
-function shortenGilbertMetricNotes(notes) {
-  return (notes || []).map(n => {
-    let text = String(n.text || "").trim();
-    for (const phrase of GILBERT_BOILERPLATE) {
-      text = text.replace(new RegExp(`\\s*${phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "g"), "");
-    }
-    return { ...n, text: text.trim() };
-  });
-}
-
-function normalizeProjectForTemplate(p) {
-  p.tldr = inferTldr(p);
-  if (!p.estimatedLeads) p.estimatedLeads = inferEstimatedLeads(p);
-  if (!p.clientTouchpoints) p.clientTouchpoints = inferClientTouchpoints(p);
-  p.description = sanitizeProjectText(mergeDescriptionAndEducation(p));
-  p.planningPhases = inferPlanningPhases(p);
-  p.informationNeeded = inferInformationNeeded(p);
-  p.gilbertMetricNotes = shortenGilbertMetricNotes(p.gilbertMetricNotes);
-  delete p.marketingEducation;
-  delete p.learningsLinks;
-  return sanitizeProjectRecord(p);
-}
-
 export function projectToMarkdown(p) {
   const id = p.id || "NEW";
   const title = applyProperCase(p.title || "Untitled Project");
@@ -829,30 +304,12 @@ export function projectToMarkdown(p) {
   md += metaTableRows(p).join("\n");
   md += `\n\n---\n\n`;
 
-  if (p.tldr) md += `## TLDR\n\n${applyProperCase(p.tldr.trim())}\n\n`;
+  if (p.description) md += `## Description\n\n${applyProperCase(p.description.trim())}\n\n`;
   md += listSection("Value Added", p.valueAdded || []);
-  if (p.valueIcons?.length) {
-    md += `## Value icons\n\n${p.valueIcons.map(id => `- ${id}`).join("\n")}\n\n`;
-  }
-  if (p.kpiRefs?.length) {
-    md += `## KPI links\n\n${p.kpiRefs.map(id => `- ${id.replace(/^#/, "")}`).join("\n")}\n\n`;
-  }
-  if (p.abQuestions?.length) {
-    md += `## AB - Q\n\n${p.abQuestions.map(q => `- AB - Q: ${q}`).join("\n")}\n\n`;
-  }
-  const fullDesc = mergeDescriptionAndEducation(p);
-  if (fullDesc) md += `## Description\n\n${applyProperCase(fullDesc.trim())}\n\n`;
-  if (p.goal) md += `## Goal\n\n${applyProperCase(String(p.goal).trim())}\n\n`;
-  md += formatPlanningPhasesSection(p);
-  md += formatInformationNeededSection(p);
+  const edu = buildMarketingEducationB2(p);
+  if (edu) md += `## Marketing Education\n\n${edu}\n\n`;
   md += listSection("WIP", p.inProgressItems);
   md += listSection("Completed", p.completedItems);
-  md += listSection("Results", p.resultsItems);
-  md += listSection("Recommended metrics", p.recommendedMetrics);
-  md += listSection("Blockers (next round)", p.blockers);
-  md += listSection("Insights & improvements", p.insightsImprovements);
-  md += formatImpactEstimatesSection(p);
-  md += formatGilbertMetricNotesSection(p);
   const account = buildAccountSection(p);
   if (account) md += `## Account Data & Marketing Principles Applied\n\n${account}\n\n`;
 
@@ -908,35 +365,6 @@ export function isValidProjectId(id) {
   return /^(RETAINER|[AB]\d+M?)$/i.test(String(id || "").trim());
 }
 
-function indexHeaderColumnMap(cells) {
-  const lower = cells.map(c => c.toLowerCase());
-  if (!lower.includes("id")) return null;
-  const pick = key => {
-    const i = lower.findIndex(c => c === key || c.replace(/\s+/g, "") === key.replace(/\s+/g, ""));
-    return i >= 0 ? i : null;
-  };
-  return {
-    priority: pick("priority") ?? pick("p") ?? 0,
-    id: pick("id") ?? 1,
-    status: pick("status"),
-    title: pick("project") ?? 2,
-    file: pick("file") ?? 3
-  };
-}
-
-function normalizeIndexStatus(raw) {
-  if (!raw) return null;
-  const s = String(raw).toLowerCase().trim();
-  if (s.includes("completed")) return "completed";
-  if (s.includes("research")) return "research";
-  if (s.includes("draft") || s.includes("outline")) return "draft";
-  if (s.includes("ongoing")) return "ongoing";
-  if (s.includes("wip")) return "wip";
-  if (s.includes("available")) return "available";
-  const first = s.split(/[·•|/]/)[0].trim().replace(/\s+/g, "");
-  return first || null;
-}
-
 export function parseIndexMarkdown(text) {
   const result = {
     intro: "",
@@ -953,37 +381,22 @@ export function parseIndexMarkdown(text) {
   }
 
   const lines = text.split("\n");
-  let colMap = null;
-  for (const line of lines) {
-    if (!/^\|/.test(line)) continue;
+  const tableLines = lines.filter(l => /^\|/.test(l) && !/^\|[\s\-:|]+\|$/.test(l.replace(/\s/g, "")));
+  for (const line of tableLines) {
     const cells = line.split("|").map(c => c.trim()).filter(Boolean);
-    if (!cells.length) continue;
-    if (/^[\-:\s|]+$/.test(line.replace(/\s/g, ""))) continue;
-
-    if (cells.some(c => /^id$/i.test(c))) {
-      colMap = indexHeaderColumnMap(cells);
-      continue;
-    }
-
-    if (!colMap) {
-      colMap = { priority: 0, id: 1, status: cells.length >= 5 ? 2 : null, title: cells.length >= 5 ? 3 : 2, file: cells.length >= 5 ? 4 : 3 };
-    }
-
-    const id = cells[colMap.id];
-    if (!id || !isValidProjectId(id)) continue;
+    if (cells.length < 4 || cells[0] === "P") continue;
+    const id = cells[1];
+    if (!id || id === "ID" || !isValidProjectId(id)) continue;
     if (result.rowsById[id]) continue;
-
-    const row = {
-      p: cells[colMap.priority] ?? "",
-      title: cells[colMap.title] ?? "",
-      file: cells[colMap.file] ?? ""
+    result.rowsById[id] = {
+      p: cells[0],
+      title: cells[2],
+      file: cells[3]
     };
-    if (colMap.status != null && cells[colMap.status]) row.status = cells[colMap.status];
-    result.rowsById[id] = row;
   }
 
-  const tableStart = text.search(/\|[^\n]*\bID\b[^\n]*\|/i);
-  if (tableStart > 0) result.intro = text.slice(0, tableStart).trim();
+  const introEnd = text.indexOf("| P |");
+  if (introEnd > 0) result.intro = text.slice(0, introEnd).trim();
 
   const footerStart = text.indexOf("**Retainer");
   if (footerStart > 0) result.footer = text.slice(footerStart).trim();
@@ -991,7 +404,7 @@ export function parseIndexMarkdown(text) {
   return result;
 }
 
-/** INDEX table titles, priority, status → picker data (INDEX wins over project .md). */
+/** INDEX table titles + P column → picker data (INDEX wins over project .md H1). */
 export function applyIndexOverrides(projects, retainer, existingText) {
   const { rowsById } = parseIndexMarkdown(existingText || "");
   const applyTo = item => {
@@ -1001,8 +414,6 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     if (o.title) next.title = o.title;
     const pm = String(o.p || "").match(/^P?(\d+)$/i);
     if (pm) next.priority = parseInt(pm[1], 10);
-    const status = normalizeIndexStatus(o.status);
-    if (status) next.status = status;
     return next;
   };
   const merged = projects.map(applyTo);
@@ -1017,11 +428,11 @@ export function buildIndex(projects, retainer, existingText) {
 
   let md = overrides.intro || `# Project Index
 
-Open a file below to edit. Sorted by priority (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
+Open a file below to edit. Sorted by priority (P). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
 
-Edit **Project** titles, **Status**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
+Edit **Project** titles and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
-  md += `\n\n| Priority | ID | Status | Project | File |\n| -------- | -- | ------ | ------- | ---- |\n`;
+  md += `\n\n| P | ID | Project | File |\n|---|-----|---------|------|\n`;
 
   const seen = new Set();
   for (const p of all) {
@@ -1030,15 +441,14 @@ Edit **Project** titles, **Status**, and add **## Notes** at the bottom — buil
     const file = id === "RETAINER" ? "retainer.md" : `projects/${id}.md`;
     const fileCell = `[${file}](${file})`;
     const o = overrides.rowsById[id];
-    const pri = o?.p ?? (p.priority != null ? String(p.priority) : "—");
+    const pri = o?.p ?? (p.priority != null ? `P${p.priority}` : "—");
     const title = o?.title || p.title;
-    const status = o?.status || p.status || "available";
-    md += `| ${pri} | ${id} | ${status} | ${title} | ${fileCell} |\n`;
+    md += `| ${pri} | ${id} | ${title} | ${fileCell} |\n`;
   }
 
   for (const [id, o] of Object.entries(overrides.rowsById)) {
     if (seen.has(id) || !isValidProjectId(id)) continue;
-    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${o.title} | ${o.file} |\n`;
+    md += `| ${o.p} | ${id} | ${o.title} | ${o.file} |\n`;
   }
 
   md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Priority** row (shows as —)."}\n`;
@@ -1069,11 +479,8 @@ export function migrateAllToB2Format(root) {
       const pm = String(row.p).match(/^P(\d+)$/i);
       if (pm) p.priority = parseInt(pm[1], 10);
     }
-    const status = normalizeIndexStatus(row?.status);
-    if (status) p.status = status;
     if (p.learningsLinks) p.learningsLinks = dedupeLinks(p.learningsLinks);
     if (p.references) p.references = dedupeLinks(p.references);
-    normalizeProjectForTemplate(p);
     fs.writeFileSync(fp, projectToMarkdown(p));
     return p.id;
   }
