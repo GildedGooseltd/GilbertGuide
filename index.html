@@ -725,6 +725,10 @@
       border-radius: 0 8px 8px 0;
     }
     .card-summary { margin-bottom: var(--space-md); width: 100%; clear: both; }
+    .card-summary-label {
+      margin: 0 0 0.35rem; font-size: var(--font-min-rem); font-weight: 800;
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--gg-royal);
+    }
     .card-tldr {
       font-size: 1.02rem; line-height: 1.6; color: var(--gg-brown); font-weight: 500;
       margin: 0 0 0.65rem; padding: 0.65rem 0.75rem;
@@ -2462,6 +2466,31 @@
       font-size: var(--font-min-rem); text-transform: uppercase;
       letter-spacing: 0.04em; font-weight: 700; color: var(--gg-brown);
     }
+    .toc-col-show {
+      width: 2.75rem; text-align: center; vertical-align: middle;
+      padding-left: 0.2rem; padding-right: 0.2rem;
+    }
+    .toc-col-show input[type="checkbox"] {
+      width: 1.15rem; height: 1.15rem; margin: 0;
+      accent-color: var(--gg-gold-dark); cursor: pointer; vertical-align: middle;
+    }
+    .toc-table thead .toc-col-show {
+      font-size: var(--font-min-rem); text-transform: uppercase;
+      letter-spacing: 0.04em; font-weight: 700; color: var(--gg-brown);
+    }
+    .toc-table tbody tr.toc-details-hidden td {
+      opacity: 0.42; color: var(--gg-brown-muted);
+    }
+    .toc-table tbody tr.toc-details-hidden td.toc-col-show {
+      opacity: 1;
+    }
+    .card.details-hidden {
+      opacity: 0.4; filter: grayscale(0.35);
+    }
+    .card.details-hidden .card-detail,
+    .card.details-hidden .expand-btn {
+      opacity: 0.55;
+    }
     .toc-col-priority { width: 5.5rem; text-align: center; }
     .toc-priority-head {
       display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
@@ -2667,6 +2696,7 @@
                 <thead>
                   <tr>
                     <th class="toc-col-select" scope="col">Add</th>
+                    <th class="toc-col-show" scope="col" title="Checked = project details visible; unchecked = grayed out">Show</th>
                     <th class="toc-col-priority" scope="col">
                       <div class="toc-priority-head">
                         <button type="button" class="toc-sort-btn active" data-sort="priority" id="toc-sort-priority">Priority <span class="sort-arrow" id="sort-arrow-priority">▲</span></button>
@@ -2752,9 +2782,9 @@
 
   <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20260713u"></script>
+  <script src="projects-data.js?v=20260714-summary"></script>
   <script src="kpi-report.js?v=20260714-goal-visual-v42"></script>
   <script src="metrics-feedback.js?v=20260714-thumbs-v4"></script>
-  <script src="app.js?v=20260714af"></script>
+  <script src="app.js?v=20260714-show-col"></script>
 </body>
 </html>

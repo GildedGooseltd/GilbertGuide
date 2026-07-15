@@ -15,7 +15,7 @@
 
 ---
 
-## TLDR
+## Summary
 
 Provides ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.
 

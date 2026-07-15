@@ -18,8 +18,7 @@ Optional rows (delete if unused): **Parent**, **Enabler**, **Monthly only**, **P
 
 ---
 
-## TLDR
-
+## Summary
 One sentence — the primary value add (shown at top of card).
 
 ## Value Added
@@ -45,7 +44,7 @@ Questions for Andrew Brown — picker blocks cart until answered in **Comment**.
 
 ## Description
 
-Full scope, current status, and strategy context. Card shows TLDR + bullets; expand for full description.
+Full scope, current status, and strategy context. Card shows Summary + bullets; expand for full description.
 
 ## Goal
 

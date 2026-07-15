@@ -457,7 +457,8 @@ export function parseProjectMarkdown(text, fallbackId) {
   const project = { ...meta };
 
   if (sections.description) project.description = applyProperCase(sections.description.trim());
-  if (sections.tldr) project.tldr = applyProperCase(sections.tldr.trim());
+  const summaryBody = sections.summary || sections.tldr;
+  if (summaryBody) project.tldr = applyProperCase(summaryBody.trim());
 
   const valueAdded = [];
   if (sections["value added"]) valueAdded.push(...parseListSection(sections["value added"]));
@@ -829,7 +830,7 @@ export function projectToMarkdown(p) {
   md += metaTableRows(p).join("\n");
   md += `\n\n---\n\n`;
 
-  if (p.tldr) md += `## TLDR\n\n${applyProperCase(p.tldr.trim())}\n\n`;
+  if (p.tldr) md += `## Summary\n\n${applyProperCase(p.tldr.trim())}\n\n`;
   md += listSection("Value Added", p.valueAdded || []);
   if (p.valueIcons?.length) {
     md += `## Value icons\n\n${p.valueIcons.map(id => `- ${id}`).join("\n")}\n\n`;

@@ -28,7 +28,7 @@
 
 ```
 Meta table: Estimated leads gained · Estimated customer touchpoints (optional rows)
-## Exec Summary                  ← one-sentence value (top of card)
+## Summary                  ← one-sentence value (top of card)
 ## Value Added           ← bullets on card (plain weight; markdown links OK)
 ## Value icons           ← picker filter icons (foundation · leads · crm · …)
 ## AB - Q                  ← Question for Andrew Brown; cart blocked until Comment answered
@@ -61,13 +61,13 @@ Copy into every project — leave `—` when unknown:
 See `[_TEMPLATE.md](content/_TEMPLATE.md)`. Fee market context: `[FEE-BENCHMARK-CO-SPRINGS.md](FEE-BENCHMARK-CO-SPRINGS.md)`.
 
 - **Marketing education** goes inside **Description** — not a separate section.
-- **TLDR** optional in markdown; if omitted, first Value Added bullet is used.
+- **Summary** optional in markdown (`## Summary`; legacy `## TLDR` still parses); if omitted, first Value Added bullet is used.
 - **AB – Q** (`AB - Q:`) — question for Andrew Brown; Gilbert flags it; **Comment required before cart**.
 - **Value icons** — `## Value icons` list in each project file (`foundation` · `leads` · `crm` · `seo` · `referrals` · `efficiency` · `intake` · `creative`); overrides auto-detect when set
 - **KPI links** — `## KPI links` lists dashboard metrics (`01`, `21`, …). External reference URLs are stripped on build; only **KPI #NN** links in the picker (opens KPIs tab).
 - **Estimated leads gained** = incremental leads expected from that campaign, not existing lead volume.
 - **Estimated customer touchpoints** = numeric estimate of customers contacted or impacted, not a list of channels.
-- Card shows **TLDR → bullets → leads gained / customer touchpoints**; **Current Status** expands Description.
+- Card shows **Summary → bullets → leads gained / customer touchpoints**; **Current Status** expands Description.
 - **Goal · Results · Recommended metrics · Blockers · Insights** render in expanded cards and the **Impact** tab (Completed section).
 - **Impact estimates** — leads impacted · leads connected · clients retained (updated on each data pull).
 - **Gilbert on metrics** — auto-commentary when sync detects a number change (`npm run sync-impact`).

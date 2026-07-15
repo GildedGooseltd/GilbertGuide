@@ -334,7 +334,9 @@
     activeViewTab: "kpis",
     doNextVisible: false,
     priorityEdit: false,
-    clientPriorityIds: []
+    clientPriorityIds: [],
+    /** Project ids with Show unchecked — cards/rows grayed out */
+    detailsHidden: new Set()
   };
 
   function normalizeViewTab(tab) {
@@ -347,6 +349,23 @@
 
   function setActiveViewTab(tab) {
     state.activeViewTab = normalizeViewTab(tab);
+  }
+
+  function detailsItemId(item) {
+    if (!item) return "";
+    return item.isRetainer || item.id === "RETAINER" ? "RETAINER" : item.id;
+  }
+
+  function isDetailsVisible(item) {
+    const id = detailsItemId(item);
+    if (!id) return true;
+    return !state.detailsHidden.has(id);
+  }
+
+  function setDetailsVisible(id, visible) {
+    if (!id) return;
+    if (visible) state.detailsHidden.delete(id);
+    else state.detailsHidden.add(id);
   }
 
   function normalizeStatus(item) {
@@ -1668,6 +1687,7 @@
   function cardSummaryHtml(item) {
     const tldr = itemTldr(item);
     return `<div class="card-summary">
+      <h4 class="card-summary-label">Summary</h4>
       <p class="card-tldr">${projectTextToHtml(tldr)}</p>
       ${valueAddedListHtml(item)}
       ${projectKpiRefsHtml(item)}
@@ -2166,9 +2186,12 @@
             <button type="button" class="toc-prio-btn" data-prio-move="down" data-id="${escapeHtml(item.id)}" title="Move down" aria-label="Move ${escapeHtml(item.title)} down">↓</button>
           </span>`
         : "";
-      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}${isPlanningPublish(item) ? " toc-planning" : ""}${state.priorityEdit ? " toc-prio-editing" : ""}" data-id="${item.id}" data-retainer="${isRetainer}" data-required="${required}">
+      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}${isPlanningPublish(item) ? " toc-planning" : ""}${state.priorityEdit ? " toc-prio-editing" : ""}${!isDetailsVisible(item) ? " toc-details-hidden" : ""}" data-id="${item.id}" data-retainer="${isRetainer}" data-required="${required}">
         <td class="toc-col-select">
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
+        </td>
+        <td class="toc-col-show">
+          <input type="checkbox" class="toc-show-chk" data-id="${escapeHtml(item.id)}" aria-label="Show details for ${escapeHtml(item.title)}" ${isDetailsVisible(item) ? "checked" : ""} title="Checked = project details visible; unchecked = grayed out">
         </td>
         <td class="toc-col-priority"><span class="toc-priority">${editControls}${priorityTocHtml(item, displayPriority)}</span></td>
         <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
@@ -2379,6 +2402,9 @@
       if (Array.isArray(saved.clientPriorityIds)) {
         state.clientPriorityIds = saved.clientPriorityIds.filter(Boolean);
       }
+      if (Array.isArray(saved.detailsHidden)) {
+        state.detailsHidden = new Set(saved.detailsHidden.filter(Boolean));
+      }
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
     } catch (e) {}
@@ -2405,7 +2431,8 @@
       surveyDone: state.surveyDone,
       iconFilters: state.iconFilters,
       doNextVisible: state.doNextVisible,
-      clientPriorityIds: state.clientPriorityIds
+      clientPriorityIds: state.clientPriorityIds,
+      detailsHidden: [...state.detailsHidden]
     }));
     updateSubmitButtons();
   }
@@ -2617,12 +2644,13 @@
     const selFirst = isFirstSelected ? " selected-first" : "";
     const chkDisabled = required ? " disabled" : "";
     const mutedClass = isPlanningPublish(item) || isResearchStatus(item) || isCompletedStatus(item) ? " status-muted" : "";
+    const detailsHiddenClass = isDetailsVisible(item) ? "" : " details-hidden";
     const planningClass = isPlanningPublish(item) ? " publish-planning" : "";
     const abPending = hasAbQuestions(item) && !abQuestionAnswered(id);
     const abClass = abPending ? " ab-q-pending" : (hasAbQuestions(item) ? " ab-q-cleared" : "");
 
     return `
-      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
+      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${detailsHiddenClass}${planningClass}${abClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
         <div class="card-header">
           ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
@@ -3498,6 +3526,15 @@
   });
 
   document.getElementById("toc-list")?.addEventListener("change", e => {
+    const showChk = e.target.closest('input[type="checkbox"].toc-show-chk');
+    if (showChk) {
+      e.stopPropagation();
+      setDetailsVisible(showChk.dataset.id, showChk.checked);
+      saveState();
+      renderProjectToc();
+      renderAllCards();
+      return;
+    }
     const chk = e.target.closest('input[type="checkbox"].toc-proj-chk');
     if (!chk) return;
     e.stopPropagation();
