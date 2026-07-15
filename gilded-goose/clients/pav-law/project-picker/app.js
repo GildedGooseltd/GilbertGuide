@@ -499,72 +499,9 @@
     renderDoNextPanel();
   }
 
-  function resolveImpactEstimates(item) {
-    const e = item?.impactEstimates;
-    if (e && (e.leadsImpacted != null || e.leadsConnected != null || e.clientsRetained != null)) {
-      const period = e.period === "wave" ? "/wave" : "/mo";
-      const fmt = v => {
-        if (v == null) return "—";
-        const n = Number(v);
-        return n < 1 && n > 0 ? `~${n.toFixed(1)}${period}` : `~${Math.round(n * 10) / 10}${period}`;
-      };
-      return {
-        leadsImpacted: { value: e.leadsImpacted, label: fmt(e.leadsImpacted) },
-        leadsConnected: { value: e.leadsConnected, label: fmt(e.leadsConnected) },
-        clientsRetained: { value: e.clientsRetained, label: fmt(e.clientsRetained) },
-        asOf: e.asOf || "",
-        source: e.source || ""
-      };
-    }
-    const gained = estimateProjectLeadsGained(item);
-    const retained = gained.value != null ? gained.value * PAV_HISTORICAL.leadToCaseRate : null;
-    return {
-      leadsImpacted: { value: null, label: "—" },
-      leadsConnected: { value: gained.value, label: gained.label },
-      clientsRetained: {
-        value: retained,
-        label: retained != null ? `~${(Math.round(retained * 10) / 10).toFixed(retained < 1 ? 1 : 0)}/mo` : "—"
-      },
-      asOf: "",
-      source: ""
-    };
-  }
-
-  function impactEstimatesHtml(item) {
-    const imp = resolveImpactEstimates(item);
-    const asOf = imp.asOf ? `<span class="impact-as-of">As of ${escapeHtml(imp.asOf)}</span>` : "";
-    return `<div class="impact-estimates-block">
-      <h4>Impact estimates ${asOf}</h4>
-      <ul class="impact-estimates-list">
-        <li><strong>Leads impacted:</strong> ${escapeHtml(imp.leadsImpacted.label)}</li>
-        <li><strong>Leads connected:</strong> ${escapeHtml(imp.leadsConnected.label)}</li>
-        <li><strong>Est. revenue:</strong> —</li>
-      </ul>
-    </div>`;
-  }
-
-  function campaignMetricsListHtml(title, items, placeholder, options) {
-    const opts = options || {};
-    const cls = ["campaign-metrics-block", opts.className].filter(Boolean).join(" ");
-    if (items && items.length) {
-      return `<div class="${cls}"><h4>${title}</h4><ul class="campaign-metrics-list">${items.map(i => `<li>${escapeHtml(i)}</li>`).join("")}</ul></div>`;
-    }
-    if (placeholder) {
-      return `<div class="${cls}"><h4>${title}</h4><p class="results-placeholder">${placeholder}</p></div>`;
-    }
-    return "";
-  }
-
   function campaignMetricsHtml(item) {
-    const blocks = [impactEstimatesHtml(item)];
-    if (item.goal) {
-      blocks.push(`<div class="campaign-metrics-block campaign-goal-block"><h4>Goal</h4><p>${escapeHtml(item.goal)}</p></div>`);
-    }
-    blocks.push(campaignMetricsListHtml("Results", item.resultsItems, item.resultsItems?.length ? "" : `Add ## Results in ${item.id}.md`));
-    blocks.push(campaignMetricsListHtml("Blockers (next round)", item.blockers, "Add ## Blockers (next round) in project markdown", { className: "campaign-blockers-callout" }));
-    blocks.push(campaignMetricsListHtml("Insights & improvements", item.insightsImprovements, "Add ## Insights & improvements in project markdown"));
-    const content = blocks.filter(Boolean).join("");
-    return content ? `<div class="campaign-metrics-panel">${content}</div>` : "";
+    if (!item.goal) return "";
+    return `<div class="campaign-metrics-panel"><div class="campaign-metrics-block campaign-goal-block"><h4>Goal</h4><p>${escapeHtml(item.goal)}</p></div></div>`;
   }
 
   function resultsBlockHtml(item) {
@@ -588,25 +525,18 @@
   }
 
   function completedReportOutProjectHtml(item) {
-    const shipped = (item.resultsItems || []).slice(0, 3);
-    const next = (item.insightsImprovements || item.blockers || []).slice(0, 2);
-    const imp = resolveImpactEstimates(item);
+    const shipped = (item.completedItems || []).slice(0, 3);
     const metaParts = [
       normalizeStatus(item),
       item.timeline,
       [item.category, item.campaignType].filter(Boolean).join(" / ")
     ].filter(Boolean);
-    const impactLine = item.impactEstimates?.note
-      ? `${escapeHtml(item.impactEstimates.note)} · Est. revenue —`
-      : `Leads impacted ${escapeHtml(imp.leadsImpacted.label)} · connected ${escapeHtml(imp.leadsConnected.label)}${imp.asOf ? ` · as of ${escapeHtml(imp.asOf)}` : ""} · Est. revenue —`;
     return `<div class="completed-report-out-project">
       <h4>${escapeHtml(item.id)} — ${escapeHtml(item.title)}</h4>
       <p class="completed-report-out-project-meta">${escapeHtml(metaParts.join(" · "))}</p>
       <ul>
         ${item.goal ? `<li><strong>Goal:</strong> ${escapeHtml(item.goal)}</li>` : ""}
-        ${shipped.length ? `<li><strong>Shipped:</strong> ${escapeHtml(shipped.join("; "))}</li>` : `<li><strong>Shipped:</strong> <em>Add ## Results in ${escapeHtml(item.id)}.md</em></li>`}
-        <li><strong>Impact:</strong> ${impactLine}</li>
-        ${next.length ? `<li><strong>Next:</strong> ${escapeHtml(next.join("; "))}</li>` : ""}
+        ${shipped.length ? `<li><strong>Completed:</strong> ${escapeHtml(shipped.join("; "))}</li>` : ""}
       </ul>
     </div>`;
   }
@@ -617,27 +547,21 @@
           <span class="completed-report-out-badge">Draft</span>
           <h3>Report out — completed projects</h3>
         </div>
-        <p class="completed-report-out-lede">No projects marked <strong>completed</strong> in INDEX yet. When a project ships, set Status to completed and fill <code>## Results</code> / <code>## Insights</code> — this report-out will populate automatically.</p>`;
+        <p class="completed-report-out-lede">No projects marked <strong>completed</strong> in INDEX yet. When a project ships, set Status to completed — this report-out will populate from Goal and Completed.</p>`;
     }
     const names = items.map(p => `<strong>${escapeHtml(p.id)} ${escapeHtml(p.title)}</strong>`).join("; ");
-    const asOfDates = items.map(p => p.impactEstimates?.asOf).filter(Boolean);
-    const asOf = asOfDates.length ? asOfDates.sort().slice(-1)[0] : "";
-    const bottomBits = items.flatMap(p => (p.insightsImprovements || []).slice(0, 1));
-    const bottom = bottomBits.length
-      ? bottomBits.join(" · ")
-      : "Confirm outcomes in HubSpot before locking revenue figures.";
     const closer =
       items.some(p => p.id === "A3") && items.some(p => p.id === "A10")
         ? "Holiday email path is live and the stack priorities are set. Continued lift depends on WIP enablers — phones (B2), LSA/intake coverage, and the KPI cockpit (A8)."
-        : bottom;
+        : "Confirm outcomes in HubSpot before locking revenue figures.";
     return `<div class="completed-report-out-head">
         <span class="completed-report-out-badge">Draft</span>
         <h3>Report out — completed projects</h3>
       </div>
-      <p class="completed-report-out-lede">${asOf ? `As of ${escapeHtml(asOf)}, ` : ""}${items.length} project${items.length === 1 ? "" : "s"} closed: ${names}. Est. revenue remains <strong>—</strong> until attribution is validated. Detail cards below carry goals, results, blockers, and next-round insights.</p>
+      <p class="completed-report-out-lede">${items.length} project${items.length === 1 ? "" : "s"} closed: ${names}. Detail cards below show Goal and Completed.</p>
       ${items.map(completedReportOutProjectHtml).join("")}
       <p class="completed-report-out-bottom"><strong>Bottom line:</strong> ${escapeHtml(closer)}</p>
-      <p class="completed-report-out-footnote">Draft for review — edit project markdown to update. Numbers from Impact estimates / Ad Reports where set.</p>`;
+      <p class="completed-report-out-footnote">Draft for review — edit project markdown to update.</p>`;
   }
 
   function renderCompletedList() {
@@ -1110,19 +1034,6 @@
       if (a.projectIds.some(id => selectedIds.has(id))) {
         pushAction({ kpi: a.kpi, text: a.text, source: "kpi" });
       }
-    });
-
-    items.filter(i => !i.monthlyOnly).forEach(item => {
-      (item.blockers || []).slice(0, 2).forEach(blocker => {
-        if (!blocker || !String(blocker).trim()) return;
-        pushAction({
-          kpi: item.id,
-          text: blocker,
-          projectId: item.id,
-          projectTitle: item.title,
-          source: "blocker"
-        });
-      });
     });
 
     return actions.slice(0, 14);
@@ -3224,36 +3135,22 @@
   function buildRevenueCalculatorHtml() {
     const items = getInvoiceLineItems();
     if (!items.length) {
-      return `<p class="empty-state">Add projects in Project Guide — leads impacted, connected, and estimated revenue show here.</p>`;
+      return `<p class="empty-state">Add projects in Project Guide — fees for your Pav Priorities cart show here.</p>`;
     }
-    let sumConnected = 0;
-    let hasConnectedSum = false;
-    // Rev. column: placeholder until estimated-revenue numbers are validated (no computed $)
-    const revenuePlaceholder = "—";
     const bodyRows = items.map(row => {
-      const item = findProjectById(row.id);
       const req = row.id === "RETAINER"
         ? requiredMarkerHtml(RETAINER, true)
         : (() => { const p = PROJECTS.find(x => x.id === row.id); return p ? requiredMarkerHtml(p, false) : ""; })();
-      const imp = resolveImpactEstimates(item);
-      if (imp.leadsConnected.value != null) { sumConnected += imp.leadsConnected.value; hasConnectedSum = true; }
       return `<tr>
         <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
-        <td class="col-num" title="${escapeHtml(imp.leadsImpacted.label)}">${escapeHtml(imp.leadsImpacted.label)}</td>
-        <td class="col-num" title="${escapeHtml(imp.leadsConnected.label)}">${escapeHtml(imp.leadsConnected.label)}</td>
-        <td class="col-num" title="Estimated revenue TBD">${revenuePlaceholder}</td>
         <td class="col-fee">${row.fee}</td>
       </tr>`;
     }).join("");
     const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;
-    const connectedTotal = hasConnectedSum ? `~${Math.round(sumConnected * 10) / 10}/mo` : "—";
     return `<div class="pav-priorities-scroll"><table class="pav-priorities-table revenue-calc-table">
       <thead>
         <tr>
           <th class="col-project" scope="col">Project</th>
-          <th class="col-num" scope="col" title="Leads impacted">Imp.</th>
-          <th class="col-num" scope="col" title="Leads connected">Conn.</th>
-          <th class="col-num" scope="col" title="Estimated revenue">Rev.</th>
           <th class="col-fee" scope="col">Fee</th>
         </tr>
       </thead>
@@ -3261,9 +3158,6 @@
         ${bodyRows}
         <tr class="priorities-totals-row">
           <td class="col-project">${label}</td>
-          <td class="col-num">—</td>
-          <td class="col-num">${connectedTotal}</td>
-          <td class="col-num">${revenuePlaceholder}</td>
           <td class="col-fee">${fmt(getSelectionCost())}</td>
         </tr>
       </tbody>

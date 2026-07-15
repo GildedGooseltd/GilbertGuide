@@ -73,7 +73,6 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Card status badges (WIP, completed, …)             | `content/INDEX.md`                                | **Status** column overrides file                                            |
 | AB – Q question text                               | `content/projects/{ID}.md`                        | `AB - Q:` block                                                             |
 | Research / optional projects section               | `app.js`                                          | `renderResearchSection()`                                                   |
-| Impact estimates                                   | `content/projects/{ID}.md`                        | `## Impact estimates`                                                       |
 
 
 
@@ -160,9 +159,9 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Panel                        | `index.html`               | `#cockpit-panel-impact`                                     |
 | Completed section title      | `index.html`               | `.completed-panel-head` inside `#impact-completed`          |
 | Completed report-out (draft) | `index.html` / `app.js`    | `#completed-report-out` → `completedReportOutHtml()`        |
-| Per-project results          | `content/projects/{ID}.md` | `## Completed`, `## Results`, `## Goal`, blockers, insights |
-| Completed render             | `app.js`                   | `renderCompletedList()`, `campaignMetricsHtml()`            |
-| Revenue calculator           | `index.html` / `app.js`    | `#revenue-calculator` → `renderRevenueCalculator()`         |
+| Per-project completed detail | `content/projects/{ID}.md` | `## Completed`, `## Goal`                                   |
+| Completed render             | `app.js`                   | `renderCompletedList()`, `campaignMetricsHtml()` (Goal only)|
+| Revenue calculator           | `index.html` / `app.js`    | `#revenue-calculator` → cart fees only                      |
 
 
 

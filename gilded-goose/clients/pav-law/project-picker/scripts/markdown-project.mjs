@@ -272,9 +272,6 @@ function inferInformationNeeded(p) {
   const items = [];
   for (const q of p.abQuestions || []) items.push(`Answer AB – Q: ${q}`);
   if (!p.goal?.trim()) items.push("Define measurable Goal");
-  if (!(p.resultsItems || []).length && bucket !== "available")
-    items.push("Add Results — baseline vs current metrics");
-  if (!p.impactEstimates && p.id !== "RETAINER") items.push("Fill Impact estimates");
   if (p.estimatedLeads === "Estimate pending") items.push("Confirm estimated leads gained");
   if (!(p.kpiRefs || []).length && /dashboard|kpi|metric/i.test(`${p.category} ${p.title}`))
     items.push("Link KPI dashboard rows");
@@ -550,9 +547,7 @@ function collectKpiRefs(p) {
     p.tldr,
     p.description,
     p.goal,
-    ...(p.valueAdded || []),
-    ...(p.blockers || []),
-    ...(p.resultsItems || [])
+    ...(p.valueAdded || [])
   ]
     .filter(Boolean)
     .join(" ");
@@ -573,10 +568,6 @@ export function sanitizeProjectRecord(p) {
     "valueAdded",
     "completedItems",
     "inProgressItems",
-    "blockers",
-    "resultsItems",
-    "recommendedMetrics",
-    "insightsImprovements",
     "deliverables"
   ]) {
     if (Array.isArray(p[key])) p[key] = p[key].map(sanitizeProjectText).filter(Boolean);
@@ -597,6 +588,10 @@ export function sanitizeProjectRecord(p) {
   delete p.timeline;
   delete p.recommendedMetrics;
   delete p.gilbertMetricNotes;
+  delete p.resultsItems;
+  delete p.blockers;
+  delete p.insightsImprovements;
+  delete p.impactEstimates;
   return p;
 }
 
@@ -729,10 +724,6 @@ export function projectToMarkdown(p) {
   md += formatInformationNeededSection(p);
   md += listSection("WIP", p.inProgressItems);
   md += listSection("Completed", p.completedItems);
-  md += listSection("Results", p.resultsItems);
-  md += listSection("Blockers (next round)", p.blockers);
-  md += listSection("Insights & improvements", p.insightsImprovements);
-  md += formatImpactEstimatesSection(p);
 
   return md.trim() + "\n";
 }
