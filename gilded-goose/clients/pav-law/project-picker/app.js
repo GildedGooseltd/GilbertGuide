@@ -1567,10 +1567,14 @@
     return "";
   }
 
-  function cardSummaryHtml(item) {
+  function cardSummaryHtml(item, iconsHtml) {
     const tldr = itemTldr(item);
+    const iconsRow = iconsHtml
+      ? `<div class="card-summary-icons">${iconsHtml}</div>`
+      : "";
     return `<div class="card-summary">
-      <h4 class="card-summary-label">Summary</h4>
+      ${iconsRow}
+      <h4 class="card-summary-label">Value Added</h4>
       <p class="card-tldr">${projectTextToHtml(tldr)}</p>
       ${valueAddedListHtml(item)}
       ${projectKpiRefsHtml(item)}
@@ -1586,14 +1590,22 @@
     return `<div class="card-description">${body}</div>`;
   }
 
-  function cardDetailBodyHtml(item) {
+  function cardDescriptionBlockHtml(item) {
     const full = fullDescriptionHtml(item);
     if (!full) return "";
-    return `<div class="detail-block detail-full-description"><h4>Current Status</h4>${full}</div>`;
+    return `<hr class="card-page-break" aria-hidden="true">
+      <div class="card-description-block">
+        <h4 class="card-summary-label">Description</h4>
+        ${full}
+      </div>`;
   }
 
-  function descriptionHtml(item) {
-    return cardSummaryHtml(item);
+  function cardDetailBodyHtml() {
+    return "";
+  }
+
+  function descriptionHtml(item, iconsHtml) {
+    return `${cardSummaryHtml(item, iconsHtml)}${cardDescriptionBlockHtml(item)}`;
   }
 
   function marketingEducationToHtml(text) {
@@ -1620,10 +1632,8 @@
 
   function expandBtnLabel(item, exp) {
     const hasProgress = hasPartialProgress(item);
-    const hasFullDesc = !!fullDescriptionText(item);
-    if (hasFullDesc) return exp ? "Hide current status" : "Current Status";
-    if (hasProgress) return exp ? "Hide details" : "Show details";
-    return exp ? "Hide scope" : "Show scope";
+    if (hasProgress) return exp ? "Hide WIP & completed" : "WIP & completed";
+    return exp ? "Hide details" : "Show details";
   }
 
   function cardFeaturedImageHtml(item) {
@@ -2519,8 +2529,7 @@
     const exp = state.expanded.has(id);
     const extra = getItemFilterClasses(item, isRetainer);
     const pkgClass = isInRecommendedPackage({ ...item, isRetainer }) ? " package-included" : "";
-    const iconMarkup = cardCornerIconsHtml(item, isRetainer);
-    const iconsHtml = iconMarkup || "";
+    const iconsHtml = cardCornerIconsHtml(item, isRetainer, true) || "";
     const retainerClass = isRetainer ? " retainer-card required-retainer" : "";
     const maintClass = item.monthlyOnly ? ` maintenance-card${required ? " required-maintenance" : ""}` : "";
     const subClass = item.parentId ? " card-sub-related" : "";
@@ -2541,11 +2550,10 @@
               ${cardReferenceLinkHtml(item)}
               <div class="card-top-row">
                 <div class="card-title"><span>${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
-                ${iconsHtml}
               </div>
               ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
               ${abQuestionsBannerHtml(item)}
-              ${descriptionHtml(item)}
+              ${descriptionHtml(item, iconsHtml)}
             <button type="button" class="expand-btn">${expandBtnLabel(item, exp)}</button>
           </div>
         </div>
