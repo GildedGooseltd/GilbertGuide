@@ -69,7 +69,19 @@ function formatReferenceLinkValue(link) {
 
 function normalizePublishStatus(raw) {
   const s = String(raw || "published").toLowerCase().trim();
-  if (s === "planning" || s === "plan" || s === "draft" || s === "outline") return "planning";
+  if (
+    s === "unpublished" ||
+    s === "unpublish" ||
+    s === "hidden" ||
+    s === "gray" ||
+    s === "grey" ||
+    s === "planning" ||
+    s === "plan" ||
+    s === "draft" ||
+    s === "outline"
+  ) {
+    return "unpublished";
+  }
   return "published";
 }
 
@@ -788,9 +800,15 @@ function indexHeaderColumnMap(cells) {
     priority: pick("priority") ?? pick("p") ?? 0,
     id: pick("id") ?? 1,
     status: pick("status"),
+    visibility: pick("visibility") ?? pick("publish") ?? pick("publishstatus"),
     title: pick("project") ?? 2,
     file: pick("file") ?? 3
   };
+}
+
+function normalizeIndexVisibility(raw) {
+  if (!raw) return null;
+  return normalizePublishStatus(raw);
 }
 
 function normalizeIndexStatus(raw) {
@@ -841,7 +859,14 @@ export function parseIndexMarkdown(text) {
     }
 
     if (!colMap) {
-      colMap = { priority: 0, id: 1, status: cells.length >= 5 ? 2 : null, title: cells.length >= 5 ? 3 : 2, file: cells.length >= 5 ? 4 : 3 };
+      colMap = {
+        priority: 0,
+        id: 1,
+        status: cells.length >= 5 ? 2 : null,
+        visibility: null,
+        title: cells.length >= 5 ? 3 : 2,
+        file: cells.length >= 5 ? 4 : 3
+      };
     }
 
     const id = cells[colMap.id];
@@ -854,6 +879,10 @@ export function parseIndexMarkdown(text) {
       file: cells[colMap.file] ?? ""
     };
     if (colMap.status != null && cells[colMap.status]) row.status = cells[colMap.status];
+    if (colMap.visibility != null && cells[colMap.visibility]) {
+      row.visibility = cells[colMap.visibility];
+      row.publishStatus = normalizeIndexVisibility(cells[colMap.visibility]);
+    }
     result.rowsById[id] = row;
   }
 
@@ -866,7 +895,7 @@ export function parseIndexMarkdown(text) {
   return result;
 }
 
-/** INDEX table titles, priority, status → picker data (INDEX wins over project .md). */
+/** INDEX table titles, priority, status, visibility → picker data (INDEX wins over project .md). */
 export function applyIndexOverrides(projects, retainer, existingText) {
   const { rowsById } = parseIndexMarkdown(existingText || "");
   const applyTo = item => {
@@ -882,6 +911,7 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     }
     const status = normalizeIndexStatus(o.status);
     if (status) next.status = status;
+    if (o.publishStatus) next.publishStatus = o.publishStatus;
     return next;
   };
   const merged = projects.map(applyTo);
@@ -898,9 +928,9 @@ export function buildIndex(projects, retainer, existingText) {
 
 Open a file below to edit. Sorted by priority (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
 
-Edit **Project** titles, **Status**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
+Edit **Project** titles, **Status**, **Visibility**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
-  md += `\n\n| Priority | ID | Status | Project | File |\n| -------- | -- | ------ | ------- | ---- |\n`;
+  md += `\n\n| Priority | ID | Status | Visibility | Project | File |\n| -------- | -- | ------ | ---------- | ------- | ---- |\n`;
 
   const seen = new Set();
   for (const p of all) {
@@ -912,12 +942,18 @@ Edit **Project** titles, **Status**, and add **## Notes** at the bottom — buil
     const pri = o?.p ?? (p.priority != null ? String(p.priority) : "—");
     const title = o?.title || p.title;
     const status = o?.status || p.status || "available";
-    md += `| ${pri} | ${id} | ${status} | ${title} | ${fileCell} |\n`;
+    const vis =
+      o?.visibility ||
+      (normalizePublishStatus(o?.publishStatus || p.publishStatus) === "published"
+        ? "Published"
+        : "Unpublished");
+    md += `| ${pri} | ${id} | ${status} | ${vis} | ${title} | ${fileCell} |\n`;
   }
 
   for (const [id, o] of Object.entries(overrides.rowsById)) {
     if (seen.has(id) || !isValidProjectId(id)) continue;
-    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${o.title} | ${o.file} |\n`;
+    const vis = o.visibility || (o.publishStatus === "unpublished" ? "Unpublished" : "Published");
+    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${vis} | ${o.title} | ${o.file} |\n`;
   }
 
   md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Priority** row (shows as —)."}\n`;
