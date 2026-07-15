@@ -196,7 +196,7 @@ window.PROJECT_DATA = {
       "category": "CRM",
       "campaignType": "HubSpot Foundation",
       "status": "wip",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Unlocks email, referral, mailer, and form→consult paths",
       "keywords": [
         "hubspot",
@@ -384,7 +384,7 @@ window.PROJECT_DATA = {
       "category": "Operations / Compensation",
       "campaignType": "Performance Incentives",
       "status": "wip",
-      "publishStatus": "planning",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Indirect — rewards tasks tied to booked consults and signed cases",
       "keywords": [
         "performance",
@@ -443,7 +443,7 @@ window.PROJECT_DATA = {
       "category": "Brand / Merch",
       "campaignType": "Internal Store + Conversation Starters",
       "status": "available",
-      "publishStatus": "planning",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Soft brand lift — referrals and walk-ups via wearable conversation starters",
       "keywords": [
         "swag",
@@ -991,7 +991,7 @@ window.PROJECT_DATA = {
         "888-7888",
         "infrastructure"
       ],
-      "title": "Hubspot Phone/ VoIP Setup",
+      "title": "HubSpot Phone/ VoIP Setup",
       "description": "Transfer phone numbers into HubSpot to get started with phone menus, call tracking, call logging, and stronger overall metrics.\n\nFor law firms running call-heavy Search campaigns, call tracking must be in place before you increase budget. The ability to track and record calls also improves training and accountability. See Google — call reporting in Google Ads and HubSpot — speed to lead.",
       "tldr": "Verified phone routing and call tracking so paid clicks tie to qualified consults — not dropped leads.",
       "valueAdded": [
@@ -1086,7 +1086,7 @@ window.PROJECT_DATA = {
       "category": "Brand / Professional Development",
       "campaignType": "Attorney Presence",
       "status": "available",
-      "publishStatus": "planning",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Profile and trust lift — discovery via Casey-specific search and directory profiles",
       "keywords": [
         "casey",

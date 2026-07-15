@@ -375,12 +375,24 @@
 
   function normalizePublishStatus(item) {
     const s = String(item.publishStatus || "published").toLowerCase().trim();
-    if (s === "planning" || s === "plan" || s === "draft" || s === "outline") return "planning";
+    if (
+      s === "unpublished" ||
+      s === "unpublish" ||
+      s === "hidden" ||
+      s === "gray" ||
+      s === "grey" ||
+      s === "planning" ||
+      s === "plan" ||
+      s === "draft" ||
+      s === "outline"
+    ) {
+      return "unpublished";
+    }
     return "published";
   }
 
   function isPlanningPublish(item) {
-    return normalizePublishStatus(item) === "planning";
+    return normalizePublishStatus(item) === "unpublished";
   }
 
   function isCompletedStatus(item) {
@@ -2497,7 +2509,7 @@
 
   function publishStatusBadgeHtml(item) {
     if (!isPlanningPublish(item)) return "";
-    return `<span class="publish-status-badge" title="Project plan in progress — shown for visibility, not yet published">Planning</span>`;
+    return `<span class="publish-status-badge" title="Unpublished — grayed out until Visibility is Published">Unpublished</span>`;
   }
 
   function cardHtml(item, isRetainer, isFirstSelected) {

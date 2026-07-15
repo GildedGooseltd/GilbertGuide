@@ -2,48 +2,46 @@
 
 Open a file below to edit. Sorted by priority (number). Template: `[_TEMPLATE.md](_TEMPLATE.md)` (matches `B2.md`).
 
-Edit **Project** titles, **Status**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.
+Edit **Project** titles, **Status**, **Visibility**, and add **## Notes** at the bottom — build applies INDEX over project files.
 
-
-| Priority | ID       | Status                 | Project                                                          | File                               |
-| -------- | -------- | ---------------------- | ---------------------------------------------------------------- | ---------------------------------- |
-| —        | RETAINER | ongoing                | Digital Ads Maintenance Retainer                                 | [retainer.md](retainer.md)         |
-| Archive  | A8M      | ongoing                | Data Management — Retainer                                       | [projects/A8M.md](projects/A8M.md) |
-| —        | A8       | wip                    | Operations Dashboard                                             | [projects/A8.md](projects/A8.md)   |
-| 2        | B11      | Recommended            | LSA Call Process Update                                          | [projects/B11.md](projects/B11.md) |
-| 3        | B10      | Recommended            | HS: Social & Directory Profile Refresh & Tracking                | [projects/B10.md](projects/B10.md) |
-| 4        | B13      | wip                    | HubSpot Marketing Setup                                          | [projects/B13.md](projects/B13.md) |
-| 5        | A4       | wip                    | HS: Client Referral Program                                      | [projects/A4.md](projects/A4.md)   |
-| 6        | A17      | wip                    | HS: Sealing & Probation Client Reengagement                      | [projects/A17.md](projects/A17.md) |
-| 7        | B5       | available              | Insurance Envelope Mailer - Client Re-engagement                 | [projects/B5.md](projects/B5.md)   |
-| 8        | A14      | wip                    | Performance Plan Payouts                                         | [projects/A14.md](projects/A14.md) |
-| 9        | B14      | available              | Pav Law Swag & Apparel                                           | [projects/B14.md](projects/B14.md) |
-| 10       | A2       | Launched               | NTGUILT Display & Search Campaign Launch                         | [projects/A2.md](projects/A2.md)   |
-| 11       | A1       | available              | Digital Ad Enhancements                                          | [projects/A1.md](projects/A1.md)   |
-| 12       | B4       | available              | Website Content Overhaul                                         | [projects/B4.md](projects/B4.md)   |
-| 13       | B1       | available              | HubSpot Pipeline Sprint                                          | [projects/B1.md](projects/B1.md)   |
-| 14       | B3       | Blocked - AB           | Website Speed and Navigation                                     | [projects/B3.md](projects/B3.md)   |
-| 15       | A7       | available              | NTGUILT & Firm Social Campaigns                                  | [projects/A7.md](projects/A7.md)   |
-| 16       | B7       | available              | HubSpot Marketing Contacts Upload                                | [projects/B7.md](projects/B7.md)   |
-| 17       | A13      | available              | Adult Site(s) Ad Campaign                                        | [projects/A13.md](projects/A13.md) |
-| 18       | A6       | available              | Gabriel Outbound Sales Calling                                   | [projects/A6.md](projects/A6.md)   |
-| 19       | B2       | On Hold                | Hubspot Phone/ VoIP Setup                                        | [projects/B2.md](projects/B2.md)   |
-| 20       | B6       | available              | Blog Revamp                                                      | [projects/B6.md](projects/B6.md)   |
-| 21       | B12      | available              | Casey Attorney Rebrand & Professional Presence                   | [projects/B12.md](projects/B12.md) |
-| 22       | A11      | available              | Seasonal Google and Microsoft Ads Campaign — Focus Area          | [projects/A11.md](projects/A11.md) |
-| 23       | A5       | Planning               | HubSpot Landing Page or Website Module                           | [projects/A5.md](projects/A5.md)   |
-| 24       | A9       | Planning               | Case Win Log and Testimonials                                    | [projects/A9.md](projects/A9.md)   |
-| 25       | A12      | available              | Enable Pavi Chat QA for After-Hours Support                      | [projects/A12.md](projects/A12.md) |
-| 26       | B9       | Planning               | Credit Card & Subscription Leak Spend Audit                      | [projects/B9.md](projects/B9.md)   |
-| 50       | A3       | completed              | Summer Safety Email Campaign (child of B13)                      | [projects/A3.md](projects/A3.md)   |
-| 51       | A10      | completed              | Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone | [projects/A10.md](projects/A10.md) |
-| 52       | A15      | Archived               | Summer Event Activation & Lead Capture                           | [projects/A15.md](projects/A15.md) |
-| 53       | A16      | archived · next summer | Garage Partnership                                               | [projects/A16.md](projects/A16.md) |
-| 54       | C1       | completed              | Systems Access Audit & Cleanse                                   | [projects/C1.md](projects/C1.md)   |
-| 55       | C2       | completed              | Email Outage Triage & DNS Runbook                                | [projects/C2.md](projects/C2.md)   |
-| 56       | A18      | archived · merged A7   | Reddit NTGUILT Ads Test (merged into A7)                         | [projects/A18.md](projects/A18.md) |
-| 57       | B8       | archived · merged A7   | HubSpot Social Media Marketing (merged into A7)                  | [projects/B8.md](projects/B8.md)   |
-
+| Priority | ID | Status | Visibility | Project | File |
+| -------- | -- | ------ | ---------- | ------- | ---- |
+| — | RETAINER | ongoing | Published | Digital Ads Maintenance Retainer | [retainer.md](retainer.md) |
+| Archive | A8M | ongoing | Published | Data Management — Retainer | [projects/A8M.md](projects/A8M.md) |
+| — | A8 | wip | Published | Operations Dashboard | [projects/A8.md](projects/A8.md) |
+| 2 | B11 | Recommended | Published | LSA Call Process Update | [projects/B11.md](projects/B11.md) |
+| 3 | B10 | Recommended | Published | HS: Social & Directory Profile Refresh & Tracking | [projects/B10.md](projects/B10.md) |
+| 4 | B13 | wip | Unpublished | HubSpot Marketing Setup | [projects/B13.md](projects/B13.md) |
+| 5 | A4 | wip | Published | HS: Client Referral Program | [projects/A4.md](projects/A4.md) |
+| 6 | A17 | wip | Published | HS: Sealing & Probation Client Reengagement | [projects/A17.md](projects/A17.md) |
+| 7 | B5 | available | Published | Insurance Envelope Mailer - Client Re-engagement | [projects/B5.md](projects/B5.md) |
+| 8 | A14 | wip | Unpublished | Performance Plan Payouts | [projects/A14.md](projects/A14.md) |
+| 9 | B14 | available | Unpublished | Pav Law Swag & Apparel | [projects/B14.md](projects/B14.md) |
+| 10 | A2 | Launched | Published | NTGUILT Display & Search Campaign Launch | [projects/A2.md](projects/A2.md) |
+| 11 | A1 | available | Published | Digital Ad Enhancements | [projects/A1.md](projects/A1.md) |
+| 12 | B4 | available | Published | Website Content Overhaul | [projects/B4.md](projects/B4.md) |
+| 13 | B1 | available | Published | HubSpot Pipeline Sprint | [projects/B1.md](projects/B1.md) |
+| 14 | B3 | Blocked - AB | Published | Website Speed and Navigation | [projects/B3.md](projects/B3.md) |
+| 15 | A7 | available | Published | NTGUILT & Firm Social Campaigns | [projects/A7.md](projects/A7.md) |
+| 16 | B7 | available | Published | HubSpot Marketing Contacts Upload | [projects/B7.md](projects/B7.md) |
+| 17 | A13 | available | Published | Adult Site(s) Ad Campaign | [projects/A13.md](projects/A13.md) |
+| 18 | A6 | available | Published | Gabriel Outbound Sales Calling | [projects/A6.md](projects/A6.md) |
+| 19 | B2 | On Hold | Published | HubSpot Phone/ VoIP Setup | [projects/B2.md](projects/B2.md) |
+| 20 | B6 | available | Published | Blog Revamp | [projects/B6.md](projects/B6.md) |
+| 21 | B12 | available | Unpublished | Casey Attorney Rebrand & Professional Presence | [projects/B12.md](projects/B12.md) |
+| 22 | A11 | available | Published | Seasonal Google and Microsoft Ads Campaign — Focus Area | [projects/A11.md](projects/A11.md) |
+| 23 | A5 | Planning | Published | HubSpot Landing Page or Website Module | [projects/A5.md](projects/A5.md) |
+| 24 | A9 | Planning | Published | Case Win Log and Testimonials | [projects/A9.md](projects/A9.md) |
+| 25 | A12 | available | Published | Enable Pavi Chat QA for After-Hours Support | [projects/A12.md](projects/A12.md) |
+| 26 | B9 | Planning | Published | Credit Card & Subscription Leak Spend Audit | [projects/B9.md](projects/B9.md) |
+| 50 | A3 | completed | Published | Summer Safety Email Campaign (child of B13) | [projects/A3.md](projects/A3.md) |
+| 51 | A10 | completed | Published | Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone | [projects/A10.md](projects/A10.md) |
+| 52 | A15 | Archived | Published | Summer Event Activation & Lead Capture | [projects/A15.md](projects/A15.md) |
+| 53 | A16 | archived · next summer | Published | Garage Partnership | [projects/A16.md](projects/A16.md) |
+| 54 | C1 | completed | Published | Systems Access Audit & Cleanse | [projects/C1.md](projects/C1.md) |
+| 55 | C2 | completed | Published | Email Outage Triage & DNS Runbook | [projects/C2.md](projects/C2.md) |
+| 56 | A18 | archived · merged A7 | Published | Reddit NTGUILT Ads Test (merged into A7) | [projects/A18.md](projects/A18.md) |
+| 57 | B8 | archived · merged A7 | Published | HubSpot Social Media Marketing (merged into A7) | [projects/B8.md](projects/B8.md) |
 
 **Retainer / monthly-only:** omit **Priority** row (shows as —).
 
@@ -73,6 +71,15 @@ Use these when editing Priority / Status / fees. Gilbert “best fit” scoring 
 | `Archived` / `archived · …` | Out of active stack (history) |
 | `ongoing` | Retainer / always-on |
 
+### Visibility (INDEX wins over the project `.md` file)
+
+| Visibility | In the guide |
+| ---------- | ------------ |
+| `Published` | Fully visible (normal card) |
+| `Unpublished` | Grayed out (not client-ready) |
+
+Same meaning as **Publish status** on each project file (`published` / `unpublished`).
+
 ### Fees (on project cards)
 
 - One-time: `Fee` only
@@ -92,7 +99,7 @@ score =
 + 10 if return estimate
 + 8  if enabler and cart already has projects
 − 45 if research/draft
-− 50 if planning publish
+− 50 if Unpublished
 − 4  if wip
 ```
 
@@ -115,4 +122,3 @@ Completed and monthly-only items are excluded from ranking (`score = −999`).
 - **B12** — Casey rebrand (like B10): clothing, makeup, hair, presentation, speech, digital presence
 - **B14** — Pav Law swag & apparel; designs by Kate; team orders via GGL → Printify portal
 - Fee market context: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)
-
