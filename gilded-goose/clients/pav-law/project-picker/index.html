@@ -1541,26 +1541,35 @@
     .kpi-rate-wrap {
       position: relative; display: flex; flex-direction: column; gap: 0.35rem; min-width: 0;
     }
+    .kpi-rate-wrap > .feedback-target,
     .kpi-rate-wrap > .kpi-stat-card,
     .kpi-rate-wrap > .kpi-goal-card,
     .kpi-rate-wrap > .kpi-mini-card,
     .kpi-rate-wrap > .kpi-dash-card,
-    .kpi-rate-wrap > .kpi-split-panel { width: 100%; }
+    .kpi-rate-wrap > .kpi-split-panel,
+    .kpi-rate-wrap > .kpi-section,
+    .kpi-rate-wrap > .picker-zone,
+    .kpi-rate-wrap > .impact-section { width: 100%; }
+    .kpi-rate-tray { display: flex; flex-direction: column; gap: 0.3rem; }
     .kpi-rate-btns {
       display: flex; gap: 0.35rem; justify-content: flex-end; padding: 0 0.15rem;
     }
     .kpi-rate-btn {
-      appearance: none; border: 1px solid var(--border); background: var(--gg-paper);
-      border-radius: 8px; width: 2.15rem; height: 2.15rem; padding: 0;
+      appearance: none; border: 2px solid var(--border); background: var(--gg-paper);
+      border-radius: 8px; width: 2.25rem; height: 2.25rem; padding: 0;
       font-size: 1.05rem; line-height: 1; cursor: pointer;
-      transition: background 0.12s, border-color 0.12s, transform 0.12s;
+      transition: background 0.12s, border-color 0.12s, transform 0.12s, box-shadow 0.12s;
     }
     .kpi-rate-btn:hover { border-color: var(--gg-gold); background: #f0e6c8; transform: translateY(-1px); }
     .kpi-rate-btn.is-selected.kpi-rate-up {
-      border-color: var(--gg-positive); background: rgba(31, 138, 101, 0.14);
+      border-color: var(--gg-positive) !important;
+      background: rgba(31, 138, 101, 0.22) !important;
+      box-shadow: 0 0 0 2px rgba(31, 138, 101, 0.35);
     }
     .kpi-rate-btn.is-selected.kpi-rate-down {
-      border-color: var(--gg-negative); background: rgba(207, 45, 86, 0.12);
+      border-color: var(--gg-negative) !important;
+      background: rgba(207, 45, 86, 0.18) !important;
+      box-shadow: 0 0 0 2px rgba(207, 45, 86, 0.35);
     }
     .kpi-rate-note {
       display: flex; flex-direction: column; gap: 0.25rem;
@@ -1579,13 +1588,13 @@
     .kpi-rate-comment:focus {
       outline: none; border-color: var(--gg-gold); background: #fffcf7;
     }
-    .kpi-rate-wrap.has-feedback-ok > :first-child {
-      outline: 2px solid rgba(31, 138, 101, 0.35); outline-offset: 2px; border-radius: 8px;
+    .kpi-rate-wrap.has-feedback-ok > .feedback-target {
+      outline: 2px solid rgba(31, 138, 101, 0.45); outline-offset: 2px; border-radius: 8px;
     }
-    .kpi-rate-wrap.has-feedback-flag > :first-child {
-      outline: 2px solid rgba(207, 45, 86, 0.4); outline-offset: 2px; border-radius: 8px;
+    .kpi-rate-wrap.has-feedback-flag > .feedback-target {
+      outline: 2px solid rgba(207, 45, 86, 0.5); outline-offset: 2px; border-radius: 8px;
     }
-    .kpi-rate-wrap.has-feedback-note > :first-child {
+    .kpi-rate-wrap.has-feedback-note > .feedback-target {
       box-shadow: inset 0 0 0 1px rgba(201, 168, 108, 0.55);
     }
     .kpi-stat-grid .kpi-rate-wrap,
@@ -2782,7 +2791,7 @@
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260715-visibility"></script>
   <script src="kpi-report.js?v=20260714-goal-visual-v42"></script>
-  <script src="metrics-feedback.js?v=20260714-thumbs-v5"></script>
+  <script src="metrics-feedback.js?v=20260715-thumbs-v6"></script>
   <script src="app.js?v=20260715-value-icons-row"></script>
 </body>
 </html>
