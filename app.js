@@ -192,17 +192,12 @@
     }
     const asOfRaw = (item.impactEstimates && item.impactEstimates.asOf) || item.asOf || "";
     const asOfMs = Date.parse(asOfRaw) || 0;
-    let noteMs = 0;
-    for (const n of item.gilbertMetricNotes || []) {
-      const t = Date.parse(n.date || "") || 0;
-      if (t > noteMs) noteMs = t;
-    }
     const listIdx = PROJECTS.findIndex(p => p.id === item.id);
     const reverseList = listIdx >= 0 ? listIdx : 0;
     let idScore = 0;
     const id = String(item.id || "");
     for (let i = 0; i < id.length; i++) idScore = idScore * 33 + id.charCodeAt(i);
-    return asOfMs * 1e7 + noteMs * 1e4 + reverseList * 100 + (idScore % 1000);
+    return asOfMs * 1e7 + reverseList * 100 + (idScore % 1000);
   }
 
   /**
@@ -535,19 +530,6 @@
     };
   }
 
-  function gilbertMetricNotesHtml(item) {
-    const notes = item?.gilbertMetricNotes || [];
-    if (!notes.length) return "";
-    return `<div class="gilbert-metric-notes">
-      <h4>Gilbert on metrics</h4>
-      <ul class="gilbert-metric-notes-list">${notes.map(n => {
-        const date = escapeHtml(n.date || "");
-        const field = n.field ? ` · ${escapeHtml(n.field)}` : "";
-        return `<li><strong>${date}${field}</strong> — ${escapeHtml(n.text || "")}</li>`;
-      }).join("")}</ul>
-    </div>`;
-  }
-
   function impactEstimatesHtml(item) {
     const imp = resolveImpactEstimates(item);
     const asOf = imp.asOf ? `<span class="impact-as-of">As of ${escapeHtml(imp.asOf)}</span>` : "";
@@ -558,7 +540,6 @@
         <li><strong>Leads connected:</strong> ${escapeHtml(imp.leadsConnected.label)}</li>
         <li><strong>Est. revenue:</strong> —</li>
       </ul>
-      ${gilbertMetricNotesHtml(item)}
     </div>`;
   }
 

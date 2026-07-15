@@ -118,7 +118,7 @@ window.PROJECT_DATA = {
       "campaignType": "LSA Operations & Training",
       "status": "recommended",
       "publishStatus": "published",
-      "estimatedLeads": "~36 calls/month baseline (Military Search + LSA)",
+      "estimatedLeads": "~36 calls/month",
       "keywords": [
         "lsa",
         "local services",
@@ -131,40 +131,33 @@ window.PROJECT_DATA = {
         "hubspot"
       ],
       "title": "LSA Call Process Update",
-      "description": "Google Local Services Ads bill on qualified leads — wrong status costs money and hides follow-ups. **Phase 1** documented how to update lead info, dispute bad charges, and align HubSpot. **Phase 2** executes Casey’s learning path and Romina/Casey coverage calendar.\n\nSee Manage Local Services leads and HubSpot — speed to lead.",
       "tldr": "Phase 1 locked in LSA lead hygiene and training docs; Phase 2 trains Casey on call review and fixed phone blocks so Romina gets pipeline time.",
       "valueAdded": [
-        "Accurate LSA lead status (booked, spam, follow-up) — billing and reporting stay honest",
-        "Casey learns Pav Law talk tracks from recordings before answering live",
-        "Fixed Casey phone schedule frees Romina for HubSpot, follow-ups, and admin without dropping speed-to-lead",
-        "Handoff doc: `gilded-goose/clients/pav-law/LSA-DOCUMENTING-TRAINING.md`"
+        "Accurate LSA lead status (booked, spam, follow-up) improves reporting and lead quality",
+        "Adding Casey to the phones schedule frees Romina for HubSpot, follow-ups, and admin with added opportunity for soft skills training and increaseing call answering and close rates"
       ],
       "valueIcons": [
         "intake",
         "foundation"
       ],
       "completedItems": [
-        "LSA lead-status SOP — how to update lead info, notes, booked/spam/dispute in Google LSA",
-        "`LSA-DOCUMENTING-TRAINING.md` written and shared with team path in repo",
-        "Daily LSA checklist defined (newest leads, status, notes, survey accuracy)",
-        "Retainer WIP scoped into this project for tracking"
+        "Retainer WIP scoped into this project for tracking",
+        "Lead Source field added in MyCase"
       ],
       "inProgressItems": [
-        "Casey trained via call review before live intake — learns practice talk tracks from recordings, then covers phones on a fixed schedule so Romina gets uninterrupted time for pipeline and admin",
+        "Casey trained via call review before live intake",
         "Casey ↔ Romina coverage calendar (2–3 hrs/day ramp **or** one full day/week)",
-        "HubSpot alignment for every LSA lead (contact, task, booked = calendar)"
+        "HubSpot alignment for every LSA lead",
+        "LSA lead-status SOP — how to update lead info, notes, booked/spam/dispute in Google LSA",
+        "`LSA-DOCUMENTING-TRAINING.md` written and shared with team path in repo"
       ],
       "resultsItems": [
         "*Phase 1 metrics to add:* LSA leads reviewed/week, status accuracy sample, disputed charges (Jun threshold declines), baseline answer rate (#21 · 69%)",
         "May 2026 reference: ~36 Military Search calls · ~$67/call (retainer Results)",
         "Jun 11–Jul 10: Military $3,983 · 330 clicks — primary call engine (retainer Results)"
       ],
-      "goal": "LSA statuses updated same business day; Casey covers a defined phone block without Romina split attention; disputed/spam leads caught before month-end billing.",
-      "informationNeeded": [
-        "Fill Impact estimates",
-        "Add Phase 1 LSA audit to Results (status accuracy, disputes, answer rate)",
-        "Andrew: link 2–3 example call recordings"
-      ],
+      "goal": "LSA statuses updated same business day; Casey covers a defined phone block or day(s); disputed/spam leads caught before month-end billing. Increased answer rated and increased close rate with legal expertise available on pickup.",
+      "informationNeeded": [],
       "abQuestions": [],
       "kpiRefs": [
         "#21"
@@ -261,23 +254,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 18,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.15 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 18 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 120 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -435,23 +411,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 35,
         "clientsRetained": 0.5
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.5 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 35 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 200 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -609,23 +568,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 40,
         "clientsRetained": 1.5
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 1.5 per wave from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 40 per wave from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 200 per wave from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [
         "Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
         "Newest or Oldest first?"
@@ -836,23 +778,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 45,
         "clientsRetained": 0.3
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.3 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 45 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 282 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -930,23 +855,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 25,
         "clientsRetained": 1.8
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 1.8 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 25 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 36 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1023,23 +931,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 7,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.08 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 7 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 45 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1115,23 +1006,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 86,
         "clientsRetained": 2
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 2 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 86 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 124 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1207,23 +1081,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 14,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.15 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 14 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 90 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1319,23 +1176,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 75,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.1 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 75 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 500 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
@@ -1417,23 +1257,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 60,
         "clientsRetained": 0.4
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.4 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 60 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 400 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1503,23 +1326,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 8,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.05 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 8 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 120 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1585,23 +1391,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 18,
         "clientsRetained": 0.2
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.2 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 18 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 60 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1680,23 +1469,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 25,
         "clientsRetained": 1.8
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 1.8 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 25 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md. B2 go-live should push connected toward ~32/mo at 90% answer (#21)."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 36 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": [
         "#21"
@@ -1768,23 +1540,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 5,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.05 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 5 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 30 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1919,23 +1674,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 17,
         "clientsRetained": 0.2
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.2 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 17 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 25 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2006,23 +1744,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 12,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.1 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 12 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 80 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2085,23 +1806,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 8,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.05 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 8 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 40 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2170,23 +1874,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 10,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.1 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 10 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 15 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2252,23 +1939,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 0,
         "clientsRetained": 0
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 0 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 0 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2345,23 +2015,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 120,
         "clientsRetained": 2
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 2 per wave from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 120 per wave from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 850 per wave from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2431,23 +2084,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 0,
         "clientsRetained": 0
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 0 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 0 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2892,23 +2528,6 @@ window.PROJECT_DATA = {
         "leadsConnected": 45,
         "clientsRetained": 0.1
       },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 0.08 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 45 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 300 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
       "abQuestions": [],
       "kpiRefs": []
     },

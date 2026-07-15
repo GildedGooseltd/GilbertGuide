@@ -130,16 +130,9 @@ function run() {
     const est = IMPACT_ESTIMATES[project.id];
     if (!est) continue;
 
-    const prevSnap = history.projects[project.id];
-    const gilbertMetricNotes = buildGilbertNotes(
-      project.id,
-      est,
-      prevSnap,
-      project.gilbertMetricNotes
-    );
     const { impactEstimates } = impactEstimatesToMarkdown(est);
     project.impactEstimates = impactEstimates;
-    project.gilbertMetricNotes = gilbertMetricNotes;
+    delete project.gilbertMetricNotes;
 
     fs.writeFileSync(fp, projectToMarkdown(project));
     history.projects[project.id] = metricSnapshot(est);
