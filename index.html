@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Business Operations Command Center</title>
+  <title>Operations Dashboard</title>
   <style>
     :root {
       /* Gilded Goose — cream, gold, brown + deep royal purple */
@@ -1216,7 +1216,7 @@
       outline: none;
     }
     .gilbert-survey-options button.is-selected {
-      background: var(--gg-gold-dim); color: var(--gg-brown);
+      background: #f0e6c8; color: #1a1208;
       border-color: var(--gg-gold); font-weight: 700;
     }
     .gilbert-survey-nav {
@@ -1247,15 +1247,19 @@
       padding: 0.75rem;
       min-width: 0;
     }
-    .pav-priorities-merged .project-continue-btn,
+    .pav-priorities-merged .btn.btn-primary.project-continue-btn,
     .pav-priorities-merged #continue-to-confirm {
-      width: 100%; margin: 0.65rem 0 0; min-width: 0;
-      padding: 0.5rem 0.85rem; font-size: 0.875rem; font-weight: 700;
-      background: var(--gg-magenta); color: #fff; border: 1px solid var(--gg-magenta);
+      display: block; width: 50%; max-width: 50%; min-width: 0;
+      margin: 0.65rem auto 0;
+      padding: 0.4rem 0.75rem; font-size: 0.8rem; font-weight: 700;
+      background: var(--gradient-gold);
+      color: var(--gg-brown); border: 1px solid var(--gg-gold-dark);
+      box-shadow: 0 1px 4px rgba(184, 134, 11, 0.25);
     }
-    .pav-priorities-merged .project-continue-btn:hover:not(:disabled),
+    .pav-priorities-merged .btn.btn-primary.project-continue-btn:hover:not(:disabled),
     .pav-priorities-merged #continue-to-confirm:hover:not(:disabled) {
-      opacity: 0.92; background: var(--gg-magenta);
+      opacity: 0.95; background: var(--gradient-gold); color: var(--gg-brown);
+      filter: brightness(1.05);
     }
     .pav-priorities-merged .total-box {
       margin: 0; background: transparent; border: none; padding: 0;
@@ -1550,7 +1554,7 @@
     .kpi-section-summary {
       cursor: pointer; padding: 0.85rem 1.15rem; list-style: none;
       display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-      background: linear-gradient(90deg, rgba(45, 20, 84, 0.14) 0%, var(--gg-cream-panel) 52%, var(--surface) 100%);
+      background: linear-gradient(90deg, rgba(45, 20, 84, 0.22) 0%, rgba(45, 20, 84, 0.10) 52%, rgba(45, 20, 84, 0.05) 100%);
       border-bottom: 1px solid transparent;
       border-left: 4px solid var(--gg-royal-deep);
       user-select: none;
@@ -1728,7 +1732,7 @@
       border-color: rgba(184, 134, 11, 0.35);
     }
     .kpi-section-goals > .kpi-section-summary {
-      background: linear-gradient(90deg, #f4e9c5 0%, #f5e8c0 55%, #f8f0d0 100%);
+      background: linear-gradient(90deg, #d0c297 0%, #d1c093 55%, #d4c9a3 100%);
       border-left-color: var(--gg-gold-dark);
     }
     .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
@@ -1807,7 +1811,7 @@
     .kpi-split-panel .kpi-dash-card-flush {
       border: none; padding: 0.35rem 0 0; background: transparent; box-shadow: none;
     }
-    .kpi-mini-card h3 { margin: 0 0 0.45rem; font-size: 0.875rem; color: var(--gg-royal); }
+    .kpi-mini-card h3 { margin: 0 0 0.45rem; font-size: calc(0.875rem + 2pt); color: var(--gg-royal); }
     .kpi-row-gap td { color: var(--gg-brown-muted); }
     .kpi-presence {
       display: inline-block; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.02em;
@@ -1824,7 +1828,12 @@
     }
     .kpi-gauge-svg { display: block; margin: 0.25rem auto 0; max-width: 160px; height: auto; }
     .kpi-half-moon-gauge .kpi-gauge-tick { fill: var(--gg-brown-muted); font-size: 14px; font-weight: 700; }
+    .kpi-half-moon-gauge .kpi-gauge-center {
+      fill: var(--gg-royal-deep); font-size: 22px; font-weight: 800;
+      font-family: inherit;
+    }
     .kpi-gauge-celebrate .kpi-gauge-tick { fill: var(--gg-gold-dark); }
+    .kpi-gauge-celebrate .kpi-gauge-center { fill: var(--gg-gold-dark); }
     .kpi-gauge-val { font-size: 1.35rem; font-weight: 800; color: var(--gg-royal-deep); }
     .kpi-bhi-card { max-width: 16rem; margin-bottom: 0.75rem; }
     .kpi-chart-head { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 14pt; }
@@ -2531,14 +2540,14 @@
 
   <div id="main-app">
     <header class="cockpit-header">
-      <h1 class="cockpit-title"><span>Business Operations Command Center</span></h1>
+      <h1 class="cockpit-title"><span>Operations Dashboard</span></h1>
       <div class="cockpit-intro">
         <p class="cockpit-synopsis"><strong>What this is for:</strong> Single view of business operating metrics to better understand the health of the business and how projects impact operations.</p>
         <details class="cockpit-howto">
           <summary>How to use it <span class="cockpit-howto-chevron" aria-hidden="true">▾</span></summary>
           <div class="cockpit-howto-body">
             <ol>
-              <li><strong>KPIs</strong> — key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export; tap a card for context. Use <strong>Feedback</strong> to open the Google Form popup. <a href="metrics.html">Open full metrics page →</a></li>
+              <li><strong>KPIs</strong> — key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export; tap a card for context. <a href="metrics.html">Open full metrics page →</a></li>
               <li><strong>Project Guide</strong> — filter by value icon, check projects into your cart, read details, then <strong>Review Plan</strong> for fees, estimated results, action items, and next steps.</li>
               <li><strong>Impact</strong> — completed project results, plus leads impacted / connected and estimated revenue for projects in your cart.</li>
               <li><strong>Ask Gilbert</strong> (Project Guide, left column) — three quick survey questions; <strong>Pav Priorities</strong> on the right shows your cart or Gilbert’s best-fit shortlist.</li>
@@ -2553,11 +2562,6 @@
         <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs</button>
         <button type="button" class="view-tab" data-view="picker" role="tab" aria-selected="false">Project Guide</button>
         <button type="button" class="view-tab" data-view="impact" role="tab" aria-selected="false">Impact</button>
-      </div>
-      <div class="cockpit-feedback-bar" role="toolbar" aria-label="Feedback">
-        <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Open feedback form">
-          Feedback
-        </button>
       </div>
     </div>
 
@@ -2687,8 +2691,7 @@
   <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260713u"></script>
-  <script src="kpi-report.js?v=20260714-goal-visual-v33"></script>
-  <script src="app.js?v=20260714ae"></script>
-  <script src="metrics-feedback.js?v=20260714x"></script>
+  <script src="kpi-report.js?v=20260714-goal-visual-v42"></script>
+  <script src="app.js?v=20260714af"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@
       { id: "#15", label: "CPL", value: "$142", target: "≤ $120", mom: null, verified: true, alert: true, targetBar: true, lowerIsBetter: true },
       /* Team goals: #19 lost-tracker first in render, then #21, then DUI */
       { id: "#19", label: "Missed revenue", value: "$4,200/mo", target: "$0", mom: null, verified: false, alert: true, lostTracker: true },
-      { id: "#21", label: "Answered phones", value: "69%", target: "≥ 90%", mom: "+2%", verified: false, alert: true, gauge: true, goal: true },
+      { id: "#21", label: "Answered Calls", value: "69%", target: "≥ 90%", mom: "+2%", verified: false, alert: true, gauge: true, goal: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
       { id: "#28", label: "Avg case fee", value: "$3,870", target: "Q2 review", mom: null, verified: false },
@@ -44,6 +44,7 @@
     ],
     phoneIntake: {
       targetPct: 90,
+      missedTargetPct: 10,
       answeredPct: 69,
       priorAnsweredPct: 67,
       missedPct: 31,
@@ -459,7 +460,7 @@
         <div class="kpi-missed-stat">
           <span class="kpi-missed-label">Missed calls</span>
           <span class="kpi-missed-val">${pi.missedPct}%</span>
-          <span class="kpi-missed-sub">was ${pi.priorMissedPct}% prior month · <span class="${momClassName}">${momLabel}</span></span>
+          <span class="kpi-missed-sub">goal ≤ ${pi.missedTargetPct}% · was ${pi.priorMissedPct}% prior month · <span class="${momClassName}">${momLabel}</span></span>
         </div>
         <div class="kpi-missed-stat">
           <span class="kpi-missed-label">Est. revenue lost (Jun)</span>
@@ -486,7 +487,7 @@
       ${kpiDetailTable(
         ["Measure", "Value", "Notes"],
         [
-          ["Missed call rate", `${pi.missedPct}%`, `was ${pi.priorMissedPct}% · <span class="${momClassName}">${momLabel}</span>`],
+          ["Missed call rate", `${pi.missedPct}%`, `goal ≤ ${pi.missedTargetPct}% · was ${pi.priorMissedPct}% · <span class="${momClassName}">${momLabel}</span>`],
           ["Est. lost (Jun)", fmtMoney(pi.monthlyLost), `prior ${fmtMoney(pi.priorMonthlyLost)}`],
           ["YTD cumulative", fmtMoney(pi.cumulativeYtd), `${(pi.leadToCaseRate * 100).toFixed(1)}% lead→case × ${fmtMoney(pi.avgCaseFee)} avg fee`]
         ]
@@ -583,27 +584,31 @@
     const clamped = Math.max(0, Math.min(1, pct));
     const celebrate = !!(opts.celebrate || clamped >= 1);
     const cx = 94;
-    const cy = 72;
-    const r = 68;
+    const cy = 78;
+    const r = 64;
+    const strokeW = 12;
     const left = halfMoonPoint(cx, cy, r, 0);
     const right = halfMoonPoint(cx, cy, r, 1);
-    const fillGradId = `${gradId}-fill`;
+    const rimGradId = `${gradId}-rim`;
     const goldStops = `<stop offset="0%" stop-color="${GOLD_GAUGE.pale}"/><stop offset="40%" stop-color="${GOLD_GAUGE.mid}"/><stop offset="100%" stop-color="${GOLD_GAUGE.dark}"/>`;
     const progressStops = `<stop offset="0%" stop-color="${PROGRESS_GAUGE.red}"/><stop offset="45%" stop-color="${PROGRESS_GAUGE.mid}"/><stop offset="100%" stop-color="${PROGRESS_GAUGE.green}"/>`;
     const fillAmt = celebrate ? 1 : clamped;
-    const fillPath = halfMoonFillPath(cx, cy, r, fillAmt);
+    const arcLen = Math.PI * r;
+    const dashLen = Math.max(0, Math.min(arcLen, fillAmt * arcLen));
     const endLabel = opts.endLabel != null ? opts.endLabel : "";
-    const aria = celebrate ? "Target reached" : "Progress half-moon gauge";
-    const arcStroke = celebrate ? GOLD_GAUGE.dark : PROGRESS_GAUGE.green;
+    const valueLabel = opts.valueLabel != null ? String(opts.valueLabel) : "";
+    const aria = celebrate ? "Target reached" : "Progress rim gauge";
+    const track = "var(--gg-cream-panel)";
+    const arcD = `M ${left.x} ${left.y} A ${r} ${r} 0 0 1 ${right.x} ${right.y}`;
 
-    return `<svg class="kpi-gauge-svg kpi-half-moon-gauge${celebrate ? " kpi-gauge-celebrate" : ""}" viewBox="0 0 188 112" role="img" aria-label="${aria}">
-      <defs><linearGradient id="${fillGradId}" x1="0%" y1="0%" x2="100%" y2="0%">${celebrate ? goldStops : progressStops}</linearGradient></defs>
-      <line x1="${left.x}" y1="${cy}" x2="${right.x}" y2="${cy}" stroke="var(--gg-royal-border)" stroke-width="2" stroke-linecap="round"/>
-      <path d="M 22 72 A 68 68 0 0 1 166 72" fill="none" stroke="var(--gg-cream-panel)" stroke-width="10" stroke-linecap="round"/>
-      ${fillPath ? `<path d="${fillPath}" fill="url(#${fillGradId})"/>` : ""}
-      <path d="M 22 72 A 68 68 0 0 1 166 72" fill="none" stroke="${arcStroke}" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
-      <text x="22" y="98" class="kpi-gauge-tick">0</text>
-      ${endLabel !== "" ? `<text x="166" y="98" class="kpi-gauge-tick" text-anchor="end">${endLabel}</text>` : ""}
+    return `<svg class="kpi-gauge-svg kpi-half-moon-gauge${celebrate ? " kpi-gauge-celebrate" : ""}" viewBox="0 0 188 118" role="img" aria-label="${aria}">
+      <defs><linearGradient id="${rimGradId}" x1="0%" y1="0%" x2="100%" y2="0%">${celebrate ? goldStops : progressStops}</linearGradient></defs>
+      <path d="${arcD}" fill="none" stroke="${track}" stroke-width="${strokeW}" stroke-linecap="round"/>
+      <path d="${arcD}" fill="none" stroke="url(#${rimGradId})" stroke-width="${strokeW}" stroke-linecap="round"
+        stroke-dasharray="${dashLen.toFixed(2)} ${(arcLen + 1).toFixed(2)}"/>
+      <text x="22" y="108" class="kpi-gauge-tick">0</text>
+      ${endLabel !== "" ? `<text x="166" y="108" class="kpi-gauge-tick" text-anchor="end">${endLabel}</text>` : ""}
+      ${valueLabel !== "" ? `<text x="${cx}" y="${cy - 6}" class="kpi-gauge-center" text-anchor="middle">${escapeHtml(valueLabel)}</text>` : ""}
     </svg>`;
   }
 
@@ -614,12 +619,14 @@
       ${statusCorner(false)}
       <div class="kpi-goal-visual">
         <span class="kpi-stat-id"># DUIs Signed 2026</span>
-        ${halfMoonGauge(Math.min(pct, 1), "goal-dui", { endLabel: String(DATA.duiGoal.target), celebrate: hit })}
-        <span class="kpi-gauge-val">${DATA.duiGoal.current} / ${DATA.duiGoal.target}</span>
+        ${halfMoonGauge(Math.min(pct, 1), "goal-dui", {
+          endLabel: String(DATA.duiGoal.target),
+          celebrate: hit,
+          valueLabel: `${DATA.duiGoal.current} / ${DATA.duiGoal.target}`
+        })}
       </div>
       ${goalTrackRows([
-        ["Metric", "DUIs Signed 2026"],
-        ["Status", hit ? "Target reached" : "Open goal"]
+        ["Metric", "DUIs Signed 2026"]
       ])}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
     </button>`;
@@ -636,13 +643,11 @@
       ${statusCorner(false)}
       <div class="kpi-goal-visual">
         <span class="kpi-stat-id">#—</span>
-        ${halfMoonGauge(0, "goal-placeholder", { endLabel: "—" })}
-        <span class="kpi-gauge-val">— / —</span>
+        ${halfMoonGauge(0, "goal-placeholder", { endLabel: "—", valueLabel: "— / —" })}
       </div>
       ${goalTrackRows([
         ["Metric", "Third team goal"],
-        ["MoM", "—"],
-        ["Status", "Placeholder — add next goal"]
+        ["MoM", "—"]
       ])}
     </button>`;
   }
@@ -808,15 +813,11 @@
     );
   }
 
-  function kpiGoalTrackFor(k, status) {
+  function kpiGoalTrackFor(k) {
     const rows = [
       ["Metric", escapeHtml(k.label)],
       ["MoM", k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)}</span>` : "—"]
     ];
-    if (k.id === "#21") {
-      rows.push(["Est. revenue lost", `${fmtMoney(DATA.phoneIntake.monthlyLost)}/mo`]);
-    }
-    rows.push(["Status", typeof status === "string" ? status : "Open goal"]);
     return goalTrackRows(rows);
   }
 
@@ -824,20 +825,20 @@
     /* Keep #19 lost-tracker chrome in goals grid — do not force gauge layout */
     if (k.lostTracker) return missedRevenueTrackerHtml();
     const nums = k.gauge ? parseGaugeNums(k.value, k.target) : null;
-    const status = (k.hit || (nums && nums.pct >= 1))
-      ? '<span class="kpi-target-hit">Target reached</span>'
-      : (k.alert ? "Requires action" : "Open goal");
     if (nums) {
       const grad = "goal-" + String(k.id).replace(/\W/g, "");
       const hit = !!(k.hit || nums.pct >= 1);
       return `<button type="button" class="kpi-goal-card kpi-stat-gauge${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
         <div class="kpi-goal-visual">
-          <span class="kpi-stat-id">${k.id}</span>
-          ${halfMoonGauge(Math.min(nums.pct, 1), grad, { endLabel: String(nums.target), celebrate: hit })}
-          <span class="kpi-gauge-val">${k.value} / ${k.target.replace(/^[≥≤<>]\s*/, "")}</span>
+          <span class="kpi-stat-id">${k.id} ${escapeHtml(k.label)}</span>
+          ${halfMoonGauge(Math.min(nums.pct, 1), grad, {
+            endLabel: String(nums.target),
+            celebrate: hit,
+            valueLabel: `${k.value} / ${k.target.replace(/^[≥≤<>]\s*/, "")}`
+          })}
         </div>
-        ${kpiGoalTrackFor(k, status)}
+        ${kpiGoalTrackFor(k)}
       </button>`;
     }
     const lostCap = 6000;
@@ -848,10 +849,12 @@
       ${statusCorner(!!k.verified)}
       <div class="kpi-goal-visual">
         <span class="kpi-stat-id">${k.id}${k.alert ? " · Requires action" : ""}</span>
-        ${halfMoonGauge(lostPct, grad, { endLabel: escapeHtml(k.target || "$0") })}
-        <span class="kpi-gauge-val">${escapeHtml(k.value)}</span>
+        ${halfMoonGauge(lostPct, grad, {
+          endLabel: k.target || "$0",
+          valueLabel: k.value
+        })}
       </div>
-      ${kpiGoalTrackFor(k, status)}
+      ${kpiGoalTrackFor(k)}
     </button>`;
   }
 
@@ -908,7 +911,7 @@
       <span class="kpi-stat-label">Ongoing money lost from unanswered calls</span>
       <ul class="kpi-lost-facts">
         <li><strong>Answer rate</strong> ${p.answeredPct}% <span class="kpi-lost-muted">(goal ≥ ${p.targetPct}%)</span></li>
-        <li><strong>Missed calls</strong> ${p.missedPct}%</li>
+        <li><strong>Missed calls</strong> ${p.missedPct}% <span class="kpi-lost-muted">(goal ≤ ${p.missedTargetPct}%)</span></li>
         <li><strong>YTD lost</strong> ${fmtMoney(p.cumulativeYtd)}</li>
         <li><strong>Trend</strong> ${deltaHtml}</li>
       </ul>
@@ -939,8 +942,11 @@
       return `<button type="button" class="kpi-stat-card kpi-stat-gauge${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
         <span class="kpi-stat-id">${headline}</span>
-        ${halfMoonGauge(Math.min(nums.pct, 1), grad, { endLabel: String(nums.target), celebrate: hit })}
-        <span class="kpi-gauge-val">${k.value} / ${k.target}</span>
+        ${halfMoonGauge(Math.min(nums.pct, 1), grad, {
+          endLabel: String(nums.target),
+          celebrate: hit,
+          valueLabel: `${k.value} / ${String(k.target).replace(/^[≥≤<>]\s*/, "")}`
+        })}
         <span class="kpi-stat-label">${targetLine}</span>
         ${k.mom ? `<span class="${momClass(k.mom)}">${k.mom} MoM</span>` : ""}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
@@ -1033,13 +1039,13 @@
             </div>
             <div class="kpi-mini-card" data-kpi-focus="#17">
               ${statusCorner(false)}
-              <h3>#17 Referrals by channel</h3>
+              <h3>#17 Total Referral Network</h3>
               ${(() => {
                 const segs = presencePieSegments(DATA.referrals);
                 return chartBlock({ chart: donutChart(segs) });
               })()}
               <table class="kpi-table">
-                <thead><tr><th>Channel</th><th>Leads</th><th>Δ MoM</th></tr></thead>
+                <thead><tr><th>Channel</th><th>Referrers</th><th>Δ MoM</th></tr></thead>
                 <tbody>${DATA.referrals.map(r => `<tr class="${r.status !== "active" ? "kpi-row-gap" : ""}">
                   <td>${star(!!r.verified)} ${r.platform}</td>
                   <td>${dash(r.count)}</td>

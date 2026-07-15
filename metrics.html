@@ -3,62 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pav Law — Metrics &amp; Feedback</title>
-  <link rel="stylesheet" href="metrics.css?v=20260714-goal-visual-v33">
-  <style>
-    .feedback-form-backdrop {
-      position: fixed; inset: 0; z-index: 1200;
-      background: rgba(13, 27, 42, 0.45);
-    }
-    .feedback-form-modal {
-      position: fixed; z-index: 1201;
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: min(720px, calc(100vw - 2rem));
-      max-height: min(90vh, 820px);
-      display: flex; flex-direction: column;
-      background: #fffef9;
-      border-radius: 12px;
-      border: 1px solid #d4c4a8;
-      box-shadow: 0 18px 48px rgba(13, 27, 42, 0.28);
-      overflow: hidden;
-    }
-    .feedback-form-modal[hidden],
-    .feedback-form-backdrop[hidden] { display: none !important; }
-    .feedback-form-modal-head {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 0.75rem; padding: 0.75rem 1rem;
-      border-bottom: 1px solid #d4c4a8;
-      background: #f7f0e4;
-    }
-    .feedback-form-modal-head h2 { margin: 0; font-size: 1.15rem; color: #3a1a6e; }
-    .feedback-form-close {
-      border: none; background: transparent; cursor: pointer;
-      font-size: 1.5rem; line-height: 1; color: #4a3728;
-      padding: 0.15rem 0.35rem;
-    }
-    .feedback-form-modal-body {
-      flex: 1; min-height: 0; display: flex; flex-direction: column;
-      background: #fff;
-    }
-    .feedback-form-frame {
-      border: 0; width: 100%; flex: 1;
-      min-height: min(70vh, 640px); height: 640px;
-    }
-    .feedback-form-foot {
-      margin: 0; padding: 0.5rem 1rem;
-      font-size: 0.8rem; color: #7a6a58;
-      border-top: 1px solid #d4c4a8;
-      background: #f7f0e4;
-    }
-    .feedback-form-setup {
-      padding: 1.25rem 1.35rem; color: #4a3728;
-      font-size: 0.95rem; line-height: 1.45;
-    }
-    .kpi-feedback-mode-toggle {
-      border: 2px solid #c02670; background: #fff; color: #c02670;
-      font-weight: 700; border-radius: 999px; padding: 0.4rem 0.9rem; cursor: pointer;
-    }
-  </style>
+  <title>Pav Law — Metrics</title>
+  <link rel="stylesheet" href="metrics.css?v=20260714-goal-visual-v40">
 </head>
 <body class="metrics-page">
   <header class="metrics-header">
@@ -66,16 +12,10 @@
       <div>
         <a class="metrics-back" href="index.html">← Back to project guide</a>
         <h1>Metrics &amp; charts</h1>
-        <p class="metrics-header-sub">Use <strong>Feedback</strong> to open the Google Form popup. Answers go to the linked Sheet.</p>
+        <p class="metrics-header-sub">Key metrics and charts from the latest Ad Reports export.</p>
       </div>
     </div>
   </header>
-
-  <div class="metrics-toolbar" role="toolbar" aria-label="Feedback">
-    <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Open feedback form">
-      Feedback
-    </button>
-  </div>
 
   <div class="metrics-main metrics-main-solo">
     <div class="metrics-report-stack">
@@ -85,7 +25,6 @@
 
   <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="kpi-report.js?v=20260714-goal-visual-v33"></script>
-  <script src="metrics-feedback.js?v=20260714x"></script>
+  <script src="kpi-report.js?v=20260714-goal-visual-v42"></script>
 </body>
 </html>
