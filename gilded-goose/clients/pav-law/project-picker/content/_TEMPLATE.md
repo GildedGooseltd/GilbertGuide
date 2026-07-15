@@ -125,12 +125,6 @@ Example:
 
 - **YYYY-MM-DD · Leads connected** — Brief note when a baseline changes
 
-## Account Data & Marketing Principles Applied
-
-Verified metric or principle text with inline links where helpful.
-
-Source: Where the number or claim comes from
-
 ## Fee note (optional)
 
 Market context vs Colorado Springs / Front Range norms — see [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md).

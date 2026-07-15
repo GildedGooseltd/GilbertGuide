@@ -853,8 +853,6 @@ export function projectToMarkdown(p) {
   md += listSection("Insights & improvements", p.insightsImprovements);
   md += formatImpactEstimatesSection(p);
   md += formatGilbertMetricNotesSection(p);
-  const account = buildAccountSection(p);
-  if (account) md += `## Account Data & Marketing Principles Applied\n\n${account}\n\n`;
 
   return md.trim() + "\n";
 }

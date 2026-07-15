@@ -379,10 +379,6 @@ window.PROJECT_DATA = {
         "Answer rate (#21) — target 90%",
         "Lead→case (#02) — baseline 7.3%"
       ],
-      "backedMetric": {
-        "label": "About 36 Military Search calls per month depend on accurate LSA lead status and intake coverage. Firms that respond within five minutes qualify far more leads than those that wait hours.",
-        "source": "May 2026 Google Ads audit · LSA-DOCUMENTING-TRAINING.md · retainer Results 2026-07-11"
-      },
       "abQuestions": [],
       "kpiRefs": [
         "#02",
@@ -827,10 +823,6 @@ window.PROJECT_DATA = {
           "text": "Baseline set at 36 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
         }
       ],
-      "backedMetric": {
-        "label": "Shift spend away from $526 per call domestic violence and $76 per click Mountain DUI toward Military Search at about $67 per call",
-        "source": "May 2026 Google Ads audit"
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -967,10 +959,6 @@ window.PROJECT_DATA = {
           "text": "Baseline set at 120 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
         }
       ],
-      "backedMetric": {
-        "label": "LinkedIn showcase page and third-party aggregator (e.g. LegalRank) already surface firm NAP and positioning — worth aligning with pav.law and GBP before next paid campaign push",
-        "source": "Public web search + client report, Jun 2026"
-      },
       "abQuestions": [],
       "kpiRefs": [
         "#18"
@@ -1376,10 +1364,6 @@ window.PROJECT_DATA = {
           "text": "Baseline set at 90 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
         }
       ],
-      "backedMetric": {
-        "label": "Prior optimization pass improved site performance about 200 percent",
-        "source": "Pav Law project tracker"
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1497,10 +1481,6 @@ window.PROJECT_DATA = {
           "text": "Baseline set at 45 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
         }
       ],
-      "backedMetric": {
-        "label": "Organic search on pav.law averaged position 45 to 58 in early 2025 Search Console export",
-        "source": "Google Search Console via Downloads export, Jan 2025"
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2399,10 +2379,6 @@ window.PROJECT_DATA = {
           "text": "Baseline set at 36 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
         }
       ],
-      "backedMetric": {
-        "label": "About 36 Military Search calls per month depend on a verified phone line. Reported volume is likely understated because call-only tracking misses some mobile and cross-device conversions — a common issue when phone setup is incomplete. Firms that respond within five minutes are far more likely to qualify a lead than those that wait hours, so routing, logging, and speed-to-lead must work before scaling spend (HubSpot speed-to-lead research; Google call extensions).",
-        "source": "May 2026 Google Ads Audit"
-      },
       "abQuestions": [],
       "kpiRefs": [
         "#21"
@@ -2633,10 +2609,6 @@ window.PROJECT_DATA = {
           "text": "Baseline set at 30 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
         }
       ],
-      "backedMetric": {
-        "label": "Organic search on pav.law averaged position 45 to 58 in early 2025 Search Console export",
-        "source": "Google Search Console via Downloads export, Jan 2025"
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
