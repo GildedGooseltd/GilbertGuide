@@ -1,720 +1,160 @@
 /**
- * Magenta Feedback mode: click a KPI or chart to leave Gilbert comments.
- * Each Save → localStorage + POST to webhook → Google Sheet tab MetricsFeedback only.
- * Feedback mode OFF → flushes all rated items to the same Sheet (item_save batch, no email).
- * No JSON download, no mailto required. Webhook missing/fail → clear error (never a file).
+ * Feedback = popup with embedded Google Form (responses → linked Sheet).
+ * Set PAV_PICKER_CONFIG.feedbackFormUrl to the Form’s published /viewform URL.
+ * Or run createCockpitFeedbackForm() in Apps Script, then paste Logger’s URL into pages-config.js.
  */
 (function () {
-  const STORAGE_KEY = "pav-metrics-feedback-v1";
-  const REVIEWER_KEY = "pav-metrics-reviewer-v1";
-  const SESSION_KEY = "pav-metrics-session-v1";
-  const SUPPORT_EMAIL = "support@gildedgooselimited.com";
-  const SHEET_ERR = "Not saved to sheet — webhook missing/failed";
-  const SETUP_HREF = "owner-webhook-setup.html";
-  const LIVE_CONFIG_HREF = "https://gildedgooseltd.github.io/PickyPavi/pages-config.js";
-  const VERDICTS = [
-    { id: "ok", label: "Looks right", chipClass: "done-ok" },
-    { id: "confusing", label: "Confusing / needs context", chipClass: "done-flag" },
-    { id: "wrong_number", label: "Wrong number", chipClass: "done-flag" },
-    { id: "wrong_chart", label: "Wrong chart type", chipClass: "done-flag" },
-    { id: "missing", label: "Missing metric", chipClass: "done-flag" }
-  ];
-
-  const state = {
-    targets: [],
-    activeId: null,
-    feedback: loadFeedback(),
-    filterPending: false,
-    feedbackMode: false,
-    sessionId: getOrCreateSessionId(),
-    lastRemoteStatus: null
-  };
-
-  function loadFeedback() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    } catch {
-      return {};
-    }
-  }
-
-  function getOrCreateSessionId() {
-    try {
-      let id = sessionStorage.getItem(SESSION_KEY);
-      if (!id) {
-        id = "s-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8);
-        sessionStorage.setItem(SESSION_KEY, id);
-      }
-      return id;
-    } catch {
-      return "s-anon-" + Date.now().toString(36);
-    }
-  }
-
-  function loadReviewer() {
-    try {
-      return JSON.parse(localStorage.getItem(REVIEWER_KEY) || "{}");
-    } catch {
-      return {};
-    }
-  }
-
-  function saveReviewer(name, email) {
-    const next = {
-      name: (name || "").trim(),
-      email: (email || "").trim()
-    };
-    try {
-      localStorage.setItem(REVIEWER_KEY, JSON.stringify(next));
-    } catch { /* ignore */ }
-    return next;
-  }
-
-  function readReviewerFromUi() {
-    const nameEl = document.getElementById("metrics-reviewer-name");
-    const emailEl = document.getElementById("metrics-email");
-    const stored = loadReviewer();
-    return saveReviewer(
-      nameEl ? nameEl.value : stored.name,
-      emailEl ? emailEl.value : stored.email
-    );
-  }
-
-  function persistFeedbackLocal() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.feedback));
-    updateProgress();
-    renderSummary();
-    syncChipStates();
-  }
+  const SETUP_SHEET =
+    "https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit";
 
   function getConfig() {
-    return (typeof window !== "undefined" && window.PAV_PICKER_CONFIG) ? window.PAV_PICKER_CONFIG : {};
+    return typeof window !== "undefined" && window.PAV_PICKER_CONFIG
+      ? window.PAV_PICKER_CONFIG
+      : {};
   }
 
-  function webhookConfigured() {
-    return !!(getConfig().webhookUrl || "").trim();
+  function formUrl() {
+    return String(getConfig().feedbackFormUrl || "").trim();
   }
 
-  function escapeHtml(s) {
-    return String(s || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-
-  function targetId(el) {
-    return el.dataset.feedbackId || el.dataset.kpiFocus || "";
-  }
-
-  function targetLabel(el) {
-    if (el.dataset.feedbackLabel) return el.dataset.feedbackLabel.trim();
-    const kpi = el.dataset.kpiFocus;
-    if (kpi) {
-      const idEl = el.querySelector(".kpi-stat-id");
-      const head = el.querySelector(".kpi-chart-head strong");
-      if (idEl) return idEl.textContent.trim();
-      if (head) return head.textContent.trim();
-      return kpi;
-    }
-    const title = el.querySelector(".kpi-section-title");
-    if (title) return title.textContent.trim();
-    return targetId(el) || "Metric";
-  }
-
-  function targetType(el) {
-    if (el.classList.contains("kpi-stat-card") || el.classList.contains("kpi-goal-card")) return "metric";
-    if (el.classList.contains("kpi-chart-card") || el.querySelector(".kpi-chart-svg")) return "chart";
-    if (el.classList.contains("kpi-section")) return "section";
-    if (
-      el.classList.contains("kpi-dash-card") ||
-      el.classList.contains("kpi-mini-card") ||
-      el.classList.contains("kpi-split-panel")
-    ) return "widget";
-    if (el.id === "completed-report-out" || el.classList.contains("completed-report-out")) return "impact";
-    if (el.classList.contains("impact-section") || el.classList.contains("picker-zone") || el.classList.contains("pav-guide-ask-section")) {
-      return "page";
-    }
-    return "other";
-  }
-
-  function discoverTargets() {
-    const seen = new Set();
-    const out = [];
-    const selectors = [
-      ".kpi-stat-card[data-kpi-focus]",
-      ".kpi-goal-card[data-kpi-focus]:not([disabled])",
-      ".kpi-mini-card[data-kpi-focus]",
-      ".kpi-dash-card[data-kpi-focus]",
-      ".kpi-split-panel[data-feedback-id]",
-      ".kpi-chart-card[data-kpi-focus]",
-      ".kpi-chart-card",
-      "[data-feedback-id]"
-    ].join(", ");
-
-    function addTarget(el) {
-      if (el.closest(".kpi-detail-panel")) return;
-      let id = targetId(el);
-      if (!id && el.classList.contains("kpi-chart-card")) {
-        const head = el.querySelector(".kpi-chart-head strong");
-        id = "chart-" + (head ? head.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") : "untitled");
-        el.dataset.feedbackId = id;
+  function toEmbedUrl(url) {
+    if (!url) return "";
+    try {
+      const u = new URL(url);
+      if (u.hostname.includes("docs.google.com") && /\/forms\//.test(u.pathname)) {
+        if (!u.pathname.includes("/viewform")) {
+          u.pathname = u.pathname.replace(/\/edit.*$/, "/viewform").replace(/\/formResponse$/, "/viewform");
+          if (!u.pathname.endsWith("/viewform")) {
+            u.pathname = u.pathname.replace(/\/?$/, "") + "/viewform";
+          }
+        }
+        u.searchParams.set("embedded", "true");
+        return u.toString();
       }
-      if (!id || seen.has(id)) return;
-      if (el.classList.contains("kpi-section") && el.querySelector("[data-kpi-focus], .kpi-chart-card, .kpi-split-panel")) {
+    } catch {
+      /* fall through */
+    }
+    if (/embedded=true/i.test(url)) return url;
+    return url + (url.includes("?") ? "&" : "?") + "embedded=true";
+  }
+
+  function ensureModal() {
+    if (document.getElementById("feedback-form-modal")) return;
+
+    const backdrop = document.createElement("div");
+    backdrop.id = "feedback-form-backdrop";
+    backdrop.className = "feedback-form-backdrop";
+    backdrop.hidden = true;
+
+    const modal = document.createElement("div");
+    modal.id = "feedback-form-modal";
+    modal.className = "feedback-form-modal";
+    modal.hidden = true;
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-labelledby", "feedback-form-title");
+    modal.innerHTML =
+      '<div class="feedback-form-modal-head">' +
+      '<h2 id="feedback-form-title">Leave feedback</h2>' +
+      '<button type="button" class="feedback-form-close" id="feedback-form-close" aria-label="Close">×</button>' +
+      "</div>" +
+      '<div class="feedback-form-modal-body" id="feedback-form-body"></div>';
+
+    document.body.appendChild(backdrop);
+    document.body.appendChild(modal);
+  }
+
+  function renderBody() {
+    const body = document.getElementById("feedback-form-body");
+    if (!body) return;
+    const raw = formUrl();
+    const embed = toEmbedUrl(raw);
+    if (embed) {
+      body.innerHTML =
+        '<iframe class="feedback-form-frame" title="Pav Law cockpit feedback form" src="' +
+        embed.replace(/"/g, "&quot;") +
+        '"></iframe>' +
+        '<p class="feedback-form-foot">Responses go to the linked Google Sheet. Close when you’re done.</p>';
+      return;
+    }
+    body.innerHTML =
+      '<div class="feedback-form-setup">' +
+      "<p><strong>No Google Form is linked yet.</strong></p>" +
+      "<p>Owner — pick one:</p>" +
+      "<ol>" +
+      '<li>Open <a href="' +
+      SETUP_SHEET +
+      '" target="_blank" rel="noopener">the feedback Sheet</a> → <strong>Tools → Create a new form</strong>. Add questions about layout / KPIs / Guide. <strong>Send</strong> → copy the link.</li>' +
+      "<li>Or in Apps Script run <code>createCockpitFeedbackForm</code>, then copy the published URL from the log.</li>" +
+      "</ol>" +
+      "<p>Paste that URL into <code>pages-config.js</code> as <code>feedbackFormUrl</code> (same folder as this page), save, hard-refresh.</p>" +
+      "</div>";
+  }
+
+  function openModal() {
+    ensureModal();
+    renderBody();
+    const backdrop = document.getElementById("feedback-form-backdrop");
+    const modal = document.getElementById("feedback-form-modal");
+    if (backdrop) backdrop.hidden = false;
+    if (modal) modal.hidden = false;
+    document.body.classList.add("feedback-form-open");
+    document.querySelectorAll(".kpi-feedback-mode-toggle").forEach(btn => {
+      btn.setAttribute("aria-pressed", "true");
+      btn.textContent = "Feedback";
+    });
+  }
+
+  function closeModal() {
+    const backdrop = document.getElementById("feedback-form-backdrop");
+    const modal = document.getElementById("feedback-form-modal");
+    if (backdrop) backdrop.hidden = true;
+    if (modal) modal.hidden = true;
+    document.body.classList.remove("feedback-form-open");
+    document.querySelectorAll(".kpi-feedback-mode-toggle").forEach(btn => {
+      btn.setAttribute("aria-pressed", "false");
+      btn.textContent = "Feedback";
+    });
+  }
+
+  function bind() {
+    if (document.documentElement.dataset.feedbackFormBound === "1") return;
+    document.documentElement.dataset.feedbackFormBound = "1";
+
+    document.addEventListener("click", e => {
+      const openBtn = e.target.closest(".kpi-feedback-mode-toggle, #feedback-open-btn");
+      if (openBtn) {
+        e.preventDefault();
+        const modal = document.getElementById("feedback-form-modal");
+        if (modal && !modal.hidden) closeModal();
+        else openModal();
         return;
       }
-      seen.add(id);
-      out.push({ id, el, label: targetLabel(el), type: targetType(el) });
-    }
-
-    document.querySelectorAll(".kpi-report-root").forEach(root => {
-      root.querySelectorAll(selectors).forEach(addTarget);
-    });
-    document.querySelectorAll(
-      "#cockpit-panel-impact [data-feedback-id], #cockpit-panel-picker [data-feedback-id]"
-    ).forEach(addTarget);
-    return out;
-  }
-
-  function verdictMeta(id) {
-    return VERDICTS.find(v => v.id === id) || VERDICTS[0];
-  }
-
-  function markTargets() {
-    state.targets.forEach(t => {
-      t.el.classList.add("feedback-target");
-      t.el.dataset.feedbackFor = t.id;
-      if (!t.el._feedbackClickBound) {
-        t.el.addEventListener("click", onTargetClick, true);
-        t.el._feedbackClickBound = true;
+      if (e.target.closest("#feedback-form-close") || e.target.id === "feedback-form-backdrop") {
+        e.preventDefault();
+        closeModal();
       }
     });
-    syncTargetStates();
-  }
 
-  function onTargetClick(e) {
-    if (!state.feedbackMode) return;
-    const el = e.currentTarget;
-    if (el.classList.contains("kpi-section")) return;
-    const nested = e.target.closest(".feedback-target");
-    if (nested && nested !== el) return;
-    const id = el.dataset.feedbackFor || targetId(el);
-    if (!id) return;
-    e.preventDefault();
-    e.stopPropagation();
-    openGilbertPopup(id);
-  }
-
-  function setFeedbackMode(on, opts) {
-    const wasOn = state.feedbackMode;
-    const next = !!on;
-    state.feedbackMode = next;
-    document.body.classList.toggle("feedback-mode-on", state.feedbackMode);
-    document.querySelectorAll(".kpi-feedback-mode-toggle").forEach(btn => {
-      btn.setAttribute("aria-pressed", state.feedbackMode ? "true" : "false");
-      btn.textContent = state.feedbackMode ? "Feedback mode · ON" : "Feedback mode";
-    });
-    syncTargetStates();
-    if (!state.feedbackMode) closeGilbertPopup();
-    // User toggle OFF → flush all rated items to MetricsFeedback (sheet only; no email event).
-    if (wasOn && !next && !opts?.silent) {
-      flushOnModeExit();
-    }
-  }
-
-  function syncTargetStates() {
-    state.targets.forEach(t => {
-      const entry = state.feedback[t.id];
-      t.el.classList.remove("has-feedback-ok", "has-feedback-flag", "is-feedback-active");
-      if (state.activeId === t.id) t.el.classList.add("is-feedback-active");
-      if (entry?.verdict) {
-        t.el.classList.add(entry.verdict === "ok" ? "has-feedback-ok" : "has-feedback-flag");
-      }
-      t.el.querySelectorAll(".feedback-chip").forEach(chip => chip.remove());
-    });
-    if (state.filterPending && state.feedbackMode) {
-      state.targets.forEach(t => {
-        t.el.style.display = state.feedback[t.id]?.verdict ? "none" : "";
-      });
-    } else {
-      state.targets.forEach(t => { t.el.style.display = ""; });
-    }
-  }
-
-  function syncChipStates() {
-    syncTargetStates();
-  }
-
-  function injectChips() {
-    markTargets();
-  }
-
-  function popupEls() {
-    return {
-      popup: document.getElementById("gilbert-feedback-popup"),
-      backdrop: document.getElementById("gilbert-feedback-backdrop"),
-      body: document.getElementById("gilbert-feedback-body"),
-      subtitle: document.getElementById("gilbert-feedback-subtitle")
-    };
-  }
-
-  function ensureFeedbackPopup() {
-    if (document.getElementById("gilbert-feedback-popup")) return;
-    const backdrop = document.createElement("div");
-    backdrop.id = "gilbert-feedback-backdrop";
-    backdrop.className = "gilbert-chat-backdrop";
-    backdrop.hidden = true;
-    const aside = document.createElement("aside");
-    aside.id = "gilbert-feedback-popup";
-    aside.className = "gilbert-chat-popup gilbert-feedback-popup";
-    aside.hidden = true;
-    aside.setAttribute("aria-label", "Gilbert metric feedback");
-    aside.innerHTML = `
-      <div class="gilbert-chat-popup-head">
-        <img class="gilbert-popup-portrait" src="assets/gilbert-thinking.png?v=20260714h" alt="">
-        <div class="gilbert-popup-head-title">Gilbert<small id="gilbert-feedback-subtitle">Comment on this metric</small></div>
-        <button type="button" class="gilbert-chat-close" id="gilbert-feedback-close" aria-label="Close">×</button>
-      </div>
-      <div class="gilbert-chat-wrap gilbert-feedback-body" id="gilbert-feedback-body"></div>`;
-    document.body.appendChild(backdrop);
-    document.body.appendChild(aside);
-    bindPopupChrome();
-  }
-
-  function closeGilbertPopup() {
-    const { popup, backdrop } = popupEls();
-    if (popup) popup.hidden = true;
-    if (backdrop) backdrop.hidden = true;
-    state.activeId = null;
-    syncChipStates();
-  }
-
-  function remoteStatusHtml() {
-    if (!webhookConfigured()) {
-      return `Remote gather OFF — ${SHEET_ERR}. Verify <a href="${LIVE_CONFIG_HREF}" target="_blank" rel="noopener">live pages-config.js</a> shows a real <code>/exec</code>, then hard-refresh Metrics and Save.`;
-    }
-    if (state.lastRemoteStatus === "ok") {
-      return "Saved to Google Sheet tab MetricsFeedback.";
-    }
-    if (state.lastRemoteStatus === "outdated") {
-      return `${SHEET_ERR} — live Apps Script is outdated. Copy Mac <code>apps-script-webhook.gs</code> → Code.gs → <strong>Deploy → Manage deployments → pencil → New version → Deploy</strong>, then confirm ping shows <code>metricsFeedback:true</code>. See <a href="${SETUP_HREF}">owner webhook setup</a>.`;
-    }
-    if (state.lastRemoteStatus === "err") {
-      return `${SHEET_ERR}. Check Apps Script deploy (Anyone + /exec). See <a href="${SETUP_HREF}">owner webhook setup</a>.`;
-    }
-    return "Remote gather ON — each Save posts to MetricsFeedback (plus a local copy).";
-  }
-
-  function openGilbertPopup(id) {
-    if (!state.feedbackMode) return;
-    state.activeId = id;
-    ensureFeedbackPopup();
-    const t = state.targets.find(x => x.id === id);
-    const { popup, backdrop, body, subtitle } = popupEls();
-    if (!popup || !body || !t) return;
-
-    const entry = state.feedback[id] || {};
-    const reviewer = loadReviewer();
-    if (subtitle) subtitle.textContent = t.label;
-    const verdicts = VERDICTS.map(
-      v => `<label class="feedback-verdict">
-        <input type="radio" name="feedback-verdict" value="${v.id}" ${entry.verdict === v.id ? "checked" : ""}>
-        <span>${escapeHtml(v.label)}</span>
-      </label>`
-    ).join("");
-
-    const remoteHint = webhookConfigured()
-      ? `<p class="feedback-remote-ok">Save sends this note to the shared <strong>MetricsFeedback</strong> sheet (plus a copy on this device).</p>`
-      : `<p class="feedback-remote-warn">Remote gather OFF — ${SHEET_ERR}. Check <a href="${LIVE_CONFIG_HREF}" target="_blank" rel="noopener">pages-config.js</a> has a non-empty <code>webhookUrl</code> ending in <code>/exec</code>, then hard-refresh.</p>`;
-
-    body.innerHTML = `
-      <div class="gilbert-feedback-msg gilbert-chat-gilbert">
-        <span class="gilbert-chat-who">Gilbert</span>
-        <p>How does <strong>${escapeHtml(t.label)}</strong> look?</p>
-      </div>
-      <p class="feedback-panel-target">${escapeHtml(t.type)} · ${escapeHtml(t.id)}</p>
-      ${remoteHint}
-      <div class="feedback-field">
-        <label for="feedback-popup-name">Your name (optional)</label>
-        <input type="text" id="feedback-popup-name" value="${escapeHtml(reviewer.name || "")}" placeholder="So Kate can tell reviewers apart" autocomplete="name">
-      </div>
-      <div class="feedback-verdicts" role="group" aria-label="Your verdict">${verdicts}</div>
-      <div class="feedback-field">
-        <label for="feedback-comment">Your comment</label>
-        <textarea id="feedback-comment" placeholder="What's unclear? What should change?">${escapeHtml(entry.comment || "")}</textarea>
-      </div>
-      <div class="feedback-field">
-        <label for="feedback-target-suggest">Suggested target or fix (optional)</label>
-        <input type="text" id="feedback-target-suggest" value="${escapeHtml(entry.suggestedTarget || "")}" placeholder="e.g. target 90% answer rate">
-      </div>
-      <div class="feedback-panel-actions">
-        <button type="button" class="btn btn-primary" id="feedback-save-btn">Save</button>
-        <button type="button" class="btn" id="feedback-clear-btn">Clear</button>
-      </div>
-      <p class="feedback-saved-toast" id="feedback-saved-toast" aria-live="polite"></p>`;
-
-    document.getElementById("feedback-save-btn")?.addEventListener("click", () => saveActive(id));
-    document.getElementById("feedback-clear-btn")?.addEventListener("click", () => {
-      delete state.feedback[id];
-      persistFeedbackLocal();
-      openGilbertPopup(id);
-    });
-    document.getElementById("feedback-popup-name")?.addEventListener("change", e => {
-      const email = document.getElementById("metrics-email")?.value || loadReviewer().email || "";
-      saveReviewer(e.target.value, email);
-      const barName = document.getElementById("metrics-reviewer-name");
-      if (barName) barName.value = e.target.value;
-    });
-
-    popup.hidden = false;
-    if (backdrop) backdrop.hidden = false;
-    syncChipStates();
-    t.el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    document.getElementById("feedback-comment")?.focus();
-  }
-
-  /**
-   * CORS POST only — never treat opaque no-cors as Sheet success.
-   * Live Apps Script must return JSON with type/sheet metrics_feedback.
-   * Outdated deploys return picker shape { ok, emailsSent } and must fail in UI.
-   */
-  async function postToWebhook(payload) {
-    const url = (getConfig().webhookUrl || "").trim();
-    if (!url) return { ok: false, reason: "missing" };
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        mode: "cors",
-        redirect: "follow",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      });
-      const text = await res.text();
-      let data = {};
-      try {
-        data = JSON.parse(text);
-      } catch {
-        /* GAS may return HTML on some failures */
-      }
-      if (
-        res.ok &&
-        data.ok === true &&
-        (data.type === "metrics_feedback" || data.sheet === "MetricsFeedback")
-      ) {
-        return { ok: true, data };
-      }
-      // Outdated Code.gs: metrics payload hit Submissions path, not MetricsFeedback.
-      if (res.ok && data.ok === true && data.emailsSent && !data.type && !data.sheet) {
-        return { ok: false, reason: "outdated_script", data };
-      }
-      return {
-        ok: false,
-        reason: data.error || (res.ok ? "bad_response" : `HTTP ${res.status}`),
-        data
-      };
-    } catch {
-      return { ok: false, reason: "network" };
-    }
-  }
-
-  function sheetSaveErrorText(result) {
-    if (result?.reason === "outdated_script") {
-      return "Not saved to MetricsFeedback — live Apps Script outdated. Paste Mac apps-script-webhook.gs → Manage deployments → New version (not GitHub Secret). Confirm ping metricsFeedback:true before Save.";
-    }
-    if (result?.reason === "missing") return SHEET_ERR;
-    return `${SHEET_ERR}. Check Apps Script deploy (Anyone + /exec).`;
-  }
-
-  function buildItemPayload(id, entry, event) {
-    const t = state.targets.find(x => x.id === id);
-    const reviewer = readReviewerFromUi();
-    const popupName = document.getElementById("feedback-popup-name")?.value;
-    if (popupName != null) saveReviewer(popupName, reviewer.email);
-    const who = loadReviewer();
-    const data = window.KPI_REPORT?.getData?.() || {};
-    const item = {
-      id,
-      label: t?.label || id,
-      type: t?.type || "other",
-      ...entry
-    };
-    return {
-      type: "metrics_feedback",
-      event: event || "item_save",
-      notifyEmail: SUPPORT_EMAIL,
-      submittedAt: new Date().toISOString(),
-      submitterName: who.name || "",
-      submitterEmail: who.email || "",
-      sessionId: state.sessionId,
-      period: data.period || "",
-      asOf: data.asOf || "",
-      source: data.source || (document.body.classList.contains("metrics-page") ? "metrics.html" : "index.html"),
-      feedbackCount: 1,
-      feedback: [item]
-    };
-  }
-
-  async function saveActive(id) {
-    const verdict = document.querySelector('input[name="feedback-verdict"]:checked')?.value;
-    const toast = document.getElementById("feedback-saved-toast");
-    if (!verdict) {
-      if (toast) toast.textContent = "Pick a verdict first.";
-      return;
-    }
-
-    const popupName = document.getElementById("feedback-popup-name")?.value || "";
-    const email = document.getElementById("metrics-email")?.value || loadReviewer().email || "";
-    saveReviewer(popupName, email);
-    const barName = document.getElementById("metrics-reviewer-name");
-    if (barName) barName.value = popupName;
-
-    const entry = {
-      verdict,
-      comment: (document.getElementById("feedback-comment")?.value || "").trim(),
-      suggestedTarget: (document.getElementById("feedback-target-suggest")?.value || "").trim(),
-      updatedAt: new Date().toISOString()
-    };
-    state.feedback[id] = entry;
-    persistFeedbackLocal();
-
-    if (!webhookConfigured()) {
-      state.lastRemoteStatus = "missing";
-      updateRemoteBanner();
-      if (toast) toast.textContent = SHEET_ERR;
-      setTimeout(() => closeGilbertPopup(), 900);
-      return;
-    }
-
-    if (toast) toast.textContent = "Saving to shared sheet…";
-    const result = await postToWebhook(buildItemPayload(id, entry, "item_save"));
-    state.lastRemoteStatus = result.ok
-      ? "ok"
-      : result.reason === "outdated_script"
-        ? "outdated"
-        : "err";
-    updateRemoteBanner();
-    if (toast) {
-      toast.textContent = result.ok
-        ? "Saved to MetricsFeedback sheet (+ local copy)."
-        : sheetSaveErrorText(result);
-    }
-    setTimeout(() => closeGilbertPopup(), result.ok ? 450 : 900);
-  }
-
-  function updateProgress() {
-    const total = state.targets.length;
-    const done = state.targets.filter(t => state.feedback[t.id]?.verdict).length;
-    const el = document.getElementById("feedback-progress");
-    if (el) el.innerHTML = `<strong>${done}</strong> <span>of ${total} rated</span>`;
-    const submitBtn = document.getElementById("metrics-submit-btn");
-    if (submitBtn) submitBtn.disabled = done === 0;
-  }
-
-  function renderSummary() {
-    const list = document.getElementById("feedback-summary-list");
-    if (!list) return;
-    const items = state.targets
-      .map(t => ({ ...t, entry: state.feedback[t.id] }))
-      .filter(x => x.entry?.verdict);
-    if (!items.length) {
-      list.innerHTML = "<li><em>None yet — turn on magenta Feedback mode, then click a KPI or chart.</em></li>";
-      return;
-    }
-    list.innerHTML = items.map(x => {
-      const cls = x.entry.verdict === "ok" ? "ok" : "flag";
-      const short = verdictMeta(x.entry.verdict).label;
-      const note = x.entry.comment ? ` — ${escapeHtml(x.entry.comment)}` : "";
-      return `<li><span>${escapeHtml(x.label)}${note}</span><span class="${cls}">${escapeHtml(short)}</span></li>`;
-    }).join("");
-  }
-
-  function feedbackItems() {
-    return state.targets
-      .filter(t => state.feedback[t.id]?.verdict)
-      .map(t => ({
-        id: t.id,
-        label: t.label,
-        type: t.type,
-        ...state.feedback[t.id]
-      }));
-  }
-
-  function buildPayload(event) {
-    const data = window.KPI_REPORT?.getData?.() || {};
-    const who = readReviewerFromUi();
-    const items = feedbackItems();
-    return {
-      type: "metrics_feedback",
-      event: event || "full_submit",
-      notifyEmail: SUPPORT_EMAIL,
-      submittedAt: new Date().toISOString(),
-      submitterName: who.name || "",
-      submitterEmail: who.email || "",
-      sessionId: state.sessionId,
-      period: data.period || "",
-      asOf: data.asOf || "",
-      source: data.source || (document.body.classList.contains("metrics-page") ? "metrics.html" : "index.html"),
-      feedbackCount: items.length,
-      feedback: items
-    };
-  }
-
-  function setSubmitStatus(text, kind) {
-    const statusEl = document.getElementById("metrics-submit-status");
-    if (!statusEl) return;
-    statusEl.hidden = false;
-    statusEl.textContent = text;
-    statusEl.className = kind === "ok"
-      ? "metrics-status ok"
-      : kind === "err"
-        ? "metrics-status err"
-        : "metrics-status";
-  }
-
-  /**
-   * POST all rated items to MetricsFeedback.
-   * event "item_save" → Sheet row only (Apps Script skips MailApp for item_save).
-   * event "full_submit" → Sheet + optional notify email (manual Save all).
-   */
-  async function postAllRated(event, opts) {
-    const silentEmpty = !!(opts && opts.silentEmpty);
-    const statusEl = document.getElementById("metrics-submit-status");
-    const items = feedbackItems();
-    if (!items.length) {
-      if (!silentEmpty && statusEl) {
-        setSubmitStatus("Rate at least one metric first.", "err");
-      }
-      return { ok: false, reason: "empty" };
-    }
-
-    persistFeedbackLocal();
-    const payload = buildPayload(event || "full_submit");
-    const btn = document.getElementById("metrics-submit-btn");
-    if (btn) btn.disabled = true;
-
-    if (!webhookConfigured()) {
-      state.lastRemoteStatus = "missing";
-      updateRemoteBanner();
-      setSubmitStatus(SHEET_ERR, "err");
-      if (btn) btn.disabled = false;
-      return { ok: false, reason: "missing" };
-    }
-
-    setSubmitStatus(
-      event === "item_save"
-        ? "Feedback mode off — saving ratings to MetricsFeedback…"
-        : "Saving full set to MetricsFeedback sheet…",
-      ""
-    );
-
-    const result = await postToWebhook(payload);
-    const webhookOk = result.ok;
-    state.lastRemoteStatus = webhookOk
-      ? "ok"
-      : result.reason === "outdated_script"
-        ? "outdated"
-        : "err";
-    updateRemoteBanner();
-
-    if (webhookOk) {
-      setSubmitStatus(
-        event === "item_save"
-          ? "Feedback mode off — saved to sheet (MetricsFeedback)."
-          : "Saved to sheet — tab MetricsFeedback. Email not required.",
-        "ok"
-      );
-    } else {
-      setSubmitStatus(sheetSaveErrorText(result), "err");
-    }
-    if (btn) btn.disabled = false;
-    return result;
-  }
-
-  async function submitAll() {
-    return postAllRated("full_submit");
-  }
-
-  /** When Feedback mode turns OFF: one batch Sheet write, no email flood (item_save). */
-  async function flushOnModeExit() {
-    return postAllRated("item_save", { silentEmpty: true });
-  }
-
-  function updateRemoteBanner() {
-    const els = document.querySelectorAll("#metrics-remote-status, .metrics-remote-status");
-    const html = remoteStatusHtml();
-    const cls = !webhookConfigured()
-      ? "metrics-status err metrics-remote-status"
-      : state.lastRemoteStatus === "err" || state.lastRemoteStatus === "outdated"
-        ? "metrics-status err metrics-remote-status"
-        : "metrics-status ok metrics-remote-status";
-    els.forEach(el => {
-      el.hidden = false;
-      el.className = cls;
-      el.innerHTML = html;
-    });
-  }
-
-  function hydrateReviewerFields() {
-    const who = loadReviewer();
-    const nameEl = document.getElementById("metrics-reviewer-name");
-    const emailEl = document.getElementById("metrics-email");
-    if (nameEl && !nameEl.value && who.name) nameEl.value = who.name;
-    if (emailEl && !emailEl.value && who.email) emailEl.value = who.email;
-    nameEl?.addEventListener("change", () => {
-      saveReviewer(nameEl.value, emailEl?.value || loadReviewer().email || "");
-    });
-    emailEl?.addEventListener("change", () => {
-      saveReviewer(nameEl?.value || loadReviewer().name || "", emailEl.value);
-    });
-  }
-
-  function bindPopupChrome() {
-    document.getElementById("gilbert-feedback-close")?.addEventListener("click", closeGilbertPopup);
-    document.getElementById("gilbert-feedback-backdrop")?.addEventListener("click", closeGilbertPopup);
-  }
-
-  function bindFeedbackModeToggle() {
-    if (document.documentElement.dataset.feedbackModeBound === "1") return;
-    document.documentElement.dataset.feedbackModeBound = "1";
-    document.addEventListener("click", e => {
-      const btn = e.target.closest(".kpi-feedback-mode-toggle");
-      if (!btn) return;
-      e.preventDefault();
-      setFeedbackMode(btn.getAttribute("aria-pressed") !== "true");
-    });
     document.addEventListener("keydown", e => {
-      if (e.key === "Escape") closeGilbertPopup();
+      if (e.key === "Escape") closeModal();
     });
   }
 
   function init() {
-    ensureFeedbackPopup();
-    state.targets = discoverTargets();
-    injectChips();
-    setFeedbackMode(false, { silent: true });
-    updateProgress();
-    renderSummary();
-    hydrateReviewerFields();
-    updateRemoteBanner();
-    bindPopupChrome();
-    bindFeedbackModeToggle();
-
-    document.getElementById("feedback-filter-pending")?.addEventListener("click", e => {
-      e.currentTarget.classList.toggle("active");
-      state.filterPending = e.currentTarget.classList.contains("active");
-      syncChipStates();
+    ensureModal();
+    bind();
+    document.querySelectorAll(".kpi-feedback-mode-toggle").forEach(btn => {
+      btn.textContent = "Feedback";
+      btn.setAttribute("aria-pressed", "false");
+      btn.title = "Open feedback form";
     });
-
-    document.getElementById("metrics-submit-btn")?.addEventListener("click", submitAll);
   }
 
   function onReady() {
-    if (!window.KPI_REPORT) return;
-    const kpis = document.getElementById("kpi-report-kpis");
-    const isMetricsPage = document.body.classList.contains("metrics-page");
-    if (isMetricsPage) {
-      KPI_REPORT.renderAll(kpis);
+    if (document.body.classList.contains("metrics-page") && window.KPI_REPORT) {
+      const kpis = document.getElementById("kpi-report-kpis");
+      if (kpis) KPI_REPORT.renderAll(kpis);
     }
     init();
   }
@@ -725,11 +165,5 @@
     onReady();
   }
 
-  window.addEventListener("kpi-report-rendered", () => {
-    state.targets = discoverTargets();
-    injectChips();
-    setFeedbackMode(state.feedbackMode, { silent: true });
-    updateProgress();
-    renderSummary();
-  });
+  window.PAV_FEEDBACK_FORM = { open: openModal, close: closeModal };
 })();

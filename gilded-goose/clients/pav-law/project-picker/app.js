@@ -13,6 +13,41 @@
   const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
   const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
 
+  /** Quick fit survey → tags in goalText → recommended projects */
+  const GILBERT_SURVEY = [
+    {
+      id: "bottleneck",
+      prompt: "What's the biggest bottleneck right now?",
+      options: [
+        { id: "leads", label: "Not enough qualified leads / consults", tags: "leads ads LSA search paid consults volume campaigns" },
+        { id: "intake", label: "Phones / intake — missing or slow follow-up", tags: "phones VoIP HubSpot intake CRM routing calls" },
+        { id: "web", label: "Website, content, or SEO", tags: "website content SEO organic pages landing" },
+        { id: "referrals", label: "Referrals / past clients", tags: "referral clients past email nurture" },
+        { id: "data", label: "Tracking, dashboards, or reporting", tags: "tracking KPI dashboard CRM data analytics reporting" }
+      ]
+    },
+    {
+      id: "outcome",
+      prompt: "What do you want most in the next 30–60 days?",
+      options: [
+        { id: "consults", label: "More signed consults", tags: "consults leads conversion cases" },
+        { id: "cpl", label: "Lower cost per lead", tags: "CPL efficiency waste pause optimize spend" },
+        { id: "speed", label: "Faster intake response", tags: "intake phones speed VoIP HubSpot routing" },
+        { id: "clarity", label: "Clearer metrics to decide", tags: "KPI dashboard reporting tracking data" },
+        { id: "refer", label: "More referral volume", tags: "referral program past clients email" }
+      ]
+    },
+    {
+      id: "posture",
+      prompt: "How should we prioritize work?",
+      options: [
+        { id: "protect", label: "Fix foundation / tracking before scaling spend", tags: "enabler tracking phones CRM foundation protect spend" },
+        { id: "grow", label: "Grow volume now — ship campaigns", tags: "ads launch campaign Military NTGUILT display search growth" },
+        { id: "wins", label: "Quick wins this month", tags: "email referral quick audit stack safety" }
+      ]
+    }
+  ];
+
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
   }
@@ -286,22 +321,25 @@
     invoicePaymentMonthlyAmount: "",
     goalText: "",
     gilbertChat: [],
+    surveyStep: 0,
+    surveyAnswers: {},
+    surveyDone: false,
     iconFilters: [],
     tocSort: { field: "priority", dir: "asc" },
     tocExpanded: false,
     showAllProjects: false,
-    activeViewTab: "picker",
+    activeViewTab: "kpis",
     doNextVisible: false,
     priorityEdit: false,
     clientPriorityIds: []
   };
 
   function normalizeViewTab(tab) {
-    const t = String(tab || "picker").toLowerCase().trim();
+    const t = String(tab || "kpis").toLowerCase().trim();
     if (t === "revenue" || t === "completed") return "impact";
     if (t === "dashboards") return "kpis";
     if (t === "kpis" || t === "picker" || t === "impact") return t;
-    return "picker";
+    return "kpis";
   }
 
   function setActiveViewTab(tab) {
@@ -398,31 +436,50 @@
     if (!el) return;
     el.hidden = false;
     const asked = hasGilbertActivity();
+    const cartItems = getInvoiceLineItems();
+    const hasCart = cartItems.length > 0;
     const head = `<div class="do-next-head">
       <div class="do-next-head-copy">
-        <h3>Recommended Priority Projects</h3>
-        <p class="do-next-blurb">${asked
-          ? "Updated from your chat with Gilbert — refine the list anytime by telling him more about leads, intake, ads, website, or CRM."
-          : "Ask Gilbert on the left about leads, intake, ads, website, or CRM — he will refine this shortlist as you chat."}</p>
+        <h3>Pav Priorities</h3>
+        <p class="do-next-blurb">${hasCart
+          ? "Your selected projects — fees and estimates show after you review &amp; submit."
+          : (asked
+            ? "Best-fit from your survey — add projects from Outlines or cards below. Fees appear on the review page."
+            : "Answer Gilbert’s survey on the left for a shortlist, or add projects below. Fees appear on the review page.")}</p>
       </div>
     </div>`;
-    const ranked = asked
-      ? gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) }))
-      : topScoredProjects(5);
-    if (!ranked.length) {
-      el.innerHTML = `${head}<p class="kpi-dashboard-note">No matches yet — add more detail in chat with Gilbert.</p>`;
-      return;
+
+    let body = "";
+    if (hasCart) {
+      body = buildPrioritiesCartHtml();
+    } else {
+      const ranked = asked
+        ? gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) }))
+        : topScoredProjects(5);
+      if (!ranked.length) {
+        body = `<p class="kpi-dashboard-note">No matches yet — finish the survey or add projects from Outlines.</p>`;
+      } else {
+        body = `<ol class="do-next-list">${ranked.map(({ item, score }, i) =>
+          `<li>
+            <span class="do-next-rank">${i + 1}.</span>
+            <div class="do-next-item-copy">
+              <a href="#project-${item.id}">${escapeHtml(item.title)}</a>
+              <span class="do-next-item-blurb">${escapeHtml(elevatorPitch(item))}</span>
+            </div>
+            <span class="do-next-score">score ${score}</span>
+          </li>`
+        ).join("")}</ol>`;
+      }
     }
-    el.innerHTML = `${head}<ol class="do-next-list">${ranked.map(({ item, score }, i) =>
-      `<li>
-        <span class="do-next-rank">${i + 1}.</span>
-        <div class="do-next-item-copy">
-          <a href="#project-${item.id}">${escapeHtml(item.title)}</a>
-          <span class="do-next-item-blurb">${escapeHtml(elevatorPitch(item))}</span>
-        </div>
-        <span class="do-next-score">score ${score}</span>
-      </li>`
-    ).join("")}</ol>`;
+
+    el.innerHTML = `${head}
+      <div class="total-box" id="plan-summary">${body}</div>
+      <button type="button" class="btn btn-primary project-continue-btn" id="continue-to-confirm" ${hasCart ? "" : "disabled"}>Review plan &amp; submit</button>`;
+
+  }
+
+  function renderPlanSummary() {
+    renderDoNextPanel();
   }
 
   function resolveImpactEstimates(item) {
@@ -1375,15 +1432,6 @@
     el.innerHTML = `<div class="why-gilded-frame"><div class="recommendation-box"><h3>Why this combination</h3>${body}</div></div>`;
   }
 
-  function renderPlanSummary() {
-    const el = document.getElementById("plan-summary");
-    const wrap = document.getElementById("pav-priorities-cart-wrap");
-    if (!el) return;
-    const hasItems = getInvoiceLineItems().length > 0;
-    if (wrap) wrap.hidden = !hasItems;
-    el.innerHTML = buildPrioritiesCartHtml();
-  }
-
   function renderRevenueCalculator() {
     const el = document.getElementById("revenue-calculator");
     if (!el) return;
@@ -2091,7 +2139,7 @@
   }
 
   function renderCondensedToc() {
-    /* Gilbert's picks live only in Recommended Priority Projects (do-next-panel). */
+    /* Gilbert's picks live only in Pav Priorities (do-next-panel). */
     const el = document.getElementById("toc-condensed");
     if (el) {
       el.hidden = true;
@@ -2322,18 +2370,24 @@
       }
       updateInvoiceScheduleAmount();
       if (saved.goalText) {
-        document.getElementById("goal-input").value = saved.goalText;
+        const gi = document.getElementById("goal-input");
+        if (gi) gi.value = saved.goalText;
         state.goalText = saved.goalText;
       }
       if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.length) {
         state.gilbertChat = saved.gilbertChat;
       }
+      if (saved.surveyAnswers && typeof saved.surveyAnswers === "object") {
+        state.surveyAnswers = saved.surveyAnswers;
+      }
+      if (typeof saved.surveyStep === "number") state.surveyStep = saved.surveyStep;
+      if (saved.surveyDone != null) state.surveyDone = !!saved.surveyDone;
       if (Array.isArray(saved.iconFilters)) {
         state.iconFilters = saved.iconFilters;
       }
       if (saved.doNextVisible != null) {
         state.doNextVisible = !!saved.doNextVisible;
-      } else if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.some(m => m.role === "user")) {
+      } else if (state.surveyDone || (Array.isArray(saved.gilbertChat) && saved.gilbertChat.some(m => m.role === "user"))) {
         state.doNextVisible = true;
       }
       if (Array.isArray(saved.clientPriorityIds)) {
@@ -2360,6 +2414,9 @@
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
       goalText: state.goalText,
       gilbertChat: state.gilbertChat,
+      surveyStep: state.surveyStep,
+      surveyAnswers: state.surveyAnswers,
+      surveyDone: state.surveyDone,
       iconFilters: state.iconFilters,
       doNextVisible: state.doNextVisible,
       clientPriorityIds: state.clientPriorityIds
@@ -2378,7 +2435,145 @@
   }
 
   function hasGilbertActivity() {
+    if (state.surveyDone && state.goalText.trim()) return true;
     return state.gilbertChat.some(m => m.role === "user" && String(m.text || "").trim());
+  }
+
+  function surveyOption(stepId, optionId) {
+    const q = GILBERT_SURVEY.find(s => s.id === stepId);
+    return q?.options?.find(o => o.id === optionId) || null;
+  }
+
+  function buildSurveyGoalText() {
+    const labels = [];
+    const tags = [];
+    GILBERT_SURVEY.forEach(q => {
+      const ans = state.surveyAnswers[q.id];
+      const opt = surveyOption(q.id, ans);
+      if (!opt) return;
+      labels.push(opt.label);
+      tags.push(opt.tags);
+    });
+    if (!labels.length) return "";
+    return `Survey fit: ${labels.join(" · ")}. Keywords: ${tags.join(" ")}`;
+  }
+
+  function applySurveyAndRecommend() {
+    const goal = buildSurveyGoalText();
+    state.goalText = goal;
+    const goalInput = document.getElementById("goal-input");
+    if (goalInput) goalInput.value = goal;
+    state.surveyDone = true;
+    state.doNextVisible = true;
+    const summaryBits = GILBERT_SURVEY.map(q => {
+      const opt = surveyOption(q.id, state.surveyAnswers[q.id]);
+      return opt ? opt.label : null;
+    }).filter(Boolean);
+    state.gilbertChat = [
+      { role: "gilbert", text: GILBERT_GREETING },
+      { role: "user", text: summaryBits.join(" → ") },
+      {
+        role: "gilbert",
+        text: pickGilbertReply(goal) ||
+          "Here's a shortlist that fits those answers — check Pav Priorities on the right."
+      }
+    ];
+    suggestPlan(true);
+    saveState();
+    renderGilbertSurvey();
+    renderCondensedToc();
+    renderDoNextPanel();
+    renderPlanSummary();
+    renderProjectToc();
+  }
+
+  function resetGilbertSurvey() {
+    state.surveyStep = 0;
+    state.surveyAnswers = {};
+    state.surveyDone = false;
+    state.goalText = "";
+    const goalInput = document.getElementById("goal-input");
+    if (goalInput) goalInput.value = "";
+    state.doNextVisible = false;
+    state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+    saveState();
+    renderGilbertSurvey();
+    renderDoNextPanel();
+    renderCondensedToc();
+  }
+
+  function renderGilbertSurvey() {
+    const el = document.getElementById("gilbert-survey");
+    if (!el) return;
+
+    if (state.surveyDone && state.goalText.trim()) {
+      const picks = gilbertRankedPicks(3).map(p => p.title);
+      const pickLine = picks.length
+        ? ` Top fits: <strong>${picks.map(escapeHtml).join("</strong>, <strong>")}</strong>.`
+        : "";
+      el.innerHTML = `
+        <p class="gilbert-survey-progress">Survey complete</p>
+        <p class="gilbert-survey-summary">Gilbert matched projects from your answers.${pickLine} See the ranked list on the right — or retake the survey.</p>
+        <div class="gilbert-survey-nav">
+          <button type="button" class="btn-survey-ghost" data-survey-action="retake">Retake survey</button>
+        </div>`;
+      return;
+    }
+
+    const step = Math.min(Math.max(0, state.surveyStep | 0), GILBERT_SURVEY.length - 1);
+    const q = GILBERT_SURVEY[step];
+    const selected = state.surveyAnswers[q.id] || "";
+    const isLast = step === GILBERT_SURVEY.length - 1;
+    el.innerHTML = `
+      <p class="gilbert-survey-progress">Question ${step + 1} of ${GILBERT_SURVEY.length}</p>
+      <p class="gilbert-survey-prompt">${escapeHtml(q.prompt)}</p>
+      <ul class="gilbert-survey-options">${q.options.map(o =>
+        `<li><button type="button" data-survey-opt="${escapeHtml(o.id)}" class="${selected === o.id ? "is-selected" : ""}">${escapeHtml(o.label)}</button></li>`
+      ).join("")}</ul>
+      <div class="gilbert-survey-nav">
+        ${step > 0 ? `<button type="button" class="btn-survey-ghost" data-survey-action="back">Back</button>` : ""}
+        <button type="button" class="btn-survey-primary" data-survey-action="next" ${selected ? "" : "disabled"}>
+          ${isLast ? "See best-fit projects" : "Next"}
+        </button>
+      </div>`;
+  }
+
+  function bindGilbertSurvey() {
+    const el = document.getElementById("gilbert-survey");
+    if (!el || el.dataset.bound === "1") return;
+    el.dataset.bound = "1";
+    el.addEventListener("click", e => {
+      const optBtn = e.target.closest("[data-survey-opt]");
+      if (optBtn) {
+        const q = GILBERT_SURVEY[state.surveyStep];
+        if (!q) return;
+        state.surveyAnswers[q.id] = optBtn.getAttribute("data-survey-opt");
+        renderGilbertSurvey();
+        return;
+      }
+      const action = e.target.closest("[data-survey-action]");
+      if (!action) return;
+      const act = action.getAttribute("data-survey-action");
+      if (act === "retake") {
+        resetGilbertSurvey();
+        return;
+      }
+      if (act === "back") {
+        state.surveyStep = Math.max(0, state.surveyStep - 1);
+        renderGilbertSurvey();
+        return;
+      }
+      if (act === "next") {
+        const q = GILBERT_SURVEY[state.surveyStep];
+        if (!q || !state.surveyAnswers[q.id]) return;
+        if (state.surveyStep >= GILBERT_SURVEY.length - 1) {
+          applySurveyAndRecommend();
+          return;
+        }
+        state.surveyStep += 1;
+        renderGilbertSurvey();
+      }
+    });
   }
 
   function getNotesPayload() {
@@ -2914,23 +3109,14 @@
     const img = document.getElementById("gilbert-launcher-img");
     if (img) {
       img.src = heroSrc;
-      img.alt = `${GUIDE_NAME} — ask a question`;
+      img.alt = `${GUIDE_NAME} — project fit survey`;
     }
     if (!state.gilbertChat.length) {
       state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
-      if (state.goalText.trim()) {
-        state.gilbertChat.push({ role: "user", text: state.goalText.trim() });
-        state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(state.goalText) });
-      }
     }
-    renderGilbertChat();
+    bindGilbertSurvey();
+    renderGilbertSurvey();
     renderDoNextPanel();
-    try {
-      const qs = new URLSearchParams(location.search || "");
-      if (qs.get("gilbert") === "1" || location.hash === "#gilbert") {
-        setTimeout(() => openGilbertChat(), 0);
-      }
-    } catch (_) { /* ignore */ }
   }
 
   function showThankYou(payload) {
@@ -3023,7 +3209,6 @@
 
   function buildPrioritiesCartHtml() {
     const items = getInvoiceLineItems();
-    const total = getSelectionCost();
     if (!items.length) {
       return `<p class="empty-state">Selections appear here as you choose projects.</p>`;
     }
@@ -3033,22 +3218,19 @@
         : (() => { const p = PROJECTS.find(x => x.id === row.id); return p ? requiredMarkerHtml(p, false) : ""; })();
       return `<tr>
         <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
-        <td class="col-fee">${row.fee}</td>
       </tr>`;
     }).join("");
     const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;
-    return `<div class="pav-priorities-scroll"><table class="pav-priorities-table">
+    return `<div class="pav-priorities-scroll"><table class="pav-priorities-table pav-priorities-cart-only">
       <thead>
         <tr>
           <th class="col-project" scope="col">Project</th>
-          <th class="col-fee" scope="col">Fee</th>
         </tr>
       </thead>
       <tbody>
         ${bodyRows}
         <tr class="priorities-totals-row">
           <td class="col-project">${label}</td>
-          <td class="col-fee">${fmt(total)}</td>
         </tr>
       </tbody>
     </table></div>`;
@@ -3214,7 +3396,17 @@
     updateSubmitButtons();
   }
 
-  document.getElementById("continue-to-confirm").addEventListener("click", showConfirmPage);
+  document.getElementById("do-next-panel")?.addEventListener("click", e => {
+    if (e.target.closest("#continue-to-confirm")) {
+      showConfirmPage();
+      return;
+    }
+    const link = e.target.closest(".priority-desc-link");
+    if (link) {
+      e.preventDefault();
+      openProjectDescription(link.dataset.projectId);
+    }
+  });
   document.getElementById("confirm-back").addEventListener("click", hideConfirmPage);
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
@@ -3222,12 +3414,6 @@
   document.getElementById("invoice-payment-months").addEventListener("change", () => {
     updateInvoiceScheduleAmount();
     saveState();
-  });
-  document.getElementById("goal-input")?.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      sendGilbertMessage();
-    }
   });
   document.getElementById("gilbert-chat-backdrop")?.setAttribute("hidden", "");
   document.getElementById("expand-all-projects").addEventListener("change", e => {
@@ -3278,13 +3464,6 @@
     if (!btn) return;
     state.tocExpanded = btn.dataset.expand === "all";
     renderProjectToc();
-  });
-
-  document.getElementById("plan-summary")?.addEventListener("click", e => {
-    const link = e.target.closest(".priority-desc-link");
-    if (!link) return;
-    e.preventDefault();
-    openProjectDescription(link.dataset.projectId);
   });
 
   document.getElementById("toc-priority-edit")?.addEventListener("click", e => {

@@ -5,6 +5,8 @@
  */
 window.PAV_PICKER_CONFIG = {
   webhookUrl: "https://script.google.com/macros/s/AKfycbyXinGO9Tnh0XlI9pKRD2sp7z3ruY6ZvFZU3yIjtxMW2HTRyak94q1g7ixbFA2DTfiAXw/exec",
+  /** Google Form published URL (/viewform or forms.gle). Popup embeds this. */
+  feedbackFormUrl: "",
   depositAmount: 2500,
   quickbooksDepositUrl: "",
   notifyEmail: "support@gildedgooselimited.com"

@@ -185,11 +185,16 @@ function buildClientEmail(data, projects, noteBlock) {
 
 function doGet(e) {
   if (e && e.parameter && e.parameter.ping) {
+    var formUrl = "";
+    try {
+      formUrl = PropertiesService.getScriptProperties().getProperty("FEEDBACK_FORM_URL") || "";
+    } catch (err) { /* ignore */ }
     return ContentService.createTextOutput(JSON.stringify({
       ok: true,
       service: "picky-pavi",
       metricsFeedback: true,
-      spreadsheetId: SPREADSHEET_ID
+      spreadsheetId: SPREADSHEET_ID,
+      feedbackFormUrl: formUrl
     })).setMimeType(ContentService.MimeType.JSON);
   }
   return ContentService.createTextOutput(JSON.stringify({
@@ -197,6 +202,43 @@ function doGet(e) {
     message: "Gilbert project picker webhook — POST JSON submissions here.",
     metricsFeedback: true
   })).setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Run once from Apps Script editor (Run → createCockpitFeedbackForm).
+ * Creates a Form linked to this spreadsheet, logs the published URL,
+ * and stores it in Script Properties as FEEDBACK_FORM_URL.
+ * Paste that URL into pages-config.js → feedbackFormUrl for the cockpit popup.
+ */
+function createCockpitFeedbackForm() {
+  var form = FormApp.create("Pav Law Cockpit — layout & design feedback");
+  form.setDescription(
+    "Tell us what to change on the Pav Law Cockpit (KPIs, Project Guide, Impact, overall layout)."
+  );
+  form.addTextItem().setTitle("Your name").setRequired(false);
+  form.addListItem()
+    .setTitle("Which area?")
+    .setChoiceValues([
+      "KPIs / metrics",
+      "Project Guide",
+      "Impact",
+      "Overall layout / branding",
+      "Other"
+    ])
+    .setRequired(true);
+  form.addParagraphTextItem()
+    .setTitle("What should we change?")
+    .setRequired(true);
+  form.addScaleItem()
+    .setTitle("How clear is this page (1–5)?")
+    .setBounds(1, 5)
+    .setRequired(false);
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, SPREADSHEET_ID);
+  var published = form.getPublishedUrl();
+  PropertiesService.getScriptProperties().setProperty("FEEDBACK_FORM_URL", published);
+  Logger.log("Published URL (paste into pages-config.js feedbackFormUrl):\n" + published);
+  Logger.log("Edit form:\n" + form.getEditUrl());
+  return published;
 }
 
 function setupMetricsFeedbackSheet() {
