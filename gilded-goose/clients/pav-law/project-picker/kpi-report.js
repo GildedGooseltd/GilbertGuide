@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260714-target-bar-v24";
+  const RENDER_VER = "20260714-goal-visual-v33";
   const DATA = {
     period: "June 2026",
     asOf: "2026-07-11",
@@ -13,11 +13,13 @@
       { id: "#02", label: "New cases", value: "9", target: "12", mom: "−25%", verified: false, alert: false, gauge: true },
       { id: "#12", label: "Avg cost/call", value: "$72", target: "< $100", mom: null, verified: true, targetBar: true, lowerIsBetter: true },
       { id: "#15", label: "CPL", value: "$142", target: "≤ $120", mom: null, verified: true, alert: true, targetBar: true, lowerIsBetter: true },
-      { id: "#21", label: "Answered phones", value: "69%", target: "≥ 90%", mom: "+2%", verified: false, alert: true, gauge: true, goal: true },
-      { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false },
-      { id: "#28", label: "Avg case fee", value: "$3,870", target: "Q2 review", mom: null, verified: false },
+      /* Team goals: #19 lost-tracker first in render, then #21, then DUI */
       { id: "#19", label: "Missed revenue", value: "$4,200/mo", target: "$0", mom: null, verified: false, alert: true, lostTracker: true },
-      { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, gauge: true }
+      { id: "#21", label: "Answered phones", value: "69%", target: "≥ 90%", mom: "+2%", verified: false, alert: true, gauge: true, goal: true },
+      /* archived for future iteration — restore by removing archived: true */
+      { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
+      { id: "#28", label: "Avg case fee", value: "$3,870", target: "Q2 review", mom: null, verified: false },
+      { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, letterGrade: true }
     ],
     channels: [
       { name: "Search calls", count: 54, prior: 31, mom: "+74%", spend: "$2,214", color: "#3a1a6e" },
@@ -608,21 +610,16 @@
   function teamDuiGoalCardHtml() {
     const pct = DATA.duiGoal.current / DATA.duiGoal.target;
     const hit = pct >= 1;
-    const status = hit ? '<span class="kpi-target-hit">Target reached</span>' : "Open goal";
     return `<button type="button" class="kpi-goal-card kpi-stat-gauge" data-kpi-focus="#DUI">
       ${statusCorner(false)}
       <div class="kpi-goal-visual">
-        <span class="kpi-goal-eyebrow">Team goal</span>
-        <span class="kpi-stat-id">#DUI</span>
+        <span class="kpi-stat-id"># DUIs Signed 2026</span>
         ${halfMoonGauge(Math.min(pct, 1), "goal-dui", { endLabel: String(DATA.duiGoal.target), celebrate: hit })}
         <span class="kpi-gauge-val">${DATA.duiGoal.current} / ${DATA.duiGoal.target}</span>
       </div>
       ${goalTrackRows([
-        ["Metric", "DUI cases YTD"],
-        ["Actual", `${DATA.duiGoal.current}`],
-        ["Target", `${DATA.duiGoal.target} calendar year`],
-        ["MoM", "—"],
-        ["Status", typeof status === "string" && status.includes("Target") ? "Target reached" : "Open goal"]
+        ["Metric", "DUIs Signed 2026"],
+        ["Status", hit ? "Target reached" : "Open goal"]
       ])}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
     </button>`;
@@ -638,15 +635,12 @@
     return `<button type="button" class="kpi-goal-card kpi-goal-placeholder" data-kpi-focus="#GOAL3" disabled aria-disabled="true">
       ${statusCorner(false)}
       <div class="kpi-goal-visual">
-        <span class="kpi-goal-eyebrow">Team goal</span>
         <span class="kpi-stat-id">#—</span>
         ${halfMoonGauge(0, "goal-placeholder", { endLabel: "—" })}
         <span class="kpi-gauge-val">— / —</span>
       </div>
       ${goalTrackRows([
         ["Metric", "Third team goal"],
-        ["Actual", "—"],
-        ["Target", "—"],
         ["MoM", "—"],
         ["Status", "Placeholder — add next goal"]
       ])}
@@ -694,7 +688,8 @@
     return { current: v, target: t, pct: v / t };
   }
 
-  const TARGET_BAR_COLORS = { miss: "#f2c2b9", hit: "#679c8e" };
+  /* GGL brand: on-target = --gg-positive · over-target = --gg-negative */
+  const TARGET_BAR_COLORS = { hit: "#1f8a65", miss: "#cf2d56" };
 
   function parseMetricNum(val) {
     if (typeof val === "number" && Number.isFinite(val)) return val;
@@ -706,7 +701,7 @@
     return m ? parseFloat(m[1]) : NaN;
   }
 
-  /** lowerIsBetter: cost metrics — teal when actual ≤ target, coral when above. */
+  /** lowerIsBetter: cost metrics — GGL positive when actual ≤ target, negative when above. */
   function meetsTarget(actual, target, lowerIsBetter) {
     if (!Number.isFinite(target)) return true;
     return lowerIsBetter ? actual <= target : actual >= target;
@@ -751,7 +746,7 @@
       const y = baselineY - bh;
       const hit = meetsTarget(b.actual, target, lowerIsBetter);
       const fill = hit ? TARGET_BAR_COLORS.hit : TARGET_BAR_COLORS.miss;
-      const textFill = hit ? "#ffffff" : "#1a1a1a";
+      const textFill = "#ffffff";
       const valLabel = fmtBarMoney(b.actual);
       const shortLabel = b.label.length > 10 ? b.label.replace(/\s.*/, "") : b.label;
       const lineW = barW + 14;
@@ -800,7 +795,34 @@
     });
   }
 
+  function avgDepositTargetBarChart() {
+    const { current, target } = DATA.avgDeposit;
+    return barWithTargetChart(
+      [{ label: "Deposit", value: current }],
+      {
+        target,
+        lowerIsBetter: false,
+        compact: true,
+        ariaLabel: `Avg deposit ${fmtBarMoney(current)} vs goal ${fmtBarMoney(target)}`
+      }
+    );
+  }
+
+  function kpiGoalTrackFor(k, status) {
+    const rows = [
+      ["Metric", escapeHtml(k.label)],
+      ["MoM", k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)}</span>` : "—"]
+    ];
+    if (k.id === "#21") {
+      rows.push(["Est. revenue lost", `${fmtMoney(DATA.phoneIntake.monthlyLost)}/mo`]);
+    }
+    rows.push(["Status", typeof status === "string" ? status : "Open goal"]);
+    return goalTrackRows(rows);
+  }
+
   function kpiGoalCardHtml(k) {
+    /* Keep #19 lost-tracker chrome in goals grid — do not force gauge layout */
+    if (k.lostTracker) return missedRevenueTrackerHtml();
     const nums = k.gauge ? parseGaugeNums(k.value, k.target) : null;
     const status = (k.hit || (nums && nums.pct >= 1))
       ? '<span class="kpi-target-hit">Target reached</span>'
@@ -811,18 +833,11 @@
       return `<button type="button" class="kpi-goal-card kpi-stat-gauge${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
         <div class="kpi-goal-visual">
-          <span class="kpi-goal-eyebrow">Team goal</span>
           <span class="kpi-stat-id">${k.id}</span>
           ${halfMoonGauge(Math.min(nums.pct, 1), grad, { endLabel: String(nums.target), celebrate: hit })}
           <span class="kpi-gauge-val">${k.value} / ${k.target.replace(/^[≥≤<>]\s*/, "")}</span>
         </div>
-        ${goalTrackRows([
-          ["Metric", escapeHtml(k.label)],
-          ["Actual", escapeHtml(k.value)],
-          ["Target", escapeHtml(k.target)],
-          ["MoM", k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)}</span>` : "—"],
-          ["Status", typeof status === "string" ? status : "Open goal"]
-        ])}
+        ${kpiGoalTrackFor(k, status)}
       </button>`;
     }
     const lostCap = 6000;
@@ -832,18 +847,46 @@
     return `<button type="button" class="kpi-goal-card kpi-stat-gauge${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
       ${statusCorner(!!k.verified)}
       <div class="kpi-goal-visual">
-        <span class="kpi-goal-eyebrow">Team goal</span>
         <span class="kpi-stat-id">${k.id}${k.alert ? " · Requires action" : ""}</span>
         ${halfMoonGauge(lostPct, grad, { endLabel: escapeHtml(k.target || "$0") })}
         <span class="kpi-gauge-val">${escapeHtml(k.value)}</span>
       </div>
-      ${goalTrackRows([
-        ["Metric", escapeHtml(k.label)],
-        ["Actual", escapeHtml(k.value)],
-        ["Target", escapeHtml(k.target || "—")],
-        ["MoM", k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)}</span>` : "—"],
-        ["Status", typeof status === "string" ? status : "Open goal"]
-      ])}
+      ${kpiGoalTrackFor(k, status)}
+    </button>`;
+  }
+
+  /**
+   * School-style letter grade from 0–100 score.
+   * A+ 97–100 · A 93–96 · A- 90–92 · B+ 87–89 · B 83–86 · B- 80–82
+   * C+ 77–79 · C 73–76 · C- 70–72 · D+ 67–69 · D 63–66 · D- 60–62 · F <60
+   */
+  function scoreToLetterGrade(score) {
+    const n = Math.round(Number(score) || 0);
+    if (n >= 97) return "A+";
+    if (n >= 93) return "A";
+    if (n >= 90) return "A-";
+    if (n >= 87) return "B+";
+    if (n >= 83) return "B";
+    if (n >= 80) return "B-";
+    if (n >= 77) return "C+";
+    if (n >= 73) return "C";
+    if (n >= 70) return "C-";
+    if (n >= 67) return "D+";
+    if (n >= 63) return "D";
+    if (n >= 60) return "D-";
+    return "F";
+  }
+
+  function bhiLetterGradeCardHtml(k) {
+    const score = Math.round(parseFloat(String(k.value).replace(/[^0-9.]/g, "")) || 0);
+    const grade = scoreToLetterGrade(score);
+    return `<button type="button" class="kpi-stat-card kpi-bhi-grade${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
+      ${statusCorner(!!k.verified)}
+      <span class="kpi-stat-id">${k.id} ${escapeHtml(k.label)}</span>
+      <span class="kpi-bhi-grade-letter">${escapeHtml(grade)}</span>
+      <span class="kpi-bhi-grade-pct">${score}%</span>
+      <span class="kpi-stat-label">target ${escapeHtml(k.target || "100")}</span>
+      ${k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)} MoM</span>` : ""}
     </button>`;
   }
 
@@ -874,6 +917,7 @@
 
   function kpiStatCardHtml(k) {
     if (k.lostTracker) return missedRevenueTrackerHtml();
+    if (k.letterGrade || k.id === "#BHI") return bhiLetterGradeCardHtml(k);
     const headline = `${k.id} ${k.label}`;
     const targetLine = k.target ? `target ${k.target}` : "";
     if (k.targetBar) {
@@ -914,11 +958,12 @@
 
   function renderKpis(el) {
     if (!el || el.dataset.rendered === RENDER_VER) return;
-    const goals = DATA.kpis.filter(k => k.goal);
-    const metrics = DATA.kpis.filter(k => !k.goal);
-    const goalsCards = [...goals.map(kpiGoalCardHtml), teamDuiGoalCardHtml()].join("");
+    const liveKpis = DATA.kpis.filter(k => !k.archived);
+    const goals = liveKpis.filter(k => k.goal);
+    const metrics = liveKpis.filter(k => !k.goal && !k.lostTracker);
+    const goalsCards = [missedRevenueTrackerHtml(), ...goals.map(kpiGoalCardHtml), teamDuiGoalCardHtml()].join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="Team goals">
-          ${kpiSectionStaticHead("Team goals", "Phones · DUI YTD")}
+          ${kpiSectionStaticHead("Team goals", "Missed revenue · Phones · DUI YTD")}
           <div class="kpi-section-body">
             <div class="kpi-goals-grid">${goalsCards}</div>
             <div class="kpi-detail-panel" id="kpi-detail-panel" hidden>
@@ -1014,7 +1059,7 @@
 
   /** Unique former-Dashboards visuals (dupes of #01 / #08 already on KPIs are omitted). */
   function dashboardSectionsHtml() {
-    const depositPct = DATA.avgDeposit.current / DATA.avgDeposit.target;
+    const depositHit = meetsTarget(DATA.avgDeposit.current, DATA.avgDeposit.target, false);
     return `<section class="kpi-section kpi-section-static" data-feedback-id="section-business-health" data-feedback-label="Pipeline & deposits">
         ${kpiSectionStaticHead("Pipeline & source mix")}
         <div class="kpi-section-body">
@@ -1048,12 +1093,12 @@
             </article>
           </div>
           <div class="kpi-dash-grid-2 kpi-dash-grid-1" style="margin-top:1rem">
-            <div class="kpi-dash-card kpi-gauge-card" data-kpi-focus="#DEPOSIT">
+            <div class="kpi-dash-card kpi-dash-target-bar" data-kpi-focus="#DEPOSIT">
               ${statusCorner(false)}
               <span class="kpi-stat-id">Avg deposit</span>
-              ${halfMoonGauge(Math.min(depositPct, 1), "g-deposit", { endLabel: String(DATA.avgDeposit.target) })}
-              <div class="kpi-gauge-val">$${DATA.avgDeposit.current} / $${DATA.avgDeposit.target}</div>
+              ${avgDepositTargetBarChart()}
               <div class="kpi-stat-label">Goal $${DATA.avgDeposit.target} · placeholder current $${DATA.avgDeposit.current}</div>
+              ${depositHit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
               ${kpiDetailTable(
                 ["Measure", "Amount"],
                 [
@@ -1099,7 +1144,7 @@
     "#22": "8 min speed-to-lead — HubSpot workflow gap; B1 sprint target <5 min.",
     "#28": "Blended avg case fee $3,870 — feeds revenue and missed-revenue (#19) math.",
     "#19": "Ongoing tracker: unanswered share of calls × lead→case × avg fee ≈ monthly money left on table. Improves as #21 answer rate rises.",
-    "#BHI": "Composite business health index 71/100 (−3% MoM). Placeholder formula until live ops weights wire — answer rate, CPL, cases, and intake drive the score."
+    "#BHI": "Composite business health index — letter grade from 0–100 score (C- at 71%, −3% MoM). Placeholder formula until live ops weights wire — answer rate, CPL, cases, and intake drive the score."
   };
 
   function bindKpiInteractions(root) {

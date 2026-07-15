@@ -25,6 +25,7 @@
       --gg-gold-dim: rgba(201, 168, 108, 0.18);
       --gg-negative: #cf2d56;
       --gg-positive: #1f8a65;
+      --gg-magenta: #c02670;
       /* Pav Law peacock brand */
       --pav-ink: #040810;
       --pav-ink-mid: #0a0f1a;
@@ -188,35 +189,6 @@
     .card input[type="checkbox"] { width: 22px; height: 22px; margin-top: 0; accent-color: var(--gg-royal-mid); cursor: pointer; flex-shrink: 0; }
     .card-body { flex: 1; min-width: 0; }
     .card-top-row { position: relative; margin-bottom: var(--space-sm); padding-right: 9.5rem; min-height: 2.25rem; }
-    .card-comment-tag {
-      position: absolute; top: 0; right: 0; z-index: 3;
-      font-size: var(--font-min-rem); font-weight: 700; letter-spacing: 0.03em;
-      padding: 0.28rem 0.55rem; border-radius: 999px; cursor: pointer;
-      background: var(--gg-paper); border: 1px solid var(--gg-royal-border); color: var(--gg-royal);
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .card-comment-tag:hover { background: var(--gg-royal-dim); border-color: var(--gg-royal); }
-    .card-comment-tag.has-note { background: var(--gg-gold-dim); border-color: var(--gg-gold); color: var(--gg-brown); }
-    .card-comment-popover {
-      position: absolute; top: 2rem; right: 0; z-index: 4; width: min(18rem, calc(100% - 1rem));
-      padding: 0.75rem; background: var(--surface); border: 1px solid var(--gg-royal-border);
-      border-radius: var(--radius); box-shadow: 0 8px 24px rgba(78, 42, 132, 0.12);
-    }
-    .card-comment-popover[hidden] { display: none; }
-    .card-comment-popover label {
-      display: block; font-size: var(--font-min-rem); font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.05em; color: var(--gg-royal); margin-bottom: 0.35rem;
-    }
-    .card-comment-popover textarea {
-      width: 100%; min-height: 4.5rem; resize: vertical; font-family: inherit; font-size: 0.92rem;
-      padding: 0.5rem 0.6rem; border: 1px solid var(--border); border-radius: 6px;
-      background: var(--gg-paper); color: var(--input-text);
-    }
-    .card-comment-popover .comment-popover-done {
-      margin-top: 0.45rem; width: 100%; padding: 0.4rem 0.65rem; font-size: var(--font-min-rem);
-      font-weight: 700; border-radius: 6px; border: 1px solid var(--gg-royal-border);
-      background: var(--gg-royal-dim); color: var(--gg-royal); cursor: pointer;
-    }
     .card-featured-image {
       display: block; width: 100%; max-height: 11rem; object-fit: cover;
       border-radius: 8px; margin-bottom: var(--space-sm); border: 1px solid var(--border);
@@ -451,9 +423,6 @@
       border-radius: 10px;
       border: 1px solid rgba(192, 38, 112, 0.28);
       background: rgba(192, 38, 112, 0.06);
-    }
-    .cockpit-feedback-hint {
-      margin: 0; flex: 1 1 12rem; font-size: var(--font-min-rem); color: var(--gg-brown-muted);
     }
     .feedback-form-backdrop {
       position: fixed; inset: 0; z-index: 1200;
@@ -786,9 +755,17 @@
     }
     .ab-q-list { margin: 0 0 0.35rem 1.1rem; padding: 0; }
     .ab-q-list li { margin: 0.15rem 0; }
+    .ab-q-answer-label {
+      display: block; font-size: var(--font-min-rem); font-weight: 700; margin: 0.35rem 0 0.25rem;
+    }
+    .ab-q-answer {
+      width: 100%; min-height: 3.5rem; resize: vertical; font-family: inherit; font-size: 0.92rem;
+      padding: 0.5rem 0.6rem; border: 1px solid var(--border); border-radius: 6px;
+      background: var(--gg-paper); color: var(--input-text); margin-bottom: 0.35rem;
+    }
     .ab-q-hint { margin: 0; font-size: var(--font-min-rem); color: var(--gg-brown-muted); }
     .card.ab-q-pending { box-shadow: inset 0 0 0 2px rgba(184, 134, 11, 0.55); }
-    .card-comment-tag.needs-ab-q, .research-comment-tag.needs-ab-q {
+    .research-comment-tag.needs-ab-q {
       background: rgba(184, 134, 11, 0.2); border-color: #b8860b; color: #92600a; font-weight: 700;
     }
     .card-description p { margin: 0 0 0.65rem; }
@@ -1270,14 +1247,38 @@
       padding: 0.75rem;
       min-width: 0;
     }
-    .pav-priorities-merged .project-continue-btn {
-      width: 100%; margin: 0.85rem 0 0; min-width: 0; padding: 0.75rem 1rem;
+    .pav-priorities-merged .project-continue-btn,
+    .pav-priorities-merged #continue-to-confirm {
+      width: 100%; margin: 0.65rem 0 0; min-width: 0;
+      padding: 0.5rem 0.85rem; font-size: 0.875rem; font-weight: 700;
+      background: var(--gg-magenta); color: #fff; border: 1px solid var(--gg-magenta);
+    }
+    .pav-priorities-merged .project-continue-btn:hover:not(:disabled),
+    .pav-priorities-merged #continue-to-confirm:hover:not(:disabled) {
+      opacity: 0.92; background: var(--gg-magenta);
     }
     .pav-priorities-merged .total-box {
       margin: 0; background: transparent; border: none; padding: 0;
     }
+    .pav-priorities-table.pav-priorities-cart-only th.col-select,
+    .pav-priorities-table.pav-priorities-cart-only td.col-select {
+      width: 2.25rem; text-align: center; vertical-align: middle;
+      padding-left: 0.35rem; padding-right: 0.15rem;
+    }
+    .pav-priorities-table.pav-priorities-cart-only .col-select input[type="checkbox"] {
+      width: 1.15rem; height: 1.15rem; margin: 0;
+      accent-color: var(--gg-royal-mid); cursor: pointer; vertical-align: middle;
+    }
+    .pav-priorities-table.pav-priorities-cart-only .col-select input[type="checkbox"]:disabled {
+      opacity: 0.85; cursor: not-allowed;
+    }
     .pav-priorities-table.pav-priorities-cart-only th.col-project,
-    .pav-priorities-table.pav-priorities-cart-only td.col-project { width: 100%; }
+    .pav-priorities-table.pav-priorities-cart-only td.col-project { width: auto; }
+    .pav-priorities-table.pav-priorities-cart-only th.col-score,
+    .pav-priorities-table.pav-priorities-cart-only td.col-score {
+      width: 3.2rem; text-align: right; white-space: nowrap;
+      font-variant-numeric: tabular-nums; font-weight: 600; color: var(--gg-royal);
+    }
     .invoice-cart-panel,
     .pav-priorities-panel {
       border: 1px solid var(--border); border-radius: var(--radius);
@@ -1381,9 +1382,10 @@
     }
     .outlines-panel .do-next-gilbert { display: none; }
     .outlines-panel .do-next-head-copy { min-width: 0; }
+    .pav-priorities-merged .do-next-head h3,
     .outlines-panel .do-next-panel h3 {
-      margin: 0 0 0.35rem; font-size: var(--font-min-rem); letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--gg-royal); font-weight: 800;
+      margin: 0 0 0.35rem; font-size: 1.1rem; letter-spacing: 0.02em;
+      color: var(--gg-royal); font-weight: 800;
     }
     .outlines-panel .do-next-blurb {
       margin: 0; font-size: 0.875rem; line-height: 1.45; color: var(--secondary); font-weight: 500;
@@ -1616,8 +1618,16 @@
     .kpi-lost-tracker {
       text-align: left; min-height: auto; grid-column: span 2;
     }
+    .kpi-goals-grid .kpi-lost-tracker { grid-column: span 1; }
     @media (max-width: 700px) {
       .kpi-lost-tracker { grid-column: span 1; }
+    }
+    .kpi-bhi-grade-letter {
+      display: block; font-size: 2.1rem; font-weight: 800; line-height: 1.05;
+      color: var(--gg-royal); margin: 0.3rem 0 0.1rem;
+    }
+    .kpi-bhi-grade-pct {
+      display: block; font-size: 1.15rem; font-weight: 800; color: var(--gg-brown); line-height: 1.2;
     }
     .kpi-lost-amount {
       display: block; font-size: 1.85rem; font-weight: 800; color: var(--gg-negative, #b91c1c);
@@ -1677,6 +1687,12 @@
       position: relative;
     }
     .kpi-goal-card.kpi-stat-gauge .kpi-goal-visual { align-items: center; }
+    .kpi-goal-card .kpi-goal-visual .kpi-stat-id {
+      font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem;
+    }
+    .kpi-goal-card .kpi-gauge-val {
+      font-size: 1.75rem; font-weight: 800; margin-top: 0.2rem;
+    }
     .kpi-goal-card:hover { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
     .kpi-goal-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
     .kpi-goal-card.kpi-stat-attention { border-left-width: 5px; }
@@ -1708,11 +1724,11 @@
       font-size: 0.8rem; font-weight: 800; color: var(--gg-gold-dark); margin-top: 0.15rem;
     }
     .kpi-section-goals {
-      background: #fff8e1;
+      background: #f5e8c0;
       border-color: rgba(184, 134, 11, 0.35);
     }
     .kpi-section-goals > .kpi-section-summary {
-      background: linear-gradient(90deg, #fef9e7 0%, #fff8e1 55%, #fffdf0 100%);
+      background: linear-gradient(90deg, #f4e9c5 0%, #f5e8c0 55%, #f8f0d0 100%);
       border-left-color: var(--gg-gold-dark);
     }
     .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
@@ -1802,6 +1818,10 @@
     .kpi-presence-outdated { background: rgba(207, 45, 86, 0.12); color: var(--gg-negative); }
     .kpi-presence-gap { background: rgba(45, 20, 84, 0.08); color: var(--gg-royal-mid); }
     .kpi-gauge-card { text-align: center; }
+    .kpi-dash-card.kpi-dash-target-bar { text-align: center; }
+    .kpi-dash-target-bar .kpi-target-bar-chart-compact {
+      display: block; width: 100%; max-width: 13.5rem; height: auto; margin: 0.35rem auto 0.15rem;
+    }
     .kpi-gauge-svg { display: block; margin: 0.25rem auto 0; max-width: 160px; height: auto; }
     .kpi-half-moon-gauge .kpi-gauge-tick { fill: var(--gg-brown-muted); font-size: 14px; font-weight: 700; }
     .kpi-gauge-celebrate .kpi-gauge-tick { fill: var(--gg-gold-dark); }
@@ -2519,7 +2539,7 @@
           <div class="cockpit-howto-body">
             <ol>
               <li><strong>KPIs</strong> — key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export; tap a card for context. Use <strong>Feedback</strong> to open the Google Form popup. <a href="metrics.html">Open full metrics page →</a></li>
-              <li><strong>Project Guide</strong> — filter by value icon, check projects into your cart, read details, then <strong>Review plan &amp; submit</strong> for fees, estimated results, action items, and next steps.</li>
+              <li><strong>Project Guide</strong> — filter by value icon, check projects into your cart, read details, then <strong>Review Plan</strong> for fees, estimated results, action items, and next steps.</li>
               <li><strong>Impact</strong> — completed project results, plus leads impacted / connected and estimated revenue for projects in your cart.</li>
               <li><strong>Ask Gilbert</strong> (Project Guide, left column) — three quick survey questions; <strong>Pav Priorities</strong> on the right shows your cart or Gilbert’s best-fit shortlist.</li>
             </ol>
@@ -2538,7 +2558,6 @@
         <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Open feedback form">
           Feedback
         </button>
-        <p class="cockpit-feedback-hint">Opens a popup with the Google Form — answers land in your linked Sheet.</p>
       </div>
     </div>
 
@@ -2563,7 +2582,7 @@
             <input type="hidden" id="goal-input" value="" autocomplete="off">
             <div class="gilbert-chat-messages" id="gilbert-chat-messages" hidden aria-hidden="true"></div>
           </aside>
-          <div class="do-next-panel pav-priorities-merged" id="do-next-panel" aria-label="Pav Priorities"></div>
+          <div class="do-next-panel pav-priorities-merged" id="do-next-panel" aria-label="Pav's Priority Project Picklist"></div>
         </div>
       </div>
 
@@ -2603,7 +2622,7 @@
 
       <div class="picker-zone picker-zone-cards" data-feedback-id="guide-project-cards" data-feedback-label="Project selection cards">
         <p class="picker-zone-label">Pav Law Project Selection</p>
-        <p class="picker-zone-blurb">Check projects to add them to your plan. Expand a card to read the outline, answer any Andrew questions, and leave comments. Use Ask Gilbert (left of Pav Priorities) for help choosing. When your cart looks right, tap <strong>Review plan &amp; submit</strong>.</p>
+        <p class="picker-zone-blurb">Check projects to add them to your plan. Expand a card to read the outline and answer any Andrew questions. Use Ask Gilbert (left of Pav Priorities) for help choosing. When your cart looks right, tap <strong>Review Plan</strong>.</p>
         <div class="projects-section-full">
           <div class="project-list-controls">
             <label class="expand-all-toggle" for="expand-all-projects">
@@ -2668,8 +2687,8 @@
   <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260713u"></script>
-  <script src="kpi-report.js?v=20260714target-bar"></script>
-  <script src="app.js?v=20260714aa"></script>
+  <script src="kpi-report.js?v=20260714-goal-visual-v33"></script>
+  <script src="app.js?v=20260714ae"></script>
   <script src="metrics-feedback.js?v=20260714x"></script>
 </body>
 </html>

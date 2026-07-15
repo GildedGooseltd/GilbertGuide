@@ -243,6 +243,34 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-stat-card:hover { border-color: var(--gg-royal-border); }
 .kpi-stat-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
 .kpi-stat-card.kpi-stat-attention { border-left: 4px solid var(--gg-gold-dark); }
+.kpi-lost-tracker {
+  text-align: left; min-height: auto; grid-column: span 2;
+}
+.kpi-goals-grid .kpi-lost-tracker { grid-column: span 1; }
+@media (max-width: 700px) {
+  .kpi-lost-tracker { grid-column: span 1; }
+}
+.kpi-bhi-grade-letter {
+  display: block; font-size: 2.1rem; font-weight: 800; line-height: 1.05;
+  color: var(--gg-royal); margin: 0.3rem 0 0.1rem;
+}
+.kpi-bhi-grade-pct {
+  display: block; font-size: 1.15rem; font-weight: 800; color: var(--gg-brown); line-height: 1.2;
+}
+.kpi-lost-amount {
+  display: block; font-size: 1.85rem; font-weight: 800; color: var(--gg-negative, #b91c1c);
+  line-height: 1.15; margin: 0.35rem 0 0.25rem;
+}
+.kpi-lost-amount small {
+  font-size: 0.95rem; font-weight: 700; color: var(--gg-brown-muted); margin-left: 0.15rem;
+}
+.kpi-lost-facts {
+  list-style: none; margin: 0.55rem 0 0; padding: 0;
+  display: flex; flex-direction: column; gap: 0.25rem;
+  font-size: var(--font-min-rem); color: var(--gg-brown); line-height: 1.4;
+}
+.kpi-lost-facts strong { color: var(--gg-royal); font-weight: 700; }
+.kpi-lost-muted { color: var(--gg-brown-muted); font-weight: 500; }
 .kpi-stat-card.kpi-stat-gauge { text-align: center; align-items: center; }
 .kpi-stat-card.kpi-stat-gauge .kpi-gauge-svg { max-width: 132px; width: 100%; margin: 0.1rem auto 0; }
 .kpi-stat-card.kpi-stat-gauge .kpi-gauge-val { font-size: 1.05rem; margin-top: 0.15rem; }
@@ -280,6 +308,12 @@ body.feedback-mode-on .feedback-target:hover {
   position: relative;
 }
 .kpi-goal-card.kpi-stat-gauge .kpi-goal-visual { align-items: center; text-align: center; }
+.kpi-goal-card .kpi-goal-visual .kpi-stat-id {
+  font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem;
+}
+.kpi-goal-card .kpi-gauge-val {
+  font-size: 1.75rem; font-weight: 800; margin-top: 0.2rem;
+}
 .kpi-goal-card:hover { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
 .kpi-goal-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
 .kpi-goal-card.kpi-stat-attention { border-left-width: 5px; }
@@ -311,11 +345,11 @@ body.feedback-mode-on .feedback-target:hover {
   font-size: 0.8rem; font-weight: 800; color: var(--gg-gold-dark); margin-top: 0.15rem;
 }
 .kpi-section-goals {
-  background: #fff8e1;
+  background: #f5e8c0;
   border-color: rgba(184, 134, 11, 0.35);
 }
 .kpi-section-goals > .kpi-section-summary {
-  background: linear-gradient(90deg, #fef9e7 0%, #fff8e1 55%, #fffdf0 100%);
+  background: linear-gradient(90deg, #f4e9c5 0%, #f5e8c0 55%, #f8f0d0 100%);
   border-left-color: var(--gg-gold-dark);
 }
 .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
@@ -390,6 +424,10 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-presence-outdated { background: rgba(207, 45, 86, 0.12); color: var(--gg-negative); }
 .kpi-presence-gap { background: rgba(45, 20, 84, 0.08); color: var(--gg-royal-mid); }
 .kpi-gauge-card { text-align: center; }
+.kpi-dash-card.kpi-dash-target-bar { text-align: center; }
+.kpi-dash-target-bar .kpi-target-bar-chart-compact {
+  display: block; width: 100%; max-width: 13.5rem; height: auto; margin: 0.35rem auto 0.15rem;
+}
 .kpi-gauge-svg { display: block; margin: 0.25rem auto 0; max-width: 160px; height: auto; }
 .kpi-half-moon-gauge .kpi-gauge-tick { fill: var(--gg-brown-muted); font-size: 14px; font-weight: 700; }
 .kpi-gauge-celebrate .kpi-gauge-tick { fill: var(--gg-gold-dark); }
