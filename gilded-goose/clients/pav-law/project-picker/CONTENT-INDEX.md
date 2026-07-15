@@ -35,15 +35,13 @@ After markdown edits: `npm run build` (or `npm run watch`).
 
 | What users see          | File         | Field / location                                                         |
 | ----------------------- | ------------ | ------------------------------------------------------------------------ |
-| Browser tab title       | `index.html` | `<title>Business Operations Command Center</title>`                      |
-| Main headline           | `index.html` | `.cockpit-title span` — “Business Operations Command Center”; Gold       |
+| Browser tab title       | `index.html` | `<title>Operations Dashboard</title>`                      |
+| Main headline           | `index.html` | `.cockpit-title span` — “Operations Dashboard”; Gold       |
 | Subtitle + how-to intro | `index.html` | `.cockpit-subtitle`, `.cockpit-intro`, `.cockpit-howto`                  |
 | Default tab on load     | `app.js`     | `activeViewTab: "kpis"` — KPIs panel visible first                       |
 | Tab: KPIs               | `index.html` | `button[data-view="kpis"]` — includes former Dashboards charts at bottom |
 | Tab: Project Guide      | `index.html` | `button[data-view="picker"]`                                             |
 | Tab: Impact             | `index.html` | `button[data-view="impact"]` — completed results + revenue calculator    |
-| Feedback bar + popup    | `index.html` + `metrics-feedback.js` | `.cockpit-feedback-bar` — Google Form popup (`feedbackFormUrl` in `pages-config.js`) |
-
 
 
 

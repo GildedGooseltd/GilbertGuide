@@ -3443,7 +3443,7 @@
     const goView = e.target.closest("[data-go-view]");
     if (goView) {
       e.preventDefault();
-      setActiveViewTab(goView.dataset.goView || "picker");
+      setActiveViewTab(goView.dataset.goView || "kpis");
       renderAllCards();
       renderSummary();
       const dest = state.activeViewTab;
@@ -3470,7 +3470,7 @@
 
   document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
     btn.addEventListener("click", () => {
-      setActiveViewTab(btn.dataset.view || "picker");
+      setActiveViewTab(btn.dataset.view || "kpis");
       renderAllCards();
       renderSummary();
     });
@@ -3524,6 +3524,7 @@
 
   loadState();
   ensureRequiredMaintenance();
+  setActiveViewTab("kpis");
   initGilbertGuide();
   renderPackageIntro();
   renderValueIconKey();

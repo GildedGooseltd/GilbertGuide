@@ -185,7 +185,7 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-section-summary {
   cursor: pointer; padding: 0.85rem 1.15rem; list-style: none;
   display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-  background: linear-gradient(90deg, rgba(45, 20, 84, 0.14) 0%, var(--gg-cream-panel) 52%, var(--surface) 100%);
+  background: linear-gradient(90deg, rgba(45, 20, 84, 0.22) 0%, rgba(45, 20, 84, 0.10) 52%, rgba(45, 20, 84, 0.05) 100%);
   border-bottom: 1px solid transparent;
   border-left: 4px solid var(--gg-royal-deep);
   user-select: none;
@@ -349,7 +349,7 @@ body.feedback-mode-on .feedback-target:hover {
   border-color: rgba(184, 134, 11, 0.35);
 }
 .kpi-section-goals > .kpi-section-summary {
-  background: linear-gradient(90deg, #f4e9c5 0%, #f5e8c0 55%, #f8f0d0 100%);
+  background: linear-gradient(90deg, #d0c297 0%, #d1c093 55%, #d4c9a3 100%);
   border-left-color: var(--gg-gold-dark);
 }
 .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
@@ -413,7 +413,7 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-split-panel .kpi-chart-card {
   border: none; padding: 0; background: transparent; box-shadow: none;
 }
-.kpi-mini-card h3 { margin: 0 0 0.45rem; font-size: 0.875rem; color: var(--gg-royal); }
+.kpi-mini-card h3 { margin: 0 0 0.45rem; font-size: calc(0.875rem + 2pt); color: var(--gg-royal); }
 .kpi-row-gap td { color: var(--gg-brown-muted); }
 .kpi-presence {
   display: inline-block; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.02em;
@@ -430,7 +430,12 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-gauge-svg { display: block; margin: 0.25rem auto 0; max-width: 160px; height: auto; }
 .kpi-half-moon-gauge .kpi-gauge-tick { fill: var(--gg-brown-muted); font-size: 14px; font-weight: 700; }
+.kpi-half-moon-gauge .kpi-gauge-center {
+  fill: var(--gg-royal-deep); font-size: 22px; font-weight: 800;
+  font-family: inherit;
+}
 .kpi-gauge-celebrate .kpi-gauge-tick { fill: var(--gg-gold-dark); }
+.kpi-gauge-celebrate .kpi-gauge-center { fill: var(--gg-gold-dark); }
 .kpi-gauge-val { font-size: 1.35rem; font-weight: 800; color: var(--gg-royal-deep); }
 .kpi-bhi-card { max-width: 16rem; margin-bottom: 0.75rem; }
 .kpi-chart-head { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 14pt; }
