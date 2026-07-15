@@ -191,7 +191,7 @@ function doGet(e) {
     } catch (err) { /* ignore */ }
     return ContentService.createTextOutput(JSON.stringify({
       ok: true,
-      service: "picky-pavi",
+      service: "gilbert-guide",
       metricsFeedback: true,
       spreadsheetId: SPREADSHEET_ID,
       feedbackFormUrl: formUrl
