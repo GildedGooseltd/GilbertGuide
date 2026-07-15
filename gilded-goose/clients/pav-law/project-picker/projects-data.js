@@ -140,15 +140,8 @@ window.PROJECT_DATA = {
         "Handoff doc: `gilded-goose/clients/pav-law/LSA-DOCUMENTING-TRAINING.md`"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
         "intake",
-        "creative"
+        "foundation"
       ],
       "completedItems": [
         "LSA lead-status SOP — how to update lead info, notes, booked/spam/dispute in Google LSA",

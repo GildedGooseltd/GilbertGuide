@@ -67,15 +67,17 @@ See `[_TEMPLATE.md](content/_TEMPLATE.md)`. Fee market context: `[FEE-BENCHMARK-
 - **Estimated leads gained** = incremental leads expected from that campaign, not existing lead volume.
 - Card shows **Summary → bullets → leads gained**; **Current Status** expands Description.
 - **Goal · Results · Blockers · Insights** render in expanded cards and the **Impact** tab (Completed section).
-- **Impact estimates** — leads impacted · leads connected · clients retained (updated on each data pull).
-- **Gilbert on metrics** — auto-commentary when sync detects a number change (`npm run sync-impact`).
+- **Impact estimates** — leads impacted · leads connected · clients retained (edit in the project file, or ask to run `npm run sync-impact` after updating `impact-estimates-data.mjs`).
+- **`npm run build`** updates `projects-data.js` only — it does **not** rewrite project markdown.
 
 After a new Ad Reports / HubSpot / LSA export:
 
 ```bash
 cd gilded-goose/clients/pav-law/project-picker
 # 1. Edit scripts/impact-estimates-data.mjs (DATA_PULL.asOf + per-project numbers)
-# 2. Sync + rebuild
+# 2. Optional — only when you want markdown Impact sections rewritten:
+npm run sync-impact
+# 3. Rebuild picker data (does not rewrite .md files):
 npm run build
 ```
 

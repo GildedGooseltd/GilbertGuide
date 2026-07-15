@@ -1,0 +1,34 @@
+---
+description: Gilbert Guide picker — preserve user markdown; never clobber open edits
+globs: gilded-goose/clients/pav-law/project-picker/**
+alwaysApply: true
+---
+
+# Gilbert Guide content rules
+
+## User owns the markdown
+
+- **`content/**/*.md`** — Kate edits by hand (Ctrl+S). Source of truth for project copy.
+- **`INDEX.md`** — Kate edits only. **Agents never write, merge, or reformat it** unless she explicitly asks in that message.
+- **`npm run build`** — regenerates **`projects-data.js` only**. Must **not** rewrite any `content/**/*.md`.
+- **`npm run sync-impact`** / **`projectToMarkdown`** — **rewrites** project markdown. Run **only** when Kate explicitly asks to sync impact / reformat. Prefer patching Impact estimates in place over full file rewrite.
+
+## Do not clobber edits (why Ctrl+S “fails”)
+
+Cursor Save writes the **editor buffer**. If an agent or `sync-impact` then **overwrites the same path on disk**, the tab looks like Save didn’t stick (or shows “file on disk is newer”). **That is clobbering — not a broken Ctrl+S.**
+
+Forbidden unless Kate asked in the same message:
+
+- Bulk find/replace or scripts across `content/projects/*.md` / `retainer.md`
+- `npm run sync-impact`, `migrate-to-b2-format`, `format-content`, or any `projectToMarkdown` write-back
+- Replacing her **Value icons** list with a full default set
+- Editing a file she just edited without merging her current wording
+
+When she asks to update INDEX → guide: run **`npm run build`** only (reads INDEX into `projects-data.js`). Do **not** rewrite project files unless she asked to change those files.
+
+## Generated vs editable
+
+| File | Who edits |
+|------|-----------|
+| `content/projects/*.md`, `retainer.md`, `settings.md`, **`INDEX.md`** | Kate |
+| `projects-data.js` | build only — do not hand-edit |
