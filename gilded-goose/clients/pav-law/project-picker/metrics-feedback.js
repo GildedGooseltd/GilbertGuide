@@ -1,13 +1,12 @@
 /**
  * Thumbs up / thumbs down on each KPI / data point.
- * Storage: browser localStorage (reliable) + Copy / Download / Email to Kate.
+ * Storage: browser localStorage (reliable) + Download Feedback Report.
  * Google Sheet webhook is optional and not required.
  */
 (function () {
   const STORAGE_KEY = "pav-metrics-feedback-v2";
   const REVIEWER_KEY = "pav-metrics-reviewer-v1";
   const SESSION_KEY = "pav-metrics-session-v1";
-  const SUPPORT_EMAIL = "support@gildedgooselimited.com";
 
   const VERDICTS = {
     up: { id: "thumbs_up", label: "Thumbs up", score: 1 },
@@ -205,34 +204,6 @@
     };
   }
 
-  function buildPlainText(report) {
-    const lines = [
-      "Gilbert Guide — KPI thumb ratings",
-      "Reviewer: " + (report.submitterName || "(no name)"),
-      "Session: " + report.sessionId,
-      "When: " + report.submittedAt,
-      "Period: " + (report.period || "—") + " · as of " + (report.asOf || "—"),
-      "Score: " + report.scores.up + " up · " + report.scores.down + " down · net " +
-        (report.scores.net >= 0 ? "+" : "") + report.scores.net +
-        " (" + report.scores.rated + " rated · " + (report.scores.notes || 0) + " notes)",
-      "",
-      "Feedback:"
-    ];
-    if (!report.feedback.length) {
-      lines.push("(none yet)");
-    } else {
-      report.feedback.forEach(item => {
-        const mark = item.verdict === "thumbs_up" ? "👍" : item.verdict === "thumbs_down" ? "👎" : "•";
-        lines.push(mark + " " + (item.label || item.id));
-        if (item.comment && String(item.comment).trim()) {
-          lines.push("  Note: " + String(item.comment).trim());
-        }
-      });
-    }
-    lines.push("", "— pasted from Gilbert Guide");
-    return lines.join("\n");
-  }
-
   function downloadReport() {
     const report = buildReport();
     if (!report.feedbackCount) {
@@ -248,23 +219,6 @@
     showToast("Downloaded feedback report.", "ok");
   }
 
-  function emailReport() {
-    const report = buildReport();
-    if (!report.feedbackCount) {
-      showToast("Add a thumb or comment on at least one card first.", "err");
-      return;
-    }
-    const subject = "Gilbert KPI ratings — " +
-      report.scores.up + " up / " + report.scores.down + " down" +
-      (report.submitterName ? " — " + report.submitterName : "");
-    const body = buildPlainText(report);
-    const href = "mailto:" + encodeURIComponent(SUPPORT_EMAIL) +
-      "?subject=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(body);
-    window.location.href = href;
-    showToast("Opened email draft to " + SUPPORT_EMAIL + ".", "ok");
-  }
-
   function ensureScoreBar() {
     const panel = document.getElementById("cockpit-panel-kpis");
     if (!panel || document.getElementById("kpi-rating-bar")) return;
@@ -276,17 +230,15 @@
       '<p class="kpi-rating-score" id="kpi-rating-score" aria-live="polite"></p>' +
       '<div class="kpi-rating-actions">' +
       '<button type="button" class="kpi-rating-action kpi-rating-action-primary" id="kpi-rating-download">Download Feedback Report</button>' +
-      '<button type="button" class="kpi-rating-action" id="kpi-rating-email">Email Kate</button>' +
       "</div>" +
       "</div>" +
-      '<p class="kpi-rating-hint">Thumbs and comments save on this device. Download or email the feedback report when done.</p>' +
+      '<p class="kpi-rating-hint">Thumbs and comments save on this device. Download the feedback report when done.</p>' +
       '<p class="kpi-rating-toast" id="kpi-rating-toast" aria-live="polite"></p>';
     const root = panel.querySelector(".kpi-report-root");
     if (root) panel.insertBefore(bar, root);
     else panel.prepend(bar);
 
     document.getElementById("kpi-rating-download")?.addEventListener("click", downloadReport);
-    document.getElementById("kpi-rating-email")?.addEventListener("click", emailReport);
   }
 
   function updateScoreBar() {
@@ -480,7 +432,6 @@
     getScores: scoreTotals,
     getFeedback: () => ({ ...state.feedback }),
     buildReport,
-    downloadReport,
-    emailReport
+    downloadReport
   };
 })();

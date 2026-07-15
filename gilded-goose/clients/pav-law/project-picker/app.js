@@ -522,10 +522,9 @@
       };
     }
     const gained = estimateProjectLeadsGained(item);
-    const touch = estimateCustomerTouchpoints(item);
     const retained = gained.value != null ? gained.value * PAV_HISTORICAL.leadToCaseRate : null;
     return {
-      leadsImpacted: { value: null, label: touch },
+      leadsImpacted: { value: null, label: "—" },
       leadsConnected: { value: gained.value, label: gained.label },
       clientsRetained: {
         value: retained,
@@ -1308,24 +1307,6 @@
       return { value, label: `~${Math.round(value)} gained/mo`, isCalls: false };
     }
     return { value: null, label: "Estimate pending", isCalls: false };
-  }
-
-  function estimateCustomerTouchpoints(item) {
-    if (!item) return "—";
-    const explicit = String(item.clientTouchpoints || "").match(/~?(\d[\d,]*(?:\.\d+)?)\s*(?:–|-)?\s*(\d[\d,]*(?:\.\d+)?)?/);
-    if (explicit) {
-      const first = explicit[1];
-      const second = explicit[2];
-      return second ? `${first}–${second}` : `~${first}`;
-    }
-    const leadText = String(item.estimatedLeads || "");
-    const households = leadText.match(/~?(\d[\d,]*)\s*households?/i);
-    if (households) return `~${households[1]}/wave`;
-    const parsed = parseLeadsFromEstimatedText(leadText);
-    if (parsed) return `~${Math.round(parsed.value)}/mo`;
-    if (/all inbound|all tracked|unified/i.test(leadText))
-      return `~${PAV_HISTORICAL.monthlyLeadsBaseline}/mo`;
-    return "Estimate pending";
   }
 
   function estimateProjectLeadRevenue(item) {

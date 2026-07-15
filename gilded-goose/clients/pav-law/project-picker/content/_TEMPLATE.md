@@ -11,7 +11,6 @@
 | **Status**        | available                                                  |
 | **Publish status** | published                                                 |
 | **Estimated leads gained** | e.g. 7–14 new leads/month                           |
-| **Estimated customer touchpoints** | e.g. 200 customers/wave                     |
 | **Keywords**      | keyword1, keyword2                                         |
 
 Optional rows (delete if unused): **Parent**, **Enabler**, **Monthly only**, **Payment type** (`performance` or `flat`), **Ongoing fee**, **Per campaign fee**, **Featured image**, **Reference link**. Omit **Priority** for retainer / monthly-only projects.

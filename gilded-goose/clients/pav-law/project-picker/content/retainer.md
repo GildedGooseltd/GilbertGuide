@@ -10,7 +10,6 @@
 | **Status**        | ongoing                                                    |
 | **Publish status** | published                                                  |
 | **Estimated leads gained** | TBD                                                        |
-| **Estimated customer touchpoints** | ~36 customers/month                                        |
 | **Keywords**      | ongoing, monthly, steady, maintain, retainer, report, crm, hubspot, referral, routine, lsa |
 
 ---

@@ -30,8 +30,6 @@ const META_KEYS = {
   "reference link": "referenceLink",
   "estimated leads": "estimatedLeads",
   "estimated leads gained": "estimatedLeads",
-  "client touchpoints": "clientTouchpoints",
-  "estimated customer touchpoints": "clientTouchpoints",
   "publish status": "publishStatus"
 };
 
@@ -364,7 +362,6 @@ function inferInformationNeeded(p) {
     items.push("Add Results — baseline vs current metrics");
   if (!p.impactEstimates && p.id !== "RETAINER") items.push("Fill Impact estimates");
   if (p.estimatedLeads === "Estimate pending") items.push("Confirm estimated leads gained");
-  if (p.clientTouchpoints === "Estimate pending") items.push("Confirm customer touchpoints");
   if (!(p.recommendedMetrics || []).length && /wip|research|ongoing/i.test(String(p.status || "")))
     items.push("List Recommended metrics");
   if (!(p.kpiRefs || []).length && /dashboard|kpi|metric/i.test(`${p.category} ${p.title}`))
@@ -594,7 +591,6 @@ function metaTableRows(p) {
     ...(p.featuredImage ? [["Featured image", p.featuredImage]] : []),
     ...(p.referenceLink?.url ? [["Reference link", formatReferenceLinkValue(p.referenceLink)]] : []),
     ...(p.estimatedLeads ? [["Estimated leads gained", p.estimatedLeads]] : []),
-    ...(p.clientTouchpoints ? [["Estimated customer touchpoints", p.clientTouchpoints]] : []),
     ["Keywords", (p.keywords || []).join(", ")]
   ];
   return rows.map(([l, v]) => padMetaRow(l, v));
@@ -707,6 +703,7 @@ export function sanitizeProjectRecord(p) {
   }
   p.kpiRefs = collectKpiRefs(p);
   p.publishStatus = normalizePublishStatus(p.publishStatus);
+  delete p.clientTouchpoints;
   return p;
 }
 
@@ -781,16 +778,6 @@ function inferEstimatedLeads(p) {
   return "Estimate pending";
 }
 
-function inferClientTouchpoints(p) {
-  if (p.clientTouchpoints && String(p.clientTouchpoints).trim()) return String(p.clientTouchpoints).trim();
-  const kw = `${(p.keywords || []).join(" ")} ${p.category || ""} ${p.campaignType || ""}`.toLowerCase();
-  if (/mailer|direct mail|postcard|envelope|insurance sleeve/.test(kw)) return "~200 customers/wave";
-  if (/display|brand|ntguilt|awareness|upper.funnel/.test(kw)) return "NTGUILT.com, Google Display, remarketing audiences";
-  if (/phone|voip|call extension|888|719|paid media|lsa/.test(kw)) return "~36 customers/month";
-  if (/hubspot|crm|pipeline|workflow|booking|dashboard|kpi/.test(kw)) return "~124 customers/month";
-  return "Estimate pending";
-}
-
 const GILBERT_BOILERPLATE = [
   "Everyone this campaign reached — calls, clicks, opens, mail, or profile views.",
   "Prospects who actually connected with intake (answered, booked, or submitted).",
@@ -810,7 +797,7 @@ function shortenGilbertMetricNotes(notes) {
 function normalizeProjectForTemplate(p) {
   p.tldr = inferTldr(p);
   if (!p.estimatedLeads) p.estimatedLeads = inferEstimatedLeads(p);
-  if (!p.clientTouchpoints) p.clientTouchpoints = inferClientTouchpoints(p);
+  delete p.clientTouchpoints;
   p.description = sanitizeProjectText(mergeDescriptionAndEducation(p));
   p.planningPhases = inferPlanningPhases(p);
   p.informationNeeded = inferInformationNeeded(p);
@@ -904,7 +891,7 @@ Include retainer: ${pkg.retainer !== false ? "yes" : "no"}
 
 /** Valid picker project IDs — rejects scratch rows like "WIP Live" in the ID column. */
 export function isValidProjectId(id) {
-  return /^(RETAINER|[AB]\d+M?)$/i.test(String(id || "").trim());
+  return /^(RETAINER|[ABC]\d+M?)$/i.test(String(id || "").trim());
 }
 
 function indexHeaderColumnMap(cells) {
@@ -930,8 +917,14 @@ function normalizeIndexStatus(raw) {
   if (s.includes("research")) return "research";
   if (s.includes("draft") || s.includes("outline")) return "draft";
   if (s.includes("ongoing")) return "ongoing";
-  if (s.includes("wip")) return "wip";
+  if (/\bwip\b/.test(s)) return "wip";
   if (s.includes("available")) return "available";
+  if (s.includes("recommended")) return "recommended";
+  if (s.includes("launched")) return "launched";
+  if (s.includes("planning")) return "planning";
+  if (s.includes("on hold") || s === "onhold") return "onhold";
+  if (s.includes("blocked")) return "blocked-ab";
+  if (s.includes("archived") || s.includes("merged")) return "archived";
   const first = s.split(/[·•|/]/)[0].trim().replace(/\s+/g, "");
   return first || null;
 }
@@ -998,8 +991,12 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     if (!o) return item;
     const next = { ...item };
     if (o.title) next.title = o.title;
-    const pm = String(o.p || "").match(/^P?(\d+)$/i);
+    const rawP = String(o.p || "").trim();
+    const pm = rawP.match(/^P?(\d+)$/i);
     if (pm) next.priority = parseInt(pm[1], 10);
+    else if (!rawP || rawP === "—" || rawP === "-" || /^archive$/i.test(rawP)) {
+      delete next.priority;
+    }
     const status = normalizeIndexStatus(o.status);
     if (status) next.status = status;
     return next;

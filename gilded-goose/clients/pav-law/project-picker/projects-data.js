@@ -31,7 +31,6 @@ window.PROJECT_DATA = {
     "status": "ongoing",
     "publishStatus": "published",
     "estimatedLeads": "TBD",
-    "clientTouchpoints": "~36 customers/month",
     "keywords": [
       "ongoing",
       "monthly",
@@ -169,7 +168,6 @@ window.PROJECT_DATA = {
       "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search + LSA)",
-      "clientTouchpoints": "Google LSA lead dashboard, HubSpot phone, Romina desk, Casey phone blocks",
       "keywords": [
         "lsa",
         "local services",
@@ -261,7 +259,6 @@ window.PROJECT_DATA = {
       "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "Profile discovery traffic — track via unique UTMs in GA4 (feeds KPI #18 / #10)",
-      "clientTouchpoints": "GBP, Directory profiles, Social bios",
       "keywords": [
         "social",
         "facebook",
@@ -399,7 +396,6 @@ window.PROJECT_DATA = {
       "status": "wip",
       "publishStatus": "published",
       "estimatedLeads": "Unlocks email, referral, mailer, and form→consult paths",
-      "clientTouchpoints": "All HubSpot contacts, forms, booking links",
       "keywords": [
         "hubspot",
         "setup",
@@ -500,7 +496,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "ongoingFee": 500,
       "estimatedLeads": "Past clients and referral network outreach",
-      "clientTouchpoints": "HubSpot email, Past-client lists, Past clients, Referral ask workflows",
       "keywords": [
         "referral",
         "referrals",
@@ -623,7 +618,6 @@ window.PROJECT_DATA = {
       "parentId": "A4",
       "enabler": false,
       "estimatedLeads": "Target 20 resigns per program wave (PDF KPI)",
-      "clientTouchpoints": "100 connects · 200 emails per wave (PDF KPI)",
       "keywords": [
         "sealing",
         "probation",
@@ -723,7 +717,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "~200 households per wave (confirm sleeve order qty); 1–2 retained matters long-tail",
-      "clientTouchpoints": "Physical mail, past-client glovebox, cold database list",
       "keywords": [
         "mailer",
         "envelope",
@@ -845,7 +838,6 @@ window.PROJECT_DATA = {
       "status": "wip",
       "publishStatus": "planning",
       "estimatedLeads": "Indirect — rewards tasks tied to booked consults and signed cases",
-      "clientTouchpoints": "Internal team (Casey, Romina, Gabriel), Andrew approval",
       "keywords": [
         "performance",
         "bonus",
@@ -917,140 +909,6 @@ window.PROJECT_DATA = {
       "kpiRefs": []
     },
     {
-      "id": "A8",
-      "priority": 9,
-      "fee": 1600,
-      "timeline": "1 to 2 weeks",
-      "category": "Analytics",
-      "campaignType": "Dashboard / Reporting",
-      "status": "wip",
-      "publishStatus": "published",
-      "estimatedLeads": "124/mo unified (Jun 2026 dummy · KPI #01) — HubSpot + LSA + Search",
-      "clientTouchpoints": "Gilbert Guide Reporting tab, Andrew review, Intake team",
-      "keywords": [
-        "analytics",
-        "tracking",
-        "dashboard",
-        "reporting",
-        "gtm",
-        "ga4",
-        "data",
-        "utm",
-        "conversion"
-      ],
-      "title": "Operations Dashboard",
-      "description": "You cannot optimize what you cannot see. Partial UTM tracking and conversion flags exist, but there is no client-facing dashboard tying calls, forms, and ad spend together. Marketing attribution requires one reliable view of which channels produce consults.\n\nMarketing attribution only works when tags, UTMs, and CRM fields agree. HubSpot’s attribution overview and Google’s conversion measurement docs explain how to tie ad spend to consult requests instead of guessing from incomplete exports. See HubSpot — marketing attribution, HubSpot — connect Google Ads, and Google Analytics Academy.",
-      "tldr": "One dashboard for calls, forms, and spend by channel.",
-      "valueAdded": [
-        "Unified KPI view for 124 June leads — see KPI wireframe v1 and KPI #01 (dummy layout)",
-        "Cost/call and CPL roll up from Jul 2026 Google Ads export — Military $41/call baseline",
-        "Missed-revenue flag (#19) ties to Search routing — feeds next cockpit chart when live"
-      ],
-      "valueIcons": [
-        "efficiency",
-        "intake"
-      ],
-      "completedItems": [
-        "Systems audit and access documentation",
-        "UTM tracking logic drafted for contact URLs",
-        "KPI master table drafted (KPI-01–35)",
-        "Google Ads API setup doc drafted (Gilbert A8 deliverable)"
-      ],
-      "inProgressItems": [
-        "UTM tracking setup on contact URLs",
-        "Dashboard and reporting planning",
-        "Conversion actions flagged but not yet in client-facing reports",
-        "**Google Ads API** — credentials, monthly pull script, LSA `local_services_lead` backfill (see `GOOGLE-ADS-API-SETUP.md`)",
-        "KPI master table + cockpit spec (see `KPI-DASHBOARD-SPEC.md` · edit `kpi-list.md`)",
-        "**Layout wireframe v1** — merged into Gilbert Guide **Reporting & dashboards** tab (`kpi-wireframe.html` · canvas source `wireframe/pav-law-kpi-wireframe.canvas.tsx`) — round 1 approval; revisions needed before live data",
-        "HubSpot **Integrations → Google Ads** connect (CRM attribution layer — separate from API secrets)"
-      ],
-      "resultsItems": [
-        "KPI master table drafted (KPI-01–35)",
-        "Wireframe v1 merged into Gilbert Reporting tab",
-        "UTM logic drafted for contact URLs",
-        "Google Ads API setup doc drafted"
-      ],
-      "goal": "Ship live KPI cockpit with 124/mo unified lead count, cost/call by channel, and missed-revenue flag (#19) wired to Search data.",
-      "informationNeeded": [
-        "*Add:*",
-        "_Add:_"
-      ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Systems audit and access documentation; UTM tracking logic drafted for contact URLs (+2 more)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "UTM tracking setup on contact URLs; Dashboard and reporting planning (+5 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "KPI master table drafted (KPI-01–35) (+3 more)",
-          "notes": ""
-        }
-      ],
-      "blockers": [
-        "Google Ads API credentials not live — monthly pull script blocked",
-        "HubSpot ↔ Google Ads integration not confirmed in UI",
-        "Jul export missing Phone calls — breaks cost/call automation",
-        "Wireframe still dummy data — round 2 revisions before client sign-off"
-      ],
-      "recommendedMetrics": [
-        "KPI #01 total leads · #02 new cases · #21 answer rate",
-        "Cost/call Military (~~$58–67) · NTGUILT CPL (~~$6.82 click / call TBD)",
-        "Missed revenue #19 — unanswered calls × avg case fee ($4,800)",
-        "MoM delta on platform spend, agency spend, and revenue"
-      ],
-      "insightsImprovements": [
-        "Fix export column first — fastest path to trustworthy cost/call",
-        "LSA leads-inbox CSV should backfill channel table alongside Search",
-        "Peacock gauge and missed-revenue card depend on #21 + #29 fee blend"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Unified Jun dummy 124 leads · 9 cases at 7.3%",
-        "leadsImpacted": 124,
-        "leadsConnected": 86,
-        "clientsRetained": 9
-      },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline set at 9 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline set at 86 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline set at 124 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-        }
-      ],
-      "abQuestions": [],
-      "kpiRefs": [
-        "#01",
-        "#02",
-        "#19",
-        "#21"
-      ]
-    },
-    {
       "id": "B14",
       "priority": 9,
       "fee": 0,
@@ -1060,7 +918,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "planning",
       "estimatedLeads": "Soft brand lift — referrals and walk-ups via wearable conversation starters",
-      "clientTouchpoints": "Team + events + client-facing gifts (shirts, mugs, socks)",
       "keywords": [
         "swag",
         "merch",
@@ -1147,7 +1004,6 @@ window.PROJECT_DATA = {
       "status": "launched",
       "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
-      "clientTouchpoints": "NTGUILT.com, Google Display, remarketing audiences",
       "keywords": [
         "display",
         "ntguilt",
@@ -1186,8 +1042,7 @@ window.PROJECT_DATA = {
       ],
       "goal": "Launch NTGUILT upper-funnel display with UTMs so remarketing pool grows 20%+ before scaling Search budget.",
       "informationNeeded": [
-        "*Add:*",
-        "_Add:_"
+        "*Add:*"
       ],
       "planningPhases": [
         {
@@ -1267,7 +1122,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
-      "clientTouchpoints": "Google Ads call extensions, Landing pages",
       "keywords": [
         "search",
         "google",
@@ -1384,7 +1238,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "Organic search discovery traffic",
-      "clientTouchpoints": "Google Ads call extensions, Landing pages, pav.law website, Organic search",
       "keywords": [
         "seo",
         "schema",
@@ -1502,7 +1355,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
-      "clientTouchpoints": "HubSpot CRM, Romina booking link",
       "keywords": [
         "hubspot",
         "workflow",
@@ -1617,7 +1469,6 @@ window.PROJECT_DATA = {
       "status": "blocked-ab",
       "publishStatus": "published",
       "estimatedLeads": "Organic form fills from paid traffic already landing (no new channel)",
-      "clientTouchpoints": "pav.law website, Organic search",
       "keywords": [
         "website",
         "speed",
@@ -1733,7 +1584,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "ongoingFee": 500,
       "estimatedLeads": "Upper-funnel traffic → site and remarketing pool",
-      "clientTouchpoints": "Social bios, HubSpot publish, Reddit, landing pages",
       "keywords": [
         "creative",
         "social",
@@ -1874,7 +1724,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
-      "clientTouchpoints": "HubSpot CRM, Romina booking link, Past clients, Referral ask workflows",
       "keywords": [
         "hubspot",
         "import",
@@ -1992,7 +1841,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
-      "clientTouchpoints": "Google Ads call extensions, Landing pages",
       "keywords": [
         "display",
         "adult",
@@ -2102,7 +1950,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "30–40 calls/month (paid search dependency)",
-      "clientTouchpoints": "HubSpot phone, Romina desk line",
       "keywords": [
         "gabriel",
         "outbound",
@@ -2209,7 +2056,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "enabler": true,
       "estimatedLeads": "30–40 calls/month (Military Search baseline)",
-      "clientTouchpoints": "HubSpot phone, Romina desk, LSA lead dashboard, Google call extensions",
       "keywords": [
         "phone",
         "VoIP",
@@ -2329,7 +2175,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "Organic search discovery traffic",
-      "clientTouchpoints": "pav.law website, Organic search",
       "keywords": [
         "blog",
         "content",
@@ -2438,7 +2283,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "planning",
       "estimatedLeads": "Profile and trust lift — discovery via Casey-specific search and directory profiles",
-      "clientTouchpoints": "Casey LinkedIn, Avvo, firm site bio, court/public appearance, social profiles",
       "keywords": [
         "casey",
         "attorney",
@@ -2518,7 +2362,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
-      "clientTouchpoints": "Google LSA lead dashboard, Google Ads call extensions, Landing pages",
       "keywords": [
         "seasonal",
         "campaign",
@@ -2633,7 +2476,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
-      "clientTouchpoints": "HubSpot CRM, Romina booking link, pav.law website, Organic search",
       "keywords": [
         "landing",
         "page",
@@ -2743,7 +2585,6 @@ window.PROJECT_DATA = {
       "status": "planning",
       "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
-      "clientTouchpoints": "Google Ads call extensions, Landing pages, GBP, Directory profiles, Social bios",
       "keywords": [
         "case win",
         "social proof",
@@ -2846,7 +2687,6 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "All inbound web leads and form fills",
-      "clientTouchpoints": "HubSpot CRM, Romina booking link, Google Ads call extensions, Landing pages, Website chat",
       "keywords": [
         "pavi",
         "chat",
@@ -2954,7 +2794,6 @@ window.PROJECT_DATA = {
       "status": "planning",
       "publishStatus": "published",
       "estimatedLeads": "N/A — cost savings (not lead-gen)",
-      "clientTouchpoints": "Andrew review, QuickBooks subscriptions, Card statements",
       "keywords": [
         "credit card",
         "subscription",
@@ -3050,187 +2889,6 @@ window.PROJECT_DATA = {
       "kpiRefs": []
     },
     {
-      "id": "C1",
-      "priority": 30,
-      "fee": 2000,
-      "timeline": "Apr 2026 triage week",
-      "category": "Systems",
-      "campaignType": "Access & Security",
-      "status": "completed",
-      "publishStatus": "published",
-      "estimatedLeads": "Indirect — unlocks Ads/LSA/GBP/MyCase ops",
-      "clientTouchpoints": "Marketing stack admins and intake owners",
-      "keywords": [
-        "systems",
-        "access",
-        "audit",
-        "google ads",
-        "lsa",
-        "gbp",
-        "analytics",
-        "bluehost",
-        "wordpress",
-        "mycase"
-      ],
-      "title": "Systems Access Audit & Cleanse",
-      "description": "Apr 19–21, 2026 kickoff email: Full Systems Access Audit & Cleanse as priority #1 for a $2,000 triage week (with email outage docs and LSA lite). Andrew approved start. Tracker lists this Completed. Keep on Guide as archive + proof of foundation fee.",
-      "tldr": "Clean admin access across every marketing and intake tool so campaigns and reporting are not blocked by logins.",
-      "valueAdded": [
-        "Documented access across Ads, LSA, GBP, GA4, Bluehost, WordPress, MyCase",
-        "Reduced security / orphaned-user risk after prior marketing personnel",
-        "Prerequisite for retainer and LSA work"
-      ],
-      "valueIcons": [
-        "foundation",
-        "efficiency"
-      ],
-      "completedItems": [
-        "Systems access audit across marketing stack",
-        "Security / permission review as scoped in Apr ops outline"
-      ],
-      "inProgressItems": [
-        "_"
-      ],
-      "resultsItems": [
-        "Period: Apr 19, 2026 – Apr 26, 2026 window",
-        "Source: Next Steps Systems Audit emails · PAV-LAW-PROJECT-TRACKER-SHEET.csv",
-        "Consulting fee charged: $2,000 (triage fee quoted Apr 19)",
-        "Media / partner spend: —",
-        "Volume: —",
-        "Efficiency: Tracker fee band also lists $1,500–$2,500 for access audit line",
-        "Outcome: Access path in place for Ads/LSA/GBP/GA/MyCase work",
-        "Status vs goal: Completed"
-      ],
-      "goal": "Admin access documented and cleansed for Google Ads/LSA, GBP, Analytics, Bluehost, WordPress, MyCase with risks flagged.",
-      "informationNeeded": [
-        "_"
-      ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Apr 2026",
-          "notes": "Kickoff outline"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "completed",
-          "target": "Apr 2026",
-          "notes": "Access + cleanse"
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "completed",
-          "target": "Handed into retainer ops",
-          "notes": ""
-        }
-      ],
-      "blockers": [
-        "_"
-      ],
-      "recommendedMetrics": [
-        "Open access tickets = 0 for critical tools"
-      ],
-      "insightsImprovements": [
-        "Re-audit when staffing changes or new tools (VoIP, HubSpot seats)"
-      ],
-      "impactEstimates": null,
-      "abQuestions": [],
-      "kpiRefs": []
-    },
-    {
-      "id": "C2",
-      "priority": 31,
-      "fee": 1500,
-      "timeline": "Apr 2026",
-      "category": "Systems",
-      "campaignType": "Email / DNS Incident",
-      "status": "completed",
-      "publishStatus": "published",
-      "estimatedLeads": "Risk recovery — inbound email restored",
-      "clientTouchpoints": "All pav.law inboxes",
-      "keywords": [
-        "email",
-        "outage",
-        "dns",
-        "mx",
-        "google workspace",
-        "bluehost",
-        "runbook"
-      ],
-      "title": "Email Outage Triage & DNS Runbook",
-      "description": "Apr 14 urgent email to Andrew requested triage status, prior incidents, marketing tool map, DNS/MX changes. Apr 19 ops outline item #2: Document Email Outage Triage. Tracker marks DNS/email outage triage and email recovery documentation Completed. Fee uses mid of tracker bands when flat invoice not isolated.",
-      "tldr": "Diagnosed and documented the pav.law inbound email outage so the next DNS/MX failure is faster to fix.",
-      "valueAdded": [
-        "Incoming mail failure triaged (accounts could send; inbound broken firm-wide)",
-        "Root-cause / resolution documentation for Carrie coordination",
-        "Maintenance log pattern for future incidents"
-      ],
-      "valueIcons": [
-        "foundation",
-        "efficiency"
-      ],
-      "completedItems": [
-        "Outage triage coordination",
-        "Email recovery documentation / runbook"
-      ],
-      "inProgressItems": [
-        "_"
-      ],
-      "resultsItems": [
-        "Period: Apr 14, 2026 – Apr 2026 resolution window",
-        "Source: Urgent Email Outage Resolution.eml · Systems Audit outline · tracker",
-        "Consulting fee charged: $1,500 listed (tracker bands $1,500–$3,000 triage · $750–$1,500 docs)",
-        "Media / partner spend: —",
-        "Volume: Firm-wide inbound impact (all employees)",
-        "Efficiency: —",
-        "Outcome: Documented resolution path; similar prior outages noted in intake email",
-        "Status vs goal: Completed"
-      ],
-      "goal": "Inbound mail restored and a reusable runbook exists for MX/DNS / Workspace routing failures.",
-      "informationNeeded": [
-        "_"
-      ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Apr 14, 2026",
-          "notes": "Symptom list to Andrew"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "completed",
-          "target": "Apr 2026",
-          "notes": "Triage with Carrie · DNS/MX"
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "completed",
-          "target": "Recovery docs",
-          "notes": ""
-        }
-      ],
-      "blockers": [
-        "_"
-      ],
-      "recommendedMetrics": [
-        "Time-to-restore on next email incident"
-      ],
-      "insightsImprovements": [
-        "Keep marketing tool integration map updated after every stack change (VoIP, HubSpot, DNS)"
-      ],
-      "impactEstimates": null,
-      "abQuestions": [],
-      "kpiRefs": []
-    },
-    {
       "id": "A3",
       "priority": 50,
       "fee": 1200,
@@ -3241,7 +2899,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "parentId": "B13",
       "estimatedLeads": "Past-client and prospect email list",
-      "clientTouchpoints": "HubSpot email, Past-client lists",
       "keywords": [
         "july",
         "holiday",
@@ -3354,7 +3011,6 @@ window.PROJECT_DATA = {
       "status": "completed",
       "publishStatus": "published",
       "estimatedLeads": "Estimate pending",
-      "clientTouchpoints": "Andrew review, Intake team",
       "keywords": [
         "strategy",
         "audit",
@@ -3462,7 +3118,6 @@ window.PROJECT_DATA = {
       "status": "archived",
       "publishStatus": "published",
       "estimatedLeads": "Onsite QR / booth captures tied to NTGUILT + Pav Law",
-      "clientTouchpoints": "PPIR / ASCEND / car-show attendees at activated booths",
       "keywords": [
         "events",
         "ascend",
@@ -3566,7 +3221,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "parentId": "A15",
       "estimatedLeads": "Shared booth leads + shop appointments from giveaways",
-      "clientTouchpoints": "ASCEND / PPIR attendees engaged by partner hosts",
       "keywords": [
         "garage",
         "partnership",
@@ -3656,6 +3310,185 @@ window.PROJECT_DATA = {
       "kpiRefs": []
     },
     {
+      "id": "C1",
+      "priority": 54,
+      "fee": 2000,
+      "timeline": "Apr 2026 triage week",
+      "category": "Systems",
+      "campaignType": "Access & Security",
+      "status": "completed",
+      "publishStatus": "published",
+      "estimatedLeads": "Indirect — unlocks Ads/LSA/GBP/MyCase ops",
+      "keywords": [
+        "systems",
+        "access",
+        "audit",
+        "google ads",
+        "lsa",
+        "gbp",
+        "analytics",
+        "bluehost",
+        "wordpress",
+        "mycase"
+      ],
+      "title": "Systems Access Audit & Cleanse",
+      "description": "Apr 19–21, 2026 kickoff email: Full Systems Access Audit & Cleanse as priority #1 for a $2,000 triage week (with email outage docs and LSA lite). Andrew approved start. Tracker lists this Completed. Keep on Guide as archive + proof of foundation fee.",
+      "tldr": "Clean admin access across every marketing and intake tool so campaigns and reporting are not blocked by logins.",
+      "valueAdded": [
+        "Documented access across Ads, LSA, GBP, GA4, Bluehost, WordPress, MyCase",
+        "Reduced security / orphaned-user risk after prior marketing personnel",
+        "Prerequisite for retainer and LSA work"
+      ],
+      "valueIcons": [
+        "foundation",
+        "efficiency"
+      ],
+      "completedItems": [
+        "Systems access audit across marketing stack",
+        "Security / permission review as scoped in Apr ops outline"
+      ],
+      "inProgressItems": [
+        "_"
+      ],
+      "resultsItems": [
+        "Period: Apr 19, 2026 – Apr 26, 2026 window",
+        "Source: Next Steps Systems Audit emails · PAV-LAW-PROJECT-TRACKER-SHEET.csv",
+        "Consulting fee charged: $2,000 (triage fee quoted Apr 19)",
+        "Media / partner spend: —",
+        "Volume: —",
+        "Efficiency: Tracker fee band also lists $1,500–$2,500 for access audit line",
+        "Outcome: Access path in place for Ads/LSA/GBP/GA/MyCase work",
+        "Status vs goal: Completed"
+      ],
+      "goal": "Admin access documented and cleansed for Google Ads/LSA, GBP, Analytics, Bluehost, WordPress, MyCase with risks flagged.",
+      "informationNeeded": [
+        "_"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "Apr 2026",
+          "notes": "Kickoff outline"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "completed",
+          "target": "Apr 2026",
+          "notes": "Access + cleanse"
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "completed",
+          "target": "Handed into retainer ops",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "_"
+      ],
+      "recommendedMetrics": [
+        "Open access tickets = 0 for critical tools"
+      ],
+      "insightsImprovements": [
+        "Re-audit when staffing changes or new tools (VoIP, HubSpot seats)"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [],
+      "kpiRefs": []
+    },
+    {
+      "id": "C2",
+      "priority": 55,
+      "fee": 1500,
+      "timeline": "Apr 2026",
+      "category": "Systems",
+      "campaignType": "Email / DNS Incident",
+      "status": "completed",
+      "publishStatus": "published",
+      "estimatedLeads": "Risk recovery — inbound email restored",
+      "keywords": [
+        "email",
+        "outage",
+        "dns",
+        "mx",
+        "google workspace",
+        "bluehost",
+        "runbook"
+      ],
+      "title": "Email Outage Triage & DNS Runbook",
+      "description": "Apr 14 urgent email to Andrew requested triage status, prior incidents, marketing tool map, DNS/MX changes. Apr 19 ops outline item #2: Document Email Outage Triage. Tracker marks DNS/email outage triage and email recovery documentation Completed. Fee uses mid of tracker bands when flat invoice not isolated.",
+      "tldr": "Diagnosed and documented the pav.law inbound email outage so the next DNS/MX failure is faster to fix.",
+      "valueAdded": [
+        "Incoming mail failure triaged (accounts could send; inbound broken firm-wide)",
+        "Root-cause / resolution documentation for Carrie coordination",
+        "Maintenance log pattern for future incidents"
+      ],
+      "valueIcons": [
+        "foundation",
+        "efficiency"
+      ],
+      "completedItems": [
+        "Outage triage coordination",
+        "Email recovery documentation / runbook"
+      ],
+      "inProgressItems": [
+        "_"
+      ],
+      "resultsItems": [
+        "Period: Apr 14, 2026 – Apr 2026 resolution window",
+        "Source: Urgent Email Outage Resolution.eml · Systems Audit outline · tracker",
+        "Consulting fee charged: $1,500 listed (tracker bands $1,500–$3,000 triage · $750–$1,500 docs)",
+        "Media / partner spend: —",
+        "Volume: Firm-wide inbound impact (all employees)",
+        "Efficiency: —",
+        "Outcome: Documented resolution path; similar prior outages noted in intake email",
+        "Status vs goal: Completed"
+      ],
+      "goal": "Inbound mail restored and a reusable runbook exists for MX/DNS / Workspace routing failures.",
+      "informationNeeded": [
+        "_"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "Apr 14, 2026",
+          "notes": "Symptom list to Andrew"
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "completed",
+          "target": "Apr 2026",
+          "notes": "Triage with Carrie · DNS/MX"
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "completed",
+          "target": "Recovery docs",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "_"
+      ],
+      "recommendedMetrics": [
+        "Time-to-restore on next email incident"
+      ],
+      "insightsImprovements": [
+        "Keep marketing tool integration map updated after every stack change (VoIP, HubSpot, DNS)"
+      ],
+      "impactEstimates": null,
+      "abQuestions": [],
+      "kpiRefs": []
+    },
+    {
       "id": "A18",
       "priority": 56,
       "fee": 600,
@@ -3666,7 +3499,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "parentId": "A2",
       "estimatedLeads": "Awareness / retargeting pool for NTGUILT events",
-      "clientTouchpoints": "Car, racing, Colorado Springs Reddit audiences",
       "keywords": [
         "reddit",
         "ntguilt",
@@ -3760,7 +3592,6 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "ongoingFee": 500,
       "estimatedLeads": "All inbound web leads and form fills",
-      "clientTouchpoints": "HubSpot CRM, Romina booking link, GBP, Directory profiles, Social bios",
       "keywords": [
         "social",
         "social media",
@@ -3869,6 +3700,130 @@ window.PROJECT_DATA = {
       "kpiRefs": []
     },
     {
+      "id": "A8",
+      "fee": 1600,
+      "timeline": "1 to 2 weeks",
+      "category": "Analytics",
+      "campaignType": "Dashboard / Reporting",
+      "status": "wip",
+      "publishStatus": "published",
+      "estimatedLeads": "124/mo unified (Jun 2026 · KPI #01) — HubSpot + LSA + Search",
+      "keywords": [
+        "dashboard",
+        "kpi",
+        "utm",
+        "ga4",
+        "google ads api",
+        "attribution"
+      ],
+      "title": "Operations Dashboard",
+      "description": "Partial UTMs and conversion flags exist, but there is no client-facing view joining calls, forms, and ad spend. A8 ships that cockpit in Gilbert so Andrew can see which channels produce consults.",
+      "tldr": "One live dashboard for calls, forms, and spend by channel.",
+      "valueAdded": [
+        "Unified view of ~124/mo leads (KPI #01) across HubSpot, LSA, and Search",
+        "Cost/call + CPL from Google Ads exports (Military ~$41/call baseline)",
+        "Missed-revenue flag (#19) once Search answer-rate data is wired"
+      ],
+      "valueIcons": [
+        "efficiency",
+        "intake"
+      ],
+      "completedItems": [
+        "Systems access audit",
+        "UTM logic drafted",
+        "KPI master table (KPI-01–35)",
+        "Google Ads API setup doc",
+        "Wireframe v1 in Gilbert Reporting tab"
+      ],
+      "inProgressItems": [
+        "UTM tracking on contact URLs",
+        "Google Ads API pull + LSA `local_services_lead` backfill (`GOOGLE-ADS-API-SETUP.md`)",
+        "Cockpit live data on Reporting tab (`kpi-wireframe.html` · round 1 approved; needs revisions)",
+        "HubSpot ↔ Google Ads CRM attribution"
+      ],
+      "resultsItems": [
+        "Spec + wireframe in Gilbert; live data and API pull still open"
+      ],
+      "goal": "Live KPI cockpit: unified lead count, cost/call by channel, and missed-revenue (#19) on Search data.",
+      "informationNeeded": [
+        "Google Ads API credentials (monthly pull + LSA backfill)",
+        "Confirm HubSpot → Integrations → Google Ads connected",
+        "_Add:_"
+      ],
+      "planningPhases": [
+        {
+          "phase": "1",
+          "focus": "Discovery & scope",
+          "status": "completed",
+          "target": "Systems access audit; UTM logic drafted (+3 more)",
+          "notes": ""
+        },
+        {
+          "phase": "2",
+          "focus": "Build & execute",
+          "status": "wip",
+          "target": "UTM tracking on contact URLs; Google Ads API pull + LSA `local_services_lead` bac… (+2 more)",
+          "notes": ""
+        },
+        {
+          "phase": "3",
+          "focus": "Measure & optimize",
+          "status": "wip",
+          "target": "Spec + wireframe in Gilbert; live data and API pull…",
+          "notes": ""
+        }
+      ],
+      "blockers": [
+        "Ads API credentials not live",
+        "HubSpot ↔ Google Ads not confirmed",
+        "Jul export missing Phone calls (breaks cost/call)",
+        "Wireframe still on dummy data"
+      ],
+      "recommendedMetrics": [
+        "#01 total leads · #02 new cases · #21 answer rate",
+        "Military cost/call · missed revenue #19 (unanswered × ~$4,800 case fee)",
+        "MoM platform spend, agency spend, revenue"
+      ],
+      "insightsImprovements": [
+        "Fix export columns first — fastest path to trustworthy cost/call",
+        "Backfill LSA leads-inbox with Search in the channel table",
+        "Peacock gauge + #19 need #21 answer rate and #29 fee blend"
+      ],
+      "impactEstimates": {
+        "period": "mo",
+        "asOf": "2026-07-11",
+        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
+        "note": "Unified Jun dummy 124 leads · 9 cases at 7.3%",
+        "leadsImpacted": 124,
+        "leadsConnected": 86,
+        "clientsRetained": 9
+      },
+      "gilbertMetricNotes": [
+        {
+          "date": "2026-07-11",
+          "field": "Clients retained",
+          "text": "Baseline 9/mo from Jul 11 performance review."
+        },
+        {
+          "date": "2026-07-11",
+          "field": "Leads connected",
+          "text": "Baseline 86/mo from Jul 11 performance review."
+        },
+        {
+          "date": "2026-07-11",
+          "field": "Leads impacted",
+          "text": "Baseline 124/mo from Jul 11 performance review."
+        }
+      ],
+      "abQuestions": [],
+      "kpiRefs": [
+        "#01",
+        "#02",
+        "#19",
+        "#21"
+      ]
+    },
+    {
       "id": "A8M",
       "fee": 500,
       "timeline": "Ongoing monthly after A8 build",
@@ -3879,7 +3834,6 @@ window.PROJECT_DATA = {
       "parentId": "A8",
       "monthlyOnly": true,
       "estimatedLeads": "Estimate pending",
-      "clientTouchpoints": "~124 customers/month",
       "keywords": [
         "dashboard",
         "reporting",

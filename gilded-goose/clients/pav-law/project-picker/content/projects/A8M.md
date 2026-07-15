@@ -1,4 +1,4 @@
-# A8M — Lead Source Dashboard — Retainer
+# A8M — Data Management — Retainer
 
 |                   |                                                            |
 | ----------------- | ---------------------------------------------------------- |
@@ -12,7 +12,6 @@
 | **Parent**        | A8                                                         |
 | **Monthly only**  | yes                                                        |
 | **Estimated leads gained** | Estimate pending                                           |
-| **Estimated customer touchpoints** | ~124 customers/month                                       |
 | **Keywords**      | dashboard, reporting, maintenance, monthly, analytics, utm, attribution |
 
 ---
