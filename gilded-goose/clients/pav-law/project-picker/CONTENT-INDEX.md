@@ -73,7 +73,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Card status badges (WIP, completed, …)             | `content/INDEX.md`                                | **Status** column overrides file                                            |
 | AB – Q question text                               | `content/projects/{ID}.md`                        | `AB - Q:` block                                                             |
 | Research / optional projects section               | `app.js`                                          | `renderResearchSection()`                                                   |
-| Impact / Gilbert on metrics                        | `content/projects/{ID}.md`                        | `## Impact estimates`, `## Gilbert on metrics` (sync scripts)               |
+| Impact estimates                                   | `content/projects/{ID}.md`                        | `## Impact estimates`                                                       |
 
 
 

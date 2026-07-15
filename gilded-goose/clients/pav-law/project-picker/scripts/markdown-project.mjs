@@ -424,9 +424,6 @@ export function parseProjectMarkdown(text, fallbackId) {
   if (sections["impact estimates"]) {
     project.impactEstimates = parseImpactEstimatesSection(sections["impact estimates"]);
   }
-  if (sections["gilbert on metrics"]) {
-    project.gilbertMetricNotes = parseGilbertMetricNotes(sections["gilbert on metrics"]);
-  }
 
   if (sections.learnings) project.learningsLinks = parseLearnings(sections.learnings);
   if (sections.references) project.references = parseLearnings(sections.references);
@@ -599,6 +596,7 @@ export function sanitizeProjectRecord(p) {
   delete p.planningPhases;
   delete p.timeline;
   delete p.recommendedMetrics;
+  delete p.gilbertMetricNotes;
   return p;
 }
 
@@ -697,8 +695,8 @@ function normalizeProjectForTemplate(p) {
   delete p.planningPhases;
   delete p.timeline;
   delete p.recommendedMetrics;
+  delete p.gilbertMetricNotes;
   p.informationNeeded = inferInformationNeeded(p);
-  p.gilbertMetricNotes = shortenGilbertMetricNotes(p.gilbertMetricNotes);
   delete p.marketingEducation;
   delete p.learningsLinks;
   return sanitizeProjectRecord(p);
@@ -735,7 +733,6 @@ export function projectToMarkdown(p) {
   md += listSection("Blockers (next round)", p.blockers);
   md += listSection("Insights & improvements", p.insightsImprovements);
   md += formatImpactEstimatesSection(p);
-  md += formatGilbertMetricNotesSection(p);
 
   return md.trim() + "\n";
 }
