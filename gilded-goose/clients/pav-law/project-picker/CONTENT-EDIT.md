@@ -34,10 +34,9 @@ Meta table: Estimated leads gained (optional row)
 ## AB - Q                  ← Question for Andrew Brown; cart blocked until Comment answered
 ## Description           ← full scope (expand to read)
 ## Goal                   ← measurable outcome
-## Planning phases        ← 3-phase table (Discovery · Build · Measure)
 ## Information needed     ← gaps, AB-Q, blockers, _Add:_ placeholders
-## WIP                   ← Phase 2 work in progress
-## Completed             ← Phase 1 shipped
+## WIP                   ← work in progress
+## Completed             ← shipped
 ## Results               ← standardized outline (required fields; use — if n/a)
 ```
 
@@ -67,7 +66,7 @@ See `[_TEMPLATE.md](content/_TEMPLATE.md)`. Fee market context: `[FEE-BENCHMARK-
 - **KPI links** — `## KPI links` lists dashboard metrics (`01`, `21`, …). External reference URLs are stripped on build; only **KPI #NN** links in the picker (opens KPIs tab).
 - **Estimated leads gained** = incremental leads expected from that campaign, not existing lead volume.
 - Card shows **Summary → bullets → leads gained**; **Current Status** expands Description.
-- **Goal · Results · Recommended metrics · Blockers · Insights** render in expanded cards and the **Impact** tab (Completed section).
+- **Goal · Results · Blockers · Insights** render in expanded cards and the **Impact** tab (Completed section).
 - **Impact estimates** — leads impacted · leads connected · clients retained (updated on each data pull).
 - **Gilbert on metrics** — auto-commentary when sync detects a number change (`npm run sync-impact`).
 

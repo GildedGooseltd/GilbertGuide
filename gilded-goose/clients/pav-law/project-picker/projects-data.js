@@ -25,12 +25,11 @@ window.PROJECT_DATA = {
   "retainer": {
     "id": "RETAINER",
     "fee": 2700,
-    "timeline": "Ongoing monthly",
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
     "status": "ongoing",
     "publishStatus": "published",
-    "estimatedLeads": "TBD",
+    "estimatedLeads": "~36 Military Search calls/mo (May verified) + ~80 LSA phone leads/mo · NTGUILT 282 clicks/30d (calls thin)",
     "keywords": [
       "ongoing",
       "monthly",
@@ -49,120 +48,72 @@ window.PROJECT_DATA = {
     "valueAdded": [
       "Monthly reporting catches waste before it runs another month",
       "Keeps Google Ads, LSA, and Microsoft Ads aligned under one scope",
-      "LSA lead-status SOP so booked, spam, and follow-up leads stay accurate for billing and reporting",
-      "<Insert link to dashboard page with traffic stats>"
+      "LSA lead-status SOP so booked, spam, and follow-up leads stay accurate for billing and reporting"
+    ],
+    "valueIcons": [
+      "foundation",
+      "retainer",
+      "efficiency"
     ],
     "completedItems": [
       "Systems access audit",
       "UTM tracking on contact form URLs, media, ads etc.",
       "Lead flow optimization",
       "LSA audit and county targeting cleanup",
-      "Google Ads and Microsoft Ads campaign buildout/automation",
+      "LSA Phase 1 — Speed-to-lead intake recommendations, limited implementation",
       "GBP content, hours, and service-area cleanup",
-      "Cross-platform paid search optimization",
-      "LSA call process Phase 1 — SOP + `LSA-DOCUMENTING-TRAINING.md` (see B11)"
+      "LSA call process Phase 1 — SOP + `LSA-DOCUMENTING-TRAINING.md` (see B11)",
+      "Paused Mountain DUI + Demand Gen bleed (confirmed $0 in Jul Search period)"
     ],
     "inProgressItems": [
-      "Ad extension and sitelink rollout",
-      "LSA performance metrics - Missed call rate shows no consistent positive impact",
-      "LSA Phase 1 — Speed-to-lead intake recommendations, limited implementation",
-      "**LSA Phase 2** — see B11: Casey call review + phone coverage calendar for another attempt at improving the calling process"
+      "Blocked: LSA performance metrics — charge/status hygiene still uneven",
+      "Account shared negatives for government / JAG / PD / competitor terms (Military + NTGUILT)",
+      "Confirm NTGUILT call extensions + ntguilt.com forms in HubSpot before scaling budget"
     ],
     "resultsItems": [
-      "Period: May 2026 · Jun 11, 2026 – Jul 10, 2026 · May 1–18 email snapshot",
-      "Source: Ad Reports exports · May 19, 2026 client email",
+      "Period: May 3–30, 2026 (baseline) · Jun 11–Jul 10, 2026 (current 30d) · LSA inbox through Jul 10",
+      "Source: `Ad Reports/PERFORMANCE-REVIEW-2026-07-11.md` · `exports/2026-07-11/Campaign report (15).csv`.csv) · `exports/2026-05-30/Campaign report (4).csv`.csv) · `exports/2026-07-11/leads-inbox (12).csv`.csv) · `exports/2026-07-11/Search terms report (4).csv`.csv) · index `exports/INDEX.md`",
       "Consulting fee charged: $2,700/mo retainer",
-      "Media / partner spend: May 1–18 ~$11,650 platform · pace ~$20k month · Military May $2,421 · Military Jun 11–Jul 10 $3,983 · NTGUILT Search $1,924",
-      "Volume: May Military 36 calls · May 1–18: 628 clicks · 19 phone calls · 21 LSA charged leads · NTGUILT Search 282 clicks",
-      "Efficiency: ~$67/call Military (May) · ~$6.82/click NTGUILT Search · message leads converted 0 (Andrew note)",
-      "Outcome: Andrew approved ~20% spend increase · trust &gt;$67k toward $100k month · Mountain DUI + Demand Gen paused · DV content split from Military for cleaner data",
-      "Status vs goal: Primary call engine = Military · NTGUILT Search live · LSA Phase 2 still open (B11)",
-      "Fee note: $2,700/mo is mid–upper vs Cos Springs PPC-only (~$1k–$2k) and mid vs Denver law PPC management ($1.5k–$5k). Includes Google + LSA + Microsoft ops. See FEE-BENCHMARK-CO-SPRINGS.md."
+      "Media / partner spend: **$6,277** Search Jun 11–Jul 10 (Military $3,983 · NTGUILT $1,924 · Core DV $179 · Core DUI paused $191) · May baseline Search+Demand Gen **$5,861**",
+      "Volume: May Military **36 phone calls** · Jul period **640** Search interactions (330 Military · 282 NTGUILT · 16 Core DV) — Jul export **missing Phone calls column** so Jul call count is estimated only · LSA inbox **181** leads (May 72 · Jun 83 · Jul-through-10th 26); **72 charged** (~40%)",
+      "Efficiency: Military cost/call **~$67** May ($2,421 ÷ 36) · **~$58–72** Jul est. from spend ÷ historical $/call · NTGUILT **~$6.82/click** · account Search CTR **4.03%** (up from 2.59% May)",
+      "Outcome: Military still primary call engine; NTGUILT adding efficient driver traffic but thin calls; Mountain/Demand Gen paused correctly; ~**38%** Jul search-term spend government/JAG/PD/navigational waste",
+      "Status vs goal: On track for Military efficiency; NTGUILT too early for retainer case proof; LSA volume strong but Denver-heavy vs Fort Carson Military focus; HubSpot Ads→case attribution still missing from this pull"
     ],
-    "goal": "Current metrics, goals and trends for 2026 digital ads",
+    "goal": "Hold Military Search cost/call near **~$58–67**, grow NTGUILT call volume off efficient clicks, keep LSA phone lead flow stable, and cut navigational/government search-term waste (~38% of query spend in Jul period).",
     "informationNeeded": [
-      "_Add:_"
-    ],
-    "planningPhases": [
-      {
-        "phase": "1",
-        "focus": "Discovery & scope",
-        "status": "completed",
-        "target": "Systems access audit; UTM tracking on contact form URLs, media, ads etc. (+6 more)",
-        "notes": ""
-      },
-      {
-        "phase": "2",
-        "focus": "Build & execute",
-        "status": "wip",
-        "target": "Ad extension and sitelink rollout; LSA performance metrics - Missed call rate shows no… (+2 more)",
-        "notes": ""
-      },
-      {
-        "phase": "3",
-        "focus": "Measure & optimize",
-        "status": "wip",
-        "target": "May 2026: $2,421 Military spend · 36 calls · ~$67/call",
-        "notes": "Period: May 2026 · Jun 11, 2026 – Jul 10, 2026 · Ma… (+8 more)"
-      }
+      "Re-export Campaign + Ad group reports **with Phone calls column** for Jun 11–Jul 10 (verify est. 59–69 Military calls)",
+      "HubSpot contacts where `pl_lead_source` = Google Ads / LSA (matters retained)",
+      "Microsoft Ads export if still in retainer scope for this month"
     ],
     "blockers": [
-      "Jul export missing Phone calls column — cannot reconcile cost/call in sheets",
-      "Six declined threshold charges in Jun — billing risk before budget increases",
-      "Core DV ad groups 2–4 still zero traffic",
-      "Military Sexual Assault RSA Poor strength — 42 impressions · $0"
-    ],
-    "recommendedMetrics": [
-      "Phone calls by campaign (restore Phone calls column in exports)",
-      "Cost/call and cost/lead weekly — Military vs NTGUILT",
-      "Search-term waste % (target <15% vs current ~38%)",
-      "Answer rate (#21) — baseline 69% · target 90%",
-      "Lead→case rate (#02) — baseline 7.3% (9/124 Jun)",
-      "Platform CPL vs all-in CPL (retainer + bonus + media)"
+      "Jul Google Ads export dropped **Phone calls** — call ROI for current period is estimate only",
+      "No HubSpot lead→matter export in Jul 11 pull",
+      "LSA geo skew (Denver 67 vs Colorado Springs 27) vs Military Fort Carson intent"
     ],
     "insightsImprovements": [
-      "Military DV + Assault RSAs carry spend — fix or pause Poor-strength ad groups before scaling",
-      "NTGUILT clicks are efficient; validate call extensions + NTGUILT.com forms in HubSpot before +budget",
-      "Shared negatives for JAG/PD/sheriff terms could recover ~$1,063/mo waste"
+      "Scale Military only while cost/call stays under ~$70; fix/pause Poor-strength RSA (e.g. Military Sexual Assault)",
+      "NTGUILT Tickets RSA Excellent — clone structure; validate calls before +budget",
+      "Negate public defender / JAG / PD / `pav law` broad waste (~$1k+ government category in Jul terms)",
+      "Track LSA separately from Search in HubSpot (`pl_lead_source`)"
     ],
     "impactEstimates": {
       "period": "mo",
       "asOf": "2026-07-11",
-      "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-      "note": "Military ~36 calls/mo · NTGUILT 282 clicks Jul period",
-      "leadsImpacted": 36,
-      "leadsConnected": 25,
-      "clientsRetained": 1.8
+      "source": "`Ad Reports/PERFORMANCE-REVIEW-2026-07-11.md` · `Ad Reports/exports/2026-07-11/Campaign report (15).csv` · `Ad Reports/exports/2026-05-30/Campaign report (4).csv` · `Ad Reports/exports/2026-07-11/leads-inbox (12).csv` · `Ad Reports/exports/INDEX.md`",
+      "note": "Jul military calls **est. ~59–69** from $3,983 spend ÷ $58–67 historical cost/call — confirm when Phone calls column returns. NTGUILT **282 clicks / $1,924** in same 30d; all-time NTGUILT calls through Jun 24 = **9** (thin). Jul period Search spend **$6,277**.",
+      "leadsImpacted": 116,
+      "leadsConnected": 90,
+      "clientsRetained": 6.6
     },
-    "gilbertMetricNotes": [
-      {
-        "date": "2026-07-11",
-        "field": "Clients retained",
-        "text": "Baseline set at 1.8 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-      },
-      {
-        "date": "2026-07-11",
-        "field": "Leads connected",
-        "text": "Baseline set at 25 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-      },
-      {
-        "date": "2026-07-11",
-        "field": "Leads impacted",
-        "text": "Baseline set at 36 per month from Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md."
-      }
-    ],
     "abQuestions": [],
-    "kpiRefs": [
-      "#02",
-      "#21"
-    ]
+    "kpiRefs": []
   },
   "projects": [
     {
       "id": "B11",
       "priority": 2,
       "fee": 0,
-      "timeline": "Phase 1 done · Phase 2 in progress",
       "category": "Intake / LSA",
       "campaignType": "LSA Operations & Training",
       "status": "recommended",
@@ -189,8 +140,15 @@ window.PROJECT_DATA = {
         "Handoff doc: `gilded-goose/clients/pav-law/LSA-DOCUMENTING-TRAINING.md`"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
         "intake",
-        "foundation"
+        "creative"
       ],
       "completedItems": [
         "LSA lead-status SOP — how to update lead info, notes, booked/spam/dispute in Google LSA",
@@ -214,38 +172,8 @@ window.PROJECT_DATA = {
         "Add Phase 1 LSA audit to Results (status accuracy, disputes, answer rate)",
         "Andrew: link 2–3 example call recordings"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "LSA lead-status SOP — how to update lead info, note…; `LSA-DOCUMENTING-TRAINING.md` written and shared wi… (+2 more)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Casey trained via call review before live intake —…; Casey ↔ Romina coverage calendar (2–3 hrs/day ramp… (+1 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Phase 1 metrics to add:* LSA leads reviewed/week, s… (+2 more)",
-          "notes": ""
-        }
-      ],
-      "recommendedMetrics": [
-        "LSA leads updated same day (%)",
-        "Disputed / spam leads per month",
-        "Answer rate (#21) — target 90%",
-        "Lead→case (#02) — baseline 7.3%"
-      ],
       "abQuestions": [],
       "kpiRefs": [
-        "#02",
         "#21"
       ]
     },
@@ -253,7 +181,6 @@ window.PROJECT_DATA = {
       "id": "B10",
       "priority": 3,
       "fee": 1400,
-      "timeline": "2–3 weeks",
       "category": "Brand / Local Presence",
       "campaignType": "Profile Audit & Refresh",
       "status": "recommended",
@@ -294,9 +221,15 @@ window.PROJECT_DATA = {
         "Merge Andrew Brown and Pav Law profiles"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
         "seo",
-        "creative",
-        "intake"
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "(None — discovery starts on kickoff)"
@@ -316,39 +249,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "(None — discovery starts on kickoff)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "LinkedIn company showcase exists but shows low foll…; Andrew + Casey personal LinkedIn and directory prof… (+3 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "UTM naming scheme partially drafted for contact URLs (+1 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Andrew/Casey personal profiles need client-provided bios and photos",
         "Directory login credentials scattered",
         "Merge Andrew Brown + Pav Law listings incomplete"
-      ],
-      "recommendedMetrics": [
-        "Profiles updated / total discovered",
-        "Discovery sessions via profile UTMs (GA4 KPI #18)",
-        "GBP calls and direction requests",
-        "NAP mismatch count (target 0)"
       ],
       "insightsImprovements": [
         "Profile layer complements B4 SEO — inconsistent phone hurts call tracking",
@@ -382,15 +286,12 @@ window.PROJECT_DATA = {
         }
       ],
       "abQuestions": [],
-      "kpiRefs": [
-        "#18"
-      ]
+      "kpiRefs": []
     },
     {
       "id": "B13",
       "priority": 4,
       "fee": 4500,
-      "timeline": "Multi-sprint parent (Apr–Jul 2026 build + ongoing ops)",
       "category": "CRM",
       "campaignType": "HubSpot Foundation",
       "status": "wip",
@@ -415,9 +316,15 @@ window.PROJECT_DATA = {
         "Makes A8 dashboard HubSpot rows possible once contacts export cleanly"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
         "crm",
+        "seo",
+        "referrals",
+        "efficiency",
         "intake",
-        "foundation"
+        "creative"
       ],
       "completedItems": [
         "Client onboarding / lead nurture templates direction (Apr 26 email)",
@@ -445,37 +352,9 @@ window.PROJECT_DATA = {
         "Confirm whether B13 $4,500 is package price or sum of children already invoiced",
         "HubSpot contacts export still missing from Downloads (see Ad Reports/DATA-PULL-LIST.md)"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Apr 2026",
-          "notes": "Nurture + onboarding pivot; Romina ownership"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Contacts upload (B7) · pipeline (B1) · LP (A5) · holiday send (A3 done)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Source hygiene + A8 HubSpot channel row",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "No HubSpot contacts export in Downloads",
         "MyCase field cleanup unfinished for nurture tracks"
-      ],
-      "recommendedMetrics": [
-        "Marketing contacts uploaded · bounce &lt;2%",
-        "Median form → first task minutes",
-        "Email → consult attributed count"
       ],
       "insightsImprovements": [
         "Keep selling B13 + children as one package so A3 isn’t re-quoted as a separate agency",
@@ -489,7 +368,6 @@ window.PROJECT_DATA = {
       "id": "A4",
       "priority": 5,
       "fee": 1700,
-      "timeline": "1 week setup, then monthly",
       "category": "Referral",
       "campaignType": "Referral Program",
       "status": "wip",
@@ -514,8 +392,15 @@ window.PROJECT_DATA = {
         "Past-client, friends-and-family, and America list paths in HubSpot"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
         "referrals",
-        "intake"
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Missed-call follow-up text templates",
@@ -538,39 +423,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Missed-call follow-up text templates; Client update email positioning drafts",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Traffic intake script for Romina",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Period: Program to date through Jul 14, 2026 (+7 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "No structured ask workflow live — manual outreach only",
         "Booking friction if Romina link not in every referral touch",
         "Past-client list upload pending (see B7)"
-      ],
-      "recommendedMetrics": [
-        "Referral asks sent per month",
-        "Referral-sourced leads in HubSpot (source = referral)",
-        "Consult→retained rate on referral leads (target 51%+)",
-        "CPL referral vs paid Search"
       ],
       "insightsImprovements": [
         "Referral CPL should beat $67 Military cost/call when program is running",
@@ -610,7 +466,6 @@ window.PROJECT_DATA = {
       "id": "A17",
       "priority": 6,
       "fee": 1500,
-      "timeline": "1–2 weeks playbook, then weekly calling",
       "category": "Referral / Outbound",
       "campaignType": "Past-Client Reengagement",
       "status": "wip",
@@ -637,9 +492,15 @@ window.PROJECT_DATA = {
         "Scripts + pricing already drafted in June Client Reengagement PDF"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
         "referrals",
+        "efficiency",
         "intake",
-        "leads"
+        "creative"
       ],
       "completedItems": [
         "Playbook PDF with KPIs, scripts, email template, pricing schedule"
@@ -665,37 +526,9 @@ window.PROJECT_DATA = {
         "Confirm MyCase field names match PDF (Outcome · Status · Disposition · Nurture Track)",
         "AB - Q: Start with Gabriel volume target of 20 calls/day or softer ramp?"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Jun 2026",
-          "notes": "PDF playbook · scripts · pricing"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "MyCase fields · list · Gabriel dials · HubSpot nurture",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "not started",
-          "target": "Connect rate · resigns · revenue",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "B7 contacts not fully in HubSpot",
         "MyCase AR/outcome quality uneven for list builds"
-      ],
-      "recommendedMetrics": [
-        "Connect rate vs 40% target",
-        "Resigns vs 20 target",
-        "Revenue from sealing/probation offers"
       ],
       "insightsImprovements": [
         "Prioritize positive-outcome closed cases; exclude hostile/open matters (PDF)",
@@ -711,7 +544,6 @@ window.PROJECT_DATA = {
       "id": "B5",
       "priority": 7,
       "fee": 1900,
-      "timeline": "2–4 weeks (mail wave + list prep)",
       "category": "Direct Mail",
       "campaignType": "Past Client Mailer",
       "status": "available",
@@ -735,7 +567,15 @@ window.PROJECT_DATA = {
         "Can use as a cold mailing campaign for the old database for a touchpoint under $5"
       ],
       "valueIcons": [
-        "referrals"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Campaign revamp from event to post & digital",
@@ -757,39 +597,10 @@ window.PROJECT_DATA = {
         "Answer AB – Q: Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
         "Answer AB – Q: Newest or Oldest first?"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Campaign revamp from event to post & digital; Mailer sleeves designed (+2 more)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "$1.40–$1.70 postage per mailer; Design insert for emergency numbers to be written in (+1 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Insurance sleeve mailer concept approved (+1 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Sleeve order quantity not confirmed",
         "Unique phone or URL for attribution not on creative",
         "Cold database list hygiene"
-      ],
-      "recommendedMetrics": [
-        "Households mailed per wave",
-        "Inbound calls/forms with UTM mail=sleeve",
-        "Consults within 30 days of mail date",
-        "Retained matters per wave (long-tail)"
       ],
       "insightsImprovements": [
         "ROI tracking is hard — use dedicated UTMs and ask intake “how did you hear about us”",
@@ -832,7 +643,6 @@ window.PROJECT_DATA = {
       "id": "A14",
       "priority": 8,
       "fee": 1200,
-      "timeline": "1–2 weeks (doc + Andrew approval)",
       "category": "Operations / Compensation",
       "campaignType": "Performance Incentives",
       "status": "wip",
@@ -860,8 +670,15 @@ window.PROJECT_DATA = {
         "Andrew-approved doc before rollout — ABA-aware framing for staff vs marketing contractors"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
         "efficiency",
-        "referrals"
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "(none yet)"
@@ -876,32 +693,7 @@ window.PROJECT_DATA = {
         "Answer AB – Q: Which tasks should pay at Tier 1 (flat) vs Tier 2 (outcome) for Casey and Romina?",
         "Define measurable Goal",
         "Add Results — baseline vs current metrics",
-        "Fill Impact estimates",
-        "List Recommended metrics",
-        "List Recommended metrics / KPI links"
-      ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "(none yet)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Draft tier matrix (employee vs contractor); List cash-generating tasks Pav Law already tracks (… (+2 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        }
+        "Fill Impact estimates"
       ],
       "abQuestions": [
         "Which tasks should pay at Tier 1 (flat) vs Tier 2 (outcome) for Casey and Romina?"
@@ -912,7 +704,6 @@ window.PROJECT_DATA = {
       "id": "B14",
       "priority": 9,
       "fee": 0,
-      "timeline": "3–4 weeks",
       "category": "Brand / Merch",
       "campaignType": "Internal Store + Conversation Starters",
       "status": "available",
@@ -940,9 +731,15 @@ window.PROJECT_DATA = {
         "Separates one-time design work from repeat ordering ops"
       ],
       "valueIcons": [
-        "creative",
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
         "efficiency",
-        "referrals"
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "_Add:_"
@@ -966,29 +763,6 @@ window.PROJECT_DATA = {
         "Who may order (partners only vs full staff)",
         "Budget per person or firm-paid vs employee-paid"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "SKU list, brand marks, Printify account access",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "Designs → Printify → GGL portal",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "not started",
-          "target": "First team order wave; iterate SKUs",
-          "notes": ""
-        }
-      ],
       "abQuestions": [
         "Which mark first — Pav Law firm logo, NTGUILT, or both catalogs? Any hard no’s on merch types (socks, drinkware)?"
       ],
@@ -998,7 +772,6 @@ window.PROJECT_DATA = {
       "id": "A2",
       "priority": 10,
       "fee": 2800,
-      "timeline": "2 weeks",
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "status": "launched",
@@ -1023,7 +796,14 @@ window.PROJECT_DATA = {
         "Summer creative pairs with A7 social when budget allows"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
         "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
         "creative"
       ],
       "completedItems": [
@@ -1044,39 +824,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "*Add:*"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "NTGUILT campaign concept and brand direction; Visual prompt and booth creative development",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Promo video concept; Giveaway and lead magnet ideas (+1 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "NTGUILT Search already live — 282 clicks · ~$6.82/c… (+2 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Promo video and giveaway concepts still in WIP — no live display spend",
         "UTM pass-through not verified on all NTGUILT landing URLs",
         "Event sponsorship outreach not closed"
-      ],
-      "recommendedMetrics": [
-        "Display impressions and view-through assists",
-        "NTGUILT.com sessions with UTM source=display",
-        "Remarketing list size week over week",
-        "View-through vs click-through consults"
       ],
       "insightsImprovements": [
         "Search lane proving clicks; display layer still missing for true funnel top",
@@ -1116,7 +867,6 @@ window.PROJECT_DATA = {
       "id": "A1",
       "priority": 11,
       "fee": 1900,
-      "timeline": "1 week",
       "category": "Paid Media",
       "campaignType": "Paid Search",
       "status": "available",
@@ -1139,7 +889,15 @@ window.PROJECT_DATA = {
       "tldr": "Recovers wasted paid-search spend and lifts ad quality so more of the ~36 monthly Military Search calls convert at lower cost per consult.",
       "valueAdded": [],
       "valueIcons": [
-        "leads"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Search campaign planning across practice areas",
@@ -1160,39 +918,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Search campaign planning across practice areas; Keyword and description rewrite for ad strength (+1 more)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Call-only campaign troubleshooting; UTM tracking on contact-page URLs (+1 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Military DV RSA pair driving $1,733 + $1,247 spend… (+2 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Conversion actions flagged but not in client-facing reports",
         "Government/navigational queries still buying — neg list incomplete",
         "Competitor firm names consuming $176/period"
-      ],
-      "recommendedMetrics": [
-        "Ad strength by RSA (Poor → fix list)",
-        "Waste spend $ by category (gov/JAG/PD/competitor/brand)",
-        "Impression share on Military DV + Assault",
-        "Calls per $1,000 spend by ad group"
       ],
       "insightsImprovements": [
         "Top burners: public defenders office ($138), fort carson legal ($87), CSPD ($82) — add to shared negatives",
@@ -1232,7 +961,6 @@ window.PROJECT_DATA = {
       "id": "B4",
       "priority": 12,
       "fee": 2000,
-      "timeline": "2 weeks",
       "category": "SEO",
       "campaignType": "Local SEO",
       "status": "available",
@@ -1257,8 +985,15 @@ window.PROJECT_DATA = {
         "Baseline avg position 45–58 in early 2025 Search Console data"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
         "seo",
-        "intake"
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Website issue review with backlink and deep-link notes",
@@ -1276,39 +1011,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Website issue review with backlink and deep-link no…; GBP content and service-area cleanup",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Attorney profile verification support on GBP; Schema markup rollout",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "SEO overhaul scope: schema, NAP, attorney attributi… (+1 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "B3 speed debt hurts crawl and UX signals",
         "NAP inconsistencies across B10 profiles",
         "Content production bandwidth"
-      ],
-      "recommendedMetrics": [
-        "Avg position by priority keyword cluster",
-        "Organic clicks and impressions (GSC)",
-        "Organic form fills",
-        "Indexed pages count"
       ],
       "insightsImprovements": [
         "Local business schema + attorney attribution are foundation — see Google local SEO docs",
@@ -1348,7 +1054,6 @@ window.PROJECT_DATA = {
       "id": "B1",
       "priority": 13,
       "fee": 1600,
-      "timeline": "1 to 2 weeks",
       "category": "CRM",
       "campaignType": "CRM Automation",
       "status": "available",
@@ -1372,8 +1077,15 @@ window.PROJECT_DATA = {
         "Foundation before scaling paid spend further"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
         "crm",
-        "intake"
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Lead flow optimization",
@@ -1392,39 +1104,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Lead flow optimization; Nurture campaign client onboarding setup (+1 more)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Dashboard and reporting planning; Find correct CRM tool evaluation",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Pipeline stages documented (+1 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Referral import path not fully connected",
         "Romina booking link not on all form thank-you pages",
         "B2 live phones needed for click-to-call leads"
-      ],
-      "recommendedMetrics": [
-        "Median speed-to-lead (form to first touch)",
-        "Task completion rate within 24h",
-        "Consult booked % from web forms",
-        "Drop-off by pipeline stage"
       ],
       "insightsImprovements": [
         "HubSpot 5-minute rule: firms responding in minutes qualify more leads",
@@ -1463,7 +1146,6 @@ window.PROJECT_DATA = {
       "id": "B3",
       "priority": 14,
       "fee": 3800,
-      "timeline": "3 phases over 4 to 6 weeks",
       "category": "Website",
       "campaignType": "Website UX",
       "status": "blocked-ab",
@@ -1488,7 +1170,15 @@ window.PROJECT_DATA = {
         "Prior work cut load times ~200%; this finishes conversion blockers"
       ],
       "valueIcons": [
-        "seo"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Website issue review completed",
@@ -1505,39 +1195,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Website issue review completed; Site performance improved about 200 percent in prio…",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Minor website updates — navigation simplification i…",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Prior work cut load times ~200% (+1 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Navigation cleanup phases not complete",
         "Some heavy assets still on Squarespace/HubSpot modules",
         "No before/after metrics logged in Results yet"
-      ],
-      "recommendedMetrics": [
-        "LCP mobile (PageSpeed / GA4)",
-        "Bounce rate on /contact and top LP URLs",
-        "Organic sessions (secondary)",
-        "Form submit rate post-speed fix"
       ],
       "insightsImprovements": [
         "Speed fix unlocks A5 LP and paid conversion gains",
@@ -1577,7 +1238,6 @@ window.PROJECT_DATA = {
       "id": "A7",
       "priority": 15,
       "fee": 4800,
-      "timeline": "2 weeks setup, then monthly",
       "category": "Creative / Social",
       "campaignType": "Social + paid social",
       "status": "available",
@@ -1607,9 +1267,15 @@ window.PROJECT_DATA = {
         "Policy-safe review for criminal defense ad rules"
       ],
       "valueIcons": [
-        "creative",
+        "foundation",
+        "retainer",
         "leads",
-        "crm"
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "NTGUILT visual prompt library",
@@ -1639,42 +1305,11 @@ window.PROJECT_DATA = {
         "Answer AB – Q: Run Reddit before or after next PPIR/ASCEND weekend?",
         "AB - Q: Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "NTGUILT visual prompt library; Policy-safe ad creative prompt rework (+3 more)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Romina event social support role defined — HubSpot-…; Reddit Ads account + pixel/UTM (+2 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Period: — (+7 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Approval workflow / SLA for firm-safe creative not defined",
         "No baseline engagement metrics from prior posts",
         "Profiles outdated until B10 completes",
         "NTGUILT.com lightweight site — confirm live before Reddit"
-      ],
-      "recommendedMetrics": [
-        "Reach, engagements, and CTR by platform",
-        "Posts published per platform",
-        "UTM-tagged sessions to NTGUILT.com / pav.law",
-        "Cost per engaged session / cost per Reddit session",
-        "Consults from social source field",
-        "Policy disapprovals (Reddit)"
       ],
       "insightsImprovements": [
         "One calendar beats three cards — consistency over volume",
@@ -1717,7 +1352,6 @@ window.PROJECT_DATA = {
       "id": "B7",
       "priority": 16,
       "fee": 1400,
-      "timeline": "1 to 2 weeks",
       "category": "CRM",
       "campaignType": "Contact Import",
       "status": "available",
@@ -1747,7 +1381,15 @@ window.PROJECT_DATA = {
         "Import guide for future CSV uploads"
       ],
       "valueIcons": [
-        "crm"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Missed-call follow-up text templates",
@@ -1764,39 +1406,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Missed-call follow-up text templates; Referral landing page setup documentation",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "America referral list import (partial — needs full…; MyCase field cleanup noted in tracker but not finis…",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Upload scope and field mapping drafted",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Source spreadsheets not consolidated",
         "GDPR/marketing consent flags unclear",
         "Duplicate records across lists"
-      ],
-      "recommendedMetrics": [
-        "Contacts uploaded vs total addressable",
-        "Segment counts (past client, referral, America list)",
-        "Bounce and unsubscribe on first send",
-        "Consults from email within 30 days"
       ],
       "insightsImprovements": [
         "Unlocks A3, A4, and B5 — list size is force multiplier",
@@ -1835,7 +1448,6 @@ window.PROJECT_DATA = {
       "id": "A13",
       "priority": 17,
       "fee": 2000,
-      "timeline": "1 to 2 weeks",
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "status": "available",
@@ -1862,7 +1474,14 @@ window.PROJECT_DATA = {
         "Policy-safe creative and landing paths reviewed before launch"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
         "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
         "creative"
       ],
       "resultsItems": [
@@ -1872,39 +1491,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Placement strategy and compliance guardrails scoped",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Brand safety review with Andrew not completed",
         "Separate conversion tracking not isolated from core Search",
         "Creative approval pending"
-      ],
-      "recommendedMetrics": [
-        "Spend and clicks on placement list only",
-        "Frequency cap compliance",
-        "Site visits with UTM display=adult",
-        "Consults from remarketing pool"
       ],
       "insightsImprovements": [
         "Keep budget siloed — do not blend with Military reporting",
@@ -1944,7 +1534,6 @@ window.PROJECT_DATA = {
       "id": "A6",
       "priority": 18,
       "fee": 1000,
-      "timeline": "1 week",
       "category": "Outbound",
       "campaignType": "Outbound Calls",
       "status": "available",
@@ -1967,8 +1556,15 @@ window.PROJECT_DATA = {
         "Every outcome logged in HubSpot for reporting"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
         "leads",
-        "intake"
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "resultsItems": [
         "Gabriel outbound scope defined for paid-search-dependent call volume"
@@ -1977,39 +1573,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Gabriel outbound scope defined for paid-search-depe…",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "B2 phone routing not live — outbound callbacks may hit wrong line",
         "List source and DNC scrub not documented",
         "No CRM task template for outbound outcomes"
-      ],
-      "recommendedMetrics": [
-        "Dials / connects / consults booked per week",
-        "Connect rate %",
-        "Consult show rate",
-        "Revenue per dial"
       ],
       "insightsImprovements": [
         "Outbound works after intake path is verified (B2 + B1)",
@@ -2049,7 +1616,6 @@ window.PROJECT_DATA = {
       "id": "B2",
       "priority": 19,
       "fee": 2000,
-      "timeline": "Blocked on carrier transfer — then 1 week",
       "category": "Infrastructure",
       "campaignType": "Call Infrastructure",
       "status": "onhold",
@@ -2074,7 +1640,14 @@ window.PROJECT_DATA = {
       ],
       "valueIcons": [
         "foundation",
-        "intake"
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Phone setup documentation in HubSpot/PHONE-SETUP.md",
@@ -2095,39 +1668,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Phone setup documentation in HubSpot/PHONE-SETUP.md; Google Ads call extension strategy drafted",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Waiting on phone company number transfer; VoIP live verification with Google (+3 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Baseline ~36 Military calls/mo · answer rate 69% (+1 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Carrier number transfer blocking go-live",
         "Casey ↔ Romina coverage schedule not signed off",
         "Google VoIP verification pending"
-      ],
-      "recommendedMetrics": [
-        "Answer rate % by line (HubSpot call logs)",
-        "Missed calls count weekly",
-        "Call duration and routing path",
-        "Cost/call after VoIP live vs baseline"
       ],
       "insightsImprovements": [
         "21-point answer gap (69%→90%) is highest-ROI fix before more ad spend",
@@ -2169,7 +1713,6 @@ window.PROJECT_DATA = {
       "id": "B6",
       "priority": 20,
       "fee": 2300,
-      "timeline": "2 to 3 weeks",
       "category": "SEO",
       "campaignType": "Blog / Content SEO",
       "status": "available",
@@ -2195,7 +1738,15 @@ window.PROJECT_DATA = {
         "Results compound over 8–12 weeks"
       ],
       "valueIcons": [
-        "seo"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Website issue review with content and deep-link notes"
@@ -2207,38 +1758,9 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Website issue review with content and deep-link not…",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Blog revamp scope defined",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Editorial calendar not staffed",
         "No baseline organic blog traffic logged"
-      ],
-      "recommendedMetrics": [
-        "Posts published per month",
-        "Organic sessions to /blog",
-        "Avg position on post target keywords",
-        "Consults from blog CTAs"
       ],
       "insightsImprovements": [
         "Blog supports B4 SEO clusters — each post needs one consult CTA",
@@ -2277,7 +1799,6 @@ window.PROJECT_DATA = {
       "id": "B12",
       "priority": 21,
       "fee": 1600,
-      "timeline": "2–3 weeks",
       "category": "Brand / Professional Development",
       "campaignType": "Attorney Presence",
       "status": "available",
@@ -2307,9 +1828,15 @@ window.PROJECT_DATA = {
         "Client-facing confidence — speech, courtroom-appropriate presentation, professional photography brief"
       ],
       "valueIcons": [
-        "creative",
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
         "seo",
-        "intake"
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "(none yet)"
@@ -2321,31 +1848,7 @@ window.PROJECT_DATA = {
         "Answer AB – Q: Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?",
         "Define measurable Goal",
         "Fill Impact estimates",
-        "Add Results — baseline vs current metrics",
-        "List Recommended metrics / KPI links"
-      ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "(none yet)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "(awaiting kickoff — depends on B10 inventory for Ca…",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        }
+        "Add Results — baseline vs current metrics"
       ],
       "abQuestions": [
         "Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?"
@@ -2356,7 +1859,6 @@ window.PROJECT_DATA = {
       "id": "A11",
       "priority": 22,
       "fee": 2000,
-      "timeline": "1 to 2 weeks per campaign",
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display",
       "status": "available",
@@ -2388,7 +1890,15 @@ window.PROJECT_DATA = {
         "Mirrored setup on Google Ads and Microsoft Ads where account allows"
       ],
       "valueIcons": [
-        "leads"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "resultsItems": [
         "Focus-area shortlist documented (military, DUI, holiday windows, LSA geo)"
@@ -2397,39 +1907,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Focus-area shortlist documented (military, DUI, hol…",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Topic not selected for next quarter",
         "Shared negative list may need seasonal exceptions",
         "Creative and LP readiness per focus area"
-      ],
-      "recommendedMetrics": [
-        "Calls and cost/call for seasonal flight only",
-        "Impression share during holiday window",
-        "Consults within 14 days of call",
-        "RSA strength at launch"
       ],
       "insightsImprovements": [
         "Single-topic campaigns outperform catch-all — pick one lane per quarter",
@@ -2469,7 +1950,6 @@ window.PROJECT_DATA = {
       "id": "A5",
       "priority": 23,
       "fee": 1300,
-      "timeline": "3 to 5 days",
       "category": "CRM / Web",
       "campaignType": "Landing Page",
       "status": "planning",
@@ -2493,8 +1973,15 @@ window.PROJECT_DATA = {
         "Mobile and desktop QA before ads or QR codes go live"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
+        "leads",
         "crm",
-        "intake"
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Referral landing page setup documentation",
@@ -2507,39 +1994,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Referral landing page setup documentation; HubSpot form and workflow foundation",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Module/LP scope aligned to paid traffic already lan…",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "B3 speed cleanup incomplete — LCP may suppress conversions",
         "Form fields and Romina booking path not unified on all LPs",
         "No baseline conversion rate logged pre-launch"
-      ],
-      "recommendedMetrics": [
-        "Sessions → form submit rate by landing page",
-        "Bounce rate and time on page (mobile vs desktop)",
-        "Cost per form fill from linked Google Ads URLs",
-        "HubSpot consults from LP UTM"
       ],
       "insightsImprovements": [
         "Mobile is majority device mix — LP must load <3s (B3 dependency)",
@@ -2579,7 +2037,6 @@ window.PROJECT_DATA = {
       "id": "A9",
       "priority": 24,
       "fee": 1900,
-      "timeline": "1 week",
       "category": "Paid Media",
       "campaignType": "Social Proof Ads",
       "status": "planning",
@@ -2601,8 +2058,15 @@ window.PROJECT_DATA = {
         "Typically lifts click-through 10–25% over generic lines"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
         "leads",
-        "referrals"
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "resultsItems": [
         "Case win log scope defined"
@@ -2611,38 +2075,9 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Case win log scope defined",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Attorney approval queue for client stories not scheduled",
         "No baseline conversion rate on pav.law consult pages"
-      ],
-      "recommendedMetrics": [
-        "Testimonials published count",
-        "Time on page for case-win URLs",
-        "Consult conversion rate before/after proof block",
-        "GBP review velocity (pairs with B10)"
       ],
       "insightsImprovements": [
         "Social proof reduces CPL indirectly — track consult rate not just clicks",
@@ -2681,7 +2116,6 @@ window.PROJECT_DATA = {
       "id": "A12",
       "priority": 25,
       "fee": 1900,
-      "timeline": "2 weeks",
       "category": "Intake / AI",
       "campaignType": "After-Hours Chat",
       "status": "available",
@@ -2708,7 +2142,15 @@ window.PROJECT_DATA = {
         "HubSpot (or site) logging so morning intake sees overnight conversations"
       ],
       "valueIcons": [
-        "intake"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "resultsItems": [
         "Pavi chat QA scope defined for after-hours intake"
@@ -2717,39 +2159,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Pavi chat QA scope defined for after-hours intake",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "HubSpot chat routing to Romina not verified after hours",
         "B2 phone menus must align with chat handoff",
         "No baseline after-hours lead volume"
-      ],
-      "recommendedMetrics": [
-        "After-hours sessions and chat starts",
-        "Leads captured outside 9–5",
-        "First response time",
-        "Consult book rate from chat leads"
       ],
       "insightsImprovements": [
         "After-hours leads are high intent — speed-to-lead metric is critical",
@@ -2788,7 +2201,6 @@ window.PROJECT_DATA = {
       "id": "B9",
       "priority": 26,
       "fee": 2400,
-      "timeline": "2 week",
       "category": "Finance / Operations",
       "campaignType": "Spend Audit",
       "status": "planning",
@@ -2813,7 +2225,15 @@ window.PROJECT_DATA = {
         "Implement budget(s)"
       ],
       "valueIcons": [
-        "efficiency"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "resultsItems": [
         "Spend audit scope defined — QuickBooks + card statements"
@@ -2822,38 +2242,9 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Spend audit scope defined — QuickBooks + card state…",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Card access and QuickBooks categorization pending",
         "No baseline subscription inventory"
-      ],
-      "recommendedMetrics": [
-        "Monthly SaaS spend before/after",
-        "Subscriptions cancelled count",
-        "Duplicate tool overlap list",
-        "Hours saved on admin"
       ],
       "insightsImprovements": [
         "Not lead-gen — efficiency dollars can fund B2 or A8",
@@ -2892,7 +2283,6 @@ window.PROJECT_DATA = {
       "id": "A3",
       "priority": 50,
       "fee": 1200,
-      "timeline": "1 week before and after July 4",
       "category": "Email",
       "campaignType": "Holiday Email",
       "status": "completed",
@@ -2919,8 +2309,15 @@ window.PROJECT_DATA = {
         "Direct path to book with Romina in every send"
       ],
       "valueIcons": [
-        "creative",
-        "intake"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "resultsItems": [
         "Period: July 4, 2026 holiday window",
@@ -2936,36 +2333,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "completed",
-          "target": "Period: July 4, 2026 holiday window (+7 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "List hygiene and segment size not logged in Results — add before next holiday send",
         "No HubSpot workflow tying email click → task → consult outcome",
         "ROI difficult to isolate without UTM on booking link"
-      ],
-      "recommendedMetrics": [
-        "Revenue attributed to summer-safety UTM tag"
       ],
       "insightsImprovements": [
         "Pattern-interrupt subject lines worked for engagement — reuse for Thanksgiving/New Year windows",
@@ -3005,7 +2376,6 @@ window.PROJECT_DATA = {
       "id": "A10",
       "priority": 51,
       "fee": 1500,
-      "timeline": "1 week",
       "category": "Strategy",
       "campaignType": "Strategy Audit",
       "status": "completed",
@@ -3028,7 +2398,15 @@ window.PROJECT_DATA = {
         "Ranked by ROI, effort, and dependencies"
       ],
       "valueIcons": [
-        "efficiency"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Marketing strategy shift recommendation",
@@ -3043,37 +2421,9 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "Confirm estimated leads gained"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Marketing strategy shift recommendation · Revenue-channel planning framework",
-          "notes": "Marketing strategy shift recommendation; Revenue-channel planning framework"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "completed",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "completed",
-          "target": "Marketing strategy shift recommendation delivered",
-          "notes": "Marketing strategy shift recommendation delivered (+2 more)"
-        }
-      ],
       "blockers": [
         "Execution spread — B2/B3/A8 still WIP while new campaigns queue",
         "No quarterly re-audit scheduled"
-      ],
-      "recommendedMetrics": [
-        "Projects started vs audit top-5 list (compliance score)",
-        "Spend on deferred channels (should trend to $0)",
-        "90-day consult volume vs audit baseline"
       ],
       "insightsImprovements": [
         "Audit value decays without KPI dashboard — A8 is force multiplier",
@@ -3112,7 +2462,6 @@ window.PROJECT_DATA = {
       "id": "A15",
       "priority": 52,
       "fee": 2500,
-      "timeline": "Per event window (inventory + activation + follow-up)",
       "category": "Events",
       "campaignType": "Event Activation",
       "status": "archived",
@@ -3139,9 +2488,15 @@ window.PROJECT_DATA = {
         "Pairs with A16 partner staff when Andrew is away"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
         "leads",
-        "creative",
-        "intake"
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Strategy approval path for conservative event spend inside existing budget (May emails)",
@@ -3168,37 +2523,9 @@ window.PROJECT_DATA = {
         "Confirm remaining 2026 event calendar and which weekends need full activation",
         "AB - Q: Cap event activation at $3k or $6k for next event?"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "May 2026",
-          "notes": "Budget mix + Ascend priority while Andrew away"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "Inventory · tents · QR · giveaways · follow-up",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "not started",
-          "target": "Lead count · CPL vs Search",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Partner staff (A16) still open for ASCEND coverage",
         "HubSpot event source field not confirmed"
-      ],
-      "recommendedMetrics": [
-        "Leads captured / event",
-        "Cost per event lead vs Search cost/call",
-        "% leads with phone + email"
       ],
       "insightsImprovements": [
         "Do not treat events as awareness-only after PPIR spend",
@@ -3214,7 +2541,6 @@ window.PROJECT_DATA = {
       "id": "A16",
       "priority": 53,
       "fee": 800,
-      "timeline": "Seasonal — reopen summer 2027 event window",
       "category": "Partnerships",
       "campaignType": "Garage Partnership",
       "status": "archived",
@@ -3242,9 +2568,15 @@ window.PROJECT_DATA = {
         "Shared leads within 48 hours of event close"
       ],
       "valueIcons": [
+        "foundation",
+        "retainer",
         "leads",
-        "creative",
-        "referrals"
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Bare-minimum ASCEND co-host proposal written and mailed to Andrew"
@@ -3269,36 +2601,8 @@ window.PROJECT_DATA = {
         "AB - Q: Did Bailey’s accept, decline, or counter the $600–$1,000 ask?",
         "Confirm ASCEND staffing names (Mo / Bailey)"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "May 16, 2026",
-          "notes": "Proposal drafted for Bailey’s / ASCEND"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "Summer 2027",
-          "notes": "Reopen when next event calendar is set"
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "not started",
-          "target": "Summer 2027",
-          "notes": "Leads shared · shop visits · Pav consults"
-        }
-      ],
       "blockers": [
         "No written acceptance on file in this review set"
-      ],
-      "recommendedMetrics": [
-        "Partner accepted Y/N",
-        "Leads shared within 48h",
-        "Shop visits from giveaway · Pav consults from same leads"
       ],
       "insightsImprovements": [
         "Repeat co-host template for future events even if Bailey’s only supplies prizes"
@@ -3313,7 +2617,6 @@ window.PROJECT_DATA = {
       "id": "C1",
       "priority": 54,
       "fee": 2000,
-      "timeline": "Apr 2026 triage week",
       "category": "Systems",
       "campaignType": "Access & Security",
       "status": "completed",
@@ -3341,7 +2644,14 @@ window.PROJECT_DATA = {
       ],
       "valueIcons": [
         "foundation",
-        "efficiency"
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Systems access audit across marketing stack",
@@ -3364,34 +2674,8 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Apr 2026",
-          "notes": "Kickoff outline"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "completed",
-          "target": "Apr 2026",
-          "notes": "Access + cleanse"
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "completed",
-          "target": "Handed into retainer ops",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "_"
-      ],
-      "recommendedMetrics": [
-        "Open access tickets = 0 for critical tools"
       ],
       "insightsImprovements": [
         "Re-audit when staffing changes or new tools (VoIP, HubSpot seats)"
@@ -3404,7 +2688,6 @@ window.PROJECT_DATA = {
       "id": "C2",
       "priority": 55,
       "fee": 1500,
-      "timeline": "Apr 2026",
       "category": "Systems",
       "campaignType": "Email / DNS Incident",
       "status": "completed",
@@ -3429,7 +2712,14 @@ window.PROJECT_DATA = {
       ],
       "valueIcons": [
         "foundation",
-        "efficiency"
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Outage triage coordination",
@@ -3452,34 +2742,8 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Apr 14, 2026",
-          "notes": "Symptom list to Andrew"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "completed",
-          "target": "Apr 2026",
-          "notes": "Triage with Carrie · DNS/MX"
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "completed",
-          "target": "Recovery docs",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "_"
-      ],
-      "recommendedMetrics": [
-        "Time-to-restore on next email incident"
       ],
       "insightsImprovements": [
         "Keep marketing tool integration map updated after every stack change (VoIP, HubSpot, DNS)"
@@ -3492,7 +2756,6 @@ window.PROJECT_DATA = {
       "id": "A18",
       "priority": 56,
       "fee": 600,
-      "timeline": "1–2 weeks setup + 30-day test",
       "category": "Paid Social",
       "campaignType": "Reddit Ads Test",
       "status": "archived",
@@ -3516,8 +2779,15 @@ window.PROJECT_DATA = {
         "UTM-ready for A8 if landing is NTGuilt.com / tagged pav.law"
       ],
       "valueIcons": [
-        "creative",
-        "leads"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "Budget slot defined in May 16 mix ($500 + $500 credit)"
@@ -3541,36 +2811,8 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "AB - Q: Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "May 2026",
-          "notes": "Budget line approved in mix proposal"
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "Account · creatives · UTMs",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "not started",
-          "target": "Sessions · CPA · policy flags",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "NTGuilt.com lightweight site mentioned in May 10 strategy — confirm live"
-      ],
-      "recommendedMetrics": [
-        "Site sessions with UTM",
-        "Cost per session (spend + credit)",
-        "Policy disapprovals"
       ],
       "insightsImprovements": [
         "Best as post-event retargeting, not primary intake"
@@ -3585,7 +2827,6 @@ window.PROJECT_DATA = {
       "id": "B8",
       "priority": 57,
       "fee": 2500,
-      "timeline": "2 weeks setup, then monthly",
       "category": "CRM / Social",
       "campaignType": "Social / HubSpot",
       "status": "archived",
@@ -3615,7 +2856,15 @@ window.PROJECT_DATA = {
         "Approval workflow before anything goes live"
       ],
       "valueIcons": [
-        "crm"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "completedItems": [
         "GBP social-link cleanup — inactive links removed; focus on call/text CTAs",
@@ -3632,39 +2881,10 @@ window.PROJECT_DATA = {
       "informationNeeded": [
         "_Add:_"
       ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "GBP social-link cleanup — inactive links removed; f…; NTGUILT visual prompt library available for repurpo…",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "Romina event social support role defined in summer…",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "HubSpot social scope defined (+1 more)",
-          "notes": ""
-        }
-      ],
       "blockers": [
         "Overlap with A7 NTGUILT social — needs single owner",
         "Andrew approval turnaround not SLA'd",
         "Profiles outdated until B10 completes"
-      ],
-      "recommendedMetrics": [
-        "Posts published per platform",
-        "Click-through to UTM-tagged URLs",
-        "Engagement rate",
-        "Consults from social source field"
       ],
       "insightsImprovements": [
         "Consolidate A7+B8 into one content calendar",
@@ -3702,12 +2922,10 @@ window.PROJECT_DATA = {
     {
       "id": "A8",
       "fee": 1600,
-      "timeline": "1 to 2 weeks",
       "category": "Analytics",
       "campaignType": "Dashboard / Reporting",
       "status": "wip",
       "publishStatus": "published",
-      "estimatedLeads": "124/mo unified (Jun 2026 · KPI #01) — HubSpot + LSA + Search",
       "keywords": [
         "dashboard",
         "kpi",
@@ -3717,16 +2935,17 @@ window.PROJECT_DATA = {
         "attribution"
       ],
       "title": "Operations Dashboard",
-      "description": "Partial UTMs and conversion flags exist, but there is no client-facing view joining calls, forms, and ad spend. A8 ships that cockpit in Gilbert so Andrew can see which channels produce consults.",
+      "description": "Make data more easily accessible and actionable. Provide clearer insight into the impact of marketing campaigns on cases retained.",
       "tldr": "One live dashboard for calls, forms, and spend by channel.",
       "valueAdded": [
-        "Unified view of ~124/mo leads (KPI #01) across HubSpot, LSA, and Search",
-        "Cost/call + CPL from Google Ads exports (Military ~$41/call baseline)",
-        "Missed-revenue flag (#19) once Search answer-rate data is wired"
+        "Unified view of operational metrics, projects and campaign results",
+        "Clear view of team goals and progress",
+        "Missed-revenue flag (#19)"
       ],
       "valueIcons": [
-        "efficiency",
-        "intake"
+        "foundation",
+        "crm",
+        "efficiency"
       ],
       "completedItems": [
         "Systems access audit",
@@ -3736,97 +2955,21 @@ window.PROJECT_DATA = {
         "Wireframe v1 in Gilbert Reporting tab"
       ],
       "inProgressItems": [
-        "UTM tracking on contact URLs",
-        "Google Ads API pull + LSA `local_services_lead` backfill (`GOOGLE-ADS-API-SETUP.md`)",
-        "Cockpit live data on Reporting tab (`kpi-wireframe.html` · round 1 approved; needs revisions)",
-        "HubSpot ↔ Google Ads CRM attribution"
-      ],
-      "resultsItems": [
-        "Spec + wireframe in Gilbert; live data and API pull still open"
+        "Google Ads API pull + LSA `local_services_lead` backfill (`GOOGLE-ADS-API-SETUP.md`)"
       ],
       "goal": "Live KPI cockpit: unified lead count, cost/call by channel, and missed-revenue (#19) on Search data.",
       "informationNeeded": [
         "Google Ads API credentials (monthly pull + LSA backfill)",
-        "Confirm HubSpot → Integrations → Google Ads connected",
-        "_Add:_"
-      ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "completed",
-          "target": "Systems access audit; UTM logic drafted (+3 more)",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "wip",
-          "target": "UTM tracking on contact URLs; Google Ads API pull + LSA `local_services_lead` bac… (+2 more)",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Spec + wireframe in Gilbert; live data and API pull…",
-          "notes": ""
-        }
-      ],
-      "blockers": [
-        "Ads API credentials not live",
-        "HubSpot ↔ Google Ads not confirmed",
-        "Jul export missing Phone calls (breaks cost/call)",
-        "Wireframe still on dummy data"
-      ],
-      "recommendedMetrics": [
-        "#01 total leads · #02 new cases · #21 answer rate",
-        "Military cost/call · missed revenue #19 (unanswered × ~$4,800 case fee)",
-        "MoM platform spend, agency spend, revenue"
-      ],
-      "insightsImprovements": [
-        "Fix export columns first — fastest path to trustworthy cost/call",
-        "Backfill LSA leads-inbox with Search in the channel table",
-        "Peacock gauge + #19 need #21 answer rate and #29 fee blend"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Unified Jun dummy 124 leads · 9 cases at 7.3%",
-        "leadsImpacted": 124,
-        "leadsConnected": 86,
-        "clientsRetained": 9
-      },
-      "gilbertMetricNotes": [
-        {
-          "date": "2026-07-11",
-          "field": "Clients retained",
-          "text": "Baseline 9/mo from Jul 11 performance review."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads connected",
-          "text": "Baseline 86/mo from Jul 11 performance review."
-        },
-        {
-          "date": "2026-07-11",
-          "field": "Leads impacted",
-          "text": "Baseline 124/mo from Jul 11 performance review."
-        }
+        "HubSpot → Integrations → Google Ads connected"
       ],
       "abQuestions": [],
       "kpiRefs": [
-        "#01",
-        "#02",
-        "#19",
-        "#21"
+        "#19"
       ]
     },
     {
       "id": "A8M",
       "fee": 500,
-      "timeline": "Ongoing monthly after A8 build",
       "category": "Analytics",
       "campaignType": "Dashboard Maintenance",
       "status": "ongoing",
@@ -3852,7 +2995,15 @@ window.PROJECT_DATA = {
         "Google Ads API monthly pull reconciled to manual CSV archive (KPI spec § Export checklist)"
       ],
       "valueIcons": [
-        "efficiency"
+        "foundation",
+        "retainer",
+        "leads",
+        "crm",
+        "seo",
+        "referrals",
+        "efficiency",
+        "intake",
+        "creative"
       ],
       "informationNeeded": [
         "Define measurable Goal",
@@ -3860,35 +3011,6 @@ window.PROJECT_DATA = {
         "Confirm estimated leads gained",
         "Link KPI dashboard rows",
         "Link KPI dashboard rows (KPI links section)"
-      ],
-      "planningPhases": [
-        {
-          "phase": "1",
-          "focus": "Discovery & scope",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "2",
-          "focus": "Build & execute",
-          "status": "not started",
-          "target": "",
-          "notes": ""
-        },
-        {
-          "phase": "3",
-          "focus": "Measure & optimize",
-          "status": "wip",
-          "target": "Ongoing measurement",
-          "notes": ""
-        }
-      ],
-      "recommendedMetrics": [
-        "Report delivery date vs month end",
-        "Data freshness score (API vs manual export)",
-        "KPIs with live vs Waldo placeholder flag",
-        "Andrew sign-off on monthly narrative"
       ],
       "impactEstimates": {
         "period": "mo",

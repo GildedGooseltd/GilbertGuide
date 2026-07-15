@@ -9,7 +9,6 @@ const META_KEYS = {
   id: "id",
   priority: "priority",
   fee: "fee",
-  timeline: "timeline",
   category: "category",
   "campaign type": "campaignType",
   status: "status",
@@ -255,32 +254,6 @@ function findSectionBody(sections, baseName) {
   return key ? sections[key] : "";
 }
 
-function parsePlanningPhasesTable(body) {
-  if (!body?.trim()) return null;
-  const rows = [];
-  for (const line of body.split("\n")) {
-    const trimmed = line.trim();
-    if (!trimmed.startsWith("|")) continue;
-    if (/^[\|\s:\-]+$/.test(trimmed.replace(/\s/g, ""))) continue;
-    const cells = trimmed.split("|").map(c => c.trim()).filter(Boolean);
-    if (!cells.length || /^phase$/i.test(cells[0])) continue;
-    rows.push({
-      phase: cells[0] || "",
-      focus: cells[1] || "",
-      status: cells[2] || "not started",
-      target: cells[3] || "",
-      notes: cells[4] || ""
-    });
-  }
-  return rows.length ? rows : null;
-}
-
-const DEFAULT_PLANNING_PHASES = [
-  { phase: "1", focus: "Discovery & scope", status: "not started", target: "", notes: "" },
-  { phase: "2", focus: "Build & execute", status: "not started", target: "", notes: "" },
-  { phase: "3", focus: "Measure & optimize", status: "not started", target: "", notes: "" }
-];
-
 function projectStatusBucket(status) {
   const s = String(status || "available").toLowerCase();
   if (s.includes("completed")) return "completed";
@@ -288,65 +261,6 @@ function projectStatusBucket(status) {
   if (s.includes("ongoing")) return "ongoing";
   if (s.includes("research") || s.includes("draft")) return "research";
   return "available";
-}
-
-function truncatePhaseNote(text, max = 52) {
-  let s = String(text || "")
-    .replace(/^Deliverable:\s*/i, "")
-    .replace(/^[-•*]\s*/, "")
-    .replace(/\*\*/g, "")
-    .trim();
-  if (!s) return "";
-  if (s.length > max) s = `${s.slice(0, max - 1).trim()}…`;
-  return s;
-}
-
-function phaseNoteSummary(items, maxItems = 2) {
-  if (!items?.length) return "";
-  const parts = items.slice(0, maxItems).map(item => truncatePhaseNote(item)).filter(Boolean);
-  if (!parts.length) return "";
-  const suffix = items.length > maxItems ? ` (+${items.length - maxItems} more)` : "";
-  return `${parts.join("; ")}${suffix}`;
-}
-
-function inferPlanningPhases(p) {
-  const phases = DEFAULT_PLANNING_PHASES.map(x => ({ ...x }));
-  const saved = p.planningPhases || [];
-  for (let i = 0; i < 3; i++) {
-    const t = saved[i]?.target;
-    if (t && /^\d{4}|^Q[1-4]|^TBD|^Jan|^Feb|^Mar|^Apr|^May|^Jun|^Jul|^Aug|^Sep|^Oct|^Nov|^Dec/i.test(String(t).trim()))
-      phases[i].target = String(t).trim();
-  }
-  const bucket = projectStatusBucket(p.status);
-  const hasCompleted = (p.completedItems || []).length > 0;
-  const hasWip = (p.inProgressItems || []).length > 0;
-  const hasResults = (p.resultsItems || []).length > 0;
-
-  if (hasCompleted) {
-    phases[0].status = "completed";
-    phases[0].notes = phaseNoteSummary(p.completedItems) || "";
-  } else if (bucket === "research" || bucket === "wip") {
-    phases[0].status = "wip";
-  }
-
-  if (hasWip) {
-    phases[1].status = "wip";
-    phases[1].notes = phaseNoteSummary(p.inProgressItems) || "";
-  } else if (hasCompleted && bucket !== "available") {
-    phases[1].status = bucket === "completed" ? "completed" : "not started";
-  }
-
-  if (hasResults) {
-    phases[2].status = bucket === "completed" ? "completed" : "wip";
-    phases[2].notes = phaseNoteSummary(p.resultsItems, 1) || "Results logged";
-  } else if (bucket === "completed") {
-    phases[2].status = "completed";
-  } else if (bucket === "ongoing") {
-    phases[2].status = "wip";
-    phases[2].notes = "Ongoing measurement";
-  }
-
-  return phases;
 }
 
 function isInfoPlaceholder(item) {
@@ -362,8 +276,6 @@ function inferInformationNeeded(p) {
     items.push("Add Results — baseline vs current metrics");
   if (!p.impactEstimates && p.id !== "RETAINER") items.push("Fill Impact estimates");
   if (p.estimatedLeads === "Estimate pending") items.push("Confirm estimated leads gained");
-  if (!(p.recommendedMetrics || []).length && /wip|research|ongoing/i.test(String(p.status || "")))
-    items.push("List Recommended metrics");
   if (!(p.kpiRefs || []).length && /dashboard|kpi|metric/i.test(`${p.category} ${p.title}`))
     items.push("Link KPI dashboard rows");
 
@@ -389,17 +301,6 @@ function inferInformationNeeded(p) {
     deduped.push("_Add:_");
 
   return deduped.slice(0, 8);
-}
-
-function formatPlanningPhasesSection(p) {
-  const phases = inferPlanningPhases(p);
-  let md = `## Planning phases\n\n`;
-  md += `| Phase | Focus | Status | Target date | Notes |\n`;
-  md += `| ----- | ----- | ------ | ----------- | ----- |\n`;
-  for (const row of phases) {
-    md += `| ${row.phase} | ${row.focus} | ${row.status} | ${row.target || ""} | ${row.notes || ""} |\n`;
-  }
-  return md + "\n";
 }
 
 function formatInformationNeededSection(p) {
@@ -513,15 +414,8 @@ export function parseProjectMarkdown(text, fallbackId) {
   if (sections.goal) project.goal = applyProperCase(sections.goal.trim());
   if (sections["information needed"])
     project.informationNeeded = parseListSection(sections["information needed"]);
-  const phasesBody = findSectionBody(sections, "planning phases");
-  if (phasesBody) {
-    const parsed = parsePlanningPhasesTable(phasesBody);
-    if (parsed) project.planningPhases = parsed;
-  }
   if (sections.blockers || sections["blockers (next round)"])
     project.blockers = parseListSection(sections.blockers || sections["blockers (next round)"]);
-  if (sections["recommended metrics"])
-    project.recommendedMetrics = parseListSection(sections["recommended metrics"]);
   const insightsKey =
     sections["insights & improvements"] ||
     sections["insights and improvements"] ||
@@ -577,7 +471,6 @@ function metaTableRows(p) {
     ["ID", p.id],
     ...(isRetainerPhase(p) || p.priority == null ? [] : [["Priority", p.priority]]),
     ["Fee", p.fee],
-    ...(p.timeline && String(p.timeline) !== "undefined" ? [["Timeline", p.timeline]] : []),
     ["Category", p.category],
     ["Campaign type", p.campaignType],
     ["Status", p.status || "available"],
@@ -661,7 +554,6 @@ function collectKpiRefs(p) {
     p.description,
     p.goal,
     ...(p.valueAdded || []),
-    ...(p.recommendedMetrics || []),
     ...(p.blockers || []),
     ...(p.resultsItems || [])
   ]
@@ -704,6 +596,9 @@ export function sanitizeProjectRecord(p) {
   p.kpiRefs = collectKpiRefs(p);
   p.publishStatus = normalizePublishStatus(p.publishStatus);
   delete p.clientTouchpoints;
+  delete p.planningPhases;
+  delete p.timeline;
+  delete p.recommendedMetrics;
   return p;
 }
 
@@ -799,7 +694,9 @@ function normalizeProjectForTemplate(p) {
   if (!p.estimatedLeads) p.estimatedLeads = inferEstimatedLeads(p);
   delete p.clientTouchpoints;
   p.description = sanitizeProjectText(mergeDescriptionAndEducation(p));
-  p.planningPhases = inferPlanningPhases(p);
+  delete p.planningPhases;
+  delete p.timeline;
+  delete p.recommendedMetrics;
   p.informationNeeded = inferInformationNeeded(p);
   p.gilbertMetricNotes = shortenGilbertMetricNotes(p.gilbertMetricNotes);
   delete p.marketingEducation;
@@ -831,12 +728,10 @@ export function projectToMarkdown(p) {
   const fullDesc = mergeDescriptionAndEducation(p);
   if (fullDesc) md += `## Description\n\n${applyProperCase(fullDesc.trim())}\n\n`;
   if (p.goal) md += `## Goal\n\n${applyProperCase(String(p.goal).trim())}\n\n`;
-  md += formatPlanningPhasesSection(p);
   md += formatInformationNeededSection(p);
   md += listSection("WIP", p.inProgressItems);
   md += listSection("Completed", p.completedItems);
   md += listSection("Results", p.resultsItems);
-  md += listSection("Recommended metrics", p.recommendedMetrics);
   md += listSection("Blockers (next round)", p.blockers);
   md += listSection("Insights & improvements", p.insightsImprovements);
   md += formatImpactEstimatesSection(p);

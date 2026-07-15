@@ -5,7 +5,6 @@
 | **ID**            | NEWID                                                      |
 | **Priority**      | 99                                                         |
 | **Fee**           | 0                                                          |
-| **Timeline**      | 2 weeks                                                    |
 | **Category**      | Category                                                   |
 | **Campaign type** | Campaign Type                                              |
 | **Status**        | available                                                  |
@@ -28,8 +27,15 @@ One sentence — the primary value add (shown at top of card).
 
 ## Value icons
 
+- foundation
+- retainer
 - leads
 - crm
+- seo
+- referrals
+- efficiency
+- intake
+- creative
 
 ## KPI links
 
@@ -49,18 +55,6 @@ Full scope, current status, and strategy context. Card shows Summary + bullets; 
 
 One measurable outcome for this campaign (consult volume, cost/call, conversion rate, etc.).
 
-## Planning phases
-
-Short snapshot only — details live in WIP / Completed / Results below.
-
-| Phase | Focus | Status | Target date | Notes |
-| ----- | ----- | ------ | ----------- | ----- |
-| 1 | Discovery & scope | not started | | Access, baseline, scope sign-off |
-| 2 | Build & execute | not started | | Deliverables in WIP |
-| 3 | Measure & optimize | not started | | Results + next round |
-
-Status: `not started` · `wip` · `completed`
-
 ## Information needed
 
 Open items for Kate / Andrew — not execution blockers (those go in Blockers).
@@ -69,11 +63,11 @@ Open items for Kate / Andrew — not execution blockers (those go in Blockers).
 
 ## WIP
 
-- Work in progress (Phase 2) — one deliverable per bullet
+- Work in progress — one deliverable per bullet
 
 ## Completed
 
-- Already finished work (Phase 1) — one deliverable per bullet
+- Already finished work — one deliverable per bullet
 
 ## Results
 
@@ -99,10 +93,6 @@ Example:
 - Outcome: Andrew approved ~20% spend increase; trust >$67k toward $100k month
 - Status vs goal: On pace for ~$20k month ad spend
 
-## Recommended metrics
-
-- KPI to track next — tie to A8 dashboard rows where possible
-
 ## Blockers (next round)
 
 - What blocked the next improvement cycle
@@ -118,10 +108,6 @@ Example:
 - Clients retained: ~1.8 /mo
 - Source: Ad Reports export path or HubSpot pull
 - Note: optional context for this campaign
-
-## Gilbert on metrics
-
-- **YYYY-MM-DD · Leads connected** — Brief note when a baseline changes
 
 ## Fee note (optional)
 

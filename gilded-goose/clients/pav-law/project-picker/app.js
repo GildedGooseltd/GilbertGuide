@@ -580,7 +580,6 @@
       blocks.push(`<div class="campaign-metrics-block campaign-goal-block"><h4>Goal</h4><p>${escapeHtml(item.goal)}</p></div>`);
     }
     blocks.push(campaignMetricsListHtml("Results", item.resultsItems, item.resultsItems?.length ? "" : `Add ## Results in ${item.id}.md`));
-    blocks.push(campaignMetricsListHtml("Recommended metrics", item.recommendedMetrics, ""));
     blocks.push(campaignMetricsListHtml("Blockers (next round)", item.blockers, "Add ## Blockers (next round) in project markdown", { className: "campaign-blockers-callout" }));
     blocks.push(campaignMetricsListHtml("Insights & improvements", item.insightsImprovements, "Add ## Insights & improvements in project markdown"));
     const content = blocks.filter(Boolean).join("");
@@ -878,16 +877,15 @@
   }
 
   function getValueIcons(item) {
-    if (item.isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
-      const def = VALUE_ICON_DEFS.find(d => d.id === "retainer");
-      return [def || { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer" }];
-    }
     let icons = [];
     if (item.valueIcons && item.valueIcons.length) {
       icons = item.valueIcons.map(id => {
         const def = VALUE_ICON_DEFS.find(d => d.id === id);
         return def || { id, svgId: id, cls: `icon-${id}`, label: id };
-      });
+      }).filter(Boolean);
+    } else if (item.isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
+      const def = VALUE_ICON_DEFS.find(d => d.id === "retainer");
+      icons = [def || { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer" }];
     } else {
       const inferred = inferValueIconIds(item);
       if (inferred.length) {

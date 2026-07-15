@@ -4,7 +4,6 @@
 | ----------------- | ---------------------------------------------------------- |
 | **ID**            | A8M                                                        |
 | **Fee**           | 500                                                        |
-| **Timeline**      | Ongoing monthly after A8 build                             |
 | **Category**      | Analytics                                                  |
 | **Campaign type** | Dashboard Maintenance                                      |
 | **Status**        | ongoing                                                    |
@@ -28,19 +27,19 @@ Dashboard updates with KPIs to help improve business operations
 
 ## Value icons
 
+- foundation
+- retainer
+- leads
+- crm
+- seo
+- referrals
 - efficiency
+- intake
+- creative
 
 ## Description
 
 Reporting only stays useful when someone reviews it every month — validating tags, reconciling ad platforms to CRM, and noting when a channel’s numbers shift.
-
-## Planning phases
-
-| Phase | Focus | Status | Target date | Notes |
-| ----- | ----- | ------ | ----------- | ----- |
-| 1 | Discovery & scope | not started |  |  |
-| 2 | Build & execute | not started |  |  |
-| 3 | Measure & optimize | wip |  | Ongoing measurement |
 
 ## Information needed
 
@@ -49,13 +48,6 @@ Reporting only stays useful when someone reviews it every month — validating t
 - Confirm estimated leads gained
 - Link KPI dashboard rows
 - Link KPI dashboard rows (KPI links section)
-
-## Recommended metrics
-
-- Report delivery date vs month end
-- Data freshness score (API vs manual export)
-- KPIs with live vs Waldo placeholder flag
-- Andrew sign-off on monthly narrative
 
 ## Impact estimates
 
