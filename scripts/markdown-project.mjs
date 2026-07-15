@@ -801,9 +801,36 @@ function indexHeaderColumnMap(cells) {
     id: pick("id") ?? 1,
     status: pick("status"),
     visibility: pick("visibility") ?? pick("publish") ?? pick("publishstatus"),
+    estCost:
+      pick("est. cost") ??
+      pick("est cost") ??
+      pick("estimated cost") ??
+      pick("cost") ??
+      pick("fee"),
     title: pick("project") ?? 2,
     file: pick("file") ?? 3
   };
+}
+
+/** Parse INDEX Est. cost cells like `$2,900/mo`, `$2,000 + $500/mo`, `$1,500`, `incl. B13`. */
+export function parseIndexEstCost(raw) {
+  const s = String(raw || "").trim();
+  if (!s || s === "—" || s === "-" || /^incl/i.test(s) || /^merged/i.test(s) || /^n\/?a$/i.test(s)) {
+    return { label: s || "—", fee: null, ongoingFee: null };
+  }
+  const nums = [...s.matchAll(/\$?\s*([\d,]+(?:\.\d+)?)/g)].map(m => parseFloat(m[1].replace(/,/g, "")));
+  if (!nums.length) return { label: s, fee: null, ongoingFee: null };
+  if (/\/\s*mo/i.test(s) && !/\+/.test(s) && nums.length === 1) {
+    // Pure monthly (retainer): store as fee for monthly-only / retainer cards
+    return { label: s, fee: nums[0], ongoingFee: null, monthlyOnly: true };
+  }
+  if (/\+/.test(s) && nums.length >= 2) {
+    return { label: s, fee: nums[0], ongoingFee: nums[1] };
+  }
+  if (/\/\s*mo/i.test(s) && nums.length >= 1) {
+    return { label: s, fee: nums[0], ongoingFee: null, monthlyOnly: true };
+  }
+  return { label: s, fee: nums[0], ongoingFee: null };
 }
 
 function normalizeIndexVisibility(raw) {
@@ -883,6 +910,10 @@ export function parseIndexMarkdown(text) {
       row.visibility = cells[colMap.visibility];
       row.publishStatus = normalizeIndexVisibility(cells[colMap.visibility]);
     }
+    if (colMap.estCost != null && cells[colMap.estCost] != null) {
+      row.estCost = cells[colMap.estCost];
+      row.estCostParsed = parseIndexEstCost(cells[colMap.estCost]);
+    }
     result.rowsById[id] = row;
   }
 
@@ -912,6 +943,15 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     const status = normalizeIndexStatus(o.status);
     if (status) next.status = status;
     if (o.publishStatus) next.publishStatus = o.publishStatus;
+    if (o.estCost) next.estCostLabel = o.estCost;
+    const ec = o.estCostParsed || (o.estCost ? parseIndexEstCost(o.estCost) : null);
+    if (ec && ec.fee != null && !/^incl/i.test(String(ec.label || "")) && !/^merged/i.test(String(ec.label || ""))) {
+      next.fee = ec.fee;
+      if (ec.ongoingFee != null) next.ongoingFee = ec.ongoingFee;
+      else if (!ec.monthlyOnly) {
+        /* keep existing ongoing unless INDEX specifies + $mo */
+      }
+    }
     return next;
   };
   const merged = projects.map(applyTo);
@@ -928,9 +968,9 @@ export function buildIndex(projects, retainer, existingText) {
 
 Open a file below to edit. Sorted by priority (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
 
-Edit **Project** titles, **Status**, **Visibility**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
+Edit **Project** titles, **Status**, **Visibility**, **Est. cost**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
-  md += `\n\n| Priority | ID | Status | Visibility | Project | File |\n| -------- | -- | ------ | ---------- | ------- | ---- |\n`;
+  md += `\n\n| Priority | ID | Status | Visibility | Est. cost | Project | File |\n| -------- | -- | ------ | ---------- | --------- | ------- | ---- |\n`;
 
   const seen = new Set();
   for (const p of all) {
@@ -947,13 +987,20 @@ Edit **Project** titles, **Status**, **Visibility**, and add **## Notes** at the
       (normalizePublishStatus(o?.publishStatus || p.publishStatus) === "published"
         ? "Published"
         : "Unpublished");
-    md += `| ${pri} | ${id} | ${status} | ${vis} | ${title} | ${fileCell} |\n`;
+    let est = o?.estCost || "";
+    if (!est) {
+      if (p.fee && p.ongoingFee) est = `$${Number(p.fee).toLocaleString("en-US")} + $${Number(p.ongoingFee).toLocaleString("en-US")}/mo`;
+      else if (p.monthlyOnly || id === "RETAINER" || id === "A8M") est = `$${Number(p.fee || 0).toLocaleString("en-US")}/mo`;
+      else if (p.fee) est = `$${Number(p.fee).toLocaleString("en-US")}`;
+      else est = "—";
+    }
+    md += `| ${pri} | ${id} | ${status} | ${vis} | ${est} | ${title} | ${fileCell} |\n`;
   }
 
   for (const [id, o] of Object.entries(overrides.rowsById)) {
     if (seen.has(id) || !isValidProjectId(id)) continue;
     const vis = o.visibility || (o.publishStatus === "unpublished" ? "Unpublished" : "Published");
-    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${vis} | ${o.title} | ${o.file} |\n`;
+    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${vis} | ${o.estCost || "—"} | ${o.title} | ${o.file} |\n`;
   }
 
   md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Priority** row (shows as —)."}\n`;

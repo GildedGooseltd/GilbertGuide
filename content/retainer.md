@@ -3,7 +3,7 @@
 |                   |                                                            |
 | ----------------- | ---------------------------------------------------------- |
 | **ID**            | RETAINER                                                   |
-| **Fee**           | 2700                                                       |
+| **Fee**           | 2900|
 | **Category**      | Retainer                                                   |
 | **Campaign type** | Paid Media Mgmt                                            |
 | **Status**        | ongoing                                                    |

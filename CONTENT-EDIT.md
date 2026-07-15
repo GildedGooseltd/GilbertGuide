@@ -13,7 +13,7 @@
 
 | File                         | Purpose                                                                                                  |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------- |
-| [INDEX.md](INDEX.md)         | **You edit only** — titles, **Status**, **Visibility** (Published/Unpublished), priority, **## Notes** (build reads; never writes) |
+| [INDEX.md](INDEX.md)         | **You edit only** — titles, **Status**, **Visibility**, **Est. cost**, priority, **## Notes** (build reads; never writes) |
 | [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches B2)                                                                             |
 | settings.md                  | Default package                                                                                          |
 | retainer.md                  | Retainer card                                                                                            |

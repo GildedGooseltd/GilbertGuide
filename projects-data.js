@@ -24,7 +24,7 @@ window.PROJECT_DATA = {
   },
   "retainer": {
     "id": "RETAINER",
-    "fee": 2700,
+    "fee": 2900,
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
     "status": "ongoing",
@@ -77,13 +77,14 @@ window.PROJECT_DATA = {
       "Microsoft Ads export if still in retainer scope for this month"
     ],
     "abQuestions": [],
-    "kpiRefs": []
+    "kpiRefs": [],
+    "estCostLabel": "$2,900/mo"
   },
   "projects": [
     {
       "id": "B11",
       "priority": 2,
-      "fee": 0,
+      "fee": 1500,
       "category": "Intake / LSA",
       "campaignType": "LSA Operations & Training",
       "status": "recommended",
@@ -124,12 +125,13 @@ window.PROJECT_DATA = {
       "goal": "LSA statuses updated same business day; Casey covers a defined phone block or day(s); disputed/spam leads caught before month-end billing. Increased answer rated and increased close rate with legal expertise available on pickup.",
       "informationNeeded": [],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,500"
     },
     {
       "id": "B10",
       "priority": 3,
-      "fee": 1400,
+      "fee": 1800,
       "category": "Brand / Local Presence",
       "campaignType": "Profile Audit & Refresh",
       "status": "recommended",
@@ -160,7 +162,7 @@ window.PROJECT_DATA = {
         "ga4",
         "traffic"
       ],
-      "title": "HS: Social & Directory Profile Refresh & Tracking",
+      "title": "HS: Digital Profiles Refresh & Tracking Updates",
       "tldr": "A lot of the websites with Pav Law information are outdated and could use a refresh. The more intake channels updated and improved the better. Yelp outreach has been increasing organically with more reviews being posted there and needs to be updated quickly.",
       "valueAdded": [
         "Refreshed bios, practice areas, photos, and CTAs for company and both attorneys — aligned to current positioning and ABA advertising rules",
@@ -187,12 +189,13 @@ window.PROJECT_DATA = {
         "GBP social links previously cleaned (A7 / former B8) — lite refresh and license verification"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,800"
     },
     {
       "id": "B13",
       "priority": 4,
-      "fee": 4500,
+      "fee": 5500,
       "category": "CRM",
       "campaignType": "HubSpot Foundation",
       "status": "wip",
@@ -234,16 +237,18 @@ window.PROJECT_DATA = {
         "B1 speed-to-lead workflows live and measured"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$5,500"
     },
     {
       "id": "A4",
       "priority": 5,
-      "fee": 1700,
+      "fee": 2000,
       "category": "Referral",
       "campaignType": "Referral Program",
       "status": "wip",
       "publishStatus": "published",
+      "ongoingFee": 500,
       "estimatedLeads": "10/ mo",
       "keywords": [
         "referral",
@@ -257,12 +262,13 @@ window.PROJECT_DATA = {
       "title": "HS: Client Referral Program",
       "valueAdded": [],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,000 + $500/mo"
     },
     {
       "id": "A17",
       "priority": 6,
-      "fee": 1500,
+      "fee": 1800,
       "category": "Referral / Outbound",
       "campaignType": "Past-Client Reengagement",
       "status": "wip",
@@ -316,12 +322,13 @@ window.PROJECT_DATA = {
       "abQuestions": [
         "Start with Gabriel volume target of 20 calls/day or softer ramp?"
       ],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,800"
     },
     {
       "id": "B5",
       "priority": 7,
-      "fee": 1900,
+      "fee": 2200,
       "category": "Direct Mail",
       "campaignType": "Past Client Mailer",
       "status": "available",
@@ -375,12 +382,13 @@ window.PROJECT_DATA = {
         "Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
         "Newest or Oldest first?"
       ],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,200"
     },
     {
       "id": "A14",
       "priority": 8,
-      "fee": 1200,
+      "fee": 1500,
       "category": "Operations / Compensation",
       "campaignType": "Performance Incentives",
       "status": "wip",
@@ -399,47 +407,30 @@ window.PROJECT_DATA = {
         "incentive"
       ],
       "title": "Performance Plan Payouts",
-      "description": "Pav Law already runs performance-based referral work (A4). This project **writes the plan**: specific cash-generating tasks, payout tiers, caps/floors, and reporting cadence for **employees** (e.g. Casey intake blocks, Romina booking conversion) and **external contractors** (e.g. Gabriel outbound, creative freelancers).\n\nStructure options to document for Andrew:\n\n| Tier | Audience | Example tasks | Payout style |\n| ---- | -------- | ------------- | ------------ |\n| **1 — Task** | Employee | LSA status cleared daily, X booked consults | Flat per task or small bonus |\n| **2 — Outcome** | Employee | Lead→case attributed to intake block | % or flat per signed case |\n| **3 — Contractor** | External | Qualified dial sets, creative deliverables | Per deliverable or per qualified lead |\n| **4 — Revenue share** | Referral partners | Referred matter retained | % of first fee (ABA rules apply) |\n\nSee A4 performance-based payment note in INDEX. Align with ABA referral fee guidance for anything touching attorney referral relationships.",
-      "tldr": "Written payout methods for cash-generating tasks — multiple tiers for employees and external contractors so performance ties to revenue, not hours alone.",
+      "description": "Which tasks should pay at Tier 1 (flat) vs Tier 2 (outcome) for Casey and Romina?\n\n| Tier                  | Audience          | Example tasks                               | Payout style                          |\n| --------------------- | ----------------- | ------------------------------------------- | ------------------------------------- |\n| **1 — Task**          | Employee          | LSA status cleared daily, X booked consults | Flat per task or small bonus          |\n| **2 — Outcome**       | Employee          | Lead→case attributed to intake block        | % or flat per signed case             |\n| **3 — Contractor**    | External          | Qualified dial sets, creative deliverables  | Per deliverable or per qualified lead |\n| **4 — Revenue share** | Referral partners | Referred matter retained                    | % of first fee (ABA rules apply)      |",
+      "tldr": "Clear performance based bonus model for clear goal(s) for team to work towards for bonuses.",
       "valueAdded": [
-        "Clear tiers: what earns, how much, and when it pays (employee vs contractor)",
         "Ties to measurable outcomes — booked consults, signed cases, referral asks, outbound dials",
-        "Complements A4 referral program and Gabriel outbound (A6) with fair compensation rules",
-        "Andrew-approved doc before rollout — ABA-aware framing for staff vs marketing contractors"
+        "Employee appreciation program - include aparrel/gift sets at set markers etc."
       ],
       "valueIcons": [
         "foundation",
-        "retainer",
         "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "efficiency"
       ],
-      "completedItems": [
-        "(none yet)"
-      ],
+      "completedItems": [],
       "inProgressItems": [
         "Draft tier matrix (employee vs contractor)",
-        "List cash-generating tasks Pav Law already tracks (calls, bookings, referrals, mailers)",
-        "Andrew review — legal/ethics check on incentive wording",
-        "HubSpot or sheet template for tracking qualifying events"
+        "List cash-generating tasks Pav Law already tracks (calls, bookings, referrals, mailers)"
       ],
-      "informationNeeded": [
-        "Answer AB – Q: Which tasks should pay at Tier 1 (flat) vs Tier 2 (outcome) for Casey and Romina?",
-        "Define measurable Goal"
-      ],
-      "abQuestions": [
-        "Which tasks should pay at Tier 1 (flat) vs Tier 2 (outcome) for Casey and Romina?"
-      ],
-      "kpiRefs": []
+      "abQuestions": [],
+      "kpiRefs": [],
+      "estCostLabel": "$1,500"
     },
     {
       "id": "B14",
       "priority": 9,
-      "fee": 0,
+      "fee": 1200,
       "category": "Brand / Merch",
       "campaignType": "Internal Store + Conversation Starters",
       "status": "available",
@@ -492,7 +483,8 @@ window.PROJECT_DATA = {
       "abQuestions": [
         "Which mark first — Pav Law firm logo, NTGUILT, or both catalogs? Any hard no’s on merch types (socks, drinkware)?"
       ],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,200"
     },
     {
       "id": "A2",
@@ -502,7 +494,7 @@ window.PROJECT_DATA = {
       "campaignType": "Display / Brand",
       "status": "launched",
       "publishStatus": "published",
-      "estimatedLeads": "~36 calls/month baseline (Military Search)",
+      "estimatedLeads": "",
       "keywords": [
         "display",
         "ntguilt",
@@ -514,49 +506,40 @@ window.PROJECT_DATA = {
         "racing"
       ],
       "title": "NTGUILT Display & Search Campaign Launch",
-      "description": "Most people do not search for a criminal defense lawyer until they need one. A marketing funnel starts with awareness — and Google Display puts NTGUILT car and racing creative in front of drivers before they search. This project launches that upper-funnel layer with proper UTM tracking and conversion measurement on NTGUILT.com.\n\nDisplay advertising sits at the top of the marketing funnel — awareness first, then retargeting and Search capture later. HubSpot’s funnel overview and Google’s Display campaign guide explain why upper-funnel spend pays off over weeks, not days. See HubSpot — marketing funnel explained, Google — about Display campaigns, HubSpot — UTM parameters guide, and Google Display overview.",
-      "tldr": "Builds brand recognition before high-intent Search.",
+      "description": "Display advertising sits at the top of the marketing funnel — awareness first, then retargeting and Search capture later.",
       "valueAdded": [
-        "Upper-funnel NTGUILT display feeds retarget pool before Military Search capture (~36 calls/mo — Campaign report Jul 2026)",
-        "UTM pass-through on NTGUILT.com — same naming as B10 profile UTM sheet",
+        "Add lead intake channel and audience expansion",
+        "UTM pass-through on NTGUILT.com",
         "Summer creative pairs with A7 social when budget allows"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
         "crm",
         "seo",
-        "referrals",
-        "efficiency",
         "intake",
         "creative"
       ],
       "completedItems": [
         "NTGUILT campaign concept and brand direction",
-        "Visual prompt and booth creative development"
+        "Visual prompt and booth creative development",
+        "Coordinate/ manage event logistics",
+        "Creative design of NTGUILT campaign including posters, business cards, flyers, insurance card holders, and apparel."
       ],
-      "inProgressItems": [
-        "Promo video concept",
-        "Giveaway and lead magnet ideas",
-        "Event sponsorship outreach"
-      ],
-      "goal": "Launch NTGUILT upper-funnel display with UTMs so remarketing pool grows 20%+ before scaling Search budget.",
-      "informationNeeded": [
-        "*Add:*"
-      ],
+      "inProgressItems": [],
+      "informationNeeded": [],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,800"
     },
     {
       "id": "A1",
       "priority": 11,
-      "fee": 1900,
+      "fee": 2200,
       "category": "Paid Media",
       "campaignType": "Paid Search",
       "status": "available",
-      "publishStatus": "published",
-      "estimatedLeads": "~36 calls/month baseline (Military Search)",
+      "publishStatus": "unpublished",
+      "estimatedLeads": "",
       "keywords": [
         "search",
         "google",
@@ -571,16 +554,11 @@ window.PROJECT_DATA = {
         "fix"
       ],
       "title": "Digital Ad Enhancements",
-      "tldr": "Recovers wasted paid-search spend and lifts ad quality so more of the ~36 monthly Military Search calls convert at lower cost per consult.",
+      "tldr": "Builds out additional targeted campaigns for new audiences",
       "valueAdded": [],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
         "crm",
-        "seo",
-        "referrals",
-        "efficiency",
         "intake",
         "creative"
       ],
@@ -591,20 +569,17 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Call-only campaign troubleshooting",
-        "UTM tracking on contact-page URLs",
-        "Ad extension and sitelink strategy"
+        "Ad Content Creative - CDL licenced drivers with personal driving ticket issues, federal masking can force these to go to court"
       ],
-      "goal": "Lift Military RSA strength to Excellent/Good on top ad groups and cut ~38% search-term waste to <20% within 30 days.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "informationNeeded": [],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,200"
     },
     {
       "id": "B4",
       "priority": 12,
-      "fee": 2000,
+      "fee": 2500,
       "category": "SEO",
       "campaignType": "Local SEO",
       "status": "available",
@@ -652,12 +627,13 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,500"
     },
     {
       "id": "B1",
       "priority": 13,
-      "fee": 1600,
+      "fee": 1800,
       "category": "CRM",
       "campaignType": "CRM Automation",
       "status": "available",
@@ -705,12 +681,13 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,800"
     },
     {
       "id": "B3",
       "priority": 14,
-      "fee": 3800,
+      "fee": 4200,
       "category": "Website",
       "campaignType": "Website UX",
       "status": "blocked-ab",
@@ -757,17 +734,18 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$4,200"
     },
     {
       "id": "A7",
       "priority": 15,
-      "fee": 4800,
+      "fee": 4500,
       "category": "Creative / Social",
       "campaignType": "Social + paid social",
       "status": "available",
       "publishStatus": "published",
-      "ongoingFee": 500,
+      "ongoingFee": 750,
       "estimatedLeads": "Upper-funnel traffic → site and remarketing pool",
       "keywords": [
         "creative",
@@ -823,12 +801,13 @@ window.PROJECT_DATA = {
       "abQuestions": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$4,500 + $750/mo"
     },
     {
       "id": "B7",
       "priority": 16,
-      "fee": 1400,
+      "fee": 1600,
       "category": "CRM",
       "campaignType": "Contact Import",
       "status": "available",
@@ -881,12 +860,13 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,600"
     },
     {
       "id": "A13",
       "priority": 17,
-      "fee": 2000,
+      "fee": 2400,
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "status": "available",
@@ -928,12 +908,13 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,400"
     },
     {
       "id": "A6",
       "priority": 18,
-      "fee": 1000,
+      "fee": 1200,
       "category": "Outbound",
       "campaignType": "Outbound Calls",
       "status": "available",
@@ -971,12 +952,13 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,200"
     },
     {
       "id": "B2",
       "priority": 19,
-      "fee": 2000,
+      "fee": 2500,
       "category": "Infrastructure",
       "campaignType": "Call Infrastructure",
       "status": "onhold",
@@ -1028,16 +1010,17 @@ window.PROJECT_DATA = {
       "abQuestions": [],
       "kpiRefs": [
         "#21"
-      ]
+      ],
+      "estCostLabel": "$2,500"
     },
     {
       "id": "B6",
       "priority": 20,
-      "fee": 2300,
+      "fee": 2500,
       "category": "SEO",
       "campaignType": "Blog / Content SEO",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Organic search discovery traffic",
       "keywords": [
         "blog",
@@ -1077,12 +1060,13 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,500"
     },
     {
       "id": "B12",
       "priority": 21,
-      "fee": 1600,
+      "fee": 2000,
       "category": "Brand / Professional Development",
       "campaignType": "Attorney Presence",
       "status": "available",
@@ -1135,16 +1119,17 @@ window.PROJECT_DATA = {
       "abQuestions": [
         "Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?"
       ],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,000"
     },
     {
       "id": "A11",
       "priority": 22,
-      "fee": 2000,
+      "fee": 2200,
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
       "keywords": [
         "seasonal",
@@ -1187,12 +1172,13 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,200"
     },
     {
       "id": "A5",
       "priority": 23,
-      "fee": 1300,
+      "fee": 1800,
       "category": "CRM / Web",
       "campaignType": "Landing Page",
       "status": "planning",
@@ -1235,16 +1221,17 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,800"
     },
     {
       "id": "A9",
       "priority": 24,
-      "fee": 1900,
+      "fee": 2000,
       "category": "Paid Media",
       "campaignType": "Social Proof Ads",
       "status": "planning",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
       "keywords": [
         "case win",
@@ -1277,16 +1264,17 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,000"
     },
     {
       "id": "A12",
       "priority": 25,
-      "fee": 1900,
+      "fee": 2200,
       "category": "Intake / AI",
       "campaignType": "After-Hours Chat",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "All inbound web leads and form fills",
       "keywords": [
         "pavi",
@@ -1324,16 +1312,17 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,200"
     },
     {
       "id": "B9",
       "priority": 26,
-      "fee": 2400,
+      "fee": 1800,
       "category": "Finance / Operations",
       "campaignType": "Spend Audit",
       "status": "planning",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "N/A — cost savings (not lead-gen)",
       "keywords": [
         "credit card",
@@ -1369,7 +1358,8 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,800"
     },
     {
       "id": "A3",
@@ -1416,12 +1406,13 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "incl. B13"
     },
     {
       "id": "A10",
       "priority": 51,
-      "fee": 1500,
+      "fee": 1800,
       "category": "Strategy",
       "campaignType": "Strategy Audit",
       "status": "completed",
@@ -1463,7 +1454,8 @@ window.PROJECT_DATA = {
         "Confirm estimated leads gained"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,800"
     },
     {
       "id": "A15",
@@ -1472,7 +1464,7 @@ window.PROJECT_DATA = {
       "category": "Events",
       "campaignType": "Event Activation",
       "status": "archived",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Onsite QR / booth captures tied to NTGUILT + Pav Law",
       "keywords": [
         "events",
@@ -1523,16 +1515,17 @@ window.PROJECT_DATA = {
       "abQuestions": [
         "Cap event activation at $3k or $6k for next event?"
       ],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,500"
     },
     {
       "id": "A16",
       "priority": 53,
-      "fee": 800,
+      "fee": 1000,
       "category": "Partnerships",
       "campaignType": "Garage Partnership",
       "status": "archived",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "parentId": "A15",
       "estimatedLeads": "Shared booth leads + shop appointments from giveaways",
       "keywords": [
@@ -1582,7 +1575,8 @@ window.PROJECT_DATA = {
       "abQuestions": [
         "Did Bailey’s accept, decline, or counter the $600–$1,000 ask?"
       ],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,000"
     },
     {
       "id": "C1",
@@ -1636,7 +1630,8 @@ window.PROJECT_DATA = {
         "_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$2,000"
     },
     {
       "id": "C2",
@@ -1687,7 +1682,8 @@ window.PROJECT_DATA = {
         "_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$1,500"
     },
     {
       "id": "A18",
@@ -1741,7 +1737,8 @@ window.PROJECT_DATA = {
       "abQuestions": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "merged A7"
     },
     {
       "id": "B8",
@@ -1798,11 +1795,12 @@ window.PROJECT_DATA = {
         "_Add:_"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "merged A7"
     },
     {
       "id": "A8",
-      "fee": 1600,
+      "fee": 2200,
       "category": "Analytics",
       "campaignType": "Dashboard / Reporting",
       "status": "wip",
@@ -1846,7 +1844,8 @@ window.PROJECT_DATA = {
       "abQuestions": [],
       "kpiRefs": [
         "#19"
-      ]
+      ],
+      "estCostLabel": "$2,200"
     },
     {
       "id": "A8M",
@@ -1893,7 +1892,8 @@ window.PROJECT_DATA = {
         "Link KPI dashboard rows (KPI links section)"
       ],
       "abQuestions": [],
-      "kpiRefs": []
+      "kpiRefs": [],
+      "estCostLabel": "$500/mo"
     }
   ]
 };
