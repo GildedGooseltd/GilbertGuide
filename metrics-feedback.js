@@ -1,7 +1,6 @@
 /**
- * Thumbs up / thumbs down on each KPI / data point.
- * Storage: browser localStorage (reliable) + Download Feedback Report.
- * Google Sheet webhook is optional and not required.
+ * Thumbs up / thumbs down on KPI and feedback boxes.
+ * Storage: browser localStorage + Download Feedback Report.
  */
 (function () {
   const STORAGE_KEY = "pav-metrics-feedback-v2";
@@ -13,11 +12,27 @@
     down: { id: "thumbs_down", label: "Thumbs down", score: -1 }
   };
 
+  const TARGET_SELECTORS = [
+    ".kpi-stat-card[data-kpi-focus]",
+    ".kpi-goal-card[data-kpi-focus]:not([disabled]):not([aria-disabled='true'])",
+    ".kpi-mini-card[data-kpi-focus]",
+    ".kpi-dash-card[data-kpi-focus]",
+    ".kpi-split-panel[data-feedback-id]",
+    ".kpi-chart-card[data-kpi-focus]",
+    ".kpi-section[data-feedback-id]",
+    ".picker-zone[data-feedback-id]",
+    ".impact-section[data-feedback-id]",
+    "#completed-report-out[data-feedback-id]",
+    ".pav-guide-ask-section[data-feedback-id]"
+  ].join(", ");
+
   const state = {
     targets: [],
     feedback: loadFeedback(),
     sessionId: getOrCreateSessionId(),
-    toastTimer: null
+    toastTimer: null,
+    mo: null,
+    syncing: false
   };
 
   function loadFeedback() {
@@ -93,23 +108,45 @@
       .replace(/"/g, "&quot;");
   }
 
-  function targetId(el) {
-    return el.dataset.feedbackId || el.dataset.kpiFocus || "";
+  function slug(s) {
+    return String(s || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "untitled";
   }
 
-  function targetLabel(el) {
+  /** Stable unique id per box — never reuse the same focus across card vs chart. */
+  function computeTargetId(el) {
+    if (el.dataset.feedbackId) return el.dataset.feedbackId.trim();
+    const focus = (el.dataset.kpiFocus || "").trim();
+    if (focus) {
+      if (el.classList.contains("kpi-chart-card")) return `chart:${focus}`;
+      if (el.classList.contains("kpi-mini-card")) return `mini:${focus}`;
+      if (el.classList.contains("kpi-dash-card")) return `dash:${focus}`;
+      if (el.classList.contains("kpi-goal-card")) return `goal:${focus}`;
+      if (el.classList.contains("kpi-stat-card")) return `stat:${focus}`;
+      return `kpi:${focus}`;
+    }
+    if (el.classList.contains("kpi-chart-card")) {
+      const head = el.querySelector(".kpi-chart-head strong, h3, .kpi-section-title");
+      return "chart:" + slug(head ? head.textContent : "untitled");
+    }
+    return "";
+  }
+
+  function targetLabel(el, id) {
     if (el.dataset.feedbackLabel) return el.dataset.feedbackLabel.trim();
     const kpi = el.dataset.kpiFocus;
     if (kpi) {
       const idEl = el.querySelector(".kpi-stat-id");
-      const head = el.querySelector(".kpi-chart-head strong");
+      const head = el.querySelector(".kpi-chart-head strong, h3");
       if (idEl) return idEl.textContent.trim();
       if (head) return head.textContent.trim();
       return kpi;
     }
-    const title = el.querySelector(".kpi-section-title");
+    const title = el.querySelector(".kpi-section-title, .completed-panel-head, .revenue-panel-head, h3");
     if (title) return title.textContent.trim();
-    return targetId(el) || "Metric";
+    return id || "Metric";
   }
 
   function targetType(el) {
@@ -120,39 +157,52 @@
       el.classList.contains("kpi-mini-card") ||
       el.classList.contains("kpi-split-panel")
     ) return "widget";
+    if (el.classList.contains("kpi-section") || el.classList.contains("picker-zone") || el.classList.contains("impact-section")) {
+      return "section";
+    }
     return "other";
   }
 
-  function discoverTargets() {
-    const seen = new Set();
-    const out = [];
-    const selectors = [
-      ".kpi-stat-card[data-kpi-focus]",
-      ".kpi-goal-card[data-kpi-focus]:not([disabled])",
-      ".kpi-mini-card[data-kpi-focus]",
-      ".kpi-dash-card[data-kpi-focus]",
-      ".kpi-split-panel[data-feedback-id]",
-      ".kpi-chart-card[data-kpi-focus]",
-      ".kpi-chart-card"
-    ].join(", ");
+  /** Look up stored vote; migrate legacy bare "#01" keys onto new unique ids. */
+  function entryFor(id, el) {
+    if (state.feedback[id]) return state.feedback[id];
+    const focus = (el?.dataset?.kpiFocus || "").trim();
+    if (focus && state.feedback[focus]) {
+      state.feedback[id] = { ...state.feedback[focus] };
+      delete state.feedback[focus];
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.feedback));
+      } catch { /* ignore */ }
+      return state.feedback[id];
+    }
+    return null;
+  }
 
-    function addTarget(el) {
+  function discoverTargets() {
+    const candidates = [];
+    document.querySelectorAll(TARGET_SELECTORS).forEach(el => {
       if (el.closest(".kpi-detail-panel")) return;
-      let id = targetId(el);
-      if (!id && el.classList.contains("kpi-chart-card")) {
-        const head = el.querySelector(".kpi-chart-head strong");
-        id = "chart-" + (head
-          ? head.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
-          : "untitled");
+      if (el.closest(".kpi-rate-btns, .kpi-rate-note, .kpi-rate-tray")) return;
+      const id = computeTargetId(el);
+      if (!id) return;
+      el.dataset.feedbackFor = id;
+      if (!el.dataset.feedbackId && id.indexOf(":") === -1 && !el.dataset.kpiFocus) {
         el.dataset.feedbackId = id;
       }
-      if (!id || seen.has(id)) return;
-      seen.add(id);
-      out.push({ id, el, label: targetLabel(el), type: targetType(el) });
-    }
+      candidates.push({ id, el, label: targetLabel(el, id), type: targetType(el) });
+    });
 
-    document.querySelectorAll(".kpi-report-root").forEach(root => {
-      root.querySelectorAll(selectors).forEach(addTarget);
+    // Prefer leaf boxes so a section wrapper doesn't steal thumbs from each card inside.
+    const leaves = candidates.filter(
+      c => !candidates.some(other => other.el !== c.el && c.el.contains(other.el))
+    );
+
+    const seen = new Set();
+    const out = [];
+    leaves.forEach(c => {
+      if (seen.has(c.id)) return;
+      seen.add(c.id);
+      out.push(c);
     });
     return out;
   }
@@ -174,14 +224,18 @@
   }
 
   function feedbackItems() {
-    return state.targets
-      .filter(t => entryHasContent(state.feedback[t.id]))
-      .map(t => ({
-        id: t.id,
-        label: t.label,
-        type: t.type,
-        ...state.feedback[t.id]
-      }));
+    const byId = new Map(state.targets.map(t => [t.id, t]));
+    return Object.keys(state.feedback)
+      .filter(id => entryHasContent(state.feedback[id]))
+      .map(id => {
+        const t = byId.get(id);
+        return {
+          id,
+          label: t?.label || state.feedback[id].targetLabel || id,
+          type: t?.type || "other",
+          ...state.feedback[id]
+        };
+      });
   }
 
   function buildReport() {
@@ -266,57 +320,75 @@
   }
 
   function ensureThumbUi(t) {
+    // Never put controls inside a <button> metric card — wrap the card instead.
     let wrap = t.el.closest(".kpi-rate-wrap");
-    if (!wrap) {
+    if (wrap && wrap.dataset.feedbackFor && wrap.dataset.feedbackFor !== t.id) {
+      // Wrong wrap from a parent target — build our own.
+      wrap = null;
+    }
+    if (!wrap || !wrap.contains(t.el)) {
       wrap = document.createElement("div");
       wrap.className = "kpi-rate-wrap";
       wrap.dataset.feedbackFor = t.id;
       const parent = t.el.parentNode;
-      if (!parent) return;
+      if (!parent) return null;
       parent.insertBefore(wrap, t.el);
       wrap.appendChild(t.el);
     }
     wrap.dataset.feedbackFor = t.id;
-    let btns = wrap.querySelector(":scope > .kpi-rate-btns");
-    if (!btns) {
-      btns = document.createElement("div");
-      btns.className = "kpi-rate-btns";
-      btns.innerHTML =
-        `<button type="button" class="kpi-rate-btn kpi-rate-up" data-rate="up" data-rate-id="${escapeHtml(t.id)}" title="Thumbs up" aria-label="Thumbs up for ${escapeHtml(t.label)}">👍</button>` +
-        `<button type="button" class="kpi-rate-btn kpi-rate-down" data-rate="down" data-rate-id="${escapeHtml(t.id)}" title="Thumbs down" aria-label="Thumbs down for ${escapeHtml(t.label)}">👎</button>`;
-      wrap.appendChild(btns);
-    }
-    let note = wrap.querySelector(":scope > .kpi-rate-note");
-    if (!note) {
-      note = document.createElement("label");
-      note.className = "kpi-rate-note";
-      note.innerHTML =
+    wrap.classList.add("kpi-rate-wrap--" + (t.type || "other"));
+
+    let tray = wrap.querySelector(":scope > .kpi-rate-tray");
+    if (!tray) {
+      tray = document.createElement("div");
+      tray.className = "kpi-rate-tray";
+      tray.innerHTML =
+        `<div class="kpi-rate-btns" role="group" aria-label="Rate ${escapeHtml(t.label)}">` +
+        `<button type="button" class="kpi-rate-btn kpi-rate-up" data-rate="up" data-rate-id="${escapeHtml(t.id)}" title="Thumbs up" aria-pressed="false" aria-label="Thumbs up for ${escapeHtml(t.label)}">👍</button>` +
+        `<button type="button" class="kpi-rate-btn kpi-rate-down" data-rate="down" data-rate-id="${escapeHtml(t.id)}" title="Thumbs down" aria-pressed="false" aria-label="Thumbs down for ${escapeHtml(t.label)}">👎</button>` +
+        `</div>` +
+        `<label class="kpi-rate-note">` +
         `<span class="kpi-rate-note-label">Comment</span>` +
-        `<textarea class="kpi-rate-comment" data-comment-id="${escapeHtml(t.id)}" rows="2" placeholder="Optional note on this box…"></textarea>`;
-      wrap.appendChild(note);
+        `<textarea class="kpi-rate-comment" data-comment-id="${escapeHtml(t.id)}" rows="2" placeholder="Optional note on this box…"></textarea>` +
+        `</label>`;
+      wrap.appendChild(tray);
+    } else {
+      // Keep rate-id in sync if target id migrated
+      tray.querySelectorAll("[data-rate-id], [data-comment-id]").forEach(node => {
+        if (node.dataset.rateId != null) node.dataset.rateId = t.id;
+        if (node.dataset.commentId != null) node.dataset.commentId = t.id;
+      });
     }
+
     t.el.classList.add("feedback-target");
     t.el.dataset.feedbackFor = t.id;
+    return wrap;
+  }
+
+  function applyThumbState(wrap, entry) {
+    if (!wrap) return;
+    const hasUp = entry?.verdict === "thumbs_up";
+    const hasDown = entry?.verdict === "thumbs_down";
+    const hasNote = !!(entry?.comment && String(entry.comment).trim());
+    wrap.classList.toggle("has-feedback-ok", hasUp);
+    wrap.classList.toggle("has-feedback-flag", hasDown);
+    wrap.classList.toggle("has-feedback-note", hasNote);
+    wrap.querySelectorAll(".kpi-rate-btn").forEach(btn => {
+      const v = btn.dataset.rate === "up" ? "thumbs_up" : "thumbs_down";
+      const on = entry?.verdict === v;
+      btn.classList.toggle("is-selected", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const ta = wrap.querySelector(".kpi-rate-comment");
+    if (ta && document.activeElement !== ta) {
+      ta.value = entry?.comment || "";
+    }
   }
 
   function syncThumbUi() {
     state.targets.forEach(t => {
-      ensureThumbUi(t);
-      const wrap = t.el.closest(".kpi-rate-wrap");
-      if (!wrap) return;
-      const entry = state.feedback[t.id];
-      wrap.classList.toggle("has-feedback-ok", entry?.verdict === "thumbs_up");
-      wrap.classList.toggle("has-feedback-flag", entry?.verdict === "thumbs_down");
-      wrap.classList.toggle("has-feedback-note", !!(entry?.comment && String(entry.comment).trim()));
-      wrap.querySelectorAll(".kpi-rate-btn").forEach(btn => {
-        const v = btn.dataset.rate === "up" ? "thumbs_up" : "thumbs_down";
-        btn.classList.toggle("is-selected", entry?.verdict === v);
-        btn.setAttribute("aria-pressed", entry?.verdict === v ? "true" : "false");
-      });
-      const ta = wrap.querySelector(".kpi-rate-comment");
-      if (ta && document.activeElement !== ta) {
-        ta.value = entry?.comment || "";
-      }
+      const wrap = ensureThumbUi(t);
+      applyThumbState(wrap, entryFor(t.id, t.el));
     });
   }
 
@@ -331,6 +403,7 @@
     state.feedback[id] = {
       ...prev,
       comment,
+      targetLabel: state.targets.find(t => t.id === id)?.label || prev.targetLabel,
       updatedAt: new Date().toISOString()
     };
     if (!state.feedback[id].verdict) {
@@ -342,12 +415,17 @@
 
   function rateTarget(id, direction) {
     const meta = VERDICTS[direction];
-    if (!meta) return;
-    const prev = state.feedback[id];
-    const comment = prev?.comment || "";
-    if (prev?.verdict === meta.id) {
+    if (!meta || !id) return;
+    const prev = state.feedback[id] || {};
+    const comment = prev.comment || "";
+    // Toggle off only if clicking the same verdict again
+    if (prev.verdict === meta.id) {
       if (comment.trim()) {
-        state.feedback[id] = { comment, updatedAt: new Date().toISOString() };
+        state.feedback[id] = {
+          comment,
+          targetLabel: state.targets.find(t => t.id === id)?.label || prev.targetLabel,
+          updatedAt: new Date().toISOString()
+        };
       } else {
         delete state.feedback[id];
       }
@@ -360,41 +438,135 @@
       score: meta.score,
       label: meta.label,
       comment,
+      targetLabel: state.targets.find(t => t.id === id)?.label || prev.targetLabel,
       updatedAt: new Date().toISOString()
     };
     persistFeedbackLocal();
-    showToast("Saved on this device. Download or email when done.", "ok");
+    // Immediate paint in case a concurrent re-render raced
+    requestAnimationFrame(() => {
+      const wrap =
+        document.querySelector(`.kpi-rate-wrap[data-feedback-for="${id.replace(/"/g, '\\"')}"]`) ||
+        Array.from(document.querySelectorAll(".kpi-rate-wrap")).find(w => w.dataset.feedbackFor === id);
+      if (wrap) applyThumbState(wrap, state.feedback[id]);
+      else syncThumbUi();
+    });
+    showToast("Saved on this device. Download when done.", "ok");
   }
 
   function bindClicks() {
     if (document.documentElement.dataset.kpiThumbsBound === "1") return;
     document.documentElement.dataset.kpiThumbsBound = "1";
-    document.addEventListener("click", e => {
-      const btn = e.target.closest(".kpi-rate-btn");
-      if (!btn) return;
-      e.preventDefault();
-      e.stopPropagation();
-      const id = btn.dataset.rateId;
-      const dir = btn.dataset.rate;
-      if (id && dir) rateTarget(id, dir);
-    });
-    document.addEventListener("change", e => {
-      const ta = e.target.closest(".kpi-rate-comment");
+    document.addEventListener(
+      "click",
+      e => {
+        const btn = e.target.closest(".kpi-rate-btn");
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation?.();
+        const id = btn.getAttribute("data-rate-id") || btn.dataset.rateId;
+        const dir = btn.getAttribute("data-rate") || btn.dataset.rate;
+        if (id && dir) rateTarget(id, dir);
+      },
+      true
+    );
+    document.addEventListener("input", e => {
+      const ta = e.target.closest?.(".kpi-rate-comment");
       if (!ta) return;
-      saveComment(ta.dataset.commentId, ta.value);
+      const id = ta.getAttribute("data-comment-id") || ta.dataset.commentId;
+      if (!id) return;
+      // Debounced live persist via blur/change as well; input keeps UI flags in sync
+      const comment = String(ta.value || "");
+      const prev = state.feedback[id] || {};
+      if (!comment.trim() && !prev.verdict) {
+        if (state.feedback[id]) {
+          delete state.feedback[id];
+          persistFeedbackLocal();
+        }
+        return;
+      }
+      state.feedback[id] = {
+        ...prev,
+        comment: comment.trim() ? comment : "",
+        updatedAt: new Date().toISOString()
+      };
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.feedback));
+      } catch { /* ignore */ }
+      const wrap = ta.closest(".kpi-rate-wrap");
+      applyThumbState(wrap, state.feedback[id]);
+      updateScoreBar();
     });
-    document.addEventListener("blur", e => {
-      const ta = e.target.classList?.contains("kpi-rate-comment") ? e.target : null;
-      if (!ta || !ta.dataset?.commentId) return;
-      saveComment(ta.dataset.commentId, ta.value);
-    }, true);
+    document.addEventListener(
+      "blur",
+      e => {
+        const ta = e.target?.classList?.contains("kpi-rate-comment") ? e.target : null;
+        if (!ta) return;
+        const id = ta.getAttribute("data-comment-id") || ta.dataset.commentId;
+        if (id) saveComment(id, ta.value);
+      },
+      true
+    );
+  }
+
+  function mutationLooksLikeReportRebuild(mutations) {
+    for (const m of mutations) {
+      for (const node of m.removedNodes) {
+        if (node.nodeType !== 1) continue;
+        if (node.classList?.contains("kpi-rate-wrap")) continue;
+        if (node.classList?.contains("kpi-section") || node.classList?.contains("kpi-stat-card") || node.id === "kpi-report-kpis") {
+          return true;
+        }
+        if (node.querySelector?.(".kpi-section, .kpi-stat-card, .kpi-goals-grid")) return true;
+      }
+      for (const node of m.addedNodes) {
+        if (node.nodeType !== 1) continue;
+        if (node.classList?.contains("kpi-rate-wrap") || node.classList?.contains("kpi-rate-tray")) continue;
+        if (node.classList?.contains("kpi-section") || node.classList?.contains("kpi-stat-grid") || node.classList?.contains("kpi-goals-grid")) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function observeDom() {
+    if (state.mo) return;
+    const roots = [
+      document.getElementById("kpi-report-kpis"),
+      document.getElementById("cockpit-panel-impact"),
+      document.getElementById("cockpit-panel-picker")
+    ].filter(Boolean);
+    if (!roots.length) return;
+    let scheduled = false;
+    state.mo = new MutationObserver(mutations => {
+      if (state.syncing || scheduled) return;
+      if (!mutationLooksLikeReportRebuild(mutations)) return;
+      scheduled = true;
+      requestAnimationFrame(() => {
+        scheduled = false;
+        refresh();
+      });
+    });
+    roots.forEach(root => {
+      state.mo.observe(root, { childList: true, subtree: true });
+    });
   }
 
   function refresh() {
-    ensureScoreBar();
-    state.targets = discoverTargets();
-    syncThumbUi();
-    updateScoreBar();
+    if (state.syncing) return;
+    state.syncing = true;
+    try {
+      ensureScoreBar();
+      state.targets = discoverTargets();
+      syncThumbUi();
+      updateScoreBar();
+      observeDom();
+    } finally {
+      requestAnimationFrame(() => {
+        state.syncing = false;
+      });
+    }
   }
 
   function init() {
@@ -424,6 +596,10 @@
   }
 
   window.addEventListener("kpi-report-rendered", () => {
+    refresh();
+  });
+
+  window.addEventListener("kpi-report-ready", () => {
     refresh();
   });
 
