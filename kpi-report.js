@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260714-status-v16";
+  const RENDER_VER = "20260714-target-bar-v24";
   const DATA = {
     period: "June 2026",
     asOf: "2026-07-11",
@@ -11,12 +11,13 @@
     kpis: [
       { id: "#01", label: "Total leads", value: "124", target: "110", mom: "+18%", verified: true, hit: true, gauge: true },
       { id: "#02", label: "New cases", value: "9", target: "12", mom: "−25%", verified: false, alert: false, gauge: true },
-      { id: "#12", label: "Cost/call Military", value: "$41", target: "< $100", mom: null, verified: true },
-      { id: "#15", label: "CPL", value: "$142", target: "≤ $120", mom: null, verified: true, alert: true },
+      { id: "#12", label: "Avg cost/call", value: "$72", target: "< $100", mom: null, verified: true, targetBar: true, lowerIsBetter: true },
+      { id: "#15", label: "CPL", value: "$142", target: "≤ $120", mom: null, verified: true, alert: true, targetBar: true, lowerIsBetter: true },
       { id: "#21", label: "Answered phones", value: "69%", target: "≥ 90%", mom: "+2%", verified: false, alert: true, gauge: true, goal: true },
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false },
       { id: "#28", label: "Avg case fee", value: "$3,870", target: "Q2 review", mom: null, verified: false },
-      { id: "#19", label: "Missed revenue", value: "$4,200/mo", target: "$0", mom: null, verified: false, alert: true, goal: true }
+      { id: "#19", label: "Missed revenue", value: "$4,200/mo", target: "$0", mom: null, verified: false, alert: true, lostTracker: true },
+      { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, gauge: true }
     ],
     channels: [
       { name: "Search calls", count: 54, prior: 31, mom: "+74%", spend: "$2,214", color: "#3a1a6e" },
@@ -53,7 +54,12 @@
       priorMonthlyLost: 4800,
       cumulativeYtd: 27300
     },
-    costPerCall: [{ channel: "Military", cost: "$41" }, { channel: "NTGUILT (est.)", cost: "TBD" }],
+    costPerCall: [
+      { channel: "All campaigns (avg)", cost: "$72" },
+      { channel: "Military", cost: "$41" },
+      { channel: "Core DV", cost: "$141" },
+      { channel: "NTGUILT", cost: "$105" }
+    ],
     referrals: [
       { platform: "Past-client program", count: null, delta: null, status: "building", verified: false },
       { platform: "Friend / family", count: null, delta: null, status: "not wired", verified: false },
@@ -101,15 +107,15 @@
 
   function star(verified) {
     return verified
-      ? '<span class="kpi-star" title="Export on file">★</span>'
-      : '<span class="kpi-unverified" title="Source not wired yet" aria-label="Not verified">✕</span>';
+      ? '<span class="kpi-star" title="Data available">★</span>'
+      : '<span class="kpi-unverified" title="Data not acquired" aria-label="Data not acquired">✕</span>';
   }
 
   /** Corner badge for tiles / section cards (upper-left quick reference). */
   function statusCorner(verified) {
     return verified
-      ? '<span class="kpi-status-corner kpi-star" title="Export on file" aria-label="Export on file">★</span>'
-      : '<span class="kpi-status-corner kpi-unverified" title="Source not wired yet" aria-label="Not wired yet">✕</span>';
+      ? '<span class="kpi-status-corner kpi-star" title="Data available" aria-label="Data available">★</span>'
+      : '<span class="kpi-status-corner kpi-unverified" title="Data not acquired" aria-label="Data not acquired">✕</span>';
   }
 
   function escapeHtml(s) {
@@ -602,12 +608,22 @@
   function teamDuiGoalCardHtml() {
     const pct = DATA.duiGoal.current / DATA.duiGoal.target;
     const hit = pct >= 1;
-    return `<button type="button" class="kpi-stat-card kpi-stat-gauge" data-kpi-focus="#DUI">
+    const status = hit ? '<span class="kpi-target-hit">Target reached</span>' : "Open goal";
+    return `<button type="button" class="kpi-goal-card kpi-stat-gauge" data-kpi-focus="#DUI">
       ${statusCorner(false)}
-      <span class="kpi-stat-id">DUI YTD</span>
-      ${halfMoonGauge(Math.min(pct, 1), "goal-dui", { endLabel: String(DATA.duiGoal.target), celebrate: hit })}
-      <span class="kpi-gauge-val">${DATA.duiGoal.current} / ${DATA.duiGoal.target}</span>
-      <span class="kpi-stat-label">50 DUI cases · calendar year</span>
+      <div class="kpi-goal-visual">
+        <span class="kpi-goal-eyebrow">Team goal</span>
+        <span class="kpi-stat-id">#DUI</span>
+        ${halfMoonGauge(Math.min(pct, 1), "goal-dui", { endLabel: String(DATA.duiGoal.target), celebrate: hit })}
+        <span class="kpi-gauge-val">${DATA.duiGoal.current} / ${DATA.duiGoal.target}</span>
+      </div>
+      ${goalTrackRows([
+        ["Metric", "DUI cases YTD"],
+        ["Actual", `${DATA.duiGoal.current}`],
+        ["Target", `${DATA.duiGoal.target} calendar year`],
+        ["MoM", "—"],
+        ["Status", typeof status === "string" && status.includes("Target") ? "Target reached" : "Open goal"]
+      ])}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
     </button>`;
   }
@@ -658,7 +674,7 @@
   }
 
   function reportKey() {
-    return `<p class="kpi-legend kpi-legend-top"><span class="kpi-star">★</span> Gold star = export on file &nbsp; <span class="kpi-unverified">✕</span> Red ✕ = not wired yet</p>`;
+    return `<p class="kpi-legend kpi-legend-top"><span class="kpi-star">★</span> = data available &nbsp; <span class="kpi-unverified">✕</span> = data not acquired</p>`;
   }
 
   function reportHeader() {
@@ -676,6 +692,112 @@
     const t = tMatch ? parseFloat(tMatch[1]) : NaN;
     if (!Number.isFinite(v) || !Number.isFinite(t) || t <= 0) return null;
     return { current: v, target: t, pct: v / t };
+  }
+
+  const TARGET_BAR_COLORS = { miss: "#f2c2b9", hit: "#679c8e" };
+
+  function parseMetricNum(val) {
+    if (typeof val === "number" && Number.isFinite(val)) return val;
+    return parseFloat(String(val).replace(/[^0-9.]/g, "")) || 0;
+  }
+
+  function parseTargetNum(targetStr) {
+    const m = String(targetStr || "").match(/([0-9]+(?:\.[0-9]+)?)/);
+    return m ? parseFloat(m[1]) : NaN;
+  }
+
+  /** lowerIsBetter: cost metrics — teal when actual ≤ target, coral when above. */
+  function meetsTarget(actual, target, lowerIsBetter) {
+    if (!Number.isFinite(target)) return true;
+    return lowerIsBetter ? actual <= target : actual >= target;
+  }
+
+  function fmtBarMoney(n) {
+    return "$" + Math.round(n).toLocaleString("en-US");
+  }
+
+  /**
+   * Vertical bars with per-category horizontal target markers (screenshot style).
+   * items: [{ label, value }] — value numeric or "$72" string.
+   */
+  function barWithTargetChart(items, options) {
+    const opts = options || {};
+    const lowerIsBetter = opts.lowerIsBetter !== false;
+    const target = opts.target != null ? opts.target : parseTargetNum(opts.targetStr);
+    const compact = opts.compact !== false;
+    const bars = (items || []).map(it => ({
+      label: it.label || it.name || it.channel || "",
+      actual: parseMetricNum(it.value != null ? it.value : it.cost)
+    })).filter(b => b.label);
+    if (!bars.length || !Number.isFinite(target)) return "";
+
+    const maxVal = Math.max(...bars.map(b => b.actual), target, 1) * 1.15;
+    const w = opts.width || (compact ? 210 : 420);
+    const h = opts.height || (compact ? 112 : 200);
+    const pad = compact
+      ? { l: 10, r: 10, t: 10, b: 30 }
+      : { l: 20, r: 20, t: 20, b: 44 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / bars.length;
+    const barW = Math.min(compact ? 34 : 56, slot * 0.52);
+    const baselineY = pad.t + plotH;
+    const targetY = baselineY - (plotH * target) / maxVal;
+    const targetLabel = fmtBarMoney(target);
+
+    const barEls = bars.map((b, i) => {
+      const bh = Math.max(5, (plotH * b.actual) / maxVal);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = baselineY - bh;
+      const hit = meetsTarget(b.actual, target, lowerIsBetter);
+      const fill = hit ? TARGET_BAR_COLORS.hit : TARGET_BAR_COLORS.miss;
+      const textFill = hit ? "#ffffff" : "#1a1a1a";
+      const valLabel = fmtBarMoney(b.actual);
+      const shortLabel = b.label.length > 10 ? b.label.replace(/\s.*/, "") : b.label;
+      const lineW = barW + 14;
+      const lineX = x + barW / 2 - lineW / 2;
+      const targetText = i === 0
+        ? `<text x="${lineX - 3}" y="${targetY + 4}" text-anchor="end" class="kpi-target-label">${targetLabel}</text>`
+        : "";
+      return `<g class="kpi-target-bar-group">
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="2" fill="${fill}"/>
+        <text x="${x + barW / 2}" y="${baselineY - 5}" text-anchor="middle" class="kpi-target-bar-val" fill="${textFill}">${valLabel}</text>
+        <line x1="${lineX}" y1="${targetY}" x2="${lineX + lineW}" y2="${targetY}" class="kpi-target-line"/>
+        ${targetText}
+        <text x="${x + barW / 2}" y="${h - 8}" text-anchor="middle" class="kpi-target-bar-cat">${escapeHtml(shortLabel)}</text>
+      </g>`;
+    }).join("");
+
+    return `<svg class="kpi-chart-svg kpi-target-bar-chart${compact ? " kpi-target-bar-chart-compact" : ""}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${escapeHtml(opts.ariaLabel || "Actual vs target bar chart")}">
+      <line x1="${pad.l}" y1="${baselineY}" x2="${w - pad.r}" y2="${baselineY}" class="kpi-target-baseline"/>
+      ${barEls}
+    </svg>`;
+  }
+
+  function costPerCallBarItems() {
+    return DATA.costPerCall
+      .filter(c => !/^All campaigns/i.test(c.channel))
+      .map(c => ({ label: c.channel, value: c.cost }));
+  }
+
+  function cplByCampaignItems() {
+    return DATA.leadsByCampaign.map(c => {
+      const spend = parseMetricNum(c.spend);
+      const count = Math.max(c.count, 1);
+      return { label: c.name, value: Math.round(spend / count) };
+    });
+  }
+
+  function targetBarChartForKpi(k) {
+    const target = parseTargetNum(k.target);
+    const items = k.id === "#12" ? costPerCallBarItems() : k.id === "#15" ? cplByCampaignItems() : (k.targetBarItems || []);
+    return barWithTargetChart(items, {
+      target,
+      lowerIsBetter: k.lowerIsBetter !== false,
+      targetStr: k.target,
+      compact: true,
+      ariaLabel: `${k.label} by campaign vs ${k.target}`
+    });
   }
 
   function kpiGoalCardHtml(k) {
@@ -725,9 +847,47 @@
     </button>`;
   }
 
+  function missedRevenueTrackerHtml() {
+    const p = DATA.phoneIntake;
+    const fmtMoney = n => "$" + Math.round(Number(n) || 0).toLocaleString();
+    const delta = p.priorMonthlyLost != null ? p.monthlyLost - p.priorMonthlyLost : null;
+    let deltaHtml = "—";
+    if (delta != null) {
+      const abs = Math.abs(delta);
+      const cls = delta <= 0 ? "kpi-mom-up" : "kpi-mom-down";
+      const sign = delta <= 0 ? "−" : "+";
+      deltaHtml = `<span class="${cls}">${sign}${fmtMoney(abs)}/mo vs prior</span>`;
+    }
+    return `<button type="button" class="kpi-stat-card kpi-lost-tracker kpi-stat-attention" data-kpi-focus="#19">
+      ${statusCorner(false)}
+      <span class="kpi-stat-id">#19 Missed revenue</span>
+      <span class="kpi-lost-amount">${fmtMoney(p.monthlyLost)}<small>/mo</small></span>
+      <span class="kpi-stat-label">Ongoing money lost from unanswered calls</span>
+      <ul class="kpi-lost-facts">
+        <li><strong>Answer rate</strong> ${p.answeredPct}% <span class="kpi-lost-muted">(goal ≥ ${p.targetPct}%)</span></li>
+        <li><strong>Missed calls</strong> ${p.missedPct}%</li>
+        <li><strong>YTD lost</strong> ${fmtMoney(p.cumulativeYtd)}</li>
+        <li><strong>Trend</strong> ${deltaHtml}</li>
+      </ul>
+    </button>`;
+  }
+
   function kpiStatCardHtml(k) {
+    if (k.lostTracker) return missedRevenueTrackerHtml();
     const headline = `${k.id} ${k.label}`;
     const targetLine = k.target ? `target ${k.target}` : "";
+    if (k.targetBar) {
+      const targetNum = parseTargetNum(k.target);
+      const hit = meetsTarget(parseMetricNum(k.value), targetNum, k.lowerIsBetter !== false);
+      return `<button type="button" class="kpi-stat-card kpi-stat-target-bar${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
+        ${statusCorner(!!k.verified)}
+        <span class="kpi-stat-id">${headline}</span>
+        ${targetBarChartForKpi(k)}
+        <span class="kpi-stat-label">Avg ${escapeHtml(k.value)} · ${escapeHtml(targetLine)}</span>
+        ${k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)} MoM</span>` : ""}
+        ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
+      </button>`;
+    }
     const nums = k.gauge ? parseGaugeNums(k.value, k.target) : null;
     if (nums) {
       const grad = "km-" + String(k.id).replace(/\W/g, "");
@@ -756,9 +916,9 @@
     if (!el || el.dataset.rendered === RENDER_VER) return;
     const goals = DATA.kpis.filter(k => k.goal);
     const metrics = DATA.kpis.filter(k => !k.goal);
-    const goalsCards = [...goals.map(kpiGoalCardHtml), placeholderGoalCardHtml()].join("");
+    const goalsCards = [...goals.map(kpiGoalCardHtml), teamDuiGoalCardHtml()].join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="Team goals">
-          ${kpiSectionStaticHead("Team goals", "Phones · missed revenue · add a third")}
+          ${kpiSectionStaticHead("Team goals", "Phones · DUI YTD")}
           <div class="kpi-section-body">
             <div class="kpi-goals-grid">${goalsCards}</div>
             <div class="kpi-detail-panel" id="kpi-detail-panel" hidden>
@@ -766,7 +926,7 @@
             </div>
           </div>
         </section>`;
-    const kpiCards = [teamDuiGoalCardHtml(), ...metrics.map(kpiStatCardHtml)].join("");
+    const kpiCards = metrics.map(kpiStatCardHtml).join("");
 
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
@@ -855,16 +1015,39 @@
   /** Unique former-Dashboards visuals (dupes of #01 / #08 already on KPIs are omitted). */
   function dashboardSectionsHtml() {
     const depositPct = DATA.avgDeposit.current / DATA.avgDeposit.target;
-    return `<section class="kpi-section kpi-section-static" data-feedback-id="section-business-health" data-feedback-label="Business health & pipeline">
-        ${kpiSectionStaticHead("Business health & pipeline")}
+    return `<section class="kpi-section kpi-section-static" data-feedback-id="section-business-health" data-feedback-label="Pipeline & deposits">
+        ${kpiSectionStaticHead("Pipeline & source mix")}
         <div class="kpi-section-body">
-          <div class="kpi-dash-grid-2">
-            <div class="kpi-dash-card kpi-gauge-card kpi-bhi-card" data-kpi-focus="#BHI" data-feedback-label="Business health index">
+          <div class="kpi-split-grid">
+            <article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 / #05 Cases MoM">
               ${statusCorner(false)}
-              <strong>Business health index</strong>
-              <div class="kpi-gauge-val">${DATA.bhi.value} / ${DATA.bhi.target}</div>
-              <span class="kpi-mom-down">↓ ${DATA.bhi.mom} MoM</span>
-            </div>
+              ${kpiSectionStaticHead("#04 / #05 Cases MoM", "Closed · New · Red accounts")}
+              <div class="kpi-split-panel-body">
+                ${chartBlock({
+                  focus: "#04",
+                  verified: false,
+                  head: `<span class="kpi-mom-up">Closed ↑ +38%</span> · <span class="kpi-mom-down">New ↓ −25%</span> · Red accounts placeholder`,
+                  chart: stackedCasesMomChart(casesMomByMonth(DATA.casesMom, DATA.casesMomSeries)),
+                  legend: channelLegend(DATA.casesMomSeries),
+                  table: casesMomDetailTable(DATA.casesMom)
+                })}
+              </div>
+            </article>
+            <article class="kpi-split-panel" data-feedback-id="section-source-mix" data-feedback-label="#10 Source mix">
+              ${statusCorner(true)}
+              ${kpiSectionStaticHead("#10 Source mix", "Lead share by channel")}
+              <div class="kpi-split-panel-body">
+                ${kpiSectionIntro("Diversify so LSA is not the only intake — channel stacks above under Leads by channel / campaign.")}
+                ${chartBlock({
+                  focus: "#10",
+                  verified: true,
+                  chart: donutChart(DATA.sourceMix),
+                  table: sourceMixDetailTable(DATA.sourceMix)
+                })}
+              </div>
+            </article>
+          </div>
+          <div class="kpi-dash-grid-2 kpi-dash-grid-1" style="margin-top:1rem">
             <div class="kpi-dash-card kpi-gauge-card" data-kpi-focus="#DEPOSIT">
               ${statusCorner(false)}
               <span class="kpi-stat-id">Avg deposit</span>
@@ -881,27 +1064,6 @@
               )}
             </div>
           </div>
-          ${chartBlock({
-            focus: "#04",
-            verified: false,
-            head: `<strong>#04 / #05 Cases MoM</strong> <span class="kpi-mom-up">Closed ↑ +38%</span> · <span class="kpi-mom-down">New ↓ −25%</span> · Red accounts placeholder`,
-            chart: stackedCasesMomChart(casesMomByMonth(DATA.casesMom, DATA.casesMomSeries)),
-            legend: channelLegend(DATA.casesMomSeries),
-            table: casesMomDetailTable(DATA.casesMom)
-          })}
-        </div>
-      </section>
-      <section class="kpi-section kpi-section-static kpi-section-leads" data-feedback-id="section-lead-expansion" data-feedback-label="Lead channel expansion">
-        ${kpiSectionStaticHead("Lead channel expansion")}
-        <div class="kpi-section-body">
-          ${kpiSectionIntro("Pav Law should not depend on a single intake channel. LSA delivers volume today, but high cost per lead and limited control over lead quality make diversification essential. Diversification keeps total lead flow strong when one source underperforms. Channel and campaign stacks are above under Key metrics / leads.")}
-          ${chartBlock({
-            focus: "#10",
-            verified: true,
-            head: `<strong>#10 Source mix</strong>`,
-            chart: donutChart(DATA.sourceMix),
-            table: sourceMixDetailTable(DATA.sourceMix)
-          })}
         </div>
       </section>`;
   }
@@ -929,14 +1091,15 @@
     "#01": "124 unified leads — above 110 target. HubSpot + LSA + Search combined (Jun dummy).",
     "#08": "Search-call leads by campaign (placeholder May/Jun) — Military · Core DV · NTGUILT.",
     "#02": "9 new cases vs 12 target. Lead→case rate 7.3% on 124 leads ≈ 9 cases — intake and answer rate are the levers.",
-    "#12": "Military ~$41/call from Jul export — under $100 target. Strong efficiency lane.",
+    "#12": "Weighted avg cost/call across Military · Core DV · NTGUILT (~$72 from campaign spend÷calls). Target under $100.",
     "#15": "CPL $142 exceeds $120 target — Core DV waste and broad match noise; see neg list work.",
     "#16": "Review presence across GBP, Yelp, Nextdoor, Avvo, Justia, FindLaw, and social — many channels outdated or not claimed (B10).",
     "#17": "Referral channels only (past-client, friend/family, attorney cross-referral, Yelp, Nextdoor). GBP is a lead source — not listed here.",
     "#21": "31% missed (was 33%) — est. $4,200/mo lost, $27,300 YTD cumulative. B2 phone + Casey coverage is highest-ROI fix before more spend.",
     "#22": "8 min speed-to-lead — HubSpot workflow gap; B1 sprint target <5 min.",
     "#28": "Blended avg case fee $3,870 — feeds revenue and missed-revenue (#19) math.",
-    "#19": "Unanswered calls × avg fee ≈ $4,200/mo left on table at current answer rate."
+    "#19": "Ongoing tracker: unanswered share of calls × lead→case × avg fee ≈ monthly money left on table. Improves as #21 answer rate rises.",
+    "#BHI": "Composite business health index 71/100 (−3% MoM). Placeholder formula until live ops weights wire — answer rate, CPL, cases, and intake drive the score."
   };
 
   function bindKpiInteractions(root) {

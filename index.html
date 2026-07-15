@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pav Law Cockpit</title>
+  <title>Business Operations Command Center</title>
   <style>
     :root {
       /* Gilded Goose — cream, gold, brown + deep royal purple */
@@ -452,27 +452,64 @@
       border: 1px solid rgba(192, 38, 112, 0.28);
       background: rgba(192, 38, 112, 0.06);
     }
-    .cockpit-feedback-bar .cockpit-feedback-progress {
-      margin: 0; font-size: var(--font-min-rem); color: var(--gg-brown-muted);
-    }
-    .cockpit-feedback-bar .cockpit-feedback-progress strong { color: var(--gg-royal); }
-    .cockpit-feedback-bar .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
     .cockpit-feedback-hint {
       margin: 0; flex: 1 1 12rem; font-size: var(--font-min-rem); color: var(--gg-brown-muted);
     }
-    .cockpit-feedback-name {
-      display: flex; align-items: center; gap: 0.35rem;
-      margin: 0; font-size: var(--font-min-rem); font-weight: 700; color: var(--gg-brown);
+    .feedback-form-backdrop {
+      position: fixed; inset: 0; z-index: 1200;
+      background: rgba(13, 27, 42, 0.45);
     }
-    .cockpit-feedback-name input,
-    .cockpit-feedback-email {
-      width: 8.5rem; padding: 0.35rem 0.45rem; border-radius: 6px;
-      border: 1px solid var(--border); font: inherit; font-size: var(--font-min-rem);
-      background: var(--gg-paper); color: var(--text);
+    .feedback-form-modal {
+      position: fixed; z-index: 1201;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: min(720px, calc(100vw - 2rem));
+      max-height: min(90vh, 820px);
+      display: flex; flex-direction: column;
+      background: var(--gg-paper, #fffef9);
+      border-radius: 12px;
+      border: 1px solid var(--border, #d4c4a8);
+      box-shadow: 0 18px 48px rgba(13, 27, 42, 0.28);
+      overflow: hidden;
     }
-    .cockpit-feedback-bar .metrics-remote-status {
-      flex: 1 1 100%; margin: 0; font-size: var(--font-min-rem);
+    .feedback-form-modal[hidden],
+    .feedback-form-backdrop[hidden] { display: none !important; }
+    .feedback-form-modal-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.75rem; padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border, #d4c4a8);
+      background: var(--gg-cream, #f7f0e4);
     }
+    .feedback-form-modal-head h2 {
+      margin: 0; font-size: 1.15rem; color: var(--gg-royal, #3a1a6e);
+    }
+    .feedback-form-close {
+      border: none; background: transparent; cursor: pointer;
+      font-size: 1.5rem; line-height: 1; color: var(--gg-brown, #4a3728);
+      padding: 0.15rem 0.35rem;
+    }
+    .feedback-form-modal-body {
+      flex: 1; min-height: 0; display: flex; flex-direction: column;
+      background: #fff;
+    }
+    .feedback-form-frame {
+      border: 0; width: 100%; flex: 1;
+      min-height: min(70vh, 640px); height: 640px;
+    }
+    .feedback-form-foot {
+      margin: 0; padding: 0.5rem 1rem;
+      font-size: var(--font-min-rem); color: var(--gg-brown-muted, #7a6a58);
+      border-top: 1px solid var(--border, #d4c4a8);
+      background: var(--gg-cream, #f7f0e4);
+    }
+    .feedback-form-setup {
+      padding: 1.25rem 1.35rem; color: var(--gg-brown, #4a3728);
+      font-size: 0.95rem; line-height: 1.45;
+    }
+    .feedback-form-setup ol { margin: 0.5rem 0 0.75rem 1.2rem; padding: 0; }
+    .feedback-form-setup code {
+      font-size: 0.85em; background: rgba(58, 26, 110, 0.08); padding: 0.1rem 0.3rem; border-radius: 4px;
+    }
+    body.feedback-form-open { overflow: hidden; }
     .feedback-remote-ok {
       margin: 0 0 0.65rem; padding: 0.45rem 0.55rem; border-radius: 6px;
       background: rgba(46, 125, 50, 0.08); color: var(--gg-positive);
@@ -1169,28 +1206,78 @@
     .gilbert-inline-sub {
       margin: 0.2rem 0 0; font-size: 0.8rem; color: var(--secondary); font-weight: 500; line-height: 1.35;
     }
-    .gilbert-inline-panel .gilbert-chat-wrap {
-      flex: 1; min-height: 12rem; display: flex; flex-direction: column;
-      border: 1px solid var(--gg-royal-border); border-radius: 10px; overflow: hidden;
+    .gilbert-survey-wrap {
+      display: flex; flex-direction: column; gap: 0.7rem;
+      margin-top: 0.55rem;
+      padding: 0.85rem 0.9rem 1rem;
+      background: var(--gg-royal);
+      color: #f8f5ef;
+      border-radius: 10px;
+      flex: 1; min-height: 14rem;
+    }
+    .gilbert-survey-progress {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--gg-gold-bright);
+      margin: 0;
+    }
+    .gilbert-survey-prompt {
+      margin: 0; font-size: 1.02rem; font-weight: 700; line-height: 1.35; color: #fff;
+    }
+    .gilbert-survey-options {
+      display: flex; flex-direction: column; gap: 0.4rem; margin: 0; padding: 0; list-style: none;
+    }
+    .gilbert-survey-options button {
+      text-align: left; width: 100%;
+      padding: 0.55rem 0.7rem; border-radius: 8px; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.1); color: #f8f5ef;
+      font: inherit; font-size: 0.9rem; line-height: 1.35;
+    }
+    .gilbert-survey-options button:hover,
+    .gilbert-survey-options button:focus-visible {
+      background: rgba(255,255,255,0.2); border-color: var(--gg-gold-bright);
+      outline: none;
+    }
+    .gilbert-survey-options button.is-selected {
+      background: var(--gg-gold-dim); color: var(--gg-brown);
+      border-color: var(--gg-gold); font-weight: 700;
+    }
+    .gilbert-survey-nav {
+      display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; margin-top: 0.1rem;
+    }
+    .gilbert-survey-nav .btn-survey-primary {
+      background: var(--gg-gold); color: var(--gg-brown); border: none; font-weight: 800;
+      border-radius: 8px; cursor: pointer; font: inherit; font-size: 0.88rem;
+      padding: 0.4rem 0.75rem;
+    }
+    .gilbert-survey-nav .btn-survey-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+    .gilbert-survey-nav .btn-survey-ghost {
+      background: transparent; color: rgba(248,245,239,0.95);
+      border: 1px solid rgba(255,255,255,0.35); border-radius: 8px; cursor: pointer;
+      font: inherit; font-size: 0.88rem; padding: 0.4rem 0.75rem;
+    }
+    .gilbert-survey-summary {
+      margin: 0; font-size: 0.92rem; line-height: 1.45; color: #f8f5ef;
+    }
+    .gilbert-survey-summary strong { color: var(--gg-gold-bright); }
+    .gilbert-inline-panel .gilbert-chat-wrap { display: none !important; }
+    .gilbert-inline-panel .gilbert-chat-messages[hidden] { display: none !important; }
+    .pav-priorities-merged {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       background: var(--gg-paper);
+      box-shadow: 0 2px 10px rgba(78, 42, 132, 0.08);
+      padding: 0.75rem;
+      min-width: 0;
     }
-    .gilbert-inline-panel .gilbert-chat-messages {
-      flex: 1; min-height: 8rem; max-height: 16rem; overflow-y: auto;
-      padding: 0.75rem; display: flex; flex-direction: column; gap: 0.55rem;
-    }
-    .pav-priorities-cart-wrap {
-      border: 1px solid var(--border); border-radius: var(--radius);
-      background: var(--surface); padding: 0.85rem 1rem 1rem;
-      margin: 0 0 var(--space-md); min-width: 0;
-    }
-    .pav-priorities-cart-wrap[hidden] { display: none !important; }
-    .pav-priorities-cart-wrap h2 {
-      margin: 0 0 0.65rem; font-size: var(--font-min-rem); letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--gg-royal); font-weight: 800;
-    }
-    .pav-priorities-cart-wrap .project-continue-btn {
+    .pav-priorities-merged .project-continue-btn {
       width: 100%; margin: 0.85rem 0 0; min-width: 0; padding: 0.75rem 1rem;
     }
+    .pav-priorities-merged .total-box {
+      margin: 0; background: transparent; border: none; padding: 0;
+    }
+    .pav-priorities-table.pav-priorities-cart-only th.col-project,
+    .pav-priorities-table.pav-priorities-cart-only td.col-project { width: 100%; }
     .invoice-cart-panel,
     .pav-priorities-panel {
       border: 1px solid var(--border); border-radius: var(--radius);
@@ -1278,6 +1365,14 @@
       background: transparent; padding: 0.15rem 0 0; margin: 0;
       min-width: 0;
       display: flex; flex-direction: column; justify-content: center;
+    }
+    .outlines-panel .do-next-panel.pav-priorities-merged,
+    .picker-panel .do-next-panel.pav-priorities-merged {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--gg-paper);
+      box-shadow: 0 2px 10px rgba(78, 42, 132, 0.08);
+      padding: 0.75rem;
     }
     .outlines-panel .do-next-panel[hidden],
     .picker-panel .do-next-panel[hidden] { display: none; }
@@ -1518,6 +1613,26 @@
     .kpi-stat-card:hover { border-color: var(--gg-royal-border); }
     .kpi-stat-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
     .kpi-stat-card.kpi-stat-attention { border-left: 4px solid var(--gg-gold-dark); }
+    .kpi-lost-tracker {
+      text-align: left; min-height: auto; grid-column: span 2;
+    }
+    @media (max-width: 700px) {
+      .kpi-lost-tracker { grid-column: span 1; }
+    }
+    .kpi-lost-amount {
+      display: block; font-size: 1.85rem; font-weight: 800; color: var(--gg-negative, #b91c1c);
+      line-height: 1.15; margin: 0.35rem 0 0.25rem;
+    }
+    .kpi-lost-amount small {
+      font-size: 0.95rem; font-weight: 700; color: var(--gg-brown-muted); margin-left: 0.15rem;
+    }
+    .kpi-lost-facts {
+      list-style: none; margin: 0.55rem 0 0; padding: 0;
+      display: flex; flex-direction: column; gap: 0.25rem;
+      font-size: var(--font-min-rem); color: var(--gg-brown); line-height: 1.4;
+    }
+    .kpi-lost-facts strong { color: var(--gg-royal); font-weight: 700; }
+    .kpi-lost-muted { color: var(--gg-brown-muted); font-weight: 500; }
     .kpi-stat-card.kpi-stat-gauge {
       text-align: center; align-items: center;
     }
@@ -1527,6 +1642,20 @@
     .kpi-stat-card.kpi-stat-gauge .kpi-gauge-val {
       font-size: 1.05rem; margin-top: 0.15rem;
     }
+    .kpi-stat-card.kpi-stat-target-bar {
+      grid-column: span 2; text-align: center;
+    }
+    @media (max-width: 700px) {
+      .kpi-stat-card.kpi-stat-target-bar { grid-column: span 1; }
+    }
+    .kpi-stat-target-bar .kpi-target-bar-chart-compact {
+      display: block; width: 100%; max-width: 13.5rem; height: auto; margin: 0.35rem auto 0.15rem;
+    }
+    .kpi-target-baseline { stroke: rgba(26, 26, 26, 0.85); stroke-width: 1.5; }
+    .kpi-target-line { stroke: #1a1a1a; stroke-width: 3.5; stroke-linecap: butt; }
+    .kpi-target-label { fill: var(--secondary); font-size: 11px; font-style: italic; font-weight: 600; }
+    .kpi-target-bar-val { font-size: 12px; font-weight: 800; }
+    .kpi-target-bar-cat { fill: var(--secondary); font-size: 11px; font-weight: 600; }
     .kpi-goals-grid {
       display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.85rem;
       max-width: none;
@@ -1658,6 +1787,9 @@
     }
     .kpi-split-panel .kpi-chart-card {
       border: none; padding: 0; background: transparent; box-shadow: none;
+    }
+    .kpi-split-panel .kpi-dash-card-flush {
+      border: none; padding: 0.35rem 0 0; background: transparent; box-shadow: none;
     }
     .kpi-mini-card h3 { margin: 0 0 0.45rem; font-size: 0.875rem; color: var(--gg-royal); }
     .kpi-row-gap td { color: var(--gg-brown-muted); }
@@ -2379,17 +2511,17 @@
 
   <div id="main-app">
     <header class="cockpit-header">
-      <h1 class="cockpit-title"><span>Pav Law Cockpit</span></h1>
+      <h1 class="cockpit-title"><span>Business Operations Command Center</span></h1>
       <div class="cockpit-intro">
         <p class="cockpit-synopsis"><strong>What this is for:</strong> Single view of business operating metrics to better understand the health of the business and how projects impact operations.</p>
         <details class="cockpit-howto">
           <summary>How to use it <span class="cockpit-howto-chevron" aria-hidden="true">▾</span></summary>
           <div class="cockpit-howto-body">
             <ol>
-              <li><strong>KPIs</strong> — key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export; tap a card for context. Turn on magenta Feedback mode to leave comments. <a href="metrics.html">Open full metrics page →</a></li>
-              <li><strong>Project Guide</strong> — filter by value icon, check projects into your cart, read details, then <strong>Continue to submit</strong> for estimated results, action items, and next steps.</li>
+              <li><strong>KPIs</strong> — key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export; tap a card for context. Use <strong>Feedback</strong> to open the Google Form popup. <a href="metrics.html">Open full metrics page →</a></li>
+              <li><strong>Project Guide</strong> — filter by value icon, check projects into your cart, read details, then <strong>Review plan &amp; submit</strong> for fees, estimated results, action items, and next steps.</li>
               <li><strong>Impact</strong> — completed project results, plus leads impacted / connected and estimated revenue for projects in your cart.</li>
-              <li><strong>Ask Gilbert</strong> (left column, always open) — describe your business problem; Recommended Priority Projects on the right updates as you chat.</li>
+              <li><strong>Ask Gilbert</strong> (Project Guide, left column) — three quick survey questions; <strong>Pav Priorities</strong> on the right shows your cart or Gilbert’s best-fit shortlist.</li>
             </ol>
           </div>
         </details>
@@ -2398,53 +2530,41 @@
 
     <div class="cockpit-tabs-wrap">
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
-        <button type="button" class="view-tab" data-view="kpis" role="tab" aria-selected="false">KPIs</button>
-        <button type="button" class="view-tab active" data-view="picker" role="tab" aria-selected="true">Project Guide</button>
+        <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs</button>
+        <button type="button" class="view-tab" data-view="picker" role="tab" aria-selected="false">Project Guide</button>
         <button type="button" class="view-tab" data-view="impact" role="tab" aria-selected="false">Impact</button>
       </div>
-      <div class="cockpit-feedback-bar" role="toolbar" aria-label="Feedback on all cockpit views">
-        <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Leave comments on KPIs, Impact, and Guide sections">
-          Feedback mode
+      <div class="cockpit-feedback-bar" role="toolbar" aria-label="Feedback">
+        <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Open feedback form">
+          Feedback
         </button>
-        <p class="cockpit-feedback-progress" id="feedback-progress"><strong>0</strong> <span>of 0 rated</span></p>
-        <label class="cockpit-feedback-name" for="metrics-reviewer-name">Name
-          <input type="text" id="metrics-reviewer-name" placeholder="Optional" autocomplete="name">
-        </label>
-        <input type="email" id="metrics-email" class="cockpit-feedback-email" placeholder="Email (optional)" autocomplete="email" aria-label="Your email optional">
-        <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Save all to sheet</button>
-        <p class="cockpit-feedback-hint">Works on KPIs, Impact, and Project Guide. Magenta ON → click → <strong>Save</strong>; turning Feedback mode <strong>OFF</strong> flushes all ratings to Sheet tab <strong>MetricsFeedback</strong> (also <strong>Save all</strong>). No file download. Email not required.</p>
-        <p class="metrics-status metrics-remote-status" id="metrics-remote-status" aria-live="polite"></p>
-        <p class="metrics-status" id="metrics-submit-status" aria-live="polite" hidden></p>
+        <p class="cockpit-feedback-hint">Opens a popup with the Google Form — answers land in your linked Sheet.</p>
       </div>
     </div>
 
-    <section class="cockpit-panel kpis-panel" id="cockpit-panel-kpis" aria-label="KPI metrics" hidden>
+    <section class="cockpit-panel kpis-panel" id="cockpit-panel-kpis" aria-label="KPI metrics">
       <div class="kpi-report-root" id="kpi-report-kpis"></div>
     </section>
 
-    <section class="cockpit-panel picker-panel outlines-panel" id="cockpit-panel-picker" aria-label="Project guide">
+    <section class="cockpit-panel picker-panel outlines-panel" id="cockpit-panel-picker" aria-label="Project guide" hidden>
       <div class="picker-zone picker-zone-priorities">
-        <div class="pav-guide-ask-section" aria-label="Ask Gilbert and recommended priorities" data-feedback-id="guide-ask-gilbert" data-feedback-label="Ask Gilbert + recommended priorities">
+        <div class="pav-guide-ask-section" aria-label="Ask Gilbert and Pav Priorities" data-feedback-id="guide-ask-gilbert" data-feedback-label="Ask Gilbert + Pav Priorities">
           <aside class="gilbert-inline-panel" id="gilbert-priority-dock" aria-label="Ask Gilbert">
             <div class="gilbert-inline-head">
               <img id="gilbert-launcher-img" class="gilbert-launcher-fig" src="assets/gilbert-thinking.png?v=20260714h" alt="">
               <div class="gilbert-inline-titles">
                 <p class="gilbert-dock-hint">Ask Gilbert</p>
-                <p class="gilbert-inline-sub">Leads, intake, ads &amp; priorities</p>
+                <p class="gilbert-inline-sub">Quick survey — best-fit projects</p>
               </div>
             </div>
-            <div class="gilbert-chat-wrap" id="gilbert-chat-popup">
-              <div class="gilbert-chat-messages" id="gilbert-chat-messages" aria-live="polite"></div>
-              <input type="text" id="goal-input" class="gilbert-chat-input" placeholder="Type here, press Enter…" autocomplete="off">
+            <div class="gilbert-survey-wrap" id="gilbert-survey" aria-label="Project fit survey">
+              <!-- filled by app.js -->
             </div>
+            <input type="hidden" id="goal-input" value="" autocomplete="off">
+            <div class="gilbert-chat-messages" id="gilbert-chat-messages" hidden aria-hidden="true"></div>
           </aside>
-          <div class="do-next-panel" id="do-next-panel"></div>
+          <div class="do-next-panel pav-priorities-merged" id="do-next-panel" aria-label="Pav Priorities"></div>
         </div>
-        <aside class="pav-priorities-cart-wrap" id="pav-priorities-cart-wrap" hidden aria-label="Pav Priorities">
-          <h2>Pav Priorities</h2>
-          <div class="total-box" id="plan-summary"></div>
-          <button type="button" class="btn btn-primary project-continue-btn" id="continue-to-confirm" disabled>Review plan &amp; submit</button>
-        </aside>
       </div>
 
       <div class="picker-zone picker-zone-outlines" data-feedback-id="guide-project-outlines" data-feedback-label="Project Outlines table">
@@ -2483,7 +2603,7 @@
 
       <div class="picker-zone picker-zone-cards" data-feedback-id="guide-project-cards" data-feedback-label="Project selection cards">
         <p class="picker-zone-label">Pav Law Project Selection</p>
-        <p class="picker-zone-blurb">Check projects to add them to your plan. Expand a card to read the outline, answer any Andrew questions, and leave comments. Use Ask Gilbert (left of recommended priorities) for help choosing. When your cart looks right, tap <strong>Review plan &amp; submit</strong>.</p>
+        <p class="picker-zone-blurb">Check projects to add them to your plan. Expand a card to read the outline, answer any Andrew questions, and leave comments. Use Ask Gilbert (left of Pav Priorities) for help choosing. When your cart looks right, tap <strong>Review plan &amp; submit</strong>.</p>
         <div class="projects-section-full">
           <div class="project-list-controls">
             <label class="expand-all-toggle" for="expand-all-projects">
@@ -2545,11 +2665,11 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260714w"></script>
+  <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260713u"></script>
-  <script src="kpi-report.js?v=20260714p"></script>
-  <script src="app.js?v=20260714p"></script>
-  <script src="metrics-feedback.js?v=20260714s"></script>
+  <script src="kpi-report.js?v=20260714target-bar"></script>
+  <script src="app.js?v=20260714aa"></script>
+  <script src="metrics-feedback.js?v=20260714x"></script>
 </body>
 </html>

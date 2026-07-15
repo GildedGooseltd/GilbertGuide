@@ -246,6 +246,20 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-stat-card.kpi-stat-gauge { text-align: center; align-items: center; }
 .kpi-stat-card.kpi-stat-gauge .kpi-gauge-svg { max-width: 132px; width: 100%; margin: 0.1rem auto 0; }
 .kpi-stat-card.kpi-stat-gauge .kpi-gauge-val { font-size: 1.05rem; margin-top: 0.15rem; }
+.kpi-stat-card.kpi-stat-target-bar {
+  grid-column: span 2; text-align: center;
+}
+@media (max-width: 700px) {
+  .kpi-stat-card.kpi-stat-target-bar { grid-column: span 1; }
+}
+.kpi-stat-target-bar .kpi-target-bar-chart-compact {
+  display: block; width: 100%; max-width: 13.5rem; height: auto; margin: 0.35rem auto 0.15rem;
+}
+.kpi-target-baseline { stroke: rgba(26, 26, 26, 0.85); stroke-width: 1.5; }
+.kpi-target-line { stroke: #1a1a1a; stroke-width: 3.5; stroke-linecap: butt; }
+.kpi-target-label { fill: var(--secondary); font-size: 11px; font-style: italic; font-weight: 600; }
+.kpi-target-bar-val { font-size: 12px; font-weight: 800; }
+.kpi-target-bar-cat { fill: var(--secondary); font-size: 11px; font-weight: 600; }
 .kpi-goals-grid {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.85rem;
   max-width: none;

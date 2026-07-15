@@ -4,27 +4,31 @@
 
 **Also see:** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) (colors, spacing, zones) · [CONTENT-INDEX.md](CONTENT-INDEX.md) (every text string by page)
 
-**Template:** copy [`_TEMPLATE.md`](_TEMPLATE.md) — same layout as [`projects/B2.md`](projects/B2.md).
+**Template:** copy `[_TEMPLATE.md](_TEMPLATE.md)` — same layout as `[projects/B2.md](projects/B2.md)`.
 
 ---
 
 ## File Map
 
-| File | Purpose |
-|------|---------|
-| [INDEX.md](INDEX.md) | **You edit only** — table titles, **Status**, priority numbers, **## Notes** (build reads; never writes) |
-| [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches B2) |
-| settings.md | Default package |
-| retainer.md | Retainer card |
-| projects/{ID}.md | One project per file |
+
+| File                         | Purpose                                                                                                  |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [INDEX.md](INDEX.md)         | **You edit only** — table titles, **Status**, priority numbers, **## Notes** (build reads; never writes) |
+| [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches B2)                                                                             |
+| settings.md                  | Default package                                                                                          |
+| retainer.md                  | Retainer card                                                                                            |
+| projects/{ID}.md             | One project per file                                                                                     |
+
 
 ---
+
+
 
 ## B2 Section Layout
 
 ```
 Meta table: Estimated leads gained · Estimated customer touchpoints (optional rows)
-## TLDR                  ← one-sentence value (top of card)
+## Exec Summary                  ← one-sentence value (top of card)
 ## Value Added           ← bullets on card (plain weight; markdown links OK)
 ## Value icons           ← picker filter icons (foundation · leads · crm · …)
 ## AB - Q                  ← Question for Andrew Brown; cart blocked until Comment answered
@@ -35,9 +39,9 @@ Meta table: Estimated leads gained · Estimated customer touchpoints (optional r
 ## WIP                   ← Phase 2 work in progress
 ## Completed             ← Phase 1 shipped
 ## Results               ← standardized outline (required fields; use — if n/a)
-## Account Data & Marketing Principles Applied
-   Source: …
 ```
+
+
 
 ### Results outline (required)
 
@@ -54,7 +58,7 @@ Copy into every project — leave `—` when unknown:
 - Status vs goal:
 ```
 
-See [`_TEMPLATE.md`](content/_TEMPLATE.md). Fee market context: [`FEE-BENCHMARK-CO-SPRINGS.md`](FEE-BENCHMARK-CO-SPRINGS.md).
+See `[_TEMPLATE.md](content/_TEMPLATE.md)`. Fee market context: `[FEE-BENCHMARK-CO-SPRINGS.md](FEE-BENCHMARK-CO-SPRINGS.md)`.
 
 - **Marketing education** goes inside **Description** — not a separate section.
 - **TLDR** optional in markdown; if omitted, first Value Added bullet is used.
@@ -81,9 +85,11 @@ History for diffs: `content/impact-history.json`
 
 - **Proper case** in all text (HubSpot, VoIP, Google Ads).
 - **Priority:** whole numbers only; omit row for retainer / monthly-only.
-- **Angle brackets `<…>`:** treat as prompts — replace with real copy, data, and links (do not leave placeholders live).
+- **Angle brackets** `<…>`**:** treat as prompts — replace with real copy, data, and links (do not leave placeholders live).
 
 ---
+
+
 
 ## Workflow
 

@@ -4,7 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pav Law — Metrics &amp; Feedback</title>
-  <link rel="stylesheet" href="metrics.css?v=20260714m">
+  <link rel="stylesheet" href="metrics.css?v=20260714x">
+  <style>
+    .feedback-form-backdrop {
+      position: fixed; inset: 0; z-index: 1200;
+      background: rgba(13, 27, 42, 0.45);
+    }
+    .feedback-form-modal {
+      position: fixed; z-index: 1201;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: min(720px, calc(100vw - 2rem));
+      max-height: min(90vh, 820px);
+      display: flex; flex-direction: column;
+      background: #fffef9;
+      border-radius: 12px;
+      border: 1px solid #d4c4a8;
+      box-shadow: 0 18px 48px rgba(13, 27, 42, 0.28);
+      overflow: hidden;
+    }
+    .feedback-form-modal[hidden],
+    .feedback-form-backdrop[hidden] { display: none !important; }
+    .feedback-form-modal-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.75rem; padding: 0.75rem 1rem;
+      border-bottom: 1px solid #d4c4a8;
+      background: #f7f0e4;
+    }
+    .feedback-form-modal-head h2 { margin: 0; font-size: 1.15rem; color: #3a1a6e; }
+    .feedback-form-close {
+      border: none; background: transparent; cursor: pointer;
+      font-size: 1.5rem; line-height: 1; color: #4a3728;
+      padding: 0.15rem 0.35rem;
+    }
+    .feedback-form-modal-body {
+      flex: 1; min-height: 0; display: flex; flex-direction: column;
+      background: #fff;
+    }
+    .feedback-form-frame {
+      border: 0; width: 100%; flex: 1;
+      min-height: min(70vh, 640px); height: 640px;
+    }
+    .feedback-form-foot {
+      margin: 0; padding: 0.5rem 1rem;
+      font-size: 0.8rem; color: #7a6a58;
+      border-top: 1px solid #d4c4a8;
+      background: #f7f0e4;
+    }
+    .feedback-form-setup {
+      padding: 1.25rem 1.35rem; color: #4a3728;
+      font-size: 0.95rem; line-height: 1.45;
+    }
+    .kpi-feedback-mode-toggle {
+      border: 2px solid #c02670; background: #fff; color: #c02670;
+      font-weight: 700; border-radius: 999px; padding: 0.4rem 0.9rem; cursor: pointer;
+    }
+  </style>
 </head>
 <body class="metrics-page">
   <header class="metrics-header">
@@ -12,63 +66,26 @@
       <div>
         <a class="metrics-back" href="index.html">← Back to project guide</a>
         <h1>Metrics &amp; charts</h1>
-        <p class="metrics-header-sub">Turn on magenta <strong>Feedback mode</strong>, then click a KPI or chart — Gilbert opens for your notes. Each <strong>Save</strong> posts to the shared Google Sheet tab <strong>MetricsFeedback</strong> (when the webhook is live). Optional email submit still mails <strong>support@gildedgooselimited.com</strong>.</p>
+        <p class="metrics-header-sub">Use <strong>Feedback</strong> to open the Google Form popup. Answers go to the linked Sheet.</p>
       </div>
     </div>
   </header>
 
-  <div class="metrics-toolbar" role="toolbar" aria-label="Feedback tools">
-    <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Turn on to leave comments on metrics and charts">
-      Feedback mode
+  <div class="metrics-toolbar" role="toolbar" aria-label="Feedback">
+    <button type="button" class="kpi-feedback-mode-toggle" aria-pressed="false" title="Open feedback form">
+      Feedback
     </button>
-    <p class="metrics-toolbar-progress" id="feedback-progress"><strong>0</strong> <span>of 0 rated</span></p>
-    <div class="metrics-toolbar-actions">
-      <button type="button" class="btn btn-toggle" id="feedback-filter-pending" title="Show only items you have not rated">Unrated only</button>
-    </div>
   </div>
-  <p class="metrics-status metrics-remote-status" id="metrics-remote-status" aria-live="polite"></p>
 
   <div class="metrics-main metrics-main-solo">
     <div class="metrics-report-stack">
       <div class="kpi-report-root" id="kpi-report-kpis" aria-label="KPI metrics and charts"></div>
     </div>
-
-    <aside class="metrics-saved-bar" aria-label="Saved ratings">
-      <h2>Saved ratings</h2>
-      <ul class="feedback-summary-list" id="feedback-summary-list">
-        <li><em>None yet — turn on Feedback mode, then click a KPI or chart</em></li>
-      </ul>
-    </aside>
-
-    <section class="metrics-submit-bar" aria-label="Submit feedback">
-      <h3>Save ratings to Google Sheet</h3>
-      <div class="feedback-field">
-        <label for="metrics-reviewer-name">Your name (optional — helps Kate tell reviewers apart)</label>
-        <input type="text" id="metrics-reviewer-name" placeholder="Name" autocomplete="name">
-      </div>
-      <div class="feedback-field">
-        <label for="metrics-email">Your email (optional — not required for success)</label>
-        <input type="email" id="metrics-email" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <button type="button" class="btn btn-primary" id="metrics-submit-btn" disabled>Save all to sheet</button>
-      <p class="metrics-submit-note">Each <strong>Save</strong>, <strong>Save all to sheet</strong>, and turning Feedback mode <strong>OFF</strong> writes localStorage + Sheet tab <strong>MetricsFeedback</strong> only. Success = Sheet row — no file download. Email not required. If the webhook is missing or fails, you will see an error (no download fallback).</p>
-      <p class="metrics-status" id="metrics-submit-status" aria-live="polite"></p>
-    </section>
   </div>
 
-  <div id="gilbert-feedback-backdrop" class="gilbert-chat-backdrop" hidden></div>
-  <aside id="gilbert-feedback-popup" class="gilbert-chat-popup gilbert-feedback-popup" hidden aria-label="Gilbert metric feedback">
-    <div class="gilbert-chat-popup-head">
-      <img class="gilbert-popup-portrait" src="assets/gilbert-thinking.png?v=20260714h" alt="">
-      <div class="gilbert-popup-head-title">Gilbert<small id="gilbert-feedback-subtitle">Comment on this metric</small></div>
-      <button type="button" class="gilbert-chat-close" id="gilbert-feedback-close" aria-label="Close">×</button>
-    </div>
-    <div class="gilbert-chat-wrap gilbert-feedback-body" id="gilbert-feedback-body"></div>
-  </aside>
-
-  <script src="pages-config.js?v=20260714w"></script>
+  <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="kpi-report.js?v=20260714p"></script>
-  <script src="metrics-feedback.js?v=20260714s"></script>
+  <script src="kpi-report.js?v=20260714target-bar"></script>
+  <script src="metrics-feedback.js?v=20260714x"></script>
 </body>
 </html>
