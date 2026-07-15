@@ -1,26 +1,26 @@
-# Cockpit feedback — Google Form popup
+# Cockpit feedback — thumbs up / down (no Google Sheet)
 
-**Feedback** on the cockpit opens a popup with an embedded **Google Form**. Responses land in the linked spreadsheet (Form Responses tab).
+Each KPI / chart card shows **👍** and **👎**. Votes save in the **browser** and ship via **Copy / Download / Email**.
 
-## Sheet
+## How scores are stored
 
-[Pav Law feedback spreadsheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit?gid=0#gid=0)
+| Place | What |
+|-------|------|
+| **This browser** | `localStorage` key `pav-metrics-feedback-v2` — score bar + selected thumbs survive refresh on that device |
+| **Copy report** | Plain-text score list → clipboard (paste into Slack, Notes, email) |
+| **Download JSON** | File `gilbert-kpi-ratings-….json` with full vote log |
+| **Email Kate** | Opens mail draft to `support@gildedgooselimited.com` with the report |
 
-## Wire the form (once)
+**Google Sheet / MetricsFeedback webhook is not used** for thumbs (that path was unreliable).
 
-1. Create the form (pick one):
-   - Sheet → **Tools → Create a new form**, add questions, **Send** → copy link  
-   - Or Apps Script → Run **`createCockpitFeedbackForm`** → copy published URL from **Execution log**
-2. Paste into `pages-config.js` (and `pages-config.defaults.js` if you use deploy fallback):
+## Reviewer UX
 
-```js
-feedbackFormUrl: "https://docs.google.com/forms/d/e/XXXX/viewform"
-```
+1. KPIs tab — optional name in the rating bar.
+2. Tap 👍 / 👎 under cards (same thumb again clears).
+3. When done: **Copy report**, **Download JSON**, or **Email Kate**.
 
-3. Hard-refresh the cockpit. **Feedback** opens the popup with that form.
+## Kate — reading scores
 
-Embed needs a `/viewform` URL (prefer that over short `forms.gle` links).
-
-## Old MetricsFeedback webhook ratings
-
-Card-by-card “Feedback mode” + webhook Save is retired on the cockpit UI in favor of this Form popup. Apps Script `handleMetricsFeedback` remains for any older clients.
+- Email inbox, or  
+- JSON they download / forward, or  
+- Text they paste from **Copy report**.

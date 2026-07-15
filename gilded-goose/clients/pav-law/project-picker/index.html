@@ -1481,30 +1481,80 @@
       display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px;
       background: var(--gg-royal); color: #fff; font-size: 0.875rem; font-weight: 700;
     }
-    .kpi-feedback-mode-toggle {
+    .kpi-rating-bar {
+      display: flex; flex-direction: column; gap: 0.35rem;
+      margin: 0 0 0.85rem; padding: 0.65rem 0.85rem;
+      background: var(--gg-paper); border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .kpi-rating-bar-main {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.65rem 1.1rem;
+    }
+    .kpi-rating-name {
       display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.4rem 0.85rem; border-radius: 999px; border: 2px solid #c02670;
-      background: #fff; color: #c02670; font-size: 0.875rem; font-weight: 800;
-      font-family: inherit; cursor: pointer; letter-spacing: 0.02em;
-      transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+      font-size: var(--font-min-rem); font-weight: 700; color: var(--gg-brown);
     }
-    .kpi-feedback-mode-toggle:hover { background: rgba(192, 38, 112, 0.08); }
-    .kpi-feedback-mode-toggle[aria-pressed="true"] {
-      background: #c02670; color: #fff;
-      box-shadow: 0 0 0 3px rgba(192, 38, 112, 0.25);
+    .kpi-rating-name input {
+      width: 9rem; padding: 0.3rem 0.45rem; border-radius: 6px;
+      border: 1px solid var(--border); font: inherit; background: var(--gg-cream-panel);
     }
-    body.feedback-mode-on .kpi-report-root {
-      outline: 2px dashed #c02670; outline-offset: 4px;
+    .kpi-rating-score {
+      margin: 0; font-size: 0.9rem; color: var(--gg-brown); font-weight: 600;
     }
-    body.feedback-mode-on .feedback-target {
-      cursor: pointer;
+    .kpi-rating-score strong { color: var(--gg-royal-deep); }
+    .kpi-rating-hint {
+      margin: 0; font-size: var(--font-min-rem); color: var(--secondary); font-weight: 500;
     }
-    body.feedback-mode-on .feedback-target:hover {
-      outline: 2px solid #c02670; outline-offset: 2px; border-radius: 8px;
+    .kpi-rating-actions {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-left: auto;
     }
-    .feedback-target.has-feedback-ok { outline: 2px solid rgba(31, 138, 101, 0.35); outline-offset: 2px; border-radius: 8px; }
-    .feedback-target.has-feedback-flag { outline: 2px solid rgba(207, 45, 86, 0.4); outline-offset: 2px; border-radius: 8px; }
-    .feedback-target.is-feedback-active { outline: 2px solid var(--gg-royal); outline-offset: 2px; }
+    .kpi-rating-action {
+      appearance: none; cursor: pointer; font: inherit; font-size: var(--font-min-rem); font-weight: 700;
+      padding: 0.35rem 0.65rem; border-radius: 8px;
+      border: 1px solid var(--gg-royal-border); background: var(--gg-paper); color: var(--gg-royal);
+    }
+    .kpi-rating-action:hover { background: var(--gg-royal-dim); }
+    .kpi-rating-action-primary {
+      background: var(--gradient-gold); color: var(--gg-brown); border-color: var(--gg-gold-dark);
+    }
+    .kpi-rating-action-primary:hover { filter: brightness(1.05); background: var(--gradient-gold); }
+    .kpi-rating-toast {
+      margin: 0; min-height: 1.1rem; font-size: var(--font-min-rem); font-weight: 700; color: var(--secondary);
+    }
+    .kpi-rating-toast.is-ok { color: var(--gg-positive); }
+    .kpi-rating-toast.is-err { color: var(--gg-negative); }
+    .kpi-rate-wrap {
+      position: relative; display: flex; flex-direction: column; gap: 0.35rem; min-width: 0;
+    }
+    .kpi-rate-wrap > .kpi-stat-card,
+    .kpi-rate-wrap > .kpi-goal-card,
+    .kpi-rate-wrap > .kpi-mini-card,
+    .kpi-rate-wrap > .kpi-dash-card,
+    .kpi-rate-wrap > .kpi-split-panel { width: 100%; }
+    .kpi-rate-btns {
+      display: flex; gap: 0.35rem; justify-content: flex-end; padding: 0 0.15rem;
+    }
+    .kpi-rate-btn {
+      appearance: none; border: 1px solid var(--border); background: var(--gg-paper);
+      border-radius: 8px; width: 2.15rem; height: 2.15rem; padding: 0;
+      font-size: 1.05rem; line-height: 1; cursor: pointer;
+      transition: background 0.12s, border-color 0.12s, transform 0.12s;
+    }
+    .kpi-rate-btn:hover { border-color: var(--gg-gold); background: #f0e6c8; transform: translateY(-1px); }
+    .kpi-rate-btn.is-selected.kpi-rate-up {
+      border-color: var(--gg-positive); background: rgba(31, 138, 101, 0.14);
+    }
+    .kpi-rate-btn.is-selected.kpi-rate-down {
+      border-color: var(--gg-negative); background: rgba(207, 45, 86, 0.12);
+    }
+    .kpi-rate-wrap.has-feedback-ok > :first-child {
+      outline: 2px solid rgba(31, 138, 101, 0.35); outline-offset: 2px; border-radius: 8px;
+    }
+    .kpi-rate-wrap.has-feedback-flag > :first-child {
+      outline: 2px solid rgba(207, 45, 86, 0.4); outline-offset: 2px; border-radius: 8px;
+    }
+    .kpi-stat-grid .kpi-rate-wrap,
+    .kpi-goals-grid .kpi-rate-wrap { min-width: 0; }
+    .kpi-split-grid .kpi-rate-wrap { height: 100%; }
     .gilbert-feedback-body {
       padding: 0.85rem 0.9rem 1rem;
       overflow-y: auto;
@@ -2692,6 +2742,7 @@
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260713u"></script>
   <script src="kpi-report.js?v=20260714-goal-visual-v42"></script>
+  <script src="metrics-feedback.js?v=20260714-thumbs-v2"></script>
   <script src="app.js?v=20260714af"></script>
 </body>
 </html>
