@@ -3,7 +3,7 @@
 |                   |                                                            |
 | ----------------- | ---------------------------------------------------------- |
 | **ID**            | A8M                                                        |
-| **Fee**           | 500                                                        |
+| **Fee**           | 500|
 | **Category**      | Analytics                                                  |
 | **Campaign type** | Dashboard Maintenance                                      |
 | **Status**        | ongoing                                                    |
