@@ -1,24 +1,16 @@
-# Gilbert — project prioritizer
+# Gilbert Guide — project prioritizer
 
 Guide character: **Lord Gilbert Granville** (Gilbert).
 
-GitHub: [GildedGooseltd/PickyPavi](https://github.com/GildedGooseltd/PickyPavi) · Live: `https://gildedgooseltd.github.io/PickyPavi/`
+GitHub: [GildedGooseltd/GilbertGuide](https://github.com/GildedGooseltd/GilbertGuide) · Live: `https://gildedgooseltd.github.io/GilbertGuide/`
 
 Static project picker: budget filters, cards, notes, submit → Sheet + email.
 
 ## Edit content
 
-**Start here:** [`content/INDEX.md`](content/INDEX.md) — links to every project file.
-
-| File | Purpose |
-|------|---------|
-| `content/INDEX.md` | Master list by priority |
-| `content/_TEMPLATE.md` | Standard layout for new projects |
-| `content/settings.md` | Default package |
-| `content/retainer.md` | Retainer card |
-| `content/projects/{ID}.md` | One readable markdown file per project |
-
-Guide: **[CONTENT-EDIT.md](CONTENT-EDIT.md)**
+**Branding & formatting (colors, type, layout — edit tokens here first):** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
+**All text by page:** [CONTENT-INDEX.md](CONTENT-INDEX.md)  
+**Project markdown:** [CONTENT-EDIT.md](CONTENT-EDIT.md) · start at [`content/INDEX.md`](content/INDEX.md)
 
 ```bash
 cd gilded-goose/clients/pav-law/project-picker
@@ -27,10 +19,16 @@ npm run watch    # rebuild on save while editing
 
 Do not edit `projects-data.js` — edit `content/**/*.md` only; build regenerates the JS from your markdown.
 
+## Data pulls (local only)
+
+**Click paths:** [DATA-EXPORT-CLICKPATHS.md](DATA-EXPORT-CLICKPATHS.md)  
+**Validate:** `npm run validate-data` → [DATA-VALIDATION.md](DATA-VALIDATION.md) (aggregates only — no phones in report)  
+Raw CSVs stay in `Ad Reports/exports/` — gitignored; not deployed with Gilbert Guide.
+
 ## Deploy (Option 2 — monorepo)
 
 **Mac → GitHub → live site:** [GITHUB-PUSH.md](GITHUB-PUSH.md)  
-**Webhook + email + QuickBooks:** [BACKEND-SETUP.md](BACKEND-SETUP.md)
+**Webhook + email + QuickBooks:** [BACKEND-SETUP.md](BACKEND-SETUP.md) · **Feedback gather (owner):** [owner-webhook-setup.html](owner-webhook-setup.html) · [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 ## Backend
 
