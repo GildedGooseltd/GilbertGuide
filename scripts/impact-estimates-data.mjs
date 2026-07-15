@@ -51,7 +51,7 @@ function none(note) {
 
 /** @type {Record<string, object>} */
 export const IMPACT_ESTIMATES = {
-  RETAINER: monthly(R.militaryCalls, 25, 1.8, "Military ~36 calls/mo · NTGUILT 282 clicks Jul period"),
+  RETAINER: monthly(116, 90, 6.6, "Military 36 calls May verified + ~80 LSA phone/mo · Jul Search $6,277 / 640 interactions · NTGUILT 282 clicks (calls thin)"),
   A1: monthly(R.militaryCalls, 25, 1.8, "Negatives + RSA fixes recover wasted click spend"),
   A2: monthly(282, 45, 0.3, "NTGUILT Search clicks Jul; calls still thin — 9 all-time through Jun"),
   A3: wave(850, 120, 2, "Past-client list ~850 · holiday open rate ~14% est."),

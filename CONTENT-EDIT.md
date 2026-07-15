@@ -27,17 +27,16 @@
 ## B2 Section Layout
 
 ```
-Meta table: Estimated leads gained · Estimated customer touchpoints (optional rows)
+Meta table: Estimated leads gained (optional row)
 ## Summary                  ← one-sentence value (top of card)
 ## Value Added           ← bullets on card (plain weight; markdown links OK)
 ## Value icons           ← picker filter icons (foundation · leads · crm · …)
 ## AB - Q                  ← Question for Andrew Brown; cart blocked until Comment answered
 ## Description           ← full scope (expand to read)
 ## Goal                   ← measurable outcome
-## Planning phases        ← 3-phase table (Discovery · Build · Measure)
 ## Information needed     ← gaps, AB-Q, blockers, _Add:_ placeholders
-## WIP                   ← Phase 2 work in progress
-## Completed             ← Phase 1 shipped
+## WIP                   ← work in progress
+## Completed             ← shipped
 ## Results               ← standardized outline (required fields; use — if n/a)
 ```
 
@@ -66,18 +65,19 @@ See `[_TEMPLATE.md](content/_TEMPLATE.md)`. Fee market context: `[FEE-BENCHMARK-
 - **Value icons** — `## Value icons` list in each project file (`foundation` · `leads` · `crm` · `seo` · `referrals` · `efficiency` · `intake` · `creative`); overrides auto-detect when set
 - **KPI links** — `## KPI links` lists dashboard metrics (`01`, `21`, …). External reference URLs are stripped on build; only **KPI #NN** links in the picker (opens KPIs tab).
 - **Estimated leads gained** = incremental leads expected from that campaign, not existing lead volume.
-- **Estimated customer touchpoints** = numeric estimate of customers contacted or impacted, not a list of channels.
-- Card shows **Summary → bullets → leads gained / customer touchpoints**; **Current Status** expands Description.
-- **Goal · Results · Recommended metrics · Blockers · Insights** render in expanded cards and the **Impact** tab (Completed section).
-- **Impact estimates** — leads impacted · leads connected · clients retained (updated on each data pull).
-- **Gilbert on metrics** — auto-commentary when sync detects a number change (`npm run sync-impact`).
+- Card shows **Summary → bullets → leads gained**; **Current Status** expands Description.
+- **Goal · Results · Blockers · Insights** render in expanded cards and the **Impact** tab (Completed section).
+- **Impact estimates** — leads impacted · leads connected · clients retained (edit in the project file, or ask to run `npm run sync-impact` after updating `impact-estimates-data.mjs`).
+- **`npm run build`** updates `projects-data.js` only — it does **not** rewrite project markdown.
 
 After a new Ad Reports / HubSpot / LSA export:
 
 ```bash
 cd gilded-goose/clients/pav-law/project-picker
 # 1. Edit scripts/impact-estimates-data.mjs (DATA_PULL.asOf + per-project numbers)
-# 2. Sync + rebuild
+# 2. Optional — only when you want markdown Impact sections rewritten:
+npm run sync-impact
+# 3. Rebuild picker data (does not rewrite .md files):
 npm run build
 ```
 

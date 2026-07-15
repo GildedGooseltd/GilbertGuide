@@ -522,10 +522,9 @@
       };
     }
     const gained = estimateProjectLeadsGained(item);
-    const touch = estimateCustomerTouchpoints(item);
     const retained = gained.value != null ? gained.value * PAV_HISTORICAL.leadToCaseRate : null;
     return {
-      leadsImpacted: { value: null, label: touch },
+      leadsImpacted: { value: null, label: "—" },
       leadsConnected: { value: gained.value, label: gained.label },
       clientsRetained: {
         value: retained,
@@ -581,7 +580,6 @@
       blocks.push(`<div class="campaign-metrics-block campaign-goal-block"><h4>Goal</h4><p>${escapeHtml(item.goal)}</p></div>`);
     }
     blocks.push(campaignMetricsListHtml("Results", item.resultsItems, item.resultsItems?.length ? "" : `Add ## Results in ${item.id}.md`));
-    blocks.push(campaignMetricsListHtml("Recommended metrics", item.recommendedMetrics, ""));
     blocks.push(campaignMetricsListHtml("Blockers (next round)", item.blockers, "Add ## Blockers (next round) in project markdown", { className: "campaign-blockers-callout" }));
     blocks.push(campaignMetricsListHtml("Insights & improvements", item.insightsImprovements, "Add ## Insights & improvements in project markdown"));
     const content = blocks.filter(Boolean).join("");
@@ -879,16 +877,15 @@
   }
 
   function getValueIcons(item) {
-    if (item.isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
-      const def = VALUE_ICON_DEFS.find(d => d.id === "retainer");
-      return [def || { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer" }];
-    }
     let icons = [];
     if (item.valueIcons && item.valueIcons.length) {
       icons = item.valueIcons.map(id => {
         const def = VALUE_ICON_DEFS.find(d => d.id === id);
         return def || { id, svgId: id, cls: `icon-${id}`, label: id };
-      });
+      }).filter(Boolean);
+    } else if (item.isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
+      const def = VALUE_ICON_DEFS.find(d => d.id === "retainer");
+      icons = [def || { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer" }];
     } else {
       const inferred = inferValueIconIds(item);
       if (inferred.length) {
@@ -1308,24 +1305,6 @@
       return { value, label: `~${Math.round(value)} gained/mo`, isCalls: false };
     }
     return { value: null, label: "Estimate pending", isCalls: false };
-  }
-
-  function estimateCustomerTouchpoints(item) {
-    if (!item) return "—";
-    const explicit = String(item.clientTouchpoints || "").match(/~?(\d[\d,]*(?:\.\d+)?)\s*(?:–|-)?\s*(\d[\d,]*(?:\.\d+)?)?/);
-    if (explicit) {
-      const first = explicit[1];
-      const second = explicit[2];
-      return second ? `${first}–${second}` : `~${first}`;
-    }
-    const leadText = String(item.estimatedLeads || "");
-    const households = leadText.match(/~?(\d[\d,]*)\s*households?/i);
-    if (households) return `~${households[1]}/wave`;
-    const parsed = parseLeadsFromEstimatedText(leadText);
-    if (parsed) return `~${Math.round(parsed.value)}/mo`;
-    if (/all inbound|all tracked|unified/i.test(leadText))
-      return `~${PAV_HISTORICAL.monthlyLeadsBaseline}/mo`;
-    return "Estimate pending";
   }
 
   function estimateProjectLeadRevenue(item) {
