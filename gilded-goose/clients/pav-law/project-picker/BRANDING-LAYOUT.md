@@ -261,7 +261,7 @@ Replace files or update paths in `content/settings.md`, then `npm run build` if 
 - [ ] Sticky continue/submit bar readable on long lists
 - [ ] Table zebra; selected row gold wash
 - [ ] Cards spaced with `var(--space-lg)`
-- [ ] TLDR / value bullets: left royal border (`.card-tldr`)
+- [ ] Summary / value bullets: left royal border (`.card-tldr`)
 - [ ] KPI sections collapsible — one topic per `<details>`
 - [ ] No light-on-light on Priorities / plan / outlines tables
 - [ ] Links underlined or clearly distinct
