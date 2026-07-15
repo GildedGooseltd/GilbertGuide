@@ -44,15 +44,6 @@ Reporting only stays useful when someone reviews it every month — validating t
 ## Information needed
 
 - Define measurable Goal
-- Add Results — baseline vs current metrics
 - Confirm estimated leads gained
 - Link KPI dashboard rows
 - Link KPI dashboard rows (KPI links section)
-
-## Impact estimates
-
-- Leads impacted: ~124/mo (as of 2026-07-11)
-- Leads connected: ~86/mo
-- Clients retained: ~9/mo
-- Source: Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md
-- Note: Same KPI set — retainer reporting refresh

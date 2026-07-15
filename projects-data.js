@@ -70,42 +70,12 @@ window.PROJECT_DATA = {
       "Account shared negatives for government / JAG / PD / competitor terms (Military + NTGUILT)",
       "Confirm NTGUILT call extensions + ntguilt.com forms in HubSpot before scaling budget"
     ],
-    "resultsItems": [
-      "Period: May 3–30, 2026 (baseline) · Jun 11–Jul 10, 2026 (current 30d) · LSA inbox through Jul 10",
-      "Source: `Ad Reports/PERFORMANCE-REVIEW-2026-07-11.md` · `exports/2026-07-11/Campaign report (15).csv`.csv) · `exports/2026-05-30/Campaign report (4).csv`.csv) · `exports/2026-07-11/leads-inbox (12).csv`.csv) · `exports/2026-07-11/Search terms report (4).csv`.csv) · index `exports/INDEX.md`",
-      "Consulting fee charged: $2,700/mo retainer",
-      "Media / partner spend: **$6,277** Search Jun 11–Jul 10 (Military $3,983 · NTGUILT $1,924 · Core DV $179 · Core DUI paused $191) · May baseline Search+Demand Gen **$5,861**",
-      "Volume: May Military **36 phone calls** · Jul period **640** Search interactions (330 Military · 282 NTGUILT · 16 Core DV) — Jul export **missing Phone calls column** so Jul call count is estimated only · LSA inbox **181** leads (May 72 · Jun 83 · Jul-through-10th 26); **72 charged** (~40%)",
-      "Efficiency: Military cost/call **~$67** May ($2,421 ÷ 36) · **~$58–72** Jul est. from spend ÷ historical $/call · NTGUILT **~$6.82/click** · account Search CTR **4.03%** (up from 2.59% May)",
-      "Outcome: Military still primary call engine; NTGUILT adding efficient driver traffic but thin calls; Mountain/Demand Gen paused correctly; ~**38%** Jul search-term spend government/JAG/PD/navigational waste",
-      "Status vs goal: On track for Military efficiency; NTGUILT too early for retainer case proof; LSA volume strong but Denver-heavy vs Fort Carson Military focus; HubSpot Ads→case attribution still missing from this pull"
-    ],
     "goal": "Hold Military Search cost/call near **~$58–67**, grow NTGUILT call volume off efficient clicks, keep LSA phone lead flow stable, and cut navigational/government search-term waste (~38% of query spend in Jul period).",
     "informationNeeded": [
       "Re-export Campaign + Ad group reports **with Phone calls column** for Jun 11–Jul 10 (verify est. 59–69 Military calls)",
       "HubSpot contacts where `pl_lead_source` = Google Ads / LSA (matters retained)",
       "Microsoft Ads export if still in retainer scope for this month"
     ],
-    "blockers": [
-      "Jul Google Ads export dropped **Phone calls** — call ROI for current period is estimate only",
-      "No HubSpot lead→matter export in Jul 11 pull",
-      "LSA geo skew (Denver 67 vs Colorado Springs 27) vs Military Fort Carson intent"
-    ],
-    "insightsImprovements": [
-      "Scale Military only while cost/call stays under ~$70; fix/pause Poor-strength RSA (e.g. Military Sexual Assault)",
-      "NTGUILT Tickets RSA Excellent — clone structure; validate calls before +budget",
-      "Negate public defender / JAG / PD / `pav law` broad waste (~$1k+ government category in Jul terms)",
-      "Track LSA separately from Search in HubSpot (`pl_lead_source`)"
-    ],
-    "impactEstimates": {
-      "period": "mo",
-      "asOf": "2026-07-11",
-      "source": "`Ad Reports/PERFORMANCE-REVIEW-2026-07-11.md` · `Ad Reports/exports/2026-07-11/Campaign report (15).csv` · `Ad Reports/exports/2026-05-30/Campaign report (4).csv` · `Ad Reports/exports/2026-07-11/leads-inbox (12).csv` · `Ad Reports/exports/INDEX.md`",
-      "note": "Jul military calls **est. ~59–69** from $3,983 spend ÷ $58–67 historical cost/call — confirm when Phone calls column returns. NTGUILT **282 clicks / $1,924** in same 30d; all-time NTGUILT calls through Jun 24 = **9** (thin). Jul period Search spend **$6,277**.",
-      "leadsImpacted": 116,
-      "leadsConnected": 90,
-      "clientsRetained": 6.6
-    },
     "abQuestions": [],
     "kpiRefs": []
   },
@@ -151,17 +121,10 @@ window.PROJECT_DATA = {
         "LSA lead-status SOP — how to update lead info, notes, booked/spam/dispute in Google LSA",
         "`LSA-DOCUMENTING-TRAINING.md` written and shared with team path in repo"
       ],
-      "resultsItems": [
-        "*Phase 1 metrics to add:* LSA leads reviewed/week, status accuracy sample, disputed charges (Jun threshold declines), baseline answer rate (#21 · 69%)",
-        "May 2026 reference: ~36 Military Search calls · ~$67/call (retainer Results)",
-        "Jun 11–Jul 10: Military $3,983 · 330 clicks — primary call engine (retainer Results)"
-      ],
       "goal": "LSA statuses updated same business day; Casey covers a defined phone block or day(s); disputed/spam leads caught before month-end billing. Increased answer rated and increased close rate with legal expertise available on pickup.",
       "informationNeeded": [],
       "abQuestions": [],
-      "kpiRefs": [
-        "#21"
-      ]
+      "kpiRefs": []
     },
     {
       "id": "B10",
@@ -171,7 +134,7 @@ window.PROJECT_DATA = {
       "campaignType": "Profile Audit & Refresh",
       "status": "recommended",
       "publishStatus": "published",
-      "estimatedLeads": "Profile discovery traffic — track via unique UTMs in GA4 (feeds KPI #18 / #10)",
+      "estimatedLeads": "10/mo",
       "keywords": [
         "social",
         "facebook",
@@ -198,62 +161,31 @@ window.PROJECT_DATA = {
         "traffic"
       ],
       "title": "HS: Social & Directory Profile Refresh & Tracking",
-      "description": "Prospects check more than pav.law before they call — they also look up **Andrew Brown**, **Casey**, and **Pav Law** separately on Facebook, Instagram, Yelp, LinkedIn, Avvo, and other directories. Firm pages and personal attorney profiles often show stale bios, old logos, mismatched phone numbers, or practice areas that no longer match how the firm actually works. This project runs a full NAP and profile audit at **three levels — Pav Law (company), Andrew Brown (personal), and Casey (personal)** — discovers listings you may have forgotten, then refreshes copy, photos, categories, and links so every touchpoint matches current branding and intake paths (call, text, HubSpot booking). Complements website SEO (B4) and HubSpot social posting (**A7**) — this is the **profile layer**, not the posting calendar.\n\n**Known outdated (client-reported):** Pav Law Facebook, Yelp, Instagram, plus several legal directory profiles (firm and attorney).\n\n**Scope — company + personal (Andrew + Casey):**\n\n| Level                       | What we audit and refresh                                                                                                                                                                      |\n| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| **Pav Law (firm)**          | Company pages and firm listings — social, GBP, Yelp, Bing/Apple, BBB, firm rows on Avvo/Justia/FindLaw/Martindale where applicable                                                             |\n| **Andrew Brown (personal)** | Individual attorney profiles — LinkedIn, Avvo, Justia, state bar directory, any personal Facebook/Instagram/X used for firm visibility; bios and headshots aligned to pav.law/team             |\n| **Casey (personal)**        | Same pass for Casey — personal LinkedIn, Avvo/Justia attorney pages, bar directory, GBP attorney verification support (per prior tracker note), social accounts tied to traffic-case lead role |\n\n**Also audit (research — common for CO criminal defense firms):**\n\n| Bucket                       | Platforms to find, claim, or refresh                                                                                                                                             |\n| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| **Social (firm + personal)** | Facebook Page (firm), Instagram (firm), LinkedIn company showcase **and** Andrew + Casey personal profiles, X/Twitter, YouTube — confirm active vs. archive                      |\n| **Reviews & local**          | Google Business Profile (firm + attorney attributions, photos, services, Q&A), Yelp (firm and any attorney-linked pages), Bing Places, Apple Business Connect, Nextdoor Business |\n| **Major legal directories**  | Avvo, Justia, FindLaw, Martindale-Hubbell, LawInfo, Lawyers.com, HG.org, Nolo — **firm listing plus individual attorney profiles for Andrew and Casey**                          |\n| **Bar & trust**              | Colorado Bar Association public directory (each attorney), El Paso County Bar (if listed), BBB profile                                                                           |\n| **Aggregators & misc.**      | Foursquare, MapQuest, YellowPages, Manta, Expertise.com, Thumbtack, LegalRank and similar auto-generated pages (firm or attorney name searches)                                  |\n| **Bilingual / niche**        | Abogado.com (Spanish-speaking intake), Super Lawyers / Best Lawyers (only if already listed or eligible — no paid vanity buys without approval)                                  |\n\nDiscovery uses **firm name, Andrew Brown, Casey, address, and phone** searches — not just logins you already have — so orphaned or duplicate firm *and* personal listings surface before updates go live.\n\n**UTM routing — see which profiles send traffic:**\n\nEvery profile website link that allows a custom URL gets a unique tagged link to pav.law (contact page or homepage — one landing target, documented in handoff). That lets GA4 and HubSpot show which directory or social profile drove the visit instead of lumping everything under “direct” or “referral.”\n\n| UTM field      | Convention (example)                                                                                 |\n| -------------- | ---------------------------------------------------------------------------------------------------- |\n| `utm_source`   | Platform slug: `facebook`, `instagram`, `yelp`, `avvo`, `linkedin`, `gbp`, `justia`, `findlaw`, etc. |\n| `utm_medium`   | `social`, `directory`, or `local`                                                                    |\n| `utm_campaign` | `profile-2026` (stable campaign name for all profile links this round)                               |\n| `utm_content`  | Owner + level: `firm`, `andrew`, `casey` — so firm Avvo vs. Andrew Avvo vs. Casey Avvo split cleanly |\n\nExample: `pav.law/contact?utm_source=avvo&utm_medium=directory&utm_campaign=profile-2026&utm_content=andrew`\n\nDeliverables include a **UTM link sheet** (profile name → tagged URL → where to paste it) and a quick GA4/HubSpot check that sessions land with the expected source/medium. Feeds the lead-source dashboard (A8) — without unique UTMs, profile traffic stays invisible next to paid ads.\n\nConsistent name-address-phone data across directories and social profiles still drives local search and AI citation trust — models and Google both lean on Avvo, Justia, FindLaw, Martindale, GBP, and bar directories when recommending lawyers. **UTM parameters** on each profile’s website link are the only practical way to attribute organic profile clicks in GA4 and HubSpot — otherwise Yelp, Avvo, and LinkedIn all look like generic referral traffic. See Google — UTM parameters, HubSpot — track traffic with UTMs, Moz — local business listings, FindLaw — optimize directory profiles, and ABA Model Rule 7.2 — advertising.",
-      "tldr": "A lot of the websites with Pav Law information are outdated and could use a refresh. The more intake channels updated and improved the better.",
+      "tldr": "A lot of the websites with Pav Law information are outdated and could use a refresh. The more intake channels updated and improved the better. Yelp outreach has been increasing organically with more reviews being posted there and needs to be updated quickly.",
       "valueAdded": [
-        "Inventory of every live profile",
         "Refreshed bios, practice areas, photos, and CTAs for company and both attorneys — aligned to current positioning and ABA advertising rules",
         "**Unique UTM-tagged website links per profile** — link sheet + validation in GA4/HubSpot so you can rank which platforms drive the most site traffic. Most of the legal sites have paid advertising or upgrades now that we can track traffic we'll be able to test out if any are worth purchasing.",
         "Merge Andrew Brown and Pav Law profiles"
       ],
       "valueIcons": [
         "foundation",
-        "retainer",
         "leads",
         "crm",
-        "seo",
         "referrals",
         "efficiency",
-        "intake",
-        "creative"
+        "intake"
       ],
       "completedItems": [
-        "(None — discovery starts on kickoff)"
+        "Inventory of every live profile",
+        "Google Business Profile",
+        "Lite general cleanse with account transfer(s)"
       ],
       "inProgressItems": [
-        "LinkedIn company showcase exists but shows low follower count and 2024-era launch copy — needs refresh",
-        "Andrew + Casey personal LinkedIn and directory profiles — audit not started",
-        "GBP attorney verification support for Casey — outreach drafted in project tracker; fold into this scope",
-        "Partial UTM logic already drafted for Pav Law contact-page URLs (project tracker) — extend naming scheme to all profile links in this project",
-        "GBP social links previously cleaned (A7 / former B8) — verify firm and attorney photos still current"
+        "LinkedIn company showcase exists but shows low follower count and 2024-era launch copy",
+        "Andrew + Casey personal LinkedIn and directory profiles",
+        "UTM logic extend naming scheme to all profile links in this project",
+        "GBP social links previously cleaned (A7 / former B8) — lite refresh and license verification"
       ],
-      "resultsItems": [
-        "UTM naming scheme partially drafted for contact URLs",
-        "Outdated profile inventory: Facebook, Yelp, Instagram, directories"
-      ],
-      "goal": "Refresh 100% of priority profiles (Pav Law, Andrew, Casey) with matching NAP and UTM-tagged links; track discovery traffic in GA4.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
-      "blockers": [
-        "Andrew/Casey personal profiles need client-provided bios and photos",
-        "Directory login credentials scattered",
-        "Merge Andrew Brown + Pav Law listings incomplete"
-      ],
-      "insightsImprovements": [
-        "Profile layer complements B4 SEO — inconsistent phone hurts call tracking",
-        "Extend UTM sheet to every bio link before claiming victory",
-        "Feeds A8 channel table when UTMs are consistent"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Profile discovery + GBP calls after NAP refresh",
-        "leadsImpacted": 120,
-        "leadsConnected": 18,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -277,7 +209,7 @@ window.PROJECT_DATA = {
         "onboarding"
       ],
       "title": "HubSpot Marketing Setup",
-      "description": "April–May emails moved Pav from ad-account triage into CRM: nurture templates, client onboarding ownership for Romina/paralegals, HubSpot invoice/payment, and holiday email. This parent tracks that HubSpot marketing setup as one program. Child cards keep sprint detail; this card owns sequence, packaging, and what’s still blocking full automation.\n\nComparable Cos Springs shops usually sell HubSpot/email as a $500–$1,500/mo add-on inside a larger package — not as disconnected one-offs. See FEE-BENCHMARK-CO-SPRINGS.md.",
+      "description": "This parent tracks that HubSpot marketing setup as one program. Child cards keep sprint detail; this card owns sequence, packaging, and what’s still blocking full automation.",
       "tldr": "One HubSpot foundation so email, referrals, forms, and booking share the same contacts, stages, and reporting.",
       "valueAdded": [
         "Packages holiday email (A3), contact upload (B7), pipeline (B1), and LPs (A5) under one CRM build",
@@ -286,50 +218,21 @@ window.PROJECT_DATA = {
       ],
       "valueIcons": [
         "foundation",
-        "retainer",
         "leads",
         "crm",
         "seo",
-        "referrals",
         "efficiency",
-        "intake",
-        "creative"
+        "intake"
       ],
       "completedItems": [
-        "Client onboarding / lead nurture templates direction (Apr 26 email)",
+        "lead nurture templates",
         "Romina HubSpot activation documentation (B1)",
-        "A3 Summer Safety Email campaign (July 4 window)",
-        "HubSpot invoice path sent to Andrew (May 29 Time Sensitive email)"
+        "A3 Summer Safety Email campaign"
       ],
       "inProgressItems": [
         "B7 America / MyCase marketing contact pass",
-        "B1 speed-to-lead workflows live and measured",
-        "A5 paid-traffic landing module if homepage still dilutes offer"
+        "B1 speed-to-lead workflows live and measured"
       ],
-      "resultsItems": [
-        "Period: Apr 19, 2026 – Jul 14, 2026 (program to date)",
-        "Source: Client emails (Systems Audit · Nurture pivot · Time Sensitive) · A3 card",
-        "Consulting fee charged: B13 package $4,500 listed · A3 $1,200 child · confirm invoice split",
-        "Media / partner spend: —",
-        "Volume: A3 impact estimates ~850 list · ~120 connected · ~2 retained / wave (see A3)",
-        "Efficiency: —",
-        "Outcome: Holiday email shipped under HubSpot path; contacts upload and pipeline still open",
-        "Status vs goal: Partial — send capability proven; full CRM foundation not complete"
-      ],
-      "goal": "HubSpot owns marketable contacts, nurture stages, holiday/referral sends, and form→task→Romina booking with exportable source data for A8.",
-      "informationNeeded": [
-        "Confirm whether B13 $4,500 is package price or sum of children already invoiced",
-        "HubSpot contacts export still missing from Downloads (see Ad Reports/DATA-PULL-LIST.md)"
-      ],
-      "blockers": [
-        "No HubSpot contacts export in Downloads",
-        "MyCase field cleanup unfinished for nurture tracks"
-      ],
-      "insightsImprovements": [
-        "Keep selling B13 + children as one package so A3 isn’t re-quoted as a separate agency",
-        "Pair A4 / A17 reengagement with B7 before scaling email volume"
-      ],
-      "impactEstimates": null,
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -341,8 +244,7 @@ window.PROJECT_DATA = {
       "campaignType": "Referral Program",
       "status": "wip",
       "publishStatus": "published",
-      "ongoingFee": 500,
-      "estimatedLeads": "Past clients and referral network outreach",
+      "estimatedLeads": "10/ mo",
       "keywords": [
         "referral",
         "referrals",
@@ -353,64 +255,7 @@ window.PROJECT_DATA = {
         "email"
       ],
       "title": "HS: Client Referral Program",
-      "description": "Referral marketing consistently outperforms cold paid channels because trust is already established. Pav Law has past clients, friends-and-family contacts, and America list prospects — but no structured program to ask for referrals or make booking easy. This project builds the HubSpot foundation and keeps it running month to month.\n\nTrack 1 (this card): past-client referral asks. Track 2 sealing & probation reengagement lives on child A17 (scripts, pricing, MyCase fields from June Client Reengagement PDF). B7 unlocks list scale; A6 can dial.\n\nReferral programs work when asking is structured and booking is frictionless. HubSpot’s referral program guide covers segmentation and follow-up; the ABA publishes ethical guidance on attorney referral relationships. See HubSpot — customer referral programs and ABA — referral fees and relationships.",
-      "tldr": "Highest-trust lead channel — one signed referral often covers project fee.",
-      "valueAdded": [
-        "Highest-trust lead channel — one signed referral often covers project fee",
-        "Setup plus monthly upkeep so the program stays active",
-        "Past-client, friends-and-family, and America list paths in HubSpot"
-      ],
-      "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
-      ],
-      "completedItems": [
-        "Missed-call follow-up text templates",
-        "Client update email positioning drafts"
-      ],
-      "inProgressItems": [
-        "Traffic intake script for Romina"
-      ],
-      "resultsItems": [
-        "Period: Program to date through Jul 14, 2026",
-        "Source: A4 card · Client Referral ops · June reengagement PDF (Track 1)",
-        "Consulting fee charged: $1,700 setup · $500/mo ongoing",
-        "Media / partner spend: —",
-        "Volume: —",
-        "Efficiency: Goal 3–5 referral consults/mo vs ~$67/call paid baseline",
-        "Outcome: HubSpot referral foundation scoped · America + past-client segments identified · performance payout model documented · Track 2 split to A17",
-        "Status vs goal: Foundation partial · monthly referral volume not yet logged"
-      ],
-      "goal": "Generate 3–5 referral-sourced consults/month at lower CPL than paid Search (~$67/call baseline).",
-      "informationNeeded": [
-        "_Add:_"
-      ],
-      "blockers": [
-        "No structured ask workflow live — manual outreach only",
-        "Booking friction if Romina link not in every referral touch",
-        "Past-client list upload pending (see B7)"
-      ],
-      "insightsImprovements": [
-        "Referral CPL should beat $67 Military cost/call when program is running",
-        "Tie to B7 contact upload and B5 physical reminder for dual-channel asks",
-        "Log every referral source in HubSpot — feeds A8 KPI #10 channel table"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Referral network outreach pool",
-        "leadsImpacted": 200,
-        "leadsConnected": 35,
-        "clientsRetained": 0.5
-      },
+      "valueAdded": [],
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -463,30 +308,11 @@ window.PROJECT_DATA = {
         "Load scripts into A6 / HubSpot call outcomes",
         "Automated follow-up email for tagged tracks"
       ],
-      "resultsItems": [
-        "Period: Playbook dated June 2026 · ops not yet measured in Guide",
-        "Source: Downloads/June_ Client Reengagement.pdf · May 29 Time Sensitive email (campaign fields doc)",
-        "Consulting fee charged: $1,500 listed (playbook + launch)",
-        "Media / partner spend: —",
-        "Volume: Targets only — 20 updates/day · 20 calls/day · 100 connects · 200 emails · 20 resigns",
-        "Efficiency: Offer menu ~$900–$1,500 DJ/probation schedules (client fees, not GGL)",
-        "Outcome: Documentation complete; dial volume not confirmed",
-        "Status vs goal: Active (wip) — playbook ready · execution in progress"
-      ],
       "goal": "Book 20 resigns (or signed sealing/probation matters) per wave at PDF connect/email targets with Nurture Track logged on every touched contact.",
       "informationNeeded": [
         "Confirm MyCase field names match PDF (Outcome · Status · Disposition · Nurture Track)",
         "AB - Q: Start with Gabriel volume target of 20 calls/day or softer ramp?"
       ],
-      "blockers": [
-        "B7 contacts not fully in HubSpot",
-        "MyCase AR/outcome quality uneven for list builds"
-      ],
-      "insightsImprovements": [
-        "Prioritize positive-outcome closed cases; exclude hostile/open matters (PDF)",
-        "Flag high-potential sealing/parole candidates into A4 referral track when fit"
-      ],
-      "impactEstimates": null,
       "abQuestions": [
         "Start with Gabriel volume target of 20 calls/day or softer ramp?"
       ],
@@ -540,34 +366,11 @@ window.PROJECT_DATA = {
         "Design insert for emergency numbers to be written in",
         "Define P1 target audience (newest vs oldest — see AB – Q)"
       ],
-      "resultsItems": [
-        "Insurance sleeve mailer concept approved",
-        "Sleeve + postage model under ~$3/piece"
-      ],
       "goal": "Generate 1–2 retained matters per ~200-household wave at ≤$3/piece all-in cost.",
       "informationNeeded": [
         "Answer AB – Q: Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
         "Answer AB – Q: Newest or Oldest first?"
       ],
-      "blockers": [
-        "Sleeve order quantity not confirmed",
-        "Unique phone or URL for attribution not on creative",
-        "Cold database list hygiene"
-      ],
-      "insightsImprovements": [
-        "ROI tracking is hard — use dedicated UTMs and ask intake “how did you hear about us”",
-        "Physical reminder stays in glovebox — long-tail matches 1–2 retained/wave goal",
-        "Pair with A3 email for same household where email exists"
-      ],
-      "impactEstimates": {
-        "period": "wave",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Insurance sleeve households per wave",
-        "leadsImpacted": 200,
-        "leadsConnected": 40,
-        "clientsRetained": 1.5
-      },
       "abQuestions": [
         "Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
         "Newest or Oldest first?"
@@ -626,9 +429,7 @@ window.PROJECT_DATA = {
       ],
       "informationNeeded": [
         "Answer AB – Q: Which tasks should pay at Tier 1 (flat) vs Tier 2 (outcome) for Casey and Romina?",
-        "Define measurable Goal",
-        "Add Results — baseline vs current metrics",
-        "Fill Impact estimates"
+        "Define measurable Goal"
       ],
       "abQuestions": [
         "Which tasks should pay at Tier 1 (flat) vs Tier 2 (outcome) for Casey and Romina?"
@@ -681,16 +482,6 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "_Add:_"
-      ],
-      "resultsItems": [
-        "Period: —",
-        "Source: —",
-        "Consulting fee charged: —",
-        "Media / partner spend: —",
-        "Volume: —",
-        "Efficiency: —",
-        "Outcome: —",
-        "Status vs goal: —"
       ],
       "goal": "Team can reorder approved swag from the portal without Kate in the fulfillment loop; at least one conversation-starter SKU in hand for events/office.",
       "informationNeeded": [
@@ -750,34 +541,10 @@ window.PROJECT_DATA = {
         "Giveaway and lead magnet ideas",
         "Event sponsorship outreach"
       ],
-      "resultsItems": [
-        "NTGUILT Search already live — 282 clicks · ~$6.82/click (Jul period)",
-        "Brand direction and booth creative drafted",
-        "All-time NTGUILT calls: 9 on $1,218 through Jun 24"
-      ],
       "goal": "Launch NTGUILT upper-funnel display with UTMs so remarketing pool grows 20%+ before scaling Search budget.",
       "informationNeeded": [
         "*Add:*"
       ],
-      "blockers": [
-        "Promo video and giveaway concepts still in WIP — no live display spend",
-        "UTM pass-through not verified on all NTGUILT landing URLs",
-        "Event sponsorship outreach not closed"
-      ],
-      "insightsImprovements": [
-        "Search lane proving clicks; display layer still missing for true funnel top",
-        "Pair summer creative with A7 social when budget allows — same UTM scheme as B10",
-        "Do not scale display until B10 profile UTMs and A8 dashboard can attribute assists"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "NTGUILT Search clicks Jul; calls still thin — 9 all-time through Jun",
-        "leadsImpacted": 282,
-        "leadsConnected": 45,
-        "clientsRetained": 0.3
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -827,34 +594,10 @@ window.PROJECT_DATA = {
         "UTM tracking on contact-page URLs",
         "Ad extension and sitelink strategy"
       ],
-      "resultsItems": [
-        "Military DV RSA pair driving $1,733 + $1,247 spend blocks (Jun 11–Jul 10)",
-        "Mobile bid adjustments active — mobile ~60%+ of Military interactions",
-        "NTGUILT Tickets RSA at Excellent strength"
-      ],
       "goal": "Lift Military RSA strength to Excellent/Good on top ad groups and cut ~38% search-term waste to <20% within 30 days.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Conversion actions flagged but not in client-facing reports",
-        "Government/navigational queries still buying — neg list incomplete",
-        "Competitor firm names consuming $176/period"
-      ],
-      "insightsImprovements": [
-        "Top burners: public defenders office ($138), fort carson legal ($87), CSPD ($82) — add to shared negatives",
-        "Brand query `pav law` ($62) — route to exact brand campaign or negative on broad",
-        "Pause Military Sexual Assault RSA until creative refresh"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Negatives + RSA fixes recover wasted click spend",
-        "leadsImpacted": 36,
-        "leadsConnected": 25,
-        "clientsRetained": 1.8
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -904,33 +647,10 @@ window.PROJECT_DATA = {
         "Attorney profile verification support on GBP",
         "Schema markup rollout"
       ],
-      "resultsItems": [
-        "SEO overhaul scope: schema, NAP, attorney attribution",
-        "Internal linking plan drafted"
-      ],
       "goal": "Move priority keywords from avg position 45–58 to top-20 for 5 core terms within 90 days.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "B3 speed debt hurts crawl and UX signals",
-        "NAP inconsistencies across B10 profiles",
-        "Content production bandwidth"
-      ],
-      "insightsImprovements": [
-        "Local business schema + attorney attribution are foundation — see Google local SEO docs",
-        "Organic discovery reduces reliance on $6k+/mo paid",
-        "Sync NAP with B10 before link-building push"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Organic discovery sessions/mo target",
-        "leadsImpacted": 45,
-        "leadsConnected": 7,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -980,32 +700,10 @@ window.PROJECT_DATA = {
         "Dashboard and reporting planning",
         "Find correct CRM tool evaluation"
       ],
-      "resultsItems": [
-        "Pipeline stages documented",
-        "Workflow gaps identified vs speed-to-lead best practice"
-      ],
       "goal": "Prove form → task → Romina booking in <15 minutes median for 90% of inbound web leads within 2 weeks of sprint.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Referral import path not fully connected",
-        "Romina booking link not on all form thank-you pages",
-        "B2 live phones needed for click-to-call leads"
-      ],
-      "insightsImprovements": [
-        "HubSpot 5-minute rule: firms responding in minutes qualify more leads",
-        "Sprint should end with one recorded end-to-end test per lead type"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Speed-to-lead uplift on 124 inbound/mo",
-        "leadsImpacted": 124,
-        "leadsConnected": 86,
-        "clientsRetained": 2
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1054,33 +752,10 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Minor website updates — navigation simplification in progress"
       ],
-      "resultsItems": [
-        "Prior work cut load times ~200%",
-        "Multi-phase cleanup plan in WIP"
-      ],
       "goal": "Cut mobile LCP below 3s on top 5 entry pages and reduce bounce rate 10% on paid landing URLs.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Navigation cleanup phases not complete",
-        "Some heavy assets still on Squarespace/HubSpot modules",
-        "No before/after metrics logged in Results yet"
-      ],
-      "insightsImprovements": [
-        "Speed fix unlocks A5 LP and paid conversion gains",
-        "Log baseline LCP in ## Results before next deploy",
-        "Pairs with B4 SEO — fix speed before content scale"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Speed fix on top paid entry pages",
-        "leadsImpacted": 90,
-        "leadsConnected": 14,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1140,42 +815,11 @@ window.PROJECT_DATA = {
         "Creative from A2 prompt library for Reddit + Display",
         "Landing destination (NTGUILT.com vs pav.law contact)"
       ],
-      "resultsItems": [
-        "Period: —",
-        "Source: May 16 mix · Ad Reports/exports/2026-07-11",
-        "Consulting fee charged: $4,800 listed (merged A7+B8); Reddit setup was $600 child line",
-        "Media / partner spend: Reddit $500 + $500 promo credit (proposed); organic $0",
-        "Volume: —",
-        "Efficiency: —",
-        "Outcome: Merged into one social card Jul 2026; launch still open",
-        "Status vs goal: Build phase"
-      ],
       "goal": "Drive 500+ NTGUILT social engagements per wave and 10+ site sessions with UTM social=NTGUILT per month; post 8–12 firm-safe items/month across connected channels; complete one 30-day Reddit flight with UTMs and ≥10 site sessions per $100 combined spend+credit without policy rejection.",
       "informationNeeded": [
         "Answer AB – Q: Run Reddit before or after next PPIR/ASCEND weekend?",
         "AB - Q: Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
-      "blockers": [
-        "Approval workflow / SLA for firm-safe creative not defined",
-        "No baseline engagement metrics from prior posts",
-        "Profiles outdated until B10 completes",
-        "NTGUILT.com lightweight site — confirm live before Reddit"
-      ],
-      "insightsImprovements": [
-        "One calendar beats three cards — consistency over volume",
-        "Use NTGUILT summer creative from A2 for cohesive brand",
-        "Every bio / post link uses B10 UTM scheme for GA4 KPI #18",
-        "Reddit best as post-event retargeting, not primary intake"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Social reach engagements/mo target",
-        "leadsImpacted": 500,
-        "leadsConnected": 75,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
@@ -1232,31 +876,10 @@ window.PROJECT_DATA = {
         "America referral list import (partial — needs full marketing contact pass)",
         "MyCase field cleanup noted in tracker but not finished"
       ],
-      "resultsItems": [
-        "Upload scope and field mapping drafted"
-      ],
       "goal": "Upload and segment 100% of marketable past-client contacts with bounce rate <2% on first send.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Source spreadsheets not consolidated",
-        "GDPR/marketing consent flags unclear",
-        "Duplicate records across lists"
-      ],
-      "insightsImprovements": [
-        "Unlocks A3, A4, and B5 — list size is force multiplier",
-        "Log upload count in ## Results after first import"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Marketable past-client upload target",
-        "leadsImpacted": 400,
-        "leadsConnected": 60,
-        "clientsRetained": 0.4
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1300,32 +923,10 @@ window.PROJECT_DATA = {
         "intake",
         "creative"
       ],
-      "resultsItems": [
-        "Placement strategy and compliance guardrails scoped"
-      ],
       "goal": "Test adult-site Display placements with frequency caps and ≥10 tracked site visits per $100 spend without brand safety flags.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Brand safety review with Andrew not completed",
-        "Separate conversion tracking not isolated from core Search",
-        "Creative approval pending"
-      ],
-      "insightsImprovements": [
-        "Keep budget siloed — do not blend with Military reporting",
-        "Remarketing tag required before scaling",
-        "If CPL >2× NTGUILT Search, pause and refine placements"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Display placement traffic est.",
-        "leadsImpacted": 120,
-        "leadsConnected": 8,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1365,32 +966,10 @@ window.PROJECT_DATA = {
         "intake",
         "creative"
       ],
-      "resultsItems": [
-        "Gabriel outbound scope defined for paid-search-dependent call volume"
-      ],
       "goal": "Book 4–8 outbound consults/month from warm lists at connect rate ≥25% and answer-rate uplift on returned calls.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "B2 phone routing not live — outbound callbacks may hit wrong line",
-        "List source and DNC scrub not documented",
-        "No CRM task template for outbound outcomes"
-      ],
-      "insightsImprovements": [
-        "Outbound works after intake path is verified (B2 + B1)",
-        "Target lists that already engaged with ads — warmer than cold database",
-        "Log dispositions in HubSpot for A8 outbound channel row"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Warm outbound dials/mo target",
-        "leadsImpacted": 60,
-        "leadsConnected": 18,
-        "clientsRetained": 0.2
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1442,33 +1021,10 @@ window.PROJECT_DATA = {
         "Casey ↔ Romina schedule: who owns **all calls** during which hours (align with HubSpot menus when live)",
         "Casey shadow: LSA call review + status updates before live answering (retainer `LSA-DOCUMENTING-TRAINING.md`)"
       ],
-      "resultsItems": [
-        "Baseline ~36 Military calls/mo · answer rate 69%",
-        "Target 90% answer rate — ~7 recoverable calls/mo at current volume"
-      ],
       "goal": "Reach 90% answered phones (#21) on Military/LSA lines and recover ~7 missed calls/month (~$2,400/mo revenue at 7.3% lead→case).",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Carrier number transfer blocking go-live",
-        "Casey ↔ Romina coverage schedule not signed off",
-        "Google VoIP verification pending"
-      ],
-      "insightsImprovements": [
-        "21-point answer gap (69%→90%) is highest-ROI fix before more ad spend",
-        "LSA documenting training must complete before Casey live answering",
-        "Cross-device call tracking still understates volume — note in reporting"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Current 69% answer; target 32 connected at 90%",
-        "leadsImpacted": 36,
-        "leadsConnected": 25,
-        "clientsRetained": 1.8
-      },
       "abQuestions": [],
       "kpiRefs": [
         "#21"
@@ -1516,30 +1072,10 @@ window.PROJECT_DATA = {
       "completedItems": [
         "Website issue review with content and deep-link notes"
       ],
-      "resultsItems": [
-        "Blog revamp scope defined"
-      ],
       "goal": "Publish 2 posts/month and earn +15% organic entrances to blog URLs within 12 weeks.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Editorial calendar not staffed",
-        "No baseline organic blog traffic logged"
-      ],
-      "insightsImprovements": [
-        "Blog supports B4 SEO clusters — each post needs one consult CTA",
-        "Repurpose NTGUILT/safety themes from A3 for timely content"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Blog organic entrances",
-        "leadsImpacted": 30,
-        "leadsConnected": 5,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1594,9 +1130,7 @@ window.PROJECT_DATA = {
       ],
       "informationNeeded": [
         "Answer AB – Q: Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?",
-        "Define measurable Goal",
-        "Fill Impact estimates",
-        "Add Results — baseline vs current metrics"
+        "Define measurable Goal"
       ],
       "abQuestions": [
         "Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?"
@@ -1648,32 +1182,10 @@ window.PROJECT_DATA = {
         "intake",
         "creative"
       ],
-      "resultsItems": [
-        "Focus-area shortlist documented (military, DUI, holiday windows, LSA geo)"
-      ],
       "goal": "Launch one seasonal Search/Microsoft flight with ≥20 calls at ≤$75 cost/call for chosen focus area.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Topic not selected for next quarter",
-        "Shared negative list may need seasonal exceptions",
-        "Creative and LP readiness per focus area"
-      ],
-      "insightsImprovements": [
-        "Single-topic campaigns outperform catch-all — pick one lane per quarter",
-        "July 4 / NYE pair with A3 email for dual touch",
-        "Use Military $67/call as go/no-go threshold"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Seasonal flight call target",
-        "leadsImpacted": 25,
-        "leadsConnected": 17,
-        "clientsRetained": 0.2
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1718,32 +1230,10 @@ window.PROJECT_DATA = {
         "Referral landing page setup documentation",
         "HubSpot form and workflow foundation"
       ],
-      "resultsItems": [
-        "Module/LP scope aligned to paid traffic already landing"
-      ],
       "goal": "Lift landing-page conversion rate 15–25% on primary paid-traffic entry pages within 30 days of launch.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "B3 speed cleanup incomplete — LCP may suppress conversions",
-        "Form fields and Romina booking path not unified on all LPs",
-        "No baseline conversion rate logged pre-launch"
-      ],
-      "insightsImprovements": [
-        "Mobile is majority device mix — LP must load <3s (B3 dependency)",
-        "Use same UTM naming as A8 dashboard before go-live",
-        "One primary CTA per page — book consult, not menu of links"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Paid LP traffic already landing",
-        "leadsImpacted": 80,
-        "leadsConnected": 12,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1782,30 +1272,10 @@ window.PROJECT_DATA = {
         "intake",
         "creative"
       ],
-      "resultsItems": [
-        "Case win log scope defined"
-      ],
       "goal": "Publish 6+ case-win proof points and lift on-site trust signals to improve consult conversion 5–10%.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Attorney approval queue for client stories not scheduled",
-        "No baseline conversion rate on pav.law consult pages"
-      ],
-      "insightsImprovements": [
-        "Social proof reduces CPL indirectly — track consult rate not just clicks",
-        "Sync wins to B10 directory profiles and A7 social calendar"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Proof-content readers → consult uplift",
-        "leadsImpacted": 40,
-        "leadsConnected": 8,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1849,31 +1319,10 @@ window.PROJECT_DATA = {
         "intake",
         "creative"
       ],
-      "resultsItems": [
-        "Pavi chat QA scope defined for after-hours intake"
-      ],
       "goal": "Capture after-hours form fills and chat leads with <5 min first response during pilot hours.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "HubSpot chat routing to Romina not verified after hours",
-        "B2 phone menus must align with chat handoff",
-        "No baseline after-hours lead volume"
-      ],
-      "insightsImprovements": [
-        "After-hours leads are high intent — speed-to-lead metric is critical",
-        "Log chat source in HubSpot for A8 channel table"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "After-hours chat/form captures",
-        "leadsImpacted": 15,
-        "leadsConnected": 10,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1915,30 +1364,10 @@ window.PROJECT_DATA = {
         "intake",
         "creative"
       ],
-      "resultsItems": [
-        "Spend audit scope defined — QuickBooks + card statements"
-      ],
       "goal": "Recover $200+/mo in duplicate or unused subscriptions within 30 days of audit delivery.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Card access and QuickBooks categorization pending",
-        "No baseline subscription inventory"
-      ],
-      "insightsImprovements": [
-        "Not lead-gen — efficiency dollars can fund B2 or A8",
-        "Cross-check HubSpot tier vs actual seat usage"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Cost savings — not lead attribution",
-        "leadsImpacted": 0,
-        "leadsConnected": 0,
-        "clientsRetained": 0
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -1982,39 +1411,10 @@ window.PROJECT_DATA = {
         "intake",
         "creative"
       ],
-      "resultsItems": [
-        "Period: July 4, 2026 holiday window",
-        "Source: A3 campaign send · HubSpot",
-        "Consulting fee charged: $1,200 (packaged under B13 HubSpot Marketing Setup)",
-        "Media / partner spend: —",
-        "Volume: ~850 list · ~120 connected / wave (impact estimates)",
-        "Efficiency: Target &lt;$50 cost per booked consult",
-        "Outcome: Pre-holiday safety + post-holiday charge guide shipped · Romina booking path in every email",
-        "Status vs goal: Completed campaign · ROI logging still weak without full UTM→consult chain"
-      ],
       "goal": "Drive 2–4 re-engaged consults from past-client list around July 4 window at <$50 cost per booked consult.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "List hygiene and segment size not logged in Results — add before next holiday send",
-        "No HubSpot workflow tying email click → task → consult outcome",
-        "ROI difficult to isolate without UTM on booking link"
-      ],
-      "insightsImprovements": [
-        "Pattern-interrupt subject lines worked for engagement — reuse for Thanksgiving/New Year windows",
-        "Next round: split test subject line vs send time; log list size and consult count in ## Results",
-        "Pair with B5 mailer for households that do not open email"
-      ],
-      "impactEstimates": {
-        "period": "wave",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Past-client list ~850 · holiday open rate ~14% est.",
-        "leadsImpacted": 850,
-        "leadsConnected": 120,
-        "clientsRetained": 2
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2058,32 +1458,10 @@ window.PROJECT_DATA = {
         "Marketing strategy shift recommendation",
         "Revenue-channel planning framework"
       ],
-      "resultsItems": [
-        "Marketing strategy shift recommendation delivered",
-        "Revenue-channel planning framework completed",
-        "Priority stack agreed: Military + NTGUILT growth, pause waste campaigns"
-      ],
       "goal": "Deliver one ranked 30-day action list with defer/cut lines so consulting spend does not scatter across 8+ channels.",
       "informationNeeded": [
         "Confirm estimated leads gained"
       ],
-      "blockers": [
-        "Execution spread — B2/B3/A8 still WIP while new campaigns queue",
-        "No quarterly re-audit scheduled"
-      ],
-      "insightsImprovements": [
-        "Audit value decays without KPI dashboard — A8 is force multiplier",
-        "Next round: 60-day checkpoint with actual cost/call and referral CPL"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Strategy audit — measures execution compliance not leads",
-        "leadsImpacted": 0,
-        "leadsConnected": 0,
-        "clientsRetained": 0
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2137,30 +1515,11 @@ window.PROJECT_DATA = {
         "QR + HubSpot capture path",
         "Follow-up toolkit for Romina/Casey"
       ],
-      "resultsItems": [
-        "Period: —",
-        "Source: May 10–29, 2026 emails · NTGUILT Partnerships.eml",
-        "Consulting fee charged: $2,500 listed (activation ops)",
-        "Media / partner spend: Client reserved ~$3,000–$6,000 activation inside ~$20,000 monthly plan · PPIR sponsorship ~$20,000 season (client)",
-        "Volume: —",
-        "Efficiency: —",
-        "Outcome: Strategy and checklist issued; lead capture not logged as complete",
-        "Status vs goal: Not started on measurement"
-      ],
       "goal": "Each activated event produces logged leads in HubSpot within 48 hours with source = event/UTM, not anonymous booth traffic.",
       "informationNeeded": [
         "Confirm remaining 2026 event calendar and which weekends need full activation",
         "AB - Q: Cap event activation at $3k or $6k for next event?"
       ],
-      "blockers": [
-        "Partner staff (A16) still open for ASCEND coverage",
-        "HubSpot event source field not confirmed"
-      ],
-      "insightsImprovements": [
-        "Do not treat events as awareness-only after PPIR spend",
-        "Turn down LSA slightly on event weekends if Romina phone capacity is the constraint (May 16 note)"
-      ],
-      "impactEstimates": null,
       "abQuestions": [
         "Cap event activation at $3k or $6k for next event?"
       ],
@@ -2215,28 +1574,11 @@ window.PROJECT_DATA = {
         "Lead-share workflow into HubSpot within 48 hours",
         "Giveaway entry form fields"
       ],
-      "resultsItems": [
-        "Period: May 16, 2026 proposal date",
-        "Source: NTGUILT Partnerships.eml",
-        "Consulting fee charged: $800 listed",
-        "Media / partner spend: Partner giveaways $600–$1,000 (Bailey’s) · Pav PPIR sponsorship already sunk (~$20k)",
-        "Volume: —",
-        "Efficiency: —",
-        "Outcome: Proposal delivered for 2026 ASCEND; archived seasonal — reopen as Garage Partnership summer 2027",
-        "Status vs goal: Archived · next summer"
-      ],
       "goal": "Signed partner contribution before ASCEND (or next equivalent event) with written giveaway + lead-share rules.",
       "informationNeeded": [
         "AB - Q: Did Bailey’s accept, decline, or counter the $600–$1,000 ask?",
         "Confirm ASCEND staffing names (Mo / Bailey)"
       ],
-      "blockers": [
-        "No written acceptance on file in this review set"
-      ],
-      "insightsImprovements": [
-        "Repeat co-host template for future events even if Bailey’s only supplies prizes"
-      ],
-      "impactEstimates": null,
       "abQuestions": [
         "Did Bailey’s accept, decline, or counter the $600–$1,000 ask?"
       ],
@@ -2289,27 +1631,10 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "_"
       ],
-      "resultsItems": [
-        "Period: Apr 19, 2026 – Apr 26, 2026 window",
-        "Source: Next Steps Systems Audit emails · PAV-LAW-PROJECT-TRACKER-SHEET.csv",
-        "Consulting fee charged: $2,000 (triage fee quoted Apr 19)",
-        "Media / partner spend: —",
-        "Volume: —",
-        "Efficiency: Tracker fee band also lists $1,500–$2,500 for access audit line",
-        "Outcome: Access path in place for Ads/LSA/GBP/GA/MyCase work",
-        "Status vs goal: Completed"
-      ],
       "goal": "Admin access documented and cleansed for Google Ads/LSA, GBP, Analytics, Bluehost, WordPress, MyCase with risks flagged.",
       "informationNeeded": [
         "_"
       ],
-      "blockers": [
-        "_"
-      ],
-      "insightsImprovements": [
-        "Re-audit when staffing changes or new tools (VoIP, HubSpot seats)"
-      ],
-      "impactEstimates": null,
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2357,27 +1682,10 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "_"
       ],
-      "resultsItems": [
-        "Period: Apr 14, 2026 – Apr 2026 resolution window",
-        "Source: Urgent Email Outage Resolution.eml · Systems Audit outline · tracker",
-        "Consulting fee charged: $1,500 listed (tracker bands $1,500–$3,000 triage · $750–$1,500 docs)",
-        "Media / partner spend: —",
-        "Volume: Firm-wide inbound impact (all employees)",
-        "Efficiency: —",
-        "Outcome: Documented resolution path; similar prior outages noted in intake email",
-        "Status vs goal: Completed"
-      ],
       "goal": "Inbound mail restored and a reusable runbook exists for MX/DNS / Workspace routing failures.",
       "informationNeeded": [
         "_"
       ],
-      "blockers": [
-        "_"
-      ],
-      "insightsImprovements": [
-        "Keep marketing tool integration map updated after every stack change (VoIP, HubSpot, DNS)"
-      ],
-      "impactEstimates": null,
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2426,27 +1734,10 @@ window.PROJECT_DATA = {
         "Creative from A2 prompt library",
         "Landing destination (NTGuilt.com vs pav.law contact)"
       ],
-      "resultsItems": [
-        "Period: —",
-        "Source: May 16, 2026 strategy email",
-        "Consulting fee charged: $600 listed",
-        "Media / partner spend: $500 client + $500 promo credit (proposed)",
-        "Volume: —",
-        "Efficiency: —",
-        "Outcome: Proposed; launch not confirmed",
-        "Status vs goal: Not started"
-      ],
       "goal": "Complete one 30-day Reddit flight with UTMs and ≥10 site sessions per $100 combined spend+credit without policy rejection.",
       "informationNeeded": [
         "AB - Q: Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
-      "blockers": [
-        "NTGuilt.com lightweight site mentioned in May 10 strategy — confirm live"
-      ],
-      "insightsImprovements": [
-        "Best as post-event retargeting, not primary intake"
-      ],
-      "impactEstimates": null,
       "abQuestions": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
@@ -2502,32 +1793,10 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Romina event social support role defined in summer campaign doc — not yet HubSpot-connected"
       ],
-      "resultsItems": [
-        "HubSpot social scope defined",
-        "INDEX note: merge with A7 to avoid duplicate calendars"
-      ],
       "goal": "Post 8–12 firm-safe items/month across connected channels with approval workflow and UTM on every link.",
       "informationNeeded": [
         "_Add:_"
       ],
-      "blockers": [
-        "Overlap with A7 NTGUILT social — needs single owner",
-        "Andrew approval turnaround not SLA'd",
-        "Profiles outdated until B10 completes"
-      ],
-      "insightsImprovements": [
-        "Consolidate A7+B8 into one content calendar",
-        "Every link uses B10 UTM pattern for GA4 KPI #18"
-      ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Social post reach/mo",
-        "leadsImpacted": 300,
-        "leadsConnected": 45,
-        "clientsRetained": 0.1
-      },
       "abQuestions": [],
       "kpiRefs": []
     },
@@ -2619,20 +1888,10 @@ window.PROJECT_DATA = {
       ],
       "informationNeeded": [
         "Define measurable Goal",
-        "Add Results — baseline vs current metrics",
         "Confirm estimated leads gained",
         "Link KPI dashboard rows",
         "Link KPI dashboard rows (KPI links section)"
       ],
-      "impactEstimates": {
-        "period": "mo",
-        "asOf": "2026-07-11",
-        "source": "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md",
-        "note": "Same KPI set — retainer reporting refresh",
-        "leadsImpacted": 124,
-        "leadsConnected": 86,
-        "clientsRetained": 9
-      },
       "abQuestions": [],
       "kpiRefs": []
     }

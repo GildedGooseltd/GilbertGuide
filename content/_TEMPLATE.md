@@ -57,7 +57,7 @@ One measurable outcome for this campaign (consult volume, cost/call, conversion 
 
 ## Information needed
 
-Open items for Kate / Andrew — not execution blockers (those go in Blockers).
+Open items for Kate / Andrew.
 
 - _Add:_
 
@@ -68,46 +68,6 @@ Open items for Kate / Andrew — not execution blockers (those go in Blockers).
 ## Completed
 
 - Already finished work — one deliverable per bullet
-
-## Results
-
-Fill every line. Use `—` if not applicable. Keep numbers dated.
-
-- Period:
-- Source:
-- Consulting fee charged:
-- Media / partner spend:
-- Volume:
-- Efficiency:
-- Outcome:
-- Status vs goal:
-
-Example:
-
-- Period: May 1, 2026 – May 18, 2026
-- Source: Client email May 19, 2026 · Google Ads + LSA
-- Consulting fee charged: Covered under RETAINER
-- Media / partner spend: $11,650 (client platform spend)
-- Volume: 628 clicks · 19 phone calls · 21 LSA charged leads
-- Efficiency: ~$67/call Military baseline (May full month sample elsewhere)
-- Outcome: Andrew approved ~20% spend increase; trust >$67k toward $100k month
-- Status vs goal: On pace for ~$20k month ad spend
-
-## Blockers (next round)
-
-- What blocked the next improvement cycle
-
-## Insights & improvements
-
-- What worked · what to fix · what to do differently next round
-
-## Impact estimates
-
-- Leads impacted: ~36 /mo (as of YYYY-MM-DD)
-- Leads connected: ~25 /mo
-- Clients retained: ~1.8 /mo
-- Source: Ad Reports export path or HubSpot pull
-- Note: optional context for this campaign
 
 ## Fee note (optional)
 
