@@ -74,9 +74,8 @@
   }
 
   function readReviewerFromUi() {
-    const nameEl = document.getElementById("metrics-reviewer-name");
     const stored = loadReviewer();
-    return saveReviewer(nameEl ? nameEl.value : stored.name, stored.email);
+    return saveReviewer(stored.name || "", stored.email || "");
   }
 
   function persistFeedbackLocal() {
@@ -159,19 +158,25 @@
     return out;
   }
 
+  function entryHasContent(e) {
+    return !!(e && (e.verdict || String(e.comment || "").trim()));
+  }
+
   function scoreTotals() {
     let up = 0;
     let down = 0;
+    let notes = 0;
     Object.values(state.feedback).forEach(e => {
       if (e?.verdict === "thumbs_up") up += 1;
       else if (e?.verdict === "thumbs_down") down += 1;
+      if (String(e?.comment || "").trim()) notes += 1;
     });
-    return { up, down, net: up - down, rated: up + down };
+    return { up, down, net: up - down, rated: up + down, notes };
   }
 
   function feedbackItems() {
     return state.targets
-      .filter(t => state.feedback[t.id]?.verdict)
+      .filter(t => entryHasContent(state.feedback[t.id]))
       .map(t => ({
         id: t.id,
         label: t.label,
@@ -209,70 +214,44 @@
       "Period: " + (report.period || "—") + " · as of " + (report.asOf || "—"),
       "Score: " + report.scores.up + " up · " + report.scores.down + " down · net " +
         (report.scores.net >= 0 ? "+" : "") + report.scores.net +
-        " (" + report.scores.rated + " rated)",
+        " (" + report.scores.rated + " rated · " + (report.scores.notes || 0) + " notes)",
       "",
-      "Votes:"
+      "Feedback:"
     ];
     if (!report.feedback.length) {
       lines.push("(none yet)");
     } else {
       report.feedback.forEach(item => {
-        const mark = item.verdict === "thumbs_up" ? "👍" : "👎";
+        const mark = item.verdict === "thumbs_up" ? "👍" : item.verdict === "thumbs_down" ? "👎" : "•";
         lines.push(mark + " " + (item.label || item.id));
+        if (item.comment && String(item.comment).trim()) {
+          lines.push("  Note: " + String(item.comment).trim());
+        }
       });
     }
     lines.push("", "— pasted from Gilbert Guide");
     return lines.join("\n");
   }
 
-  async function copyReport() {
-    const report = buildReport();
-    if (!report.feedbackCount) {
-      showToast("Rate at least one card first.", "err");
-      return;
-    }
-    const text = buildPlainText(report);
-    try {
-      await navigator.clipboard.writeText(text);
-      showToast("Copied score report — paste into email/Slack/notes.", "ok");
-    } catch {
-      // Fallback: select a temporary textarea
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.left = "-9999px";
-      document.body.appendChild(ta);
-      ta.select();
-      try {
-        document.execCommand("copy");
-        showToast("Copied score report — paste into email/Slack/notes.", "ok");
-      } catch {
-        showToast("Could not copy — use Download instead.", "err");
-      }
-      ta.remove();
-    }
-  }
-
   function downloadReport() {
     const report = buildReport();
     if (!report.feedbackCount) {
-      showToast("Rate at least one card first.", "err");
+      showToast("Add a thumb or comment on at least one card first.", "err");
       return;
     }
     const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
-    const who = (report.submitterName || "reviewer").replace(/[^\w.-]+/g, "_").slice(0, 40);
     a.href = URL.createObjectURL(blob);
-    a.download = "gilbert-kpi-ratings-" + who + "-" + Date.now() + ".json";
+    a.download = "gilbert-feedback-report-" + Date.now() + ".json";
     a.click();
     URL.revokeObjectURL(a.href);
-    showToast("Downloaded JSON score file.", "ok");
+    showToast("Downloaded feedback report.", "ok");
   }
 
   function emailReport() {
     const report = buildReport();
     if (!report.feedbackCount) {
-      showToast("Rate at least one card first.", "err");
+      showToast("Add a thumb or comment on at least one card first.", "err");
       return;
     }
     const subject = "Gilbert KPI ratings — " +
@@ -294,29 +273,18 @@
     bar.className = "kpi-rating-bar";
     bar.innerHTML =
       '<div class="kpi-rating-bar-main">' +
-      '<label class="kpi-rating-name">Your name ' +
-      '<input type="text" id="metrics-reviewer-name" placeholder="optional" autocomplete="name">' +
-      "</label>" +
       '<p class="kpi-rating-score" id="kpi-rating-score" aria-live="polite"></p>' +
       '<div class="kpi-rating-actions">' +
-      '<button type="button" class="kpi-rating-action" id="kpi-rating-copy">Copy report</button>' +
-      '<button type="button" class="kpi-rating-action" id="kpi-rating-download">Download JSON</button>' +
-      '<button type="button" class="kpi-rating-action kpi-rating-action-primary" id="kpi-rating-email">Email Kate</button>' +
+      '<button type="button" class="kpi-rating-action kpi-rating-action-primary" id="kpi-rating-download">Download Feedback Report</button>' +
+      '<button type="button" class="kpi-rating-action" id="kpi-rating-email">Email Kate</button>' +
       "</div>" +
       "</div>" +
-      '<p class="kpi-rating-hint">Thumbs save on this device. Use Copy / Download / Email to send the score log — no Google Sheet.</p>' +
+      '<p class="kpi-rating-hint">Thumbs and comments save on this device. Download or email the feedback report when done.</p>' +
       '<p class="kpi-rating-toast" id="kpi-rating-toast" aria-live="polite"></p>';
     const root = panel.querySelector(".kpi-report-root");
     if (root) panel.insertBefore(bar, root);
     else panel.prepend(bar);
 
-    const who = loadReviewer();
-    const nameEl = document.getElementById("metrics-reviewer-name");
-    if (nameEl && who.name) nameEl.value = who.name;
-    nameEl?.addEventListener("change", () => {
-      saveReviewer(nameEl.value, loadReviewer().email || "");
-    });
-    document.getElementById("kpi-rating-copy")?.addEventListener("click", copyReport);
     document.getElementById("kpi-rating-download")?.addEventListener("click", downloadReport);
     document.getElementById("kpi-rating-email")?.addEventListener("click", emailReport);
   }
@@ -329,7 +297,8 @@
     const total = state.targets.length;
     el.innerHTML =
       `<strong>${t.up}</strong> 👍 · <strong>${t.down}</strong> 👎 · net <strong>${t.net >= 0 ? "+" : ""}${t.net}</strong>` +
-      ` · <span>${t.rated} of ${total} rated</span>`;
+      ` · <span>${t.rated} of ${total} rated</span>` +
+      (t.notes ? ` · <span>${t.notes} with notes</span>` : "");
   }
 
   function showToast(msg, kind) {
@@ -365,6 +334,15 @@
         `<button type="button" class="kpi-rate-btn kpi-rate-down" data-rate="down" data-rate-id="${escapeHtml(t.id)}" title="Thumbs down" aria-label="Thumbs down for ${escapeHtml(t.label)}">👎</button>`;
       wrap.appendChild(btns);
     }
+    let note = wrap.querySelector(":scope > .kpi-rate-note");
+    if (!note) {
+      note = document.createElement("label");
+      note.className = "kpi-rate-note";
+      note.innerHTML =
+        `<span class="kpi-rate-note-label">Comment</span>` +
+        `<textarea class="kpi-rate-comment" data-comment-id="${escapeHtml(t.id)}" rows="2" placeholder="Optional note on this box…"></textarea>`;
+      wrap.appendChild(note);
+    }
     t.el.classList.add("feedback-target");
     t.el.dataset.feedbackFor = t.id;
   }
@@ -377,34 +355,63 @@
       const entry = state.feedback[t.id];
       wrap.classList.toggle("has-feedback-ok", entry?.verdict === "thumbs_up");
       wrap.classList.toggle("has-feedback-flag", entry?.verdict === "thumbs_down");
+      wrap.classList.toggle("has-feedback-note", !!(entry?.comment && String(entry.comment).trim()));
       wrap.querySelectorAll(".kpi-rate-btn").forEach(btn => {
         const v = btn.dataset.rate === "up" ? "thumbs_up" : "thumbs_down";
         btn.classList.toggle("is-selected", entry?.verdict === v);
         btn.setAttribute("aria-pressed", entry?.verdict === v ? "true" : "false");
       });
+      const ta = wrap.querySelector(".kpi-rate-comment");
+      if (ta && document.activeElement !== ta) {
+        ta.value = entry?.comment || "";
+      }
     });
+  }
+
+  function saveComment(id, text) {
+    const comment = String(text || "").trim();
+    const prev = state.feedback[id] || {};
+    if (!comment && !prev.verdict) {
+      delete state.feedback[id];
+      persistFeedbackLocal();
+      return;
+    }
+    state.feedback[id] = {
+      ...prev,
+      comment,
+      updatedAt: new Date().toISOString()
+    };
+    if (!state.feedback[id].verdict) {
+      delete state.feedback[id].score;
+      delete state.feedback[id].label;
+    }
+    persistFeedbackLocal();
   }
 
   function rateTarget(id, direction) {
     const meta = VERDICTS[direction];
     if (!meta) return;
     const prev = state.feedback[id];
-    const entry = {
-      verdict: meta.id,
-      score: meta.score,
-      label: meta.label,
-      comment: prev?.comment || "",
-      updatedAt: new Date().toISOString()
-    };
+    const comment = prev?.comment || "";
     if (prev?.verdict === meta.id) {
-      delete state.feedback[id];
+      if (comment.trim()) {
+        state.feedback[id] = { comment, updatedAt: new Date().toISOString() };
+      } else {
+        delete state.feedback[id];
+      }
       persistFeedbackLocal();
       showToast("Cleared vote (this browser).");
       return;
     }
-    state.feedback[id] = entry;
+    state.feedback[id] = {
+      verdict: meta.id,
+      score: meta.score,
+      label: meta.label,
+      comment,
+      updatedAt: new Date().toISOString()
+    };
     persistFeedbackLocal();
-    showToast("Saved on this device. Copy / Download / Email when done.", "ok");
+    showToast("Saved on this device. Download or email when done.", "ok");
   }
 
   function bindClicks() {
@@ -419,6 +426,16 @@
       const dir = btn.dataset.rate;
       if (id && dir) rateTarget(id, dir);
     });
+    document.addEventListener("change", e => {
+      const ta = e.target.closest(".kpi-rate-comment");
+      if (!ta) return;
+      saveComment(ta.dataset.commentId, ta.value);
+    });
+    document.addEventListener("blur", e => {
+      const ta = e.target.classList?.contains("kpi-rate-comment") ? e.target : null;
+      if (!ta || !ta.dataset?.commentId) return;
+      saveComment(ta.dataset.commentId, ta.value);
+    }, true);
   }
 
   function refresh() {
@@ -463,7 +480,6 @@
     getScores: scoreTotals,
     getFeedback: () => ({ ...state.feedback }),
     buildReport,
-    copyReport,
     downloadReport,
     emailReport
   };
