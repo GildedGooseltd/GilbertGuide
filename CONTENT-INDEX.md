@@ -55,7 +55,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Ask Gilbert + Pav Priorities (merged)              | `index.html` + `app.js`                           | `#do-next-panel.pav-priorities-merged` — survey left, priorities right      |
 | Ask Gilbert quick survey                           | `app.js`                                          | `GILBERT_SURVEY` / `renderGilbertSurvey()` — not free chat                  |
 | “Best to do next” (scored shortlist)               | `app.js`                                          | `renderDoNextPanel()` — ranked from survey `goalText`                       |
-| “Pav Priorities” panel title                       | `app.js`                                          | `renderDoNextPanel()` → `h3` inside `#do-next-panel`                        |
+| “Pav's Priority Project Picklist” panel title    | `app.js`                                          | `renderDoNextPanel()` → `h3` inside `#do-next-panel`                        |
 | Pav Priorities cart (project names only)           | `app.js`                                          | `buildPrioritiesCartHtml()` — **no fees** in top panel                      |
 | Action items list                                  | `app.js`                                          | `buildActionItems()` — shown on **confirm page** only                       |
 | Next steps (confirm page)                          | `app.js`                                          | `buildConfirmNextStepsHtml()`, `formatNextStepsText()`                      |
@@ -70,7 +70,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Each table row title & blurb                       | `projects-data.js`                                | Built from `content/projects/*.md` + `content/INDEX.md` titles              |
 | Zone label “Project details”                       | `index.html`                                      | `.picker-zone-cards .picker-zone-label`                                     |
 | “Expand All”                                       | `index.html`                                      | `#expand-all-projects` label                                                |
-| “Review plan & submit”                           | `app.js`                                          | `renderDoNextPanel()` → `#continue-to-confirm`                              |
+| “Review Plan”                                    | `app.js`                                          | `renderDoNextPanel()` → `#continue-to-confirm`                              |
 | Project cards (all body copy)                      | `content/projects/{ID}.md`, `content/retainer.md` | See [CONTENT-EDIT.md](CONTENT-EDIT.md) sections                             |
 | Card status badges (WIP, completed, …)             | `content/INDEX.md`                                | **Status** column overrides file                                            |
 | AB – Q question text                               | `content/projects/{ID}.md`                        | `AB - Q:` block                                                             |
