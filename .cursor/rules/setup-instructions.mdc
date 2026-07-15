@@ -32,7 +32,7 @@ See `clarity-accuracy-first.mdc` for non-negotiable clarity rules. See `fail-ass
 ## Product-specific
 
 6. **Verify UI paths** for Google, QuickBooks, GitHub before writing — do not guess.
-7. **Pav Law project picker:** repo **`GildedGooseltd/PickyPavi`** → GitHub Actions → `gh-pages` → live `https://gildedgooseltd.github.io/PickyPavi/`. Secrets live in **PickyPavi** only (never GilbertGuide). Injected file is **`pages-config.js`** (not `config.js`). Webhook = Apps Script `/exec`; deposit = QuickBooks — never swap. Owner one-pager: `owner-webhook-setup.html`.
+7. **Pav Law project picker (Gilbert Guide):** repo **`GildedGooseltd/GilbertGuide`** → GitHub Actions → `gh-pages` → live `https://gildedgooseltd.github.io/GilbertGuide/`. Secrets live in **GilbertGuide** only. Injected file is **`pages-config.js`** (not `config.js`). Webhook = Apps Script `/exec`; deposit = QuickBooks — never swap. Owner one-pager: `owner-webhook-setup.html`.
 8. **Backend vs content:** setup → `*-SETUP.md` only; copy edits → `content/**/*.md` only (not `projects-data.js`).
 
 When she corrects a workflow, update the project `*-SETUP.md` in the same session.

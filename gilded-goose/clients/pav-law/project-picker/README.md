@@ -2,7 +2,7 @@
 
 Guide character: **Lord Gilbert Granville** (Gilbert).
 
-GitHub: [GildedGooseltd/PickyPavi](https://github.com/GildedGooseltd/PickyPavi) · Live: `https://gildedgooseltd.github.io/PickyPavi/`
+GitHub: [GildedGooseltd/GilbertGuide](https://github.com/GildedGooseltd/GilbertGuide) · Live: `https://gildedgooseltd.github.io/GilbertGuide/`
 
 Static project picker: budget filters, cards, notes, submit → Sheet + email.
 
