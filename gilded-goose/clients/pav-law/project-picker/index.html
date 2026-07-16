@@ -1604,7 +1604,11 @@
     .completed-report-out-footnote {
       margin: 0.75rem 0 0; font-size: var(--font-min-rem); color: var(--secondary); font-style: italic;
     }
-    .revenue-calculator .pav-priorities-scroll { max-width: 56rem; }
+    .revenue-calculator .pav-priorities-scroll { max-width: 56rem; margin-top: 0.35rem; }
+    .revenue-calculator .empty-state {
+      padding: 0.75rem 0.85rem; border: 1px dashed var(--gg-royal-border);
+      border-radius: var(--radius); background: var(--gg-cream-panel);
+    }
     .metrics-page-link {
       margin: 0 0 0.75rem; font-size: var(--font-min-rem); font-weight: 700;
     }
@@ -2543,55 +2547,113 @@
     .confirm-payment-options .payment-options-lead {
       margin: 0 0 0.75rem; font-size: 0.88rem; line-height: 1.55; color: var(--gg-brown);
     }
-    .payment-options-empty { margin: 0; font-size: 0.88rem; color: var(--secondary); }
-    .payment-options-scroll { overflow-x: auto; margin-bottom: 0.85rem; }
+    .confirm-payment-options .payment-options-lead code {
+      color: var(--gg-royal); background: var(--gg-gold-dim);
+      padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.82rem;
+    }
+    .payment-options-empty { margin: 0; font-size: 0.88rem; color: var(--secondary); font-style: italic; }
+    .payment-options-scroll {
+      overflow-x: auto; margin-bottom: 0.85rem;
+      border: 1px solid var(--gg-box-border); border-radius: 8px;
+      background: var(--gg-paper); box-shadow: var(--gg-box-shadow);
+    }
     .payment-options-table {
       width: 100%; border-collapse: collapse; font-size: 0.85rem;
     }
     .payment-options-table th {
       text-align: left; font-size: var(--font-min-rem); text-transform: uppercase;
-      letter-spacing: 0.04em; color: var(--gg-royal); font-weight: 700;
-      padding: 0.35rem 0.5rem 0.45rem 0; border-bottom: 2px solid var(--gg-head-accent);
+      letter-spacing: 0.04em; color: var(--gg-royal-deep); font-weight: 800;
+      padding: 0.5rem 0.65rem; border-bottom: 2px solid var(--gg-head-accent);
+      background: linear-gradient(90deg, var(--gg-royal-dim) 0%, var(--gg-cream-panel) 100%);
     }
+    .payment-options-table th.col-fee,
+    .payment-options-table th.col-due,
+    .payment-options-table th.col-remain { text-align: right; }
     .payment-options-table td {
-      padding: 0.45rem 0.5rem 0.45rem 0; border-bottom: 1px solid var(--border);
+      padding: 0.45rem 0.65rem; border-bottom: 1px solid var(--border);
       vertical-align: top; color: var(--gg-brown);
     }
-    .payment-options-table .col-note { font-size: 0.8rem; color: var(--secondary); max-width: 14rem; }
-    .payment-options-totals td {
-      font-weight: 700; border-bottom: none; padding-top: 0.65rem; color: var(--gg-royal-deep);
+    .payment-options-table tbody tr:nth-child(even):not(.payment-options-totals) {
+      background: var(--gg-cream-panel);
     }
+    .payment-options-table .col-fee,
+    .payment-options-table .col-due,
+    .payment-options-table .col-remain {
+      text-align: right; white-space: nowrap;
+      font-variant-numeric: tabular-nums; font-weight: 600;
+    }
+    .payment-options-table .col-due { color: var(--gg-royal); font-weight: 700; }
+    .payment-options-table .col-remain { color: var(--gg-brown-muted); }
+    .payment-options-table .col-note { font-size: 0.8rem; color: var(--secondary); max-width: 14rem; }
+    .payment-options-table tr.payment-options-totals {
+      background: linear-gradient(90deg, var(--gg-gold-dim) 0%, var(--gg-royal-dim) 100%);
+    }
+    .payment-options-totals td {
+      font-weight: 800; border-bottom: none; border-top: 2px solid var(--gg-head-accent);
+      padding-top: 0.65rem; color: var(--gg-royal-deep);
+    }
+    .payment-options-totals .col-due,
+    .payment-options-totals .col-remain { color: var(--gg-royal-deep); }
     .payment-schedule-block {
-      margin-top: 0.85rem; padding-top: 0.85rem;
-      border-top: 1px solid var(--border);
+      margin-top: 1rem; padding: 0.85rem 0.95rem 1rem;
+      border: 1px solid var(--gg-box-border); border-left: 4px solid var(--gg-gold-dark);
+      border-radius: var(--radius); background: var(--gg-paper);
+      box-shadow: var(--gg-box-shadow);
     }
     .payment-schedule-heading {
-      margin: 0 0 0.4rem; font-size: 0.95rem; font-weight: 800; color: var(--gg-brown);
+      margin: 0 0 0.5rem; font-size: var(--font-min-rem); font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--gg-royal-deep);
+      border-bottom: 2px solid var(--gg-head-accent); padding-bottom: 0.35rem;
     }
     .payment-calc-lead {
-      font-size: 0.85rem; color: var(--secondary); margin: 0 0 0.65rem; line-height: 1.45;
+      font-size: 0.85rem; color: var(--gg-brown-muted); margin: 0 0 0.65rem; line-height: 1.45;
+    }
+    .payment-terms-row select.general-note,
+    .payment-terms-row input.general-note {
+      border-color: var(--gg-royal-border); background: var(--gg-cream-panel);
+    }
+    .payment-terms-row select.general-note:focus-visible,
+    .payment-terms-row input.general-note:focus-visible {
+      outline: 2px solid var(--gg-royal-mid); border-color: var(--gg-royal);
+    }
+    .payment-terms-row .sub-label {
+      color: var(--gg-royal); text-transform: uppercase; letter-spacing: 0.04em;
     }
     .payment-calc-breakdown {
       margin: 0.65rem 0 0.35rem; padding: 0.65rem 0.75rem;
-      border: 1px solid var(--border); border-radius: 8px; background: var(--gg-paper);
+      border: 1px solid var(--gg-box-border); border-left: 3px solid var(--gg-gold-dark);
+      border-radius: 8px; background: var(--gg-cream-panel);
     }
-    .payment-calc-empty { margin: 0; font-size: 0.85rem; color: var(--secondary); }
+    .payment-calc-empty { margin: 0; font-size: 0.85rem; color: var(--secondary); font-style: italic; }
     .payment-calc-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     .payment-calc-table th {
-      text-align: left; font-weight: 600; color: var(--secondary); padding: 0.28rem 0.5rem 0.28rem 0;
+      text-align: left; font-weight: 600; color: var(--gg-brown-muted); padding: 0.32rem 0.5rem 0.32rem 0;
       border-bottom: 1px solid var(--border); width: 62%;
     }
     .payment-calc-table td {
-      text-align: right; font-weight: 700; color: var(--gg-brown); padding: 0.28rem 0;
+      text-align: right; font-weight: 700; color: var(--gg-brown); padding: 0.32rem 0;
       border-bottom: 1px solid var(--border); white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
-    .payment-calc-table tr:last-child th,
-    .payment-calc-table tr:last-child td {
-      border-bottom: none; color: var(--gg-royal); font-weight: 800;
+    .payment-calc-table tr.payment-calc-row--deposit td { color: var(--gg-royal); }
+    .payment-calc-table tr.payment-calc-row--surcharge td { color: var(--gg-negative); }
+    .payment-calc-table tr.payment-calc-row--surcharge-none td { color: var(--gg-positive); }
+    .payment-calc-table tr.payment-calc-row--total th,
+    .payment-calc-table tr.payment-calc-row--total td {
+      border-bottom: none; border-top: 2px solid var(--gg-head-accent);
+      padding-top: 0.45rem; color: var(--gg-royal-deep); font-weight: 800;
     }
     .submit-compact textarea.general-note { min-height: 2.5rem; }
-    .invoice-amount-auto[readonly] { opacity: 0.95; cursor: default; color: var(--green); font-weight: 700; }
+    .invoice-amount-auto[readonly] {
+      opacity: 1; cursor: default; color: var(--gg-positive); font-weight: 800;
+      background: var(--gg-forest-dim); border-color: var(--gg-forest);
+    }
     .field-hint { font-size: var(--font-min-rem); color: var(--secondary); margin: 0.35rem 0 0; line-height: 1.45; }
+    #invoice-schedule-hint {
+      padding: 0.5rem 0.65rem; margin-top: 0.5rem;
+      background: rgba(45, 20, 84, 0.06); border-left: 3px solid var(--gg-royal);
+      border-radius: 0 6px 6px 0; color: var(--gg-brown-muted);
+    }
     .submit-actions { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.5rem; }
     .submit-actions .btn { margin: 0; }
     .submit-note { font-size: var(--font-min-rem); color: var(--secondary); margin: 0.5rem 0 0; line-height: 1.5; }
@@ -2610,25 +2672,54 @@
     }
     .confirm-plan-review { margin-bottom: var(--space-md); display: flex; flex-direction: column; gap: 0.75rem; }
     .confirm-review-block {
-      border: 1px solid var(--border);
+      border: 1px solid var(--gg-box-border);
+      border-left: 4px solid var(--gg-royal);
       border-radius: var(--radius);
       background: var(--gg-cream-panel);
       padding: 0.85rem 1rem 1rem;
+      box-shadow: var(--gg-box-shadow);
     }
     .confirm-review-block h3 {
-      margin: 0 0 0.55rem;
+      margin: 0 0 0.65rem;
       font-size: var(--font-min-rem);
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--gg-royal);
+      color: var(--gg-royal-deep);
+      border-bottom: 2px solid var(--gg-head-accent);
+      padding-bottom: 0.35rem;
     }
     .confirm-review-block .action-items-panel {
       margin: 0; padding: 0; border: none; background: transparent;
     }
-    .confirm-priorities-wrap .pav-priorities-table { font-size: 0.875rem; }
+    .confirm-priorities-wrap .pav-priorities-scroll,
+    .revenue-calculator .pav-priorities-scroll {
+      border: 1px solid var(--gg-box-border); border-radius: 8px;
+      background: var(--gg-paper); box-shadow: var(--gg-box-shadow);
+    }
+    .confirm-priorities-wrap .pav-priorities-table,
+    .revenue-calculator .revenue-calc-table { font-size: 0.875rem; }
+    .revenue-calc-table th {
+      background: linear-gradient(90deg, var(--gg-royal-dim) 0%, var(--gg-cream-panel) 100%);
+      border-bottom: 2px solid var(--gg-head-accent);
+      color: var(--gg-royal-deep);
+    }
+    .revenue-calc-table tbody tr:nth-child(even):not(.priorities-totals-row) {
+      background: var(--gg-cream-panel);
+    }
+    .revenue-calc-table td.col-fee {
+      font-variant-numeric: tabular-nums; font-weight: 700; color: var(--gg-royal);
+    }
+    .revenue-calc-table tr.priorities-totals-row {
+      background: linear-gradient(90deg, var(--gg-gold-dim) 0%, var(--gg-royal-dim) 100%);
+    }
+    .revenue-calc-table tr.priorities-totals-row td {
+      border-top-color: var(--gg-head-accent); color: var(--gg-royal-deep);
+    }
     .confirm-review-block .thank-you-roi-box {
-      margin: 0.65rem 0 0; padding: 0; border: none; background: transparent;
+      margin: 0.75rem 0 0; padding: 0.75rem 0.85rem;
+      border: 1px solid rgba(201, 168, 108, 0.35); border-left: 3px solid var(--gg-gold-dark);
+      background: var(--gg-gold-dim); border-radius: 8px;
     }
     .confirm-review-block .thank-you-roi-box h3 { display: none; }
     .confirm-review-block .thank-you-roi-item {
@@ -3072,8 +3163,8 @@
   <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260716-live-fix"></script>
-  <script src="kpi-report.js?v=20260715-source-mix-tables"></script>
+  <script src="kpi-report.js?v=20260716-cases-leads-spend"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260716-clickwrap"></script>
+  <script src="app.js?v=20260716-ggl-payment"></script>
 </body>
 </html>

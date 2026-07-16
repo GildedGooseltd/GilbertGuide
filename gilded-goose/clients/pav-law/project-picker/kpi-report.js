@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260715-source-mix-tables";
+  const RENDER_VER = "20260716-cases-leads-spend";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -29,6 +29,10 @@
     "#28": {
       file: "Ad Reports/exports/mycase/as-of-2026-07-01/contact_report_task_export.csv",
       fields: "Contact group=Client · Pre-Trial Flat Fee / flat / trial / retainer (mean $5,587 · n=142) · see CLIENT-VALUE-BASELINE.md"
+    },
+    "cases-leads-spend": {
+      file: "MyCase new-cases-by-month · LSA leads-inbox · Google account_activities May–Jun 2026",
+      fields: "New cases (Created) · LSA inbox rows · Search + LSA spend excl. starting/ending balance"
     }
   };
   const DATA = {
@@ -145,6 +149,11 @@
     pipeline: [
       { month: "Jun", closed: 11, mom: "+38%" },
       { month: "Jun", rate: "51%", retained: 14 }
+    ],
+    /* Dual-axis: left = counts · right = $ spend. Trust omitted — needs fees-collected. */
+    casesLeadsSpend: [
+      { month: "May", cases: 22, leads: 69, spend: 18919 },
+      { month: "Jun", cases: 34, leads: 83, spend: 21675 }
     ]
   };
 
@@ -394,6 +403,117 @@
       <div class="kpi-chart-plot">${opts.chart || ""}${legend}</div>
       ${table}
     </div>`;
+  }
+
+  /** Dual-axis: cases + LSA leads (left count) · marketing spend (right $). */
+  function dualAxisCasesSpendChart(rows) {
+    const w = 720;
+    const h = 300;
+    const pad = { l: 56, r: 64, t: 36, b: 44 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const leftMax = 100;
+    const rightMax = 25000;
+    const leftY = v => pad.t + plotH * (1 - v / leftMax);
+    const rightY = v => pad.t + plotH * (1 - v / rightMax);
+    const slot = plotW / rows.length;
+    const colors = { cases: "#3a1a6e", leads: "#2d5a3d", spend: "#c45c26" };
+    const leftTicks = [0, 25, 50, 75, 100].map(t => {
+      const y = leftY(t);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${t}</text>
+      </g>`;
+    }).join("");
+    const rightTicks = [0, 5000, 10000, 15000, 20000, 25000].map(t => {
+      const y = rightY(t);
+      const label = t === 0 ? "$0" : `$${t / 1000}k`;
+      return `<text x="${w - pad.r + 8}" y="${y + 4}" class="kpi-chart-axis">${label}</text>`;
+    }).join("");
+    const bars = rows.map((r, i) => {
+      const cx = pad.l + slot * i + slot / 2;
+      const casesY = leftY(r.cases);
+      const leadsY = leftY(r.leads);
+      return `<g>
+        <rect x="${cx - 36}" y="${casesY}" width="28" height="${pad.t + plotH - casesY}" rx="3" fill="${colors.cases}"/>
+        <text x="${cx - 22}" y="${casesY - 6}" text-anchor="middle" class="kpi-chart-total">${r.cases}</text>
+        <rect x="${cx + 8}" y="${leadsY}" width="28" height="${pad.t + plotH - leadsY}" rx="3" fill="${colors.leads}"/>
+        <text x="${cx + 22}" y="${leadsY - 6}" text-anchor="middle" class="kpi-chart-total">${r.leads}</text>
+        <text x="${cx}" y="${h - 14}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
+      </g>`;
+    }).join("");
+    const spendPts = rows.map((r, i) => {
+      const cx = pad.l + slot * i + slot / 2;
+      return `${cx},${rightY(r.spend)}`;
+    }).join(" ");
+    const spendDots = rows.map((r, i) => {
+      const cx = pad.l + slot * i + slot / 2;
+      const cy = rightY(r.spend);
+      return `<g>
+        <circle cx="${cx}" cy="${cy}" r="5" fill="${colors.spend}"/>
+        <text x="${cx}" y="${cy - 10}" text-anchor="middle" class="kpi-chart-total">$${Math.round(r.spend / 1000)}k</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cases and leads vs marketing spend dual-axis chart">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${leftTicks}${rightTicks}${bars}
+      <polyline points="${spendPts}" fill="none" stroke="${colors.spend}" stroke-width="3"/>
+      ${spendDots}
+      <text x="14" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 14 ${pad.t + plotH / 2})" class="kpi-chart-axis">Cases / leads</text>
+      <text x="${w - 12}" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(90 ${w - 12} ${pad.t + plotH / 2})" class="kpi-chart-axis">Spend ($)</text>
+    </svg>`;
+  }
+
+  function casesLeadsSpendLegend() {
+    const items = [
+      { name: "New cases", color: "#3a1a6e" },
+      { name: "LSA leads", color: "#2d5a3d" },
+      { name: "Marketing spend", color: "#c45c26" }
+    ];
+    return channelLegend(items);
+  }
+
+  function casesLeadsSpendTable(rows) {
+    const totals = rows.reduce((a, r) => ({
+      cases: a.cases + r.cases,
+      leads: a.leads + r.leads,
+      spend: a.spend + r.spend
+    }), { cases: 0, leads: 0, spend: 0 });
+    return kpiDetailTable(
+      ["Period", "New cases", "LSA leads", "Marketing spend"],
+      [
+        ...rows.map(r => [
+          escapeHtml(r.month) + " 2026",
+          String(r.cases),
+          String(r.leads),
+          fmtMoney(r.spend)
+        ]),
+        [
+          "May–Jun totals",
+          String(totals.cases),
+          String(totals.leads),
+          fmtMoney(totals.spend)
+        ]
+      ]
+    );
+  }
+
+  function casesLeadsSpendSectionHtml() {
+    const rows = DATA.casesLeadsSpend || [];
+    if (!rows.length) return "";
+    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-cases-leads-spend" data-feedback-label="Cases and leads vs marketing spend">
+      ${kpiSectionStaticHead("Cases and leads vs marketing spend", "Left: counts · Right: $ spend")}
+      <div class="kpi-section-body">
+        <p class="kpi-section-intro">Dual-axis May–Jun 2026. Trust omitted — needs fees-collected (or another accurate cash field) before charting.</p>
+        ${chartBlock({
+          verified: true,
+          chart: dualAxisCasesSpendChart(rows),
+          legend: casesLeadsSpendLegend(),
+          table: casesLeadsSpendTable(rows)
+        })}
+        ${sourceFootnote("cases-leads-spend")}
+      </div>
+    </section>`;
   }
 
   function stackedSeriesDetailTable(series, opts) {
@@ -1161,6 +1281,7 @@
 
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
+      ${casesLeadsSpendSectionHtml()}
       ${feeByPracticeSectionHtml()}
       <section class="kpi-section kpi-section-static" data-feedback-id="section-key-metrics" data-feedback-label="Key metrics">
         ${kpiSectionStaticHead("Key metrics", "")}
