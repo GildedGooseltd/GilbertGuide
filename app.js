@@ -1133,7 +1133,7 @@
       el.innerHTML = `<p class="survey-result-meta">Trail guide unavailable.</p>`;
       return;
     }
-    const waypointLabel = node.step === 1 ? "Trailhead" : "Fork ahead";
+    const waypointLabel = node.step === 1 ? "Trailhead" : "Waypoint";
     el.innerHTML = `<div class="survey-progress">
         <span>${waypointLabel}</span>
         <span class="survey-progress-steps">Waypoint ${node.step} of ${node.steps}</span>
@@ -1642,9 +1642,7 @@
       const stored = normalizeTheme(localStorage.getItem(THEME_STORAGE_KEY));
       if (stored) return stored;
     } catch (e) { /* ignore */ }
-    if (typeof window.matchMedia === "function" && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return THEME_DARK;
-    }
+    /* Preferred presentation: cream unicorn + quiet trail questionnaire */
     return THEME_UNICORN;
   }
 

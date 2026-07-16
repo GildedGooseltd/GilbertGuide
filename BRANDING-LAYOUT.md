@@ -64,7 +64,7 @@ Do **not** put branding hex in project markdown or `projects-data.js`.
 
 ### Themes — Dark ↔ Unicorn
 
-Header toggle switches **`dark`** and **`unicorn`** only (legacy `light` maps to `unicorn`). Preference key `gilbert-guide-theme` in `localStorage`. First visit follows `prefers-color-scheme` (dark → dark, else unicorn). Early head script sets `data-theme` before paint. URL override: `?theme=dark` or `?theme=unicorn`.
+Header toggle switches **`dark`** and **`unicorn`** only (legacy `light` maps to `unicorn`). Preference key `gilbert-guide-theme` in `localStorage`. **Default / preferred: unicorn** (cream + quiet trail questionnaire). Early head script sets `data-theme` before paint. URL override: `?theme=dark` or `?theme=unicorn`.
 
 #### Dark (`html[data-theme="dark"]`)
 
