@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260716-cases-leads-spend";
+  const RENDER_VER = "20260716-cpl-consulting";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -154,7 +154,9 @@
     casesLeadsSpend: [
       { month: "May", cases: 22, leads: 69, spend: 18919 },
       { month: "Jun", cases: 34, leads: 83, spend: 21675 }
-    ]
+    ],
+    /** Estimated consulting retainer included in all-in CPL. */
+    consultingMonthly: 6000
   };
 
   function star(verified) {
@@ -474,13 +476,16 @@
   }
 
   function casesLeadsSpendTable(rows) {
+    const consulting = DATA.consultingMonthly || 0;
     const totals = rows.reduce((a, r) => ({
       cases: a.cases + r.cases,
       leads: a.leads + r.leads,
-      spend: a.spend + r.spend
-    }), { cases: 0, leads: 0, spend: 0 });
-    return kpiDetailTable(
-      ["Period", "New cases", "LSA leads", "Marketing spend"],
+      spend: a.spend + r.spend,
+      consulting: a.consulting + consulting,
+      total: a.total + r.spend + consulting
+    }), { cases: 0, leads: 0, spend: 0, consulting: 0, total: 0 });
+    const volume = kpiDetailTable(
+      ["Period", "New cases", "LSA leads", "Paid media (Search + LSA)"],
       [
         ...rows.map(r => [
           escapeHtml(r.month) + " 2026",
@@ -496,6 +501,37 @@
         ]
       ]
     );
+    const cpl = kpiDetailTable(
+      ["Period", "Paid media", "Consulting", "Total spend", "LSA leads", "CPL (paid only)", "CPL (all-in)", "Cost / case (all-in)"],
+      [
+        ...rows.map(r => {
+          const total = r.spend + consulting;
+          return [
+            escapeHtml(r.month) + " 2026",
+            fmtMoney(r.spend),
+            fmtMoney(consulting),
+            fmtMoney(total),
+            String(r.leads),
+            fmtMoney(r.spend / r.leads),
+            fmtMoney(total / r.leads),
+            fmtMoney(total / r.cases)
+          ];
+        }),
+        [
+          "May–Jun totals",
+          fmtMoney(totals.spend),
+          fmtMoney(totals.consulting),
+          fmtMoney(totals.total),
+          String(totals.leads),
+          fmtMoney(totals.spend / totals.leads),
+          fmtMoney(totals.total / totals.leads),
+          fmtMoney(totals.total / totals.cases)
+        ]
+      ]
+    );
+    return `${volume}
+      <p class="kpi-section-intro" style="margin-top:1rem">Overall cost per lead — all-in = (paid media + consulting ${fmtMoney(consulting)}/mo) ÷ LSA leads.</p>
+      ${cpl}`;
   }
 
   function casesLeadsSpendSectionHtml() {
@@ -504,7 +540,7 @@
     return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-cases-leads-spend" data-feedback-label="Cases and leads vs marketing spend">
       ${kpiSectionStaticHead("Cases and leads vs marketing spend", "Left: counts · Right: $ spend")}
       <div class="kpi-section-body">
-        <p class="kpi-section-intro">Dual-axis May–Jun 2026. Trust omitted — needs fees-collected (or another accurate cash field) before charting.</p>
+        <p class="kpi-section-intro">Dual-axis May–Jun 2026. Trust omitted — needs fees-collected (or another accurate cash field) before charting. Consulting ${fmtMoney(DATA.consultingMonthly || 0)}/mo included in CPL table only.</p>
         ${chartBlock({
           verified: true,
           chart: dualAxisCasesSpendChart(rows),
