@@ -1,8 +1,11 @@
 {
-  "name": "picky-pavi",
+  "name": "gilbert-guide",
   "private": true,
   "scripts": {
     "build": "node scripts/build-picker-data.mjs",
+    "sync-impact": "node scripts/sync-impact-estimates.mjs",
+    "build:with-impact": "node scripts/sync-impact-estimates.mjs && node scripts/build-picker-data.mjs",
+    "validate-data": "node scripts/parse-ads-export.mjs --batch=2026-07-11 --prior=2026-05-30",
     "watch": "node scripts/build-picker-data.mjs --watch",
     "migrate": "node scripts/migrate-to-b2-format.mjs"
   }

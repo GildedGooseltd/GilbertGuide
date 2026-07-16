@@ -5,5 +5,6 @@
 window.PAV_PICKER_CONFIG = Object.assign({}, window.PAV_PICKER_CONFIG || {}, {
   webhookUrl: "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec",
   depositAmount: 2500,
-  quickbooksDepositUrl: "https://pay.intuit.com/YOUR_PAYMENT_LINK"
+  quickbooksDepositUrl: "https://pay.intuit.com/YOUR_PAYMENT_LINK",
+  notifyEmail: "support@gildedgooselimited.com"
 });
