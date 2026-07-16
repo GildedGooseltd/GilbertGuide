@@ -1079,28 +1079,32 @@
   }
 
   function renderGilbertSurvey() {
-    const el = document.getElementById("gilbert-survey");
+    const el = document.getElementById("gilbert-survey-body") || document.getElementById("gilbert-survey");
     if (!el) return;
+    const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
+    const crumbs = pathLabels.length
+      ? `<p class="survey-crumbs">So far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
+      : "";
 
     if (state.surveyDone && state.surveyPath.length) {
       const icons = iconsFromSurveyPath();
       const matchCount = allItemsByPriority().filter(item => itemMatchesIconFilters(item)).length;
-      const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
       const tags = icons.map(id => {
         const def = VALUE_ICON_DEFS.find(d => d.id === id);
         if (!def) return `<span class="survey-tag">${escapeHtml(id)}</span>`;
         return `<span class="survey-tag">${valueIconMarkup(def)}<span>${escapeHtml(def.label)}</span></span>`;
       }).join("");
-      el.innerHTML = `<div class="survey-result">
-        <h3>Your path</h3>
-        <p class="survey-result-path">${escapeHtml(pathLabels.join(" → "))}</p>
+      el.innerHTML = `<div class="survey-progress">
+          <span>Path set</span>
+          <span class="survey-progress-steps">Done</span>
+        </div>
+        ${crumbs}
         <p class="survey-result-meta">Filtering Project Outlines to <strong>${matchCount}</strong> match${matchCount === 1 ? "" : "es"}. Pick from the table below, or refine with value icons.</p>
         <div class="survey-result-tags">${tags}</div>
         <div class="survey-actions">
           <button type="button" class="btn btn-primary" id="survey-jump-toc">See matching projects</button>
           <button type="button" class="btn btn-secondary" id="survey-restart">Start over</button>
-        </div>
-      </div>`;
+        </div>`;
       el.querySelector("#survey-restart")?.addEventListener("click", () => resetSurvey(true));
       el.querySelector("#survey-jump-toc")?.addEventListener("click", () => {
         const toc = document.getElementById("project-toc");
@@ -1122,6 +1126,7 @@
         <span>Gilbert path</span>
         <span class="survey-progress-steps">Step ${node.step} of ${node.steps}</span>
       </div>
+      ${crumbs}
       <p class="survey-prompt">${escapeHtml(node.prompt)}</p>
       <div class="survey-choices">${node.choices.map(c =>
         `<button type="button" class="survey-choice" data-choice="${escapeHtml(c.id)}">
@@ -1129,7 +1134,7 @@
           ${c.hint ? `<span class="survey-choice-hint">${escapeHtml(c.hint)}</span>` : ""}
         </button>`
       ).join("")}</div>
-      ${state.surveyPath.length ? `<div class="survey-actions" style="margin-top:0.85rem"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Back</button></div>` : ""}`;
+      ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Back</button></div>` : ""}`;
     el.querySelectorAll(".survey-choice").forEach(btn => {
       btn.addEventListener("click", () => selectSurveyChoice(btn.dataset.choice));
     });

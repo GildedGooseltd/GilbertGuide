@@ -35,11 +35,13 @@ Do **not** put branding hex in project markdown or `projects-data.js`.
 | `--gg-cream-panel` | `#f3ede4` | Nested panels, TOC zebra |
 | `--gg-paper` | `#fffcf7` | Cards, inputs (`--surface`) |
 | `--gg-brown` / `--gg-brown-muted` | `#3d3028` / `#5c4f45` | Body / secondary text |
-| `--gg-royal-deep` | `#2d1454` | Hero title, deep accents |
-| `--gg-royal` | `#3a1a6e` | Headings, primary actions |
-| `--gg-royal-mid` | `#4c1d95` | Focus, TLDR rail, mid accents |
-| `--gg-royal-light` | `#6b4fa0` | Soft royal (no neon purple) |
-| `--gg-royal-dim` / `--gg-royal-border` | rgba deep royal | Selected wash / borders |
+| `--gg-royal-deep` | `#3d3028` | Titles (alias of brown — **no navy**) |
+| `--gg-royal` | `#5c4010` | Dark gold-brown accents |
+| `--gg-royal-mid` | `#b8860b` | Gold mid accents / rails |
+| `--gg-royal-light` | `#c9a86c` | Soft gold |
+| `--gg-royal-dim` / `--gg-royal-border` | gold wash / border | Selected wash / borders |
+
+**Forbidden accents:** navy, blue-purple (`#2d1454`, `#3a1a6e`, `#4c1d95`, neon purple). Brand spine is cream / gold / brown only.
 | `--gg-gold-dim` | gold wash | Selected TOC rows |
 | `--focus-ring` | gold glow | `:focus-visible` on controls |
 | `--space-sm/md/lg/xl` | 0.75 / 1.25 / 2 / 2.75 rem | Spacing scale |
