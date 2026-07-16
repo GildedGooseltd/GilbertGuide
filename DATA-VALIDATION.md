@@ -25,7 +25,7 @@
 | LSA inbox | Jun 2026 charged | ✅ | File 39 vs PERFORMANCE-REVIEW 39 |
 | LSA inbox | Jul 2026 lead count | ✅ | File 26 vs PERFORMANCE-REVIEW 26 |
 | LSA inbox | Jul 2026 charged | ✅ | File 6 vs PERFORMANCE-REVIEW 6 |
-| KPI #01 | LSA channel (41 in UI) | ⚠️ | UI uses 41/mo — Jun file has 83 total LSA rows. Lock definition (charged vs all phone) before marking verified |
+| KPI #01 | LSA channel (41 in UI) | ⚠️ | UI uses 41/mo — Jun file has 83 total LSA rows. Lock definition (charged vs all phone) before wiring ★ |
 | KPI #01 | Channel sum | ✅ | Search 54 + LSA 41 + HubSpot 29 = 124 vs total 124 |
 | KPI #01 | HubSpot slice | ⬜ | 29 forms — no HubSpot export on file to verify |
 | KPI #02 | New cases (9) | ⬜ | Needs MyCase or HubSpot deals export — not in Ad Reports |
