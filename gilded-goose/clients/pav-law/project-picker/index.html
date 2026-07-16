@@ -306,12 +306,7 @@
       cursor: pointer;
       letter-spacing: 0.02em;
     }
-    .theme-toggle:hover { border-color: var(--gg-royal-border); color: var(--gg-royal); }
     .theme-toggle:focus-visible { outline: none; box-shadow: var(--focus-ring); }
-    html[data-theme="light"] .theme-toggle:hover {
-      border-color: var(--gg-gold);
-      color: var(--gg-gold-bright);
-    }
     html[data-theme="light"] .theme-toggle {
       color: #3d3028;
       border: 1px solid transparent;
@@ -332,6 +327,10 @@
       background: var(--header-control-bg);
       color: var(--text);
       border-color: var(--border-strong);
+    }
+    html[data-theme="dark"] .theme-toggle:hover {
+      border-color: var(--gg-royal-border);
+      color: var(--gg-royal);
     }
     .gilbert-guide-col-chat-only { width: 100%; }
     .picker-zone-lead {
