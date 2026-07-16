@@ -201,42 +201,28 @@
     .picker-zone-lead {
       margin: 0 0 1rem; font-size: 0.92rem; color: var(--secondary); line-height: 1.5; max-width: 40rem;
     }
-    /* Trail-guide survey box — steps swap inside; choices are rows, not stage tiles */
+    /* Trail-guide survey — subtle map nod; list rows; small Gilbert guide */
     .gilbert-survey {
-      position: relative;
-      background:
-        linear-gradient(180deg, rgba(255, 252, 247, 0.96) 0%, rgba(243, 237, 228, 0.98) 100%);
-      border: 1px solid var(--gg-forest-border);
+      background: var(--gg-paper);
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius);
-      padding: 1.15rem 1.25rem 1.25rem;
-      box-shadow: inset 0 0 0 1px rgba(201, 168, 108, 0.35);
-      overflow: hidden;
+      padding: 1.1rem 1.2rem 1.2rem;
     }
-    .gilbert-survey::before {
-      content: "";
-      position: absolute; inset: 0;
-      pointer-events: none; opacity: 0.07;
-      background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 22px, rgba(61, 48, 40, 0.35) 23px),
-        repeating-linear-gradient(90deg, transparent, transparent 22px, rgba(61, 48, 40, 0.28) 23px);
-    }
-    .gilbert-survey > * { position: relative; z-index: 1; }
     .gilbert-survey > .picker-zone-label {
-      margin-bottom: 0.45rem;
-      color: var(--gg-forest);
-      border-left-color: var(--gg-burnt);
+      margin-bottom: 0.4rem;
+      color: var(--gg-gold-dark);
+      border-left-color: var(--gg-forest);
     }
-    .gilbert-survey > .picker-zone-title { margin-bottom: 0.25rem; }
+    .gilbert-survey > .picker-zone-title { margin-bottom: 0.2rem; }
     .survey-with-gilbert {
       display: grid;
-      /* Gilbert on the right so gaze faces inward toward the question column */
-      grid-template-columns: minmax(0, 1fr) 5.5rem;
-      gap: 0.85rem 1.15rem;
+      grid-template-columns: minmax(0, 1fr) 3.5rem;
+      gap: 0.65rem 0.85rem;
       align-items: start;
-      margin-top: 0.35rem;
+      margin-top: 0.25rem;
     }
     .survey-gilbert-col {
-      width: 5.5rem;
+      width: 3.5rem;
       flex-shrink: 0;
       grid-column: 2;
       grid-row: 1;
@@ -248,124 +234,94 @@
     }
     .survey-gilbert-fig {
       margin: 0;
-      width: 5.5rem;
-      height: 5.5rem;
+      width: 3.5rem;
+      height: 3.5rem;
       border-radius: 50%;
       overflow: hidden;
-      border: 2px solid var(--gg-gold);
-      background: #111;
-      box-shadow: 0 2px 10px rgba(61, 48, 40, 0.12);
+      border: 1.5px solid var(--gg-gold);
+      background: var(--gg-cream);
+      box-shadow: 0 1px 4px rgba(61, 48, 40, 0.08);
     }
     .survey-gilbert-img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 18%;
-      /* Portrait sits on the right — native gaze looks left into the questions / page center */
-      transform: none;
-    }
-    .survey-gilbert-fig.is-profile {
-      background: var(--gg-cream);
+      object-position: center 12%;
     }
     .survey-gilbert-fig.is-profile .survey-gilbert-img {
-      object-fit: contain;
-      object-position: center top;
-      padding: 0.2rem;
-      box-sizing: border-box;
+      object-fit: cover;
+      object-position: center 10%;
+      padding: 0;
     }
     .survey-gilbert-caption {
-      display: block; margin-top: 0.4rem; text-align: center;
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em;
-      text-transform: uppercase; color: var(--gg-brown-muted); line-height: 1.3;
+      display: block; margin-top: 0.3rem; text-align: center;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--gg-brown-muted); line-height: 1.25;
     }
     @media (max-width: 640px) {
       .survey-with-gilbert {
-        grid-template-columns: minmax(0, 1fr) 4.25rem;
-        gap: 0.65rem 0.85rem;
+        grid-template-columns: minmax(0, 1fr) 3rem;
+        gap: 0.5rem 0.65rem;
       }
       .survey-gilbert-col,
-      .survey-gilbert-fig { width: 4.25rem; }
-      .survey-gilbert-fig { height: 4.25rem; }
+      .survey-gilbert-fig { width: 3rem; }
+      .survey-gilbert-fig { height: 3rem; }
     }
     .survey-progress {
       display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-      margin: 0 0 0.65rem; padding-bottom: 0.55rem;
-      border-bottom: 2px dashed rgba(22, 101, 52, 0.28);
-      font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.07em; text-transform: uppercase; color: var(--gg-forest);
+      margin: 0 0 0.55rem; padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase; color: var(--gg-brown-muted);
     }
     .survey-progress-steps {
-      color: var(--gg-burnt); font-weight: 800;
-      display: inline-flex; align-items: center; gap: 0.35rem;
-    }
-    .survey-progress-steps::before {
-      content: "";
-      width: 0.55rem; height: 0.55rem; border-radius: 50%;
-      background: var(--gg-burnt);
-      box-shadow: 0 0 0 2px rgba(194, 65, 12, 0.2);
+      color: var(--gg-gold-dark); font-weight: 700;
     }
     .survey-crumbs {
-      margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--secondary); line-height: 1.45;
-      padding-left: 0.85rem;
-      border-left: 3px solid var(--gg-forest);
+      margin: 0 0 0.65rem; font-size: 0.84rem; color: var(--secondary); line-height: 1.45;
     }
     .survey-crumbs strong { color: var(--gg-brown); font-weight: 700; }
     .survey-prompt {
-      margin: 0 0 0.75rem; font-size: 1.08rem; font-weight: 700; color: var(--gg-royal-deep); line-height: 1.4;
+      margin: 0 0 0.65rem; font-size: 1.05rem; font-weight: 700; color: var(--gg-royal-deep); line-height: 1.4;
     }
     .survey-choices {
       display: flex; flex-direction: column;
-      border: 1px solid rgba(22, 101, 52, 0.28);
+      border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
-      background: rgba(248, 245, 239, 0.9);
+      background: var(--gg-cream);
     }
     .survey-choice {
       display: block; width: 100%; text-align: left;
-      padding: 0.7rem 0.95rem 0.7rem 2.1rem;
-      border: none; border-bottom: 1px dashed rgba(61, 48, 40, 0.16); border-radius: 0;
+      padding: 0.65rem 0.9rem;
+      border: none; border-bottom: 1px solid var(--border); border-radius: 0;
       background: transparent;
-      color: var(--gg-brown); font: inherit; font-weight: 600; font-size: 0.95rem; line-height: 1.4;
+      color: var(--gg-brown); font: inherit; font-weight: 600; font-size: 0.94rem; line-height: 1.4;
       cursor: pointer; transition: background 0.12s;
-      position: relative;
     }
-    .survey-choice::before {
-      content: "";
-      position: absolute; left: 0.85rem; top: 1rem;
-      width: 0.55rem; height: 0.55rem;
-      border: 2px solid var(--gg-forest);
-      border-radius: 50%;
-      background: var(--gg-paper);
-    }
-    .survey-choice:hover {
-      background: var(--gg-forest-dim);
-    }
-    .survey-choice:hover::before {
-      background: var(--gg-burnt);
-      border-color: var(--gg-burnt);
-    }
+    .survey-choice:hover { background: rgba(201, 168, 108, 0.14); }
     .survey-choice:last-child { border-bottom: none; }
     .survey-choice:focus-visible { outline: none; box-shadow: inset var(--focus-ring); }
     .survey-choice-hint {
-      display: block; margin-top: 0.2rem; font-size: 0.8rem; font-weight: 500; color: var(--secondary);
+      display: block; margin-top: 0.18rem; font-size: 0.78rem; font-weight: 500; color: var(--secondary);
     }
     .survey-result-meta {
-      margin: 0 0 0.85rem; font-size: 0.9rem; color: var(--secondary); line-height: 1.5;
+      margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--secondary); line-height: 1.5;
     }
     .survey-result-tags {
-      display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.85rem;
+      display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0 0 0.75rem;
     }
     .survey-tag {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0.2rem 0.5rem;
-      background: var(--gg-cream-panel); border: 1px solid var(--gg-forest-border);
-      font-size: 0.8rem; font-weight: 700; color: var(--gg-brown);
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.18rem 0.45rem;
+      background: var(--gg-cream-panel); border: 1px solid var(--border);
+      font-size: 0.78rem; font-weight: 700; color: var(--gg-brown);
     }
     .survey-actions {
-      display: flex; flex-wrap: wrap; gap: 0.55rem;
-      margin-top: 0.85rem; padding-top: 0.85rem;
-      border-top: 2px dashed rgba(184, 134, 11, 0.35);
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 0.75rem; padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
     }
     .survey-actions .btn { width: auto; margin: 0; }
     .gilbert-guide-col {
@@ -1296,8 +1252,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716h"></script>
-  <script src="projects-data.js?v=20260716h"></script>
-  <script src="app.js?v=20260716h"></script>
+  <script src="pages-config.js?v=20260716i"></script>
+  <script src="projects-data.js?v=20260716i"></script>
+  <script src="app.js?v=20260716i"></script>
 </body>
 </html>
