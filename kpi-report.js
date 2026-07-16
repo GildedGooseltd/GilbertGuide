@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260715-client-value-baseline-v1";
+  const RENDER_VER = "20260715-client-value-visible-v2";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -1021,11 +1021,37 @@
     </button>`;
   }
 
+  function feeByPracticeSectionHtml() {
+    const rows = DATA.feeByPractice || [];
+    if (!rows.length) return "";
+    const fmt = n => "$" + Math.round(Number(n) || 0).toLocaleString();
+    const k28 = DATA.kpis.find(k => k.id === "#28");
+    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-client-value" data-feedback-label="#28 Client value by practice" data-kpi-focus="#28">
+        ${kpiSectionStaticHead("#28 Avg case fee · by practice area", "MyCase Client mean · contracted fees")}
+        <div class="kpi-section-body">
+          <div class="kpi-stat-grid" style="margin-bottom:0.75rem">
+            <button type="button" class="kpi-stat-card kpi-verified" data-kpi-focus="#28">
+              ${statusCorner(true)}
+              <span class="kpi-stat-id">#28 Avg case fee</span>
+              <span class="kpi-stat-val">${k28 ? escapeHtml(k28.value) : "$5,587"}</span>
+              <span class="kpi-stat-label">Client mean · n=142 · as of 2026-07-01</span>
+              ${sourceFootnote("#28")}
+            </button>
+          </div>
+          <p class="kpi-section-intro">Mean fee by practice (Client contacts with a fee field · n ≥ 5). Not cash collected — fees-collected export still needed.</p>
+          <table class="kpi-table">
+            <thead><tr><th>Practice area</th><th>n</th><th>Mean fee</th></tr></thead>
+            <tbody>${rows.map(r => `<tr><td>${escapeHtml(r.name)}</td><td>${r.n}</td><td>${fmt(r.mean)}</td></tr>`).join("")}</tbody>
+          </table>
+        </div>
+      </section>`;
+  }
+
   function renderKpis(el) {
     if (!el || el.dataset.rendered === RENDER_VER) return;
     const liveKpis = DATA.kpis.filter(k => !k.archived);
     const goals = liveKpis.filter(k => k.goal);
-    const metrics = liveKpis.filter(k => !k.goal && !k.lostTracker);
+    const metrics = liveKpis.filter(k => !k.goal && !k.lostTracker && k.id !== "#28");
     const goalsCards = [missedRevenueTrackerHtml(), ...goals.map(kpiGoalCardHtml), teamDuiGoalCardHtml()].join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="Team goals">
           ${kpiSectionStaticHead("Team goals", "Missed revenue · Phones · DUI YTD")}
@@ -1040,6 +1066,7 @@
 
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
+      ${feeByPracticeSectionHtml()}
       <section class="kpi-section kpi-section-static" data-feedback-id="section-key-metrics" data-feedback-label="Key metrics">
         ${kpiSectionStaticHead("Key metrics", "Tap a card for detail")}
         <div class="kpi-section-body">
