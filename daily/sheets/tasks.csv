@@ -113,3 +113,13 @@ T057,P011,USAA — verify Avion limit + fire/stationary coverage,todo,2026-07-05
 T059,P004,Vine rental — pet deposit + rent update + HOA forms,todo,2026-07-15,45,N,one-off,,Kate,Collect pet deposit from renters · set new monthly rent in QB + rental.csv · email HOA for tenant/pet docs to complete · daily/sheets/rental.csv · T059
 T060,P009,Apply for retail food license — LA-H plan review after DOR,todo,2026-07-15,60,N,one-off,,Kate,GG-037 · DOR #96288442 first · 719-846-2213 Robin Sykes ext 623 · gilded-goose/GRANT-APPLICATION-PROFILE.md § Apply for · OP-01 prerequisite
 
+T061,P014,Blog thread 001 — mystery shopping Colorado — expand + publish draft,todo,2026-07-20,90,N,one-off,,Kate,gilded-goose/content/blog/threads/001-mystery-shopping-colorado.md · add T038 shop results when done
+
+T062,P014,Blog publish setup — /blog on GildedGooseLimited.com,todo,2026-07-31,120,N,one-off,,Kate,gilded-goose/content/blog/README.md · meta + slug from thread front matter
+
+T063,P014,Blog CTA map — link posts to eBay art pantry,todo,2026-08-15,45,N,one-off,,Kate,gilded-goose/content/blog/BLOG-STRATEGY.md · UTM template
+
+T064,P014,Blog thread 002 — eBay cross-list or rural income stack (outline),todo,2026-08-31,60,N,one-off,,Kate,gilded-goose/content/blog/INDEX.md queue · tie T041
+
+
+T065,P002,Gilbert Guide — MetricsFeedback + restore comments UI (parked),holding,2026-08-01,60,N,one-off,,Kate,Later · 1) Apps Script New version (ping metricsFeedback:true) 2) Restore feedback/metrics-feedback-comments.parked.js → metrics-feedback.js 3) Push GilbertGuide · Send → Sheet MetricsFeedback · feedback/README.md · owner-webhook-setup.html

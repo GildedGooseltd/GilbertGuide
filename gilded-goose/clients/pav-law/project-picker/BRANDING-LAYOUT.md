@@ -198,7 +198,6 @@ Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pa
 | `intake`       | Intake       | `#c4b5fd` / `#2d1454` / `#4c1d95` (royal) |
 | `creative`     | Creative     | `#e879f9` / `#701a75` / `#c026d3` |
 | `general`      | Growth       | `#94a3b8` / `#0f172a` / `#64748b` |
-| `account-data` | Account data | `#facc15` / `#713f12` / `#ca8a04` |
 
 
 Chip soft tints: `--vi-*-chip` / `--vi-*-chip-border` (do not replace badge fills).
@@ -253,7 +252,6 @@ Voice: practical law-firm cockpit for Andrew/team — polished, scannable, not s
 | Gilbert guide icon   | `assets/gigi-goose-guide.svg`     | `content/settings.md`  |
 | Gilbert thinking     | `assets/gilbert-thinking.png`     | Launcher / ask-Gilbert |
 | Gilbert celebrating  | `assets/gilbert-celebrating.png`  | Thank-you              |
-| Pav Law shield       | `assets/pav-law-shield.svg`       | Account-data badge     |
 | Gilded Goose account | `assets/gilded-goose-account.svg` | Badges                 |
 
 

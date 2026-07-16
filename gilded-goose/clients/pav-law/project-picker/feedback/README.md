@@ -1,23 +1,24 @@
-# Cockpit feedback — thumbs up / down (no Google Sheet)
+# Cockpit feedback — parked for later
 
-Each KPI / chart card shows **👍**, **👎**, and a **Comment** box. Votes and notes save in the **browser** and ship via **Download Feedback Report**.
+**Status (2026-07-15):** Comment / Send / thumbs UI is **off** in the live cockpit.
 
-## How scores are stored
+## Restore later
 
-| Place | What |
-|-------|------|
-| **This browser** | `localStorage` key `pav-metrics-feedback-v2` — score bar + selected thumbs survive refresh on that device |
-| **Download Feedback Report** | File `gilbert-feedback-report-….json` with full vote log |
+1. Copy `feedback/metrics-feedback-comments.parked.js` → `metrics-feedback.js`
+2. In `index.html`, keep `<script src="metrics-feedback.js?v=…">` and bump `?v=`
+3. Finish **T065** first: Apps Script New version so ping shows `"metricsFeedback":true`, then push GilbertGuide
+4. Test: comment → **Send comments** → Sheet tab **MetricsFeedback** + support email
 
-**Google Sheet / MetricsFeedback webhook is not used** for thumbs (that path was unreliable).
+## Parked file
 
-## Reviewer UX
+| File | What |
+|------|------|
+| `metrics-feedback-comments.parked.js` | Comments-only UI + localStorage + Send (webhook) + Download |
+| `../apps-script-webhook.gs` | `handleMetricsFeedback` + MailApp (unchanged; still needed for roll-out) |
 
-1. KPIs tab — score bar at top.
-2. Tap 👍 / 👎 under cards (same thumb again clears).
-3. Type an optional **Comment** under any box (saved on blur).
-4. When done: **Download Feedback Report**.
+## Not used while parked
 
-## Kate — reading scores
+- No comment boxes / rating bar on KPIs
+- No automatic Sheet or email from cockpit ratings
 
-JSON they download / forward.
+Owner webhook ping: [owner-webhook-setup.html](../owner-webhook-setup.html)

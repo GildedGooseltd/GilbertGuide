@@ -66,8 +66,8 @@ Use these when editing Priority / Status / Visibility / Est. cost / fees.
 
 | Status                      | Meaning                                      |
 | --------------------------- | -------------------------------------------- |
-| `Required`                  | Always-on / must-have in cart                |
-| `Recommended`               | Push next / high confidence                  |
+| `Required`                  | Always-on / must-have in cart · no Fit score |
+| `Recommended`               | Default-selected in cart · Fit score applies |
 | `wip`                       | In progress                                  |
 | `available`                 | Ready to sell / start                        |
 | `Planning`                  | Scoped, not ready to run                     |
@@ -113,7 +113,9 @@ Backend display control for drafts (no per-row Show checkbox in the guide).
 
 ### Gilbert best-fit score (Pav Priorities shortlist)
 
-Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **110** with WIP). Completed / archived / monthly-only → excluded (`−999`). **No status or Visibility penalties** — use INDEX **Visibility = Unpublished** to gray drafts for Andrew (backend), not ranking.
+Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **110** with WIP). **Required** items are never scored (Fit shows —). Completed / archived / monthly-only → excluded (`−999`). **No status or Visibility penalties** — use INDEX **Visibility = Unpublished** to gray drafts for Andrew (backend), not ranking.
+
+**Default cart** (fresh load): INDEX `Required` + `Recommended` are pre-checked. Required stays locked.
 
 | Name | Max | How |
 |------|-----|-----|

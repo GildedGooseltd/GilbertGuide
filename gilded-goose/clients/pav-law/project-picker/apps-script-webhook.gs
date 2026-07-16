@@ -302,9 +302,11 @@ function handleMetricsFeedback(data) {
   if (event !== "item_save") {
     try {
       const lines = (data.feedback || []).map(function(item) {
-        return "• " + (item.label || item.id) + " — " + (item.verdict || "") +
-            (item.comment ? "\n  " + item.comment : "") +
-            (item.suggestedTarget ? "\n  Suggested: " + item.suggestedTarget : "");
+        var bit = "• " + (item.label || item.id);
+        if (item.verdict) bit += " — " + item.verdict;
+        if (item.comment) bit += "\n  " + item.comment;
+        if (item.suggestedTarget) bit += "\n  Suggested: " + item.suggestedTarget;
+        return bit;
       });
       const who = (data.submitterName || "") +
         (data.submitterName && data.submitterEmail ? " · " : "") +
