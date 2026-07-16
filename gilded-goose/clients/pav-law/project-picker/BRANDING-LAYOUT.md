@@ -62,6 +62,18 @@ Do **not** put branding hex in project markdown or `projects-data.js`.
 
 **Forbidden:** navy / blue-black (`#0f172a`, `#1e3a5f`, `#2d1454`, `#3a1a6e`), neon cyan/teal, neon `#7c5cff` as the main brand light, light-on-light plan panels.
 
+### Dark theme (`html[data-theme="dark"]`)
+
+Warm charcoal / gold / violet — same accent family, no navy. Toggle lives in the header (`.theme-toggle`); preference key `gilbert-guide-theme` in `localStorage` (`dark` | `light`). First visit follows `prefers-color-scheme`. Early head script sets `data-theme` before paint. Optional URL override: `?theme=dark` or `?theme=light`.
+
+| Token family | Dark intent |
+|--------------|-------------|
+| Cream / paper / surfaces | Charcoal browns (`#120f0c` → `#2b241d`) |
+| Brown text | Cream ink (`#f3ede4` / `#c9beae`) |
+| Purple / burnt / forest | Lifted for contrast on dark (`#c4a2f0`, `#fb923c`, `#4ade80`) |
+| Sticky bar / TOC panel tops | Theme tokens (`--sticky-bar-bg`, `--toc-panel-top`) |
+| Buttons on accents | `--btn-on-accent` → dark ink on light accents |
+
 ---
 
 ## 4. Typography
@@ -73,7 +85,7 @@ Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + 
 ## 5. Layout patterns
 
 ```
-┌─ gg-header ────────────────── Gilbert Guide title (no logo wordmark)
+┌─ gg-header ────────────────── Gilbert Guide title + theme toggle (no logo wordmark)
 ├─ picker-zone-ask ──────────── Choose-your-path survey (2 steps) → filters outlines
 ├─ picker-zone-outlines ─────── TOC table (filtered) + Filter by value
 └─ picker-zone-cards ────────── sticky Continue bar + project cards
@@ -146,6 +158,7 @@ Voice: practical law-firm cockpit for Andrew/team — scannable, not startup-lan
 - [x] Button `:focus-visible` ring
 - [x] Value icons share one `--vi-*` map (filter + TOC)
 - [x] No navy brand tokens
+- [x] Dark theme via `data-theme` + header toggle
 
 ---
 

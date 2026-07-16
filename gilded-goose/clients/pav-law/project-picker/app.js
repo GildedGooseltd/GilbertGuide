@@ -1600,7 +1600,7 @@
       layer.setAttribute("aria-hidden", "true");
       document.body.appendChild(layer);
     }
-    const colors = ["#3a1a6e", "#b8860b", "#ffd700", "#2d1454", "#f8f5ef", "#c9a86c"];
+    const colors = ["#4e2a84", "#b8860b", "#ffd700", "#6d28a8", "#f8f5ef", "#c9a86c", "#c2410c", "#166534"];
     for (let i = 0; i < n; i++) {
       const piece = document.createElement("span");
       const glitter = Math.random() > 0.45;
@@ -1620,6 +1620,47 @@
       state.goalText = goalFromSurveyPath();
     }
     renderGilbertSurvey();
+  }
+
+  const THEME_STORAGE_KEY = "gilbert-guide-theme";
+
+  function getPreferredTheme() {
+    try {
+      const q = new URLSearchParams(location.search).get("theme");
+      if (q === "dark" || q === "light") return q;
+    } catch (e) { /* ignore */ }
+    try {
+      const stored = localStorage.getItem(THEME_STORAGE_KEY);
+      if (stored === "dark" || stored === "light") return stored;
+    } catch (e) { /* ignore */ }
+    if (typeof window.matchMedia === "function" && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  }
+
+  function applyTheme(theme) {
+    const next = theme === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch (e) { /* ignore */ }
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    const isDark = next === "dark";
+    btn.setAttribute("aria-pressed", isDark ? "true" : "false");
+    btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+    btn.textContent = isDark ? "Light" : "Dark";
+  }
+
+  function initThemeToggle() {
+    applyTheme(getPreferredTheme());
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      applyTheme(current === "dark" ? "light" : "dark");
+    });
   }
 
   function showThankYou(payload) {
@@ -1841,6 +1882,7 @@
 
   loadState();
   ensureRequiredMaintenance();
+  initThemeToggle();
   initGilbertGuide();
   renderPackageIntro();
   renderValueIconKey();

@@ -4,9 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gilbert Guide — Project Prioritizer</title>
+  <script>
+    (function () {
+      try {
+        var q = new URLSearchParams(location.search).get("theme");
+        var stored = localStorage.getItem("gilbert-guide-theme");
+        var theme = (q === "dark" || q === "light")
+          ? q
+          : (stored === "dark" || stored === "light"
+            ? stored
+            : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
   <style>
     :root {
-      /* Gilded Goose — cream / gold / brown + purple · burnt orange · forest (no navy) · value-icon-palette v=20260716g */
+      /* Gilded Goose — cream / gold / brown + purple · burnt orange · forest (no navy) · value-icon-palette v=20260716j · dark via data-theme */
       --gg-gold: #c9a86c;
       --gg-gold-bright: #e3c58d;
       --gg-gold-dark: #b8860b;
@@ -79,6 +95,61 @@
       --space-lg: 2rem;
       --space-xl: 2.75rem;
       --focus-ring: 0 0 0 3px rgba(109, 40, 168, 0.35);
+      --sticky-bar-bg: rgba(255, 252, 247, 0.96);
+      --sticky-bar-shadow: 0 -6px 20px rgba(61, 48, 40, 0.08);
+      --header-control-bg: var(--gg-paper);
+      --btn-on-accent: #fff;
+      --toc-panel-top: #fffdf8;
+      --shadow-soft: rgba(61, 48, 40, 0.08);
+    }
+    /* Dark version — warm charcoal / gold / violet (no navy) */
+    html[data-theme="dark"] {
+      --gg-cream: #1a1612;
+      --gg-cream-panel: #221c17;
+      --gg-paper: #2b241d;
+      --gg-brown: #f3ede4;
+      --gg-brown-muted: #c9beae;
+      --gg-sage: #3d4a3f;
+      --gg-royal-deep: #e8d5ff;
+      --gg-royal: #c4a2f0;
+      --gg-royal-mid: #a78bfa;
+      --gg-royal-light: #c4b5fd;
+      --gg-royal-dim: rgba(167, 139, 250, 0.18);
+      --gg-royal-border: rgba(196, 162, 240, 0.42);
+      --gg-burnt: #fb923c;
+      --gg-burnt-dim: rgba(251, 146, 60, 0.16);
+      --gg-burnt-border: rgba(251, 146, 60, 0.45);
+      --gg-forest: #4ade80;
+      --gg-forest-dim: rgba(74, 222, 128, 0.14);
+      --gg-forest-border: rgba(74, 222, 128, 0.4);
+      --gg-gold-dim: rgba(201, 168, 108, 0.22);
+      --gg-positive: #4ade80;
+      --bg: #120f0c;
+      --surface: #2b241d;
+      --surface2: #221c17;
+      --surface-panel: #2f2820;
+      --surface-panel-nested: #352d24;
+      --surface-plan: #2a231c;
+      --surface-plan-inner: #332b22;
+      --input-text: #f3ede4;
+      --input-placeholder: #9a8f80;
+      --border: rgba(227, 197, 141, 0.14);
+      --border-strong: rgba(227, 197, 141, 0.28);
+      --text: #f3ede4;
+      --secondary: #c9beae;
+      --accent-dim: var(--gg-royal-dim);
+      --green: var(--gg-forest);
+      --green-dim: var(--gg-forest-dim);
+      --highlight: var(--gg-royal-mid);
+      --highlight-dim: var(--gg-royal-dim);
+      --focus-ring: 0 0 0 3px rgba(196, 162, 240, 0.45);
+      --sticky-bar-bg: rgba(43, 36, 29, 0.96);
+      --sticky-bar-shadow: 0 -6px 20px rgba(0, 0, 0, 0.35);
+      --header-control-bg: #2b241d;
+      --btn-on-accent: #1a1612;
+      --toc-panel-top: #2f2820;
+      --shadow-soft: rgba(0, 0, 0, 0.35);
+      color-scheme: dark;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -92,6 +163,13 @@
       line-height: 1.8;
       min-height: 100vh;
       font-size: 1.14rem;
+    }
+    html[data-theme="dark"] body {
+      background:
+        radial-gradient(ellipse 120% 80% at 8% -8%, rgba(201, 168, 108, 0.12), transparent 50%),
+        radial-gradient(ellipse 90% 55% at 100% 0%, rgba(109, 40, 168, 0.18), transparent 48%),
+        radial-gradient(ellipse 70% 45% at 0% 100%, rgba(194, 65, 12, 0.1), transparent 42%),
+        var(--bg);
     }
     a { color: var(--gg-royal); text-decoration: underline; text-underline-offset: 2px; }
     a:hover { color: var(--gg-royal-mid); }
@@ -186,9 +264,10 @@
       width: 100%; height: 100%; display: block; object-fit: contain;
     }
     .gg-header {
-      display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem;
+      display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0.65rem 1.25rem;
       max-width: 1400px; margin: 0 auto; padding: var(--space-md) 2rem 0;
     }
+    .gg-header-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; min-width: 0; flex: 1; }
     .gg-app-title {
       font-size: 1.75rem; font-weight: 800; color: var(--gg-royal-deep);
       letter-spacing: 0.02em; line-height: 1.15;
@@ -197,6 +276,22 @@
     .gg-header-sub {
       margin: 0; font-size: 0.95rem; color: var(--secondary); line-height: 1.45;
     }
+    .theme-toggle {
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background: var(--header-control-bg);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+    .theme-toggle:hover { border-color: var(--gg-gold); color: var(--gg-gold-bright); }
+    .theme-toggle:focus-visible { outline: none; box-shadow: var(--focus-ring); }
     .gilbert-guide-col-chat-only { width: 100%; }
     .picker-zone-lead {
       margin: 0 0 1rem; font-size: 0.92rem; color: var(--secondary); line-height: 1.5; max-width: 40rem;
@@ -240,7 +335,7 @@
       overflow: hidden;
       border: 1.5px solid var(--gg-gold);
       background: var(--gg-cream);
-      box-shadow: 0 1px 4px rgba(61, 48, 40, 0.08);
+      box-shadow: 0 1px 4px var(--shadow-soft);
     }
     .survey-gilbert-img {
       display: block;
@@ -394,7 +489,7 @@
       margin-top: var(--space-md);
       border: 1px solid var(--gg-gold);
       border-radius: var(--radius);
-      background: linear-gradient(180deg, #fffdf8 0%, var(--gg-cream-panel) 100%);
+      background: linear-gradient(180deg, var(--toc-panel-top) 0%, var(--gg-cream-panel) 100%);
       padding: 0.85rem 1rem 1rem;
     }
     .toc-condensed-title {
@@ -446,11 +541,11 @@
     .gilbert-chat-gilbert {
       align-self: flex-start;
       background: var(--gg-royal);
-      border: 1px solid #3d1f6e;
-      color: #f8f5ef;
+      border: 1px solid var(--gg-royal-border);
+      color: var(--btn-on-accent);
       box-shadow: 0 2px 8px rgba(78, 42, 132, 0.25);
     }
-    .gilbert-chat-gilbert p { color: #f8f5ef; }
+    .gilbert-chat-gilbert p { color: var(--btn-on-accent); }
     .gilbert-chat-gilbert .gilbert-chat-who { color: var(--gg-gold-bright); }
     .gilbert-chat-user {
       align-self: flex-end;
@@ -604,10 +699,10 @@
     }
     .btn:hover { opacity: 0.9; }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .btn-primary { background: var(--gg-royal); color: #fff; border: 1px solid var(--gg-royal); }
-    .btn-primary:hover { background: var(--gg-royal-deep); border-color: var(--gg-royal-deep); }
-    .btn-accent-burnt { background: var(--gg-burnt); color: #fff; border: 1px solid var(--gg-burnt); }
-    .btn-accent-forest { background: var(--gg-forest); color: #fff; border: 1px solid var(--gg-forest); }
+    .btn-primary { background: var(--gg-royal); color: var(--btn-on-accent); border: 1px solid var(--gg-royal); }
+    .btn-primary:hover { background: var(--gg-royal-deep); border-color: var(--gg-royal-deep); color: var(--btn-on-accent); }
+    .btn-accent-burnt { background: var(--gg-burnt); color: var(--btn-on-accent); border: 1px solid var(--gg-burnt); }
+    .btn-accent-forest { background: var(--gg-forest); color: var(--btn-on-accent); border: 1px solid var(--gg-forest); }
     .btn-primary:hover { opacity: 0.92; }
     .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
     .empty-state { color: var(--secondary); font-size: 0.9rem; font-style: italic; }
@@ -818,7 +913,7 @@
     .budget-bar { height: 6px; background: var(--surface); border-radius: 3px; overflow: hidden; }
     .budget-bar-fill { height: 100%; background: var(--green); transition: width 0.2s; }
     .budget-bar-fill.over { background: #f87171; }
-    .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--gg-royal); color: #fff; padding: 0.75rem 1.25rem; border-radius: var(--radius); font-size: 0.9rem; opacity: 0; transform: translateY(10px); transition: all 0.25s; z-index: 100; max-width: 320px; font-weight: 600; }
+    .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--gg-royal); color: var(--btn-on-accent); padding: 0.75rem 1.25rem; border-radius: var(--radius); font-size: 0.9rem; opacity: 0; transform: translateY(10px); transition: all 0.25s; z-index: 100; max-width: 320px; font-weight: 600; }
     .toast.show { opacity: 1; transform: translateY(0); }
     .toast.error { background: #f87171; color: #fff; }
     .thank-you { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(248, 245, 239, 0.92); backdrop-filter: blur(4px); overflow-y: auto; padding: 2rem 1rem; }
@@ -990,10 +1085,10 @@
       position: sticky; bottom: 0; z-index: 40;
       padding: 0.85rem 1rem;
       margin: 0 0 var(--space-md);
-      background: rgba(255, 252, 247, 0.96);
+      background: var(--sticky-bar-bg);
       border: 1px solid var(--gg-royal-border);
       border-radius: var(--radius);
-      box-shadow: 0 -6px 20px rgba(45, 20, 84, 0.08);
+      box-shadow: var(--sticky-bar-shadow);
       backdrop-filter: blur(6px);
     }
     .project-continue-btn { width: auto; margin: 0; padding: 0.65rem 1.25rem; min-width: 12rem; }
@@ -1158,8 +1253,13 @@
 
   <div id="main-app">
     <header class="gg-header">
-      <span class="gg-app-title">Gilbert Guide</span>
-      <p class="gg-header-sub">Choose a path, filter the outline list, pick projects, then confirm &amp; submit.</p>
+      <div class="gg-header-copy">
+        <span class="gg-app-title">Gilbert Guide</span>
+        <p class="gg-header-sub">Choose a path, filter the outline list, pick projects, then confirm &amp; submit.</p>
+      </div>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark theme">
+        Dark
+      </button>
     </header>
     <section class="finder-panel" aria-label="Find projects and submit">
       <div class="top-unified-panel">
@@ -1252,8 +1352,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716i"></script>
-  <script src="projects-data.js?v=20260716i"></script>
-  <script src="app.js?v=20260716i"></script>
+  <script src="pages-config.js?v=20260716j"></script>
+  <script src="projects-data.js?v=20260716j"></script>
+  <script src="app.js?v=20260716j"></script>
 </body>
 </html>
