@@ -497,6 +497,61 @@ export function migrateAllToB2Format(root) {
   return ids;
 }
 
+/**
+ * Parse content/survey.md → { start, nodes } for the choose-your-path guide.
+ * Node sections: ## q1 … with Step / Prompt fields and a Choices table.
+ */
+export function parseSurveyMarkdown(text) {
+  const survey = { start: "q1", nodes: {} };
+  if (!text) return survey;
+
+  const startMatch = text.match(/^##\s+Start\s*\n+([a-zA-Z0-9_-]+)/m);
+  if (startMatch) survey.start = startMatch[1].trim();
+
+  const parts = text.split(/^##\s+/m).slice(1);
+  for (const part of parts) {
+    const nl = part.indexOf("\n");
+    const heading = (nl === -1 ? part : part.slice(0, nl)).trim();
+    const body = nl === -1 ? "" : part.slice(nl + 1);
+    if (!heading || /^start$/i.test(heading)) continue;
+
+    const id = heading.trim();
+    const stepMatch = body.match(/\*\*Step:\*\*\s*(\d+)\s*\/\s*(\d+)/i);
+    const promptMatch = body.match(/\*\*Prompt:\*\*\s*(.+)/i);
+    const node = {
+      step: stepMatch ? parseInt(stepMatch[1], 10) : 1,
+      steps: stepMatch ? parseInt(stepMatch[2], 10) : 2,
+      prompt: promptMatch ? promptMatch[1].trim() : id,
+      choices: []
+    };
+
+    const tableBlock = body.match(/\|[^\n]+\|\n\|[\s\-:|]+\|\n([\s\S]*?)(?=\n##|\n#|$)/);
+    if (tableBlock) {
+      const rows = tableBlock[1].split("\n").filter(l => /^\|/.test(l));
+      for (const row of rows) {
+        const cells = row.split("|").map(c => c.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
+        if (cells.length < 4) continue;
+        const [choiceId, label, hint, next, iconsRaw = "", goal = ""] = cells;
+        if (!choiceId || choiceId === "id") continue;
+        const icons = iconsRaw
+          .split(/[, ]+/)
+          .map(s => s.trim())
+          .filter(Boolean);
+        node.choices.push({
+          id: choiceId,
+          label,
+          hint: hint || "",
+          next: next || "done",
+          icons,
+          goal: goal || label
+        });
+      }
+    }
+    survey.nodes[id] = node;
+  }
+  return survey;
+}
+
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 if (process.argv[1]?.includes("migrate-to-b2-format")) {
   migrateAllToB2Format(ROOT);

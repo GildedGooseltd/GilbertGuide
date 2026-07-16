@@ -102,7 +102,7 @@ Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + 
 Overlays: confirm · thank-you
 ```
 
-**Survey (subtle trail guide — keep this UX):** `GILBERT_SURVEY` in `app.js` — branching waypoints map to `--vi-*` via `iconFilters`. One quiet `.gilbert-survey` **paper** box (soft forest accent on the zone label only — no topo / blazes, no unicorn glitter chrome on the survey itself). List-row choices. Trailhead / waypoint labels stay. Gilbert portrait (`gilbert-guide-subtle-hat.png`, funny trail hat) on the **right** at **3.5rem** (3rem small screens), facing the questions. “Back to trailhead” resets.
+**Survey (subtle trail guide — keep this UX):** Q&A lives in [`content/survey.md`](content/survey.md) (linked from [`content/INDEX.md`](content/INDEX.md)); build loads it as `PROJECT_DATA.survey`. Branching waypoints map to `--vi-*` via `iconFilters`. One quiet `.gilbert-survey` **paper** box (soft forest accent on the zone label only — no topo / blazes). List-row choices. Trailhead / waypoint labels stay. Gilbert portrait (`gilbert-guide-subtle-hat.png`) on the **right** at **3.5rem**. “Back to trailhead” resets.
 
 **Character facing rule:** Portraits and mascots always face toward the middle of the composition / adjacent content — never away off the edge of the screen. Prefer placing the figure on the side that lets the native pose look inward; mirror only when needed.
 
