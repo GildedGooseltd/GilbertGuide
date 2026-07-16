@@ -1195,6 +1195,70 @@
     .cockpit-tabs .view-tab:not(.active) .tab-count {
       background: var(--gg-royal-dim); color: var(--gg-royal-deep);
     }
+    .cockpit-tabs .view-tab.view-tab-wip {
+      opacity: 0.55;
+      color: var(--secondary);
+      background: rgba(148, 163, 184, 0.18);
+      border-color: rgba(100, 116, 139, 0.35);
+      cursor: pointer;
+    }
+    .cockpit-tabs .view-tab.view-tab-wip:hover {
+      border-color: rgba(100, 116, 139, 0.55);
+      color: var(--secondary);
+    }
+    .cockpit-tabs .view-tab.view-tab-wip.active {
+      opacity: 0.85;
+      color: var(--secondary);
+      border-color: rgba(100, 116, 139, 0.55);
+      background: rgba(148, 163, 184, 0.28);
+    }
+    .cockpit-tabs .view-tab.view-tab-wip .tab-count { opacity: 0.7; }
+    .impact-panel {
+      position: relative;
+      min-height: 18rem;
+    }
+    .impact-panel-body {
+      filter: grayscale(0.55);
+      opacity: 0.42;
+      pointer-events: none;
+      user-select: none;
+    }
+    .impact-under-construction {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: rgba(248, 245, 239, 0.78);
+      backdrop-filter: blur(1.5px);
+      border-radius: var(--radius);
+      pointer-events: none;
+    }
+    .impact-under-construction-card {
+      text-align: center;
+      padding: 1.5rem 2rem;
+      border: 2px dashed rgba(100, 116, 139, 0.55);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      max-width: 22rem;
+      box-shadow: 0 8px 28px rgba(45, 20, 84, 0.08);
+    }
+    .impact-under-construction-card strong {
+      display: block;
+      font-size: 1.35rem;
+      color: var(--gg-royal-deep);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+    .impact-under-construction-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--secondary);
+      line-height: 1.45;
+    }
     .cockpit-panel { max-width: 1400px; margin: 0 auto; padding: 0 2rem var(--space-lg); }
     .cockpit-panel[hidden] { display: none; }
     .pav-guide-ask-section {
@@ -1875,6 +1939,46 @@
     .kpi-mom-up { color: var(--gg-positive); font-size: 0.875rem; font-weight: 700; }
     .kpi-target-hit { display: block; color: var(--gg-positive); font-size: 0.875rem; font-weight: 700; margin-top: 0.15rem; }
     .kpi-star { color: var(--gg-gold-dark); }
+    .kpi-verified-mark {
+      display: inline-block;
+      width: 0.85rem;
+      height: 0.85rem;
+      border: 2px solid var(--gg-forest, #2d5a3d);
+      border-radius: 2px;
+      background: transparent;
+      vertical-align: -0.1em;
+      flex-shrink: 0;
+    }
+    .kpi-verified-mark-inline { margin-right: 0.15rem; }
+    .kpi-stat-card.kpi-verified,
+    .kpi-goal-card.kpi-verified,
+    .kpi-mini-card.kpi-verified,
+    .kpi-dash-card.kpi-verified,
+    .kpi-split-panel.kpi-verified,
+    .kpi-chart-card.kpi-verified {
+      border-color: var(--gg-forest, #2d5a3d);
+      box-shadow: 0 0 0 2px var(--gg-forest, #2d5a3d);
+    }
+    .kpi-source-footnote {
+      display: block;
+      margin: 0.55rem 0 0;
+      padding-top: 0.45rem;
+      border-top: 1px solid rgba(45, 90, 61, 0.22);
+      font-size: 0.72rem;
+      line-height: 1.45;
+      color: var(--secondary);
+      text-align: left;
+      font-weight: 500;
+    }
+    .kpi-source-footnote .kpi-source-label {
+      display: inline-block;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--gg-forest, #2d5a3d);
+      margin-right: 0.25rem;
+    }
+    .kpi-source-footnote .kpi-source-fields { color: var(--gg-brown-muted, #5c4f44); }
     .kpi-unverified {
       color: var(--gg-negative);
       font-weight: 900;
@@ -2706,7 +2810,7 @@
             <ol>
               <li><strong>KPIs</strong> — key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export; tap a card for context. <a href="metrics.html">Open full metrics page →</a></li>
               <li><strong>Project Guide</strong> — filter by value icon, check projects into your cart, read details, then <strong>Review Plan</strong> for fees, estimated results, action items, and next steps.</li>
-              <li><strong>Impact</strong> — completed project results, plus leads impacted / connected and estimated revenue for projects in your cart.</li>
+              <li><strong>Impact</strong> — under construction (completed results + cart revenue calculator coming soon).</li>
               <li><strong>Ask Gilbert</strong> (Project Guide, left column) — three quick survey questions; <strong>Pav Priorities</strong> on the right shows your cart or Gilbert’s best-fit shortlist.</li>
             </ol>
           </div>
@@ -2718,7 +2822,7 @@
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
         <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs</button>
         <button type="button" class="view-tab" data-view="picker" role="tab" aria-selected="false">Project Guide</button>
-        <button type="button" class="view-tab" data-view="impact" role="tab" aria-selected="false">Impact</button>
+        <button type="button" class="view-tab view-tab-wip" data-view="impact" role="tab" aria-selected="false" aria-description="Under construction">Impact</button>
       </div>
     </div>
 
@@ -2800,6 +2904,13 @@
     </section>
 
     <section class="cockpit-panel impact-panel" id="cockpit-panel-impact" aria-label="Impact" hidden>
+      <div class="impact-under-construction" role="status" aria-live="polite">
+        <div class="impact-under-construction-card">
+          <strong>Under Construction</strong>
+          <p>Completed report-out and revenue calculator will land here next.</p>
+        </div>
+      </div>
+      <div class="impact-panel-body" aria-hidden="true">
       <div class="impact-section impact-section-completed" id="impact-completed" data-feedback-id="impact-completed" data-feedback-label="Completed projects report-out">
         <p class="completed-panel-head">Completed</p>
         <p class="completed-panel-intro">Draft report-out for projects marked completed in INDEX — present to Andrew/Pav or edit Goal / Completed in project markdown. Detail cards below update from live project data.</p>
@@ -2817,6 +2928,7 @@
         <p class="revenue-panel-intro">Fees for projects currently in your Pav Priorities cart. Add or remove projects in <strong>Project Guide</strong> to update these numbers.</p>
         <div id="revenue-calculator" class="revenue-calculator"></div>
       </div>
+      </div>
     </section>
   </div>
 
@@ -2826,9 +2938,9 @@
 
   <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20260715-fee-est"></script>
-  <script src="kpi-report.js?v=20260715-ggl-palette-v1"></script>
+  <script src="projects-data.js?v=20260716-content-sync"></script>
+  <script src="kpi-report.js?v=20260715-verified-outline-v1"></script>
   <script src="metrics-feedback.js?v=20260715-thumbs-v6"></script>
-  <script src="app.js?v=20260715-value-icons-row"></script>
+  <script src="app.js?v=20260716-content-sync"></script>
 </body>
 </html>
