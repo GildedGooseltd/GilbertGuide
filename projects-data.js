@@ -28,415 +28,135 @@ window.PROJECT_DATA = {
       "q1": {
         "step": 1,
         "steps": 3,
-        "prompt": "What should marketing fix first?",
+        "prompt": "What’s the current business priority?",
         "choices": [
           {
             "id": "leads",
-            "label": "Get more qualified cases",
-            "hint": "Paid & campaign demand",
-            "next": "q2_leads",
+            "label": "Increase leads",
+            "hint": "Demand and intake",
+            "next": "q2_audience",
             "icons": [
               "leads"
             ],
-            "goal": "More qualified cases"
+            "goal": "Increase leads"
           },
           {
-            "id": "web",
-            "label": "Make the website earn its keep",
-            "hint": "SEO, speed, landers",
-            "next": "q2_web",
+            "id": "website",
+            "label": "Improve website",
+            "hint": "Site experience & findability",
+            "next": "q2_audience",
             "icons": [
               "seo"
             ],
-            "goal": "Stronger website"
+            "goal": "Improve website"
           },
           {
-            "id": "clarity",
-            "label": "See leads, spend, and ROI clearly",
-            "hint": "Dashboards & audits",
-            "next": "q2_clarity",
+            "id": "reputation",
+            "label": "Grow reputation",
+            "hint": "Proof, trust, brand",
+            "next": "q2_audience",
+            "icons": [
+              "referrals",
+              "creative"
+            ],
+            "goal": "Grow reputation"
+          },
+          {
+            "id": "spend",
+            "label": "Reduce spend",
+            "hint": "Waste and efficiency",
+            "next": "q2_audience",
             "icons": [
               "efficiency"
             ],
-            "goal": "Clearer metrics"
-          },
-          {
-            "id": "costs",
-            "label": "Stop leaking money",
-            "hint": "Ads & subscriptions",
-            "next": "q2_costs",
-            "icons": [
-              "efficiency"
-            ],
-            "goal": "Cut waste"
+            "goal": "Reduce spend"
           }
         ]
       },
-      "q2_leads": {
+      "q2_audience": {
         "step": 2,
         "steps": 3,
-        "prompt": "Which demand channel first?",
+        "prompt": "Who is the priority audience?",
         "choices": [
           {
-            "id": "search",
-            "label": "Google / Microsoft search & LSA",
-            "hint": "Intent capture",
-            "next": "q3_after_click",
+            "id": "current",
+            "label": "Current clients",
+            "hint": "Active relationships",
+            "next": "q3_horizon",
             "icons": [
-              "leads"
-            ],
-            "goal": "Search & LSA"
-          },
-          {
-            "id": "display",
-            "label": "Display & brand (NTGUILT)",
-            "hint": "Upper funnel",
-            "next": "q3_after_click",
-            "icons": [
-              "leads",
-              "creative"
-            ],
-            "goal": "Display & brand"
-          },
-          {
-            "id": "seasonal",
-            "label": "Seasonal / focus-area push",
-            "hint": "Holidays, military, DUI",
-            "next": "q3_after_click",
-            "icons": [
-              "leads",
-              "creative"
-            ],
-            "goal": "Seasonal campaigns"
-          },
-          {
-            "id": "warm",
-            "label": "Past-client & warm channels",
-            "hint": "Mail, referral, proof",
-            "next": "q3_warm",
-            "icons": [
-              "referrals"
-            ],
-            "goal": "Warm demand"
-          }
-        ]
-      },
-      "q3_after_click": {
-        "step": 3,
-        "steps": 3,
-        "prompt": "After someone clicks or calls, what breaks?",
-        "choices": [
-          {
-            "id": "voip",
-            "label": "Phone / VoIP capture",
-            "hint": "Missed or untracked calls",
-            "next": "done",
-            "icons": [
-              "intake",
-              "leads"
-            ],
-            "goal": "Fix call intake"
-          },
-          {
-            "id": "chat",
-            "label": "After-hours chat intake",
-            "hint": "Nights & weekends",
-            "next": "done",
-            "icons": [
-              "intake"
-            ],
-            "goal": "After-hours chat"
-          },
-          {
-            "id": "crm",
-            "label": "HubSpot pipeline follow-up",
-            "hint": "Stages & workflows",
-            "next": "done",
-            "icons": [
-              "crm"
-            ],
-            "goal": "CRM follow-up"
-          },
-          {
-            "id": "track",
-            "label": "Lead-source tracking",
-            "hint": "UTM, KPI dashboard",
-            "next": "done",
-            "icons": [
-              "efficiency",
-              "leads"
-            ],
-            "goal": "Track lead sources"
-          }
-        ]
-      },
-      "q3_warm": {
-        "step": 3,
-        "steps": 3,
-        "prompt": "Which warm channel?",
-        "choices": [
-          {
-            "id": "referral",
-            "label": "Client referral program",
-            "hint": "Setup + ongoing",
-            "next": "done",
-            "icons": [
-              "referrals"
-            ],
-            "goal": "Referral program"
-          },
-          {
-            "id": "proof",
-            "label": "Case wins & testimonials",
-            "hint": "Social proof",
-            "next": "done",
-            "icons": [
-              "referrals",
-              "creative"
-            ],
-            "goal": "Testimonials"
-          },
-          {
-            "id": "mail",
-            "label": "Insurance / past-client mailer",
-            "hint": "Print re-engagement",
-            "next": "done",
-            "icons": [
-              "referrals",
-              "creative"
-            ],
-            "goal": "Past-client mail"
-          },
-          {
-            "id": "profiles",
-            "label": "Directories & social profiles",
-            "hint": "NAP, Avvo, GBP",
-            "next": "done",
-            "icons": [
-              "referrals",
-              "creative"
-            ],
-            "goal": "Profile refresh"
-          }
-        ]
-      },
-      "q2_web": {
-        "step": 2,
-        "steps": 3,
-        "prompt": "What’s weakest on the site?",
-        "choices": [
-          {
-            "id": "seo",
-            "label": "SEO content & local search",
-            "hint": "Schema, blogs, NAP",
-            "next": "q3_web_seo",
-            "icons": [
-              "seo"
-            ],
-            "goal": "SEO & content"
-          },
-          {
-            "id": "speed",
-            "label": "Speed & navigation",
-            "hint": "Load time, IA",
-            "next": "done",
-            "icons": [
-              "seo"
-            ],
-            "goal": "Site speed & nav"
-          },
-          {
-            "id": "landers",
-            "label": "Campaign landing pages",
-            "hint": "Forms & modules",
-            "next": "done",
-            "icons": [
-              "seo",
               "crm",
+              "referrals"
+            ],
+            "goal": "Current clients"
+          },
+          {
+            "id": "past",
+            "label": "Past clients",
+            "hint": "Re-engage warm people",
+            "next": "q3_horizon",
+            "icons": [
+              "referrals"
+            ],
+            "goal": "Past clients"
+          },
+          {
+            "id": "netnew",
+            "label": "Net-new prospects",
+            "hint": "People who don’t know you yet",
+            "next": "q3_horizon",
+            "icons": [
               "leads"
             ],
-            "goal": "Landing pages"
+            "goal": "Net-new prospects"
+          },
+          {
+            "id": "awareness",
+            "label": "General awareness",
+            "hint": "Broader market presence",
+            "next": "q3_horizon",
+            "icons": [
+              "creative"
+            ],
+            "goal": "General awareness"
           }
         ]
       },
-      "q3_web_seo": {
+      "q3_horizon": {
         "step": 3,
         "steps": 3,
-        "prompt": "SEO workstream?",
+        "prompt": "What kind of timeline fits?",
         "choices": [
           {
-            "id": "pages",
-            "label": "Site content & linking",
-            "hint": "Overhaul pages",
+            "id": "soon",
+            "label": "Need movement soon",
+            "hint": "Near-term push",
             "next": "done",
             "icons": [
-              "seo"
+              "leads",
+              "creative"
             ],
-            "goal": "Content overhaul"
+            "goal": "Near-term movement"
           },
           {
-            "id": "blog",
-            "label": "Blog revamp",
-            "hint": "Posts, meta, links",
-            "next": "done",
-            "icons": [
-              "seo"
-            ],
-            "goal": "Blog revamp"
-          },
-          {
-            "id": "local",
-            "label": "Local / directory consistency",
-            "hint": "NAP + profiles",
+            "id": "compounds",
+            "label": "Build something that compounds",
+            "hint": "Foundations that keep paying off",
             "next": "done",
             "icons": [
               "seo",
-              "referrals"
-            ],
-            "goal": "Local SEO & profiles"
-          }
-        ]
-      },
-      "q2_clarity": {
-        "step": 2,
-        "steps": 3,
-        "prompt": "What must get measurable?",
-        "choices": [
-          {
-            "id": "kpi",
-            "label": "Live lead & spend KPIs",
-            "hint": "Dashboard",
-            "next": "q3_kpi",
-            "icons": [
-              "efficiency"
-            ],
-            "goal": "KPI dashboard"
-          },
-          {
-            "id": "roadmap",
-            "label": "What to fund next",
-            "hint": "Stack priorities",
-            "next": "done",
-            "icons": [
-              "efficiency",
               "foundation"
             ],
-            "goal": "Priorities audit"
+            "goal": "Compounding build"
           },
           {
             "id": "leak",
-            "label": "Where cash is leaking",
-            "hint": "Cards & SaaS",
+            "label": "Fix an ongoing leak or drag",
+            "hint": "Stop the drip",
             "next": "done",
             "icons": [
               "efficiency"
             ],
-            "goal": "Spend leak audit"
-          }
-        ]
-      },
-      "q3_kpi": {
-        "step": 3,
-        "steps": 3,
-        "prompt": "Dashboard focus?",
-        "choices": [
-          {
-            "id": "build",
-            "label": "Build the lead/KPI dashboard",
-            "hint": "GA4, UTM, GTM",
-            "next": "done",
-            "icons": [
-              "efficiency"
-            ],
-            "goal": "Build KPIs"
-          },
-          {
-            "id": "maintain",
-            "label": "Keep reporting current",
-            "hint": "Monthly retainer",
-            "next": "done",
-            "icons": [
-              "efficiency",
-              "retainer"
-            ],
-            "goal": "KPI maintenance"
-          }
-        ]
-      },
-      "q2_costs": {
-        "step": 2,
-        "steps": 3,
-        "prompt": "Where is money wasting?",
-        "choices": [
-          {
-            "id": "saas",
-            "label": "Credit cards & subscriptions",
-            "hint": "Recurring tools",
-            "next": "done",
-            "icons": [
-              "efficiency"
-            ],
-            "goal": "Cut SaaS waste"
-          },
-          {
-            "id": "adwaste",
-            "label": "Ad bids & targeting waste",
-            "hint": "Search/display efficiency",
-            "next": "q3_adwaste",
-            "icons": [
-              "leads",
-              "efficiency"
-            ],
-            "goal": "Tighten ad spend"
-          },
-          {
-            "id": "both",
-            "label": "Full spend clean-up",
-            "hint": "Cards + ads + roadmap",
-            "next": "done",
-            "icons": [
-              "efficiency"
-            ],
-            "goal": "Full cost clean-up"
-          }
-        ]
-      },
-      "q3_adwaste": {
-        "step": 3,
-        "steps": 3,
-        "prompt": "Which ad waste to cut?",
-        "choices": [
-          {
-            "id": "enhance",
-            "label": "Fix existing search campaigns",
-            "hint": "Digital ad enhancements",
-            "next": "done",
-            "icons": [
-              "leads",
-              "efficiency"
-            ],
-            "goal": "Fix ad waste"
-          },
-          {
-            "id": "seasonal_cut",
-            "label": "Rebuild seasonal targeting",
-            "hint": "Focus-area campaigns",
-            "next": "done",
-            "icons": [
-              "leads"
-            ],
-            "goal": "Retarget seasonal"
-          },
-          {
-            "id": "retain",
-            "label": "Keep ads maintained",
-            "hint": "Ads retainer",
-            "next": "done",
-            "icons": [
-              "leads",
-              "retainer"
-            ],
-            "goal": "Ads retainer"
+            "goal": "Fix ongoing leak"
           }
         ]
       }

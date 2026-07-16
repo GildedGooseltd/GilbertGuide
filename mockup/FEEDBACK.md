@@ -1,8 +1,6 @@
 # Design feedback — Trail Guide mockup
 
-Paste lasting notes here (the dock notes in the browser are local-only).
-
-Open the working mockup: [`index.html`](index.html)
+Open: [`index.html`](index.html) · questions: [`../content/QUESTIONS.md`](../content/QUESTIONS.md)
 
 ---
 
@@ -14,9 +12,10 @@ Open the working mockup: [`index.html`](index.html)
 
 - Dark theme: black + deep purple; no fuchsia/hot pink; gold only for important highlights
 - Survey: quiet paper card, numbered rows, no character portrait
+- Questions: business-level only — priority → audience → horizon (tactical tree retired)
 
 ## To try next
 
-- [ ] Higher-level questions from [`../content/QUESTIONS.md`](../content/QUESTIONS.md) (priority → audience → horizon)
 - [ ] Leaf icon on / off (toggle in mockup dock)
 - [ ] Row density / masthead scale
+- [ ] Map path cells → project clusters
