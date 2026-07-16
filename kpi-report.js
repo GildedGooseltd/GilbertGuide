@@ -152,8 +152,8 @@
     ],
     /* Dual-axis: left = counts · right = $ spend. Trust omitted — needs fees-collected. */
     casesLeadsSpend: [
-      { month: "May", cases: 22, leads: 69, spend: 18633, lsaSpend: 11006, adsSpend: 7627 },
-      { month: "Jun", cases: 34, leads: 83, spend: 21502, lsaSpend: 13206, adsSpend: 8296 }
+      { month: "May", cases: 22, leads: 69, spend: 18633, lsaSpend: 11006, adsSpend: 7627, adsLeads: 39 },
+      { month: "Jun", cases: 34, leads: 83, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138 }
     ],
     /** Consulting allocation estimates for channel CPL (not full retainer). */
     consultingLsaMonthly: 1000,
@@ -481,23 +481,24 @@
     const adsConsult = DATA.consultingAdsMonthly || 0;
     const totals = rows.reduce((a, r) => ({
       leads: a.leads + r.leads,
-      lsaSpend: a.lsaSpend + (r.lsaSpend || 0),
       lsaAllIn: a.lsaAllIn + (r.lsaSpend || 0) + lsaConsult,
-      adsSpend: a.adsSpend + (r.adsSpend || 0),
+      adsLeads: a.adsLeads + (r.adsLeads || 0),
       adsAllIn: a.adsAllIn + (r.adsSpend || 0) + adsConsult
-    }), { leads: 0, lsaSpend: 0, lsaAllIn: 0, adsSpend: 0, adsAllIn: 0 });
+    }), { leads: 0, lsaAllIn: 0, adsLeads: 0, adsAllIn: 0 });
     return kpiDetailTable(
-      ["Period", "LSA leads", "LSA + $1k consulting", "Cost per LSA lead", "Ads + $2k consulting"],
+      ["Period", "LSA leads", "LSA + $1k consulting", "Cost per LSA lead", "Ads + $2k consulting", "Cost per digital lead"],
       [
         ...rows.map(r => {
           const lsaAllIn = (r.lsaSpend || 0) + lsaConsult;
           const adsAllIn = (r.adsSpend || 0) + adsConsult;
+          const adsLeads = r.adsLeads || 0;
           return [
             escapeHtml(r.month) + " 2026",
             String(r.leads),
             fmtMoney(lsaAllIn),
             fmtMoney(lsaAllIn / r.leads),
-            fmtMoney(adsAllIn)
+            fmtMoney(adsAllIn),
+            adsLeads ? fmtMoney(adsAllIn / adsLeads) : "—"
           ];
         }),
         [
@@ -505,7 +506,8 @@
           String(totals.leads),
           fmtMoney(totals.lsaAllIn),
           fmtMoney(totals.lsaAllIn / totals.leads),
-          fmtMoney(totals.adsAllIn)
+          fmtMoney(totals.adsAllIn),
+          totals.adsLeads ? fmtMoney(totals.adsAllIn / totals.adsLeads) : "—"
         ]
       ]
     );
@@ -517,7 +519,7 @@
     return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-cases-leads-spend" data-feedback-label="Cases and leads vs marketing spend">
       ${kpiSectionStaticHead("Cases and leads vs marketing spend", "Left: counts · Right: $ spend")}
       <div class="kpi-section-body">
-        <p class="kpi-section-intro">Cost per LSA lead = (LSA media + ${fmtMoney(DATA.consultingLsaMonthly || 0)} consulting) ÷ LSA leads. Digital ads cost = Search media + ${fmtMoney(DATA.consultingAdsMonthly || 0)} consulting. Trust omitted.</p>
+        <p class="kpi-section-intro">Cost per LSA lead = (LSA media + ${fmtMoney(DATA.consultingLsaMonthly || 0)} consulting) ÷ LSA leads. Cost per digital lead = (Search media + ${fmtMoney(DATA.consultingAdsMonthly || 0)} consulting) ÷ Search call details. Trust omitted.</p>
         ${chartBlock({
           verified: true,
           chart: dualAxisCasesSpendChart(rows),
