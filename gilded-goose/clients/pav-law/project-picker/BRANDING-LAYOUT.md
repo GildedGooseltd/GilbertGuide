@@ -80,7 +80,9 @@ Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + 
 Overlays: confirm · thank-you
 ```
 
-**Survey:** `GILBERT_SURVEY` in `app.js` — branching questions map to `--vi-*` icon ids via `iconFilters`. One `.gilbert-survey` box holds title + steps + result (choices are list rows, not stage tiles). Gilbert portrait sits beside questions at **5.5rem** circle (4.25rem on small screens): lightbulb (`gilbert-lightbulb-idea.png`) while asking, thinking profile (`gilbert-thinking.png`) when path is set. Completing a path opens the TOC. “Start over” / Clear filters resets the path.
+**Survey:** `GILBERT_SURVEY` in `app.js` — branching questions map to `--vi-*` icon ids via `iconFilters`. One `.gilbert-survey` box holds title + steps + result (choices are list rows, not stage tiles). Gilbert portrait sits on the **right** of the questions at **5.5rem** circle (4.25rem on small screens), face toward page center (inward — never looking off-screen): lightbulb (`gilbert-lightbulb-idea.png`, mirrored) while asking, thinking profile (`gilbert-thinking.png`) when path is set. Completing a path opens the TOC. “Start over” / Clear filters resets the path.
+
+**Character facing rule:** Portraits and mascots always face toward the middle of the composition / adjacent content — never away off the edge of the screen.
 
 | Pattern | Classes | Behavior |
 |---------|---------|----------|
