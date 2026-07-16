@@ -80,7 +80,7 @@ Deep **purple** night — plum / eggplant surfaces (not brown charcoal), lavende
 
 #### Unicorn (`html[data-theme="unicorn"]`)
 
-**Lisa Frank** energy: neon sticker pink / purple / sunshine yellow / lime / tangerine rainbow (`--lisa-rainbow`), dense glitter stars, rainbow borders on survey/cards/sticky bar. Header **logo title formatting stays default** (`.gg-app-title` color + gold underline only — no holo clip). Still no navy.
+Upscale cream / champagne gold / soft violet — glitter stays champagne (not hot pink). Quiet paper survey. Header **logo title formatting stays default**. Still no navy.
 
 **Activation burst:** Switching Dark → Unicorn plays `#unicorn-fart-cloud` — pink/fuchsia sparkle fart cloud, line “good morning sparkle farts!”, and dancing Gilbert GIF (`assets/gilbert-unicorn-dance.gif`) in a fake unicorn headband. Click anywhere or wait ~3s to dismiss. Honors `prefers-reduced-motion`.
 

@@ -1654,7 +1654,7 @@
   function spawnUnicornFartPuffs(host) {
     if (!host) return;
     host.innerHTML = "";
-    const colors = ["#ff4ecd", "#e879f9", "#fb7185", "#f0abfc", "#fbbf24", "#c084fc", "#fff"];
+    const colors = ["#c9a86c", "#e3c58d", "#f5efe4", "#c4b5fd", "#a78bfa", "#fff8e7", "#fff"];
     for (let i = 0; i < 16; i++) {
       const puff = document.createElement("span");
       puff.className = "unicorn-fart-puff";
