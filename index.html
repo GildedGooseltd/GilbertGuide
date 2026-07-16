@@ -750,6 +750,153 @@
     .toc-condensed-inner .btn-sm { width: auto; margin-top: 0.25rem; font-size: 0.82rem; padding: 0.45rem 0.85rem; }
     .toc-expand-row { text-align: center; padding: 0.65rem 0 0.15rem; }
     .toc-expand-row .btn-sm { width: auto; min-width: 12rem; }
+    /* Unicorn activation — pink/fuchsia fart cloud + dancing Gilbert */
+    .unicorn-fart-cloud {
+      position: fixed;
+      inset: 0;
+      z-index: 12000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .unicorn-fart-cloud.show {
+      display: flex;
+      pointer-events: auto;
+      animation: unicorn-fart-in 0.35s ease-out both;
+    }
+    .unicorn-fart-cloud.fade-out {
+      animation: unicorn-fart-out 0.55s ease-in both;
+    }
+    .unicorn-fart-blast {
+      position: absolute;
+      inset: -10%;
+      background:
+        radial-gradient(circle at 50% 58%, rgba(255, 255, 255, 0.55) 0 8%, transparent 22%),
+        radial-gradient(circle at 42% 48%, rgba(255, 78, 205, 0.92) 0 18%, transparent 42%),
+        radial-gradient(circle at 62% 52%, rgba(217, 70, 239, 0.88) 0 16%, transparent 40%),
+        radial-gradient(circle at 50% 70%, rgba(251, 113, 133, 0.85) 0 22%, transparent 48%),
+        radial-gradient(circle at 30% 60%, rgba(244, 114, 182, 0.7) 0 14%, transparent 36%),
+        radial-gradient(circle at 72% 62%, rgba(192, 132, 252, 0.65) 0 12%, transparent 34%),
+        radial-gradient(ellipse 120% 90% at 50% 100%, rgba(255, 78, 205, 0.55), transparent 55%);
+      filter: blur(2px);
+      transform-origin: 50% 70%;
+      animation: unicorn-fart-bloom 2.8s ease-out both;
+    }
+    .unicorn-fart-sparkles {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 12% 20%, #fff 0 1.4px, transparent 2.2px),
+        radial-gradient(circle at 28% 70%, #ffe566 0 1.6px, transparent 2.4px),
+        radial-gradient(circle at 46% 30%, #ff4ecd 0 1.3px, transparent 2.1px),
+        radial-gradient(circle at 64% 78%, #fff 0 1.5px, transparent 2.3px),
+        radial-gradient(circle at 78% 24%, #f0abfc 0 1.4px, transparent 2.2px),
+        radial-gradient(circle at 88% 58%, #fbbf24 0 1.5px, transparent 2.4px),
+        radial-gradient(circle at 18% 48%, #fff 0 1.1px, transparent 1.8px),
+        radial-gradient(circle at 52% 54%, #fb7185 0 1.3px, transparent 2px),
+        radial-gradient(circle at 36% 88%, #a78bfa 0 1.4px, transparent 2.2px);
+      background-size: 140px 140px, 160px 160px, 120px 120px, 150px 150px, 110px 110px, 170px 170px, 90px 90px, 130px 130px, 100px 100px;
+      animation: unicorn-glitter-drift 3.2s linear infinite;
+      mix-blend-mode: plus-lighter;
+      opacity: 0.95;
+    }
+    .unicorn-fart-puffs {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .unicorn-fart-puff {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: 0.75;
+      animation: unicorn-puff-rise 2.4s ease-out forwards;
+    }
+    .unicorn-fart-card {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      max-width: min(92vw, 28rem);
+      padding: 1.4rem 1.5rem 1.55rem;
+      border-radius: 22px;
+      text-align: center;
+      color: #4a044e;
+      background:
+        linear-gradient(180deg, rgba(255, 250, 253, 0.92), rgba(255, 214, 240, 0.88)) padding-box,
+        var(--metal-holo) border-box;
+      border: 2px solid transparent;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.75) inset,
+        0 18px 50px rgba(192, 38, 211, 0.35),
+        0 0 40px rgba(255, 78, 205, 0.4);
+      animation: unicorn-card-pop 0.55s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+    }
+    .unicorn-fart-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.55rem, 4.5vw, 2.15rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      background: var(--metal-holo);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.85)) drop-shadow(0 0 12px rgba(255, 78, 205, 0.45));
+    }
+    .unicorn-fart-gilbert {
+      width: min(58vw, 13.5rem);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 18px rgba(124, 31, 160, 0.35));
+      animation: gilbert-unicorn-boogie 0.45s ease-in-out infinite alternate;
+    }
+    .unicorn-fart-caption {
+      margin: 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #9d174d;
+    }
+    @keyframes unicorn-fart-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes unicorn-fart-out {
+      to { opacity: 0; }
+    }
+    @keyframes unicorn-fart-bloom {
+      0% { transform: scale(0.2) translateY(18%); opacity: 0.3; }
+      35% { transform: scale(1.05) translateY(0); opacity: 1; }
+      100% { transform: scale(1.2) translateY(-4%); opacity: 0.85; }
+    }
+    @keyframes unicorn-puff-rise {
+      0% { transform: translate(-50%, 20%) scale(0.4); opacity: 0; }
+      20% { opacity: 0.85; }
+      100% { transform: translate(calc(-50% + var(--drift, 0px)), -42vh) scale(1.35); opacity: 0; }
+    }
+    @keyframes unicorn-card-pop {
+      0% { transform: scale(0.6) translateY(30px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    @keyframes gilbert-unicorn-boogie {
+      from { transform: rotate(-4deg) translateY(0); }
+      to { transform: rotate(4deg) translateY(-8px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .unicorn-fart-blast,
+      .unicorn-fart-sparkles,
+      .unicorn-fart-puff,
+      .unicorn-fart-gilbert,
+      .unicorn-fart-card { animation: none !important; }
+      .unicorn-fart-cloud.show { animation: unicorn-fart-in 0.2s ease-out both; }
+    }
     .confetti-layer {
       position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden;
     }
@@ -1595,8 +1742,27 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716m"></script>
-  <script src="projects-data.js?v=20260716m"></script>
-  <script src="app.js?v=20260716m"></script>
+  <div id="unicorn-fart-cloud" class="unicorn-fart-cloud" hidden aria-hidden="true" role="dialog" aria-labelledby="unicorn-fart-title">
+    <div class="unicorn-fart-blast" aria-hidden="true"></div>
+    <div class="unicorn-fart-sparkles" aria-hidden="true"></div>
+    <div class="unicorn-fart-puffs" id="unicorn-fart-puffs" aria-hidden="true"></div>
+    <div class="unicorn-fart-card">
+      <p class="unicorn-fart-title" id="unicorn-fart-title">good morning sparkle farts!</p>
+      <img
+        class="unicorn-fart-gilbert"
+        id="unicorn-fart-gilbert"
+        src="assets/gilbert-unicorn-dance.gif"
+        alt="Gilbert dancing in a fake unicorn headband"
+        width="220"
+        height="250"
+        decoding="async"
+      >
+      <p class="unicorn-fart-caption">Unicorn mode unlocked</p>
+    </div>
+  </div>
+
+  <script src="pages-config.js?v=20260716n"></script>
+  <script src="projects-data.js?v=20260716n"></script>
+  <script src="app.js?v=20260716n"></script>
 </body>
 </html>
