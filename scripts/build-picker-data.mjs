@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import {
   parseProjectMarkdown,
   parseSettingsMarkdown,
+  parseSurveyMarkdown,
   applyIndexOverrides
 } from "./markdown-project.mjs";
 
@@ -39,10 +40,17 @@ function loadRetainer() {
   return parseProjectMarkdown(fs.readFileSync(md, "utf8"), "retainer");
 }
 
+function loadSurvey() {
+  const md = path.join(CONTENT, "survey.md");
+  if (!fs.existsSync(md)) throw new Error("Missing content/survey.md");
+  return parseSurveyMarkdown(fs.readFileSync(md, "utf8"));
+}
+
 function build() {
   const settings = loadSettings();
   let retainer = loadRetainer();
   let projects = loadProjects();
+  const survey = loadSurvey();
 
   const indexPath = path.join(CONTENT, "INDEX.md");
   if (fs.existsSync(indexPath)) {
@@ -59,6 +67,7 @@ function build() {
     guideLogo: settings.guideLogo,
     paviIcon: settings.guideIcon,
     recommendedPackage: settings.recommendedPackage,
+    survey,
     retainer,
     projects
   };
@@ -70,51 +79,20 @@ function build() {
 window.PROJECT_DATA = `;
 
   fs.writeFileSync(OUT, header + JSON.stringify(data, null, 2) + ";\n", "utf8");
-  console.log(`Built ${OUT} (${projects.length} projects)`);
-}
-
-function contentMarkdownPaths() {
-  const paths = [
-    path.join(CONTENT, "INDEX.md"),
-    path.join(CONTENT, "settings.md"),
-    path.join(CONTENT, "retainer.md")
-  ];
-  const projectsDir = path.join(CONTENT, "projects");
-  if (fs.existsSync(projectsDir)) {
-    for (const f of fs.readdirSync(projectsDir)) {
-      if (f.endsWith(".md") && !f.startsWith("_")) paths.push(path.join(projectsDir, f));
-    }
-  }
-  return paths;
-}
-
-function contentSnapshot() {
-  const snap = new Map();
-  for (const fp of contentMarkdownPaths()) {
-    try {
-      snap.set(fp, fs.statSync(fp).mtimeMs);
-    } catch {
-      /* file removed mid-watch */
-    }
-  }
-  return snap;
+  const nodeCount = Object.keys(survey.nodes || {}).length;
+  console.log(`Built ${OUT} (${projects.length} projects, ${nodeCount} survey nodes)`);
 }
 
 function watch() {
   build();
-  let prev = contentSnapshot();
-  setInterval(() => {
-    const next = contentSnapshot();
-    const changed = next.size !== prev.size || [...next].some(([fp, mtime]) => prev.get(fp) !== mtime);
-    if (!changed) return;
-    prev = next;
+  fs.watch(CONTENT, { recursive: true }, () => {
     try {
       build();
     } catch (e) {
       console.error(e.message);
     }
-  }, 1000);
-  console.log("Watching content/ (poll) … INDEX.md is never modified by build");
+  });
+  console.log("Watching content/ … (INDEX.md is never modified by build)");
 }
 
 if (process.argv.includes("--watch")) watch();
