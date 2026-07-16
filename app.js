@@ -1249,8 +1249,6 @@
 
   function showConfirmPage() {
     if (!canContinue()) return;
-    const guideImg = document.getElementById("confirm-gilbert");
-    if (guideImg) guideImg.src = GILBERT_ICON;
     renderConfirmSelectionSummary();
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
@@ -1477,12 +1475,6 @@
   }
 
   function initGilbertGuide() {
-    const guideImg = document.getElementById("gilbert-guide-img");
-    if (guideImg) {
-      guideImg.src = GILBERT_HERO;
-      guideImg.alt = `${GUIDE_NAME} — your Gilded Goose guide`;
-      guideImg.className = "gilbert-caricature";
-    }
     if (!state.gilbertChat.length) {
       state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
       if (state.goalText.trim()) {
@@ -1498,9 +1490,11 @@
     const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-gilbert").src = GILBERT_SEAL;
-    document.getElementById("thank-you-sub").textContent =
-      "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
+    const thankSub = document.getElementById("thank-you-sub");
+    if (thankSub) {
+      thankSub.textContent =
+        "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
+    }
 
     const lines = [];
     if (payload.retainer) lines.push(`<li><strong>${escapeHtml(RETAINER.title)}</strong> — ${fmt(RETAINER.fee)}</li>`);

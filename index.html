@@ -177,21 +177,18 @@
       width: 100%; height: 100%; display: block; object-fit: contain;
     }
     .gg-header {
-      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem;
       max-width: 1400px; margin: 0 auto; padding: var(--space-md) 2rem 0;
     }
-    .gg-wordmark {
-      height: 2.85rem; width: auto; display: block;
-      mix-blend-mode: multiply;
-    }
     .gg-app-title {
-      font-size: 1.45rem; font-weight: 800; color: var(--gg-royal-deep);
-      letter-spacing: 0.02em; line-height: 1.2;
-      border-bottom: 3px solid var(--gg-gold); padding-bottom: 0.15rem;
+      font-size: 1.75rem; font-weight: 800; color: var(--gg-royal-deep);
+      letter-spacing: 0.02em; line-height: 1.15;
+      border-bottom: 3px solid var(--gg-gold); padding-bottom: 0.2rem;
     }
     .gg-header-sub {
-      width: 100%; margin: 0.15rem 0 0; font-size: 0.92rem; color: var(--secondary); line-height: 1.45;
+      margin: 0; font-size: 0.95rem; color: var(--secondary); line-height: 1.45;
     }
+    .gilbert-guide-col-chat-only { width: 100%; }
     .gilbert-guide-col {
       display: flex; flex-direction: row; flex: 1; min-width: 0; width: 100%;
       gap: var(--space-md); align-items: flex-start;
@@ -956,7 +953,6 @@
   <div id="confirm-page" class="confirm-page" aria-hidden="true">
     <div class="confirm-panel">
       <div class="confirm-header">
-        <img class="confirm-gilbert" id="confirm-gilbert" src="assets/gigi-goose-guide.svg" alt="Lord Gilbert Granville">
         <h2>Confirm &amp; submit</h2>
       </div>
       <p class="confirm-intro">Review your picks, add your email, and choose how project fees are invoiced. Deposit is billed right away; project invoices follow your schedule.</p>
@@ -1009,9 +1005,6 @@
   <div id="thank-you" class="thank-you" aria-hidden="true">
     <div class="thank-you-panel">
       <div class="thank-you-hero">
-        <div class="gilbert-celebrate-wrap">
-          <img class="thank-you-gilbert" id="thank-you-gilbert" src="assets/gilbert-celebrating.png" alt="Lord Gilbert Granville celebrating">
-        </div>
         <h2 class="thank-you-headline">Excellent choices — you're on your way!</h2>
         <p class="thank-you-sub" id="thank-you-sub">Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.</p>
       </div>
@@ -1027,7 +1020,6 @@
 
   <div id="main-app">
     <header class="gg-header">
-      <img class="gg-wordmark" src="assets/gigi-logo.jpg" alt="Gilded Goose Ltd.">
       <span class="gg-app-title">Gilbert Guide</span>
       <p class="gg-header-sub">Ask Gilbert, filter by value, pick projects, then confirm &amp; submit.</p>
     </header>
@@ -1039,11 +1031,7 @@
             <h2 class="picker-zone-title">What should we prioritize?</h2>
             <div class="search-unified-panel">
               <div class="search-unified-inner search-unified-gilbert-only">
-                <div class="gilbert-guide-col">
-                  <div class="gilbert-portrait-col">
-                    <img class="gilbert-caricature" id="gilbert-guide-img" src="assets/gilbert-thinking.png" alt="Lord Gilbert Granville">
-                    <p class="gilbert-name">Lord Gilbert Granville</p>
-                  </div>
+                <div class="gilbert-guide-col gilbert-guide-col-chat-only">
                   <div class="gilbert-chat-col">
                     <div class="gilbert-chat-wrap">
                       <div class="gilbert-chat-messages" id="gilbert-chat-messages" aria-live="polite"></div>
@@ -1116,8 +1104,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716b"></script>
-  <script src="projects-data.js?v=20260716b"></script>
-  <script src="app.js?v=20260716b"></script>
+  <script src="pages-config.js?v=20260716c"></script>
+  <script src="projects-data.js?v=20260716c"></script>
+  <script src="app.js?v=20260716c"></script>
 </body>
 </html>
