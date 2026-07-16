@@ -1,49 +1,57 @@
-# RETAINER — Digital Ads Maintenance Retainer
+# RETAINER — Digital Ads
 
 |                   |                                                            |
 | ----------------- | ---------------------------------------------------------- |
 | **ID**            | RETAINER                                                   |
-| **Fee**           | 2700                                                       |
-| **Timeline**      | Ongoing monthly                                            |
+| **Fee**           | 2900|
 | **Category**      | Retainer                                                   |
 | **Campaign type** | Paid Media Mgmt                                            |
 | **Status**        | ongoing                                                    |
+| **Publish status** | published                                                  |
+| **Estimated leads gained** | ~36 Military Search calls/mo (May verified) + ~80 LSA phone leads/mo · NTGUILT 282 clicks/30d (calls thin) |
 | **Keywords**      | ongoing, monthly, steady, maintain, retainer, report, crm, hubspot, referral, routine, lsa |
 
 ---
 
-## Description
+## Summary
 
-Pav Law invests about $6,000/month in Google Ads media, but without a formal <a href="https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/" target="_blank" rel="noopener">PPC management</a> retainer, campaigns drift between one-off fixes. This project provides ongoing oversight of Google Ads, <a href="https://support.google.com/localservices/answer/6224841" target="_blank" rel="noopener">Local Services Ads</a>, and Microsoft Ads — monitoring spend, tuning bids, reviewing call quality, and reporting <a href="https://www.clio.com/blog/law-firm-marketing/" target="_blank" rel="noopener">cost per call</a> by campaign each month.
+Provides ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.
 
 ## Value Added
 
-- Protects Military Search at roughly $67 per call (~36 calls/month in May 2026 data)
 - Monthly reporting catches waste before it runs another month
 - Keeps Google Ads, LSA, and Microsoft Ads aligned under one scope
+- LSA lead-status SOP so booked, spam, and follow-up leads stay accurate for billing and reporting
 
-## Marketing Education
+## Value icons
 
-Ongoing PPC management means watching campaigns weekly — pausing losers, scaling winners, and measuring cost per call. For law firms, Google and Clio both recommend tracking phone outcomes, not clicks alone, when judging paid search performance. See [Google Ads help — measure conversions](https://support.google.com/google-ads/answer/1722022), [Clio — law firm marketing overview](https://www.clio.com/blog/law-firm-marketing/), [Google Local Services Ads overview](https://support.google.com/localservices/answer/6224841), [PPC management pricing (2026)](https://www.outerboxdesign.com/articles/paid-media/google-ads-management-agency/ppc-management-pricing-fees/), [Law firm agency retainers](https://12amagency.com/blog/pricing-and-service-packages-of-law-firm-marketing-firms/), and [Rocket Pilots PPC tiers](https://rocketpilots.com/ppc-for-lawyers/).
+- foundation
+- retainer
+- efficiency
+
+## Goal
+
+Hold Military Search cost/call near **~$58–67**, grow NTGUILT call volume off efficient clicks, keep LSA phone lead flow stable, and cut navigational/government search-term waste (~38% of query spend in Jul period).
+
+## Information needed
+
+- Re-export Campaign + Ad group reports **with Phone calls column** for Jun 11–Jul 10 (verify est. 59–69 Military calls)
+- HubSpot contacts where `pl_lead_source` = Google Ads / LSA (matters retained)
+- Microsoft Ads export if still in retainer scope for this month
 
 ## WIP
 
-- UTM tracking on contact URLs
-- Ad extension and sitelink rollout
-- LSA performance summaries
-- Speed-to-lead intake recommendations
+- Blocked: LSA performance metrics — charge/status hygiene still uneven
+- Account shared negatives for government / JAG / PD / competitor terms (Military + NTGUILT)
+- Confirm NTGUILT call extensions + ntguilt.com forms in HubSpot before scaling budget
 
 ## Completed
 
 - Systems access audit
+- UTM tracking on contact form URLs, media, ads etc.
 - Lead flow optimization
 - LSA audit and county targeting cleanup
-- Google Ads and Microsoft Ads campaign buildout
+- LSA Phase 1 — Speed-to-lead intake recommendations, limited implementation
 - GBP content, hours, and service-area cleanup
-- Cross-platform paid search optimization
-
-## Account Data & Marketing Principles Applied
-
-Military Search averaged about 36 calls per month at roughly $67 per call in May 2026 account data
-
-Source: Pav Law Google Ads audit, May 2026
+- LSA call process Phase 1 — SOP + `LSA-DOCUMENTING-TRAINING.md` (see B11)
+- Paused Mountain DUI + Demand Gen bleed (confirmed $0 in Jul Search period)

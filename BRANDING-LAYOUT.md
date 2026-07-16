@@ -1,150 +1,310 @@
-# Gilbert Guide — branding & formatting
+# Pav Law Cockpit — branding & formatting guide
 
-**Canonical hub** for how the picker *looks*. Change colors, type, and layout tokens here first — then edit the files this doc points to.
+**Canonical hub** for how the tool *looks*. Change colors, type, and layout tokens here first — then edit the files this doc points to.
 
-**Project copy** lives elsewhere: [CONTENT-EDIT.md](CONTENT-EDIT.md) · [`content/INDEX.md`](content/INDEX.md)
-
----
-
-## 1. Change formatting all at once
-
-Edit `:root` in [`index.html`](index.html). Rebuild is not required for CSS — hard-refresh the browser (`?v=` cache busters on scripts are bumped when JS changes).
+**Copy / project text** lives elsewhere: [CONTENT-INDEX.md](CONTENT-INDEX.md) · [CONTENT-EDIT.md](CONTENT-EDIT.md)
 
 ---
 
-## 2. File map
+## TOC
 
-| Concern | File |
-|---------|------|
-| Tokens, zones, sticky bar, TOC, cards, confirm | `index.html` `<style>` + markup |
-| Value icon classes / filter / TOC / confirm summary | `app.js` (classes only — no badge hex) |
-| Generated project data | `projects-data.js` (from markdown build) |
+1. [Change formatting all at once](#1-change-formatting-all-at-once)
+2. [File map (where CSS lives)](#2-file-map-where-css-lives)
+3. [Brand tokens](#3-brand-tokens)
+4. [Typography](#4-typography)
+5. [Layout patterns](#5-layout-patterns)
+6. [KPI chart colors](#6-kpi-chart-colors)
+7. [Value icon color map](#7-value-icon-color-map)
+8. [Do / don’t](#8-do--dont)
+9. [Images & assets](#9-images--assets)
+10. [Scanability checklist](#10-scanability-checklist)
+11. [Build, preview, deploy](#11-build-preview-deploy)
+12. [Related rules & docs](#12-related-rules--docs)
 
-Do **not** put branding hex in project markdown or `projects-data.js`.
+---
+
+
+
+## Brand tokens
+
+Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for the metrics page.
+
+### Gilded Goose (cream / gold / brown / royal)
+
+
+| Token               | Default               | Use                                           |
+| ------------------- | --------------------- | --------------------------------------------- |
+| `--gg-gold`         | `#c9a86c`             | Accents, borders                              |
+| `--gg-gold-bright`  | `#e3c58d`             | Highlights                                    |
+| `--gg-gold-dark`    | `#b8860b`             | Rank numbers, chart gold series               |
+| `--gg-cream`        | `#f8f5ef`             | Page background (`--bg`)                      |
+| `--gg-cream-panel`  | `#f3ede4`             | Nested panels                                 |
+| `--gg-paper`        | `#fffcf7`             | Cards, inputs (`--surface`)                   |
+| `--gg-brown`        | `#3d3028`             | Body text (`--text`)                          |
+| `--gg-brown-muted`  | `#5c4f45`             | Secondary (`--secondary`)                     |
+| `--gg-royal-deep`   | `#2d1454`             | Section headers, deep accents                 |
+| `--gg-royal`        | `#3a1a6e`             | Headings, buttons, chart royal series         |
+| `--gg-royal-mid`    | `#4c1d95`             | Focus rings, Cases “Red accounts” series fill |
+| `--gg-royal-dim`    | `rgba(45,20,84,0.12)` | Selected wash                                 |
+| `--gg-royal-border` | `rgba(45,20,84,0.38)` | Borders                                       |
+| `--gg-negative`     | `#cf2d56`             | **Negative numbers only** (↓ MoM, − deltas)   |
+| `--gg-positive`     | `#1f8a65`             | Positive MoM / target hit                     |
+
+
+
+
+### Pav Law peacock (dark panels + chart teal)
+
+
+| Token                              | Default            | Use                                                   |
+| ---------------------------------- | ------------------ | ----------------------------------------------------- |
+| `--pav-teal`                       | `#00d4c4`          | Chart teal series (also literal in `kpi-report.js`)   |
+| `--pav-ink` / `--pav-ink-panel`    | near-black         | Gilbert chat / thank-you dark shells                  |
+| `--pav-text`                       | `#e8e8ec`          | Text on **dark** panels only                          |
+| `--pav-gradient-panel` / `-accent` | pink → navy radial | Dark priority / accent panels only                    |
+| Cockpit title                      | `#0d1b2a`          | Solid navy on `.cockpit-title` — **no gradient text** |
+
+
+Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` sources.
+
+### Layout scale
+
+
+| Token                                                     | Default            | Use                           |
+| --------------------------------------------------------- | ------------------ | ----------------------------- |
+| `--radius`                                                | `12px`             | Cards, panels                 |
+| `--space-sm` / `--space-md` / `--space-lg` / `--space-xl` | `0.75` → `2.75rem` | Gaps                          |
+| `--font-min-rem`                                          | `0.875rem` (14px)  | Labels, hints — UI copy floor |
+
+
+
+
+### Contrast (ADA)
+
+On cream/paper (`--bg`, `--gg-paper`, `--surface-plan`): use `--text`, `--gg-brown`, or `--gg-royal` only.
+
+**Never** put `#f0f4fc`, `--pav-text`, or white rgba washes on light panels.
+
+Links on light: `--gg-royal` + underline. Focus: `outline: 2px solid var(--gg-royal-mid)`.
 
 ---
 
-## 3. Brand tokens (`index.html` `:root`)
 
-| Token | Default | Use |
-|-------|---------|-----|
-| `--gg-gold` | `#c9a86c` | Accents, zone gold bar |
-| `--gg-gold-bright` | `#e3c58d` | Highlights, focus ring |
-| `--gg-gold-dark` | `#b8860b` | Zone labels, rank accents |
-| `--gg-cream` | `#f8f5ef` | Page background (`--bg`) |
-| `--gg-cream-panel` | `#f3ede4` | Nested panels, TOC zebra |
-| `--gg-paper` | `#fffcf7` | Cards, inputs (`--surface`) |
-| `--gg-brown` / `--gg-brown-muted` | `#3d3028` / `#5c4f45` | Body / secondary text |
-| `--gg-royal-deep` | `#2d1454` | Hero title, deep accents |
-| `--gg-royal` | `#3a1a6e` | Headings, primary actions |
-| `--gg-royal-mid` | `#4c1d95` | Focus, TLDR rail, mid accents |
-| `--gg-royal-light` | `#6b4fa0` | Soft royal (no neon purple) |
-| `--gg-royal-dim` / `--gg-royal-border` | rgba deep royal | Selected wash / borders |
-| `--gg-gold-dim` | gold wash | Selected TOC rows |
-| `--focus-ring` | gold glow | `:focus-visible` on controls |
-| `--space-sm/md/lg/xl` | 0.75 / 1.25 / 2 / 2.75 rem | Spacing scale |
-
-**`--gradient-brand`:** deep royal → royal → gold-dark (no `#6d28d9` / neon purple stops).
-
-**Forbidden:** teal/cyan accents · light-on-light plan panels · neon purple (`#7c5cff`) as brand light.
-
----
 
 ## 4. Typography
 
-Body: Georgia / Times New Roman (serif cockpit). Hierarchy via weight and size; titles use `--gg-royal-deep` + gold underline on `.gg-app-title`.
+
+| Element               | Selector / location    | Pattern                                                                     |
+| --------------------- | ---------------------- | --------------------------------------------------------------------------- |
+| Body (cockpit)        | `body` in `index.html` | Georgia / Times, serif · `1.14rem` · line-height `1.65` — “legal memo” feel |
+| Body (metrics page)   | `metrics.css` `body`   | system-ui sans — metrics-only exception                                     |
+| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, solid `#0d1b2a`                 |
+| Section / zone labels | `.picker-zone-label`   | Uppercase, ~`0.8125rem`,` --gg-royal`, full-width divider                   |
+| KPI section titles    | `.kpi-section-title`   | Bold royal deep; inside collapsible `<details>` summary                     |
+| Card titles           | `.card-title`          | ~`1.28rem`, weight 800, royal                                               |
+| KPI report title      | `.kpi-report-title`    | `1.35rem`, weight 800, royal                                                |
+| Table headers         | `.toc-table thead`     | Uppercase, muted brown                                                      |
+
+
+**Section title pattern:** short label → uppercase or weight-800 royal → optional gold/chevron accent (KPI) or hairline divider (picker zones). One purpose per section.
+
+To switch cockpit body to sans: change only `body { font-family }` in `index.html`; re-check card density.
 
 ---
+
+
 
 ## 5. Layout patterns
 
 ```
-┌─ gg-header ────────────────── brand + Gilbert Guide title
-├─ picker-zone-ask ──────────── Ask Gilbert + Why + condensed picks
-├─ picker-zone-outlines ─────── TOC table + Filter by value
-└─ picker-zone-cards ────────── sticky Continue bar + project cards
-Overlays: confirm · thank-you
+┌─ cockpit-header ───────────── title + subtitle
+├─ cockpit-tabs ─────────────── KPIs | Project Guide | Impact
+│
+├─ [KPIs] ───────────────────── kpi-report.js → #kpi-report-kpis
+│     collapsible .kpi-section (<details>)
+│     .kpi-stat-card / .kpi-goal-card tiles
+│     .kpi-split-grid → .kpi-split-panel (side-by-side; stack ≤900px)
+├─ [Impact] ─────────────────── #completed-list + #revenue-calculator
+└─ [Project Guide]
+   ├─ .picker-zone-priorities ── selection + Pav Priorities
+   ├─ .picker-zone-outlines ──── value filters + priority table
+   └─ .picker-zone-cards ─────── project cards → submit
+
+Overlays: Gilbert chat · confirm · thank-you
 ```
 
-| Pattern | Classes | Behavior |
-|---------|---------|----------|
-| Zones | `.picker-zone` + `.picker-zone-label` | Gold accent label; one purpose per zone |
-| Zone title | `.picker-zone-title` | Short royal-deep headline |
-| Sticky submit | `.project-list-controls.sticky-submit-bar` | Sticky bottom; paper + royal border |
-| TOC | `.toc-table` | Zebra even rows; `.row-selected` gold wash wins |
-| Cards | `.card` | `--space-lg` between cards; selected = royal wash |
-| Value TLDR | `.card-tldr` | Left royal rail around value bullets |
-| Confirm picks | `#confirm-selection-summary` | List before email / invoice fields |
+
+| Pattern           | Classes                                | Behavior                                        |
+| ----------------- | -------------------------------------- | ----------------------------------------------- |
+| Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
+| KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; left royal border                  |
+| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | Paper surface; gold accent when attention       |
+| Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | 2-col → 1-col ≤900px                            |
+| Project cards     | `.card`, `.card.selected`              | Selected = royal wash + border                  |
+| Zone labels       | `.picker-zone` + `.picker-zone-label`  | Scan breaks between picker areas                |
+| Charts            | `chartBlock()` in JS                   | Plot + legend + **always-visible** detail table |
+
+
+Confirm flow: estimated results · action items · next steps → submit (email + invoice). Action items appear on confirm / thank-you / email — not on the picker browse zones.
 
 ---
 
-## 6. Value icon color map
 
-**One map only.** Filter tiles and TOC ICONS column share `.value-icon.icon-{id}` → `--vi-*` tokens in `index.html` `:root`.
 
-| Icon id | Label | Badge bg / fg / border |
-|---------|-------|------------------------|
-| `foundation` | Foundation | `--vi-foundation-*` |
-| `retainer` | Retainer | `--vi-retainer-*` |
-| `leads` | Leads | `--vi-leads-*` |
-| `crm` | CRM | `--vi-crm-*` |
-| `seo` | SEO | `--vi-seo-*` |
-| `referrals` | Referrals | `--vi-referrals-*` |
-| `efficiency` | Analytics | `--vi-efficiency-*` (gold) |
-| `intake` | Intake | `--vi-intake-*` (royal) |
-| `creative` | Creative | `--vi-creative-*` |
-| `general` | Growth | `--vi-general-*` |
-| `account-data` | Account data | `--vi-account-data-*` |
+## 6. KPI chart colors
 
-Chip soft tints: `--vi-*-chip` on `.key-filter-btn[data-icon-filter].filter-active` only — do not replace badge fills.
+**Structure:** every graph card uses `chartBlock()` — plot + legend (2+ series) + detail table always below (not behind “Show table” alone).
 
-Palette comment in `:root`: `value-icon-palette v=20260716-ggl`.
+**Locked triad** (unique, high-contrast — no two similar purples adjacent):
 
-**Never:** hardcode badge colors in `app.js` · filter-only purple overrides · second palette under `.toc-value`.
+
+| Role                                           | Hex       | Token / note     |
+| ---------------------------------------------- | --------- | ---------------- |
+| Primary / Search / Military / Closed           | `#3a1a6e` | `--gg-royal`     |
+| Secondary / LSA / Core DV / New                | `#00d4c4` | `--pav-teal`     |
+| Tertiary / HubSpot / NTGUILT / cumulative gold | `#b8860b` | `--gg-gold-dark` |
+
+
+**Cases MoM stack:** Closed `#3a1a6e` · New `#00d4c4` · Red accounts `#4c1d95` (`--gg-royal-mid` — never alert-red fill for that series).
+
+**Forbidden on charts:** red/magenta for positive counts. `--gg-negative` only for negative deltas. Half-moon gauges: progress toward green; gold fill at 100%+.
+
+Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pav-law-kpi-charts.mdc)`
 
 ---
 
-## 7. Do / don’t
 
-- Do keep cream / gold / brown / deep royal as the brand spine.
-- Do underline links (TOC, condensed picks, refs) without relying on hover alone.
-- Do keep `:focus-visible` rings on buttons, filters, inputs.
-- Don’t revive light-on-light `.plan-summary` text (`#f0f4fc` on pale panels).
-- Don’t put neon purple in `--gradient-brand` or `--gg-royal-light`.
 
-Voice: practical law-firm cockpit for Andrew/team — scannable, not startup-landing wallpaper.
+## 7. Value icon color map
+
+**One map only.** Filter tiles and Project Outlines ICONS column share `.value-icon.icon-{id}` → `--vi-`* tokens in `index.html` `:root`.
+
+
+| Icon id        | Label        | Badge bg / fg / border            |
+| -------------- | ------------ | --------------------------------- |
+| `foundation`   | Foundation   | `#f87171` / `#7f1d1d` / `#dc2626` |
+| `retainer`     | Retainer     | `#818cf8` / `#312e81` / `#4f46e5` |
+| `leads`        | Leads        | `#fb923c` / `#7c2d12` / `#ea580c` |
+| `crm`          | CRM          | `#a78bfa` / `#4c1d95` / `#7c3aed` |
+| `seo`          | SEO          | `#4ade80` / `#14532d` / `#16a34a` |
+| `referrals`    | Referrals    | `#f472b6` / `#831843` / `#db2777` |
+| `efficiency`   | Analytics    | `#2dd4bf` / `#134e4a` / `#0d9488` |
+| `intake`       | Intake       | `#60a5fa` / `#1e3a8a` / `#2563eb` |
+| `creative`     | Creative     | `#e879f9` / `#701a75` / `#c026d3` |
+| `general`      | Growth       | `#94a3b8` / `#0f172a` / `#64748b` |
+| `account-data` | Account data | `#facc15` / `#713f12` / `#ca8a04` |
+
+
+Chip soft tints: `--vi-*-chip` / `--vi-*-chip-border` (do not replace badge fills).
+
+Palette comment in `:root`: `value-icon-palette v=20260714`.
+
+**Forbidden:** filter-only purple overrides · duplicate hex under `.toc-value` · second palette in `app.js` / `projects-data.js` / markdown.
+
+Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/pav-law-value-icons.mdc)`
 
 ---
 
-## 8. Scanability checklist
 
-- [x] Picker zones have `.picker-zone` + visible `.picker-zone-label`
-- [x] Sticky continue/submit bar readable on long lists
-- [x] Table zebra; selected row gold wash
-- [x] Cards spaced with `var(--space-lg)`
-- [x] Summary / value bullets: left royal border (`.card-tldr`)
-- [x] No light-on-light on plan / outlines tables
-- [x] Links underlined or clearly distinct
-- [x] Tab/button `:focus-visible` ring
-- [x] Value icons share one `--vi-*` map (filter + TOC)
+
+## 8. Do / don’t
+
+
+
+### Do
+
+- Edit `:root` tokens first; let components inherit.
+- Keep cream + gold + brown + **deep royal** as the light-UI voice (Gilded Goose × Pav).
+- Keep Georgia body on the cockpit for memo/brief tone.
+- Keep chart series distinguishable (royal / teal / gold).
+- Use red only for negatives and unverified **✕** badges.
+- One job per section; collapsible KPI topics stay focused.
+
+
+
+### Don’t
+
+- Generic AI look: purple-on-white marketing gradients, Inter/Roboto stacks as “brand,” glow blobs, pill spam, card walls with heavy shadows.
+- Gradient text on `.cockpit-title` — solid navy only.
+- Light-on-light or `--pav-text` on cream panels.
+- Swap chart series to two near-identical purples.
+- Recolor value icons on one surface only.
+- Put branding hex in project markdown or `projects-data.js`.
+
+Voice: practical law-firm cockpit for Andrew/team — polished, scannable, not startup-landing or dashboard-wallpaper.
 
 ---
 
-## 9. Build, preview, deploy
+
+
+## 9. Images & assets
+
+
+| Asset                | Path                              | Referenced from        |
+| -------------------- | --------------------------------- | ---------------------- |
+| Gilbert guide icon   | `assets/gigi-goose-guide.svg`     | `content/settings.md`  |
+| Gilbert thinking     | `assets/gilbert-thinking.png`     | Launcher / ask-Gilbert |
+| Gilbert celebrating  | `assets/gilbert-celebrating.png`  | Thank-you              |
+| Pav Law shield       | `assets/pav-law-shield.svg`       | Account-data badge     |
+| Gilded Goose account | `assets/gilded-goose-account.svg` | Badges                 |
+
+
+Replace files or update paths in `content/settings.md`, then `npm run build` if settings affect generated output.
+
+---
+
+
+
+## 10. Scanability checklist
+
+- [ ] Picker zones have `.picker-zone` + visible `.picker-zone-label`
+- [ ] Sticky continue/submit bar readable on long lists
+- [ ] Table zebra; selected row gold wash
+- [ ] Cards spaced with `var(--space-lg)`
+- [ ] Summary / value bullets: left royal border (`.card-tldr`)
+- [ ] KPI sections collapsible — one topic per `<details>`
+- [ ] No light-on-light on Priorities / plan / outlines tables
+- [ ] Links underlined or clearly distinct
+- [ ] Tab/button `:focus-visible` ring
+- [ ] Red **✕** = unverified; **★** = export-backed (tile corners)
+
+---
+
+
+
+## 11. Build, preview, deploy
 
 ```bash
 cd gilded-goose/clients/pav-law/project-picker
-python3 -m http.server 8777 --bind 127.0.0.1
-# open http://127.0.0.1:8777/index.html
+python3 -m http.server 8765
+# open http://localhost:8765/index.html
 ```
 
-Markdown content changes: `npm run build` (or `npm run watch`). CSS/JS in `index.html` / `app.js` — hard-refresh.
+Hard-refresh after CSS edits. Bump `?v=` on scripts if cached.
 
-Deploy: [GITHUB-PUSH.md](GITHUB-PUSH.md)
+1. Edit `index.html` and/or `kpi-report.js` / `metrics.css`
+2. Preview locally
+3. Push — [GITHUB-PUSH.md](GITHUB-PUSH.md)
+
+No `npm run build` for pure CSS/HTML/JS layout. Run build only if `content/**/*.md` or settings changed.
 
 ---
 
-## 10. Related
 
-- Chart / KPI pages (when present): leave `kpi-report.js` to the charts owner; shared tokens stay in this `:root`.
-- Backend / webhook: [BACKEND-SETUP.md](BACKEND-SETUP.md) · [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
+
+## 12. Related rules & docs
+
+
+| Doc / rule                                | Role                                   |
+| ----------------------------------------- | -------------------------------------- |
+| **This file**                             | Branding + formatting (single hub)     |
+| [CONTENT-INDEX.md](CONTENT-INDEX.md)      | Every string by page                   |
+| [CONTENT-EDIT.md](CONTENT-EDIT.md)        | Project markdown workflow              |
+| [content/INDEX.md](content/INDEX.md)      | Project list (Kate-owned)              |
+| [README.md](README.md)                    | Entry + deploy pointers                |
+| `.cursor/rules/pav-law-kpi-charts.mdc`    | Chart structure + locked series colors |
+| `.cursor/rules/pav-law-value-icons.mdc`   | One value-icon palette                 |
+| `.cursor/rules/gilbert-guide-content.mdc` | Don’t clobber `content/INDEX.md`       |
+
+
+When palette or chart conventions change, update **this file** and the matching `.mdc` rule in the same PR.

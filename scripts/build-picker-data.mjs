@@ -73,16 +73,48 @@ window.PROJECT_DATA = `;
   console.log(`Built ${OUT} (${projects.length} projects)`);
 }
 
+function contentMarkdownPaths() {
+  const paths = [
+    path.join(CONTENT, "INDEX.md"),
+    path.join(CONTENT, "settings.md"),
+    path.join(CONTENT, "retainer.md")
+  ];
+  const projectsDir = path.join(CONTENT, "projects");
+  if (fs.existsSync(projectsDir)) {
+    for (const f of fs.readdirSync(projectsDir)) {
+      if (f.endsWith(".md") && !f.startsWith("_")) paths.push(path.join(projectsDir, f));
+    }
+  }
+  return paths;
+}
+
+function contentSnapshot() {
+  const snap = new Map();
+  for (const fp of contentMarkdownPaths()) {
+    try {
+      snap.set(fp, fs.statSync(fp).mtimeMs);
+    } catch {
+      /* file removed mid-watch */
+    }
+  }
+  return snap;
+}
+
 function watch() {
   build();
-  fs.watch(CONTENT, { recursive: true }, () => {
+  let prev = contentSnapshot();
+  setInterval(() => {
+    const next = contentSnapshot();
+    const changed = next.size !== prev.size || [...next].some(([fp, mtime]) => prev.get(fp) !== mtime);
+    if (!changed) return;
+    prev = next;
     try {
       build();
     } catch (e) {
       console.error(e.message);
     }
-  });
-  console.log("Watching content/ … (INDEX.md is never modified by build)");
+  }, 1000);
+  console.log("Watching content/ (poll) … INDEX.md is never modified by build");
 }
 
 if (process.argv.includes("--watch")) watch();
