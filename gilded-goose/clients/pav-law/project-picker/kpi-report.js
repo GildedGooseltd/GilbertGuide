@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260716-financial-section";
+  const RENDER_VER = "20260716-data-tab";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -1479,57 +1479,12 @@
 
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
-      ${casesLeadsSpendSectionHtml()}
-      ${cashCollectedSectionHtml()}
-      ${feeByPracticeSectionHtml()}
       <section class="kpi-section kpi-section-static" data-feedback-id="section-key-metrics" data-feedback-label="Key metrics">
         ${kpiSectionStaticHead("Key metrics", "")}
         <div class="kpi-section-body">
           <div class="kpi-stat-grid">${kpiCards}</div>
         </div>
-      </section>
-      <section class="kpi-section kpi-section-static kpi-section-leads-split" data-feedback-id="section-leads-channel" data-feedback-label="Leads by channel">
-        <div class="kpi-section-body">
-          <div class="kpi-split-grid">
-            <article class="kpi-split-panel kpi-verified" data-feedback-id="section-leads-channel-01" data-feedback-label="#01 Leads by channel">
-              ${kpiSectionStaticHead("#01 Leads by channel", "Stacked by month")}
-              <div class="kpi-split-panel-body">
-                ${chartBlock({
-                  focus: "#01",
-                  chart: stackedLeadsByMonthChart(leadsByMonthFromChannels(DATA.channels)),
-                  legend: channelLegend(DATA.channels),
-                  table: channelsDetailTable(DATA.channels)
-                })}
-                ${sourceFootnote("#01")}
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-      <section class="kpi-section kpi-section-static" data-feedback-id="section-reputation" data-feedback-label="Reputation">
-        ${kpiSectionStaticHead("Reputation", "Reviews by channel · includes gap channels")}
-        <div class="kpi-section-body">
-          <div class="kpi-split-grid">
-            <div class="kpi-mini-card" data-kpi-focus="#16">
-              ${statusCorner(false)}
-              <h3>#16 Reviews by channel</h3>
-              ${(() => {
-                const segs = presencePieSegments(DATA.reviews);
-                return chartBlock({ chart: donutChart(segs) });
-              })()}
-              <table class="kpi-table">
-                <thead><tr><th>Channel</th><th>Rating</th><th># Reviews</th></tr></thead>
-                <tbody>${DATA.reviews.map(r => `<tr class="${r.status !== "active" ? "kpi-row-gap" : ""}">
-                  <td>${star(!!r.verified)} ${r.platform}</td>
-                  <td>${dash(r.rating)}</td>
-                  <td>${dash(r.count)}</td>
-                </tr>`).join("")}</tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-      ${dashboardSectionsHtml()}`;
+      </section>`;
     el.dataset.rendered = RENDER_VER;
     bindKpiInteractions(el);
     bindDashboardInteractions(el);
@@ -1634,6 +1589,126 @@
       </section>`;
   }
 
+  function reviewsByChannelPanelHtml() {
+    return `<div class="kpi-mini-card" data-kpi-focus="#16">
+      ${statusCorner(false)}
+      <h3>#16 Reviews by channel</h3>
+      ${(() => {
+        const segs = presencePieSegments(DATA.reviews);
+        return chartBlock({ chart: donutChart(segs) });
+      })()}
+      <table class="kpi-table">
+        <thead><tr><th>Channel</th><th>Rating</th><th># Reviews</th></tr></thead>
+        <tbody>${DATA.reviews.map(r => `<tr class="${r.status !== "active" ? "kpi-row-gap" : ""}">
+          <td>${star(!!r.verified)} ${r.platform}</td>
+          <td>${dash(r.rating)}</td>
+          <td>${dash(r.count)}</td>
+        </tr>`).join("")}</tbody>
+      </table>
+    </div>`;
+  }
+
+  function leadsByChannelPanelHtml() {
+    return `<article class="kpi-split-panel kpi-verified" data-feedback-id="section-leads-channel-01" data-feedback-label="#01 Leads by channel">
+      ${kpiSectionStaticHead("#01 Leads by channel", "Stacked by month")}
+      <div class="kpi-split-panel-body">
+        ${chartBlock({
+          focus: "#01",
+          chart: stackedLeadsByMonthChart(leadsByMonthFromChannels(DATA.channels)),
+          legend: channelLegend(DATA.channels),
+          table: channelsDetailTable(DATA.channels)
+        })}
+        ${sourceFootnote("#01")}
+      </div>
+    </article>`;
+  }
+
+  function sourceMixPanelHtml() {
+    return `<article class="kpi-split-panel kpi-verified" data-feedback-id="section-source-mix" data-feedback-label="#10 Source mix">
+      ${kpiSectionStaticHead("#10 Source mix", "Lead share by channel")}
+      <div class="kpi-split-panel-body">
+        ${chartBlock({
+          focus: "#10",
+          chart: donutChart(DATA.sourceMix),
+          table: sourceMixDetailTable(DATA.sourceMix)
+        })}
+        ${sourceFootnote("#10")}
+      </div>
+    </article>`;
+  }
+
+  function casesMomPanelHtml() {
+    return `<article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 / #05 Cases MoM">
+      ${statusCorner(false)}
+      ${kpiSectionStaticHead("#04 / #05 Cases MoM", "Closed · New · Red accounts")}
+      <div class="kpi-split-panel-body">
+        ${chartBlock({
+          focus: "#04",
+          verified: false,
+          head: `<span class="kpi-mom-up">Closed ↑ +38%</span> · <span class="kpi-mom-down">New ↓ −25%</span> · Red accounts placeholder`,
+          chart: stackedCasesMomChart(casesMomByMonth(DATA.casesMom, DATA.casesMomSeries)),
+          legend: channelLegend(DATA.casesMomSeries),
+          table: casesMomDetailTable(DATA.casesMom)
+        })}
+      </div>
+    </article>`;
+  }
+
+  function avgDepositPanelHtml() {
+    const depositHit = meetsTarget(DATA.avgDeposit.current, DATA.avgDeposit.target, false);
+    return `<div class="kpi-dash-card kpi-dash-target-bar" data-kpi-focus="#DEPOSIT">
+      ${statusCorner(false)}
+      <span class="kpi-stat-id">Avg deposit</span>
+      ${avgDepositTargetBarChart()}
+      <div class="kpi-stat-label">Goal $${DATA.avgDeposit.target} · placeholder current $${DATA.avgDeposit.current}</div>
+      ${depositHit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
+      ${kpiDetailTable(
+        ["Measure", "Amount"],
+        [
+          ["Current (placeholder)", `$${DATA.avgDeposit.current}`],
+          ["Goal", `$${DATA.avgDeposit.target}`],
+          ["Gap", `$${DATA.avgDeposit.target - DATA.avgDeposit.current}`]
+        ]
+      )}
+    </div>`;
+  }
+
+  function dataCardHtml(title, note, body, opts) {
+    const full = opts && opts.full ? " data-grid-full" : "";
+    return `<section class="data-card${full}">
+      <h3>${escapeHtml(title)}</h3>
+      ${note ? `<p class="data-card-note">${escapeHtml(note)}</p>` : ""}
+      ${body || ""}
+    </section>`;
+  }
+
+  function renderData(el) {
+    if (!el || el.dataset.rendered === RENDER_VER) return;
+    el.innerHTML = `<header class="data-page-head">
+      <img class="data-brand-logo" src="assets/gigi-logo.jpg" alt="Gilded Goose Ltd.">
+      <div>
+        <p class="data-eyebrow">Saved Data View</p>
+        <h2 class="data-page-title">Pav Law Data Dashboard</h2>
+        <p class="data-page-sub">Charts flagged as useful enough to save while the new visual system is tested here only.</p>
+      </div>
+    </header>
+    <div class="data-grid">
+      ${dataCardHtml("Lead Channel Stack", "High-level lead source movement and MoM table.", leadsByChannelPanelHtml(), { full: true })}
+      ${dataCardHtml("Cases, Leads & Spend", "Saved chart comparing case creation, LSA lead volume, and marketing spend.", casesLeadsSpendSectionHtml(), { full: true })}
+      ${dataCardHtml("Financials", "Cash collected, LSA charge efficiency, and trust-transfer aggregates.", cashCollectedSectionHtml(), { full: true })}
+      ${dataCardHtml("Lead Share & Potential Revenue", "Source mix with lead counts, MoM comparison, and estimated potential client revenue.", sourceMixPanelHtml(), { full: true })}
+      ${dataCardHtml("Leads By Campaign", "Parked #08 chart saved for dashboard use.", leadsByCampaignPanelHtml())}
+      ${dataCardHtml("Referral Network", "Parked #17 tile saved for a later referral dashboard.", totalReferralNetworkPanelHtml())}
+      ${dataCardHtml("Reviews By Channel", "Manual profile/review input now lives in B10; this keeps the old #16 data view.", reviewsByChannelPanelHtml())}
+      ${dataCardHtml("Cases MoM", "Saved operational trend tile for closed/new/red-account counts.", casesMomPanelHtml())}
+      ${dataCardHtml("Average Deposit", "Saved target chart for a later finance pass.", avgDepositPanelHtml())}
+    </div>`;
+    el.dataset.rendered = RENDER_VER;
+    bindKpiInteractions(el);
+    bindDashboardInteractions(el);
+    dispatchRendered(el, "data");
+  }
+
   /** @deprecated Dashboards tab removed — content is in renderKpis(). Kept for callers. */
   function renderDashboards(el) {
     if (!el) return;
@@ -1690,6 +1765,7 @@
 
   window.KPI_REPORT = {
     renderKpis,
+    renderData,
     renderDashboards,
     renderAll,
     focusKpi,

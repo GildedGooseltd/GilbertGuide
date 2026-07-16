@@ -6,10 +6,14 @@
     );
   }
   let CONFIG = getConfig();
-  const GILBERT_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-goose-guide.svg";
+  function currentBrandAsset(value, fallback) {
+    const deprecated = new Set(["assets/gigi-goose-guide.svg", "assets/gigi-logo-frame.png"]);
+    return value && !deprecated.has(value) ? value : fallback;
+  }
+  const GILBERT_ICON = currentBrandAsset(PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon, "assets/gigi-seal.jpg");
   const GILBERT_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
-  const GILBERT_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-logo-frame.png";
-  const GILBERT_LOGO = PROJECT_DATA.guideLogo || "assets/gigi-logo-frame.png";
+  const GILBERT_SEAL = currentBrandAsset(PROJECT_DATA.guideSeal, "assets/gilbert-celebrating.png");
+  const GILBERT_LOGO = currentBrandAsset(PROJECT_DATA.guideLogo, "assets/gigi-logo.jpg");
   const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
   const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
   const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
@@ -357,7 +361,7 @@
     const t = String(tab || "kpis").toLowerCase().trim();
     if (t === "revenue" || t === "completed") return "impact";
     if (t === "dashboards") return "kpis";
-    if (t === "kpis" || t === "picker" || t === "impact") return t;
+    if (t === "kpis" || t === "data" || t === "picker" || t === "impact") return t;
     return "kpis";
   }
 
@@ -698,7 +702,7 @@
     const doneCount = completedProjects().length;
     document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
       const view = btn.dataset.view;
-      if (view === "kpis") {
+      if (view === "kpis" || view === "data") {
         const badge = btn.querySelector(".tab-count");
         if (badge) badge.remove();
         return;
@@ -717,17 +721,24 @@
   function renderViewLayout() {
     state.activeViewTab = normalizeViewTab(state.activeViewTab);
     const isKpis = state.activeViewTab === "kpis";
+    const isData = state.activeViewTab === "data";
     const isPicker = state.activeViewTab === "picker";
     const isImpact = state.activeViewTab === "impact";
     const kpisPanel = document.getElementById("cockpit-panel-kpis");
+    const dataPanel = document.getElementById("cockpit-panel-data");
     const pickerPanel = document.getElementById("cockpit-panel-picker");
     const impactPanel = document.getElementById("cockpit-panel-impact");
     if (kpisPanel) kpisPanel.hidden = !isKpis;
+    if (dataPanel) dataPanel.hidden = !isData;
     if (pickerPanel) pickerPanel.hidden = !isPicker;
     if (impactPanel) impactPanel.hidden = !isImpact;
     syncViewTabs();
     renderResearchSection();
     renderKpiDashboard();
+    if (isData && window.KPI_REPORT) {
+      const dataEl = document.getElementById("kpi-report-data");
+      if (dataEl) KPI_REPORT.renderData(dataEl);
+    }
     if (isImpact) {
       renderCompletedList();
       renderRevenueCalculator();
@@ -962,9 +973,20 @@
     } else {
       rows.push(["Choose a schedule", `Select how long to pay the remaining ${fmt(plan.remainingBase)}`]);
     }
+    function paymentCalcRowClass(label) {
+      if (/Total due/i.test(label)) return "payment-calc-row--total";
+      if (/Due now/i.test(label)) return "payment-calc-row--deposit";
+      if (/Schedule surcharge/i.test(label)) {
+        return plan.within60Days ? "payment-calc-row--surcharge-none" : "payment-calc-row--surcharge";
+      }
+      return "";
+    }
     return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">
       <table class="payment-calc-table"><tbody>
-        ${rows.map(([k, v]) => `<tr><th scope="row">${escapeHtml(k)}</th><td>${escapeHtml(String(v))}</td></tr>`).join("")}
+        ${rows.map(([k, v]) => {
+          const cls = paymentCalcRowClass(k);
+          return `<tr${cls ? ` class="${cls}"` : ""}><th scope="row">${escapeHtml(k)}</th><td>${escapeHtml(String(v))}</td></tr>`;
+        }).join("")}
       </tbody></table>
     </div>`;
   }
@@ -3139,7 +3161,7 @@
     const guideImg = document.getElementById("confirm-gilbert");
     if (guideImg) {
       guideImg.src = GILBERT_LOGO;
-      guideImg.alt = "Gilded Goose";
+      guideImg.alt = "Gilded Goose Ltd.";
     }
     const consentEl = document.getElementById("esign-consent");
     if (consentEl) consentEl.checked = false;
