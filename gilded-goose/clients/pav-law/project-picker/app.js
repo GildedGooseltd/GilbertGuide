@@ -1045,13 +1045,14 @@
     answerRate: 0.69,
     consultToRetained: 0.51,
     leadToCaseRate: 9 / 124,
-    avgCaseFee: 4800,
+    /* MyCase Client mean fee — CLIENT-VALUE-BASELINE.md · as of 2026-07-01 */
+    avgCaseFee: 5587,
     monthlyLeadsBaseline: 124
   };
 
   const ACCOUNT_KPI_ACTIONS = [
     { kpi: "#21", text: "Answered phones 69% — assign Casey phone block Wed AM", projectIds: ["B2", "RETAINER", "A8", "B1", "A6"] },
-    { kpi: "#19", text: "Est. missed revenue $4,200/mo — review Search routing + after-hours callback", projectIds: ["B2", "RETAINER", "A6", "A8", "A1"] },
+    { kpi: "#19", text: "Est. missed revenue $6,060/mo — review Search routing + after-hours callback", projectIds: ["B2", "RETAINER", "A6", "A8", "A1"] },
     { kpi: "#15", text: "CPL $142 over target — pause Core DV bleed", projectIds: ["RETAINER", "A1"] },
     { kpi: "#17", text: "GBP referrals −3 MoM — refresh profile + UTM pass", projectIds: ["B10", "A2", "B5"] }
   ];

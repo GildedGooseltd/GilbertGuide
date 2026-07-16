@@ -18,7 +18,7 @@ export const KPI_EXPECTED = {
     cpl: 142,
     newCases: 9,
     answerRatePct: 69,
-    avgCaseFee: 3870
+    avgCaseFee: 5587
   },
   campaignsJul: {
     "Military | Search | Calls": { spend: 3982.68, clicks: 330 },

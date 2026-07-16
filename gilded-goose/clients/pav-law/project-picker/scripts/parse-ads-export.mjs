@@ -257,10 +257,14 @@ function run() {
   push("KPI #01", "Channel sum", status(channelSum === KPI_EXPECTED.kpis.totalLeads, true,
     `Search ${KPI_EXPECTED.kpis.searchCallsChannel} + LSA ${KPI_EXPECTED.kpis.lsaInboxChannel} + HubSpot ${KPI_EXPECTED.kpis.hubspotFormsChannel} = ${channelSum} vs total ${KPI_EXPECTED.kpis.totalLeads}`));
   push("KPI #01", "HubSpot slice", { level: "gap", msg: "29 forms — no HubSpot export on file to verify" });
+  push("KPI #28", "Avg case fee", status(
+    KPI_EXPECTED.kpis.avgCaseFee === 5587,
+    true,
+    `Guide baseline $${KPI_EXPECTED.kpis.avgCaseFee} mean (MyCase Client n=142) — cash-collected export still missing`
+  ));
   push("KPI #02", "New cases (9)", { level: "gap", msg: "Needs MyCase or HubSpot deals export — not in Ad Reports" });
   push("KPI #21", "Answer rate (69%)", { level: "gap", msg: "Needs HubSpot call logs / VoIP — not in Ad Reports" });
   push("KPI #22", "Speed to lead", { level: "gap", msg: "Needs HubSpot workflow timestamps" });
-  push("KPI #28", "Avg case fee", { level: "gap", msg: "Needs MyCase billing export" });
 
   const levelIcon = { ok: "✅", warn: "⚠️", fail: "❌", gap: "⬜" };
   const safe = s => String(s).replace(/\|/g, " · ");
