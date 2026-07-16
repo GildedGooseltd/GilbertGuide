@@ -224,7 +224,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 - Keep Georgia body on the cockpit for memo/brief tone.
 - Keep chart series distinguishable (royal / gold / mid-royal).
 - Shared box chrome: `--gg-box-border`, `--gg-box-shadow`, `--gg-head-accent` on section heads.
-- Use red only for negatives and unverified **✕** badges. Verified tiles use a **green outline** (no star).
+- Use red only for negatives and unverified **✕** badges.
 - One job per section; collapsible KPI topics stay focused.
 
 
@@ -274,7 +274,7 @@ Replace files or update paths in `content/settings.md`, then `npm run build` if 
 - [ ] No light-on-light on Priorities / plan / outlines tables
 - [ ] Links underlined or clearly distinct
 - [ ] Tab/button `:focus-visible` ring
-- [ ] Red **✕** = unverified; green outline = export-backed (no ★)
+- [ ] Red **✕** = unverified; **★** = export-backed (tile corners)
 
 ---
 

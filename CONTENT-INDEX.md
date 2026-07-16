@@ -41,7 +41,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Default tab on load     | `app.js`     | `activeViewTab: "kpis"` — KPIs panel visible first                       |
 | Tab: KPIs               | `index.html` | `button[data-view="kpis"]` — includes former Dashboards charts at bottom |
 | Tab: Project Guide      | `index.html` | `button[data-view="picker"]`                                             |
-| Tab: Impact             | `index.html` | `button[data-view="impact"]` — grayed + Under Construction overlay |
+| Tab: Impact             | `index.html` | `button[data-view="impact"]` — completed results + revenue calculator    |
 
 
 
@@ -147,7 +147,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | #02 New cases YoY (2025 vs 2026)        | `kpi-report.js` | `dashboardSectionsHtml()` — `DATA.newCasesYoY`                   |
 | Avg deposit · Cases MoM (#04/#05)       | `kpi-report.js` | `dashboardSectionsHtml()` — `DATA.avgDeposit`, `casesMom`        |
 | #10 Source mix                          | `kpi-report.js` | `DATA.sourceMix`                                                 |
-| Legend green outline / ✕                | `kpi-report.js` | `reportKey()` — verified vs gap channels                     |
+| Legend ★ / ✕                            | `kpi-report.js` | `kpiSectionStaticHead()` — verified vs gap channels              |
 
 
 
