@@ -1566,10 +1566,10 @@
 
   const THEME_STORAGE_KEY = "gilbert-guide-theme";
   const THEME_DARK = "dark";
-  const THEME_UNICORN = "unicorn";
+  const THEME_LIGHT = "light";
 
   function normalizeTheme(value) {
-    if (value === THEME_UNICORN || value === "light") return THEME_UNICORN;
+    if (value === THEME_LIGHT || value === "unicorn") return THEME_LIGHT;
     if (value === THEME_DARK) return THEME_DARK;
     return null;
   }
@@ -1583,73 +1583,11 @@
       const stored = normalizeTheme(localStorage.getItem(THEME_STORAGE_KEY));
       if (stored) return stored;
     } catch (e) { /* ignore */ }
-    /* Preferred presentation: cream unicorn + quiet trail questionnaire */
-    return THEME_UNICORN;
+    return THEME_LIGHT;
   }
 
-  let unicornFartTimer = null;
-  let unicornFartHideTimer = null;
-
-  function spawnUnicornFartPuffs(host) {
-    if (!host) return;
-    host.innerHTML = "";
-    const colors = ["#c9a86c", "#e3c58d", "#f5efe4", "#c4b5fd", "#a78bfa", "#fff8e7", "#fff"];
-    for (let i = 0; i < 16; i++) {
-      const puff = document.createElement("span");
-      puff.className = "unicorn-fart-puff";
-      const size = 70 + Math.random() * 140;
-      puff.style.width = size + "px";
-      puff.style.height = size + "px";
-      puff.style.left = (18 + Math.random() * 64) + "%";
-      puff.style.top = (52 + Math.random() * 30) + "%";
-      puff.style.background = colors[Math.floor(Math.random() * colors.length)];
-      puff.style.setProperty("--drift", (Math.random() * 160 - 80) + "px");
-      puff.style.animationDelay = (Math.random() * 0.45) + "s";
-      host.appendChild(puff);
-    }
-  }
-
-  function hideUnicornFartCloud() {
-    const overlay = document.getElementById("unicorn-fart-cloud");
-    if (!overlay) return;
-    overlay.classList.add("fade-out");
-    window.clearTimeout(unicornFartHideTimer);
-    unicornFartHideTimer = window.setTimeout(() => {
-      overlay.classList.remove("show", "fade-out");
-      overlay.hidden = true;
-      overlay.setAttribute("aria-hidden", "true");
-      const puffs = document.getElementById("unicorn-fart-puffs");
-      if (puffs) puffs.innerHTML = "";
-    }, 560);
-  }
-
-  function playUnicornFartCloud() {
-    const reduceMotion = typeof window.matchMedia === "function"
-      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const overlay = document.getElementById("unicorn-fart-cloud");
-    if (!overlay) return;
-    window.clearTimeout(unicornFartTimer);
-    window.clearTimeout(unicornFartHideTimer);
-    overlay.hidden = false;
-    overlay.setAttribute("aria-hidden", "false");
-    overlay.classList.remove("fade-out");
-    // restart CSS animations
-    void overlay.offsetWidth;
-    overlay.classList.add("show");
-    spawnUnicornFartPuffs(document.getElementById("unicorn-fart-puffs"));
-    const img = document.getElementById("unicorn-fart-gilbert");
-    if (img) {
-      // restart gif
-      const src = img.getAttribute("src") || "assets/gilbert-unicorn-dance.gif";
-      img.src = src.split("?")[0] + "?t=" + Date.now();
-    }
-    unicornFartTimer = window.setTimeout(hideUnicornFartCloud, reduceMotion ? 1600 : 3200);
-  }
-
-  function applyTheme(theme, options) {
-    const opts = options || {};
-    const prev = normalizeTheme(document.documentElement.getAttribute("data-theme"));
-    const next = normalizeTheme(theme) || THEME_UNICORN;
+  function applyTheme(theme) {
+    const next = normalizeTheme(theme) || THEME_LIGHT;
     document.documentElement.setAttribute("data-theme", next);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
@@ -1658,11 +1596,8 @@
     if (btn) {
       const isDark = next === THEME_DARK;
       btn.setAttribute("aria-pressed", isDark ? "true" : "false");
-      btn.setAttribute("aria-label", isDark ? "Switch to unicorn theme" : "Switch to dark theme");
-      btn.textContent = isDark ? "Unicorn" : "Dark";
-    }
-    if (opts.celebrate && next === THEME_UNICORN && prev !== THEME_UNICORN) {
-      playUnicornFartCloud();
+      btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+      btn.textContent = isDark ? "Light" : "Dark";
     }
   }
 
@@ -1671,19 +1606,9 @@
     const btn = document.getElementById("theme-toggle");
     if (!btn) return;
     btn.addEventListener("click", () => {
-      const current = normalizeTheme(document.documentElement.getAttribute("data-theme")) || THEME_UNICORN;
-      applyTheme(current === THEME_DARK ? THEME_UNICORN : THEME_DARK, { celebrate: true });
+      const current = normalizeTheme(document.documentElement.getAttribute("data-theme")) || THEME_LIGHT;
+      applyTheme(current === THEME_DARK ? THEME_LIGHT : THEME_DARK);
     });
-    const overlay = document.getElementById("unicorn-fart-cloud");
-    if (overlay) {
-      overlay.addEventListener("click", hideUnicornFartCloud);
-    }
-    try {
-      if (new URLSearchParams(location.search).get("unicornFart") === "1") {
-        applyTheme(THEME_UNICORN);
-        playUnicornFartCloud();
-      }
-    } catch (e) { /* ignore */ }
   }
 
   function showThankYou(payload) {
