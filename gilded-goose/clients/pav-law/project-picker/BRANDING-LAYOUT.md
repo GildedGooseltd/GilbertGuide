@@ -100,7 +100,7 @@ Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + 
 Overlays: confirm · thank-you
 ```
 
-**Survey (quiet paper trail-guide):** Q&A in [`content/survey.md`](content/survey.md) → `PROJECT_DATA.survey`. One paper card. Centered masthead (leaf + TRAIL GUIDE + Choose your path). No Trailhead/Waypoint chrome. Numbered choice rows with chevrons. No character portrait. Draft question set: [`content/survey-DRAFT.md`](content/survey-DRAFT.md).
+**Survey (quiet paper trail-guide):** Q&A in [`content/survey.md`](content/survey.md) → `PROJECT_DATA.survey`. One paper card. Centered masthead (leaf + TRAIL GUIDE + Choose your path). **3-layer** business questions (pressure → channel → bottleneck). No Trailhead/Waypoint chrome. Numbered choice rows with chevrons. Mapping notes: [`content/survey-DRAFT.md`](content/survey-DRAFT.md).
 
 | Pattern | Classes | Behavior |
 |---------|---------|----------|
