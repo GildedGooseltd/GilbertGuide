@@ -1058,7 +1058,7 @@
     renderCondensedToc();
     saveState();
     const matchCount = allItemsByPriority().filter(item => itemMatchesIconFilters(item)).length;
-    showToast(`Path set — showing ${matchCount} matching project${matchCount === 1 ? "" : "s"}`);
+    showToast(`Trail marked — ${matchCount} project${matchCount === 1 ? "" : "s"} on your map`);
   }
 
   function selectSurveyChoice(choiceId) {
@@ -1099,7 +1099,7 @@
     syncSurveyGilbertPortrait();
     const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
     const crumbs = pathLabels.length
-      ? `<p class="survey-crumbs">So far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
+      ? `<p class="survey-crumbs">Trail so far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
       : "";
 
     if (state.surveyDone && state.surveyPath.length) {
@@ -1111,15 +1111,15 @@
         return `<span class="survey-tag">${valueIconMarkup(def)}<span>${escapeHtml(def.label)}</span></span>`;
       }).join("");
       el.innerHTML = `<div class="survey-progress">
-          <span>Path set</span>
-          <span class="survey-progress-steps">Done</span>
+          <span>Trail marked</span>
+          <span class="survey-progress-steps">Map ready</span>
         </div>
         ${crumbs}
-        <p class="survey-result-meta">Filtering Project Outlines to <strong>${matchCount}</strong> match${matchCount === 1 ? "" : "es"}. Pick from the table below, or refine with value icons.</p>
+        <p class="survey-result-meta">Gilbert marked <strong>${matchCount}</strong> project${matchCount === 1 ? "" : "s"} on the outline map. Pick from the table below, or refine with value icons.</p>
         <div class="survey-result-tags">${tags}</div>
         <div class="survey-actions">
-          <button type="button" class="btn btn-primary" id="survey-jump-toc">See matching projects</button>
-          <button type="button" class="btn btn-secondary" id="survey-restart">Start over</button>
+          <button type="button" class="btn btn-primary" id="survey-jump-toc">View the map</button>
+          <button type="button" class="btn btn-secondary" id="survey-restart">Back to trailhead</button>
         </div>`;
       el.querySelector("#survey-restart")?.addEventListener("click", () => resetSurvey(true));
       el.querySelector("#survey-jump-toc")?.addEventListener("click", () => {
@@ -1135,12 +1135,13 @@
     const nodeId = state.surveyNode || GILBERT_SURVEY.start;
     const node = GILBERT_SURVEY.nodes[nodeId];
     if (!node) {
-      el.innerHTML = `<p class="survey-result-meta">Survey unavailable.</p>`;
+      el.innerHTML = `<p class="survey-result-meta">Trail guide unavailable.</p>`;
       return;
     }
+    const waypointLabel = node.step === 1 ? "Trailhead" : "Fork ahead";
     el.innerHTML = `<div class="survey-progress">
-        <span>Gilbert path</span>
-        <span class="survey-progress-steps">Step ${node.step} of ${node.steps}</span>
+        <span>${waypointLabel}</span>
+        <span class="survey-progress-steps">Waypoint ${node.step} of ${node.steps}</span>
       </div>
       ${crumbs}
       <p class="survey-prompt">${escapeHtml(node.prompt)}</p>
@@ -1150,7 +1151,7 @@
           ${c.hint ? `<span class="survey-choice-hint">${escapeHtml(c.hint)}</span>` : ""}
         </button>`
       ).join("")}</div>
-      ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Back</button></div>` : ""}`;
+      ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Previous waypoint</button></div>` : ""}`;
     el.querySelectorAll(".survey-choice").forEach(btn => {
       btn.addEventListener("click", () => selectSurveyChoice(btn.dataset.choice));
     });
