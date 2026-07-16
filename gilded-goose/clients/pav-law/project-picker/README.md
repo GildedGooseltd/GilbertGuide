@@ -1,18 +1,20 @@
-# Gilbert — project prioritizer
+# Gilbert Guide — project prioritizer
 
 Guide character: **Lord Gilbert Granville** (Gilbert).
 
 GitHub: [GildedGooseltd/PickyPavi](https://github.com/GildedGooseltd/PickyPavi) · Live: `https://gildedgooseltd.github.io/PickyPavi/`
 
-Static project picker: budget filters, cards, notes, submit → Sheet + email.
+Static project picker: choose-your-path survey → filters outlines, value filters, cards, notes, submit → Sheet + email.
 
 ## Edit content
 
-**Start here:** [`content/INDEX.md`](content/INDEX.md) — links to every project file.
+**Style guide:** [STYLE-GUIDE.md](STYLE-GUIDE.md) · token/layout map: [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
+**Start here for projects:** [`content/INDEX.md`](content/INDEX.md) — links to every project file.
 
 | File | Purpose |
 |------|---------|
-| `content/INDEX.md` | Master list by priority |
+| `content/INDEX.md` | Master list by priority (+ link to guide Q&A) |
+| `content/survey.md` | Guide questionnaire questions & answers (edit then build) |
 | `content/_TEMPLATE.md` | Standard layout for new projects |
 | `content/settings.md` | Default package |
 | `content/retainer.md` | Retainer card |

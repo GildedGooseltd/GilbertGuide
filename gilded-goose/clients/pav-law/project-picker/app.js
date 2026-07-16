@@ -6,12 +6,10 @@
     );
   }
   let CONFIG = getConfig();
-  const GILBERT_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-goose-guide.svg";
-  const GILBERT_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
-  const GILBERT_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-logo-frame.png";
-  const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
-  const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
-  const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
+  /** Choose-your-path survey — sourced from content/survey.md via projects-data.js */
+  const GILBERT_SURVEY = (typeof PROJECT_DATA !== "undefined" && PROJECT_DATA.survey && PROJECT_DATA.survey.nodes)
+    ? PROJECT_DATA.survey
+    : { start: "q1", nodes: {} };
 
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
@@ -91,6 +89,7 @@
     ].filter(Boolean).join(" ");
   }
 
+  /* Colors live in index.html :root --vi-* + .value-icon.icon-{id}. Filter + TOC share those classes — never hardcode badge colors here. */
   function valueIconMarkup(def) {
     const svg = VALUE_ICON_SVGS[def.svgId || def.id] || VALUE_ICON_SVGS.general;
     return `<span class="value-icon ${def.cls}" title="${escapeHtml(def.label)}" aria-label="${escapeHtml(def.label)}">${svg}</span>`;
@@ -110,7 +109,9 @@
     invoicePaymentMonths: "",
     invoicePaymentMonthlyAmount: "",
     goalText: "",
-    gilbertChat: [],
+    surveyNode: GILBERT_SURVEY.start,
+    surveyPath: [],
+    surveyDone: false,
     iconFilters: [],
     tocSort: { field: "priority", dir: "asc" },
     tocExpanded: false,
@@ -264,6 +265,10 @@
   }
 
   function clearIconFilters() {
+    if (state.surveyDone) {
+      resetSurvey(true);
+      return;
+    }
     state.iconFilters = [];
     saveState();
     renderValueIconKey();
@@ -374,7 +379,7 @@
     if (hasGoal) {
       const g = state.goalText.trim();
       rec.goalIntro =
-        `You told Gilbert the core problem is: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below close that gap — not as a random list, but as a sequenced marketing stack.`;
+        `You named the core problem as: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below close that gap — not as a random list, but as a sequenced marketing stack.`;
     }
 
     if (!projectItems.length && selected.length) {
@@ -422,7 +427,7 @@
 
       rec.strategy = strategy;
     } else if (hasGoal) {
-      rec.pickPrompt = "Pick projects from the list below — Gilbert will explain how they fit together as you add them.";
+      rec.pickPrompt = "Pick projects from the list below — each one shows how it fits the path as you add it.";
     }
 
     return rec;
@@ -533,9 +538,9 @@
     }
     const bullets = valueAddedBullets(item);
     if (bullets.length) {
-      parts.push(`<ul class="card-objectives">${bullets.map(b =>
+      parts.push(`<div class="card-tldr"><ul class="card-objectives">${bullets.map(b =>
         `<li>${escapeHtml(String(b).replace(/^Deliverable:\s*/i, "").trim())}</li>`
-      ).join("")}</ul>`);
+      ).join("")}</ul></div>`);
     }
     const edu = item.marketingEducation && String(item.marketingEducation).trim();
     if (edu) {
@@ -776,7 +781,7 @@
     const top5 = picked.slice(0, 5);
     el.hidden = false;
     el.innerHTML = `<div class="toc-condensed-inner">
-      <h4 class="toc-condensed-title">Gilbert's picks — quick view</h4>
+      <h4 class="toc-condensed-title">Path matches — quick view</h4>
       <ol class="toc-condensed-list">${top5.map(item =>
         `<li><a href="#project-${item.id}">${escapeHtml(item.title)}</a><span class="toc-condensed-blurb">${escapeHtml(briefValueAdd(item))}</span></li>`
       ).join("")}</ol>
@@ -821,9 +826,13 @@
     if (statusEl) {
       const total = allItemsByPriority().length;
       const shown = items.length;
-      statusEl.textContent = state.iconFilters.length && shown !== total
-        ? `Showing ${shown} of ${total} projects (icon filter)`
-        : "";
+      if (state.iconFilters.length && shown !== total) {
+        statusEl.textContent = state.surveyDone
+          ? `Showing ${shown} of ${total} projects (your path)`
+          : `Showing ${shown} of ${total} projects (icon filter)`;
+      } else {
+        statusEl.textContent = "";
+      }
     }
     if (expandEl) {
       if (items.length > 5) {
@@ -894,64 +903,184 @@
   }
 
   function suggestPlan(silent) {
-    const goal = document.getElementById("goal-input").value.trim();
-    state.goalText = goal;
+    /* Survey drives filters — keep package recommendations only when no path is set. */
     state.recommended = new Set();
     ensureRequiredMaintenance();
     state.recommended.add("RETAINER");
-    let added = 0;
-
-    if (goal) {
-      const words = goal.toLowerCase().split(/\W+/).filter(Boolean);
-      const scored = getAllItems().map(item => ({
-        item, score: scoreItemForGoal(item, words), isRetainer: item.isRetainer
-      })).filter(s => s.score > 0).sort((a, b) => b.score - a.score);
-
-      scored.slice(0, 6).forEach(({ item, isRetainer }) => {
-        if (isRetainer || item.monthlyOnly) return;
-        if (!itemPassesCostPriorityFilter({ ...item, isRetainer: false })) return;
-        if (!state.projects.has(item.id)) added += 1;
-        state.projects.add(item.id);
-        state.recommended.add(item.id);
-      });
-
-      if (!scored.length && !silent) showToast("No strong matches — try different keywords", true);
-      else if (added > 0 && !silent) {
-        showToast(`Added ${added} project${added === 1 ? "" : "s"} to your cart`);
-      }
-    } else {
+    if (!state.surveyDone) {
       const pkg = PROJECT_DATA.recommendedPackage;
       (pkg?.projectIds || []).forEach(id => {
         const p = PROJECTS.find(x => x.id === id);
         if (p && itemPassesCostPriorityFilter({ ...p, isRetainer: false })) {
-          state.projects.add(id);
           state.recommended.add(id);
         }
       });
+    } else {
+      allItemsByPriority().filter(item => itemMatchesIconFilters(item)).slice(0, 8).forEach(item => {
+        if (!item.isRetainer && item.id !== "RETAINER") state.recommended.add(item.id);
+      });
     }
-
+    if (!silent) { /* no toast — survey applySurveyFilters handles feedback */ }
     saveState();
     renderAllCards();
     renderSummary();
-  }
-
-  let suggestTimer;
-  function scheduleSuggestPlan() {
-    clearTimeout(suggestTimer);
-    suggestTimer = setTimeout(() => suggestPlan(true), 350);
+    renderCondensedToc();
   }
 
   function clearFilters() {
-    document.getElementById("goal-input").value = "";
+    resetSurvey(true);
+  }
+
+  function resetSurvey(keepCart) {
     state.goalText = "";
-    state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+    state.surveyNode = GILBERT_SURVEY.start;
+    state.surveyPath = [];
+    state.surveyDone = false;
     state.iconFilters = [];
-    state.projects = new Set();
-    state.recommended = new Set();
-    ensureRequiredMaintenance();
-    renderGilbertChat();
+    if (!keepCart) {
+      state.projects = new Set();
+      state.recommended = new Set();
+      ensureRequiredMaintenance();
+    }
+    renderGilbertSurvey();
     renderValueIconKey();
-    suggestPlan(true);
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+    saveState();
+  }
+
+  function surveyChoiceByPath() {
+    const out = [];
+    for (const step of state.surveyPath) {
+      const node = GILBERT_SURVEY.nodes[step.nodeId];
+      const choice = node?.choices?.find(c => c.id === step.choiceId);
+      if (choice) out.push({ nodeId: step.nodeId, choice });
+    }
+    return out;
+  }
+
+  function iconsFromSurveyPath() {
+    const icons = [];
+    surveyChoiceByPath().forEach(({ choice }) => {
+      (choice.icons || []).forEach(id => {
+        if (!icons.includes(id)) icons.push(id);
+      });
+    });
+    return icons;
+  }
+
+  function goalFromSurveyPath() {
+    const parts = surveyChoiceByPath().map(({ choice }) => choice.goal || choice.label).filter(Boolean);
+    return parts.join(" · ");
+  }
+
+  function applySurveyFilters() {
+    const icons = iconsFromSurveyPath();
+    state.iconFilters = icons.slice();
+    state.goalText = goalFromSurveyPath();
+    state.surveyDone = true;
+    state.tocExpanded = true;
+    const toc = document.getElementById("project-toc");
+    if (toc) toc.open = true;
+    renderValueIconKey();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+    renderCondensedToc();
+    saveState();
+    const matchCount = allItemsByPriority().filter(item => itemMatchesIconFilters(item)).length;
+    showToast(`${matchCount} project${matchCount === 1 ? "" : "s"} match this path`);
+  }
+
+  function selectSurveyChoice(choiceId) {
+    const node = GILBERT_SURVEY.nodes[state.surveyNode];
+    if (!node) return;
+    const choice = node.choices.find(c => c.id === choiceId);
+    if (!choice) return;
+    state.surveyPath.push({ nodeId: state.surveyNode, choiceId: choice.id });
+    if (choice.next === "done") {
+      applySurveyFilters();
+      renderGilbertSurvey();
+      return;
+    }
+    state.surveyNode = choice.next;
+    state.surveyDone = false;
+    renderGilbertSurvey();
+    saveState();
+  }
+
+  function renderGilbertSurvey() {
+    const el = document.getElementById("gilbert-survey-body") || document.getElementById("gilbert-survey");
+    if (!el) return;
+    const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
+    const crumbs = pathLabels.length
+      ? `<p class="survey-crumbs">Path so far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
+      : "";
+
+    if (state.surveyDone && state.surveyPath.length) {
+      const icons = iconsFromSurveyPath();
+      const matchCount = allItemsByPriority().filter(item => itemMatchesIconFilters(item)).length;
+      const tags = icons.map(id => {
+        const def = VALUE_ICON_DEFS.find(d => d.id === id);
+        if (!def) return `<span class="survey-tag">${escapeHtml(id)}</span>`;
+        return `<span class="survey-tag">${valueIconMarkup(def)}<span>${escapeHtml(def.label)}</span></span>`;
+      }).join("");
+      el.innerHTML = `${crumbs}
+        <p class="survey-result-meta"><strong>${matchCount}</strong> project${matchCount === 1 ? "" : "s"} match this path. Pick from the table below, or refine with value icons.</p>
+        <div class="survey-result-tags">${tags}</div>
+        <div class="survey-actions">
+          <button type="button" class="btn btn-primary" id="survey-jump-toc">View matching projects</button>
+          <button type="button" class="btn btn-secondary" id="survey-restart">Start over</button>
+        </div>`;
+      el.querySelector("#survey-restart")?.addEventListener("click", () => resetSurvey(true));
+      el.querySelector("#survey-jump-toc")?.addEventListener("click", () => {
+        const toc = document.getElementById("project-toc");
+        if (toc) {
+          toc.open = true;
+          toc.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+      return;
+    }
+
+    const nodeId = state.surveyNode || GILBERT_SURVEY.start;
+    const node = GILBERT_SURVEY.nodes[nodeId];
+    if (!node) {
+      el.innerHTML = `<p class="survey-result-meta">Questionnaire unavailable.</p>`;
+      return;
+    }
+    const choicesHtml = node.choices.map((c, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      return `<button type="button" class="survey-choice" data-choice="${escapeHtml(c.id)}">
+          <span class="survey-choice-num">${num}</span>
+          <span class="survey-choice-copy">
+            <span class="survey-choice-label">${escapeHtml(c.label)}</span>
+            ${c.hint ? `<span class="survey-choice-hint">${escapeHtml(c.hint)}</span>` : ""}
+          </span>
+          <span class="survey-choice-chevron" aria-hidden="true">›</span>
+        </button>`;
+    }).join("");
+    el.innerHTML = `${crumbs}
+      <p class="survey-prompt">${escapeHtml(node.prompt)}</p>
+      <div class="survey-choices" role="group" aria-label="${escapeHtml(node.prompt)}">${choicesHtml}</div>
+      ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Back</button></div>` : ""}`;
+    el.querySelectorAll(".survey-choice").forEach(btn => {
+      btn.addEventListener("click", () => selectSurveyChoice(btn.dataset.choice));
+    });
+    el.querySelector("#survey-back")?.addEventListener("click", () => {
+      const last = state.surveyPath.pop();
+      state.surveyNode = last ? last.nodeId : GILBERT_SURVEY.start;
+      state.surveyDone = false;
+      state.iconFilters = [];
+      state.goalText = "";
+      renderGilbertSurvey();
+      renderValueIconKey();
+      renderAllCards();
+      renderProjectToc();
+      renderSummary();
+      saveState();
+    });
   }
 
   function renderFilterStatus() {
@@ -980,13 +1109,10 @@
         if (monthsEl) monthsEl.value = saved.invoicePaymentMonths;
       }
       updateInvoiceScheduleAmount();
-      if (saved.goalText) {
-        document.getElementById("goal-input").value = saved.goalText;
-        state.goalText = saved.goalText;
-      }
-      if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.length) {
-        state.gilbertChat = saved.gilbertChat;
-      }
+      if (saved.goalText) state.goalText = saved.goalText;
+      if (Array.isArray(saved.surveyPath)) state.surveyPath = saved.surveyPath;
+      if (saved.surveyNode) state.surveyNode = saved.surveyNode;
+      if (saved.surveyDone) state.surveyDone = !!saved.surveyDone;
       if (Array.isArray(saved.iconFilters)) {
         state.iconFilters = saved.iconFilters;
       }
@@ -1012,7 +1138,9 @@
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
       goalText: state.goalText,
-      gilbertChat: state.gilbertChat,
+      surveyNode: state.surveyNode,
+      surveyPath: state.surveyPath,
+      surveyDone: state.surveyDone,
       iconFilters: state.iconFilters
     }));
     updateSubmitButtons();
@@ -1207,10 +1335,37 @@
     el.innerHTML = "Live webhook not configured yet — submit still works: your selections download as JSON and are saved in this browser. For automatic email + Sheet logging, add GitHub Secret <strong>PAV_PICKER_WEBHOOK_URL</strong> and redeploy.";
   }
 
+  function selectionCountLabel() {
+    const lines = getInvoiceLineItems();
+    const n = lines.length;
+    if (!n) return "Continue to submit";
+    return `Continue to submit · ${n} item${n === 1 ? "" : "s"}`;
+  }
+
+  function renderConfirmSelectionSummary() {
+    const el = document.getElementById("confirm-selection-summary");
+    if (!el) return;
+    const lines = getInvoiceLineItems();
+    if (!lines.length) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+    el.hidden = false;
+    el.innerHTML = `<h3>Your selections</h3>
+      <ol class="confirm-selection-list">${lines.map(row =>
+        `<li><strong>${escapeHtml(row.title)}</strong>${row.fee ? ` · ${escapeHtml(row.fee)}` : ""}</li>`
+      ).join("")}</ol>
+      <p class="confirm-selection-meta">${lines.length} item${lines.length === 1 ? "" : "s"} selected · deposit billed separately</p>`;
+  }
+
   function updateSubmitButtons() {
     CONFIG = getConfig();
     const cont = document.getElementById("continue-to-confirm");
-    if (cont) cont.disabled = !canContinue();
+    if (cont) {
+      cont.disabled = !canContinue();
+      cont.textContent = selectionCountLabel();
+    }
     const submit = document.getElementById("submit-selections");
     if (submit) {
       submit.disabled = !canSubmit();
@@ -1221,8 +1376,7 @@
 
   function showConfirmPage() {
     if (!canContinue()) return;
-    const guideImg = document.getElementById("confirm-gilbert");
-    if (guideImg) guideImg.src = GILBERT_ICON;
+    renderConfirmSelectionSummary();
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
     updateInvoiceScheduleAmount();
@@ -1275,7 +1429,7 @@
       invoicePaymentTotalFormatted: paymentTerms.months && paymentTerms.monthlyAmount != null
         ? fmt(paymentTerms.months * paymentTerms.monthlyAmount)
         : null,
-      goalText: document.getElementById("goal-input").value.trim(),
+      goalText: state.goalText || "",
       filterConsultingBudget: null,
       filterMediaBudget: null,
       retainer: state.retainer,
@@ -1355,27 +1509,6 @@
     return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
   }
 
-  function renderGilbertChat() {
-    const el = document.getElementById("gilbert-chat-messages");
-    if (!el) return;
-    if (!state.gilbertChat.length) {
-      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
-    }
-    el.innerHTML = state.gilbertChat.map(msg => {
-      const who = msg.role === "gilbert" ? GUIDE_SHORT : "You";
-      return `<div class="gilbert-chat-msg gilbert-chat-${msg.role}"><span class="gilbert-chat-who">${escapeHtml(who)}</span><p>${escapeHtml(msg.text)}</p></div>`;
-    }).join("");
-    el.scrollTop = el.scrollHeight;
-  }
-
-  function userCursedGilbert(text) {
-    return /\b(fuck|shit|damn|asshole|bitch|bastard|cunt|dick|wtf)\b/i.test(text || "");
-  }
-
-  function userThankedGilbert(text) {
-    return /\b(thanks|thank you|thank\s*u|tysm|thx|appreciate)\b/i.test(text || "");
-  }
-
   function launchConfetti(count) {
     const n = count || 90;
     let layer = document.getElementById("confetti-layer");
@@ -1386,7 +1519,7 @@
       layer.setAttribute("aria-hidden", "true");
       document.body.appendChild(layer);
     }
-    const colors = ["#7c3aed", "#b8860b", "#ffd700", "#4e2a84", "#f8f5ef", "#c4b5fd"];
+    const colors = ["#4e2a84", "#b8860b", "#ffd700", "#6d28a8", "#f8f5ef", "#c9a86c", "#c2410c", "#166534"];
     for (let i = 0; i < n; i++) {
       const piece = document.createElement("span");
       const glitter = Math.random() > 0.45;
@@ -1400,68 +1533,59 @@
     }
   }
 
-  function pickGilbertReply(userText) {
-    const text = (userText || "").trim();
-    const items = getInvoiceLineItems();
-    const count = items.length;
-    if (userCursedGilbert(text)) {
-      return "Well fuck you too, Sparky. Now — what's actually broken in the business so we can fix it?";
-    }
-    if (userThankedGilbert(text)) {
-      return "Anytime Sparklefarts!";
-    }
-    if (!text) {
-      return "Tell me what's not working — leads, intake, ads, website, or CRM. We'll map projects to fix it.";
-    }
-    const words = text.toLowerCase().split(/\W+/).filter(w => w.length > 2);
-    const scored = getAllItems()
-      .filter(item => !item.isRetainer && item.id !== "RETAINER")
-      .map(item => ({ item, score: scoreItemForGoal(item, words) }))
-      .filter(s => s.score > 0)
-      .sort((a, b) => b.score - a.score);
-    if (scored.length) {
-      const picks = scored.slice(0, 3).map(s => s.item.title);
-      const list = picks.length === 1 ? picks[0] : picks.slice(0, -1).join(", ") + " and " + picks[picks.length - 1];
-      if (count > 0) {
-        return `Understood. I'd prioritize ${list} — ${count} item${count === 1 ? "" : "s"} in your cart so far. Add more detail or pick from the list below.`;
-      }
-      return `I hear you. I'd start with ${list} — I'm matching those to your cart. What else should we fix?`;
-    }
-    if (count > 0) {
-      return `${count} project${count === 1 ? "" : "s"} in your cart. Tell me more about the problem and I'll refine the mix.`;
-    }
-    return "Got it. Browse the project list below, or tell me more — wasted ad spend, broken forms, slow intake — and I'll suggest matches.";
-  }
-
-  function sendGilbertMessage() {
-    const input = document.getElementById("goal-input");
-    const text = (input?.value || "").trim();
-    if (!text) return;
-    state.goalText = text;
-    if (input) input.value = "";
-    state.gilbertChat.push({ role: "user", text });
-    state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(text) });
-    if (userThankedGilbert(text)) launchConfetti();
-    renderGilbertChat();
-    saveState();
-    suggestPlan(true);
-  }
-
   function initGilbertGuide() {
-    const guideImg = document.getElementById("gilbert-guide-img");
-    if (guideImg) {
-      guideImg.src = GILBERT_HERO;
-      guideImg.alt = `${GUIDE_NAME} — your Gilded Goose guide`;
-      guideImg.className = "gilbert-caricature";
+    if (state.surveyDone && state.surveyPath.length) {
+      state.iconFilters = iconsFromSurveyPath();
+      state.goalText = goalFromSurveyPath();
     }
-    if (!state.gilbertChat.length) {
-      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
-      if (state.goalText.trim()) {
-        state.gilbertChat.push({ role: "user", text: state.goalText.trim() });
-        state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(state.goalText) });
-      }
+    renderGilbertSurvey();
+  }
+
+  const THEME_STORAGE_KEY = "gilbert-guide-theme";
+  const THEME_DARK = "dark";
+  const THEME_LIGHT = "light";
+
+  function normalizeTheme(value) {
+    if (value === THEME_LIGHT || value === "unicorn") return THEME_LIGHT;
+    if (value === THEME_DARK) return THEME_DARK;
+    return null;
+  }
+
+  function getPreferredTheme() {
+    try {
+      const q = normalizeTheme(new URLSearchParams(location.search).get("theme"));
+      if (q) return q;
+    } catch (e) { /* ignore */ }
+    try {
+      const stored = normalizeTheme(localStorage.getItem(THEME_STORAGE_KEY));
+      if (stored) return stored;
+    } catch (e) { /* ignore */ }
+    return THEME_LIGHT;
+  }
+
+  function applyTheme(theme) {
+    const next = normalizeTheme(theme) || THEME_LIGHT;
+    document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch (e) { /* ignore */ }
+    const btn = document.getElementById("theme-toggle");
+    if (btn) {
+      const isDark = next === THEME_DARK;
+      btn.setAttribute("aria-pressed", isDark ? "true" : "false");
+      btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+      btn.textContent = isDark ? "Light" : "Dark";
     }
-    renderGilbertChat();
+  }
+
+  function initThemeToggle() {
+    applyTheme(getPreferredTheme());
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const current = normalizeTheme(document.documentElement.getAttribute("data-theme")) || THEME_LIGHT;
+      applyTheme(current === THEME_DARK ? THEME_LIGHT : THEME_DARK);
+    });
   }
 
   function showThankYou(payload) {
@@ -1469,9 +1593,11 @@
     const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-gilbert").src = GILBERT_SEAL;
-    document.getElementById("thank-you-sub").textContent =
-      "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
+    const thankSub = document.getElementById("thank-you-sub");
+    if (thankSub) {
+      thankSub.textContent =
+        "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
+    }
 
     const lines = [];
     if (payload.retainer) lines.push(`<li><strong>${escapeHtml(RETAINER.title)}</strong> — ${fmt(RETAINER.fee)}</li>`);
@@ -1662,12 +1788,6 @@
     updateInvoiceScheduleAmount();
     saveState();
   });
-  document.getElementById("goal-input")?.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      sendGilbertMessage();
-    }
-  });
   document.getElementById("expand-all-projects").addEventListener("change", e => setExpandAll(e.target.checked));
 
   document.getElementById("toc-expand-row")?.addEventListener("click", e => {
@@ -1687,12 +1807,15 @@
 
   loadState();
   ensureRequiredMaintenance();
+  initThemeToggle();
   initGilbertGuide();
   renderPackageIntro();
   renderValueIconKey();
   renderAllCards();
-  if (state.goalText.trim()) suggestPlan(true);
-  else {
-    renderSummary();
+  suggestPlan(true);
+  renderSummary();
+  if (state.surveyDone) {
+    const toc = document.getElementById("project-toc");
+    if (toc) toc.open = true;
   }
 })();
