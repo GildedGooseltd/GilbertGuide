@@ -1082,9 +1082,10 @@
     const fig = document.getElementById("survey-gilbert-fig");
     const img = document.getElementById("survey-gilbert-img");
     if (!img) return;
-    img.src = "assets/gilbert-trail-guide-hat.png";
-    img.alt = "Lord Gilbert Granville in a trail guide hat";
-    fig?.classList.add("is-profile");
+    img.src = "assets/gilbert-curious-walk.png";
+    img.alt = "Lord Gilbert Granville curiously walking the trail";
+    fig?.classList.remove("is-profile");
+    fig?.classList.add("is-walk");
   }
 
   function renderGilbertSurvey() {
