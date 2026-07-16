@@ -413,74 +413,32 @@
     const STORAGE_NOTES = "gg-mockup-notes";
     const STORAGE_LEAF = "gg-mockup-leaf";
 
-    /* Current guide survey tree (from content/survey.md) */
+    /* Business-level tree — mirrors content/QUESTIONS.md + survey.md */
     const TREE = {
       q1: {
-        prompt: "What should marketing fix first?",
+        prompt: "What’s the current business priority?",
         choices: [
-          { id: "leads", label: "Get more qualified cases", hint: "Paid & campaign demand", next: "q2_leads" },
-          { id: "web", label: "Make the website earn its keep", hint: "SEO, speed, landers", next: "q2_web" },
-          { id: "clarity", label: "See leads, spend, and ROI clearly", hint: "Dashboards & audits", next: "q2_clarity" },
-          { id: "costs", label: "Stop leaking money", hint: "Ads & subscriptions", next: "q2_costs" }
+          { id: "leads", label: "Increase leads", hint: "Demand and intake", next: "q2_audience" },
+          { id: "website", label: "Improve website", hint: "Site experience & findability", next: "q2_audience" },
+          { id: "reputation", label: "Grow reputation", hint: "Proof, trust, brand", next: "q2_audience" },
+          { id: "spend", label: "Reduce spend", hint: "Waste and efficiency", next: "q2_audience" }
         ]
       },
-      q2_leads: {
-        prompt: "Which demand channel first?",
+      q2_audience: {
+        prompt: "Who is the priority audience?",
         choices: [
-          { id: "search", label: "Google / Microsoft search & LSA", hint: "Intent capture", next: "q3_after_click" },
-          { id: "display", label: "Display & brand (NTGUILT)", hint: "Upper funnel", next: "q3_after_click" },
-          { id: "seasonal", label: "Seasonal / focus-area push", hint: "Holidays, military, DUI", next: "q3_after_click" },
-          { id: "warm", label: "Past-client & warm channels", hint: "Mail, referral, proof", next: "q3_warm" }
+          { id: "current", label: "Current clients", hint: "Active relationships", next: "q3_horizon" },
+          { id: "past", label: "Past clients", hint: "Re-engage warm people", next: "q3_horizon" },
+          { id: "netnew", label: "Net-new prospects", hint: "People who don’t know you yet", next: "q3_horizon" },
+          { id: "awareness", label: "General awareness", hint: "Broader market presence", next: "q3_horizon" }
         ]
       },
-      q3_after_click: {
-        prompt: "After someone clicks or calls, what breaks?",
+      q3_horizon: {
+        prompt: "What kind of timeline fits?",
         choices: [
-          { id: "voip", label: "Phone / VoIP capture", hint: "Missed or untracked calls", next: "done", projects: ["B2", "A8", "A1"] },
-          { id: "chat", label: "After-hours chat intake", hint: "Nights & weekends", next: "done", projects: ["A12", "B1"] },
-          { id: "crm", label: "HubSpot pipeline follow-up", hint: "Stages & workflows", next: "done", projects: ["B1", "A8"] },
-          { id: "track", label: "Lead-source tracking", hint: "UTM, KPI dashboard", next: "done", projects: ["A8", "A8M"] }
-        ]
-      },
-      q3_warm: {
-        prompt: "Which warm channel?",
-        choices: [
-          { id: "referral", label: "Client referral program", hint: "Setup + ongoing", next: "done", projects: ["A4"] },
-          { id: "proof", label: "Case wins & testimonials", hint: "Social proof", next: "done", projects: ["B4", "A7"] },
-          { id: "mail", label: "Insurance / past-client mailer", hint: "Print re-engagement", next: "done", projects: ["B5"] },
-          { id: "profiles", label: "Directories & social profiles", hint: "NAP, Avvo, GBP", next: "done", projects: ["B4", "A7"] }
-        ]
-      },
-      q2_web: {
-        prompt: "What’s weakest on the site?",
-        choices: [
-          { id: "seo", label: "SEO content & local search", hint: "Schema, blogs, NAP", next: "q3_web_seo" },
-          { id: "speed", label: "Speed & navigation", hint: "Load time, IA", next: "done", projects: ["B3"] },
-          { id: "landers", label: "Campaign landing pages", hint: "Forms & modules", next: "done", projects: ["A2", "A11"] }
-        ]
-      },
-      q3_web_seo: {
-        prompt: "SEO workstream?",
-        choices: [
-          { id: "pages", label: "Site content & linking", hint: "Overhaul pages", next: "done", projects: ["B4"] },
-          { id: "blog", label: "Blog revamp", hint: "Posts, meta, links", next: "done", projects: ["B6"] },
-          { id: "local", label: "Local / directory consistency", hint: "NAP + profiles", next: "done", projects: ["B4"] }
-        ]
-      },
-      q2_clarity: {
-        prompt: "What clarity work first?",
-        choices: [
-          { id: "build", label: "Build the KPI dashboard", hint: "Leads, spend, ROI", next: "done", projects: ["A8"] },
-          { id: "maintain", label: "Weekly dashboard maintenance", hint: "Keep numbers honest", next: "done", projects: ["A8M"] },
-          { id: "audit", label: "Audit tracking & attribution", hint: "Calls, forms, UTMs", next: "done", projects: ["A8", "B2"] }
-        ]
-      },
-      q2_costs: {
-        prompt: "Where is money leaking?",
-        choices: [
-          { id: "ads", label: "Paid media waste", hint: "Search, display, social", next: "done", projects: ["A1", "A13"] },
-          { id: "subs", label: "Tools & subscriptions", hint: "Stack cleanup", next: "done", projects: ["B7"] },
-          { id: "retainer", label: "Retainer scope bloat", hint: "What’s actually needed", next: "done", projects: ["B8"] }
+          { id: "soon", label: "Need movement soon", hint: "Near-term push", next: "done", projects: ["A1", "A2", "A11", "A12"] },
+          { id: "compounds", label: "Build something that compounds", hint: "Foundations that keep paying off", next: "done", projects: ["B4", "B3", "B6", "A8"] },
+          { id: "leak", label: "Fix an ongoing leak or drag", hint: "Stop the drip", next: "done", projects: ["A8", "B2", "A1", "B1"] }
         ]
       }
     };

@@ -1,42 +1,55 @@
 # Path questions (edit me)
 
-Plain list you can rewrite. When ready, say **sync QUESTIONS → survey** (or paste changes) so it updates `[survey.md](survey.md)` and the live picker.
+Plain list you can rewrite. When ready, say **sync QUESTIONS → survey** so it updates [`survey.md`](survey.md) and the live picker.
 
-**Design mockup framework:** open [`../mockup/index.html`](../mockup/index.html) (full guide shell for layout feedback).  
-**Questions-only mockup:** [`../questions-mockup.html`](../questions-mockup.html).
+**Design mockup:** [`../mockup/index.html`](../mockup/index.html) · notes [`../mockup/FEEDBACK.md`](../mockup/FEEDBACK.md)
 
-Use short labels. Keep three layers when you can: **pressure → channel → bottleneck**.
-
----
-
-## Layer 1
-
-##  Current business priority: 
-
-1. Increase Leads
-2. Improve Website 
-3. Grow Reputation
-4.  Reduce Spend
-
-## Layer 2 + 3
-
-#### Audience Priorities:
-
-1. Current Clients
-2. Past Clients
-3. Net New Prospects
-4. General Awareness
+**Rule:** stay at business level — priority, audience, time horizon. No tactical execution (VoIP, LSA, blog, HubSpot stages, etc.).
 
 ---
 
+## Layer 1 — What’s the current business priority?
 
+1. Increase leads  
+2. Improve website  
+3. Grow reputation  
+4. Reduce spend  
 
-### New ideas
+---
 
-- keep questions at a higher level focused on business issues not at the tactical executional level
+## Layer 2 — Who is the priority audience?
 
-consider duration reactivity of project
+1. Current clients  
+2. Past clients  
+3. Net-new prospects  
+4. General awareness  
 
+---
 
+## Layer 3 — What kind of timeline / reactivity?
 
-- 
+1. Need movement soon  
+2. Build something that compounds  
+3. Fix an ongoing leak or drag  
+
+---
+
+## How the path works
+
+Same L2 and L3 for every L1 pick (cross-cutting).  
+Example: **Increase leads → Past clients → Need movement soon**.
+
+---
+
+## Review notes (from brainstorm)
+
+| Note | Decision |
+|------|----------|
+| Keep questions higher level — business issues, not tactics | Locked — L1/L2/L3 above |
+| Consider duration / reactivity of project | Locked as Layer 3 |
+| Old tactical `survey.md` tree | Retired — rebuilt from this file |
+
+### Still open
+
+- [ ] Map each path cell to project clusters (when syncing)
+- [ ] Wording polish on L3 (“leak or drag” vs “ops drag”)
