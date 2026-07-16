@@ -53,18 +53,16 @@ Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for t
 
 
 
-### Dark panels + chart series (GGL only — **no teal**)
+### Pav Law peacock (dark panels + chart teal)
 
 
-| Token                              | Default                         | Use                                      |
-| ---------------------------------- | ------------------------------- | ---------------------------------------- |
-| `--gg-series-1` … `4`              | royal · gold · mid · gold-bright | KPI chart series                       |
-| `--pav-ink` / `--pav-ink-panel`    | near-black                      | Gilbert chat / thank-you dark shells     |
-| `--pav-text`                       | `#e8e8ec`                       | Text on **dark** panels only             |
-| `--pav-border`                     | gold rgba                       | Dark panel borders                       |
-| `--pav-gradient-panel` / `-accent` | royal / gold → ink              | Dark shells only                         |
-| `--pav-teal`                       | → `--gg-series-2` (gold)        | **Deprecated alias** — do not introduce teal |
-| Cockpit title                      | `--gg-royal-deep` + gold rule   | `.cockpit-title`                         |
+| Token                              | Default            | Use                                                   |
+| ---------------------------------- | ------------------ | ----------------------------------------------------- |
+| `--pav-teal`                       | `#00d4c4`          | Chart teal series (also literal in `kpi-report.js`)   |
+| `--pav-ink` / `--pav-ink-panel`    | near-black         | Gilbert chat / thank-you dark shells                  |
+| `--pav-text`                       | `#e8e8ec`          | Text on **dark** panels only                          |
+| `--pav-gradient-panel` / `-accent` | pink → navy radial | Dark priority / accent panels only                    |
+| Cockpit title                      | `#0d1b2a`          | Solid navy on `.cockpit-title` — **no gradient text** |
 
 
 Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` sources.
@@ -100,9 +98,9 @@ Links on light: `--gg-royal` + underline. Focus: `outline: 2px solid var(--gg-ro
 | --------------------- | ---------------------- | --------------------------------------------------------------------------- |
 | Body (cockpit)        | `body` in `index.html` | Georgia / Times, serif · `1.14rem` · line-height `1.65` — “legal memo” feel |
 | Body (metrics page)   | `metrics.css` `body`   | system-ui sans — metrics-only exception                                     |
-| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, `--gg-royal-deep` + gold underline |
-| Section / zone labels | `.picker-zone-label`   | Uppercase chip + gold left bar; zone head = gold accent + gradient wash     |
-| KPI section titles    | `.kpi-section-title`   | Bold royal deep; summary = gold left bar + cream→gold gradient               |
+| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, solid `#0d1b2a`                 |
+| Section / zone labels | `.picker-zone-label`   | Uppercase, ~`0.8125rem`,` --gg-royal`, full-width divider                   |
+| KPI section titles    | `.kpi-section-title`   | Bold royal deep; inside collapsible `<details>` summary                     |
 | Card titles           | `.card-title`          | ~`1.28rem`, weight 800, royal                                               |
 | KPI report title      | `.kpi-report-title`    | `1.35rem`, weight 800, royal                                                |
 | Table headers         | `.toc-table thead`     | Uppercase, muted brown                                                      |
@@ -139,11 +137,11 @@ Overlays: Gilbert chat · confirm · thank-you
 | Pattern           | Classes                                | Behavior                                        |
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
-| KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; gold accent bar + distinctive head |
-| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | `--gg-box-border` / paper; gold when attention  |
-| Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
-| Project cards     | `.card`, `.card.selected`              | Box border/shadow; selected = royal wash        |
-| Zone labels       | `.picker-zone` + `.picker-zone-label`  | Gold accent heads; scan breaks between areas    |
+| KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; left royal border                  |
+| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | Paper surface; gold accent when attention       |
+| Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | 2-col → 1-col ≤900px                            |
+| Project cards     | `.card`, `.card.selected`              | Selected = royal wash + border                  |
+| Zone labels       | `.picker-zone` + `.picker-zone-label`  | Scan breaks between picker areas                |
 | Charts            | `chartBlock()` in JS                   | Plot + legend + **always-visible** detail table |
 
 
@@ -162,15 +160,14 @@ Confirm flow: estimated results · action items · next steps → submit (email 
 
 | Role                                           | Hex       | Token / note     |
 | ---------------------------------------------- | --------- | ---------------- |
-| Primary / Search / Military / Closed           | `#3a1a6e` | `--gg-series-1` / `--gg-royal` |
-| Secondary / LSA / Core DV / New                | `#b8860b` | `--gg-series-2` / `--gg-gold-dark` |
-| Tertiary / HubSpot / NTGUILT / Red accounts    | `#4c1d95` | `--gg-series-3` / `--gg-royal-mid` |
-| Soft highlight / building                      | `#e3c58d` | `--gg-series-4` / `--gg-gold-bright` |
+| Primary / Search / Military / Closed           | `#3a1a6e` | `--gg-royal`     |
+| Secondary / LSA / Core DV / New                | `#00d4c4` | `--pav-teal`     |
+| Tertiary / HubSpot / NTGUILT / cumulative gold | `#b8860b` | `--gg-gold-dark` |
 
 
-**Cases MoM stack:** Closed `#3a1a6e` · New `#b8860b` · Red accounts `#4c1d95` (never alert-red fill for counts).
+**Cases MoM stack:** Closed `#3a1a6e` · New `#00d4c4` · Red accounts `#4c1d95` (`--gg-royal-mid` — never alert-red fill for that series).
 
-**Forbidden:** teal/cyan (`#00d4c4`, `#2dd4bf`, etc.) anywhere in the cockpit. `--gg-negative` only for negative deltas. Half-moon gauges: progress toward `--gg-positive`; gold fill at 100%+.
+**Forbidden on charts:** red/magenta for positive counts. `--gg-negative` only for negative deltas. Half-moon gauges: progress toward green; gold fill at 100%+.
 
 Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pav-law-kpi-charts.mdc)`
 
@@ -191,8 +188,8 @@ Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pa
 | `crm`          | CRM          | `#a78bfa` / `#4c1d95` / `#7c3aed` |
 | `seo`          | SEO          | `#4ade80` / `#14532d` / `#16a34a` |
 | `referrals`    | Referrals    | `#f472b6` / `#831843` / `#db2777` |
-| `efficiency`   | Analytics    | `#e3c58d` / `#5c4010` / `#b8860b` (gold) |
-| `intake`       | Intake       | `#c4b5fd` / `#2d1454` / `#4c1d95` (royal) |
+| `efficiency`   | Analytics    | `#2dd4bf` / `#134e4a` / `#0d9488` |
+| `intake`       | Intake       | `#60a5fa` / `#1e3a8a` / `#2563eb` |
 | `creative`     | Creative     | `#e879f9` / `#701a75` / `#c026d3` |
 | `general`      | Growth       | `#94a3b8` / `#0f172a` / `#64748b` |
 | `account-data` | Account data | `#facc15` / `#713f12` / `#ca8a04` |
@@ -200,7 +197,7 @@ Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pa
 
 Chip soft tints: `--vi-*-chip` / `--vi-*-chip-border` (do not replace badge fills).
 
-Palette comment in `:root`: `value-icon-palette v=20260715-ggl`.
+Palette comment in `:root`: `value-icon-palette v=20260714`.
 
 **Forbidden:** filter-only purple overrides · duplicate hex under `.toc-value` · second palette in `app.js` / `projects-data.js` / markdown.
 
@@ -219,8 +216,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 - Edit `:root` tokens first; let components inherit.
 - Keep cream + gold + brown + **deep royal** as the light-UI voice (Gilded Goose × Pav).
 - Keep Georgia body on the cockpit for memo/brief tone.
-- Keep chart series distinguishable (royal / gold / mid-royal).
-- Shared box chrome: `--gg-box-border`, `--gg-box-shadow`, `--gg-head-accent` on section heads.
+- Keep chart series distinguishable (royal / teal / gold).
 - Use red only for negatives and unverified **✕** badges.
 - One job per section; collapsible KPI topics stay focused.
 
@@ -229,8 +225,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 ### Don’t
 
 - Generic AI look: purple-on-white marketing gradients, Inter/Roboto stacks as “brand,” glow blobs, pill spam, card walls with heavy shadows.
-- Gradient text on `.cockpit-title` — solid `--gg-royal-deep` + gold underline only.
-- Teal/cyan chart or UI accents (`#00d4c4`, `#2dd4bf`, peacock teal).
+- Gradient text on `.cockpit-title` — solid navy only.
 - Light-on-light or `--pav-text` on cream panels.
 - Swap chart series to two near-identical purples.
 - Recolor value icons on one surface only.

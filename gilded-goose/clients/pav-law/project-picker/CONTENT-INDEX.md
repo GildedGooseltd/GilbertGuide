@@ -144,7 +144,6 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Card detail on click                    | `kpi-report.js` | `KPI_DETAIL`                                                     |
 | Leads-by-channel / campaign charts      | `kpi-report.js` | `DATA.channels`, `leadsByCampaign`                               |
 | Reputation (#16 / #17)                  | `kpi-report.js` | `DATA.reviews`, `DATA.referrals`                                 |
-| #02 New cases YoY (2025 vs 2026)        | `kpi-report.js` | `dashboardSectionsHtml()` — `DATA.newCasesYoY`                   |
 | Avg deposit · Cases MoM (#04/#05)       | `kpi-report.js` | `dashboardSectionsHtml()` — `DATA.avgDeposit`, `casesMom`        |
 | #10 Source mix                          | `kpi-report.js` | `DATA.sourceMix`                                                 |
 | Legend ★ / ✕                            | `kpi-report.js` | `kpiSectionStaticHead()` — verified vs gap channels              |

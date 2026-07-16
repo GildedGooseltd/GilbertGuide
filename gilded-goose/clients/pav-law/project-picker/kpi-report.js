@@ -3,11 +3,11 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260715-new-cases-yoy-v2";
+  const RENDER_VER = "20260714-goal-visual-v33";
   const DATA = {
     period: "June 2026",
-    asOf: "2026-07-15",
-    source: "Ad Reports/exports/mycase/as-of-2026-07-01",
+    asOf: "2026-07-11",
+    source: "Ad Reports/exports/2026-07-11",
     kpis: [
       { id: "#01", label: "Total leads", value: "124", target: "110", mom: "+18%", verified: true, hit: true, gauge: true },
       { id: "#02", label: "New cases", value: "9", target: "12", mom: "−25%", verified: false, alert: false, gauge: true },
@@ -23,24 +23,24 @@
     ],
     channels: [
       { name: "Search calls", count: 54, prior: 31, mom: "+74%", spend: "$2,214", color: "#3a1a6e" },
-      { name: "LSA inbox", count: 41, prior: 38, mom: "+8%", spend: "$12,792", color: "#b8860b" },
-      { name: "HubSpot forms", count: 29, prior: 24, mom: "+21%", spend: "$0", color: "#4c1d95" }
+      { name: "LSA inbox", count: 41, prior: 38, mom: "+8%", spend: "$12,792", color: "#00d4c4" },
+      { name: "HubSpot forms", count: 29, prior: 24, mom: "+21%", spend: "$0", color: "#b8860b" }
     ],
     sourceMix: [
       { name: "Paid Search", pct: 44, color: "#3a1a6e" },
-      { name: "LSA", pct: 33, color: "#b8860b" },
-      { name: "HubSpot / other", pct: 23, color: "#4c1d95" }
+      { name: "LSA", pct: 33, color: "#00d4c4" },
+      { name: "HubSpot / other", pct: 23, color: "#b8860b" }
     ],
-    /* Campaign brand: Military royal · Core DV gold · NTGUILT mid-royal (GGL — no teal) */
+    /* Campaign brand: Military royal · Core DV teal · NTGUILT gold */
     searchCallsByCampaign: [
       { name: "Military", count: 36, color: "#3a1a6e" },
-      { name: "Core DV", count: 14, color: "#b8860b" },
-      { name: "NTGUILT", count: 4, color: "#4c1d95" }
+      { name: "Core DV", count: 14, color: "#00d4c4" },
+      { name: "NTGUILT", count: 4, color: "#b8860b" }
     ],
     leadsByCampaign: [
       { name: "Military", count: 36, prior: 28, mom: "+29%", spend: "$1,476", color: "#3a1a6e" },
-      { name: "Core DV", count: 14, prior: 11, mom: "+27%", spend: "$1,980", color: "#b8860b" },
-      { name: "NTGUILT", count: 4, prior: 2, mom: "+100%", spend: "$420", color: "#4c1d95" }
+      { name: "Core DV", count: 14, prior: 11, mom: "+27%", spend: "$1,980", color: "#00d4c4" },
+      { name: "NTGUILT", count: 4, prior: 2, mom: "+100%", spend: "$420", color: "#b8860b" }
     ],
     phoneIntake: {
       targetPct: 90,
@@ -94,7 +94,7 @@
     duiGoal: { current: 18, target: 50 },
     casesMomSeries: [
       { name: "Closed cases", color: "#3a1a6e", verified: false },
-      { name: "New cases", color: "#b8860b", verified: false },
+      { name: "New cases", color: "#00d4c4", verified: false },
       { name: "Red accounts", color: "#4c1d95", verified: false }
     ],
     casesMom: [
@@ -102,15 +102,6 @@
       { month: "May", closed: 8, newCases: 12, redAccounts: 2 },
       { month: "Jun", closed: 11, newCases: 9, redAccounts: 4 }
     ],
-    /** KPI #02 proxy — MyCase Contact group=Client by Created date (Jul 1 2026 export through Jun 29) */
-    newCasesYoY: {
-      months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      y2025: [23, 16, 12, 31, 24, 15, 10, 11, 9, 13, 5, 9],
-      y2026: [12, 14, 17, 15, 22, 34],
-      comparableThrough: 6,
-      source: "mycase/as-of-2026-07-01/contact_report_task_export.csv",
-      flag: "Counts use Created date + Contact group = Client. Accuracy depends on those fields after legacy imports (e.g. 2024-06-05 bulk Unfiled load). Created date ≠ matter open/signed date. Jul 2026+ omitted until fresh export (not shown as zero)."
-    },
     pipeline: [
       { month: "Jun", closed: 11, mom: "+38%" },
       { month: "Jun", rate: "51%", retained: 14 }
@@ -324,175 +315,6 @@
     );
   }
 
-  function newCasesYoYGroupedChart(cfg) {
-    const n = cfg.comparableThrough || Math.min(cfg.y2025.length, cfg.y2026.length);
-    const months = cfg.months.slice(0, n);
-    const a = cfg.y2025.slice(0, n);
-    const b = cfg.y2026.slice(0, n);
-    const max = Math.max(...a, ...b, 1);
-    const w = 720;
-    const h = 300;
-    const pad = { l: 48, r: 24, t: 44, b: 44 };
-    const plotW = w - pad.l - pad.r;
-    const plotH = h - pad.t - pad.b;
-    const slot = plotW / months.length;
-    const barW = Math.min(18, slot * 0.32);
-    const gap = 4;
-    const c2025 = "#6b7280";
-    const c2026 = "#3a1a6e";
-    const ticks = [0, 0.25, 0.5, 0.75, 1].map(p => {
-      const y = pad.t + plotH * (1 - p);
-      const val = Math.round(max * p);
-      return `<g>
-        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
-        <text x="${pad.l - 10}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}</text>
-      </g>`;
-    }).join("");
-    const bars = months.map((m, i) => {
-      const x0 = pad.l + i * slot + (slot - (barW * 2 + gap)) / 2;
-      const hA = Math.max(0, (plotH * a[i]) / max);
-      const hB = Math.max(0, (plotH * b[i]) / max);
-      const yA = pad.t + plotH - hA;
-      const yB = pad.t + plotH - hB;
-      return `<g>
-        <rect x="${x0}" y="${yA}" width="${barW}" height="${hA}" rx="3" fill="${c2025}">
-          <title>2025 ${escapeHtml(m)}: ${a[i]}</title>
-        </rect>
-        <rect x="${x0 + barW + gap}" y="${yB}" width="${barW}" height="${hB}" rx="3" fill="${c2026}">
-          <title>2026 ${escapeHtml(m)}: ${b[i]}</title>
-        </rect>
-        <text x="${x0 + barW + gap / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(m)}</text>
-      </g>`;
-    }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="New cases 2025 vs 2026 by month">
-      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
-      ${ticks}${bars}
-      <line x1="${pad.l}" y1="${pad.t + plotH}" x2="${w - pad.r}" y2="${pad.t + plotH}" class="kpi-chart-baseline"/>
-    </svg>`;
-  }
-
-  function linearTrend(data) {
-    const n = data.length;
-    if (n === 0) return [];
-    if (n === 1) return [data[0]];
-    let sumX = 0;
-    let sumY = 0;
-    let sumXY = 0;
-    let sumXX = 0;
-    for (let i = 0; i < n; i++) {
-      sumX += i;
-      sumY += data[i];
-      sumXY += i * data[i];
-      sumXX += i * i;
-    }
-    const denom = n * sumXX - sumX * sumX;
-    const slope = denom === 0 ? 0 : (n * sumXY - sumX * sumY) / denom;
-    const intercept = (sumY - slope * sumX) / n;
-    return data.map((_, i) => Math.round((intercept + slope * i) * 10) / 10);
-  }
-
-  function overallPctChange(data) {
-    if (!data || data.length < 2 || data[0] === 0) return null;
-    return Math.round(((data[data.length - 1] - data[0]) / data[0]) * 1000) / 10;
-  }
-
-  function fmtOverallPct(p) {
-    if (p == null) return "—";
-    return `${p >= 0 ? "+" : ""}${p}%`;
-  }
-
-  /** Single-year bars + dashed linear trend (matches canvas Case counts · bars + trend). */
-  function newCasesBarsWithTrendChart(months, bars, color) {
-    const trend = linearTrend(bars);
-    const max = Math.max(...bars, ...trend, 1);
-    const w = 680;
-    const h = 280;
-    const pad = { l: 44, r: 20, t: 36, b: 40 };
-    const plotW = w - pad.l - pad.r;
-    const plotH = h - pad.t - pad.b;
-    const n = months.length;
-    const slot = plotW / n;
-    const barW = Math.min(36, slot * 0.55);
-    const ticks = [0, 0.25, 0.5, 0.75, 1].map(p => {
-      const y = pad.t + plotH * (1 - p);
-      const val = Math.round(max * p);
-      return `<g>
-        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
-        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}</text>
-      </g>`;
-    }).join("");
-    const barRects = months.map((m, i) => {
-      const bh = Math.max(0, (plotH * bars[i]) / max);
-      const x = pad.l + i * slot + (slot - barW) / 2;
-      const y = pad.t + plotH - bh;
-      return `<g>
-        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="3" fill="${color}">
-          <title>${escapeHtml(m)}: ${bars[i]}</title>
-        </rect>
-        <text x="${x + barW / 2}" y="${y - 6}" text-anchor="middle" class="kpi-chart-total">${bars[i]}</text>
-        <text x="${x + barW / 2}" y="${h - 14}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(m)}</text>
-      </g>`;
-    }).join("");
-    const pts = trend
-      .map((v, i) => {
-        const x = pad.l + i * slot + slot / 2;
-        const y = pad.t + plotH - (plotH * v) / max;
-        return `${x},${y}`;
-      })
-      .join(" ");
-    const dots = trend
-      .map((v, i) => {
-        const x = pad.l + i * slot + slot / 2;
-        const y = pad.t + plotH - (plotH * v) / max;
-        return `<circle cx="${x}" cy="${y}" r="3.5" fill="#3a1a6e"/>`;
-      })
-      .join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="New cases with trend line">
-      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
-      ${ticks}${barRects}
-      <polyline points="${pts}" fill="none" stroke="#3a1a6e" stroke-width="2" stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round"/>
-      ${dots}
-      <line x1="${pad.l}" y1="${pad.t + plotH}" x2="${w - pad.r}" y2="${pad.t + plotH}" class="kpi-chart-baseline"/>
-    </svg>`;
-  }
-
-  function newCasesYearMonthTable(months, counts) {
-    const rows = months.map((m, i) => [escapeHtml(m), String(counts[i])]);
-    const total = counts.reduce((s, n) => s + n, 0);
-    rows.push(["<strong>Total</strong>", `<strong>${total}</strong>`]);
-    return kpiDetailTable(["Month", "New cases"], rows);
-  }
-
-  function newCasesYoYDetailTable(cfg) {
-    const n = cfg.comparableThrough || Math.min(cfg.y2025.length, cfg.y2026.length);
-    const rows = [];
-    for (let i = 0; i < n; i++) {
-      const a = cfg.y2025[i];
-      const b = cfg.y2026[i];
-      const d = b - a;
-      const pct = a === 0 ? "—" : `${d >= 0 ? "+" : ""}${Math.round((d / a) * 100)}%`;
-      rows.push([
-        escapeHtml(cfg.months[i]),
-        String(a),
-        String(b),
-        d >= 0 ? `+${d}` : String(d),
-        `<span class="${momClass(pct)}">${pct}</span>`
-      ]);
-    }
-    const sumA = cfg.y2025.slice(0, n).reduce((s, x) => s + x, 0);
-    const sumB = cfg.y2026.slice(0, n).reduce((s, x) => s + x, 0);
-    const d = sumB - sumA;
-    const pct = `${d >= 0 ? "+" : ""}${Math.round((d / sumA) * 100)}%`;
-    rows.push([
-      "<strong>Jan–Jun</strong>",
-      `<strong>${sumA}</strong>`,
-      `<strong>${sumB}</strong>`,
-      `<strong>${d >= 0 ? "+" : ""}${d}</strong>`,
-      `<strong class="${momClass(pct)}">${pct}</strong>`
-    ]);
-    return kpiDetailTable(["Month", "2025", "2026", "Δ", "YoY %"], rows);
-  }
-
   function channelLegend(channels) {
     return `<ul class="kpi-stack-legend" aria-label="Series colors">${channels.map(c => {
       const mark = c.verified === false ? ` ${star(false)}` : c.verified === true ? ` ${star(true)}` : "";
@@ -693,8 +515,8 @@
   }
 
   const PRESENCE_PIE_COLORS = {
-    active: "#b8860b",
-    building: "#e3c58d",
+    active: "#00d4c4",
+    building: "#b8860b",
     outdated: "#4c1d95",
     "not on": "#3a1a6e",
     "not wired": "#8b7355"
@@ -1244,48 +1066,9 @@
   /** Unique former-Dashboards visuals (dupes of #01 / #08 already on KPIs are omitted). */
   function dashboardSectionsHtml() {
     const depositHit = meetsTarget(DATA.avgDeposit.current, DATA.avgDeposit.target, false);
-    const yoy = DATA.newCasesYoY;
-    const months2025 = yoy.months;
-    const months2026 = yoy.months.slice(0, yoy.y2026.length);
-    const pct2025 = overallPctChange(yoy.y2025);
-    const pct2026 = overallPctChange(yoy.y2026);
     return `<section class="kpi-section kpi-section-static" data-feedback-id="section-business-health" data-feedback-label="Pipeline & deposits">
         ${kpiSectionStaticHead("Pipeline & source mix")}
         <div class="kpi-section-body">
-          <article class="kpi-split-panel" data-feedback-id="section-new-cases-yoy" data-feedback-label="#02 New cases YoY" style="margin-bottom:1rem">
-            ${statusCorner(true)}
-            ${kpiSectionStaticHead("#02 New cases · Case counts · bars + trend", "MyCase Client by Created date")}
-            <div class="kpi-split-panel-body">
-              <p class="kpi-dashboard-note" style="margin:0 0 0.75rem">${escapeHtml(yoy.flag)}</p>
-              <div class="kpi-split-grid" style="margin-bottom:1rem">
-                ${chartBlock({
-                  focus: "#02",
-                  verified: true,
-                  head: `2025 · full year · overall ${fmtOverallPct(pct2025)} (Jan→Dec) · dashed = linear trend`,
-                  chart: newCasesBarsWithTrendChart(months2025, yoy.y2025, "#6b7280"),
-                  table: newCasesYearMonthTable(months2025, yoy.y2025)
-                })}
-                ${chartBlock({
-                  focus: "#02",
-                  verified: true,
-                  head: `2026 · Jan–Jun · overall ${fmtOverallPct(pct2026)} (Jan→Jun) · dashed = linear trend`,
-                  chart: newCasesBarsWithTrendChart(months2026, yoy.y2026, "#3a1a6e"),
-                  table: newCasesYearMonthTable(months2026, yoy.y2026)
-                })}
-              </div>
-              ${chartBlock({
-                focus: "#02",
-                verified: true,
-                head: `Source: ${escapeHtml(yoy.source)} · Jan–Jun YoY comparable`,
-                chart: newCasesYoYGroupedChart(yoy),
-                legend: channelLegend([
-                  { name: "2025", color: "#6b7280" },
-                  { name: "2026", color: "#3a1a6e" }
-                ]),
-                table: newCasesYoYDetailTable(yoy)
-              })}
-            </div>
-          </article>
           <div class="kpi-split-grid">
             <article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 / #05 Cases MoM">
               ${statusCorner(false)}
@@ -1358,7 +1141,7 @@
     "#GOAL3": "Third team goal slot — set the next firm-wide goal (e.g. DUI cases, lead→case rate, or speed-to-lead) when ready.",
     "#01": "124 unified leads — above 110 target. HubSpot + LSA + Search combined (Jun dummy).",
     "#08": "Search-call leads by campaign (placeholder May/Jun) — Military · Core DV · NTGUILT.",
-    "#02": "New cases YoY chart uses MyCase Contact group=Client by Created date (export through Jun 29 2026). Jan–Jun 2026 = 114 vs 2025 = 121 (−6%). Flag: Created date + Contact group accuracy after legacy imports — not matter open date.",
+    "#02": "9 new cases vs 12 target. Lead→case rate 7.3% on 124 leads ≈ 9 cases — intake and answer rate are the levers.",
     "#12": "Weighted avg cost/call across Military · Core DV · NTGUILT (~$72 from campaign spend÷calls). Target under $100.",
     "#15": "CPL $142 exceeds $120 target — Core DV waste and broad match noise; see neg list work.",
     "#16": "Review presence across GBP, Yelp, Nextdoor, Avvo, Justia, FindLaw, and social — many channels outdated or not claimed (B10).",

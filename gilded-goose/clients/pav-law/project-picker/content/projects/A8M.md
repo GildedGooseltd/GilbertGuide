@@ -6,8 +6,8 @@
 | **Fee**           | 500|
 | **Category**      | Analytics                                                  |
 | **Campaign type** | Dashboard Maintenance                                      |
-| **Status**        | ongoing|
-| **Publish status** | unpublished|
+| **Status**        | ongoing                                                    |
+| **Publish status** | published                                                  |
 | **Parent**        | A8                                                         |
 | **Monthly only**  | yes                                                        |
 | **Estimated leads gained** | Estimate pending                                           |
@@ -17,29 +17,33 @@
 
 ## Summary
 
-Monthly dashboard upkeep so KPIs stay accurate and useful for operations.
+Dashboard updates with KPIs to help improve business operations
 
 ## Value Added
 
 - Monthly lead-source report
-- Google Ads and LSA manual review with API pull reconciled to CSV archive (KPI spec export checklist)
+- Google Ads and LSA manual
+- Google Ads API monthly pull reconciled to manual CSV archive (KPI spec § Export checklist)
 
 ## Value icons
 
-- retainer
 - foundation
-- efficiency
+- retainer
+- leads
 - crm
+- seo
+- referrals
+- efficiency
+- intake
+- creative
 
 ## Description
 
-Reporting stays useful only when someone reviews it monthly — validating tags, reconciling ad platforms to CRM, and noting channel shifts. Child of A8.
-
-## Goal
-
-Publish a reconciled monthly lead-source and Ads/LSA report tied to the A8 KPI cockpit.
+Reporting only stays useful when someone reviews it every month — validating tags, reconciling ad platforms to CRM, and noting when a channel’s numbers shift.
 
 ## Information needed
 
+- Define measurable Goal
 - Confirm estimated leads gained
-- Link KPI dashboard rows for this retainer card
+- Link KPI dashboard rows
+- Link KPI dashboard rows (KPI links section)
