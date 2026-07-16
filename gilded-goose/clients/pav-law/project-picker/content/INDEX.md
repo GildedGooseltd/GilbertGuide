@@ -6,9 +6,8 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
 
 ## Guide questionnaire (Q&A)
 
-Edit the choose-your-path questions here → [`survey.md`](survey.md)  
-(3-layer business questions. Run `npm run build` after edits.)  
-Notes / mapping → [`survey-DRAFT.md`](survey-DRAFT.md)
+**Edit questions here** → [`QUESTIONS.md`](QUESTIONS.md)  
+Machine format (after sync) → [`survey.md`](survey.md) · mapping notes → [`survey-DRAFT.md`](survey-DRAFT.md)
 
 
 | Priority | ID       | Project                                                          | File                               |
