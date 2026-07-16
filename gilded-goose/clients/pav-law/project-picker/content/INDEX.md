@@ -7,6 +7,7 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
 ## Guide questionnaire (Q&A)
 
 **Edit questions here** → [`QUESTIONS.md`](QUESTIONS.md)  
+**Clickable mockup** → [`../questions-mockup.html`](../questions-mockup.html)  
 Machine format (after sync) → [`survey.md`](survey.md) · mapping notes → [`survey-DRAFT.md`](survey-DRAFT.md)
 
 

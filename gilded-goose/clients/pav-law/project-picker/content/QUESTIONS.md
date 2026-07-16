@@ -2,6 +2,8 @@
 
 Plain list you can rewrite. When ready, say **sync QUESTIONS → survey** (or paste changes) so it updates [`survey.md`](survey.md) and the live picker.
 
+**Clickable layout mockup:** open [`../questions-mockup.html`](../questions-mockup.html) in a browser (numbered rows → next layer).
+
 Use short labels. Keep three layers when you can: **pressure → channel → bottleneck**.
 
 ---
