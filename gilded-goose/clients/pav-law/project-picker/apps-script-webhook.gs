@@ -84,6 +84,17 @@ function formatActionItems(actionItems) {
   }).join("\n");
 }
 
+function formatConsentBlock(data) {
+  if (!data || !data.consentAgreed) return "";
+  return [
+    "",
+    "E-sign consent: YES",
+    "Consent version: " + (data.consentVersion || "—"),
+    "Consent at: " + (data.consentAt || "—"),
+    "Consent text: " + (data.consentText || "—")
+  ].join("\n");
+}
+
 function buildInternalEmail(data, projects, noteBlock) {
   var depositLine = data.depositAmount != null
     ? "$" + data.depositAmount + " (QuickBooks deposit link sent to client)"
@@ -119,6 +130,7 @@ function buildInternalEmail(data, projects, noteBlock) {
     "Invoice schedule (QuickBooks): " + (data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "—"),
     "",
     "Standard deposit collected separately: " + depositLine,
+    formatConsentBlock(data),
     "",
     "Per-project comments:",
     noteBlock || "(none)"
@@ -169,6 +181,7 @@ function buildClientEmail(data, projects, noteBlock) {
     "Estimated consulting (first month projects): " + (data.projectsSubtotal || "—"),
     "Note: " + (data.grandTotalNote || "—"),
     "Invoice schedule: " + (data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "—"),
+    formatConsentBlock(data),
     depositSection,
     "",
     "Gilbert chat:",

@@ -9,9 +9,13 @@
   const GILBERT_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-goose-guide.svg";
   const GILBERT_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
   const GILBERT_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-logo-frame.png";
+  const GILBERT_LOGO = PROJECT_DATA.guideLogo || "assets/gigi-logo-frame.png";
   const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
   const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
   const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
+
+  const CONSENT_VERSION = "plan-clickwrap-v1";
+  const CONSENT_TEXT = "By checking this box, I consent to electronic records and signatures for this project plan selection and confirm my intent to authorize the projects, fees, and payment terms shown on this page.";
 
   /** Quick fit survey → tags in goalText → recommended projects */
   const GILBERT_SURVEY = [
@@ -737,42 +741,274 @@
 
   const PERFORMANCE_PAY_IDS = new Set(["RETAINER", "A1", "A2", "A3", "A4", "A6", "A7", "A11"]);
 
+  /** Payment calculator defaults — full rules in PAYMENT-SCHEDULE.md */
+  const PAYMENT_DEPOSIT_PCT = 0.5;
+  const PAYMENT_NO_SURCHARGE_DAYS = 60;
+
   function getProjectsInvoiceTotal() {
-    return getSelectedProjects().reduce((s, p) => s + itemSelectionCost(p), 0);
+    return getSelectedProjects().reduce((s, p) => s + projectScheduleFee(p), 0);
+  }
+
+  /** One-time fee that participates in deposit + schedule (excludes retainer / monthly / ongoing). */
+  function projectScheduleFee(item) {
+    if (!item || item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return 0;
+    return Math.max(0, Math.round(Number(item.fee) || 0));
+  }
+
+  function projectMonthlyBill(item) {
+    if (!item) return 0;
+    if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) {
+      return Math.max(0, Math.round(Number(item.fee) || 0));
+    }
+    return Math.max(0, Math.round(Number(item.ongoingFee) || 0));
+  }
+
+  function normalizeDepositPct(raw) {
+    if (raw == null || raw === "") return PAYMENT_DEPOSIT_PCT;
+    const n = Number(raw);
+    if (!Number.isFinite(n) || n < 0) return PAYMENT_DEPOSIT_PCT;
+    return n > 1 ? Math.min(1, n / 100) : Math.min(1, n);
+  }
+
+  /** Per-project payment option: due now, remaining on schedule, optional monthly bill. */
+  function getProjectPaymentOption(item) {
+    const isRetainer = !!(item.isRetainer || item.id === "RETAINER");
+    const scheduleFee = projectScheduleFee(item);
+    const monthly = projectMonthlyBill(item);
+    const payType = getPaymentType(item, isRetainer);
+
+    if (scheduleFee <= 0) {
+      return {
+        id: item.id,
+        title: item.title,
+        kind: "monthly",
+        scheduleFee: 0,
+        dueNow: 0,
+        remaining: 0,
+        monthly,
+        depositPct: null,
+        paymentType: payType,
+        note: monthly
+          ? `${fmt(monthly)}/mo — bills separately (not on project schedule)`
+          : "No project fee on this line"
+      };
+    }
+
+    const depositPct = normalizeDepositPct(item.depositPct);
+    let dueNow = item.depositAmount != null && item.depositAmount !== ""
+      ? Math.round(Number(item.depositAmount))
+      : Math.round(scheduleFee * depositPct);
+    dueNow = Math.max(0, Math.min(scheduleFee, dueNow));
+    const remaining = scheduleFee - dueNow;
+    const pctLabel = Math.round((dueNow / scheduleFee) * 100);
+    const notes = [`${pctLabel}% due now`];
+    if (monthly) notes.push(`${fmt(monthly)}/mo ongoing separate`);
+    if (payType === "performance") notes.push("Performance-linked");
+    return {
+      id: item.id,
+      title: item.title,
+      kind: "project",
+      scheduleFee,
+      dueNow,
+      remaining,
+      monthly,
+      depositPct: dueNow / scheduleFee,
+      paymentType: payType,
+      note: notes.join(" · ")
+    };
+  }
+
+  function getCartPaymentOptions() {
+    const items = [];
+    if (state.retainer) items.push(getProjectPaymentOption({ ...RETAINER, isRetainer: true }));
+    getSelectedProjects().forEach(p => items.push(getProjectPaymentOption({ ...p, isRetainer: false })));
+    getMaintenanceProjects().forEach(p => {
+      if (state.projects.has(p.id)) items.push(getProjectPaymentOption({ ...p, isRetainer: false }));
+    });
+    return items;
+  }
+
+  function cartPaymentTotals(options) {
+    const rows = options || getCartPaymentOptions();
+    return {
+      dueNow: rows.reduce((s, r) => s + r.dueNow, 0),
+      remaining: rows.reduce((s, r) => s + r.remaining, 0),
+      scheduleFees: rows.reduce((s, r) => s + r.scheduleFee, 0),
+      monthly: rows.reduce((s, r) => s + r.monthly, 0)
+    };
+  }
+
+  function buildPaymentOptionsHtml() {
+    const rows = getCartPaymentOptions();
+    if (!rows.length) {
+      return `<p class="payment-options-empty">Add projects to see deposit and schedule amounts.</p>`;
+    }
+    const totals = cartPaymentTotals(rows);
+    const body = rows.map(r => `<tr>
+      <td class="col-project"><a href="${projectAnchor(r.id)}" class="priority-desc-link" data-project-id="${escapeHtml(r.id)}">${escapeHtml(r.title)}</a></td>
+      <td class="col-fee">${r.scheduleFee ? fmt(r.scheduleFee) : (r.monthly ? `${fmt(r.monthly)}/mo` : "—")}</td>
+      <td class="col-due">${r.dueNow ? fmt(r.dueNow) : (r.kind === "monthly" ? "Monthly" : "—")}</td>
+      <td class="col-remain">${r.remaining ? fmt(r.remaining) : "—"}</td>
+      <td class="col-note">${escapeHtml(r.note)}</td>
+    </tr>`).join("");
+    return `<div class="payment-options-scroll"><table class="payment-options-table">
+      <thead>
+        <tr>
+          <th scope="col">Project</th>
+          <th scope="col">One-time fee</th>
+          <th scope="col">Due now</th>
+          <th scope="col">On schedule</th>
+          <th scope="col">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${body}
+        <tr class="payment-options-totals">
+          <td>Totals</td>
+          <td>${totals.scheduleFees ? fmt(totals.scheduleFees) : "—"}</td>
+          <td>${totals.dueNow ? fmt(totals.dueNow) : "—"}</td>
+          <td>${totals.remaining ? fmt(totals.remaining) : "—"}</td>
+          <td>${totals.monthly ? `${fmt(totals.monthly)}/mo separate` : ""}</td>
+        </tr>
+      </tbody>
+    </table></div>`;
+  }
+
+  /** Payment calculator: deposit from payment options; remaining on schedule; surcharge if payoff > 60 days.
+   *  Rules: PAYMENT-SCHEDULE.md */
+
+  function paymentSurchargeRateForMonths(months) {
+    const m = Number(months) || 0;
+    const days = m * 30;
+    if (days <= PAYMENT_NO_SURCHARGE_DAYS) return 0;
+    if (m <= 6) return 0.05;
+    return 0.10; /* 7–12 months */
+  }
+
+  function computePaymentPlan(months, projectTotal) {
+    const cart = cartPaymentTotals();
+    const fees = Math.max(0, Math.round(cart.scheduleFees || Number(projectTotal) || 0));
+    const m = months != null && months !== "" ? Number(months) : null;
+    const deposit = Math.max(0, Math.round(cart.dueNow != null ? cart.dueNow : fees * PAYMENT_DEPOSIT_PCT));
+    const remainingBase = Math.max(0, Math.round(cart.remaining != null ? cart.remaining : fees - deposit));
+    if (!m || m < 1 || fees <= 0) {
+      return {
+        months: m && m >= 1 ? m : null,
+        projectFees: fees,
+        depositPct: fees ? deposit / fees : PAYMENT_DEPOSIT_PCT,
+        deposit,
+        remainingBase,
+        surchargeRate: 0,
+        surchargeAmount: 0,
+        financedRemaining: remainingBase,
+        perInvoice: null,
+        totalDue: deposit + remainingBase,
+        within60Days: true,
+        daysEstimate: m && m >= 1 ? m * 30 : null,
+        monthlySeparate: cart.monthly || 0
+      };
+    }
+    const daysEstimate = m * 30;
+    const within60Days = daysEstimate <= PAYMENT_NO_SURCHARGE_DAYS;
+    const surchargeRate = paymentSurchargeRateForMonths(m);
+    const surchargeAmount = Math.round(remainingBase * surchargeRate);
+    const financedRemaining = remainingBase + surchargeAmount;
+    const perInvoice = Math.round(financedRemaining / m);
+    const totalDue = deposit + financedRemaining;
+    return {
+      months: m,
+      projectFees: fees,
+      depositPct: fees ? deposit / fees : PAYMENT_DEPOSIT_PCT,
+      deposit,
+      remainingBase,
+      surchargeRate,
+      surchargeAmount,
+      financedRemaining,
+      perInvoice,
+      totalDue,
+      within60Days,
+      daysEstimate,
+      monthlySeparate: cart.monthly || 0
+    };
+  }
+
+  function paymentPlanBreakdownHtml(plan) {
+    if (!plan || plan.projectFees <= 0) {
+      return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">
+        <p class="payment-calc-empty">Select one-time projects to calculate deposit and invoice schedule.</p>
+      </div>`;
+    }
+    const ratePct = Math.round(plan.surchargeRate * 100);
+    const rows = [
+      ["Project fees (one-time)", fmt(plan.projectFees)],
+      [`Due now (from payment options)`, fmt(plan.deposit)],
+      ["Remaining on schedule", fmt(plan.remainingBase)]
+    ];
+    if (plan.monthlySeparate) {
+      rows.push(["Monthly (retainer / ongoing)", `${fmt(plan.monthlySeparate)}/mo separate`]);
+    }
+    if (plan.months) {
+      rows.push(["Payoff window", `~${plan.daysEstimate} days (${plan.months} invoice${plan.months === 1 ? "" : "s"})`]);
+      if (plan.within60Days) {
+        rows.push(["Schedule surcharge", "None — paid within 60 days"]);
+      } else {
+        rows.push([`Schedule surcharge (+${ratePct}% on remaining)`, fmt(plan.surchargeAmount)]);
+        rows.push(["Financed remaining", fmt(plan.financedRemaining)]);
+      }
+      if (plan.perInvoice != null) {
+        rows.push([`Amount per invoice × ${plan.months}`, fmt(plan.perInvoice)]);
+      }
+      rows.push(["Total due (deposit + invoices)", fmt(plan.totalDue)]);
+    } else {
+      rows.push(["Choose a schedule", `Select how long to pay the remaining ${fmt(plan.remainingBase)}`]);
+    }
+    return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">
+      <table class="payment-calc-table"><tbody>
+        ${rows.map(([k, v]) => `<tr><th scope="row">${escapeHtml(k)}</th><td>${escapeHtml(String(v))}</td></tr>`).join("")}
+      </tbody></table>
+    </div>`;
   }
 
   function updateInvoiceScheduleAmount() {
     const monthsEl = document.getElementById("invoice-payment-months");
     const amountEl = document.getElementById("invoice-payment-amount");
     const hintEl = document.getElementById("invoice-schedule-hint");
+    const breakdownHost = document.getElementById("payment-calc-breakdown-host");
     if (!monthsEl || !amountEl) return;
 
     const months = monthsEl.value !== "" ? Number(monthsEl.value) : null;
     const projectTotal = getProjectsInvoiceTotal();
-    const baseHint = "Deposit is billed immediately. Project invoices are sent via QuickBooks on the schedule you choose. Retainer and maintenance bill separately each month.";
+    const plan = computePaymentPlan(months, projectTotal);
 
-    if (!months || months < 1) {
-      amountEl.value = "";
-      amountEl.placeholder = "Select invoices first";
-      if (hintEl) hintEl.textContent = baseHint;
-      syncPaymentTermsFromDom();
-      return;
-    }
+    if (breakdownHost) breakdownHost.innerHTML = paymentPlanBreakdownHtml(plan);
 
     if (projectTotal <= 0) {
       amountEl.value = "";
       amountEl.placeholder = "No project fees to invoice";
       if (hintEl) {
-        hintEl.textContent = "No one-time project fees selected — only retainer/maintenance apply. " + baseHint;
+        hintEl.textContent = "No one-time project fees selected — only retainer/maintenance apply. Deposit and schedule apply to project fees only.";
       }
       syncPaymentTermsFromDom();
       return;
     }
 
-    const perInvoice = Math.round(projectTotal / months);
-    amountEl.value = String(perInvoice);
+    if (!months || months < 1) {
+      amountEl.value = "";
+      amountEl.placeholder = "Select schedule first";
+      if (hintEl) {
+        hintEl.textContent = `${fmt(plan.deposit)} due now from payment options. Choose a payoff schedule for the remaining ${fmt(plan.remainingBase)}. Schedules longer than 60 days add a surcharge on the remaining balance.`;
+      }
+      syncPaymentTermsFromDom();
+      return;
+    }
+
+    amountEl.value = String(plan.perInvoice != null ? plan.perInvoice : "");
     if (hintEl) {
-      hintEl.textContent = `${fmt(projectTotal)} in project fees split over ${months} invoice${months === 1 ? "" : "s"} (${fmt(perInvoice)} each). ${baseHint}`;
+      if (plan.within60Days) {
+        hintEl.textContent = `${fmt(plan.deposit)} deposit now + ${plan.months} invoice${plan.months === 1 ? "" : "s"} of ${fmt(plan.perInvoice)} (no surcharge — within 60 days). Retainer/maintenance bill separately.`;
+      } else {
+        hintEl.textContent = `${fmt(plan.deposit)} deposit now + ${plan.months} invoice${plan.months === 1 ? "" : "s"} of ${fmt(plan.perInvoice)} after +${Math.round(plan.surchargeRate * 100)}% schedule surcharge on the remaining balance. Total ${fmt(plan.totalDue)}. Retainer/maintenance bill separately.`;
+      }
     }
     syncPaymentTermsFromDom();
   }
@@ -785,13 +1021,32 @@
     const months = monthsRaw !== "" && monthsRaw != null ? Number(monthsRaw) : null;
     const monthlyAmount = amountRaw !== "" && amountRaw != null ? Math.max(0, Number(amountRaw)) : null;
     const projectTotal = getProjectsInvoiceTotal();
+    const plan = computePaymentPlan(months, projectTotal);
     let label = null;
-    if (months && monthlyAmount != null) {
-      label = `${months} QuickBooks invoice${months === 1 ? "" : "s"} of ${fmt(monthlyAmount)} (${fmt(monthlyAmount * months)} project fees; deposit billed immediately)`;
+    if (months && monthlyAmount != null && plan.projectFees > 0) {
+      const surchargeNote = plan.surchargeAmount
+        ? `; +${Math.round(plan.surchargeRate * 100)}% schedule surcharge ${fmt(plan.surchargeAmount)} on remaining`
+        : "; no surcharge (≤60 days)";
+      label = `Due now ${fmt(plan.deposit)}; then ${months} QuickBooks invoice${months === 1 ? "" : "s"} of ${fmt(monthlyAmount)} (financed remaining ${fmt(plan.financedRemaining)}${surchargeNote}; total ${fmt(plan.totalDue)})`;
     } else if (months) {
-      label = `${months} invoice${months === 1 ? "" : "s"} — deposit billed immediately`;
+      label = `${months} invoice${months === 1 ? "" : "s"} — deposit billed immediately per payment options`;
     }
-    return { months, monthlyAmount, projectTotal, label };
+    return {
+      months,
+      monthlyAmount,
+      projectTotal: plan.projectFees,
+      depositAmount: plan.deposit,
+      depositPct: plan.depositPct,
+      remainingBase: plan.remainingBase,
+      surchargeRate: plan.surchargeRate,
+      surchargeAmount: plan.surchargeAmount,
+      financedRemaining: plan.financedRemaining,
+      totalDue: plan.totalDue,
+      within60Days: plan.within60Days,
+      monthlySeparate: plan.monthlySeparate || 0,
+      lineItems: getCartPaymentOptions(),
+      label
+    };
   }
 
   function syncPaymentTermsFromDom() {
@@ -1011,7 +1266,22 @@
     getSelectedProjects().forEach(p => {
       rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p) });
     });
-    return rows;
+    return sortInvoiceRowsRequiredFirst(rows);
+  }
+
+  /** Required (lock) rows first in Pav Priorities cart / invoice lists. */
+  function sortInvoiceRowsRequiredFirst(rows) {
+    return [...rows].sort((a, b) => {
+      const aRet = a.id === "RETAINER";
+      const bRet = b.id === "RETAINER";
+      const aItem = aRet ? RETAINER : findProjectById(a.id);
+      const bItem = bRet ? RETAINER : findProjectById(b.id);
+      const aReq = aItem ? isRequiredProject(aItem, aRet) : false;
+      const bReq = bItem ? isRequiredProject(bItem, bRet) : false;
+      if (aReq !== bReq) return aReq ? -1 : 1;
+      if (aRet !== bRet) return aRet ? -1 : 1;
+      return (aItem?.priority ?? 99) - (bItem?.priority ?? 99);
+    });
   }
 
   function getSuggestedItems() {
@@ -1163,9 +1433,9 @@
         ? `<h3>Estimated results</h3><div class="confirm-priorities-wrap">${totals}</div>${returns}`
         : `<h3>Estimated results</h3><p class="confirm-next-foot">Notes or Gilbert chat only — add projects for impact estimates.</p>`;
     }
-    renderActionItemsPanel();
-    const nextEl = document.getElementById("confirm-next-steps");
-    if (nextEl) nextEl.innerHTML = buildConfirmNextStepsHtml();
+    const payEl = document.getElementById("confirm-payment-options-body");
+    if (payEl) payEl.innerHTML = buildPaymentOptionsHtml();
+    updateInvoiceScheduleAmount();
   }
 
   function formatActionItemsText(actions) {
@@ -1672,16 +1942,9 @@
     </div>`;
   }
 
-  function descriptionHtml(item, iconsHtml) {
-    const iconsRow = iconsHtml
-      ? `<div class="card-summary-icons">${iconsHtml}</div>`
-      : "";
+  function descriptionHtml(item) {
     const progress = progressHtml(item);
     return `<div class="card-summary card-merged-desc">
-      <div class="card-desc-head">
-        <h4 class="card-summary-label">Description</h4>
-        ${iconsRow}
-      </div>
       ${conciseDescriptionBulletsHtml(item)}
       ${progress ? `<div class="card-progress-under">${progress}</div>` : ""}
     </div>`;
@@ -1696,9 +1959,9 @@
   }
 
   function expandBtnLabel(item, exp) {
-    const hasProgress = hasPartialProgress(item);
-    if (hasProgress) return exp ? "Hide To Do & completed" : "To Do & completed";
-    return exp ? "Hide details" : "Show details";
+    const chevron = `<span class="expand-btn-chevron" aria-hidden="true">${exp ? "▴" : "▾"}</span>`;
+    if (exp) return `${chevron}<span class="expand-btn-text">Hide current status</span>`;
+    return `${chevron}<span class="expand-btn-text">Expand for current status</span>`;
   }
 
   function cardDetailBodyHtml() {
@@ -2334,9 +2597,12 @@
       state.submitterEmail = saved.submitterEmail || "";
       if (state.submitterEmail) document.getElementById("submitted-email").value = state.submitterEmail;
       if (saved.invoicePaymentMonths != null) {
-        state.invoicePaymentMonths = saved.invoicePaymentMonths;
+        let monthsVal = String(saved.invoicePaymentMonths);
+        const monthsNum = Number(monthsVal);
+        if (monthsNum > 12) monthsVal = "12";
+        state.invoicePaymentMonths = monthsVal;
         const monthsEl = document.getElementById("invoice-payment-months");
-        if (monthsEl) monthsEl.value = saved.invoicePaymentMonths;
+        if (monthsEl) monthsEl.value = monthsVal;
       }
       updateInvoiceScheduleAmount();
       if (saved.goalText) {
@@ -2597,7 +2863,7 @@
 
   function publishStatusBadgeHtml(item) {
     if (!isPlanningPublish(item)) return "";
-    return `<span class="publish-status-badge" title="Unpublished — grayed out until Visibility is Published">Unpublished</span>`;
+    return `<span class="publish-status-badge" title="Research &amp; Planning">Research &amp; Planning</span>`;
   }
 
   function cardHtml(item, isRetainer, isFirstSelected) {
@@ -2643,11 +2909,12 @@
               ${cardReferenceLinkHtml(item)}
               <div class="card-top-row">
                 <div class="card-title"><span>${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
+                ${iconsHtml ? `<div class="card-title-icons">${iconsHtml}</div>` : ""}
               </div>
               ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
               ${abQuestionsBannerHtml(item)}
-              ${descriptionHtml(item, iconsHtml)}
-            <button type="button" class="expand-btn">${expandBtnLabel(item, exp)}</button>
+              ${descriptionHtml(item)}
+            <button type="button" class="expand-btn" aria-expanded="${exp ? "true" : "false"}">${expandBtnLabel(item, exp)}</button>
           </div>
         </div>
         <div class="card-detail">
@@ -2669,8 +2936,13 @@
     }
     const maintenance = sortCartFirst(getMaintenanceProjects());
     const optional = sortCartFirst(activeOptionalProjects());
-    const visible = visibleOptionalProjects(optional);
-    const hidden = hiddenOptionalCount(optional);
+    // Live cards first; Research & Planning (unpublished) always at bottom
+    const maintLive = maintenance.filter(p => !isPlanningPublish(p));
+    const maintPlan = maintenance.filter(p => isPlanningPublish(p));
+    const optLive = optional.filter(p => !isPlanningPublish(p));
+    const optPlan = optional.filter(p => isPlanningPublish(p));
+    const visible = visibleOptionalProjects(optLive);
+    const hidden = hiddenOptionalCount(optLive);
     let markedFirst = false;
     const projectCards = visible.map(p => {
       const sel = state.projects.has(p.id);
@@ -2678,13 +2950,17 @@
       if (isFirst) markedFirst = true;
       return cardHtml(p, false, isFirst);
     }).join("");
-    const maintCards = maintenance.map(p => cardHtml(p, false, false)).join("");
+    const maintCards = maintLive.map(p => cardHtml(p, false, false)).join("");
     const showMoreBtn = hidden > 0
       ? `<div class="project-list-show-more"><button type="button" class="btn btn-secondary" id="show-more-projects">Show ${hidden} more project${hidden === 1 ? "" : "s"}</button></div>`
-      : state.showAllProjects && optional.length > PROJECT_LIST_LIMIT
+      : state.showAllProjects && optLive.length > PROJECT_LIST_LIMIT
         ? `<div class="project-list-show-more"><button type="button" class="btn btn-secondary" id="show-more-projects">Show fewer</button></div>`
         : "";
-    list.innerHTML = cardHtml(RETAINER, true, true) + maintCards + projectCards + showMoreBtn;
+    const planCards = maintPlan.concat(optPlan).map(p => cardHtml(p, false, false)).join("");
+    const planBlock = planCards
+      ? `<div class="research-planning-list" role="group" aria-label="Research and Planning"><div class="research-planning-heading">Research &amp; Planning</div>${planCards}</div>`
+      : "";
+    list.innerHTML = cardHtml(RETAINER, true, true) + maintCards + projectCards + showMoreBtn + planBlock;
     syncExpandAllCheckbox();
     attachProjectListListeners(list);
     attachProjectListListeners(document.getElementById("research-section-wrap"));
@@ -2806,9 +3082,31 @@
     return getInvoiceLineItems().length > 0 || hasAnyNotes() || hasGilbertActivity();
   }
 
+  function isValidSubmitEmail(email) {
+    const e = String(email || "").trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  }
+
+  function isConsentAgreed() {
+    const el = document.getElementById("esign-consent");
+    return !!(el && el.checked);
+  }
+
+  function updateConsentLabel() {
+    const label = document.getElementById("esign-consent-label");
+    if (!label) return;
+    const termsUrl = String((getConfig().planTermsUrl || "")).trim();
+    if (termsUrl) {
+      label.innerHTML = `${escapeHtml(CONSENT_TEXT)} <a href="${escapeHtml(termsUrl)}" target="_blank" rel="noopener noreferrer">View terms</a>.`;
+    } else {
+      label.textContent = CONSENT_TEXT;
+    }
+  }
+
   function canSubmit() {
     const email = (document.getElementById("submitted-email") || {}).value || "";
-    if (!email.trim()) return false;
+    if (!isValidSubmitEmail(email)) return false;
+    if (!isConsentAgreed()) return false;
     return getInvoiceLineItems().length > 0 || hasAnyNotes() || hasGilbertActivity();
   }
 
@@ -2839,7 +3137,13 @@
   function showConfirmPage() {
     if (!canContinue()) return;
     const guideImg = document.getElementById("confirm-gilbert");
-    if (guideImg) guideImg.src = GILBERT_ICON;
+    if (guideImg) {
+      guideImg.src = GILBERT_LOGO;
+      guideImg.alt = "Gilded Goose";
+    }
+    const consentEl = document.getElementById("esign-consent");
+    if (consentEl) consentEl.checked = false;
+    updateConsentLabel();
     renderConfirmPlanReview();
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
@@ -2907,7 +3211,15 @@
       retainerPaymentType: state.retainer ? getPaymentType(RETAINER, true) : null,
       maintenanceMonthly: fmt(maintMonthly),
       maintenanceMonthlyNum: maintMonthly,
-      depositAmount: CONFIG.depositAmount || null,
+      depositAmount: paymentTerms.depositAmount != null && paymentTerms.depositAmount > 0
+        ? paymentTerms.depositAmount
+        : (CONFIG.depositAmount || null),
+      depositPct: paymentTerms.depositPct != null ? paymentTerms.depositPct : null,
+      paymentSurchargeRate: paymentTerms.surchargeRate != null ? paymentTerms.surchargeRate : null,
+      paymentSurchargeAmount: paymentTerms.surchargeAmount != null ? paymentTerms.surchargeAmount : null,
+      paymentFinancedRemaining: paymentTerms.financedRemaining != null ? paymentTerms.financedRemaining : null,
+      paymentTotalDue: paymentTerms.totalDue != null ? paymentTerms.totalDue : null,
+      paymentWithin60Days: paymentTerms.within60Days,
       quickbooksDepositUrl: CONFIG.quickbooksDepositUrl || null,
       projects: [...maintRows, ...projectRows],
       projectsSubtotal: fmt(projectTotal),
@@ -2920,7 +3232,11 @@
       }),
       projectNotes: getNotesPayload(),
       actionItems: buildActionItems(),
-      nextStepsText: formatNextStepsText()
+      nextStepsText: formatNextStepsText(),
+      consentAgreed: true,
+      consentAt: new Date().toISOString(),
+      consentVersion: CONSENT_VERSION,
+      consentText: CONSENT_TEXT
     };
   }
 
@@ -2956,6 +3272,68 @@
     return parts.join(" ");
   }
 
+  function buildSelectionImpactSummary(items) {
+    const list = items || [];
+    if (!list.length) {
+      return "Add projects to see estimated lead and client impact for this plan.";
+    }
+
+    const valueBits = [];
+    list.forEach(item => {
+      const brief = briefValueAdd(item);
+      if (brief) valueBits.push(brief);
+      else {
+        const bullets = valueAddedBullets(item);
+        if (bullets[0]) {
+          valueBits.push(String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim());
+        }
+      }
+    });
+    const uniqueValue = [...new Set(valueBits.filter(Boolean))].slice(0, 3);
+
+    let leadSum = 0;
+    let leadProjects = 0;
+    list.forEach(item => {
+      const leads = estimateProjectLeadsGained(item);
+      if (leads.value != null && leads.value > 0) {
+        leadSum += leads.value;
+        leadProjects += 1;
+      }
+    });
+    const casesEst = leadSum * PAV_HISTORICAL.leadToCaseRate;
+    const revenueEst = Math.round(casesEst * PAV_HISTORICAL.avgCaseFee);
+
+    const parts = [];
+    if (uniqueValue.length) {
+      parts.push(
+        uniqueValue.length === 1
+          ? `Added value focus: ${uniqueValue[0]}.`
+          : `Added value across this plan: ${uniqueValue.slice(0, -1).join("; ")}; and ${uniqueValue[uniqueValue.length - 1]}.`
+      );
+    } else {
+      parts.push("This plan strengthens infrastructure, intake, and marketing so results compound month over month.");
+    }
+
+    if (leadSum > 0) {
+      const leadLo = Math.max(1, Math.round(leadSum * 0.85));
+      const leadHi = Math.max(leadLo, Math.round(leadSum * 1.15));
+      const caseLo = Math.max(0.5, Math.round(casesEst * 10) / 10);
+      const caseHi = Math.max(caseLo, Math.round(casesEst * 1.2 * 10) / 10);
+      parts.push(
+        `Estimated impact: about ${leadLo}–${leadHi} incremental leads/mo` +
+        (leadProjects > 1 ? ` from ${leadProjects} lead-driving projects` : "") +
+        `, or roughly ${caseLo === caseHi ? `~${caseLo}` : `${caseLo}–${caseHi}`} new clients/mo` +
+        ` (~${fmt(revenueEst)}/mo potential fees at ${(PAV_HISTORICAL.leadToCaseRate * 100).toFixed(1)}% lead→case × ${fmt(PAV_HISTORICAL.avgCaseFee)} avg).`
+      );
+    } else {
+      parts.push(
+        "Lead volume is mostly indirect on these selections — impact shows up as better answer rates, cleaner tracking, and higher conversion of the ~124 leads/mo already in the funnel."
+      );
+    }
+
+    return parts.join(" ");
+  }
+
   function buildThankYouReturnsHtml(selected, includeRetainer) {
     const items = [];
     if (includeRetainer) items.push(RETAINER);
@@ -2965,19 +3343,7 @@
       if (!signals.length) return "";
       return `<div class="thank-you-roi-item"><strong>${escapeHtml(item.title)}</strong>${signals.map(s => escapeHtml(s)).join(" · ")}</div>`;
     }).filter(Boolean);
-    let summary = "";
-    const allSignals = items.flatMap(getReturnSignals);
-    const hasCalls = allSignals.some(s => /call/i.test(s));
-    const hasFees = allSignals.some(s => /\$|fee|revenue/i.test(s));
-    if (hasCalls && hasFees) {
-      summary = "Combined, these activities target lower cost per call, more qualified consults, and revenue you can tie back to marketing — not guesswork.";
-    } else if (hasCalls) {
-      summary = "Combined, these activities focus on more qualified calls and consults from the marketing you're already running.";
-    } else if (rows.length) {
-      summary = "These projects stack: stronger infrastructure, clearer reporting, and marketing that compounds month over month.";
-    } else {
-      summary = "Your selections prioritize measurable business outcomes — better intake, clearer data, and marketing that supports signed cases.";
-    }
+    const summary = escapeHtml(buildSelectionImpactSummary(items));
     if (!rows.length) {
       return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3><p class="thank-you-roi-summary">${summary}</p></div>`;
     }
@@ -3117,7 +3483,7 @@
 
   function showThankYou(payload) {
     const selected = getSelectedProjects();
-    const depositAmt = CONFIG.depositAmount;
+    const depositAmt = payload.depositAmount != null ? payload.depositAmount : CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
     document.getElementById("thank-you-gilbert").src = GILBERT_SEAL;
@@ -3151,7 +3517,7 @@
     let depositHtml = "";
     if (depositAmt && depositUrl) {
       depositHtml = `<div class="thank-you-deposit-box">
-        <p>Secure your spot with the standard kickoff deposit</p>
+        <p>Secure your spot with the 50% kickoff deposit</p>
         <p class="deposit-amount">${fmt(depositAmt)}</p>
         <p>Full invoice for selected projects follows separately. Pay now via QuickBooks:</p>
         <a class="thank-you-qb-link" href="${escapeHtml(depositUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(depositUrl)}</a>
@@ -3423,6 +3789,7 @@
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
   document.getElementById("submitted-email").addEventListener("input", () => { saveState(); updateSubmitButtons(); });
+  document.getElementById("esign-consent")?.addEventListener("change", updateSubmitButtons);
   document.getElementById("invoice-payment-months").addEventListener("change", () => {
     updateInvoiceScheduleAmount();
     saveState();

@@ -279,6 +279,9 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-lost-facts strong { color: var(--gg-royal); font-weight: 700; }
 .kpi-lost-muted { color: var(--gg-brown-muted); font-weight: 500; }
+.kpi-lost-tracker .kpi-target-bar-chart-compact {
+  display: block; width: 100%; max-width: 12rem; height: auto; margin: 0.45rem 0 0.15rem;
+}
 .kpi-stat-card.kpi-stat-gauge { text-align: center; align-items: center; }
 .kpi-stat-card.kpi-stat-gauge .kpi-gauge-svg { max-width: 132px; width: 100%; margin: 0.1rem auto 0; }
 .kpi-stat-card.kpi-stat-gauge .kpi-gauge-val { font-size: 1.05rem; margin-top: 0.15rem; }
@@ -316,6 +319,7 @@ body.feedback-mode-on .feedback-target:hover {
   position: relative;
 }
 .kpi-goal-card.kpi-stat-gauge .kpi-goal-visual { align-items: center; text-align: center; }
+.kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual { align-items: center; text-align: center; }
 .kpi-goal-card .kpi-goal-visual .kpi-stat-id {
   font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem;
 }
@@ -404,6 +408,25 @@ body.feedback-mode-on .feedback-target:hover {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--gg-forest, #2d5a3d);
+  margin-right: 0.25rem;
+}
+.kpi-formula-footnote {
+  display: block;
+  margin: 0.55rem 0 0;
+  padding-top: 0.45rem;
+  border-top: 1px dashed rgba(184, 134, 11, 0.45);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--secondary);
+  text-align: left;
+  font-weight: 500;
+}
+.kpi-formula-footnote .kpi-source-label {
+  display: inline-block;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gg-gold-dark, #b8860b);
   margin-right: 0.25rem;
 }
 .kpi-unverified { color: var(--gg-negative); font-weight: 900; font-size: 1.1rem; line-height: 1; }

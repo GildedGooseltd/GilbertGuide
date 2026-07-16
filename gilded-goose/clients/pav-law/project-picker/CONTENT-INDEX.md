@@ -102,12 +102,16 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | “Your plan” header              | `index.html` | `.confirm-header h2`                                       |
 | Intro paragraph                 | `index.html` | `.confirm-intro`                                           |
 | Fees / revenue calculator       | `app.js`     | `renderConfirmPlanReview()` → `buildRevenueCalculatorHtml()` (confirm only) |
+| Payment options (per project)   | `app.js`     | `buildPaymentOptionsHtml()` · rules in [PAYMENT-SCHEDULE.md](PAYMENT-SCHEDULE.md) |
+| Schedule calculator             | `app.js` / `index.html` | `computePaymentPlan()` · `#invoice-payment-months` |
 | Estimated results               | `app.js`     | `renderConfirmPlanReview()` → `#confirm-estimated-results` |
 | Action items                    | `app.js`     | `#confirm-action-items`                                    |
 | Next steps                      | `app.js`     | `#confirm-next-steps`                                      |
 | “Confirm & submit” section      | `index.html` | `.confirm-submit-section`                                  |
 | Email field label / placeholder | `index.html` | `#submitted-email`                                         |
 | Invoice schedule labels         | `index.html` | `#invoice-payment-months`, hints                           |
+| E-sign consent clickwrap        | `index.html` | `#esign-consent`, `#esign-consent-label` — required before submit |
+| Submit gating / payload consent | `app.js`     | `canSubmit()`, `buildPayload()` → `consentAgreed`, `consentAt`, `consentVersion`, `consentText` |
 | Submit / Back buttons           | `index.html` | `#submit-selections`, `#confirm-back`                      |
 | Deposit / QuickBooks notes      | `index.html` | `.submit-note`, `#invoice-schedule-hint`                   |
 | Webhook warning                 | `app.js`     | `updateWebhookWarning()`                                   |

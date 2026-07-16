@@ -19,6 +19,8 @@ const META_KEYS = {
   "monthly only": "monthlyOnly",
   "ongoing fee": "ongoingFee",
   "per campaign fee": "perCampaignFee",
+  "deposit pct": "depositPct",
+  "deposit amount": "depositAmount",
   icon: "guideIcon",
   "guide hero": "guideHero",
   seal: "guideSeal",
@@ -98,8 +100,12 @@ function parseMetaTable(text) {
     if (field === "priority") {
       if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank")
         meta.priority = parseInt(val, 10);
-    } else if (field === "fee" || field === "ongoingFee" || field === "perCampaignFee")
+    } else if (field === "fee" || field === "ongoingFee" || field === "perCampaignFee" || field === "depositAmount")
       meta[field] = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
+    else if (field === "depositPct") {
+      const n = parseFloat(val.replace(/[^0-9.]/g, ""));
+      if (Number.isFinite(n)) meta.depositPct = n > 1 ? n / 100 : n;
+    }
     else if (field === "enabler" || field === "monthlyOnly")
       meta[field] = /^(yes|true|1)$/i.test(val);
     else if (field === "paymentType") {
@@ -487,6 +493,8 @@ function metaTableRows(p) {
     ...(p.paymentType ? [["Payment type", p.paymentType === "performance" ? "performance" : "flat"]] : []),
     ...(p.ongoingFee ? [["Ongoing fee", p.ongoingFee]] : []),
     ...(p.perCampaignFee ? [["Per campaign fee", p.perCampaignFee]] : []),
+    ...(p.depositPct != null && p.depositPct !== 0.5 ? [["Deposit pct", Math.round(Number(p.depositPct) * 100)]] : []),
+    ...(p.depositAmount != null && p.depositAmount !== "" ? [["Deposit amount", p.depositAmount]] : []),
     ...(p.featuredImage ? [["Featured image", p.featuredImage]] : []),
     ...(p.referenceLink?.url ? [["Reference link", formatReferenceLinkValue(p.referenceLink)]] : []),
     ...(p.estimatedLeads ? [["Estimated leads gained", p.estimatedLeads]] : []),

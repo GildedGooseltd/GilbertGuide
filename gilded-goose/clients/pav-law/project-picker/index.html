@@ -202,7 +202,19 @@
     }
     .card input[type="checkbox"] { width: 22px; height: 22px; margin-top: 0; accent-color: var(--gg-royal-mid); cursor: pointer; flex-shrink: 0; }
     .card-body { flex: 1; min-width: 0; }
-    .card-top-row { position: relative; margin-bottom: var(--space-sm); min-height: 2.25rem; }
+    .card-top-row {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 0.65rem;
+      position: relative; margin-bottom: var(--space-sm); min-height: 2.25rem;
+    }
+    .card-top-row .card-title { flex: 1; min-width: 0; }
+    .card-title-icons {
+      display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 0.3rem;
+      flex: 0 0 auto; margin-left: auto; padding-top: 0.1rem;
+    }
+    .card-title-icons .card-icons-inline { display: flex; align-items: center; justify-content: flex-end; gap: 0.3rem; }
+    .card-title-icons .value-icons { flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; }
+    .card-title-icons .value-icon { width: 2.1rem; height: 2.1rem; }
+    .card-title-icons .value-icon svg { width: 1.25rem; height: 1.25rem; }
     .card-featured-image {
       display: block; width: 100%; max-height: 11rem; object-fit: cover;
       border-radius: 8px; margin-bottom: var(--space-sm); border: 1px solid var(--border);
@@ -885,9 +897,27 @@
     .card-sub-related .card-title { font-size: 1.22rem; }
     .table-project-sub { font-weight: 600; color: var(--secondary); }
     .expand-btn {
-      background: none; border: none; color: var(--gg-royal);
-      font-size: 0.9rem; font-weight: 600; cursor: pointer; margin-top: var(--space-sm); padding: 0;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: transparent; border: none; cursor: pointer;
+      margin-top: 0.55rem; padding: 0.2rem 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.88rem; font-weight: 500; font-style: italic;
+      letter-spacing: 0.01em; text-transform: none;
+      color: var(--gg-burnt, #c45c26);
     }
+    .expand-btn:hover { color: var(--gg-burnt, #c45c26); text-decoration: underline; text-underline-offset: 3px; }
+    .expand-btn-chevron {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.15rem; height: 1.15rem; flex-shrink: 0;
+      font-style: normal; font-size: 0.72rem; font-weight: 800;
+      border: 1.5px solid rgba(196, 92, 38, 0.55); border-radius: 4px;
+      color: var(--gg-burnt, #c45c26); background: rgba(196, 92, 38, 0.08);
+      line-height: 1;
+    }
+    .expand-btn[aria-expanded="true"] .expand-btn-chevron {
+      background: rgba(196, 92, 38, 0.16);
+    }
+    .expand-btn-text { line-height: 1.3; }
     .card-detail { display: none; margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--border); font-size: 1.06rem; }
     .card.expanded .card-detail { display: block; }
     .detail-block { margin-bottom: var(--space-md); }
@@ -1019,7 +1049,9 @@
       .gilbert-caricature { width: 9rem; }
     }
     .project-note { color: var(--input-text); background: var(--gg-paper); border-color: var(--border-strong); min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
-    .general-note { min-height: 4rem; resize: vertical; margin-top: 0.35rem; }
+    .general-note { margin-top: 0.35rem; }
+    textarea.general-note { min-height: 4rem; resize: vertical; }
+    input.general-note { min-height: 0; resize: none; }
     .goal-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
     .goal-actions .btn { width: auto; margin: 0; }
     .goal-actions .btn-primary { width: auto; }
@@ -1768,6 +1800,14 @@
     .kpi-chart-table .kpi-stack-swatch {
       display: inline-block; vertical-align: -0.1em; margin-right: 0.25rem;
     }
+    .kpi-subtable-title {
+      font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
+      color: var(--gg-brown); margin: 0.85rem 0 0.35rem;
+    }
+    .kpi-table-note {
+      font-size: 0.72rem; line-height: 1.4; color: var(--secondary);
+      margin: 0.45rem 0 0; font-weight: 500;
+    }
     .kpi-stack-legend {
       display: flex; flex-wrap: wrap; gap: 0.65rem 1.25rem; list-style: none;
       margin: 0; padding: 0; font-size: 0.875rem; color: var(--gg-brown); font-weight: 700;
@@ -1819,6 +1859,9 @@
     }
     .kpi-lost-facts strong { color: var(--gg-royal); font-weight: 700; }
     .kpi-lost-muted { color: var(--gg-brown-muted); font-weight: 500; }
+    .kpi-lost-tracker .kpi-target-bar-chart-compact {
+      display: block; width: 100%; max-width: 12rem; height: auto; margin: 0.45rem 0 0.15rem;
+    }
     .kpi-stat-card.kpi-stat-gauge {
       text-align: center; align-items: center;
     }
@@ -1858,6 +1901,7 @@
       position: relative; min-width: 0;
     }
     .kpi-goal-card.kpi-stat-gauge .kpi-goal-visual { align-items: center; text-align: center; }
+    .kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual { align-items: center; text-align: center; }
     .kpi-goal-visual {
       display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem;
       position: relative;
@@ -1955,6 +1999,25 @@
       margin-right: 0.25rem;
     }
     .kpi-source-footnote .kpi-source-fields { color: var(--gg-brown-muted, #5c4f44); }
+    .kpi-formula-footnote {
+      display: block;
+      margin: 0.55rem 0 0;
+      padding-top: 0.45rem;
+      border-top: 1px dashed rgba(184, 134, 11, 0.45);
+      font-size: 0.72rem;
+      line-height: 1.45;
+      color: var(--secondary);
+      text-align: left;
+      font-weight: 500;
+    }
+    .kpi-formula-footnote .kpi-source-label {
+      display: inline-block;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--gg-gold-dark, #b8860b);
+      margin-right: 0.25rem;
+    }
     .kpi-unverified {
       color: var(--gg-negative);
       font-weight: 900;
@@ -2167,11 +2230,18 @@
     .card.card-header-only .card-body { padding-bottom: 0.15rem; }
     .publish-status-badge {
       display: inline-block; margin-left: 0.45rem; vertical-align: middle;
-      font-size: var(--font-min-rem); font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.06em; color: var(--gg-brown-muted); background: var(--surface2);
+      font-size: var(--font-min-rem); font-weight: 800; text-transform: none;
+      letter-spacing: 0.02em; color: var(--gg-brown-muted); background: var(--surface2);
       border: 1px solid var(--border); padding: 0.12rem 0.4rem; border-radius: 4px;
     }
     .card-title .publish-status-badge { font-size: 0.62rem; }
+    .research-planning-list {
+      margin-top: 1.25rem; padding-top: 0.75rem; border-top: 1px solid var(--border);
+    }
+    .research-planning-heading {
+      font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+      color: var(--secondary); margin: 0 0 0.75rem; letter-spacing: 0.02em;
+    }
     tr.toc-planning td { color: var(--gg-brown-muted); opacity: 0.72; }
     .research-section {
       margin-top: var(--space-lg); border-top: 2px dashed var(--gg-gold); padding-top: var(--space-md);
@@ -2470,6 +2540,55 @@
     .submit-compact select.general-note { width: 100%; cursor: pointer; appearance: auto; }
     .payment-terms-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
     .payment-terms-row .sub-label { display: block; font-size: var(--font-min-rem); color: var(--secondary); margin-bottom: 0.25rem; font-weight: 600; }
+    .confirm-payment-options .payment-options-lead {
+      margin: 0 0 0.75rem; font-size: 0.88rem; line-height: 1.55; color: var(--gg-brown);
+    }
+    .payment-options-empty { margin: 0; font-size: 0.88rem; color: var(--secondary); }
+    .payment-options-scroll { overflow-x: auto; margin-bottom: 0.85rem; }
+    .payment-options-table {
+      width: 100%; border-collapse: collapse; font-size: 0.85rem;
+    }
+    .payment-options-table th {
+      text-align: left; font-size: var(--font-min-rem); text-transform: uppercase;
+      letter-spacing: 0.04em; color: var(--gg-royal); font-weight: 700;
+      padding: 0.35rem 0.5rem 0.45rem 0; border-bottom: 2px solid var(--gg-head-accent);
+    }
+    .payment-options-table td {
+      padding: 0.45rem 0.5rem 0.45rem 0; border-bottom: 1px solid var(--border);
+      vertical-align: top; color: var(--gg-brown);
+    }
+    .payment-options-table .col-note { font-size: 0.8rem; color: var(--secondary); max-width: 14rem; }
+    .payment-options-totals td {
+      font-weight: 700; border-bottom: none; padding-top: 0.65rem; color: var(--gg-royal-deep);
+    }
+    .payment-schedule-block {
+      margin-top: 0.85rem; padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+    .payment-schedule-heading {
+      margin: 0 0 0.4rem; font-size: 0.95rem; font-weight: 800; color: var(--gg-brown);
+    }
+    .payment-calc-lead {
+      font-size: 0.85rem; color: var(--secondary); margin: 0 0 0.65rem; line-height: 1.45;
+    }
+    .payment-calc-breakdown {
+      margin: 0.65rem 0 0.35rem; padding: 0.65rem 0.75rem;
+      border: 1px solid var(--border); border-radius: 8px; background: var(--gg-paper);
+    }
+    .payment-calc-empty { margin: 0; font-size: 0.85rem; color: var(--secondary); }
+    .payment-calc-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .payment-calc-table th {
+      text-align: left; font-weight: 600; color: var(--secondary); padding: 0.28rem 0.5rem 0.28rem 0;
+      border-bottom: 1px solid var(--border); width: 62%;
+    }
+    .payment-calc-table td {
+      text-align: right; font-weight: 700; color: var(--gg-brown); padding: 0.28rem 0;
+      border-bottom: 1px solid var(--border); white-space: nowrap;
+    }
+    .payment-calc-table tr:last-child th,
+    .payment-calc-table tr:last-child td {
+      border-bottom: none; color: var(--gg-royal); font-weight: 800;
+    }
     .submit-compact textarea.general-note { min-height: 2.5rem; }
     .invoice-amount-auto[readonly] { opacity: 0.95; cursor: default; color: var(--green); font-weight: 700; }
     .field-hint { font-size: var(--font-min-rem); color: var(--secondary); margin: 0.35rem 0 0; line-height: 1.45; }
@@ -2543,6 +2662,34 @@
       border: 2px solid var(--gg-gold); box-shadow: 0 2px 10px rgba(78, 42, 132, 0.1);
     }
     .confirm-intro { font-size: 0.88rem; color: var(--secondary); margin: 0 0 var(--space-md); line-height: 1.55; }
+    .consent-field {
+      margin-top: 0.75rem;
+      padding: 0.75rem 0.85rem;
+      background: var(--gg-paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .consent-checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+    .consent-checkbox-row input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 0.15rem;
+      accent-color: var(--gg-royal-mid);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .consent-label {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--gg-brown);
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .consent-label a { color: var(--gg-royal); font-weight: 600; }
     .confirm-actions { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.75rem; }
     .confirm-actions .btn { margin: 0; }
     .deliverables-compact { margin-bottom: var(--space-md); font-size: 0.875rem; }
@@ -2707,14 +2854,43 @@
   <div id="confirm-page" class="confirm-page" aria-hidden="true">
     <div class="confirm-panel">
       <div class="confirm-header">
-        <img class="confirm-gilbert" id="confirm-gilbert" src="assets/gigi-goose-guide.svg" alt="Lord Gilbert Granville">
-        <h2>Your plan</h2>
+        <img class="confirm-gilbert" id="confirm-gilbert" src="assets/gigi-logo-frame.png" alt="Gilded Goose">
+        <h2>Pav Law Growth Plan</h2>
       </div>
-      <p class="confirm-intro">You chose your projects — review estimated results, action items, and next steps below. Then add your email to submit.</p>
+      <p class="confirm-intro">You chose your projects — review estimated results below. Then add your email to submit.</p>
       <div id="confirm-plan-review" class="confirm-plan-review">
         <div id="confirm-estimated-results" class="confirm-review-block"></div>
-        <div id="confirm-action-items" class="confirm-review-block action-items-panel" hidden></div>
-        <div id="confirm-next-steps" class="confirm-review-block"></div>
+        <div id="confirm-payment-options" class="confirm-review-block confirm-payment-options">
+          <h3>Payment options</h3>
+          <p class="payment-options-lead">Each project can require a different amount due now. Defaults are <strong>50% deposit</strong> on one-time fees; retainer and monthly fees bill separately. Schedule calculator below applies to the remaining project balance (surcharge after 60 days). Full rules: <code>PAYMENT-SCHEDULE.md</code>.</p>
+          <div id="confirm-payment-options-body"></div>
+          <div class="payment-schedule-block">
+            <h4 class="payment-schedule-heading">Schedule calculator</h4>
+            <p class="payment-calc-lead">Choose how long to pay the remaining one-time balance. ≤60 days = no surcharge; 3–6 months = +5%; 7–12 months = +10% on the remaining half.</p>
+            <div class="payment-terms-row">
+              <div>
+                <label class="sub-label" for="invoice-payment-months">Pay remaining over</label>
+                <select id="invoice-payment-months" class="general-note">
+                  <option value="">Select…</option>
+                  <option value="1">1 month (≤30 days · no surcharge)</option>
+                  <option value="2">2 months (≤60 days · no surcharge)</option>
+                  <option value="3">3 months (+5% on remaining)</option>
+                  <option value="4">4 months (+5% on remaining)</option>
+                  <option value="5">5 months (+5% on remaining)</option>
+                  <option value="6">6 months (+5% on remaining)</option>
+                  <option value="9">9 months (+10% on remaining)</option>
+                  <option value="12">12 months (+10% on remaining)</option>
+                </select>
+              </div>
+              <div>
+                <label class="sub-label" for="invoice-payment-amount">Amount per invoice</label>
+                <input type="number" id="invoice-payment-amount" class="general-note invoice-amount-auto" min="0" step="1" placeholder="Select schedule first" readonly>
+              </div>
+            </div>
+            <div id="payment-calc-breakdown-host"></div>
+            <p class="field-hint" id="invoice-schedule-hint">Choose a schedule to see surcharge and invoice amounts.</p>
+          </div>
+        </div>
       </div>
       <p id="webhook-warning" class="webhook-warning" hidden>Submit backend is not configured on the live site. Add GitHub Secret <strong>PAV_PICKER_WEBHOOK_URL</strong> and redeploy.</p>
       <div class="submit-compact confirm-submit-section">
@@ -2723,37 +2899,17 @@
           <label for="submitted-email">Your email</label>
           <input type="email" id="submitted-email" class="general-note" placeholder="you@example.com" autocomplete="email">
         </div>
-        <div class="submit-field">
-          <span class="submit-field-label">Choose invoice schedule</span>
-          <div class="payment-terms-row">
-            <div>
-              <label class="sub-label" for="invoice-payment-months">Number of invoices</label>
-              <select id="invoice-payment-months" class="general-note">
-                <option value="">Select…</option>
-                <option value="1">1 month</option>
-                <option value="2">2 months</option>
-                <option value="3">3 months</option>
-                <option value="4">4 months</option>
-                <option value="5">5 months</option>
-                <option value="6">6 months</option>
-                <option value="9">9 months</option>
-                <option value="12">12 months</option>
-                <option value="18">18 months</option>
-                <option value="24">24 months</option>
-              </select>
-            </div>
-            <div>
-              <label class="sub-label" for="invoice-payment-amount">Amount per invoice</label>
-              <input type="number" id="invoice-payment-amount" class="general-note invoice-amount-auto" min="0" step="1" placeholder="Select invoices first" readonly>
-            </div>
+        <div class="submit-field consent-field">
+          <div class="consent-checkbox-row">
+            <input type="checkbox" id="esign-consent" name="esign-consent" required aria-required="true">
+            <label for="esign-consent" class="consent-label" id="esign-consent-label">By checking this box, I consent to electronic records and signatures for this project plan selection and confirm my intent to authorize the projects, fees, and payment terms shown on this page.</label>
           </div>
-          <p class="field-hint" id="invoice-schedule-hint">Deposit is billed immediately. Project invoices are sent via QuickBooks on the schedule you choose. Retainer and maintenance bill separately each month.</p>
         </div>
         <div class="confirm-actions">
           <button class="btn btn-primary" id="submit-selections" disabled>Submit selections</button>
           <button type="button" class="btn btn-secondary" id="confirm-back">Back to projects</button>
         </div>
-        <p class="submit-note">Deposit billed immediately via QuickBooks. Project invoices follow your selected schedule.</p>
+        <p class="submit-note">Deposit billed immediately via QuickBooks per Payment options. Remaining project fees follow your schedule. Retainer and maintenance bill separately each month.</p>
       </div>
     </div>
   </div>
@@ -2916,8 +3072,8 @@
   <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260716-live-fix"></script>
-  <script src="kpi-report.js?v=20260715-client-value-visible-v2"></script>
+  <script src="kpi-report.js?v=20260715-source-mix-tables"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260715-client-value-visible-v2"></script>
+  <script src="app.js?v=20260716-clickwrap"></script>
 </body>
 </html>
