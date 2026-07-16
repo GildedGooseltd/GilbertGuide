@@ -492,6 +492,13 @@
     if (kpis) KPI_REPORT.renderKpis(kpis);
   }
 
+  function pinKpiTabToTop() {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+
   function renderDoNextPanel() {
     const el = document.getElementById("do-next-panel");
     if (!el) return;
@@ -3450,6 +3457,7 @@
 
   loadState();
   ensureRequiredMaintenance();
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   setActiveViewTab("kpis");
   initGilbertGuide();
   renderPackageIntro();
@@ -3458,6 +3466,20 @@
   renderDoNextPanel();
   renderCondensedToc();
   renderAllCards();
+  pinKpiTabToTop();
+  requestAnimationFrame(() => {
+    pinKpiTabToTop();
+    requestAnimationFrame(pinKpiTabToTop);
+  });
+  window.addEventListener("kpi-report-rendered", () => {
+    if (state.activeViewTab === "kpis" && !window.__gilbertKpiScrolledOnce) {
+      window.__gilbertKpiScrolledOnce = true;
+      pinKpiTabToTop();
+      /* Feedback wraps can shift layout after paint — re-pin once more */
+      setTimeout(pinKpiTabToTop, 50);
+      setTimeout(pinKpiTabToTop, 200);
+    }
+  }, { once: false });
   if (state.goalText.trim()) suggestPlan(true);
   else {
     renderSummary();

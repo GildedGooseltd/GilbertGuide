@@ -3,7 +3,30 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260714-goal-visual-v33";
+  const RENDER_VER = "20260715-verified-outline-v1";
+  /** Export-backed source footnotes — file path + fields for quick re-pull. */
+  const KPI_SOURCES = {
+    "#01": {
+      file: "Ad Reports/exports/2026-07-11 · Campaign report + LSA inbox + HubSpot count",
+      fields: "Campaign / Cost / Clicks / Phone calls · LSA lead rows · form count"
+    },
+    "#08": {
+      file: "Ad Reports/exports/2026-07-11 · Campaign report (Search calls by campaign)",
+      fields: "Campaign, Cost, Clicks, Phone calls (Military · Core DV · NTGUILT)"
+    },
+    "#10": {
+      file: "Derived from #01 channel stack (same export batch)",
+      fields: "Search share · LSA share · HubSpot / other %"
+    },
+    "#12": {
+      file: "Ad Reports/exports · Campaign report (spend ÷ phone calls)",
+      fields: "Cost, Phone calls → cost/call by campaign"
+    },
+    "#15": {
+      file: "Ad Reports/exports/2026-07-11 · Campaign report (15).csv",
+      fields: "Cost, Clicks → CPL (Jun 11 – Jul 10, 2026)"
+    }
+  };
   const DATA = {
     period: "June 2026",
     asOf: "2026-07-11",
@@ -110,15 +133,25 @@
 
   function star(verified) {
     return verified
-      ? '<span class="kpi-star" title="Data available">★</span>'
+      ? '<span class="kpi-verified-mark" title="Verified — export-backed" aria-label="Verified"></span>'
       : '<span class="kpi-unverified" title="Data not acquired" aria-label="Data not acquired">✕</span>';
   }
 
-  /** Corner badge for tiles / section cards (upper-left quick reference). */
+  /** Corner badge for unverified tiles only — verified uses green outline on the card. */
   function statusCorner(verified) {
     return verified
-      ? '<span class="kpi-status-corner kpi-star" title="Data available" aria-label="Data available">★</span>'
+      ? ""
       : '<span class="kpi-status-corner kpi-unverified" title="Data not acquired" aria-label="Data not acquired">✕</span>';
+  }
+
+  function verifiedClass(verified) {
+    return verified ? " kpi-verified" : "";
+  }
+
+  function sourceFootnote(kpiId) {
+    const s = KPI_SOURCES[kpiId];
+    if (!s) return "";
+    return `<span class="kpi-source-footnote"><span class="kpi-source-label">Source</span> ${escapeHtml(s.file)} · <span class="kpi-source-fields">Fields: ${escapeHtml(s.fields)}</span></span>`;
   }
 
   function escapeHtml(s) {
@@ -337,7 +370,8 @@
     const table = opts.table || "";
     const focus = opts.focus ? ` data-kpi-focus="${opts.focus}"` : "";
     const badge = typeof opts.verified === "boolean" ? statusCorner(opts.verified) : "";
-    return `<div class="kpi-chart-card"${focus}>
+    const vClass = opts.verified === true ? " kpi-verified" : "";
+    return `<div class="kpi-chart-card${vClass}"${focus}>
       ${badge}
       ${head}
       <div class="kpi-chart-plot">${opts.chart || ""}${legend}</div>
@@ -673,7 +707,7 @@
   }
 
   function reportKey() {
-    return `<p class="kpi-legend kpi-legend-top"><span class="kpi-star">★</span> = data available &nbsp; <span class="kpi-unverified">✕</span> = data not acquired</p>`;
+    return `<p class="kpi-legend kpi-legend-top"><span class="kpi-verified-mark kpi-verified-mark-inline" title="Verified"></span> = verified (export-backed) &nbsp; <span class="kpi-unverified">✕</span> = data not acquired</p>`;
   }
 
   function reportHeader() {
@@ -825,10 +859,12 @@
     /* Keep #19 lost-tracker chrome in goals grid — do not force gauge layout */
     if (k.lostTracker) return missedRevenueTrackerHtml();
     const nums = k.gauge ? parseGaugeNums(k.value, k.target) : null;
+    const vClass = verifiedClass(!!k.verified);
+    const foot = k.verified ? sourceFootnote(k.id) : "";
     if (nums) {
       const grad = "goal-" + String(k.id).replace(/\W/g, "");
       const hit = !!(k.hit || nums.pct >= 1);
-      return `<button type="button" class="kpi-goal-card kpi-stat-gauge${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
+      return `<button type="button" class="kpi-goal-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
         <div class="kpi-goal-visual">
           <span class="kpi-stat-id">${k.id} ${escapeHtml(k.label)}</span>
@@ -839,13 +875,14 @@
           })}
         </div>
         ${kpiGoalTrackFor(k)}
+        ${foot}
       </button>`;
     }
     const lostCap = 6000;
     const lostN = parseFloat(String(k.value).replace(/[^0-9.]/g, "")) || 0;
     const lostPct = Math.min(1, lostN / lostCap);
     const grad = "goal-" + String(k.id).replace(/\W/g, "");
-    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
+    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
       ${statusCorner(!!k.verified)}
       <div class="kpi-goal-visual">
         <span class="kpi-stat-id">${k.id}${k.alert ? " · Requires action" : ""}</span>
@@ -855,6 +892,7 @@
         })}
       </div>
       ${kpiGoalTrackFor(k)}
+      ${foot}
     </button>`;
   }
 
@@ -883,13 +921,14 @@
   function bhiLetterGradeCardHtml(k) {
     const score = Math.round(parseFloat(String(k.value).replace(/[^0-9.]/g, "")) || 0);
     const grade = scoreToLetterGrade(score);
-    return `<button type="button" class="kpi-stat-card kpi-bhi-grade${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
+    return `<button type="button" class="kpi-stat-card kpi-bhi-grade${verifiedClass(!!k.verified)}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
       ${statusCorner(!!k.verified)}
       <span class="kpi-stat-id">${k.id} ${escapeHtml(k.label)}</span>
       <span class="kpi-bhi-grade-letter">${escapeHtml(grade)}</span>
       <span class="kpi-bhi-grade-pct">${score}%</span>
       <span class="kpi-stat-label">target ${escapeHtml(k.target || "100")}</span>
       ${k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)} MoM</span>` : ""}
+      ${k.verified ? sourceFootnote(k.id) : ""}
     </button>`;
   }
 
@@ -923,23 +962,26 @@
     if (k.letterGrade || k.id === "#BHI") return bhiLetterGradeCardHtml(k);
     const headline = `${k.id} ${k.label}`;
     const targetLine = k.target ? `target ${k.target}` : "";
+    const vClass = verifiedClass(!!k.verified);
+    const foot = k.verified ? sourceFootnote(k.id) : "";
     if (k.targetBar) {
       const targetNum = parseTargetNum(k.target);
       const hit = meetsTarget(parseMetricNum(k.value), targetNum, k.lowerIsBetter !== false);
-      return `<button type="button" class="kpi-stat-card kpi-stat-target-bar${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
+      return `<button type="button" class="kpi-stat-card kpi-stat-target-bar${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
         <span class="kpi-stat-id">${headline}</span>
         ${targetBarChartForKpi(k)}
         <span class="kpi-stat-label">Avg ${escapeHtml(k.value)} · ${escapeHtml(targetLine)}</span>
         ${k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)} MoM</span>` : ""}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
+        ${foot}
       </button>`;
     }
     const nums = k.gauge ? parseGaugeNums(k.value, k.target) : null;
     if (nums) {
       const grad = "km-" + String(k.id).replace(/\W/g, "");
       const hit = !!(k.hit || nums.pct >= 1);
-      return `<button type="button" class="kpi-stat-card kpi-stat-gauge${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
+      return `<button type="button" class="kpi-stat-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
         <span class="kpi-stat-id">${headline}</span>
         ${halfMoonGauge(Math.min(nums.pct, 1), grad, {
@@ -950,15 +992,17 @@
         <span class="kpi-stat-label">${targetLine}</span>
         ${k.mom ? `<span class="${momClass(k.mom)}">${k.mom} MoM</span>` : ""}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
+        ${foot}
       </button>`;
     }
-    return `<button type="button" class="kpi-stat-card${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
+    return `<button type="button" class="kpi-stat-card${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
       ${statusCorner(!!k.verified)}
       <span class="kpi-stat-id">${headline}</span>
       <span class="kpi-stat-val">${k.value}</span>
       <span class="kpi-stat-label">${targetLine}</span>
       ${k.mom ? `<span class="${momClass(k.mom)}">${k.mom} MoM</span>` : ""}
       ${k.hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
+      ${foot}
     </button>`;
   }
 
@@ -990,8 +1034,7 @@
       <section class="kpi-section kpi-section-static kpi-section-leads-split" data-feedback-id="section-leads-channel" data-feedback-label="Leads by channel & campaign">
         <div class="kpi-section-body">
           <div class="kpi-split-grid">
-            <article class="kpi-split-panel" data-feedback-id="section-leads-channel-01" data-feedback-label="#01 Leads by channel">
-              ${statusCorner(true)}
+            <article class="kpi-split-panel kpi-verified" data-feedback-id="section-leads-channel-01" data-feedback-label="#01 Leads by channel">
               ${kpiSectionStaticHead("#01 Leads by channel", "Stacked by month")}
               <div class="kpi-split-panel-body">
                 ${chartBlock({
@@ -1000,10 +1043,10 @@
                   legend: channelLegend(DATA.channels),
                   table: channelsDetailTable(DATA.channels)
                 })}
+                ${sourceFootnote("#01")}
               </div>
             </article>
-            <article class="kpi-split-panel" data-feedback-id="section-leads-campaign" data-feedback-label="#08 Leads by campaign">
-              ${statusCorner(true)}
+            <article class="kpi-split-panel kpi-verified" data-feedback-id="section-leads-campaign" data-feedback-label="#08 Leads by campaign">
               ${kpiSectionStaticHead("#08 Leads by campaign", "Stacked by month")}
               <div class="kpi-split-panel-body">
                 ${chartBlock({
@@ -1012,6 +1055,7 @@
                   legend: channelLegend(DATA.leadsByCampaign),
                   table: campaignLeadsDetailTable(DATA.leadsByCampaign)
                 })}
+                ${sourceFootnote("#08")}
               </div>
             </article>
           </div>
@@ -1084,17 +1128,16 @@
                 })}
               </div>
             </article>
-            <article class="kpi-split-panel" data-feedback-id="section-source-mix" data-feedback-label="#10 Source mix">
-              ${statusCorner(true)}
+            <article class="kpi-split-panel kpi-verified" data-feedback-id="section-source-mix" data-feedback-label="#10 Source mix">
               ${kpiSectionStaticHead("#10 Source mix", "Lead share by channel")}
               <div class="kpi-split-panel-body">
                 ${kpiSectionIntro("Diversify so LSA is not the only intake — channel stacks above under Leads by channel / campaign.")}
                 ${chartBlock({
                   focus: "#10",
-                  verified: true,
                   chart: donutChart(DATA.sourceMix),
                   table: sourceMixDetailTable(DATA.sourceMix)
                 })}
+                ${sourceFootnote("#10")}
               </div>
             </article>
           </div>

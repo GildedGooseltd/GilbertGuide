@@ -29,7 +29,7 @@ window.PROJECT_DATA = {
     "campaignType": "Paid Media Mgmt",
     "status": "required",
     "publishStatus": "published",
-    "estimatedLeads": "~36 Military Search calls/mo (May verified) + ~80 LSA phone leads/mo · NTGUILT 282 clicks/30d (calls thin)",
+    "estimatedLeads": "~36 calls/mo \u001f~80 LSA phone leads/mo",
     "keywords": [
       "ongoing",
       "monthly",
@@ -68,15 +68,7 @@ window.PROJECT_DATA = {
       "Paused Mountain DUI + Demand Gen bleed (confirmed $0 in Jul Search period)"
     ],
     "inProgressItems": [
-      "Blocked: LSA performance metrics — charge/status hygiene still uneven",
-      "Account shared negatives for government / JAG / PD / competitor terms (Military + NTGUILT)",
-      "Confirm NTGUILT call extensions + ntguilt.com forms in HubSpot before scaling budget"
-    ],
-    "goal": "Hold Military Search cost/call near ~$58–67, grow NTGUILT call volume off efficient clicks, keep LSA phone lead flow stable, and cut navigational/government search-term waste (~38% of query spend in Jul period).",
-    "informationNeeded": [
-      "Re-export Campaign + Ad group reports with Phone calls column for Jun 11–Jul 10 (verify est. 59–69 Military calls)",
-      "HubSpot contacts where `pl_lead_source` = Google Ads / LSA (matters retained)",
-      "Microsoft Ads export if still in retainer scope for this month"
+      "Blocked: LSA performance metrics — charge/status hygiene still uneven"
     ],
     "abQuestions": [],
     "kpiRefs": [],
