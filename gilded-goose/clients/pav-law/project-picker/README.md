@@ -13,7 +13,8 @@ Static project picker: choose-your-path survey → filters outlines, value filte
 
 | File | Purpose |
 |------|---------|
-| `content/INDEX.md` | Master list by priority |
+| `content/INDEX.md` | Master list by priority (+ link to guide Q&A) |
+| `content/survey.md` | Guide questionnaire questions & answers (edit then build) |
 | `content/_TEMPLATE.md` | Standard layout for new projects |
 | `content/settings.md` | Default package |
 | `content/retainer.md` | Retainer card |

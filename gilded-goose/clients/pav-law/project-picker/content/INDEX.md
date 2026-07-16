@@ -4,6 +4,11 @@ Open a file below to edit. Sorted by priority (P). Template: `[_TEMPLATE.md](_TE
 
 Edit **Project** titles and add **## Notes** at the bottom — build keeps your changes and adds new projects.
 
+## Guide questionnaire (Q&A)
+
+Edit the choose-your-path questions here → [`survey.md`](survey.md)  
+(short labels; includes **Cut costs**. Run `npm run build` after edits.)
+
 
 | Priority | ID       | Project                                                          | File                               |
 | -------- | -------- | ---------------------------------------------------------------- | ---------------------------------- |

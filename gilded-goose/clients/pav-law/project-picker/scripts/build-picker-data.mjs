@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import {
   parseProjectMarkdown,
   parseSettingsMarkdown,
+  parseSurveyMarkdown,
   applyIndexOverrides
 } from "./markdown-project.mjs";
 
@@ -39,10 +40,17 @@ function loadRetainer() {
   return parseProjectMarkdown(fs.readFileSync(md, "utf8"), "retainer");
 }
 
+function loadSurvey() {
+  const md = path.join(CONTENT, "survey.md");
+  if (!fs.existsSync(md)) throw new Error("Missing content/survey.md");
+  return parseSurveyMarkdown(fs.readFileSync(md, "utf8"));
+}
+
 function build() {
   const settings = loadSettings();
   let retainer = loadRetainer();
   let projects = loadProjects();
+  const survey = loadSurvey();
 
   const indexPath = path.join(CONTENT, "INDEX.md");
   if (fs.existsSync(indexPath)) {
@@ -59,6 +67,7 @@ function build() {
     guideLogo: settings.guideLogo,
     paviIcon: settings.guideIcon,
     recommendedPackage: settings.recommendedPackage,
+    survey,
     retainer,
     projects
   };
@@ -70,7 +79,8 @@ function build() {
 window.PROJECT_DATA = `;
 
   fs.writeFileSync(OUT, header + JSON.stringify(data, null, 2) + ";\n", "utf8");
-  console.log(`Built ${OUT} (${projects.length} projects)`);
+  const nodeCount = Object.keys(survey.nodes || {}).length;
+  console.log(`Built ${OUT} (${projects.length} projects, ${nodeCount} survey nodes)`);
 }
 
 function watch() {

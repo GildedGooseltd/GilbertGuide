@@ -22,6 +22,321 @@ window.PROJECT_DATA = {
       "Include retainer: yes"
     ]
   },
+  "survey": {
+    "start": "q1",
+    "nodes": {
+      "q1": {
+        "step": 1,
+        "steps": 2,
+        "prompt": "Biggest problem right now?",
+        "choices": [
+          {
+            "id": "leads",
+            "label": "Not enough leads",
+            "hint": "Ads & reach",
+            "next": "q2_leads",
+            "icons": [
+              "leads"
+            ],
+            "goal": "More leads"
+          },
+          {
+            "id": "convert",
+            "label": "Leads don't convert",
+            "hint": "Intake & CRM",
+            "next": "q2_convert",
+            "icons": [
+              "intake",
+              "crm"
+            ],
+            "goal": "Convert leads"
+          },
+          {
+            "id": "clarity",
+            "label": "Can't see what's working",
+            "hint": "KPIs",
+            "next": "q2_clarity",
+            "icons": [
+              "efficiency"
+            ],
+            "goal": "Clearer metrics"
+          },
+          {
+            "id": "web",
+            "label": "Website / SEO weak",
+            "hint": "Content & search",
+            "next": "q2_web",
+            "icons": [
+              "seo"
+            ],
+            "goal": "Stronger web"
+          },
+          {
+            "id": "refer",
+            "label": "Need referrals",
+            "hint": "Reputation",
+            "next": "q2_refer",
+            "icons": [
+              "referrals"
+            ],
+            "goal": "More referrals"
+          },
+          {
+            "id": "costs",
+            "label": "Cut costs",
+            "hint": "Waste & subscriptions",
+            "next": "q2_costs",
+            "icons": [
+              "efficiency"
+            ],
+            "goal": "Cut costs"
+          },
+          {
+            "id": "foundation",
+            "label": "Start with foundation",
+            "hint": "Must-dos first",
+            "next": "done",
+            "icons": [
+              "foundation"
+            ],
+            "goal": "Foundation first"
+          }
+        ]
+      },
+      "q2_leads": {
+        "step": 2,
+        "steps": 2,
+        "prompt": "Where should leads come from?",
+        "choices": [
+          {
+            "id": "paid",
+            "label": "Paid search & display",
+            "hint": "Google / LSA",
+            "next": "done",
+            "icons": [
+              "leads"
+            ],
+            "goal": "Paid leads"
+          },
+          {
+            "id": "creative",
+            "label": "Social & creative",
+            "hint": "Campaigns",
+            "next": "done",
+            "icons": [
+              "leads",
+              "creative"
+            ],
+            "goal": "Social leads"
+          },
+          {
+            "id": "mix",
+            "label": "Paid + organic",
+            "hint": "Ads with SEO",
+            "next": "done",
+            "icons": [
+              "leads",
+              "seo",
+              "creative"
+            ],
+            "goal": "Paid & organic"
+          }
+        ]
+      },
+      "q2_convert": {
+        "step": 2,
+        "steps": 2,
+        "prompt": "Where do leads drop?",
+        "choices": [
+          {
+            "id": "phones",
+            "label": "Phones / after-hours",
+            "hint": "Missed calls",
+            "next": "done",
+            "icons": [
+              "intake"
+            ],
+            "goal": "Fix intake"
+          },
+          {
+            "id": "crm",
+            "label": "CRM follow-up",
+            "hint": "Pipeline",
+            "next": "done",
+            "icons": [
+              "crm"
+            ],
+            "goal": "Tighten CRM"
+          },
+          {
+            "id": "both_conv",
+            "label": "Intake + CRM",
+            "hint": "Full handoff",
+            "next": "done",
+            "icons": [
+              "intake",
+              "crm"
+            ],
+            "goal": "Intake + CRM"
+          }
+        ]
+      },
+      "q2_clarity": {
+        "step": 2,
+        "steps": 2,
+        "prompt": "What clarity do you need?",
+        "choices": [
+          {
+            "id": "kpi",
+            "label": "Live KPIs",
+            "hint": "Leads + spend",
+            "next": "done",
+            "icons": [
+              "efficiency"
+            ],
+            "goal": "KPI clarity"
+          },
+          {
+            "id": "audit",
+            "label": "Priorities audit",
+            "hint": "What to fund",
+            "next": "done",
+            "icons": [
+              "efficiency",
+              "foundation"
+            ],
+            "goal": "Priorities"
+          },
+          {
+            "id": "spend",
+            "label": "Find waste",
+            "hint": "Leaking spend",
+            "next": "done",
+            "icons": [
+              "efficiency"
+            ],
+            "goal": "Cut waste"
+          }
+        ]
+      },
+      "q2_web": {
+        "step": 2,
+        "steps": 2,
+        "prompt": "What should the site fix first?",
+        "choices": [
+          {
+            "id": "content",
+            "label": "Content & SEO",
+            "hint": "Pages & blogs",
+            "next": "done",
+            "icons": [
+              "seo"
+            ],
+            "goal": "Content & SEO"
+          },
+          {
+            "id": "ux",
+            "label": "Speed & navigation",
+            "hint": "UX cleanup",
+            "next": "done",
+            "icons": [
+              "seo"
+            ],
+            "goal": "Site UX"
+          },
+          {
+            "id": "land",
+            "label": "Landing pages",
+            "hint": "Campaign pages",
+            "next": "done",
+            "icons": [
+              "seo",
+              "crm",
+              "leads"
+            ],
+            "goal": "Landing pages"
+          }
+        ]
+      },
+      "q2_refer": {
+        "step": 2,
+        "steps": 2,
+        "prompt": "How should reputation grow?",
+        "choices": [
+          {
+            "id": "program",
+            "label": "Referral program",
+            "hint": "Setup + ongoing",
+            "next": "done",
+            "icons": [
+              "referrals"
+            ],
+            "goal": "Referral program"
+          },
+          {
+            "id": "proof",
+            "label": "Case wins & quotes",
+            "hint": "Social proof",
+            "next": "done",
+            "icons": [
+              "referrals",
+              "creative"
+            ],
+            "goal": "Testimonials"
+          },
+          {
+            "id": "mail",
+            "label": "Re-engage clients",
+            "hint": "Mailers",
+            "next": "done",
+            "icons": [
+              "referrals",
+              "creative"
+            ],
+            "goal": "Past clients"
+          }
+        ]
+      },
+      "q2_costs": {
+        "step": 2,
+        "steps": 2,
+        "prompt": "Where should we cut first?",
+        "choices": [
+          {
+            "id": "subs",
+            "label": "Unused subscriptions",
+            "hint": "SaaS & tools",
+            "next": "done",
+            "icons": [
+              "efficiency"
+            ],
+            "goal": "Cut SaaS waste"
+          },
+          {
+            "id": "ads",
+            "label": "Ad spend waste",
+            "hint": "Bids & targeting",
+            "next": "done",
+            "icons": [
+              "leads",
+              "efficiency"
+            ],
+            "goal": "Tighten ad spend"
+          },
+          {
+            "id": "both_cost",
+            "label": "Full spend audit",
+            "hint": "Cards + ads",
+            "next": "done",
+            "icons": [
+              "efficiency"
+            ],
+            "goal": "Full cost audit"
+          }
+        ]
+      }
+    }
+  },
   "retainer": {
     "id": "RETAINER",
     "fee": 2700,

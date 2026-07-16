@@ -11,6 +11,7 @@
 | File | Purpose |
 |------|---------|
 | [INDEX.md](INDEX.md) | **You edit only** — table titles + **## Notes** (build reads; never writes) |
+| [survey.md](survey.md) | **Guide questionnaire Q&A** — short prompts/choices (build → picker survey) |
 | [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches B2) |
 | settings.md | Default package |
 | retainer.md | Retainer card |

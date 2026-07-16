@@ -9,75 +9,10 @@
   const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
   const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
 
-  /** Choose-your-path survey — answers set iconFilters that narrow Project Outlines. */
-  const GILBERT_SURVEY = {
-    start: "q1",
-    nodes: {
-      q1: {
-        step: 1,
-        steps: 2,
-        prompt: "What's the biggest problem right now?",
-        choices: [
-          { id: "leads", label: "Not enough qualified leads", hint: "Ads, campaigns, reach", next: "q2_leads", icons: ["leads"], goal: "More qualified leads" },
-          { id: "convert", label: "Leads come in but don't convert", hint: "Phones, chat, CRM handoff", next: "q2_convert", icons: ["intake", "crm"], goal: "Convert more leads" },
-          { id: "clarity", label: "Can't tell what's working", hint: "KPIs, dashboards, reporting", next: "q2_clarity", icons: ["efficiency"], goal: "Clearer metrics to decide" },
-          { id: "web", label: "Website / SEO isn't helping", hint: "Content, speed, search", next: "q2_web", icons: ["seo"], goal: "Stronger website & organic" },
-          { id: "refer", label: "Need more referrals & reputation", hint: "Past clients, testimonials", next: "q2_refer", icons: ["referrals"], goal: "Grow referrals & reputation" },
-          { id: "foundation", label: "Not sure — start with foundation", hint: "Must-do enablers first", next: "done", icons: ["foundation"], goal: "Foundation first" }
-        ]
-      },
-      q2_leads: {
-        step: 2,
-        steps: 2,
-        prompt: "Where should new leads come from first?",
-        choices: [
-          { id: "paid", label: "Paid search & display", hint: "Google / Microsoft / LSA", next: "done", icons: ["leads"], goal: "Paid media leads" },
-          { id: "creative", label: "Social & creative campaigns", hint: "Creative + social proof", next: "done", icons: ["leads", "creative"], goal: "Social & creative leads" },
-          { id: "mix", label: "Paid + organic mix", hint: "Ads with SEO support", next: "done", icons: ["leads", "seo", "creative"], goal: "Paid and organic leads" }
-        ]
-      },
-      q2_convert: {
-        step: 2,
-        steps: 2,
-        prompt: "Where do leads fall through?",
-        choices: [
-          { id: "phones", label: "Phones / after-hours intake", hint: "Missed calls, chat, VoIP", next: "done", icons: ["intake"], goal: "Fix intake & phones" },
-          { id: "crm", label: "CRM / pipeline follow-up", hint: "HubSpot routing & logging", next: "done", icons: ["crm"], goal: "Tighten CRM pipeline" },
-          { id: "both_conv", label: "Both intake and CRM", hint: "Full handoff path", next: "done", icons: ["intake", "crm"], goal: "Intake + CRM conversion" }
-        ]
-      },
-      q2_clarity: {
-        step: 2,
-        steps: 2,
-        prompt: "What clarity do you need most?",
-        choices: [
-          { id: "kpi", label: "Live KPIs & dashboards", hint: "See leads and spend together", next: "done", icons: ["efficiency"], goal: "KPI dashboard clarity" },
-          { id: "audit", label: "Stack audit / priorities", hint: "What to fund next", next: "done", icons: ["efficiency", "foundation"], goal: "Priorities audit" },
-          { id: "spend", label: "Where money is leaking", hint: "Subscriptions & waste", next: "done", icons: ["efficiency"], goal: "Cut waste / spend clarity" }
-        ]
-      },
-      q2_web: {
-        step: 2,
-        steps: 2,
-        prompt: "What should the site fix first?",
-        choices: [
-          { id: "content", label: "Content & SEO", hint: "Pages, blogs, linking", next: "done", icons: ["seo"], goal: "Website content & SEO" },
-          { id: "ux", label: "Speed & navigation", hint: "UX cleanup", next: "done", icons: ["seo"], goal: "Site speed & navigation" },
-          { id: "land", label: "Landing pages / modules", hint: "Campaign destinations", next: "done", icons: ["seo", "crm", "leads"], goal: "Landing pages that convert" }
-        ]
-      },
-      q2_refer: {
-        step: 2,
-        steps: 2,
-        prompt: "How do you want reputation to grow?",
-        choices: [
-          { id: "program", label: "Client referral program", hint: "Setup + ongoing", next: "done", icons: ["referrals"], goal: "Referral program" },
-          { id: "proof", label: "Case wins & testimonials", hint: "Social proof assets", next: "done", icons: ["referrals", "creative"], goal: "Testimonials & case wins" },
-          { id: "mail", label: "Re-engage past clients", hint: "Mailers & nurture", next: "done", icons: ["referrals", "creative"], goal: "Past-client re-engagement" }
-        ]
-      }
-    }
-  };
+  /** Choose-your-path survey — sourced from content/survey.md via projects-data.js */
+  const GILBERT_SURVEY = (typeof PROJECT_DATA !== "undefined" && PROJECT_DATA.survey && PROJECT_DATA.survey.nodes)
+    ? PROJECT_DATA.survey
+    : { start: "q1", nodes: {} };
 
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
