@@ -1,18 +1,27 @@
 # Deploy Gilbert Guide to GitHub Pages (gh-pages branch)
-# Repo: https://github.com/GildedGooseltd/PickyPavi
-# Live: https://gildedgooseltd.github.io/PickyPavi/
+# Repo: https://github.com/GildedGooseltd/GilbertGuide
+# Live: https://gildedgooseltd.github.io/GilbertGuide/
 # Enable: repo Settings → Pages → Deploy from branch gh-pages / root
 # Webhook: secret PAV_PICKER_WEBHOOK_URL if set; else committed pages-config.defaults.js
 # Optional: PAV_PICKER_DEPOSIT_AMOUNT (default 2500), PAV_PICKER_QUICKBOOKS_DEPOSIT_URL
 
 name: Deploy Gilbert Guide
 
+# Only publish from the Guide content branch (or manual run).
+# Other feature branches (e.g. branding UX) must NOT overwrite live project cards.
 on:
   push:
+    branches:
+      - main
+      - cursor/op01-submission-updates
     paths:
       - "gilded-goose/clients/pav-law/project-picker/**"
       - ".github/workflows/pav-project-picker-pages.yml"
   workflow_dispatch:
+
+concurrency:
+  group: gilbert-guide-pages
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -26,6 +35,18 @@ jobs:
       - name: Build projects-data.js from content/
         working-directory: gilded-goose/clients/pav-law/project-picker
         run: npm run build
+
+      - name: Verify retainer content before publish
+        working-directory: gilded-goose/clients/pav-law/project-picker
+        run: |
+          set -euo pipefail
+          grep -q '"fee": 2900' projects-data.js
+          grep -q 'Ongoing oversight of Google Ads' projects-data.js
+          if grep -q '6,000/month' projects-data.js; then
+            echo "::error::Stale retainer copy (6,000/month) still in projects-data.js"
+            exit 1
+          fi
+          echo "Retainer content checks passed"
 
       - name: Write pages-config.js (secret or committed default)
         working-directory: gilded-goose/clients/pav-law/project-picker
