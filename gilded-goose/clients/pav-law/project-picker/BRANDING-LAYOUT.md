@@ -68,7 +68,7 @@ Body: Georgia / Times New Roman (serif cockpit). Hierarchy via weight and size; 
 Overlays: confirm · thank-you (text only — no logo / goose images)
 ```
 
-**Survey:** `GILBERT_SURVEY` in `app.js` — branching questions map to `--vi-*` icon ids via `iconFilters`. Completing a path opens the TOC and shows matching projects only. “Start over” / Clear filters resets the path.
+**Survey:** `GILBERT_SURVEY` in `app.js` — branching questions map to `--vi-*` icon ids via `iconFilters`. One `.gilbert-survey` box holds title + steps + result (choices are list rows, not stage tiles). Gilbert portrait sits beside questions at **5.5rem** circle (4.25rem on small screens): lightbulb (`gilbert-lightbulb-idea.png`) while asking, thinking profile (`gilbert-thinking.png`) when path is set. Completing a path opens the TOC. “Start over” / Clear filters resets the path.
 
 | Pattern | Classes | Behavior |
 |---------|---------|----------|

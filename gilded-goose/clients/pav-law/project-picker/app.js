@@ -1078,9 +1078,25 @@
     saveState();
   }
 
+  function syncSurveyGilbertPortrait() {
+    const fig = document.getElementById("survey-gilbert-fig");
+    const img = document.getElementById("survey-gilbert-img");
+    if (!img) return;
+    if (state.surveyDone) {
+      img.src = "assets/gilbert-thinking.png";
+      img.alt = "Lord Gilbert Granville";
+      fig?.classList.add("is-profile");
+    } else {
+      img.src = "assets/gilbert-lightbulb-idea.png";
+      img.alt = "Lord Gilbert Granville with an idea";
+      fig?.classList.remove("is-profile");
+    }
+  }
+
   function renderGilbertSurvey() {
     const el = document.getElementById("gilbert-survey-body") || document.getElementById("gilbert-survey");
     if (!el) return;
+    syncSurveyGilbertPortrait();
     const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
     const crumbs = pathLabels.length
       ? `<p class="survey-crumbs">So far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
