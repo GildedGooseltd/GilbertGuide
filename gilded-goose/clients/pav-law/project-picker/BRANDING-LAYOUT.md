@@ -68,19 +68,19 @@ Header toggle switches **`dark`** and **`unicorn`** only (legacy `light` maps to
 
 #### Dark (`html[data-theme="dark"]`)
 
-Warm charcoal / gold / violet — same accent family, no navy.
+Deep **purple** night — plum / eggplant surfaces (not brown charcoal), lavender ink, fuchsia accents. No navy.
 
 | Token family | Dark intent |
 |--------------|-------------|
-| Cream / paper / surfaces | Charcoal browns (`#120f0c` → `#2b241d`) |
-| Brown text | Cream ink (`#f3ede4` / `#c9beae`) |
-| Purple / burnt / forest | Lifted for contrast on dark (`#c4a2f0`, `#fb923c`, `#4ade80`) |
-| Sticky bar / TOC panel tops | Theme tokens (`--sticky-bar-bg`, `--toc-panel-top`) |
-| Buttons on accents | `--btn-on-accent` → dark ink on light accents |
+| Surfaces | Purple (`#12061f` → `#2d1654`) |
+| Text | Lavender (`#f3e8ff` / `#d8b4fe`) |
+| Accents | Fuchsia / violet / gold (`#e879f9`, `#d946ef`, `#f0c84a`) |
+| Sticky / TOC | Purple panel tokens |
+| Buttons on accents | `--btn-on-accent` → deep purple ink |
 
 #### Unicorn (`html[data-theme="unicorn"]`)
 
-Bold magenta / fuchsia / hot rose / electric gold with **metallics** (`--metal-gold`, `--metal-rose`, `--metal-chrome`, `--metal-holo`) and drifting **glitter** layers on `body` + `.gilbert-survey`. Holo borders on survey, cards, sticky bar; metallic title / primary button. Still no navy.
+**Lisa Frank** energy: neon sticker pink / purple / sunshine yellow / lime / tangerine rainbow (`--lisa-rainbow`), dense glitter stars, rainbow borders on survey/cards/sticky bar. Header **logo title formatting stays default** (`.gg-app-title` color + gold underline only — no holo clip). Still no navy.
 
 **Activation burst:** Switching Dark → Unicorn plays `#unicorn-fart-cloud` — pink/fuchsia sparkle fart cloud, line “good morning sparkle farts!”, and dancing Gilbert GIF (`assets/gilbert-unicorn-dance.gif`) in a fake unicorn headband. Click anywhere or wait ~3s to dismiss. Honors `prefers-reduced-motion`.
 
