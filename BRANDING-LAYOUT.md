@@ -8,7 +8,7 @@
 
 ## 1. Change formatting all at once
 
-Edit `:root` in [`index.html`](index.html). Rebuild is not required for CSS — hard-refresh the browser (`?v=` cache busters on scripts are bumped when JS changes).
+Edit `:root` in [`index.html`](index.html). Hard-refresh the browser (`?v=` cache busters on scripts are bumped when JS changes).
 
 ---
 
@@ -16,8 +16,8 @@ Edit `:root` in [`index.html`](index.html). Rebuild is not required for CSS — 
 
 | Concern | File |
 |---------|------|
-| Tokens, zones, sticky bar, TOC, cards, confirm | `index.html` `<style>` + markup |
-| Value icon classes / filter / TOC / confirm summary | `app.js` (classes only — no badge hex) |
+| Tokens, zones, sticky bar, TOC, cards, confirm, survey | `index.html` `<style>` + markup |
+| Value icon classes / survey / TOC / confirm summary | `app.js` (classes only — no badge hex) |
 | Generated project data | `projects-data.js` (from markdown build) |
 
 Do **not** put branding hex in project markdown or `projects-data.js`.
@@ -26,46 +26,58 @@ Do **not** put branding hex in project markdown or `projects-data.js`.
 
 ## 3. Brand tokens (`index.html` `:root`)
 
+### Spine — cream / gold / brown
+
 | Token | Default | Use |
 |-------|---------|-----|
 | `--gg-gold` | `#c9a86c` | Accents, zone gold bar |
-| `--gg-gold-bright` | `#e3c58d` | Highlights, focus ring |
+| `--gg-gold-bright` | `#e3c58d` | Highlights |
 | `--gg-gold-dark` | `#b8860b` | Zone labels, rank accents |
 | `--gg-cream` | `#f8f5ef` | Page background (`--bg`) |
 | `--gg-cream-panel` | `#f3ede4` | Nested panels, TOC zebra |
 | `--gg-paper` | `#fffcf7` | Cards, inputs (`--surface`) |
 | `--gg-brown` / `--gg-brown-muted` | `#3d3028` / `#5c4f45` | Body / secondary text |
-| `--gg-royal-deep` | `#3d3028` | Titles (alias of brown — **no navy**) |
-| `--gg-royal` | `#5c4010` | Dark gold-brown accents |
-| `--gg-royal-mid` | `#b8860b` | Gold mid accents / rails |
-| `--gg-royal-light` | `#c9a86c` | Soft gold |
-| `--gg-royal-dim` / `--gg-royal-border` | gold wash / border | Selected wash / borders |
 
-**Forbidden accents:** navy, blue-purple (`#2d1454`, `#3a1a6e`, `#4c1d95`, neon purple). Brand spine is cream / gold / brown only.
-| `--gg-gold-dim` | gold wash | Selected TOC rows |
-| `--focus-ring` | gold glow | `:focus-visible` on controls |
+### Accents — purple · burnt orange · forest (**not navy**)
+
+| Token | Default | Use |
+|-------|---------|-----|
+| `--gg-royal-deep` | `#3b1769` | Titles, deep purple |
+| `--gg-royal` | `#4e2a84` | Primary purple actions / links |
+| `--gg-royal-mid` | `#6d28a8` | Mid purple, focus, rails |
+| `--gg-royal-light` | `#8b5cf6` | Soft purple highlight |
+| `--gg-royal-dim` / `--gg-royal-border` | purple wash / border | Selected wash |
+| `--gg-burnt` | `#c2410c` | Burnt orange accent |
+| `--gg-burnt-dim` / `--gg-burnt-border` | burnt wash / border | Warm callouts |
+| `--gg-forest` | `#166534` | Forest green (positive / SEO) |
+| `--gg-forest-dim` / `--gg-forest-border` | forest wash / border | Success tints |
+| `--gg-positive` | `var(--gg-forest)` | Positive MoM / hits |
+| `--gg-negative` | `#cf2d56` | Negative numbers only |
+| `--focus-ring` | soft purple glow | `:focus-visible` |
 | `--space-sm/md/lg/xl` | 0.75 / 1.25 / 2 / 2.75 rem | Spacing scale |
 
-**`--gradient-brand`:** deep royal → royal → gold-dark (no `#6d28d9` / neon purple stops).
+**`--gradient-brand`:** purple → mid purple → gold-dark.
 
-**Forbidden:** teal/cyan accents · light-on-light plan panels · neon purple (`#7c5cff`) as brand light.
+**Allowed:** purple, burnt orange, forest, gold, cream, brown.
+
+**Forbidden:** navy / blue-black (`#0f172a`, `#1e3a5f`, `#2d1454`, `#3a1a6e`), neon cyan/teal, neon `#7c5cff` as the main brand light, light-on-light plan panels.
 
 ---
 
 ## 4. Typography
 
-Body: Georgia / Times New Roman (serif cockpit). Hierarchy via weight and size; titles use `--gg-royal-deep` + gold underline on `.gg-app-title`.
+Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + gold underline on `.gg-app-title`.
 
 ---
 
 ## 5. Layout patterns
 
 ```
-┌─ gg-header ────────────────── Gilbert Guide title (no logo / no goose)
+┌─ gg-header ────────────────── Gilbert Guide title (no logo wordmark)
 ├─ picker-zone-ask ──────────── Choose-your-path survey (2 steps) → filters outlines
 ├─ picker-zone-outlines ─────── TOC table (filtered) + Filter by value
 └─ picker-zone-cards ────────── sticky Continue bar + project cards
-Overlays: confirm · thank-you (text only — no logo / goose images)
+Overlays: confirm · thank-you
 ```
 
 **Survey:** `GILBERT_SURVEY` in `app.js` — branching questions map to `--vi-*` icon ids via `iconFilters`. One `.gilbert-survey` box holds title + steps + result (choices are list rows, not stage tiles). Gilbert portrait sits beside questions at **5.5rem** circle (4.25rem on small screens): lightbulb (`gilbert-lightbulb-idea.png`) while asking, thinking profile (`gilbert-thinking.png`) when path is set. Completing a path opens the TOC. “Start over” / Clear filters resets the path.
@@ -73,11 +85,11 @@ Overlays: confirm · thank-you (text only — no logo / goose images)
 | Pattern | Classes | Behavior |
 |---------|---------|----------|
 | Zones | `.picker-zone` + `.picker-zone-label` | Gold accent label; one purpose per zone |
-| Zone title | `.picker-zone-title` | Short royal-deep headline |
-| Sticky submit | `.project-list-controls.sticky-submit-bar` | Sticky bottom; paper + royal border |
+| Zone title | `.picker-zone-title` | Short purple-deep headline |
+| Sticky submit | `.project-list-controls.sticky-submit-bar` | Sticky bottom; paper + border |
 | TOC | `.toc-table` | Zebra even rows; `.row-selected` gold wash wins |
-| Cards | `.card` | `--space-lg` between cards; selected = royal wash |
-| Value TLDR | `.card-tldr` | Left royal rail around value bullets |
+| Cards | `.card` | `--space-lg` between cards; selected = purple wash |
+| Value TLDR | `.card-tldr` | Left purple/gold rail around value bullets |
 | Confirm picks | `#confirm-selection-summary` | List before email / invoice fields |
 
 ---
@@ -86,35 +98,35 @@ Overlays: confirm · thank-you (text only — no logo / goose images)
 
 **One map only.** Filter tiles and TOC ICONS column share `.value-icon.icon-{id}` → `--vi-*` tokens in `index.html` `:root`.
 
-| Icon id | Label | Badge bg / fg / border |
-|---------|-------|------------------------|
-| `foundation` | Foundation | `--vi-foundation-*` |
-| `retainer` | Retainer | `--vi-retainer-*` |
-| `leads` | Leads | `--vi-leads-*` |
-| `crm` | CRM | `--vi-crm-*` |
-| `seo` | SEO | `--vi-seo-*` |
-| `referrals` | Referrals | `--vi-referrals-*` |
-| `efficiency` | Analytics | `--vi-efficiency-*` (gold) |
-| `intake` | Intake | `--vi-intake-*` (royal) |
-| `creative` | Creative | `--vi-creative-*` |
-| `general` | Growth | `--vi-general-*` |
-| `account-data` | Account data | `--vi-account-data-*` |
+| Icon id | Label | Notes |
+|---------|-------|-------|
+| `foundation` | Foundation | Red family |
+| `retainer` | Retainer | Purple |
+| `leads` | Leads | Burnt orange |
+| `crm` | CRM | Purple |
+| `seo` | SEO | Forest |
+| `referrals` | Referrals | Rose |
+| `efficiency` | Analytics | Gold |
+| `intake` | Intake | Soft purple |
+| `creative` | Creative | Magenta |
+| `general` | Growth | Slate / brown text |
+| `account-data` | Account data | Gold |
 
 Chip soft tints: `--vi-*-chip` on `.key-filter-btn[data-icon-filter].filter-active` only — do not replace badge fills.
 
-Palette comment in `:root`: `value-icon-palette v=20260716-ggl`.
+Palette comment in `:root`: `value-icon-palette v=20260716g`.
 
-**Never:** hardcode badge colors in `app.js` · filter-only purple overrides · second palette under `.toc-value`.
+**Never:** hardcode badge colors in `app.js` · filter-only navy overrides · second palette under `.toc-value`.
 
 ---
 
 ## 7. Do / don’t
 
-- Do keep cream / gold / brown / deep royal as the brand spine.
-- Do underline links (TOC, condensed picks, refs) without relying on hover alone.
+- Do use purple, burnt orange, and forest as accents on cream / gold / brown.
+- Do keep links underlined without relying on hover alone.
 - Do keep `:focus-visible` rings on buttons, filters, inputs.
-- Don’t revive light-on-light `.plan-summary` text (`#f0f4fc` on pale panels).
-- Don’t put neon purple in `--gradient-brand` or `--gg-royal-light`.
+- Don’t use navy / blue-black as primary or secondary.
+- Don’t revive light-on-light `.plan-summary` text.
 
 Voice: practical law-firm cockpit for Andrew/team — scannable, not startup-landing wallpaper.
 
@@ -126,11 +138,12 @@ Voice: practical law-firm cockpit for Andrew/team — scannable, not startup-lan
 - [x] Sticky continue/submit bar readable on long lists
 - [x] Table zebra; selected row gold wash
 - [x] Cards spaced with `var(--space-lg)`
-- [x] Summary / value bullets: left royal border (`.card-tldr`)
-- [x] No light-on-light on plan / outlines tables
+- [x] Summary / value bullets: left accent border (`.card-tldr`)
+- [x] Survey in one box; list-row choices
 - [x] Links underlined or clearly distinct
-- [x] Tab/button `:focus-visible` ring
+- [x] Button `:focus-visible` ring
 - [x] Value icons share one `--vi-*` map (filter + TOC)
+- [x] No navy brand tokens
 
 ---
 
@@ -142,7 +155,7 @@ python3 -m http.server 8777 --bind 127.0.0.1
 # open http://127.0.0.1:8777/index.html
 ```
 
-Markdown content changes: `npm run build` (or `npm run watch`). CSS/JS in `index.html` / `app.js` — hard-refresh.
+Markdown content changes: `npm run build` (or `npm run watch`). CSS/JS — hard-refresh.
 
 Deploy: [GITHUB-PUSH.md](GITHUB-PUSH.md)
 
