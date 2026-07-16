@@ -876,9 +876,9 @@ export function parseIndexMarkdown(text) {
   let colMap = null;
   for (const line of lines) {
     if (!/^\|/.test(line)) continue;
-    const cells = line.split("|").map(c => c.trim()).filter(Boolean);
+    const cells = line.split("|").slice(1, -1).map(c => c.trim());
     if (!cells.length) continue;
-    if (/^[\-:\s|]+$/.test(line.replace(/\s/g, ""))) continue;
+    if (cells.every(c => /^[\-:]+$/.test(c) || c === "")) continue;
 
     if (cells.some(c => /^id$/i.test(c))) {
       colMap = indexHeaderColumnMap(cells);
@@ -949,7 +949,8 @@ export function applyIndexOverrides(projects, retainer, existingText) {
       next.fee = ec.fee;
       if (ec.ongoingFee != null) next.ongoingFee = ec.ongoingFee;
       else if (!ec.monthlyOnly) {
-        /* keep existing ongoing unless INDEX specifies + $mo */
+        /* INDEX setup-only (no + $/mo) clears a prior Ongoing fee */
+        delete next.ongoingFee;
       }
     }
     return next;

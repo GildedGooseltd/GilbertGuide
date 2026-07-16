@@ -49,7 +49,9 @@
   ];
 
   function isRequiredProject(item, isRetainer) {
-    return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
+    if (isRetainer || item.id === "RETAINER" || item.category === "Retainer") return true;
+    const st = String(item.status || "").toLowerCase();
+    return st.includes("required");
   }
 
   function findProjectById(id) {
@@ -329,9 +331,7 @@
     activeViewTab: "kpis",
     doNextVisible: false,
     priorityEdit: false,
-    clientPriorityIds: [],
-    /** Project ids with Show unchecked — cards/rows grayed out */
-    detailsHidden: new Set()
+    clientPriorityIds: []
   };
 
   function normalizeViewTab(tab) {
@@ -346,32 +346,31 @@
     state.activeViewTab = normalizeViewTab(tab);
   }
 
-  function detailsItemId(item) {
-    if (!item) return "";
-    return item.isRetainer || item.id === "RETAINER" ? "RETAINER" : item.id;
-  }
-
-  function isDetailsVisible(item) {
-    const id = detailsItemId(item);
-    if (!id) return true;
-    return !state.detailsHidden.has(id);
-  }
-
-  function setDetailsVisible(id, visible) {
-    if (!id) return;
-    if (visible) state.detailsHidden.delete(id);
-    else state.detailsHidden.add(id);
-  }
-
   function normalizeStatus(item) {
     const s = String(item.status || "available").toLowerCase();
     if (s.includes("completed")) return "completed";
+    if (s.includes("archived")) return "archived";
     if (s.includes("research")) return "research";
     if (s.includes("draft") || s.includes("outline")) return "draft";
+    if (s.includes("hold")) return "onhold";
+    if (s.includes("blocked")) return "blocked";
     if (s.includes("ongoing")) return "ongoing";
     if (s.includes("wip")) return "wip";
     return "available";
   }
+
+  /** Named 0–100 best-fit weights (positives sum to 100 at full credit). */
+  const SCORE_WEIGHTS = {
+    priority: 30,
+    leadGenerator: 17,
+    enabler: 15,
+    goalMatch: 15,
+    dataBacked: 6,
+    dataReturn: 4,
+    feeAccess: 8,
+    cartSynergy: 5,
+    wip: 10
+  };
 
   function normalizePublishStatus(item) {
     const s = String(item.publishStatus || "published").toLowerCase().trim();
@@ -396,7 +395,8 @@
   }
 
   function isCompletedStatus(item) {
-    return normalizeStatus(item) === "completed";
+    const s = normalizeStatus(item);
+    return s === "completed" || s === "archived";
   }
 
   function isResearchStatus(item) {
@@ -424,26 +424,58 @@
     return Math.max(500, ...PROJECTS.filter(p => !p.monthlyOnly).map(p => itemSelectionCost(p)));
   }
 
+  function liveRankableProjects() {
+    return PROJECTS.filter(p => !p.monthlyOnly && !isCompletedStatus(p));
+  }
+
+  function livePriorityBounds() {
+    const pris = liveRankableProjects()
+      .map(p => p.priority)
+      .filter(p => p != null && Number.isFinite(Number(p)))
+      .map(Number);
+    if (!pris.length) return { min: 1, max: 1 };
+    return { min: Math.min(...pris), max: Math.max(...pris) };
+  }
+
+  function isLeadGenerator(item) {
+    return getValueIcons(item).some(v => v.id === "leads");
+  }
+
+  /** Best-fit score on a named 0–100 scale (see SCORE_WEIGHTS / INDEX.md). */
   function computeProjectScore(item) {
     if (isCompletedStatus(item) || item.monthlyOnly) return -999;
+    const W = SCORE_WEIGHTS;
     let score = 0;
-    const pri = item.priority ?? 50;
-    score += Math.max(0, 32 - pri);
-    if (item.enabler) score += 22;
+
+    const { min: pMin, max: pMax } = livePriorityBounds();
+    const pri = Number(item.priority);
+    const priSafe = Number.isFinite(pri) ? pri : pMax;
+    if (pMax === pMin) score += W.priority;
+    else score += W.priority * Math.max(0, Math.min(1, (pMax - priSafe) / (pMax - pMin)));
+
+    if (isLeadGenerator(item)) score += W.leadGenerator;
+    if (item.enabler) score += W.enabler;
+
     if (state.goalText.trim()) {
       const words = state.goalText.toLowerCase().split(/\W+/).filter(w => w.length > 2);
-      score += Math.min(28, scoreItemForGoal(item, words) * 3);
+      const raw = scoreItemForGoal(item, words);
+      score += Math.min(W.goalMatch, raw * (W.goalMatch / 12));
     }
+
+    if (item.backedMetric && item.backedMetric.label) score += W.dataBacked;
+    if (item.returnEstimate) score += W.dataReturn;
+
     const fee = itemSelectionCost(item);
-    score += Math.max(0, 16 * (1 - fee / maxProjectFee()));
-    if (item.backedMetric && item.backedMetric.label) score += 14;
-    if (item.returnEstimate) score += 10;
-    if (state.projects.size && item.enabler) score += 8;
-    const st = normalizeStatus(item);
-    if (st === "research" || st === "draft") score -= 45;
-    if (isPlanningPublish(item)) score -= 50;
-    if (st === "wip") score -= 4;
-    return Math.round(score * 10) / 10;
+    const feeMax = maxProjectFee();
+    score += Math.max(0, W.feeAccess * (1 - fee / feeMax));
+
+    if (state.projects.size && item.enabler) score += W.cartSynergy;
+    if (normalizeStatus(item) === "wip") score += W.wip;
+
+    /* Max 110 when WIP (+10 on top of the 100 named positives). No status penalties. */
+    score = Math.min(110, score);
+
+    return Math.round(Math.max(0, score) * 10) / 10;
   }
 
   function topScoredProjects(limit) {
@@ -2017,7 +2049,7 @@
       const ranked = pool
         .map(item => {
           let score = scoreItemForGoal(item, words) * 5;
-          score += Math.max(0, computeProjectScore(item)) * 0.4;
+          score += Math.max(0, computeProjectScore(item)) * 0.5;
           const id = item.isRetainer ? "RETAINER" : item.id;
           if (isItemSelected(item)) score += 18;
           if (state.recommended.has(id)) score += 10;
@@ -2079,12 +2111,9 @@
             <button type="button" class="toc-prio-btn" data-prio-move="down" data-id="${escapeHtml(item.id)}" title="Move down" aria-label="Move ${escapeHtml(item.title)} down">↓</button>
           </span>`
         : "";
-      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}${isPlanningPublish(item) ? " toc-planning" : ""}${state.priorityEdit ? " toc-prio-editing" : ""}${!isDetailsVisible(item) ? " toc-details-hidden" : ""}" data-id="${item.id}" data-retainer="${isRetainer}" data-required="${required}">
+      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}${isPlanningPublish(item) ? " toc-planning" : ""}${state.priorityEdit ? " toc-prio-editing" : ""}" data-id="${item.id}" data-retainer="${isRetainer}" data-required="${required}">
         <td class="toc-col-select">
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
-        </td>
-        <td class="toc-col-show">
-          <input type="checkbox" class="toc-show-chk" data-id="${escapeHtml(item.id)}" aria-label="Show details for ${escapeHtml(item.title)}" ${isDetailsVisible(item) ? "checked" : ""} title="Checked = project details visible; unchecked = grayed out">
         </td>
         <td class="toc-col-priority"><span class="toc-priority">${editControls}${priorityTocHtml(item, displayPriority)}</span></td>
         <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
@@ -2295,9 +2324,6 @@
       if (Array.isArray(saved.clientPriorityIds)) {
         state.clientPriorityIds = saved.clientPriorityIds.filter(Boolean);
       }
-      if (Array.isArray(saved.detailsHidden)) {
-        state.detailsHidden = new Set(saved.detailsHidden.filter(Boolean));
-      }
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
     } catch (e) {}
@@ -2324,8 +2350,7 @@
       surveyDone: state.surveyDone,
       iconFilters: state.iconFilters,
       doNextVisible: state.doNextVisible,
-      clientPriorityIds: state.clientPriorityIds,
-      detailsHidden: [...state.detailsHidden]
+      clientPriorityIds: state.clientPriorityIds
     }));
     updateSubmitButtons();
   }
@@ -2536,13 +2561,12 @@
     const selFirst = isFirstSelected ? " selected-first" : "";
     const chkDisabled = required ? " disabled" : "";
     const mutedClass = isPlanningPublish(item) || isResearchStatus(item) || isCompletedStatus(item) ? " status-muted" : "";
-    const detailsHiddenClass = isDetailsVisible(item) ? "" : " details-hidden";
     const planningClass = isPlanningPublish(item) ? " publish-planning" : "";
     const abPending = hasAbQuestions(item) && !abQuestionAnswered(id);
     const abClass = abPending ? " ab-q-pending" : (hasAbQuestions(item) ? " ab-q-cleared" : "");
 
     return `
-      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${detailsHiddenClass}${planningClass}${abClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
+      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
         <div class="card-header">
           ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
@@ -3400,15 +3424,6 @@
   });
 
   document.getElementById("toc-list")?.addEventListener("change", e => {
-    const showChk = e.target.closest('input[type="checkbox"].toc-show-chk');
-    if (showChk) {
-      e.stopPropagation();
-      setDetailsVisible(showChk.dataset.id, showChk.checked);
-      saveState();
-      renderProjectToc();
-      renderAllCards();
-      return;
-    }
     const chk = e.target.closest('input[type="checkbox"].toc-proj-chk');
     if (!chk) return;
     e.stopPropagation();

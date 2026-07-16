@@ -38,7 +38,7 @@ const GGL = {
   red: "#CF2D56",
   orange: "#F1B467",
   green: "#1F8A65",
-  peacockTeal: "#00d4c4",
+  seriesGold: "#b8860b",
   peacockBlue: "#4d8bff",
   peacockViolet: "#7c5cff",
   peacockPurple: "#b24bf3",
