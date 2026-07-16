@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260716-lsa-ads-cpl-split";
+  const RENDER_VER = "20260716-drop-lsa-media-col";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -487,7 +487,7 @@
       adsAllIn: a.adsAllIn + (r.adsSpend || 0) + adsConsult
     }), { leads: 0, lsaSpend: 0, lsaAllIn: 0, adsSpend: 0, adsAllIn: 0 });
     return kpiDetailTable(
-      ["Period", "LSA leads", "LSA media", "LSA + $1k consulting", "Cost per LSA lead", "Digital ads media", "Ads + $2k consulting"],
+      ["Period", "LSA leads", "LSA + $1k consulting", "Cost per LSA lead", "Digital ads media", "Ads + $2k consulting"],
       [
         ...rows.map(r => {
           const lsaAllIn = (r.lsaSpend || 0) + lsaConsult;
@@ -495,7 +495,6 @@
           return [
             escapeHtml(r.month) + " 2026",
             String(r.leads),
-            fmtMoney(r.lsaSpend || 0),
             fmtMoney(lsaAllIn),
             fmtMoney(lsaAllIn / r.leads),
             fmtMoney(r.adsSpend || 0),
@@ -505,7 +504,6 @@
         [
           "May–Jun totals",
           String(totals.leads),
-          fmtMoney(totals.lsaSpend),
           fmtMoney(totals.lsaAllIn),
           fmtMoney(totals.lsaAllIn / totals.leads),
           fmtMoney(totals.adsSpend),
