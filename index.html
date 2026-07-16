@@ -144,11 +144,6 @@
       --vi-general-bg: #94a3b8;
       --vi-general-fg: #0f172a;
       --vi-general-border: #64748b;
-      --vi-account-data-bg: #facc15;
-      --vi-account-data-fg: #713f12;
-      --vi-account-data-border: #ca8a04;
-      --vi-account-data-chip: #fefce8;
-      --vi-account-data-chip-border: #fef08a;
     }
     html { scroll-behavior: smooth; font-size: 16px; }
     @media (prefers-reduced-motion: reduce) {
@@ -239,14 +234,6 @@
     .card-icons-corner .value-icons { flex-wrap: wrap; max-width: 9rem; justify-content: flex-end; gap: 0.3rem; }
     .card-icons-corner .value-icon { width: 2.35rem; height: 2.35rem; }
     .card-icons-corner .value-icon svg { width: 1.45rem; height: 1.45rem; }
-    .account-data-shield {
-      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-      width: 1.55rem; height: 1.85rem; cursor: help; line-height: 0;
-      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
-    }
-    .pav-law-shield-img {
-      width: 100%; height: 100%; display: block; object-fit: contain;
-    }
     .cockpit-header {
       max-width: 1400px; margin: 0 auto;
       padding: 1.35rem 2rem 0.75rem; text-align: left;
@@ -765,13 +752,17 @@
       border: 1px solid rgba(45, 20, 84, 0.12);
       border-radius: 10px;
     }
-    .card-summary-icons {
-      display: flex; align-items: center; flex-wrap: wrap; gap: 0.35rem;
-      margin: 0 0 0.65rem; padding-bottom: 0.55rem;
-      border-bottom: 1px solid rgba(45, 20, 84, 0.1);
+    .card-desc-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.65rem;
+      margin: 0 0 0.45rem; min-width: 0;
     }
-    .card-summary-icons .card-icons-inline { display: flex; align-items: center; gap: 0.35rem; }
-    .card-summary-icons .value-icons { flex-wrap: wrap; gap: 0.3rem; }
+    .card-desc-head .card-summary-label { margin: 0; flex: 0 1 auto; }
+    .card-summary-icons {
+      display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 0.35rem;
+      margin: 0; padding: 0; border: none; margin-left: auto;
+    }
+    .card-summary-icons .card-icons-inline { display: flex; align-items: center; justify-content: flex-end; gap: 0.35rem; }
+    .card-summary-icons .value-icons { flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; }
     .card-summary-icons .value-icon { width: 2.1rem; height: 2.1rem; }
     .card-summary-icons .value-icon svg { width: 1.25rem; height: 1.25rem; }
     .card-summary-label {
@@ -843,8 +834,6 @@
       padding: 0.2rem 0; color: var(--gg-brown-muted); font-size: 0.92rem; line-height: 1.5; font-weight: 400;
     }
     .card-value-add-list li::before { content: "→ "; color: var(--gg-royal-mid); }
-    .account-data-footnote { margin: 0.85rem 0 0; padding-top: 0.85rem; border-top: 1px solid var(--border); font-size: 1.02rem; color: var(--gg-royal); line-height: 1.7; }
-    .account-data-footnote .metric-source { color: var(--secondary); font-size: 0.92rem; }
     .value-added-box {
       font-size: 1.05rem; padding: var(--space-md); margin-bottom: var(--space-md);
       background: var(--gg-royal-dim); border-radius: var(--radius);
@@ -869,7 +858,17 @@
       margin: 0 0 0.35rem; font-weight: 700;
     }
     .progress-completed h4 { color: var(--gg-gold-dark); }
+    .progress-todo h4,
     .progress-wip h4 { color: #92600a; }
+    .card-progress-under {
+      display: none;
+      margin: 0.65rem 0 0;
+      padding: 0.55rem 0 0.15rem 1.1rem;
+      border-left: 2px solid var(--gg-royal-border);
+    }
+    .card.expanded .card-progress-under { display: block; }
+    .card-progress-under .progress-split { margin-bottom: 0.35rem; }
+    .card-merged-desc .card-summary-bullets { margin-bottom: 0.35rem; }
     .progress-list { list-style: none; padding: 0; margin: 0; }
     .progress-list li {
       display: flex; align-items: flex-start; gap: 0.45rem;
@@ -996,7 +995,6 @@
     .card-icons-inline .value-icons { flex-wrap: nowrap; gap: 0.2rem; }
     .card-icons-inline .value-icon { width: 1.65rem; height: 1.65rem; border-radius: 8px; }
     .card-icons-inline .value-icon svg { width: 1rem; height: 1rem; }
-    .card-icons-inline .account-data-shield { width: 1.15rem; height: 1.35rem; filter: none; }
     .recommendation-box h3 {
       font-size: var(--font-min-rem); text-transform: uppercase; letter-spacing: 0.06em;
       color: var(--gg-royal); font-weight: 800; margin: 0 0 0.45rem;
@@ -1060,9 +1058,18 @@
       border: 1px solid var(--border); font-size: 0.88rem; color: var(--gg-brown);
     }
     .value-icon-key-title { width: 100%; font-size: var(--font-min-rem); text-transform: uppercase; letter-spacing: 0.06em; color: var(--gg-royal-deep); font-weight: 700; margin-bottom: 0.15rem; }
-    .key-item { display: inline-flex; align-items: center; gap: 0.55rem; max-width: 100%; font-weight: 600; }
+    .key-item {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.35rem;
+      max-width: 5.75rem;
+      text-align: center;
+      font-weight: 600;
+    }
     .key-filter-btn {
-      border: 2px solid transparent; border-radius: 10px; padding: 0.35rem 0.5rem;
+      border: 2px solid transparent; border-radius: 10px; padding: 0.45rem 0.4rem 0.5rem;
       cursor: pointer; font: inherit; transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
     }
     .key-filter-btn:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(45, 20, 84, 0.14); }
@@ -1088,27 +1095,12 @@
     .key-filter-intake .key-item-label { color: var(--gg-royal-deep); }
     .key-filter-creative { background: var(--vi-creative-chip); color: var(--vi-creative-fg); border-color: var(--vi-creative-chip-border); }
     .key-filter-creative .key-item-label { color: var(--gg-royal-deep); }
-    .key-filter-account-data { background: var(--vi-account-data-chip); color: var(--vi-account-data-fg); border-color: var(--vi-account-data-chip-border); }
-    .key-filter-account-data .key-item-label { color: var(--gg-royal-deep); }
     /* Size only in filter — do NOT override .value-icon.icon-* colors here */
     .value-icon-key .key-filter-btn .value-icon {
       box-shadow: none;
     }
     .value-icon-key .key-filter-btn .value-icon svg {
       stroke: currentColor;
-    }
-    .value-icon-key .key-filter-account-data .account-data-shield {
-      width: 2.35rem; height: 2.35rem; border-radius: 10px;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: var(--vi-account-data-bg);
-      color: var(--vi-account-data-fg);
-      border: 1px solid var(--vi-account-data-border);
-      box-sizing: border-box;
-    }
-    .value-icon-key .key-filter-account-data .pav-law-shield-img {
-      filter: none;
-      opacity: 0.95;
-      width: 1.35rem;
     }
     .icon-filter-hint { width: 100%; font-size: 0.875rem; color: var(--gg-brown-muted); font-weight: 500; margin-bottom: 0.15rem; }
     .icon-filter-clear {
@@ -1117,7 +1109,6 @@
       color: var(--gg-royal); cursor: pointer;
     }
     .icon-filter-clear:hover { background: var(--gg-royal-dim); }
-    .account-data-shield .pav-law-shield-img { width: 1.75rem; height: auto; object-fit: contain; display: block; }
     .project-list-controls {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start;
       gap: 0.75rem 1rem; margin-bottom: var(--space-md);
@@ -1125,8 +1116,8 @@
     .project-continue-btn { width: auto; margin: 0; padding: 0.65rem 1.25rem; min-width: 12rem; }
     .key-filter-btn .value-icon { width: 2.35rem; height: 2.35rem; }
     .key-filter-btn .value-icon svg { width: 1.45rem; height: 1.45rem; }
-    .key-item-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 0.12rem; min-width: 0; }
-    .key-kpi-hint { display: flex; flex-wrap: wrap; gap: 0.2rem; font-size: 0.875rem; font-weight: 700; line-height: 1.2; }
+    .key-item-meta { display: flex; flex-direction: column; align-items: center; gap: 0.12rem; min-width: 0; width: 100%; }
+    .key-kpi-hint { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.2rem; font-size: 0.875rem; font-weight: 700; line-height: 1.2; }
     .key-kpi-hint .kpi-ref-link { padding: 0.05rem 0.28rem; border-radius: 4px; background: rgba(45, 20, 84, 0.1); }
     .kpi-ref-link {
       color: var(--gg-royal); font-weight: 700; text-decoration: none; font-size: 0.875rem;
@@ -1147,7 +1138,7 @@
     .kpi-chart-card[data-kpi-focus].kpi-stat-active {
       border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim);
     }
-    .key-item-label { line-height: 1.35; white-space: normal; color: var(--gg-royal-deep); font-weight: 600; }
+    .key-item-label { line-height: 1.25; white-space: normal; color: var(--gg-royal-deep); font-weight: 600; font-size: 0.8rem; text-align: center; }
     .value-icons { display: inline-flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
     .value-icon {
       display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -1627,10 +1618,13 @@
       border: 1px solid var(--gg-royal-border); background: var(--gg-paper); color: var(--gg-royal);
     }
     .kpi-rating-action:hover { background: var(--gg-royal-dim); }
+    .kpi-rating-action:disabled { opacity: 0.45; cursor: not-allowed; }
     .kpi-rating-action-primary {
       background: var(--gradient-gold); color: var(--gg-brown); border-color: var(--gg-gold-dark);
     }
     .kpi-rating-action-primary:hover { filter: brightness(1.05); background: var(--gradient-gold); }
+    .kpi-rating-action-primary:disabled:hover { filter: none; }
+    .kpi-rating-warn { color: var(--gg-negative); font-weight: 700; }
     .kpi-rating-toast {
       margin: 0; min-height: 1.1rem; font-size: var(--font-min-rem); font-weight: 700; color: var(--secondary);
     }
@@ -1649,26 +1643,8 @@
     .kpi-rate-wrap > .picker-zone,
     .kpi-rate-wrap > .impact-section { width: 100%; }
     .kpi-rate-tray { display: flex; flex-direction: column; gap: 0.3rem; }
-    .kpi-rate-btns {
-      display: flex; gap: 0.35rem; justify-content: flex-end; padding: 0 0.15rem;
-    }
-    .kpi-rate-btn {
-      appearance: none; border: 2px solid var(--border); background: var(--gg-paper);
-      border-radius: 8px; width: 2.25rem; height: 2.25rem; padding: 0;
-      font-size: 1.05rem; line-height: 1; cursor: pointer;
-      transition: background 0.12s, border-color 0.12s, transform 0.12s, box-shadow 0.12s;
-    }
-    .kpi-rate-btn:hover { border-color: var(--gg-gold); background: #f0e6c8; transform: translateY(-1px); }
-    .kpi-rate-btn.is-selected.kpi-rate-up {
-      border-color: var(--gg-positive) !important;
-      background: rgba(31, 138, 101, 0.22) !important;
-      box-shadow: 0 0 0 2px rgba(31, 138, 101, 0.35);
-    }
-    .kpi-rate-btn.is-selected.kpi-rate-down {
-      border-color: var(--gg-negative) !important;
-      background: rgba(207, 45, 86, 0.18) !important;
-      box-shadow: 0 0 0 2px rgba(207, 45, 86, 0.35);
-    }
+    .kpi-rate-btns { display: none !important; }
+    .kpi-rate-btn { display: none !important; }
     .kpi-rate-note {
       display: flex; flex-direction: column; gap: 0.25rem;
       padding: 0 0.15rem 0.15rem; margin: 0;
@@ -2187,6 +2163,8 @@
     }
     .card.status-muted .card-title { color: var(--gg-brown-muted); }
     .card.publish-planning { border-style: dashed; }
+    .card.card-header-only .card-header { margin-bottom: 0; }
+    .card.card-header-only .card-body { padding-bottom: 0.15rem; }
     .publish-status-badge {
       display: inline-block; margin-left: 0.45rem; vertical-align: middle;
       font-size: var(--font-min-rem); font-weight: 800; text-transform: uppercase;
@@ -2875,7 +2853,6 @@
                     </th>
                     <th class="toc-col-project" scope="col">Project</th>
                     <th class="toc-col-blurb" scope="col">Value add</th>
-                    <th class="toc-col-icons" scope="col">Icons</th>
                   </tr>
                 </thead>
                 <tbody id="toc-list"></tbody>
@@ -2940,7 +2917,7 @@
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260716-live-fix"></script>
   <script src="kpi-report.js?v=20260715-client-value-baseline-v1"></script>
-  <script src="metrics-feedback.js?v=20260715-thumbs-v6"></script>
-  <script src="app.js?v=20260715-client-value-baseline-v1"></script>
+  <script src="metrics-feedback.js?v=20260715-comments-off"></script>
+  <script src="app.js?v=20260715-desc-icons-right"></script>
 </body>
 </html>

@@ -49,9 +49,27 @@
   ];
 
   function isRequiredProject(item, isRetainer) {
-    if (isRetainer || item.id === "RETAINER" || item.category === "Retainer") return true;
+    if (!item) return false;
+    if (isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
+      const st = String(item.status || "required").toLowerCase();
+      return st.includes("required") || st.includes("ongoing");
+    }
+    return String(item.status || "").toLowerCase().includes("required");
+  }
+
+  /** INDEX Status → default cart: Required + Recommended (not available / planning / etc.). */
+  function isIndexDefaultSelected(item, isRetainer) {
+    if (!item) return false;
+    if (isRequiredProject(item, isRetainer)) return true;
     const st = String(item.status || "").toLowerCase();
-    return st.includes("required");
+    return st.includes("recommended");
+  }
+
+  function fitScoreLabel(item, isRetainer) {
+    if (!item || isRequiredProject(item, isRetainer)) return "—";
+    const scoreRaw = computeProjectScore(item);
+    if (scoreRaw == null || scoreRaw <= -999) return "—";
+    return String(scoreRaw);
   }
 
   function findProjectById(id) {
@@ -112,6 +130,10 @@
     const item = findProjectById(id);
     if (!item) return false;
     const isRetainer = !!item.isRetainer;
+    if (!add && isRequiredProject(item, isRetainer)) {
+      if (!opts?.silent) showToast("Required items stay in the cart", true);
+      return false;
+    }
     if (add && !canSelectProject(item, isRetainer)) {
       if (!opts?.silent) {
         showToast("AB – Q: answer Andrew's question before adding to cart", true);
@@ -122,7 +144,7 @@
     }
     if (isRetainer) {
       if (add) state.retainer = true;
-      else if (!isRequiredProject(item, true)) state.retainer = false;
+      else state.retainer = false;
     } else {
       if (add) state.projects.add(id);
       else state.projects.delete(id);
@@ -151,12 +173,6 @@
   }
 
   const REQUIRED_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
-
-  const ACCOUNT_DATA_ICON = "assets/gg-shield-emblem.png";
-
-  function accountDataBadgeImg() {
-    return `<img class="pav-law-shield-img" src="${ACCOUNT_DATA_ICON}" alt="" width="24" height="29">`;
-  }
 
   const VALUE_ICON_SVGS = {
     foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="17" width="7" height="4.5" rx="0.5"/><rect x="9.5" y="17" width="7" height="4.5" rx="0.5"/><rect x="17" y="17" width="6" height="4.5" rx="0.5"/><rect x="5" y="11.5" width="7" height="4.5" rx="0.5"/><rect x="13.5" y="11.5" width="7" height="4.5" rx="0.5"/><rect x="1" y="6" width="7" height="4.5" rx="0.5"/><rect x="9.5" y="6" width="7" height="4.5" rx="0.5"/><path d="M18 2.5 21.5 6"/><path d="M14.5 6.5 20 12"/><path d="M17.5 3.5h4v4"/></svg>`,
@@ -287,8 +303,7 @@
     referrals: ["#16", "#17"],
     efficiency: ["#01", "#10", "#19", "#28"],
     intake: ["#09", "#21", "#23"],
-    creative: ["#08", "#14"],
-    "account-data": ["#01", "#12", "#15", "#21"]
+    creative: ["#08", "#14"]
   };
 
   function iconMatchText(item) {
@@ -354,6 +369,10 @@
     if (s.includes("draft") || s.includes("outline")) return "draft";
     if (s.includes("hold")) return "onhold";
     if (s.includes("blocked")) return "blocked";
+    if (s.includes("required")) return "required";
+    if (s.includes("recommended")) return "recommended";
+    if (s.includes("launched")) return "launched";
+    if (s.includes("planning")) return "planning";
     if (s.includes("ongoing")) return "ongoing";
     if (s.includes("wip")) return "wip";
     return "available";
@@ -441,9 +460,9 @@
     return getValueIcons(item).some(v => v.id === "leads");
   }
 
-  /** Best-fit score on a named 0–100 scale (see SCORE_WEIGHTS / INDEX.md). */
+  /** Best-fit score on a named 0–100 scale (see SCORE_WEIGHTS / INDEX.md). Required items are not scored. */
   function computeProjectScore(item) {
-    if (isCompletedStatus(item) || item.monthlyOnly) return -999;
+    if (!item || isRequiredProject(item, !!item.isRetainer) || isCompletedStatus(item) || item.monthlyOnly) return -999;
     const W = SCORE_WEIGHTS;
     let score = 0;
 
@@ -480,6 +499,7 @@
 
   function topScoredProjects(limit) {
     return activeOptionalProjects()
+      .filter(item => !isRequiredProject(item, false))
       .map(item => ({ item, score: computeProjectScore(item) }))
       .filter(x => x.score > 0)
       .sort((a, b) => b.score - a.score)
@@ -510,7 +530,7 @@
       <div class="do-next-head-copy">
         <h3>Pav's Priority Project Picklist</h3>
         <p class="do-next-blurb">${hasCart
-          ? "Your selected projects — Fit is best-fit / impact (higher is better). Uncheck to remove. Fees appear after you review &amp; submit."
+          ? "Defaults follow INDEX Status (Required + Recommended). Fit is for optional picks only — Required shows —. Uncheck non-required to remove. Fees appear after you review &amp; submit."
           : (asked
             ? "Best-fit from your survey — add projects from Outlines or cards below. Fees appear on the review page."
             : "Answer Gilbert’s survey on the left for a shortlist, or add projects below. Fees appear on the review page.")}</p>
@@ -534,7 +554,7 @@
               <a href="#project-${item.id}">${escapeHtml(item.title)}</a>
               <span class="do-next-item-blurb">${escapeHtml(elevatorPitch(item))}</span>
             </div>
-            <span class="do-next-score">score ${score}</span>
+            <span class="do-next-score">${score <= -999 ? "—" : `score ${score}`}</span>
           </li>`
         ).join("")}</ol>`;
       }
@@ -864,27 +884,17 @@
     return `<span class="value-icons">${icons.map(valueIconMarkup).join("")}</span>`;
   }
 
-  function accountDataIconHtml(item) {
-    if (!item.backedMetric) return "";
-    const label = item.backedMetric.label || "Verified account data";
-    const src = item.backedMetric.source ? ` (${item.backedMetric.source})` : "";
-    const tip = escapeHtml(label + src);
-    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${accountDataBadgeImg()}</span>`;
-  }
-
   function cardCornerIconsHtml(item, isRetainer, inline) {
     const valueHtml = valueIconsHtml({ ...item, isRetainer });
-    const dataHtml = accountDataIconHtml(item);
-    if (!valueHtml && !dataHtml) return "";
+    if (!valueHtml) return "";
     const cls = inline ? "card-icons-inline" : "card-icons-corner";
-    return `<div class="${cls}">${valueHtml}${dataHtml}</div>`;
+    return `<div class="${cls}">${valueHtml}</div>`;
   }
 
   function itemMatchesIconFilters(item) {
     if (!state.iconFilters.length) return true;
-    if (state.iconFilters.includes("account-data") && item.backedMetric) return true;
     const iconIds = getValueIcons(item).map(i => i.id);
-    return state.iconFilters.some(f => f !== "account-data" && iconIds.includes(f));
+    return state.iconFilters.some(f => iconIds.includes(f));
   }
 
   function toggleIconFilter(id) {
@@ -925,11 +935,7 @@
       VALUE_ICON_DEFS.map(d => {
         const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
         return `<button type="button" class="key-item key-filter-btn key-filter-${d.id}${active}" data-icon-filter="${d.id}">${valueIconMarkup(d)}<span class="key-item-meta"><span class="key-item-label">${escapeHtml(d.label)}</span>${kpiHintHtml(d.id)}</span></button>`;
-      }).join("") +
-      (() => {
-        const active = state.iconFilters.includes("account-data") ? " filter-active" : "";
-        return `<button type="button" class="key-item key-filter-btn key-filter-account-data${active}" data-icon-filter="account-data"><span class="account-data-shield key-shield">${accountDataBadgeImg()}</span><span class="key-item-meta"><span class="key-item-label">Account data</span>${kpiHintHtml("account-data")}</span></button>`;
-      })();
+      }).join("");
     el.querySelectorAll(".key-filter-btn").forEach(btn => {
       btn.addEventListener("click", e => {
         if (e.target.closest(".kpi-ref-link")) return;
@@ -955,25 +961,6 @@
     requestAnimationFrame(() => {
       window.KPI_REPORT?.focusKpi?.(id);
     });
-  }
-
-  function getProjectKpiIds(item) {
-    const ids = new Set(item.kpiRefs || []);
-    getValueIcons(item).forEach(icon => {
-      (ICON_KPI_MAP[icon.id] || []).forEach(k => ids.add(k));
-    });
-    if (item.backedMetric) {
-      (ICON_KPI_MAP["account-data"] || []).forEach(k => ids.add(k));
-    }
-    return [...ids].sort((a, b) => parseInt(a.slice(1), 10) - parseInt(b.slice(1), 10));
-  }
-
-  function projectKpiRefsHtml(item) {
-    const ids = getProjectKpiIds(item);
-    if (!ids.length) return "";
-    return `<div class="card-kpi-refs" aria-label="Related KPIs">${ids.map(id =>
-      `<a href="#" class="kpi-ref-link" data-kpi="${id}">${id}</a>`
-    ).join("")}</div>`;
   }
 
   function isItemSelected(item) {
@@ -1192,6 +1179,13 @@
   function openProjectDescription(id) {
     if (!id) return;
     if (id !== "RETAINER") {
+      const item = findProjectById(id);
+      if (item && isPlanningPublish(item)) {
+        requestAnimationFrame(() => {
+          document.getElementById(`project-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        return;
+      }
       state.expanded.add(id);
       saveState();
       renderAllCards();
@@ -1607,45 +1601,90 @@
     return "";
   }
 
-  function cardSummaryHtml(item, iconsHtml) {
-    const tldr = itemTldr(item);
-    const iconsRow = iconsHtml
-      ? `<div class="card-summary-icons">${iconsHtml}</div>`
-      : "";
-    return `<div class="card-summary">
-      ${iconsRow}
-      <h4 class="card-summary-label">Value Added</h4>
-      <p class="card-tldr">${projectTextToHtml(tldr)}</p>
-      ${valueAddedListHtml(item)}
-      ${projectKpiRefsHtml(item)}
+  /** Prefer a short bullet list from Value Added + Description (deduped). */
+  function conciseDescriptionBullets(item) {
+    const seen = new Set();
+    const out = [];
+    const push = raw => {
+      let t = cleanBusinessText(String(raw || "").replace(/^Deliverable:\s*/i, "").trim());
+      t = t.replace(/^[-•*]\s*/, "").trim();
+      if (!t || isExecutionBlurb(t)) return;
+      const key = t.toLowerCase().replace(/\s+/g, " ").slice(0, 72);
+      if (seen.has(key)) return;
+      seen.add(key);
+      out.push(t);
+    };
+
+    valueAddedBullets(item).forEach(push);
+
+    const desc = fullDescriptionText(item);
+    if (desc) {
+      const lines = String(desc)
+        .split(/\n+/)
+        .map(l => l.replace(/^[-•*\d.)\s]+/, "").trim())
+        .filter(Boolean);
+      if (lines.length > 1) {
+        lines.forEach(push);
+      } else if (!out.length) {
+        const sents = String(desc).match(/[^.!?]+[.!?]+/g) || [desc];
+        sents.slice(0, 4).forEach(s => push(s.trim()));
+      } else {
+        const sents = String(desc).match(/[^.!?]+[.!?]+/g) || [];
+        sents.slice(0, 2).forEach(s => {
+          const t = s.trim();
+          const overlap = out.some(b => {
+            const a = b.toLowerCase().slice(0, 32);
+            const c = t.toLowerCase().slice(0, 32);
+            return a && c && (b.toLowerCase().includes(c) || t.toLowerCase().includes(a));
+          });
+          if (!overlap) push(t);
+        });
+      }
+    }
+
+    if (!out.length) {
+      const tldr = itemTldr(item);
+      if (tldr) push(tldr);
+    }
+
+    return out.slice(0, 6);
+  }
+
+  function conciseDescriptionBulletsHtml(item) {
+    const bullets = conciseDescriptionBullets(item);
+    if (!bullets.length) return "";
+    return `<ul class="card-objectives card-summary-bullets">${bullets.map(b =>
+      `<li>${mdLinksToHtml(b)}</li>`
+    ).join("")}</ul>`;
+  }
+
+  function progressHtml(item) {
+    const done = (item.completedItems || []).map(t =>
+      `<li><span class="progress-check done" aria-hidden="true">✓</span><span>${escapeHtml(t)}</span></li>`
+    ).join("");
+    const todo = (item.inProgressItems || []).map(t =>
+      `<li><span class="progress-check open" aria-hidden="true"></span><span>${escapeHtml(t)}</span></li>`
+    ).join("");
+    if (!done && !todo) return "";
+    return `<div class="progress-split card-progress-lists">
+      ${todo ? `<div class="progress-col progress-todo"><h4>To Do</h4><ul class="progress-list">${todo}</ul></div>` : ""}
+      ${done ? `<div class="progress-col progress-completed"><h4>Completed</h4><ul class="progress-list">${done}</ul></div>` : ""}
     </div>`;
   }
 
-  function fullDescriptionHtml(item) {
-    const combined = fullDescriptionText(item);
-    if (!combined) return "";
-    const body = combined.includes("<a ")
-      ? combined
-      : marketingEducationToHtml(combined);
-    return `<div class="card-description">${body}</div>`;
-  }
-
-  function cardDescriptionBlockHtml(item) {
-    const full = fullDescriptionHtml(item);
-    if (!full) return "";
-    return `<hr class="card-page-break" aria-hidden="true">
-      <div class="card-description-block">
-        <h4 class="card-summary-label">Description</h4>
-        ${full}
-      </div>`;
-  }
-
-  function cardDetailBodyHtml() {
-    return "";
-  }
-
   function descriptionHtml(item, iconsHtml) {
-    return `${cardSummaryHtml(item, iconsHtml)}${cardDescriptionBlockHtml(item)}`;
+    const iconsRow = iconsHtml
+      ? `<div class="card-summary-icons">${iconsHtml}</div>`
+      : "";
+    const progress = progressHtml(item);
+    return `<div class="card-summary card-merged-desc">
+      <div class="card-desc-head">
+        <h4 class="card-summary-label">Description</h4>
+        ${iconsRow}
+      </div>
+      ${conciseDescriptionBulletsHtml(item)}
+      ${progress ? `<div class="card-progress-under">${progress}</div>` : ""}
+    </div>`;
   }
 
   function marketingEducationToHtml(text) {
@@ -1656,24 +1695,14 @@
       .join("");
   }
 
-  function progressHtml(item) {
-    const done = (item.completedItems || []).map(t =>
-      `<li><span class="progress-check done" aria-hidden="true">✓</span><span>${escapeHtml(t)}</span></li>`
-    ).join("");
-    const wip = (item.inProgressItems || []).map(t =>
-      `<li><span class="progress-check open" aria-hidden="true"></span><span>${escapeHtml(t)}</span></li>`
-    ).join("");
-    if (!done && !wip) return "";
-    return `<div class="progress-split">
-      ${wip ? `<div class="progress-col progress-wip"><h4>WIP</h4><ul class="progress-list">${wip}</ul></div>` : ""}
-      ${done ? `<div class="progress-col progress-completed"><h4>Completed</h4><ul class="progress-list">${done}</ul></div>` : ""}
-    </div>`;
-  }
-
   function expandBtnLabel(item, exp) {
     const hasProgress = hasPartialProgress(item);
-    if (hasProgress) return exp ? "Hide WIP & completed" : "WIP & completed";
+    if (hasProgress) return exp ? "Hide To Do & completed" : "To Do & completed";
     return exp ? "Hide details" : "Show details";
+  }
+
+  function cardDetailBodyHtml() {
+    return "";
   }
 
   function cardFeaturedImageHtml(item) {
@@ -1829,8 +1858,6 @@
     s = s.replace(/<a\s+[^>]*href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi, (_m, _url, label) => String(label).trim());
     s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label) => String(label).trim());
     s = escapeHtml(s)
-      .replace(/KPI\s+(#\d{2})/gi, (_m, id) =>
-        `<a href="#" class="kpi-ref-link" data-kpi="${id.toLowerCase()}">${id}</a>`)
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
     return s;
   }
@@ -1840,28 +1867,38 @@
   }
 
   function ensureRequiredMaintenance() {
-    state.retainer = true;
-  }
-
-  function isInRecommendedPackage(item) {
-    const pkg = PROJECT_DATA.recommendedPackage;
-    if (!pkg) return false;
-    if (item.isRetainer || item.id === "RETAINER") return !!pkg.retainer;
-    return (pkg.projectIds || []).includes(item.id);
-  }
-
-  function applyRecommendedPackage() {
-    const pkg = PROJECT_DATA.recommendedPackage;
-    if (!pkg) return;
-    if (pkg.retainer) {
+    if (isRequiredProject(RETAINER, true)) {
       state.retainer = true;
       state.recommended.add("RETAINER");
     }
-    (pkg.projectIds || []).forEach(id => {
-      trySetProjectInCart(id, true, { silent: true });
-      if (state.projects.has(id)) state.recommended.add(id);
+    PROJECTS.forEach(p => {
+      if (!isRequiredProject(p, false)) return;
+      trySetProjectInCart(p.id, true, { silent: true });
+      if (state.projects.has(p.id)) state.recommended.add(p.id);
+    });
+  }
+
+  function isInRecommendedPackage(item) {
+    return isIndexDefaultSelected(item, !!item.isRetainer);
+  }
+
+  /** Fresh cart from INDEX Status: Required (locked) + Recommended. */
+  function applyIndexDefaultSelections() {
+    if (isIndexDefaultSelected(RETAINER, true)) {
+      state.retainer = true;
+      state.recommended.add("RETAINER");
+    }
+    PROJECTS.forEach(p => {
+      if (!isIndexDefaultSelected(p, false)) return;
+      if (isCompletedStatus(p) || isPlanningPublish(p)) return;
+      trySetProjectInCart(p.id, true, { silent: true });
+      if (state.projects.has(p.id)) state.recommended.add(p.id);
     });
     ensureRequiredMaintenance();
+  }
+
+  function applyRecommendedPackage() {
+    applyIndexDefaultSelections();
   }
 
   function renderPackageIntro() {
@@ -2046,6 +2083,7 @@
     const goal = state.goalText.trim();
     const pool = getAllItems().filter(item => {
       if (isCompletedStatus(item)) return false;
+      if (isRequiredProject(item, !!item.isRetainer)) return false;
       if (item.monthlyOnly && !isItemSelected(item)) return false;
       if (item.isRetainer) return true;
       if (isPlanningPublish(item) && !isItemSelected(item)) return false;
@@ -2126,7 +2164,6 @@
         <td class="toc-col-priority"><span class="toc-priority">${editControls}${priorityTocHtml(item, displayPriority)}</span></td>
         <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
         <td class="toc-col-blurb toc-blurb">${escapeHtml(blurb)}</td>
-        <td class="toc-col-icons toc-value">${valueIconsHtml(item)}</td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
@@ -2248,14 +2285,7 @@
         showToast(`Added ${added} project${added === 1 ? "" : "s"} to your cart`);
       }
     } else {
-      const pkg = PROJECT_DATA.recommendedPackage;
-      (pkg?.projectIds || []).forEach(id => {
-        const p = PROJECTS.find(x => x.id === id);
-        if (p && itemPassesCostPriorityFilter({ ...p, isRetainer: false })) {
-          trySetProjectInCart(id, true, { silent: true });
-          if (state.projects.has(id)) state.recommended.add(id);
-        }
-      });
+      applyIndexDefaultSelections();
     }
 
     saveState();
@@ -2277,7 +2307,7 @@
     state.projects = new Set();
     state.recommended = new Set();
     state.doNextVisible = false;
-    ensureRequiredMaintenance();
+    applyIndexDefaultSelections();
     renderGilbertChat();
     renderValueIconKey();
     suggestPlan(true);
@@ -2287,12 +2317,13 @@
     /* status shown via search suggestions + invoice summary */
   }
 
+  const CART_STORAGE_KEY = "pav-project-picker-v3";
+
   function loadState() {
     try {
-      const raw = localStorage.getItem("pav-project-picker");
+      const raw = localStorage.getItem(CART_STORAGE_KEY);
       if (!raw) {
-        applyRecommendedPackage();
-        ensureRequiredMaintenance();
+        applyIndexDefaultSelections();
         return;
       }
       const saved = JSON.parse(raw);
@@ -2322,7 +2353,7 @@
       if (typeof saved.surveyStep === "number") state.surveyStep = saved.surveyStep;
       if (saved.surveyDone != null) state.surveyDone = !!saved.surveyDone;
       if (Array.isArray(saved.iconFilters)) {
-        state.iconFilters = saved.iconFilters;
+        state.iconFilters = saved.iconFilters.filter(f => f && f !== "account-data");
       }
       if (saved.doNextVisible != null) {
         state.doNextVisible = !!saved.doNextVisible;
@@ -2342,7 +2373,7 @@
     ensureRequiredMaintenance();
     state.submitterEmail = document.getElementById("submitted-email").value;
     syncPaymentTermsFromDom();
-    localStorage.setItem("pav-project-picker", JSON.stringify({
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({
       retainer: state.retainer,
       projects: [...state.projects],
       expanded: [...state.expanded],
@@ -2360,6 +2391,7 @@
       doNextVisible: state.doNextVisible,
       clientPriorityIds: state.clientPriorityIds
     }));
+    try { localStorage.removeItem("pav-project-picker"); } catch (e) {}
     updateSubmitButtons();
   }
 
@@ -2531,7 +2563,11 @@
   }
 
   function isExpandAll() {
-    const ids = allProjectIds();
+    const ids = allProjectIds().filter(id => {
+      if (id === "RETAINER") return true;
+      const item = findProjectById(id);
+      return item && !isPlanningPublish(item);
+    });
     return ids.length > 0 && ids.every(id => state.expanded.has(id));
   }
 
@@ -2544,8 +2580,17 @@
   }
 
   function setExpandAll(open) {
-    if (open) allProjectIds().forEach(id => state.expanded.add(id));
-    else state.expanded.clear();
+    if (open) {
+      allProjectIds().forEach(id => {
+        if (id === "RETAINER") {
+          state.expanded.add(id);
+          return;
+        }
+        const item = findProjectById(id);
+        if (item && isPlanningPublish(item)) return;
+        state.expanded.add(id);
+      });
+    } else state.expanded.clear();
     saveState();
     renderAllCards();
   }
@@ -2559,7 +2604,9 @@
     const id = item.id;
     const required = isRequiredMaintenance(item, isRetainer);
     const sel = isRetainer ? state.retainer : state.projects.has(id);
-    const exp = state.expanded.has(id);
+    const unpublished = !isRetainer && isPlanningPublish(item);
+    if (unpublished) state.expanded.delete(id);
+    const exp = !unpublished && state.expanded.has(id);
     const extra = getItemFilterClasses(item, isRetainer);
     const pkgClass = isInRecommendedPackage({ ...item, isRetainer }) ? " package-included" : "";
     const iconsHtml = cardCornerIconsHtml(item, isRetainer, true) || "";
@@ -2569,9 +2616,23 @@
     const selFirst = isFirstSelected ? " selected-first" : "";
     const chkDisabled = required ? " disabled" : "";
     const mutedClass = isPlanningPublish(item) || isResearchStatus(item) || isCompletedStatus(item) ? " status-muted" : "";
-    const planningClass = isPlanningPublish(item) ? " publish-planning" : "";
+    const planningClass = unpublished ? " publish-planning card-header-only" : "";
     const abPending = hasAbQuestions(item) && !abQuestionAnswered(id);
     const abClass = abPending ? " ab-q-pending" : (hasAbQuestions(item) ? " ab-q-cleared" : "");
+
+    if (unpublished) {
+      return `
+      <div class="card${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass} ${sel ? "selected" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
+        <div class="card-header">
+          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
+            <div class="card-body">
+              <div class="card-top-row">
+                <div class="card-title"><span>${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
+              </div>
+            </div>
+        </div>
+      </div>`;
+    }
 
     return `
       <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
@@ -2590,7 +2651,6 @@
           </div>
         </div>
         <div class="card-detail">
-          ${progressHtml(item)}
           ${campaignMetricsHtml(item)}
           ${cardDetailBodyHtml(item)}
         </div>
@@ -3154,14 +3214,14 @@
       const required = item ? isRequiredMaintenance(item, isRetainer) : false;
       const req = item ? requiredMarkerHtml(item, isRetainer) : "";
       const chkDisabled = required ? " disabled" : "";
-      const scoreRaw = item ? computeProjectScore(item) : null;
-      const scoreLabel = scoreRaw == null || scoreRaw <= -999 ? "—" : String(scoreRaw);
+      const scoreLabel = item ? fitScoreLabel(item, isRetainer) : "—";
+      const scoreTitle = required ? "Required — no fit score" : "Best-fit / impact — higher is better";
       return `<tr data-id="${escapeHtml(row.id)}" data-retainer="${isRetainer}" data-required="${required}">
         <td class="col-select">
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(row.id)}" aria-label="Keep ${escapeHtml(row.title)} in cart"${chkDisabled} checked>
         </td>
         <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
-        <td class="col-score" title="Best-fit / impact — higher is better">${escapeHtml(scoreLabel)}</td>
+        <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
       </tr>`;
     }).join("");
     const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;
@@ -3170,7 +3230,7 @@
         <tr>
           <th class="col-select" scope="col">Add</th>
           <th class="col-project" scope="col">Project</th>
-          <th class="col-score" scope="col" title="Best-fit / impact — higher is better">Fit</th>
+          <th class="col-score" scope="col" title="Best-fit / impact — higher is better. Required items show —.">Fit</th>
         </tr>
       </thead>
       <tbody>
