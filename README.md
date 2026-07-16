@@ -21,8 +21,7 @@ Do not edit `projects-data.js` — edit `content/**/*.md` only; build regenerate
 
 ## Data pulls (local only)
 
-**Click paths:** [DATA-EXPORT-CLICKPATHS.md](DATA-EXPORT-CLICKPATHS.md)  
-**Validate:** `npm run validate-data` → [DATA-VALIDATION.md](DATA-VALIDATION.md) (aggregates only — no phones in report)  
+**Data pulls:** [DATA-EXPORT-CLICKPATHS.md](DATA-EXPORT-CLICKPATHS.md) · [CLIENT-VALUE-BASELINE.md](CLIENT-VALUE-BASELINE.md) (#28 mean fee) · validate: `npm run validate-data` → [DATA-VALIDATION.md](DATA-VALIDATION.md)  
 Raw CSVs stay in `Ad Reports/exports/` — gitignored; not deployed with Gilbert Guide.
 
 ## Deploy (Option 2 — monorepo)

@@ -204,7 +204,7 @@ export const CAMPAIGN_METRICS = {
     recommendedMetrics: [
       "KPI #01 total leads · #02 new cases · #21 answer rate",
       "Cost/call Military (~$58–67) · NTGUILT CPL (~$6.82 click / call TBD)",
-      "Missed revenue #19 — unanswered calls × avg case fee ($4,800)",
+      "Missed revenue #19 — unanswered calls × avg case fee ($5,587)",
       "MoM delta on platform spend, agency spend, and revenue"
     ],
     blockers: [

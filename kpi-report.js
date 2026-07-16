@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260715-verified-outline-v1";
+  const RENDER_VER = "20260715-client-value-baseline-v1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -25,23 +25,27 @@
     "#15": {
       file: "Ad Reports/exports/2026-07-11 · Campaign report (15).csv",
       fields: "Cost, Clicks → CPL (Jun 11 – Jul 10, 2026)"
+    },
+    "#28": {
+      file: "Ad Reports/exports/mycase/as-of-2026-07-01/contact_report_task_export.csv",
+      fields: "Contact group=Client · Pre-Trial Flat Fee / flat / trial / retainer (mean $5,587 · n=142) · see CLIENT-VALUE-BASELINE.md"
     }
   };
   const DATA = {
     period: "June 2026",
-    asOf: "2026-07-11",
-    source: "Ad Reports/exports/2026-07-11",
+    asOf: "2026-07-15",
+    source: "Ad Reports/exports · MyCase contact_report 2026-07-01 (#28)",
     kpis: [
       { id: "#01", label: "Total leads", value: "124", target: "110", mom: "+18%", verified: true, hit: true, gauge: true },
       { id: "#02", label: "New cases", value: "9", target: "12", mom: "−25%", verified: false, alert: false, gauge: true },
       { id: "#12", label: "Avg cost/call", value: "$72", target: "< $100", mom: null, verified: true, targetBar: true, lowerIsBetter: true },
       { id: "#15", label: "CPL", value: "$142", target: "≤ $120", mom: null, verified: true, alert: true, targetBar: true, lowerIsBetter: true },
       /* Team goals: #19 lost-tracker first in render, then #21, then DUI */
-      { id: "#19", label: "Missed revenue", value: "$4,200/mo", target: "$0", mom: null, verified: false, alert: true, lostTracker: true },
+      { id: "#19", label: "Missed revenue", value: "$6,060/mo", target: "$0", mom: null, verified: false, alert: true, lostTracker: true },
       { id: "#21", label: "Answered Calls", value: "69%", target: "≥ 90%", mom: "+2%", verified: false, alert: true, gauge: true, goal: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
-      { id: "#28", label: "Avg case fee", value: "$3,870", target: "Q2 review", mom: null, verified: false },
+      { id: "#28", label: "Avg case fee", value: "$5,587", target: "MyCase mean", mom: null, verified: true },
       { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, letterGrade: true }
     ],
     channels: [
@@ -74,12 +78,23 @@
       priorMissedPct: 33,
       missedMomPp: -2,
       monthlyCalls: 54,
-      avgCaseFee: 3870,
+      avgCaseFee: 5587,
       leadToCaseRate: 9 / 124,
-      monthlyLost: 4200,
-      priorMonthlyLost: 4800,
-      cumulativeYtd: 27300
+      /* Scaled from prior $4,200/$4,800/$27,300 when #28 moved 3870→5587 (CLIENT-VALUE-BASELINE.md) */
+      monthlyLost: 6060,
+      priorMonthlyLost: 6930,
+      cumulativeYtd: 39400
     },
+    /* KPI #29 support — Client + fee means · n≥5 · see CLIENT-VALUE-BASELINE.md */
+    feeByPractice: [
+      { name: "Sex Assault / Sex Offense", n: 6, mean: 9500 },
+      { name: "Theft / Property", n: 12, mean: 7333 },
+      { name: "Assault / Menacing", n: 20, mean: 6538 },
+      { name: "Domestic Violence / DV", n: 52, mean: 5414 },
+      { name: "Criminal Defense (other)", n: 11, mean: 4582 },
+      { name: "Probation Revocation", n: 5, mean: 4500 },
+      { name: "DUI / DWAI / Traffic", n: 24, mean: 3542 }
+    ],
     costPerCall: [
       { channel: "All campaigns (avg)", cost: "$72" },
       { channel: "Military", cost: "$41" },
@@ -1191,8 +1206,8 @@
     "#17": "Referral channels only (past-client, friend/family, attorney cross-referral, Yelp, Nextdoor). GBP is a lead source — not listed here.",
     "#21": "31% missed (was 33%) — est. $4,200/mo lost, $27,300 YTD cumulative. B2 phone + Casey coverage is highest-ROI fix before more spend.",
     "#22": "8 min speed-to-lead — HubSpot workflow gap; B1 sprint target <5 min.",
-    "#28": "Blended avg case fee $3,870 — feeds revenue and missed-revenue (#19) math.",
-    "#19": "Ongoing tracker: unanswered share of calls × lead→case × avg fee ≈ monthly money left on table. Improves as #21 answer rate rises.",
+    "#28": "MyCase Client mean fee $5,587 (n=142 · as of 2026-07-01 export). Contracted/quoted fields — not cash collected. Practice means in CLIENT-VALUE-BASELINE.md. Feeds #19 missed-revenue math.",
+    "#19": "Ongoing tracker: unanswered share of calls × lead→case × avg fee ($5,587) ≈ $6,060/mo left on table. Improves as #21 answer rate rises. Scaled when #28 updated Jul 2026.",
     "#BHI": "Composite business health index — letter grade from 0–100 score (C- at 71%, −3% MoM). Placeholder formula until live ops weights wire — answer rate, CPL, cases, and intake drive the score."
   };
 
