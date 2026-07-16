@@ -91,6 +91,7 @@
     ].filter(Boolean).join(" ");
   }
 
+  /* Colors live in index.html :root --vi-* + .value-icon.icon-{id}. Filter + TOC share those classes — never hardcode badge colors here. */
   function valueIconMarkup(def) {
     const svg = VALUE_ICON_SVGS[def.svgId || def.id] || VALUE_ICON_SVGS.general;
     return `<span class="value-icon ${def.cls}" title="${escapeHtml(def.label)}" aria-label="${escapeHtml(def.label)}">${svg}</span>`;
@@ -533,9 +534,9 @@
     }
     const bullets = valueAddedBullets(item);
     if (bullets.length) {
-      parts.push(`<ul class="card-objectives">${bullets.map(b =>
+      parts.push(`<div class="card-tldr"><ul class="card-objectives">${bullets.map(b =>
         `<li>${escapeHtml(String(b).replace(/^Deliverable:\s*/i, "").trim())}</li>`
-      ).join("")}</ul>`);
+      ).join("")}</ul></div>`);
     }
     const edu = item.marketingEducation && String(item.marketingEducation).trim();
     if (edu) {
@@ -776,7 +777,7 @@
     const top5 = picked.slice(0, 5);
     el.hidden = false;
     el.innerHTML = `<div class="toc-condensed-inner">
-      <h4 class="toc-condensed-title">Gilbert's picks — quick view</h4>
+      <h4 class="toc-condensed-title">Pav priorities — quick view</h4>
       <ol class="toc-condensed-list">${top5.map(item =>
         `<li><a href="#project-${item.id}">${escapeHtml(item.title)}</a><span class="toc-condensed-blurb">${escapeHtml(briefValueAdd(item))}</span></li>`
       ).join("")}</ol>
@@ -1207,10 +1208,37 @@
     el.innerHTML = "Live webhook not configured yet — submit still works: your selections download as JSON and are saved in this browser. For automatic email + Sheet logging, add GitHub Secret <strong>PAV_PICKER_WEBHOOK_URL</strong> and redeploy.";
   }
 
+  function selectionCountLabel() {
+    const lines = getInvoiceLineItems();
+    const n = lines.length;
+    if (!n) return "Continue to submit";
+    return `Continue to submit · ${n} item${n === 1 ? "" : "s"}`;
+  }
+
+  function renderConfirmSelectionSummary() {
+    const el = document.getElementById("confirm-selection-summary");
+    if (!el) return;
+    const lines = getInvoiceLineItems();
+    if (!lines.length) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+    el.hidden = false;
+    el.innerHTML = `<h3>Your selections</h3>
+      <ol class="confirm-selection-list">${lines.map(row =>
+        `<li><strong>${escapeHtml(row.title)}</strong>${row.fee ? ` · ${escapeHtml(row.fee)}` : ""}</li>`
+      ).join("")}</ol>
+      <p class="confirm-selection-meta">${lines.length} item${lines.length === 1 ? "" : "s"} selected · deposit billed separately</p>`;
+  }
+
   function updateSubmitButtons() {
     CONFIG = getConfig();
     const cont = document.getElementById("continue-to-confirm");
-    if (cont) cont.disabled = !canContinue();
+    if (cont) {
+      cont.disabled = !canContinue();
+      cont.textContent = selectionCountLabel();
+    }
     const submit = document.getElementById("submit-selections");
     if (submit) {
       submit.disabled = !canSubmit();
@@ -1223,6 +1251,7 @@
     if (!canContinue()) return;
     const guideImg = document.getElementById("confirm-gilbert");
     if (guideImg) guideImg.src = GILBERT_ICON;
+    renderConfirmSelectionSummary();
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
     updateInvoiceScheduleAmount();

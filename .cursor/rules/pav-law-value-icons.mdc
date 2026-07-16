@@ -1,0 +1,25 @@
+---
+description: Value icon colors — one map only for Gilbert Guide filter tiles and TOC badges
+globs: gilded-goose/clients/pav-law/project-picker/**/{index.html,app.js,BRANDING-LAYOUT.md}
+alwaysApply: false
+---
+
+# Value icon colors — one map only
+
+Filter-by-value tiles and Project Outlines table **ICONS** badges must be pixel-identical in color for each icon id.
+
+## Source of truth
+
+- `index.html` `:root` → `--vi-{id}-bg`, `--vi-{id}-fg`, `--vi-{id}-border` (and `-chip` for filter button soft tint)
+- Applied via `.value-icon.icon-{id}` (same markup from `valueIconMarkup()` / `VALUE_ICON_DEFS.cls` in `app.js`)
+- Docs: `BRANDING-LAYOUT.md` → **Value icon color map**
+
+## Never
+
+- Separate colors for filter vs `.toc-value` (no parallel hex lists)
+- Filter-only overrides that force a shared purple / white stroke on `.value-icon-key .value-icon`
+- Hardcoded badge colors in `app.js`, `projects-data.js`, or project markdown
+
+## When changing a color
+
+Edit the `--vi-*` token once; confirm filter tile badge and table badge both update. Chip backgrounds use `--vi-*-chip` only — they do not replace badge fills.
