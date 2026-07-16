@@ -6,7 +6,7 @@
   <title>Operations Dashboard</title>
   <style>
     :root {
-      /* Gilded Goose — cream, gold, brown + deep royal purple */
+      /* Gilded Goose — cream, gold, brown · royal · burnt orange · forest green (no teal) */
       --gg-gold: #c9a86c;
       --gg-gold-bright: #e3c58d;
       --gg-gold-dark: #b8860b;
@@ -20,28 +20,46 @@
       --gg-royal: #3a1a6e;
       --gg-royal-mid: #4c1d95;
       --gg-royal-light: #6d28d9;
+      --gg-royal-blue: #1e3a8a;
       --gg-royal-dim: rgba(45, 20, 84, 0.12);
       --gg-royal-border: rgba(45, 20, 84, 0.38);
+      --gg-burnt: #c45c26;
+      --gg-burnt-dark: #9a3f14;
+      --gg-burnt-bright: #e07a3d;
+      --gg-burnt-dim: rgba(196, 92, 38, 0.16);
+      --gg-forest: #2d5a3d;
+      --gg-forest-deep: #1b4332;
+      --gg-forest-bright: #40916c;
+      --gg-forest-dim: rgba(45, 90, 61, 0.14);
       --gg-gold-dim: rgba(201, 168, 108, 0.18);
       --gg-negative: #cf2d56;
-      --gg-positive: #1f8a65;
+      --gg-positive: var(--gg-forest);
       --gg-magenta: #c02670;
-      /* Pav Law peacock brand */
+      /* Chart series — royal · burnt orange · forest · soft gold */
+      --gg-series-1: var(--gg-royal);
+      --gg-series-2: var(--gg-burnt);
+      --gg-series-3: var(--gg-forest);
+      --gg-series-4: var(--gg-gold-bright);
+      --gg-head-accent: var(--gg-burnt);
+      --gg-box-border: rgba(45, 20, 84, 0.16);
+      --gg-box-shadow: 0 1px 4px rgba(45, 20, 84, 0.08);
+      /* Dark panels — royal + burnt → ink (no teal / peacock pink) */
       --pav-ink: #040810;
       --pav-ink-mid: #0a0f1a;
       --pav-ink-panel: #121a28;
-      --pav-teal: #00d4c4;
-      --pav-blue: #4d8bff;
-      --pav-violet: #7c5cff;
-      --pav-purple: #b24bf3;
       --pav-text: #e8e8ec;
-      --pav-text-muted: #9aa3b8;
-      --pav-border: rgba(0, 212, 196, 0.28);
-      --pav-border-violet: rgba(124, 92, 255, 0.38);
-      --pav-gradient-panel: radial-gradient(circle at center, #ff6aa8 0%, #7c2f74 38%, #121a28 72%, #040810 100%);
-      --pav-gradient-accent: radial-gradient(circle at center, #ff6aa8 0%, #b24bf3 36%, #121a28 72%, #040810 100%);
-      /* Legacy aliases (app.js / badges) */
-      --peacock-teal: var(--gg-gold-dark);
+      --pav-text-muted: #c4b59a;
+      --pav-border: rgba(201, 168, 108, 0.45);
+      --pav-border-gold: rgba(201, 168, 108, 0.45);
+      --pav-gradient-panel: radial-gradient(circle at center, #3a1a6e 0%, #2d1454 42%, #121a28 72%, #040810 100%);
+      --pav-gradient-accent: radial-gradient(circle at center, #c45c26 0%, #3a1a6e 42%, #121a28 72%, #040810 100%);
+      /* Deprecated aliases — former teal/peacock → GGL series */
+      --pav-teal: var(--gg-series-2);
+      --pav-blue: var(--gg-royal-blue);
+      --pav-violet: var(--gg-royal-mid);
+      --pav-purple: var(--gg-royal);
+      --pav-border-violet: rgba(76, 29, 149, 0.38);
+      --peacock-teal: var(--gg-series-2);
       --peacock-blue: var(--gg-gold);
       --peacock-violet: var(--gg-royal-mid);
       --peacock-purple: var(--gg-royal);
@@ -59,8 +77,8 @@
       --text: var(--gg-brown);
       --secondary: var(--gg-brown-muted);
       --accent-dim: var(--gg-royal-dim);
-      --green: var(--gg-royal-mid);
-      --green-dim: var(--gg-royal-dim);
+      --green: var(--gg-forest);
+      --green-dim: var(--gg-forest-dim);
       --highlight: var(--gg-royal-mid);
       --highlight-dim: var(--gg-royal-dim);
       --gradient-brand: linear-gradient(135deg, var(--gg-royal-deep) 0%, var(--gg-royal) 48%, var(--gg-royal-mid) 100%);
@@ -73,9 +91,10 @@
       --space-lg: 2rem;
       --space-xl: 2.75rem;
       /*
-       * VALUE ICON COLOR MAP (single source of truth) — v=20260714
+       * VALUE ICON COLOR MAP (single source of truth) — v=20260715-ggl
        * Filter tiles, table ICONS column, and card badges MUST all use
        * .value-icon.icon-{id} → these tokens. Never recolor one surface alone.
+       * Brand lane: royal / burnt orange / forest / cream — no teal.
        */
       --vi-foundation-bg: #f87171;
       --vi-foundation-fg: #7f1d1d;
@@ -87,34 +106,34 @@
       --vi-retainer-border: #4f46e5;
       --vi-retainer-chip: #eef2ff;
       --vi-retainer-chip-border: #c7d2fe;
-      --vi-leads-bg: #fb923c;
+      --vi-leads-bg: #e07a3d;
       --vi-leads-fg: #7c2d12;
-      --vi-leads-border: #ea580c;
-      --vi-leads-chip: #fff7ed;
-      --vi-leads-chip-border: #fed7aa;
+      --vi-leads-border: #c45c26;
+      --vi-leads-chip: #fff4ec;
+      --vi-leads-chip-border: #f5c9a8;
       --vi-crm-bg: #a78bfa;
       --vi-crm-fg: #4c1d95;
       --vi-crm-border: #7c3aed;
       --vi-crm-chip: #f5f3ff;
       --vi-crm-chip-border: #ddd6fe;
-      --vi-seo-bg: #4ade80;
-      --vi-seo-fg: #14532d;
-      --vi-seo-border: #16a34a;
-      --vi-seo-chip: #f0fdf4;
-      --vi-seo-chip-border: #bbf7d0;
+      --vi-seo-bg: #40916c;
+      --vi-seo-fg: #1b4332;
+      --vi-seo-border: #2d5a3d;
+      --vi-seo-chip: #edf5ef;
+      --vi-seo-chip-border: #b7d4c0;
       --vi-referrals-bg: #f472b6;
       --vi-referrals-fg: #831843;
       --vi-referrals-border: #db2777;
       --vi-referrals-chip: #fdf2f8;
       --vi-referrals-chip-border: #fbcfe8;
-      --vi-efficiency-bg: #2dd4bf;
-      --vi-efficiency-fg: #134e4a;
-      --vi-efficiency-border: #0d9488;
-      --vi-efficiency-chip: #f0fdfa;
-      --vi-efficiency-chip-border: #99f6e4;
-      --vi-intake-bg: #60a5fa;
+      --vi-efficiency-bg: #74a882;
+      --vi-efficiency-fg: #1b4332;
+      --vi-efficiency-border: #2d5a3d;
+      --vi-efficiency-chip: #edf5ef;
+      --vi-efficiency-chip-border: #b7d4c0;
+      --vi-intake-bg: #93c5fd;
       --vi-intake-fg: #1e3a8a;
-      --vi-intake-border: #2563eb;
+      --vi-intake-border: #1e40af;
       --vi-intake-chip: #eff6ff;
       --vi-intake-chip-border: #bfdbfe;
       --vi-creative-bg: #e879f9;
@@ -235,11 +254,14 @@
     .cockpit-title {
       margin: 0;
       font-size: clamp(2.35rem, 6vw, 3.75rem);
-      font-weight: 800; line-height: 1.05; letter-spacing: 0.01em;
-      color: #0d1b2a;
+      font-weight: 800; line-height: 1.05; letter-spacing: 0.02em;
+      color: var(--gg-royal-deep);
+      padding-bottom: 0.35rem;
+      border-bottom: 3px solid var(--gg-head-accent);
+      display: inline-block;
     }
     .cockpit-title span {
-      color: #0d1b2a;
+      color: var(--gg-royal-deep);
       background: none;
       -webkit-background-clip: unset;
       background-clip: unset;
@@ -299,48 +321,60 @@
     .cockpit-howto li:last-child { margin-bottom: 0; }
     .cockpit-howto strong { color: var(--gg-brown); font-weight: 700; }
     .picker-zone {
-      margin-bottom: var(--space-lg);
-      padding-bottom: var(--space-md);
-      border-bottom: 2px solid var(--border);
+      margin-bottom: var(--space-xl);
+      padding: 0 0 var(--space-lg);
+      border-bottom: 1px solid rgba(196, 92, 38, 0.35);
     }
     .picker-zone:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .picker-zone-label {
-      margin: 0 0 0.75rem;
-      font-size: var(--font-min-rem);
+      display: inline-block;
+      margin: 0 0 0.85rem;
+      padding: 0.28rem 0.65rem;
+      font-size: 0.72rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--gg-royal-deep);
+      letter-spacing: 0.14em;
+      color: var(--gg-paper);
+      background: var(--gg-royal-deep);
+      border-left: 3px solid var(--gg-head-accent);
+      border-radius: 0 4px 4px 0;
     }
     .picker-zone-head {
-      display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem;
-      margin: 0 0 0.75rem; flex-wrap: wrap;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 0.75rem;
+      margin: 0 0 0.85rem; flex-wrap: wrap;
+      padding: 0.65rem 0 0.75rem 0.85rem;
+      border-left: 5px solid var(--gg-head-accent);
+      background: linear-gradient(90deg, rgba(45, 20, 84, 0.1) 0%, rgba(196, 92, 38, 0.12) 45%, transparent 100%);
+      border-bottom: 1px solid rgba(196, 92, 38, 0.3);
     }
     .picker-zone-title {
       margin: 0;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: var(--gg-royal-deep);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
     .picker-zone-outlines .project-outlines-hint { margin: 0; }
     .picker-zone-blurb {
-      margin: -0.35rem 0 1rem;
-      max-width: 42rem;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--secondary);
+      margin: 0 0 1.1rem;
+      max-width: 44rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--gg-brown-muted);
       font-weight: 500;
       text-transform: none;
       letter-spacing: 0;
+      padding-left: 0.85rem;
     }
     .picker-zone-priorities .pav-guide-ask-section { margin-bottom: var(--space-md); }
-    .picker-zone-action { border-bottom: 2px solid var(--border); margin-bottom: var(--space-lg); padding-bottom: var(--space-md); }
+    .picker-zone-action { border-bottom: 1px solid rgba(196, 92, 38, 0.35); margin-bottom: var(--space-lg); padding-bottom: var(--space-md); }
     .picker-zone-action[hidden] { display: none; border: none; margin: 0; padding: 0; }
     .picker-zone-cards {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: var(--gg-paper);
+      border: 1px solid var(--gg-box-border);
       border-radius: var(--radius);
+      box-shadow: var(--gg-box-shadow);
       padding: 0 1.25rem var(--space-lg);
       margin-top: var(--space-md);
     }
@@ -1647,16 +1681,19 @@
       box-shadow: 0 1px 4px rgba(45, 20, 84, 0.08);
     }
     .kpi-section-summary {
-      cursor: pointer; padding: 0.85rem 1.15rem; list-style: none;
+      cursor: pointer; padding: 0.95rem 1.2rem; list-style: none;
       display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-      background: linear-gradient(90deg, rgba(45, 20, 84, 0.22) 0%, rgba(45, 20, 84, 0.10) 52%, rgba(45, 20, 84, 0.05) 100%);
+      background: linear-gradient(90deg, rgba(45, 20, 84, 0.16) 0%, rgba(196, 92, 38, 0.12) 48%, rgba(45, 90, 61, 0.08) 100%);
       border-bottom: 1px solid transparent;
-      border-left: 4px solid var(--gg-royal-deep);
+      border-left: 5px solid var(--gg-head-accent);
       user-select: none;
     }
-    .kpi-section[open] .kpi-section-summary { border-bottom-color: var(--border); }
+    .kpi-section[open] .kpi-section-summary {
+      border-bottom-color: rgba(196, 92, 38, 0.35);
+      background: linear-gradient(90deg, rgba(45, 20, 84, 0.2) 0%, rgba(196, 92, 38, 0.1) 55%, var(--gg-cream-panel) 100%);
+    }
     .kpi-section-summary::-webkit-details-marker { display: none; }
-    .kpi-section-summary-static { cursor: default; border-bottom-color: var(--border); }
+    .kpi-section-summary-static { cursor: default; border-bottom-color: rgba(196, 92, 38, 0.35); }
     .kpi-section-heading { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
     .kpi-section-title {
       font-size: 1.15rem; font-weight: 800; color: var(--gg-royal-deep);
@@ -2790,7 +2827,7 @@
   <script src="pages-config.js?v=20260714x"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260715-fee-est"></script>
-  <script src="kpi-report.js?v=20260714-goal-visual-v42"></script>
+  <script src="kpi-report.js?v=20260715-ggl-palette-v1"></script>
   <script src="metrics-feedback.js?v=20260715-thumbs-v6"></script>
   <script src="app.js?v=20260715-value-icons-row"></script>
 </body>

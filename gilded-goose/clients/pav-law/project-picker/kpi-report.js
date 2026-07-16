@@ -23,24 +23,24 @@
     ],
     channels: [
       { name: "Search calls", count: 54, prior: 31, mom: "+74%", spend: "$2,214", color: "#3a1a6e" },
-      { name: "LSA inbox", count: 41, prior: 38, mom: "+8%", spend: "$12,792", color: "#00d4c4" },
-      { name: "HubSpot forms", count: 29, prior: 24, mom: "+21%", spend: "$0", color: "#b8860b" }
+      { name: "LSA inbox", count: 41, prior: 38, mom: "+8%", spend: "$12,792", color: "#c45c26" },
+      { name: "HubSpot forms", count: 29, prior: 24, mom: "+21%", spend: "$0", color: "#2d5a3d" }
     ],
     sourceMix: [
       { name: "Paid Search", pct: 44, color: "#3a1a6e" },
-      { name: "LSA", pct: 33, color: "#00d4c4" },
-      { name: "HubSpot / other", pct: 23, color: "#b8860b" }
+      { name: "LSA", pct: 33, color: "#c45c26" },
+      { name: "HubSpot / other", pct: 23, color: "#2d5a3d" }
     ],
-    /* Campaign brand: Military royal · Core DV teal · NTGUILT gold */
+    /* Campaign brand: Military royal · Core DV burnt orange · NTGUILT forest (GGL — no teal) */
     searchCallsByCampaign: [
       { name: "Military", count: 36, color: "#3a1a6e" },
-      { name: "Core DV", count: 14, color: "#00d4c4" },
-      { name: "NTGUILT", count: 4, color: "#b8860b" }
+      { name: "Core DV", count: 14, color: "#c45c26" },
+      { name: "NTGUILT", count: 4, color: "#2d5a3d" }
     ],
     leadsByCampaign: [
       { name: "Military", count: 36, prior: 28, mom: "+29%", spend: "$1,476", color: "#3a1a6e" },
-      { name: "Core DV", count: 14, prior: 11, mom: "+27%", spend: "$1,980", color: "#00d4c4" },
-      { name: "NTGUILT", count: 4, prior: 2, mom: "+100%", spend: "$420", color: "#b8860b" }
+      { name: "Core DV", count: 14, prior: 11, mom: "+27%", spend: "$1,980", color: "#c45c26" },
+      { name: "NTGUILT", count: 4, prior: 2, mom: "+100%", spend: "$420", color: "#2d5a3d" }
     ],
     phoneIntake: {
       targetPct: 90,
@@ -94,8 +94,8 @@
     duiGoal: { current: 18, target: 50 },
     casesMomSeries: [
       { name: "Closed cases", color: "#3a1a6e", verified: false },
-      { name: "New cases", color: "#00d4c4", verified: false },
-      { name: "Red accounts", color: "#4c1d95", verified: false }
+      { name: "New cases", color: "#c45c26", verified: false },
+      { name: "Red accounts", color: "#2d5a3d", verified: false }
     ],
     casesMom: [
       { month: "Apr", closed: 6, newCases: 12, redAccounts: 3 },
@@ -481,7 +481,7 @@
         <rect x="88" y="34" width="${currW}" height="16" rx="4" fill="#3a1a6e"/>
         <text x="${88 + currW + 6}" y="46" class="kpi-chart-val-sm">${fmtMoney(pi.monthlyLost)}</text>
         <text x="0" y="74" class="kpi-chart-axis">YTD cumulative</text>
-        <rect x="88" y="64" width="${cumW}" height="16" rx="4" fill="#b8860b"/>
+        <rect x="88" y="64" width="${cumW}" height="16" rx="4" fill="#c45c26"/>
         <text x="${88 + cumW + 6}" y="76" class="kpi-chart-val-sm">${fmtMoney(pi.cumulativeYtd)}</text>
       </svg>
       ${kpiDetailTable(
@@ -515,8 +515,8 @@
   }
 
   const PRESENCE_PIE_COLORS = {
-    active: "#00d4c4",
-    building: "#b8860b",
+    active: "#2d5a3d",
+    building: "#c45c26",
     outdated: "#4c1d95",
     "not on": "#3a1a6e",
     "not wired": "#8b7355"

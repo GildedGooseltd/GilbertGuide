@@ -29,42 +29,45 @@
 
 Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for the metrics page.
 
-### Gilded Goose (cream / gold / brown / royal)
+### Gilded Goose (cream / gold / brown · royal · burnt orange · forest)
 
 
 | Token               | Default               | Use                                           |
 | ------------------- | --------------------- | --------------------------------------------- |
 | `--gg-gold`         | `#c9a86c`             | Accents, borders                              |
-| `--gg-gold-bright`  | `#e3c58d`             | Highlights                                    |
-| `--gg-gold-dark`    | `#b8860b`             | Rank numbers, chart gold series               |
+| `--gg-gold-bright`  | `#e3c58d`             | Soft chart highlight (`--gg-series-4`)        |
+| `--gg-gold-dark`    | `#b8860b`             | Metal accents                                 |
 | `--gg-cream`        | `#f8f5ef`             | Page background (`--bg`)                      |
 | `--gg-cream-panel`  | `#f3ede4`             | Nested panels                                 |
 | `--gg-paper`        | `#fffcf7`             | Cards, inputs (`--surface`)                   |
 | `--gg-brown`        | `#3d3028`             | Body text (`--text`)                          |
 | `--gg-brown-muted`  | `#5c4f45`             | Secondary (`--secondary`)                     |
 | `--gg-royal-deep`   | `#2d1454`             | Section headers, deep accents                 |
-| `--gg-royal`        | `#3a1a6e`             | Headings, buttons, chart royal series         |
-| `--gg-royal-mid`    | `#4c1d95`             | Focus rings, Cases “Red accounts” series fill |
+| `--gg-royal`        | `#3a1a6e`             | Headings, buttons, chart primary              |
+| `--gg-royal-blue`   | `#1e3a8a`             | Intake / blue accents                         |
+| `--gg-royal-mid`    | `#4c1d95`             | Focus rings                                   |
+| `--gg-burnt`        | `#c45c26`             | Secondary chart / head accent                 |
+| `--gg-forest`       | `#2d5a3d`             | Secondary chart / positive MoM                |
 | `--gg-royal-dim`    | `rgba(45,20,84,0.12)` | Selected wash                                 |
 | `--gg-royal-border` | `rgba(45,20,84,0.38)` | Borders                                       |
 | `--gg-negative`     | `#cf2d56`             | **Negative numbers only** (↓ MoM, − deltas)   |
-| `--gg-positive`     | `#1f8a65`             | Positive MoM / target hit                     |
+| `--gg-positive`     | `#2d5a3d`             | Positive MoM / target hit (= forest)          |
 
 
 
+### Dark panels + chart series (GGL — **no teal**)
 
-### Dark panels + chart series (GGL only — **no teal**)
 
-
-| Token                              | Default                         | Use                                      |
-| ---------------------------------- | ------------------------------- | ---------------------------------------- |
-| `--gg-series-1` … `4`              | royal · gold · mid · gold-bright | KPI chart series                       |
-| `--pav-ink` / `--pav-ink-panel`    | near-black                      | Gilbert chat / thank-you dark shells     |
-| `--pav-text`                       | `#e8e8ec`                       | Text on **dark** panels only             |
-| `--pav-border`                     | gold rgba                       | Dark panel borders                       |
-| `--pav-gradient-panel` / `-accent` | royal / gold → ink              | Dark shells only                         |
-| `--pav-teal`                       | → `--gg-series-2` (gold)        | **Deprecated alias** — do not introduce teal |
-| Cockpit title                      | `--gg-royal-deep` + gold rule   | `.cockpit-title`                         |
+| Token                              | Default                                      | Use                                      |
+| ---------------------------------- | -------------------------------------------- | ---------------------------------------- |
+| `--gg-series-1` … `4`              | royal · burnt · forest · gold-bright         | KPI chart series                         |
+| `--gg-head-accent`                 | burnt orange                                 | Title underline, zone bars               |
+| `--pav-ink` / `--pav-ink-panel`    | near-black                                   | Gilbert chat / thank-you dark shells     |
+| `--pav-text`                       | `#e8e8ec`                                    | Text on **dark** panels only             |
+| `--pav-border`                     | gold rgba                                    | Dark panel borders                       |
+| `--pav-gradient-panel` / `-accent` | royal / burnt → ink                          | Dark shells only                         |
+| `--pav-teal`                       | → `--gg-series-2` (burnt)                    | **Deprecated** — do not introduce teal   |
+| Cockpit title                      | `--gg-royal-deep` + burnt rule               | `.cockpit-title`                         |
 
 
 Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` sources.
@@ -163,14 +166,14 @@ Confirm flow: estimated results · action items · next steps → submit (email 
 | Role                                           | Hex       | Token / note     |
 | ---------------------------------------------- | --------- | ---------------- |
 | Primary / Search / Military / Closed           | `#3a1a6e` | `--gg-series-1` / `--gg-royal` |
-| Secondary / LSA / Core DV / New                | `#b8860b` | `--gg-series-2` / `--gg-gold-dark` |
-| Tertiary / HubSpot / NTGUILT / Red accounts    | `#4c1d95` | `--gg-series-3` / `--gg-royal-mid` |
+| Secondary / LSA / Core DV / New                | `#c45c26` | `--gg-series-2` / `--gg-burnt` |
+| Tertiary / HubSpot / NTGUILT / Red accounts    | `#2d5a3d` | `--gg-series-3` / `--gg-forest` |
 | Soft highlight / building                      | `#e3c58d` | `--gg-series-4` / `--gg-gold-bright` |
 
 
-**Cases MoM stack:** Closed `#3a1a6e` · New `#b8860b` · Red accounts `#4c1d95` (never alert-red fill for counts).
+**Cases MoM stack:** Closed `#3a1a6e` · New `#c45c26` · Red accounts `#2d5a3d` (never alert-red fill for counts).
 
-**Forbidden:** teal/cyan (`#00d4c4`, `#2dd4bf`, etc.) anywhere in the cockpit. `--gg-negative` only for negative deltas. Half-moon gauges: progress toward `--gg-positive`; gold fill at 100%+.
+**Forbidden:** teal/cyan (`#00d4c4`, `#2dd4bf`, etc.) anywhere in the cockpit. `--gg-negative` only for negative deltas. Half-moon gauges: progress toward `--gg-positive` (forest); gold fill at 100%+.
 
 Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pav-law-kpi-charts.mdc)`
 
