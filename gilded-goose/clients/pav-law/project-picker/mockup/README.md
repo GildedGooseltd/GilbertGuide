@@ -11,6 +11,8 @@ Open [`index.html`](index.html) in a browser (or via the local static server).
 | File | Role |
 |------|------|
 | [`index.html`](index.html) | Clickable guide shell — survey, outlines, project cards, light/dark |
+| [`cream-ship-preview.html`](cream-ship-preview.html) | Cream ship review — charts, icons, goose masthead |
+| [`SHIP-CREAM.md`](SHIP-CREAM.md) | What can ship on cream vs hold |
 | [`FEEDBACK.md`](FEEDBACK.md) | Lasting design notes (commit these) |
 | This README | How to use the framework |
 

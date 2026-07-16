@@ -178,12 +178,12 @@
       box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
     }
     .survey-masthead { text-align: center; margin: 0 0 1.1rem; }
-    .survey-leaf {
-      display: block; width: 1.1rem; height: 1.1rem; margin: 0 auto 0.35rem; color: #9a7b3c;
+    .survey-goose {
+      display: block; width: 2.35rem; height: 2.35rem; margin: 0 auto 0.4rem;
+      border-radius: 50%; object-fit: cover;
+      box-shadow: 0 1px 0 rgba(201, 168, 108, 0.45);
     }
-    html[data-theme="dark"] .survey-leaf { color: var(--gg-brown-muted); }
-    html[data-hide-leaf="true"] .survey-leaf { display: none; }
-    .survey-leaf svg { display: block; width: 100%; height: 100%; }
+    html[data-hide-goose="true"] .survey-goose { display: none; }
     .survey-kicker {
       display: flex; align-items: center; justify-content: center; gap: 0.8rem;
       margin: 0 0 0.45rem; font-size: 0.68rem; font-weight: 700;
@@ -345,7 +345,8 @@
   <div class="dock" role="region" aria-label="Design mockup controls">
     <strong>Mockup framework</strong>
     <span>based on live Trail Guide</span>
-    <label><input type="checkbox" id="dock-leaf" checked> Leaf icon</label>
+    <label><input type="checkbox" id="dock-goose" checked> Goose icon</label>
+    <a href="cream-ship-preview.html">Cream ship preview</a>
     <button type="button" id="dock-notes-btn" aria-expanded="false">Feedback notes</button>
     <a href="FEEDBACK.md">FEEDBACK.md</a>
     <a href="../content/QUESTIONS.md">QUESTIONS.md</a>
@@ -370,13 +371,7 @@
   <section class="finder-panel" aria-label="Path questionnaire">
     <div class="gilbert-survey" id="survey">
       <header class="survey-masthead">
-        <span class="survey-leaf" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 21c0-6 4-10 9-12-1 7-5 11-9 12z"/>
-            <path d="M12 21c0-6-4-10-9-12 1 7 5 11 9 12z"/>
-            <path d="M12 21V9"/>
-          </svg>
-        </span>
+        <img class="survey-goose" src="../assets/gigi-goose-guide.svg" width="38" height="38" alt="" role="presentation">
         <p class="survey-kicker"><span>Trail guide</span></p>
         <h2 class="survey-title">Choose your path</h2>
         <p class="survey-lead">A few quick questions help tailor the best recommendations for your next adventure.</p>
@@ -411,7 +406,7 @@
   <script>
     const STORAGE_THEME = "gg-mockup-theme";
     const STORAGE_NOTES = "gg-mockup-notes";
-    const STORAGE_LEAF = "gg-mockup-leaf";
+    const STORAGE_GOOSE = "gg-mockup-goose";
 
     /* Business-level tree — mirrors content/QUESTIONS.md + survey.md */
     const TREE = {
@@ -611,13 +606,13 @@
       applyTheme(cur === "dark" ? "light" : "dark");
     });
 
-    const leafToggle = document.getElementById("dock-leaf");
-    function applyLeaf(show) {
-      document.documentElement.setAttribute("data-hide-leaf", show ? "false" : "true");
-      leafToggle.checked = show;
-      localStorage.setItem(STORAGE_LEAF, show ? "1" : "0");
+    const gooseToggle = document.getElementById("dock-goose");
+    function applyGoose(show) {
+      document.documentElement.setAttribute("data-hide-goose", show ? "false" : "true");
+      gooseToggle.checked = show;
+      localStorage.setItem(STORAGE_GOOSE, show ? "1" : "0");
     }
-    leafToggle.addEventListener("change", () => applyLeaf(leafToggle.checked));
+    gooseToggle.addEventListener("change", () => applyGoose(gooseToggle.checked));
 
     const notesPanel = document.getElementById("notes-panel");
     const notesBtn = document.getElementById("dock-notes-btn");
@@ -638,7 +633,7 @@
     });
 
     applyTheme(localStorage.getItem(STORAGE_THEME) === "dark" ? "dark" : "light");
-    applyLeaf(localStorage.getItem(STORAGE_LEAF) !== "0");
+    applyGoose(localStorage.getItem(STORAGE_GOOSE) !== "0");
     renderSurvey();
   </script>
 </body>

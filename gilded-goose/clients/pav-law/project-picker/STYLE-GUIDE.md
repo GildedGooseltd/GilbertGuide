@@ -95,11 +95,12 @@ Surfaces stay **black → deep plum**. Text stays **neutral / warm off-white** �
 - Theme toggle: Light ↔ Dark only
 
 ### Path survey (paper card)
-- Centered masthead: optional leaf · `TRAIL GUIDE` kicker · **Choose your path** · one lead line
+- Centered masthead: **small goose profile** (`assets/gigi-goose-guide.svg`) · `TRAIL GUIDE` kicker · **Choose your path** · one lead line
+- Do **not** use a leaf/flower mark for the masthead icon
 - Numbered choice rows (`01`…) + hint + chevron
 - Crumbs: `Path so far: …`
 - Actions: Back / Start over
-- No character portrait; no Trailhead / Waypoint chrome
+- No full-bleed character portrait; no Trailhead / Waypoint chrome
 
 ### Zones
 - Gold left bar + uppercase label (`Project outlines`, `Project details`)
