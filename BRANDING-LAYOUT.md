@@ -102,7 +102,7 @@ Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + 
 Overlays: confirm · thank-you
 ```
 
-**Survey (cream trail-guide card):** Q&A in [`content/survey.md`](content/survey.md) → `PROJECT_DATA.survey`. One cream card (no nested panel). Centered masthead (leaf + TRAIL GUIDE + Choose your path + adventure lead). Compact single-line numbered rows (`01` label ›); hints live in `title` tooltips. Gilbert portrait centered on the **right** of the rows. No topo / blazes. “Back to trailhead” resets.
+**Survey (quiet paper trail-guide):** Q&A in [`content/survey.md`](content/survey.md) → `PROJECT_DATA.survey`. One paper card. Centered masthead (leaf + TRAIL GUIDE + Choose your path). Trailhead / Waypoint labels stay. Numbered choice rows with chevrons. Gilbert **3.5rem** circle on the **right** (funny hat asset), facing inward. No topo / blazes. “Back to trailhead” resets.
 
 **Character facing rule:** Portraits and mascots always face toward the middle of the composition / adjacent content — never away off the edge of the screen. Prefer placing the figure on the side that lets the native pose look inward; mirror only when needed.
 
