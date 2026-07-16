@@ -16,12 +16,13 @@
       --gg-brown: #3d3028;
       --gg-brown-muted: #5c4f45;
       --gg-sage: #d4ddd0;
-      --gg-royal-deep: #2d1454;
-      --gg-royal: #3a1a6e;
-      --gg-royal-mid: #4c1d95;
-      --gg-royal-light: #6b4fa0;
-      --gg-royal-dim: rgba(45, 20, 84, 0.12);
-      --gg-royal-border: rgba(45, 20, 84, 0.38);
+      /* Accents: brown + gold only — no navy / blue-purple */
+      --gg-royal-deep: #3d3028;
+      --gg-royal: #5c4010;
+      --gg-royal-mid: #b8860b;
+      --gg-royal-light: #c9a86c;
+      --gg-royal-dim: rgba(184, 134, 11, 0.14);
+      --gg-royal-border: rgba(184, 134, 11, 0.42);
       --gg-gold-dim: rgba(201, 168, 108, 0.18);
       --gg-box-border: 1px solid var(--border-strong);
       --gg-negative: #cf2d56;
@@ -61,7 +62,7 @@
       --green-dim: var(--gg-royal-dim);
       --highlight: var(--gg-royal-mid);
       --highlight-dim: var(--gg-royal-dim);
-      --gradient-brand: linear-gradient(135deg, var(--gg-royal-deep) 0%, var(--gg-royal) 48%, var(--gg-gold-dark) 100%);
+      --gradient-brand: linear-gradient(135deg, var(--gg-brown) 0%, var(--gg-gold-dark) 55%, var(--gg-gold) 100%);
       --gradient-gold: linear-gradient(135deg, var(--gg-gold-dark) 0%, var(--gg-gold-bright) 100%);
       --radius: 12px;
       --font-min: 12px;
@@ -142,7 +143,7 @@
     .picker-zone-title {
       font-size: 1.15rem;
       font-weight: 800;
-      color: var(--gg-royal-deep);
+      color: var(--gg-brown);
       margin: 0 0 0.35rem;
     }
     .card-header { display: flex; align-items: flex-start; gap: var(--space-md); }
@@ -181,7 +182,7 @@
       max-width: 1400px; margin: 0 auto; padding: var(--space-md) 2rem 0;
     }
     .gg-app-title {
-      font-size: 1.75rem; font-weight: 800; color: var(--gg-royal-deep);
+      font-size: 1.75rem; font-weight: 800; color: var(--gg-brown);
       letter-spacing: 0.02em; line-height: 1.15;
       border-bottom: 3px solid var(--gg-gold); padding-bottom: 0.2rem;
     }
@@ -190,68 +191,77 @@
     }
     .gilbert-guide-col-chat-only { width: 100%; }
     .picker-zone-lead {
-      margin: 0 0 var(--space-md); font-size: 0.95rem; color: var(--secondary); line-height: 1.5; max-width: 40rem;
+      margin: 0 0 1rem; font-size: 0.92rem; color: var(--secondary); line-height: 1.5; max-width: 40rem;
     }
+    /* One survey box — steps swap inside; choices are rows, not stage tiles */
     .gilbert-survey {
       background: var(--gg-paper);
-      border: 1px solid var(--gg-royal-border);
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius);
-      padding: 1.15rem 1.25rem 1.35rem;
+      padding: 1.15rem 1.25rem 1.25rem;
     }
+    .gilbert-survey > .picker-zone-label { margin-bottom: 0.45rem; }
+    .gilbert-survey > .picker-zone-title { margin-bottom: 0.25rem; }
+    .survey-body { margin-top: 0.25rem; }
     .survey-progress {
       display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-      margin-bottom: 0.85rem; font-size: 0.78rem; font-weight: 700;
+      margin: 0 0 0.65rem; padding-bottom: 0.55rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem; font-weight: 700;
       letter-spacing: 0.06em; text-transform: uppercase; color: var(--gg-gold-dark);
     }
-    .survey-progress-steps { color: var(--gg-royal); }
+    .survey-progress-steps { color: var(--gg-brown-muted); font-weight: 600; }
+    .survey-crumbs {
+      margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--secondary); line-height: 1.45;
+    }
+    .survey-crumbs strong { color: var(--gg-brown); font-weight: 700; }
     .survey-prompt {
-      margin: 0 0 1rem; font-size: 1.15rem; font-weight: 700; color: var(--gg-royal-deep); line-height: 1.4;
+      margin: 0 0 0.75rem; font-size: 1.08rem; font-weight: 700; color: var(--gg-brown); line-height: 1.4;
     }
     .survey-choices {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;
-    }
-    @media (max-width: 700px) {
-      .survey-choices { grid-template-columns: 1fr; }
+      display: flex; flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--gg-cream);
     }
     .survey-choice {
       display: block; width: 100%; text-align: left;
-      padding: 0.85rem 1rem; border-radius: 10px;
-      border: 2px solid var(--border-strong);
-      background: var(--gg-cream);
+      padding: 0.7rem 0.95rem;
+      border: none; border-bottom: 1px solid var(--border); border-radius: 0;
+      background: transparent;
       color: var(--gg-brown); font: inherit; font-weight: 600; font-size: 0.95rem; line-height: 1.4;
-      cursor: pointer; transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+      cursor: pointer; transition: background 0.12s;
     }
-    .survey-choice:hover {
-      border-color: var(--gg-royal-border); background: var(--gg-royal-dim);
-    }
-    .survey-choice:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+    .survey-choice:last-child { border-bottom: none; }
+    .survey-choice:hover { background: var(--gg-gold-dim); }
+    .survey-choice:focus-visible { outline: none; box-shadow: inset var(--focus-ring); }
     .survey-choice-hint {
-      display: block; margin-top: 0.3rem; font-size: 0.8rem; font-weight: 500; color: var(--secondary);
-    }
-    .survey-result {
-      border-left: 4px solid var(--gg-royal-mid);
-      padding-left: 0.85rem;
+      display: block; margin-top: 0.2rem; font-size: 0.8rem; font-weight: 500; color: var(--secondary);
     }
     .survey-result h3 {
-      margin: 0 0 0.45rem; font-size: 0.78rem; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--gg-royal); font-weight: 800;
+      margin: 0 0 0.45rem; font-size: 0.75rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--gg-gold-dark); font-weight: 800;
     }
     .survey-result-path {
-      margin: 0 0 0.75rem; font-size: 1.02rem; color: var(--gg-brown); line-height: 1.55; font-weight: 600;
+      margin: 0 0 0.65rem; font-size: 1rem; color: var(--gg-brown); line-height: 1.55; font-weight: 600;
     }
     .survey-result-meta {
-      margin: 0 0 1rem; font-size: 0.9rem; color: var(--secondary); line-height: 1.5;
+      margin: 0 0 0.85rem; font-size: 0.9rem; color: var(--secondary); line-height: 1.5;
     }
     .survey-result-tags {
-      display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1rem;
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.85rem;
     }
     .survey-tag {
       display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0.25rem 0.55rem; border-radius: 999px;
+      padding: 0.2rem 0.5rem;
       background: var(--gg-cream-panel); border: 1px solid var(--border);
       font-size: 0.8rem; font-weight: 700; color: var(--gg-brown);
     }
-    .survey-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .survey-actions {
+      display: flex; flex-wrap: wrap; gap: 0.55rem;
+      margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border);
+    }
     .survey-actions .btn { width: auto; margin: 0; }
     .gilbert-guide-col {
       display: flex; flex-direction: row; flex: 1; min-width: 0; width: 100%;
@@ -533,7 +543,8 @@
     }
     .btn:hover { opacity: 0.9; }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .btn-primary { background: var(--gg-royal); color: #fff; border: 1px solid var(--gg-royal); }
+    .btn-primary { background: var(--gg-brown); color: #fff; border: 1px solid var(--gg-brown); }
+    .btn-primary:hover { background: #2a211c; border-color: #2a211c; }
     .btn-primary:hover { opacity: 0.92; }
     .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
     .empty-state { color: var(--secondary); font-size: 0.9rem; font-style: italic; }
@@ -1090,12 +1101,14 @@
     <section class="finder-panel" aria-label="Find projects and submit">
       <div class="top-unified-panel">
         <div class="top-unified-card">
-          <div class="picker-zone picker-zone-ask" aria-labelledby="zone-ask-label">
-            <span class="picker-zone-label" id="zone-ask-label">Quick path</span>
-            <h2 class="picker-zone-title">Choose your path</h2>
-            <p class="picker-zone-lead">Answer 2 short questions — Gilbert filters the project outline list to what fits.</p>
+          <div class="picker-zone picker-zone-ask">
             <div class="search-unified-panel">
-              <div id="gilbert-survey" class="gilbert-survey" aria-live="polite"></div>
+              <div id="gilbert-survey" class="gilbert-survey" aria-labelledby="zone-ask-label" aria-live="polite">
+                <span class="picker-zone-label" id="zone-ask-label">Quick path</span>
+                <h2 class="picker-zone-title">Choose your path</h2>
+                <p class="picker-zone-lead">Answer 2 short questions — Gilbert filters the project outline list to what fits.</p>
+                <div id="gilbert-survey-body" class="survey-body"></div>
+              </div>
               <div id="why-panel" class="why-panel" hidden></div>
               <div id="toc-condensed" class="toc-condensed" hidden></div>
             </div>
@@ -1160,8 +1173,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716d"></script>
-  <script src="projects-data.js?v=20260716d"></script>
-  <script src="app.js?v=20260716d"></script>
+  <script src="pages-config.js?v=20260716e"></script>
+  <script src="projects-data.js?v=20260716e"></script>
+  <script src="app.js?v=20260716e"></script>
 </body>
 </html>
