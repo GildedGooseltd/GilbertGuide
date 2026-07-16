@@ -990,7 +990,7 @@
     renderCondensedToc();
     saveState();
     const matchCount = allItemsByPriority().filter(item => itemMatchesIconFilters(item)).length;
-    showToast(`Trail marked — ${matchCount} project${matchCount === 1 ? "" : "s"} on your map`);
+    showToast(`${matchCount} project${matchCount === 1 ? "" : "s"} match this path`);
   }
 
   function selectSurveyChoice(choiceId) {
@@ -1015,7 +1015,7 @@
     if (!el) return;
     const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
     const crumbs = pathLabels.length
-      ? `<p class="survey-crumbs">Trail so far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
+      ? `<p class="survey-crumbs">Path so far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
       : "";
 
     if (state.surveyDone && state.surveyPath.length) {
@@ -1026,16 +1026,12 @@
         if (!def) return `<span class="survey-tag">${escapeHtml(id)}</span>`;
         return `<span class="survey-tag">${valueIconMarkup(def)}<span>${escapeHtml(def.label)}</span></span>`;
       }).join("");
-      el.innerHTML = `<div class="survey-progress">
-          <span>Trail marked</span>
-          <span class="survey-progress-steps">Map ready</span>
-        </div>
-        ${crumbs}
-        <p class="survey-result-meta"><strong>${matchCount}</strong> project${matchCount === 1 ? "" : "s"} marked on the outline map. Pick from the table below, or refine with value icons.</p>
+      el.innerHTML = `${crumbs}
+        <p class="survey-result-meta"><strong>${matchCount}</strong> project${matchCount === 1 ? "" : "s"} match this path. Pick from the table below, or refine with value icons.</p>
         <div class="survey-result-tags">${tags}</div>
         <div class="survey-actions">
-          <button type="button" class="btn btn-primary" id="survey-jump-toc">View the map</button>
-          <button type="button" class="btn btn-secondary" id="survey-restart">Back to trailhead</button>
+          <button type="button" class="btn btn-primary" id="survey-jump-toc">View matching projects</button>
+          <button type="button" class="btn btn-secondary" id="survey-restart">Start over</button>
         </div>`;
       el.querySelector("#survey-restart")?.addEventListener("click", () => resetSurvey(true));
       el.querySelector("#survey-jump-toc")?.addEventListener("click", () => {
@@ -1051,10 +1047,9 @@
     const nodeId = state.surveyNode || GILBERT_SURVEY.start;
     const node = GILBERT_SURVEY.nodes[nodeId];
     if (!node) {
-      el.innerHTML = `<p class="survey-result-meta">Trail guide unavailable.</p>`;
+      el.innerHTML = `<p class="survey-result-meta">Questionnaire unavailable.</p>`;
       return;
     }
-    const waypointLabel = node.step === 1 ? "Trailhead" : "Waypoint";
     const choicesHtml = node.choices.map((c, i) => {
       const num = String(i + 1).padStart(2, "0");
       return `<button type="button" class="survey-choice" data-choice="${escapeHtml(c.id)}">
@@ -1066,14 +1061,10 @@
           <span class="survey-choice-chevron" aria-hidden="true">›</span>
         </button>`;
     }).join("");
-    el.innerHTML = `<div class="survey-progress">
-        <span>${waypointLabel}</span>
-        <span class="survey-progress-steps">Waypoint ${node.step} of ${node.steps}</span>
-      </div>
-      ${crumbs}
+    el.innerHTML = `${crumbs}
       <p class="survey-prompt">${escapeHtml(node.prompt)}</p>
       <div class="survey-choices" role="group" aria-label="${escapeHtml(node.prompt)}">${choicesHtml}</div>
-      ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Previous waypoint</button></div>` : ""}`;
+      ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Back</button></div>` : ""}`;
     el.querySelectorAll(".survey-choice").forEach(btn => {
       btn.addEventListener("click", () => selectSurveyChoice(btn.dataset.choice));
     });

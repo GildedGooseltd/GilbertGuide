@@ -100,7 +100,7 @@ Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + 
 Overlays: confirm · thank-you
 ```
 
-**Survey (quiet paper trail-guide):** Q&A in [`content/survey.md`](content/survey.md) → `PROJECT_DATA.survey`. One paper card. Centered masthead (leaf + TRAIL GUIDE + Choose your path). Trailhead / Waypoint labels stay. Numbered choice rows with chevrons. No character portrait / Gilbert icon in the survey. No topo / blazes. “Back to trailhead” resets.
+**Survey (quiet paper trail-guide):** Q&A in [`content/survey.md`](content/survey.md) → `PROJECT_DATA.survey`. One paper card. Centered masthead (leaf + TRAIL GUIDE + Choose your path). No Trailhead/Waypoint chrome. Numbered choice rows with chevrons. No character portrait. Draft question set: [`content/survey-DRAFT.md`](content/survey-DRAFT.md).
 
 | Pattern | Classes | Behavior |
 |---------|---------|----------|

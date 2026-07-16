@@ -7,7 +7,8 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
 ## Guide questionnaire (Q&A)
 
 Edit the choose-your-path questions here → [`survey.md`](survey.md)  
-(short labels; includes **Cut costs**. Run `npm run build` after edits.)
+(short labels; includes **Cut costs**. Run `npm run build` after edits.)  
+Proposed rewrite (draft) → [`survey-DRAFT.md`](survey-DRAFT.md)
 
 
 | Priority | ID       | Project                                                          | File                               |
