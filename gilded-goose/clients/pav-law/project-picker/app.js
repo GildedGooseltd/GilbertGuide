@@ -6,9 +6,6 @@
     );
   }
   let CONFIG = getConfig();
-  const GILBERT_ICON = PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon || "assets/gigi-goose-guide.svg";
-  const GILBERT_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
-  const GILBERT_SEAL = PROJECT_DATA.guideSeal || "assets/gigi-logo-frame.png";
   const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
   const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
   const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
