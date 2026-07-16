@@ -3,12 +3,16 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260716-drop-ads-media-col";
+  const RENDER_VER = "20260716-download-revisions";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Ad Reports/exports/2026-07-11 · Campaign report + LSA inbox + HubSpot count",
-      fields: "Campaign / Cost / Clicks / Phone calls · LSA lead rows · form count"
+      file: "Ad Reports/exports + ~/Downloads/leads-inbox (15).csv",
+      fields: "Campaign / Phone calls · LSA inbox rows · HubSpot form count still stale"
+    },
+    "#02": {
+      file: "Ad Reports/exports/mycase/as-of-2026-07-01/new-cases-by-month.csv",
+      fields: "MyCase Created month · Jun 2026 = 34 · Jan–Jun 2026 = 114"
     },
     "#08": {
       file: "Ad Reports/exports/2026-07-11 · Campaign report (Search calls by campaign)",
@@ -31,8 +35,12 @@
       fields: "Contact group=Client · Pre-Trial Flat Fee / flat / trial / retainer (mean $5,587 · n=142) · see CLIENT-VALUE-BASELINE.md"
     },
     "cases-leads-spend": {
-      file: "MyCase new-cases-by-month · LSA leads-inbox · Google account_activities May–Jun 2026",
+      file: "MyCase new-cases-by-month · LSA leads-inbox (15) · Google account_activities May–Jul 2026",
       fields: "New cases (Created) · LSA inbox rows · Search + LSA spend excl. starting/ending balance"
+    },
+    "cash-collected": {
+      file: "~/Downloads/ledger_account_activity_report.csv",
+      fields: "Ledger Credit by month · aggregate only · Jan 2025–Jul 15 2026"
     }
   };
   const DATA = {
@@ -40,8 +48,8 @@
     asOf: "2026-07-15",
     source: "Ad Reports/exports · MyCase contact_report 2026-07-01 (#28)",
     kpis: [
-      { id: "#01", label: "Total leads", value: "18%", target: "≥ 20%", mom: "+18%", count: 124, verified: true, hit: false, alert: true, gauge: true },
-      { id: "#02", label: "New cases", value: "9", target: "12", mom: "−25%", verified: false, alert: false, gauge: true },
+      { id: "#01", label: "Total leads", value: "58%", target: "≥ 20%", mom: "+58%", count: 166, verified: true, hit: true, alert: false, gauge: true },
+      { id: "#02", label: "New cases", value: "34", target: "12", mom: "+55%", verified: true, alert: false, gauge: true, hit: true },
       { id: "#12", label: "Avg cost/call", value: "$72", target: "< $100", mom: null, verified: true, targetBar: true, lowerIsBetter: true },
       { id: "#15", label: "CPL", value: "$142", target: "≤ $120", mom: null, verified: true, alert: true, targetBar: true, lowerIsBetter: true },
       /* Team goals: #19 lost-tracker first in render, then #21, then DUI */
@@ -54,13 +62,13 @@
     ],
     channels: [
       { name: "Search calls", count: 54, prior: 31, mom: "+74%", spend: "$2,214", color: "#3a1a6e" },
-      { name: "LSA inbox", count: 41, prior: 38, mom: "+8%", spend: "$12,792", color: "#c45c26" },
+      { name: "LSA inbox", count: 83, prior: 50, mom: "+66%", spend: "$14,206", color: "#c45c26" },
       { name: "HubSpot forms", count: 29, prior: 24, mom: "+21%", spend: "$0", color: "#2d5a3d" }
     ],
     sourceMix: [
-      { name: "Paid Search", pct: 44, color: "#3a1a6e", count: 54, prior: 31, mom: "+74%" },
-      { name: "LSA", pct: 33, color: "#c45c26", count: 41, prior: 38, mom: "+8%" },
-      { name: "HubSpot / other", pct: 23, color: "#2d5a3d", count: 29, prior: 24, mom: "+21%" }
+      { name: "Paid Search", pct: 33, color: "#3a1a6e", count: 54, prior: 31, mom: "+74%" },
+      { name: "LSA", pct: 50, color: "#c45c26", count: 83, prior: 50, mom: "+66%" },
+      { name: "HubSpot / other", pct: 17, color: "#2d5a3d", count: 29, prior: 24, mom: "+21%" }
     ],
     /* Campaign brand: Military royal · Core DV burnt orange · NTGUILT forest (GGL — no teal) */
     searchCallsByCampaign: [
@@ -142,9 +150,9 @@
       { name: "Red accounts", color: "#2d5a3d", verified: false }
     ],
     casesMom: [
-      { month: "Apr", closed: 6, newCases: 12, redAccounts: 3 },
-      { month: "May", closed: 8, newCases: 12, redAccounts: 2 },
-      { month: "Jun", closed: 11, newCases: 9, redAccounts: 4 }
+      { month: "Apr", closed: 6, newCases: 15, redAccounts: 3 },
+      { month: "May", closed: 8, newCases: 22, redAccounts: 2 },
+      { month: "Jun", closed: 11, newCases: 34, redAccounts: 4 }
     ],
     pipeline: [
       { month: "Jun", closed: 11, mom: "+38%" },
@@ -153,11 +161,26 @@
     /* Dual-axis: left = counts · right = $ spend. Trust omitted — needs fees-collected. */
     casesLeadsSpend: [
       { month: "May", cases: 22, leads: 69, spend: 18633, lsaSpend: 11006, adsSpend: 7627, adsLeads: 39 },
-      { month: "Jun", cases: 34, leads: 83, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138 }
+      { month: "Jun", cases: 34, leads: 83, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138 },
+      { month: "Jul*", cases: 0, leads: 57, spend: 8832, lsaSpend: 7163, adsSpend: 1669, adsLeads: 26 }
     ],
     /** Consulting allocation estimates for channel CPL (not full retainer). */
     consultingLsaMonthly: 1000,
-    consultingAdsMonthly: 2000
+    consultingAdsMonthly: 2000,
+    cashCollected: [
+      { month: "Jan", credit: 57925 },
+      { month: "Feb", credit: 83950 },
+      { month: "Mar", credit: 80500 },
+      { month: "Apr", credit: 70026 },
+      { month: "May", credit: 92140 },
+      { month: "Jun", credit: 103485 },
+      { month: "Jul*", credit: 44950 }
+    ],
+    cashCollectedTotals: {
+      total2025: 945436,
+      total2026ToDate: 532976,
+      allCredits: 1478412
+    }
   };
 
   function star(verified) {
@@ -527,6 +550,69 @@
           table: casesLeadsSpendTable(rows)
         })}
         ${sourceFootnote("cases-leads-spend")}
+      </div>
+    </section>`;
+  }
+
+  function cashCollectedChart(rows) {
+    const max = Math.max(...rows.map(r => r.credit), 1);
+    const w = 720;
+    const h = 260;
+    const pad = { l: 58, r: 22, t: 32, b: 46 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / rows.length;
+    const barW = Math.min(54, slot * 0.58);
+    const ticks = [0, 0.5, 1].map(p => {
+      const y = pad.t + plotH * (1 - p);
+      const val = Math.round(max * p / 1000);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">$${val}k</text>
+      </g>`;
+    }).join("");
+    const bars = rows.map((r, i) => {
+      const bh = Math.max(6, (plotH * r.credit) / max);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pad.t + plotH - bh;
+      return `<g>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="#2d5a3d"/>
+        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total">$${Math.round(r.credit / 1000)}k</text>
+        <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cash collected by month">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}${bars}
+    </svg>`;
+  }
+
+  function cashCollectedTable(rows) {
+    const ytd = rows.reduce((s, r) => s + r.credit, 0);
+    return kpiDetailTable(
+      ["Month", "Cash collected (Ledger Credits)"],
+      [
+        ...rows.map(r => [escapeHtml(r.month) + " 2026", fmtMoney(r.credit)]),
+        ["2026 to date", fmtMoney(ytd)],
+        ["2025 total", fmtMoney(DATA.cashCollectedTotals.total2025)],
+        ["All ledger credits", fmtMoney(DATA.cashCollectedTotals.allCredits)]
+      ]
+    );
+  }
+
+  function cashCollectedSectionHtml() {
+    const rows = DATA.cashCollected || [];
+    if (!rows.length) return "";
+    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-cash-collected" data-feedback-label="Cash collected">
+      ${kpiSectionStaticHead("Cash collected from MyCase ledger", "Credits · aggregate only")}
+      <div class="kpi-section-body">
+        <p class="kpi-section-intro">New Downloads ledger file adds cash-collected truth beside #28 contracted fee. Jul is through Jul 15 only. No client names shown.</p>
+        ${chartBlock({
+          verified: true,
+          chart: cashCollectedChart(rows),
+          table: cashCollectedTable(rows)
+        })}
+        ${sourceFootnote("cash-collected")}
       </div>
     </section>`;
   }
@@ -1297,6 +1383,7 @@
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
       ${casesLeadsSpendSectionHtml()}
+      ${cashCollectedSectionHtml()}
       ${feeByPracticeSectionHtml()}
       <section class="kpi-section kpi-section-static" data-feedback-id="section-key-metrics" data-feedback-label="Key metrics">
         ${kpiSectionStaticHead("Key metrics", "")}
