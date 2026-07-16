@@ -59,11 +59,11 @@ Body: Georgia / Times New Roman (serif cockpit). Hierarchy via weight and size; 
 ## 5. Layout patterns
 
 ```
-┌─ gg-header ────────────────── brand + Gilbert Guide title
-├─ picker-zone-ask ──────────── Ask Gilbert + Why + condensed picks
+┌─ gg-header ────────────────── Gilbert Guide title (no logo / no goose)
+├─ picker-zone-ask ──────────── Ask Gilbert chat + Why + condensed picks
 ├─ picker-zone-outlines ─────── TOC table + Filter by value
 └─ picker-zone-cards ────────── sticky Continue bar + project cards
-Overlays: confirm · thank-you
+Overlays: confirm · thank-you (text only — no logo / goose images)
 ```
 
 | Pattern | Classes | Behavior |
