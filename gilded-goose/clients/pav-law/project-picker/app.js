@@ -6,9 +6,6 @@
     );
   }
   let CONFIG = getConfig();
-  const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
-  const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
-
   /** Choose-your-path survey — sourced from content/survey.md via projects-data.js */
   const GILBERT_SURVEY = (typeof PROJECT_DATA !== "undefined" && PROJECT_DATA.survey && PROJECT_DATA.survey.nodes)
     ? PROJECT_DATA.survey
@@ -382,7 +379,7 @@
     if (hasGoal) {
       const g = state.goalText.trim();
       rec.goalIntro =
-        `You told Gilbert the core problem is: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below close that gap — not as a random list, but as a sequenced marketing stack.`;
+        `You named the core problem as: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below close that gap — not as a random list, but as a sequenced marketing stack.`;
     }
 
     if (!projectItems.length && selected.length) {
@@ -430,7 +427,7 @@
 
       rec.strategy = strategy;
     } else if (hasGoal) {
-      rec.pickPrompt = "Pick projects from the list below — Gilbert will explain how they fit together as you add them.";
+      rec.pickPrompt = "Pick projects from the list below — each one shows how it fits the path as you add it.";
     }
 
     return rec;
@@ -1013,20 +1010,9 @@
     saveState();
   }
 
-  function syncSurveyGilbertPortrait() {
-    const fig = document.getElementById("survey-gilbert-fig");
-    const img = document.getElementById("survey-gilbert-img");
-    if (!img) return;
-    img.src = "assets/gilbert-guide-subtle-hat.png";
-    img.alt = "Lord Gilbert Granville in a funny trail guide hat";
-    fig?.classList.remove("is-walk");
-    fig?.classList.add("is-profile");
-  }
-
   function renderGilbertSurvey() {
     const el = document.getElementById("gilbert-survey-body") || document.getElementById("gilbert-survey");
     if (!el) return;
-    syncSurveyGilbertPortrait();
     const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
     const crumbs = pathLabels.length
       ? `<p class="survey-crumbs">Trail so far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
@@ -1045,7 +1031,7 @@
           <span class="survey-progress-steps">Map ready</span>
         </div>
         ${crumbs}
-        <p class="survey-result-meta">Gilbert marked <strong>${matchCount}</strong> project${matchCount === 1 ? "" : "s"} on the outline map. Pick from the table below, or refine with value icons.</p>
+        <p class="survey-result-meta"><strong>${matchCount}</strong> project${matchCount === 1 ? "" : "s"} marked on the outline map. Pick from the table below, or refine with value icons.</p>
         <div class="survey-result-tags">${tags}</div>
         <div class="survey-actions">
           <button type="button" class="btn btn-primary" id="survey-jump-toc">View the map</button>

@@ -93,16 +93,14 @@ Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + 
 ## 5. Layout patterns
 
 ```
-┌─ gg-header ────────────────── Gilbert Guide title + theme toggle (no logo wordmark)
+┌─ gg-header ────────────────── Trail Guide title + theme toggle (no logo / character)
 ├─ picker-zone-ask ──────────── Choose-your-path survey (2 steps) → filters outlines
 ├─ picker-zone-outlines ─────── TOC table (filtered) + Filter by value
 └─ picker-zone-cards ────────── sticky Continue bar + project cards
 Overlays: confirm · thank-you
 ```
 
-**Survey (quiet paper trail-guide):** Q&A in [`content/survey.md`](content/survey.md) → `PROJECT_DATA.survey`. One paper card. Centered masthead (leaf + TRAIL GUIDE + Choose your path). Trailhead / Waypoint labels stay. Numbered choice rows with chevrons. Gilbert **3.5rem** circle on the **right** (funny hat asset), facing inward. No topo / blazes. “Back to trailhead” resets.
-
-**Character facing rule:** Portraits and mascots always face toward the middle of the composition / adjacent content — never away off the edge of the screen. Prefer placing the figure on the side that lets the native pose look inward; mirror only when needed.
+**Survey (quiet paper trail-guide):** Q&A in [`content/survey.md`](content/survey.md) → `PROJECT_DATA.survey`. One paper card. Centered masthead (leaf + TRAIL GUIDE + Choose your path). Trailhead / Waypoint labels stay. Numbered choice rows with chevrons. No character portrait / Gilbert icon in the survey. No topo / blazes. “Back to trailhead” resets.
 
 | Pattern | Classes | Behavior |
 |---------|---------|----------|
