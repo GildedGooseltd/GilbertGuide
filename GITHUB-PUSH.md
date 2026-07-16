@@ -4,9 +4,7 @@
 
 **Where it goes:** GitHub repo → Action builds → public picker on GitHub Pages
 
-**Live site:** `https://gildedgooseltd.github.io/GilbertGuide/`
-
-**Secrets + Pages:** repo **`GildedGooseltd/GilbertGuide` only**.
+**Live site:** `https://gildedgooseltd.github.io/PickyPavi/`
 
 ---
 
@@ -16,13 +14,13 @@
 Cursor (edit B1.md, etc.)
     ↓  git add + git commit + git push
 GitHub repo (stores the files)
-    ↓  workflow "Deploy Gilbert Guide" runs automatically
+    ↓  workflow "Deploy Pav Project Picker" runs automatically
 gh-pages branch (built site)
     ↓  GitHub Pages serves it
 Public URL (client opens picker)
 ```
 
-You never upload files manually in the browser. Prefer **GitHub Desktop → Push**. Terminal / Cursor Source Control also work after auth is set up.
+You never upload files manually in the browser. **Push from Terminal** (or Cursor Source Control) after you edit markdown.
 
 ---
 
@@ -32,8 +30,8 @@ You never upload files manually in the browser. Prefer **GitHub Desktop → Push
 
 | Where | Do this |
 |--------|---------|
-| Browser → [github.com/GildedGooseltd/GilbertGuide](https://github.com/GildedGooseltd/GilbertGuide) | Repo for this picker |
-| HTTPS URL to save | `https://github.com/GildedGooseltd/GilbertGuide.git` |
+| Browser → [github.com/GildedGooseltd/PickyPavi](https://github.com/GildedGooseltd/PickyPavi) | Repo for this picker |
+| HTTPS URL to save | `https://github.com/GildedGooseltd/PickyPavi.git` |
 
 ### Step 2 — Commit picker files on your Mac
 
@@ -62,48 +60,22 @@ If `git commit` says "nothing to commit", files may already be committed — con
 | Same Terminal | Replace `YOUR_USERNAME` and `YOUR_REPO` with yours, then run: |
 
 ```bash
-git remote add origin https://github.com/GildedGooseltd/GilbertGuide.git
+git remote add origin https://github.com/GildedGooseltd/PickyPavi.git
 
 git push -u origin HEAD:main
 ```
 
-*(If `remote origin already exists`: `git remote set-url origin https://github.com/GildedGooseltd/GilbertGuide.git` then push.)*
+*(If `remote origin already exists`: `git remote set-url origin https://github.com/GildedGooseltd/PickyPavi.git` then push.)*
+**If asked to log in:** GitHub username + Personal Access Token (not password) — create at GitHub → **Settings** → **Developer settings** → **Personal access tokens**
 
-### Personal Access Token (Terminal HTTPS only)
-
-**You only need a token if you push from Terminal / Cursor and Git asks you to log in.**  
-**Prefer [GitHub Desktop](https://desktop.github.com)** (browser sign-in) — then skip this whole section.
-
-| Question | Answer |
-|----------|--------|
-| **What is it for?** | Password substitute so `git push` can talk to GitHub |
-| **Suggested Name** (label only) | `GilbertGuide Mac push` |
-| **Where do I put it?** | Only in the Terminal **Password** prompt when `git push` asks — **not** in GitHub Secrets, Apps Script, Cursor chat, or any repo file |
-| **Username prompt** | Your GitHub username |
-| **Password prompt** | Paste the token (not your GitHub account password) |
-
-**Create token:** [github.com/settings/tokens](https://github.com/settings/tokens) → **Generate new token**
-
-| Scope checkbox | Needed? |
-|----------------|---------|
-| `repo` (full) | Yes — push code |
-| `workflow` | Yes — required if you ever push changes under `.github/workflows/` |
-
-Without `workflow`, GitHub rejects pushes that touch the deploy workflow with:  
-`refusing to allow a Personal Access Token to create or update workflow … without workflow scope`
-
-**Never paste a token into Cursor chat.** If you did — revoke it immediately on the tokens page, make a new one, use only at the Password prompt.
-
-macOS usually saves the token in **Keychain** after one successful push — you paste once.
-
-**If HTTPS auth fails once** (can't paste, "Device not configured", repeated prompts, or `workflow` scope error and you don't want a new token) → **stop.** Use **GitHub Desktop** next — do not retry Terminal token paste.
+**If HTTPS auth fails once** (can't paste token, "Device not configured", repeated password prompts) → **stop retrying the same Terminal flow.** Switch immediately to **GitHub Desktop** (recommended) or SSH — do not send the user through token paste again.
 
 ### Auth failed? Use GitHub Desktop (do this next)
 
 1. Install: https://desktop.github.com  
 2. Sign in via browser in the app  
 3. **File → Add Local Repository** → `/Users/gildedgoose/Documents/1 Cursor Helper`  
-4. **Publish branch** / **Push origin** → `GildedGooseltd/GilbertGuide`
+4. **Publish branch** / **Push origin** → `GildedGooseltd/PickyPavi`, branch **main**
 
 No token paste in Terminal.
 
@@ -123,7 +95,7 @@ No token paste in Terminal.
 
 Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
-**Secret 1:** [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new)
+**Secret 1:** [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new)
 
 | Field | Paste this |
 |-------|------------|
@@ -132,7 +104,7 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 → **Add secret**
 
-**Secret 2:** [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions/new) again
+**Secret 2:** [New repository secret](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions/new) again
 
 | Field | Paste this |
 |-------|------------|
@@ -141,7 +113,7 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 → **Add secret**
 
-**Check:** [Secrets list](https://github.com/GildedGooseltd/GilbertGuide/settings/secrets/actions) — both names appear.
+**Check:** [Secrets list](https://github.com/GildedGooseltd/PickyPavi/settings/secrets/actions) — both names appear.
 
 **Wrong value?** Remove secret → add again (GitHub cannot edit secrets).
 
@@ -151,12 +123,12 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 | Link | Do this |
 |------|---------|
-| [Pages settings](https://github.com/GildedGooseltd/GilbertGuide/settings/pages) | Branch **`gh-pages`** / **`/ (root)`** → **Save** |
-| [Run Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** |
-| [Actions](https://github.com/GildedGooseltd/GilbertGuide/actions) | Wait for green ✓ |
-| [Live site](https://gildedgooseltd.github.io/GilbertGuide/) | Picker loads when deploy finishes |
+| [Pages settings](https://github.com/GildedGooseltd/PickyPavi/settings/pages) | Branch **`gh-pages`** / **`/ (root)`** → **Save** |
+| [Run Deploy Picky Pavi](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) | **Run workflow** |
+| [Actions](https://github.com/GildedGooseltd/PickyPavi/actions) | Wait for green ✓ |
+| [Live site](https://gildedgooseltd.github.io/PickyPavi/) | Picker loads when deploy finishes |
 
-**Do not re-run old Actions runs** — [Actions](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) → **Run workflow** only (uses latest code). Re-running a run from an older commit redeploys that old build to `gh-pages` and overwrites the live site.
+**Do not re-run old Actions runs** — [Actions](https://github.com/GildedGooseltd/PickyPavi/actions/workflows/pav-project-picker-pages.yml) → **Run workflow** only (uses latest code). Re-running a run from an older commit redeploys that old build to `gh-pages` and overwrites the live site.
 
 ---
 
@@ -201,12 +173,10 @@ First time still needs **Step 3** remote URL in Terminal unless you use **Publis
 | Problem | Fix |
 |---------|-----|
 | `remote origin already exists` | Skip `git remote add`; run `git push -u origin HEAD:main` |
-| Push rejected / auth failed | **GitHub Desktop → Push** (first choice). Or new PAT with `repo` + `workflow` → paste at Terminal **Password** only |
-| `… update workflow … without workflow scope` | Token missing `workflow`. Revoke → new token with `workflow` checked → push again; **or** push from Desktop; **or** commit without `.github/workflows/` changes |
-| Where does the PAT go? | Terminal **Password** on push only — never GitHub Secrets / chat / repo files |
-| Action did not run | Push must touch `gilded-goose/clients/pav-law/project-picker/**` or [Run Deploy Gilbert Guide](https://github.com/GildedGooseltd/GilbertGuide/actions/workflows/pav-project-picker-pages.yml) manually |
+| Push rejected / auth failed | Use Personal Access Token as password; or `gh auth login` |
+| Action did not run | Push must touch `gilded-goose/clients/pav-law/project-picker/**` or run workflow manually |
 | Site old after push | Wait for Actions ✓; hard-refresh browser |
-| `pages-config.js` empty webhook on live site | Add GitHub secret `PAV_PICKER_WEBHOOK_URL` on **GilbertGuide** (Step 4) → re-run deploy → verify [pages-config.js](https://gildedgooseltd.github.io/GilbertGuide/pages-config.js) |
+| `config.js` empty on live site | Add GitHub secrets (Step 4) → re-run deploy workflow |
 
 ---
 
