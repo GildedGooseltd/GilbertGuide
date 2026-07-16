@@ -4,7 +4,7 @@ Guide character: **Lord Gilbert Granville** (Gilbert).
 
 GitHub: [GildedGooseltd/PickyPavi](https://github.com/GildedGooseltd/PickyPavi) · Live: `https://gildedgooseltd.github.io/PickyPavi/`
 
-Static project picker: Ask Gilbert, value filters, cards, notes, submit → Sheet + email.
+Static project picker: choose-your-path survey → filters outlines, value filters, cards, notes, submit → Sheet + email.
 
 ## Edit content
 

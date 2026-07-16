@@ -60,11 +60,13 @@ Body: Georgia / Times New Roman (serif cockpit). Hierarchy via weight and size; 
 
 ```
 ┌─ gg-header ────────────────── Gilbert Guide title (no logo / no goose)
-├─ picker-zone-ask ──────────── Ask Gilbert chat + Why + condensed picks
-├─ picker-zone-outlines ─────── TOC table + Filter by value
+├─ picker-zone-ask ──────────── Choose-your-path survey (2 steps) → filters outlines
+├─ picker-zone-outlines ─────── TOC table (filtered) + Filter by value
 └─ picker-zone-cards ────────── sticky Continue bar + project cards
 Overlays: confirm · thank-you (text only — no logo / goose images)
 ```
+
+**Survey:** `GILBERT_SURVEY` in `app.js` — branching questions map to `--vi-*` icon ids via `iconFilters`. Completing a path opens the TOC and shows matching projects only. “Start over” / Clear filters resets the path.
 
 | Pattern | Classes | Behavior |
 |---------|---------|----------|

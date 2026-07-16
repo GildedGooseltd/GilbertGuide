@@ -189,6 +189,70 @@
       margin: 0; font-size: 0.95rem; color: var(--secondary); line-height: 1.45;
     }
     .gilbert-guide-col-chat-only { width: 100%; }
+    .picker-zone-lead {
+      margin: 0 0 var(--space-md); font-size: 0.95rem; color: var(--secondary); line-height: 1.5; max-width: 40rem;
+    }
+    .gilbert-survey {
+      background: var(--gg-paper);
+      border: 1px solid var(--gg-royal-border);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.25rem 1.35rem;
+    }
+    .survey-progress {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+      margin-bottom: 0.85rem; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--gg-gold-dark);
+    }
+    .survey-progress-steps { color: var(--gg-royal); }
+    .survey-prompt {
+      margin: 0 0 1rem; font-size: 1.15rem; font-weight: 700; color: var(--gg-royal-deep); line-height: 1.4;
+    }
+    .survey-choices {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;
+    }
+    @media (max-width: 700px) {
+      .survey-choices { grid-template-columns: 1fr; }
+    }
+    .survey-choice {
+      display: block; width: 100%; text-align: left;
+      padding: 0.85rem 1rem; border-radius: 10px;
+      border: 2px solid var(--border-strong);
+      background: var(--gg-cream);
+      color: var(--gg-brown); font: inherit; font-weight: 600; font-size: 0.95rem; line-height: 1.4;
+      cursor: pointer; transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+    }
+    .survey-choice:hover {
+      border-color: var(--gg-royal-border); background: var(--gg-royal-dim);
+    }
+    .survey-choice:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+    .survey-choice-hint {
+      display: block; margin-top: 0.3rem; font-size: 0.8rem; font-weight: 500; color: var(--secondary);
+    }
+    .survey-result {
+      border-left: 4px solid var(--gg-royal-mid);
+      padding-left: 0.85rem;
+    }
+    .survey-result h3 {
+      margin: 0 0 0.45rem; font-size: 0.78rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--gg-royal); font-weight: 800;
+    }
+    .survey-result-path {
+      margin: 0 0 0.75rem; font-size: 1.02rem; color: var(--gg-brown); line-height: 1.55; font-weight: 600;
+    }
+    .survey-result-meta {
+      margin: 0 0 1rem; font-size: 0.9rem; color: var(--secondary); line-height: 1.5;
+    }
+    .survey-result-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1rem;
+    }
+    .survey-tag {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.25rem 0.55rem; border-radius: 999px;
+      background: var(--gg-cream-panel); border: 1px solid var(--border);
+      font-size: 0.8rem; font-weight: 700; color: var(--gg-brown);
+    }
+    .survey-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .survey-actions .btn { width: auto; margin: 0; }
     .gilbert-guide-col {
       display: flex; flex-direction: row; flex: 1; min-width: 0; width: 100%;
       gap: var(--space-md); align-items: flex-start;
@@ -1021,25 +1085,17 @@
   <div id="main-app">
     <header class="gg-header">
       <span class="gg-app-title">Gilbert Guide</span>
-      <p class="gg-header-sub">Ask Gilbert, filter by value, pick projects, then confirm &amp; submit.</p>
+      <p class="gg-header-sub">Choose a path, filter the outline list, pick projects, then confirm &amp; submit.</p>
     </header>
     <section class="finder-panel" aria-label="Find projects and submit">
       <div class="top-unified-panel">
         <div class="top-unified-card">
           <div class="picker-zone picker-zone-ask" aria-labelledby="zone-ask-label">
-            <span class="picker-zone-label" id="zone-ask-label">Ask Gilbert</span>
-            <h2 class="picker-zone-title">What should we prioritize?</h2>
+            <span class="picker-zone-label" id="zone-ask-label">Quick path</span>
+            <h2 class="picker-zone-title">Choose your path</h2>
+            <p class="picker-zone-lead">Answer 2 short questions — Gilbert filters the project outline list to what fits.</p>
             <div class="search-unified-panel">
-              <div class="search-unified-inner search-unified-gilbert-only">
-                <div class="gilbert-guide-col gilbert-guide-col-chat-only">
-                  <div class="gilbert-chat-col">
-                    <div class="gilbert-chat-wrap">
-                      <div class="gilbert-chat-messages" id="gilbert-chat-messages" aria-live="polite"></div>
-                      <input type="text" id="goal-input" class="gilbert-chat-input" placeholder="Type a goal, press Enter…" autocomplete="off">
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <div id="gilbert-survey" class="gilbert-survey" aria-live="polite"></div>
               <div id="why-panel" class="why-panel" hidden></div>
               <div id="toc-condensed" class="toc-condensed" hidden></div>
             </div>
@@ -1104,8 +1160,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716c"></script>
-  <script src="projects-data.js?v=20260716c"></script>
-  <script src="app.js?v=20260716c"></script>
+  <script src="pages-config.js?v=20260716d"></script>
+  <script src="projects-data.js?v=20260716d"></script>
+  <script src="app.js?v=20260716d"></script>
 </body>
 </html>
