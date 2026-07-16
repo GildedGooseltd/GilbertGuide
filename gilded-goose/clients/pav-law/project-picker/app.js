@@ -1069,18 +1069,24 @@
       return;
     }
     const waypointLabel = node.step === 1 ? "Trailhead" : "Waypoint";
+    const choicesHtml = node.choices.map((c, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      return `<button type="button" class="survey-choice" data-choice="${escapeHtml(c.id)}">
+          <span class="survey-choice-num">${num}</span>
+          <span class="survey-choice-copy">
+            <span class="survey-choice-label">${escapeHtml(c.label)}</span>
+            ${c.hint ? `<span class="survey-choice-hint">${escapeHtml(c.hint)}</span>` : ""}
+          </span>
+          <span class="survey-choice-chevron" aria-hidden="true">›</span>
+        </button>`;
+    }).join("");
     el.innerHTML = `<div class="survey-progress">
         <span>${waypointLabel}</span>
         <span class="survey-progress-steps">Waypoint ${node.step} of ${node.steps}</span>
       </div>
       ${crumbs}
       <p class="survey-prompt">${escapeHtml(node.prompt)}</p>
-      <div class="survey-choices">${node.choices.map(c =>
-        `<button type="button" class="survey-choice" data-choice="${escapeHtml(c.id)}">
-          ${escapeHtml(c.label)}
-          ${c.hint ? `<span class="survey-choice-hint">${escapeHtml(c.hint)}</span>` : ""}
-        </button>`
-      ).join("")}</div>
+      <div class="survey-choices">${choicesHtml}</div>
       ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Previous waypoint</button></div>` : ""}`;
     el.querySelectorAll(".survey-choice").forEach(btn => {
       btn.addEventListener("click", () => selectSurveyChoice(btn.dataset.choice));
