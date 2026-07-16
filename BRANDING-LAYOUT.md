@@ -62,9 +62,9 @@ Do **not** put branding hex in project markdown or `projects-data.js`.
 
 **Forbidden:** navy / blue-black (`#0f172a`, `#1e3a5f`, `#2d1454`, `#3a1a6e`), neon cyan/teal, neon `#7c5cff` as the main brand light, light-on-light plan panels.
 
-### Themes — Dark ↔ Unicorn
+### Themes — Light ↔ Dark
 
-Header toggle switches **`dark`** and **`unicorn`** only (legacy `light` maps to `unicorn`). Preference key `gilbert-guide-theme` in `localStorage`. **Default / preferred: unicorn** (cream + quiet trail questionnaire). Early head script sets `data-theme` before paint. URL override: `?theme=dark` or `?theme=unicorn`.
+Header toggle switches **`light`** and **`dark`** only (legacy `unicorn` maps to `light`). Preference key `gilbert-guide-theme` in `localStorage`. **Default: light** (cream paper + quiet trail questionnaire). Early head script sets `data-theme` before paint. URL override: `?theme=dark` or `?theme=light`.
 
 #### Dark (`html[data-theme="dark"]`)
 
@@ -78,11 +78,9 @@ Deep **purple** night — plum / eggplant surfaces (not brown charcoal), lavende
 | Sticky / TOC | Purple panel tokens |
 | Buttons on accents | `--btn-on-accent` → deep purple ink |
 
-#### Unicorn (`html[data-theme="unicorn"]`)
+#### Light (`html[data-theme="light"]`)
 
-Upscale cream / champagne gold / soft violet — glitter stays champagne (not hot pink). Quiet paper survey. Header **logo title formatting stays default**. Still no navy.
-
-**Activation burst:** Switching Dark → Unicorn plays `#unicorn-fart-cloud` — pink/fuchsia sparkle fart cloud, line “good morning sparkle farts!”, and dancing Gilbert GIF (`assets/gilbert-unicorn-dance.gif`) in a fake unicorn headband. Click anywhere or wait ~3s to dismiss. Honors `prefers-reduced-motion`.
+Quiet cream paper / champagne gold / soft violet. Quiet trail questionnaire. Header **logo title formatting stays default**. No navy. Unicorn mode removed.
 
 ---
 
@@ -168,7 +166,7 @@ Voice: practical law-firm cockpit for Andrew/team — scannable, not startup-lan
 - [x] Button `:focus-visible` ring
 - [x] Value icons share one `--vi-*` map (filter + TOC)
 - [x] No navy brand tokens
-- [x] Dark ↔ Unicorn themes via `data-theme` + header toggle
+- [x] Light ↔ Dark themes via `data-theme` + header toggle
 
 ---
 
