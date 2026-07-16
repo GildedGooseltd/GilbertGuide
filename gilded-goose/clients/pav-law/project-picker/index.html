@@ -420,7 +420,7 @@
     .picker-zone-lead {
       margin: 0 0 1rem; font-size: 0.92rem; color: var(--secondary); line-height: 1.5; max-width: 40rem;
     }
-    /* Trail-guide questionnaire — one cream card (no nested panel), tight rows */
+    /* Quiet trail-guide paper card — masthead + waypoint rows + 3.5rem Gilbert */
     .top-unified-card:has(.gilbert-survey) {
       background: transparent;
       border: none;
@@ -429,23 +429,23 @@
     }
     .picker-zone-ask { margin-bottom: 0; }
     .gilbert-survey {
-      background: #fffcf7;
-      border: 1px solid rgba(184, 134, 11, 0.28);
-      border-radius: 22px;
-      padding: 1.65rem 1.85rem 1.35rem;
-      box-shadow: 0 8px 24px rgba(61, 48, 40, 0.05);
-      max-width: 44rem;
+      background: var(--gg-paper);
+      border: 1px solid rgba(120, 90, 50, 0.22);
+      border-radius: 20px;
+      padding: 1.35rem 1.5rem 1.25rem;
+      box-shadow: 0 4px 18px rgba(61, 48, 40, 0.04);
+      max-width: 58rem;
       margin: 0 auto;
     }
     html[data-theme="dark"] .gilbert-survey {
       background: var(--gg-paper);
       border-color: var(--border-strong);
-      box-shadow: 0 10px 28px rgba(18, 6, 31, 0.35);
+      box-shadow: 0 8px 22px rgba(18, 6, 31, 0.3);
     }
     html[data-theme="unicorn"] .gilbert-survey {
       background: #fffcf7;
-      border-color: rgba(184, 134, 11, 0.28);
-      box-shadow: 0 8px 24px rgba(61, 48, 40, 0.05);
+      border-color: rgba(120, 90, 50, 0.22);
+      box-shadow: 0 4px 18px rgba(61, 48, 40, 0.04);
     }
     html[data-theme="unicorn"] .btn-primary {
       background: var(--metal-gold);
@@ -482,14 +482,14 @@
     }
     .survey-masthead {
       text-align: center;
-      margin: 0 0 1.15rem;
+      margin: 0 0 1.1rem;
     }
     .survey-leaf {
       display: block;
-      width: 1.15rem;
-      height: 1.15rem;
-      margin: 0 auto 0.4rem;
-      color: #b8860b;
+      width: 1.1rem;
+      height: 1.1rem;
+      margin: 0 auto 0.35rem;
+      color: #9a7b3c;
     }
     html[data-theme="dark"] .survey-leaf { color: var(--gg-gold-bright); }
     .survey-leaf svg { display: block; width: 100%; height: 100%; }
@@ -497,86 +497,75 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.85rem;
-      margin: 0 0 0.55rem;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 0.7rem;
+      gap: 0.8rem;
+      margin: 0 0 0.45rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
-      color: #b8860b;
+      color: #9a7b3c;
     }
     html[data-theme="dark"] .survey-kicker { color: var(--gg-gold-bright); }
     .survey-kicker::before,
     .survey-kicker::after {
       content: "";
-      width: 2.75rem;
+      width: 2.5rem;
       height: 1px;
       background: currentColor;
-      opacity: 0.45;
+      opacity: 0.4;
     }
     .survey-title {
-      margin: 0 0 0.4rem;
+      margin: 0 0 0.35rem;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.7rem, 3.2vw, 2.05rem);
+      font-size: clamp(1.55rem, 2.8vw, 1.85rem);
       font-weight: 700;
       color: var(--gg-royal-deep);
-      letter-spacing: -0.015em;
+      letter-spacing: -0.01em;
       line-height: 1.15;
     }
     .survey-lead {
       margin: 0 auto;
-      max-width: 28rem;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 0.92rem;
+      max-width: 32rem;
+      font-size: 0.9rem;
       line-height: 1.45;
       color: var(--secondary);
     }
-    .survey-meta {
-      margin: 0 0 0.85rem;
-      text-align: center;
-    }
-    .survey-meta:empty { margin: 0; }
     .survey-with-gilbert {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 6.5rem;
-      column-gap: 0.85rem;
-      align-items: center;
+      grid-template-columns: minmax(0, 1fr) 3.5rem;
+      column-gap: 1rem;
+      align-items: start;
       margin: 0;
     }
     .survey-gilbert-col {
-      width: 6.5rem;
+      width: 3.5rem;
       flex-shrink: 0;
       grid-column: 2;
       grid-row: 1;
       text-align: center;
       justify-self: end;
-      align-self: center;
-      padding-top: 0;
+      padding-top: 0.15rem;
     }
     .survey-body {
       grid-column: 1;
       grid-row: 1;
       min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
     }
     .survey-gilbert-fig {
       position: relative;
       display: block;
       margin: 0 auto;
-      width: 6.25rem;
-      height: 6.25rem;
+      width: 3.5rem;
+      height: 3.5rem;
       border-radius: 50%;
       overflow: hidden;
-      border: 1.5px solid #c9a86c;
-      background-color: #f8f5ef;
+      border: 1.5px solid var(--gg-gold);
+      background-color: var(--gg-cream);
       background-image: url("assets/gilbert-guide-subtle-hat.png");
       background-size: cover;
-      background-position: center 18%;
+      background-position: center 20%;
       background-repeat: no-repeat;
-      box-shadow: none;
+      box-shadow: 0 1px 4px var(--shadow-soft);
     }
     html[data-theme="dark"] .survey-gilbert-fig {
       border-color: var(--gg-gold);
@@ -589,116 +578,104 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 18%;
+      object-position: center 20%;
     }
     .survey-gilbert-fig.is-profile .survey-gilbert-img {
       object-fit: cover;
-      object-position: center 18%;
+      object-position: center 20%;
       padding: 0;
     }
     .survey-gilbert-caption {
-      display: block; margin-top: 0.4rem; text-align: center;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.22em;
-      text-transform: uppercase; color: #b8860b; line-height: 1.2;
+      display: block;
+      margin-top: 0.28rem;
+      text-align: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gg-brown-muted);
+      line-height: 1.2;
     }
     html[data-theme="dark"] .survey-gilbert-caption { color: var(--gg-gold-bright); }
-    @media (max-width: 720px) {
-      .gilbert-survey { padding: 1.5rem 1.15rem 1.35rem; }
+    @media (max-width: 640px) {
+      .gilbert-survey { padding: 1.15rem 1rem 1.1rem; }
       .survey-with-gilbert {
-        grid-template-columns: minmax(0, 1fr);
-        row-gap: 1rem;
+        grid-template-columns: minmax(0, 1fr) 3rem;
+        column-gap: 0.65rem;
       }
-      .survey-gilbert-col {
-        grid-column: 1;
-        grid-row: 1;
-        width: 5.25rem;
-        justify-self: center;
-      }
-      .survey-body { grid-column: 1; grid-row: 2; }
-      .survey-gilbert-fig { width: 5.25rem; height: 5.25rem; }
+      .survey-gilbert-col,
+      .survey-gilbert-fig { width: 3rem; }
+      .survey-gilbert-fig { height: 3rem; }
     }
     .survey-progress {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    .survey-progress.is-visible {
-      position: static;
-      width: auto;
-      height: auto;
-      margin: 0 0 0.55rem;
-      clip: auto;
-      overflow: visible;
-      white-space: normal;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      font-size: 0.65rem;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin: 0 0 0.55rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #b8860b;
+      color: var(--gg-brown-muted);
     }
-    html[data-theme="dark"] .survey-progress.is-visible { color: var(--gg-gold-bright); }
-    .survey-progress-steps { font-weight: 700; opacity: 0.9; }
+    .survey-progress-steps {
+      color: var(--gg-gold-dark);
+      font-weight: 700;
+    }
+    html[data-theme="dark"] .survey-progress { color: var(--gg-gold-bright); border-bottom-color: var(--border); }
+    html[data-theme="dark"] .survey-progress-steps { color: var(--gg-gold-bright); }
     .survey-crumbs {
-      margin: 0 0 0.4rem; font-size: 0.78rem; color: var(--secondary); line-height: 1.35;
-      text-align: center;
+      margin: 0 0 0.5rem;
+      font-size: 0.82rem;
+      color: var(--secondary);
+      line-height: 1.4;
     }
     .survey-crumbs strong { color: var(--gg-brown); font-weight: 700; }
     .survey-prompt {
-      margin: 0;
+      margin: 0 0 0.55rem;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 0.98rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: var(--gg-royal-deep);
-      line-height: 1.3;
-      text-align: center;
+      line-height: 1.35;
     }
     .survey-choices {
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.4rem;
       border: none;
       background: transparent;
-      border-radius: 0;
-      overflow: visible;
     }
     .survey-choice {
       display: grid;
-      grid-template-columns: 1.7rem minmax(0, 1fr) 0.85rem;
+      grid-template-columns: 1.65rem minmax(0, 1fr) 0.85rem;
       align-items: center;
-      gap: 0.25rem 0.7rem;
+      gap: 0.35rem 0.6rem;
       width: 100%;
       text-align: left;
-      padding: 0.72rem 1.05rem;
-      border: 1px solid rgba(184, 134, 11, 0.26);
-      border-radius: 12px;
-      background: #fffdf9;
+      padding: 0.62rem 0.8rem;
+      border: 1px solid rgba(120, 90, 50, 0.18);
+      border-radius: 10px;
+      background: rgba(255, 253, 249, 0.9);
       color: var(--gg-brown);
       font: inherit;
-      font-family: Georgia, "Times New Roman", serif;
       font-weight: 600;
-      font-size: 0.98rem;
+      font-size: 0.94rem;
       line-height: 1.3;
       cursor: pointer;
-      transition: background 0.15s ease, border-color 0.15s ease;
+      transition: background 0.12s ease, border-color 0.12s ease;
     }
     html[data-theme="dark"] .survey-choice {
       background: var(--surface2);
-      border-color: var(--border-strong);
+      border-color: var(--border);
       color: var(--text);
     }
     .survey-choice:hover {
-      background: #f7f1e7;
-      border-color: rgba(184, 134, 11, 0.45);
+      background: rgba(201, 168, 108, 0.12);
+      border-color: rgba(120, 90, 50, 0.32);
     }
     html[data-theme="dark"] .survey-choice:hover {
       background: var(--surface-panel);
@@ -707,24 +684,26 @@
     .survey-choice:focus-visible { outline: none; box-shadow: var(--focus-ring); }
     .survey-choice-num {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
-      color: #b8860b;
+      letter-spacing: 0.03em;
+      color: #9a7b3c;
     }
     html[data-theme="dark"] .survey-choice-num { color: var(--gg-gold-bright); }
-    .survey-choice-label {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .survey-choice-copy { min-width: 0; }
+    .survey-choice-label { display: block; }
+    .survey-choice-hint {
+      display: block;
+      margin-top: 0.12rem;
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--secondary);
     }
     .survey-choice-chevron {
-      color: #b8860b;
-      font-size: 1.05rem;
+      color: #9a7b3c;
+      font-size: 1rem;
       line-height: 1;
       justify-self: end;
-      font-weight: 400;
     }
     html[data-theme="dark"] .survey-choice-chevron { color: var(--gg-gold-bright); }
     .survey-result-meta {
@@ -1751,7 +1730,6 @@
                   <h2 class="survey-title">Choose your path</h2>
                   <p class="survey-lead">A few quick questions help Gilbert tailor the best recommendations for your next adventure.</p>
                 </header>
-                <div id="survey-meta" class="survey-meta" aria-live="polite"></div>
                 <div class="survey-with-gilbert">
                   <div id="gilbert-survey-body" class="survey-body"></div>
                   <div class="survey-gilbert-col">
@@ -1761,8 +1739,8 @@
                         class="survey-gilbert-img"
                         src="assets/gilbert-guide-subtle-hat.png"
                         alt="Lord Gilbert Granville in a funny trail guide hat"
-                        width="108"
-                        height="108"
+                        width="56"
+                        height="56"
                         decoding="async"
                       >
                     </figure>
@@ -1853,8 +1831,8 @@
     </div>
   </div>
 
-  <script src="pages-config.js?v=20260716y"></script>
-  <script src="projects-data.js?v=20260716y"></script>
-  <script src="app.js?v=20260716y"></script>
+  <script src="pages-config.js?v=20260716aa"></script>
+  <script src="projects-data.js?v=20260716aa"></script>
+  <script src="app.js?v=20260716aa"></script>
 </body>
 </html>

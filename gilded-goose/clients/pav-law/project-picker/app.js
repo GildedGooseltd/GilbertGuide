@@ -1023,26 +1023,14 @@
     fig?.classList.add("is-profile");
   }
 
-  const SURVEY_LEAD_DEFAULT =
-    "A few quick questions help Gilbert tailor the best recommendations for your next adventure.";
-
-  function setSurveyLead(text) {
-    const lead = document.querySelector("#gilbert-survey .survey-lead");
-    if (lead) lead.textContent = text || SURVEY_LEAD_DEFAULT;
-  }
-
   function renderGilbertSurvey() {
     const el = document.getElementById("gilbert-survey-body") || document.getElementById("gilbert-survey");
-    const meta = document.getElementById("survey-meta");
     if (!el) return;
     syncSurveyGilbertPortrait();
     const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
     const crumbs = pathLabels.length
       ? `<p class="survey-crumbs">Trail so far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
       : "";
-    const setMeta = (html) => {
-      if (meta) meta.innerHTML = html || "";
-    };
 
     if (state.surveyDone && state.surveyPath.length) {
       const icons = iconsFromSurveyPath();
@@ -1052,11 +1040,14 @@
         if (!def) return `<span class="survey-tag">${escapeHtml(id)}</span>`;
         return `<span class="survey-tag">${valueIconMarkup(def)}<span>${escapeHtml(def.label)}</span></span>`;
       }).join("");
-      setSurveyLead(SURVEY_LEAD_DEFAULT);
-      setMeta(`${crumbs}
+      el.innerHTML = `<div class="survey-progress">
+          <span>Trail marked</span>
+          <span class="survey-progress-steps">Map ready</span>
+        </div>
+        ${crumbs}
         <p class="survey-result-meta">Gilbert marked <strong>${matchCount}</strong> project${matchCount === 1 ? "" : "s"} on the outline map. Pick from the table below, or refine with value icons.</p>
-        <div class="survey-result-tags">${tags}</div>`);
-      el.innerHTML = `<div class="survey-actions">
+        <div class="survey-result-tags">${tags}</div>
+        <div class="survey-actions">
           <button type="button" class="btn btn-primary" id="survey-jump-toc">View the map</button>
           <button type="button" class="btn btn-secondary" id="survey-restart">Back to trailhead</button>
         </div>`;
@@ -1074,29 +1065,28 @@
     const nodeId = state.surveyNode || GILBERT_SURVEY.start;
     const node = GILBERT_SURVEY.nodes[nodeId];
     if (!node) {
-      setSurveyLead(SURVEY_LEAD_DEFAULT);
-      setMeta(`<p class="survey-result-meta">Trail guide unavailable.</p>`);
-      el.innerHTML = "";
+      el.innerHTML = `<p class="survey-result-meta">Trail guide unavailable.</p>`;
       return;
     }
-    // Masthead: one supporting line like the mockup (adventure lead, then prompt on later steps).
-    setSurveyLead(node.step === 1 ? SURVEY_LEAD_DEFAULT : node.prompt);
-    const progressHtml = node.step > 1
-      ? `<div class="survey-progress is-visible" aria-live="polite">
-          <span class="survey-progress-steps">Waypoint ${node.step} of ${node.steps}</span>
-        </div>`
-      : "";
+    const waypointLabel = node.step === 1 ? "Trailhead" : "Waypoint";
     const choicesHtml = node.choices.map((c, i) => {
       const num = String(i + 1).padStart(2, "0");
-      const title = c.hint ? ` title="${escapeHtml(c.hint)}"` : "";
-      return `<button type="button" class="survey-choice" data-choice="${escapeHtml(c.id)}"${title}>
+      return `<button type="button" class="survey-choice" data-choice="${escapeHtml(c.id)}">
           <span class="survey-choice-num">${num}</span>
-          <span class="survey-choice-label">${escapeHtml(c.label)}</span>
+          <span class="survey-choice-copy">
+            <span class="survey-choice-label">${escapeHtml(c.label)}</span>
+            ${c.hint ? `<span class="survey-choice-hint">${escapeHtml(c.hint)}</span>` : ""}
+          </span>
           <span class="survey-choice-chevron" aria-hidden="true">›</span>
         </button>`;
     }).join("");
-    setMeta(`${progressHtml}${crumbs}`);
-    el.innerHTML = `<div class="survey-choices" role="group" aria-label="${escapeHtml(node.prompt)}">${choicesHtml}</div>
+    el.innerHTML = `<div class="survey-progress">
+        <span>${waypointLabel}</span>
+        <span class="survey-progress-steps">Waypoint ${node.step} of ${node.steps}</span>
+      </div>
+      ${crumbs}
+      <p class="survey-prompt">${escapeHtml(node.prompt)}</p>
+      <div class="survey-choices" role="group" aria-label="${escapeHtml(node.prompt)}">${choicesHtml}</div>
       ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Previous waypoint</button></div>` : ""}`;
     el.querySelectorAll(".survey-choice").forEach(btn => {
       btn.addEventListener("click", () => selectSurveyChoice(btn.dataset.choice));
