@@ -1648,18 +1648,83 @@
     return THEME_UNICORN;
   }
 
-  function applyTheme(theme) {
+  let unicornFartTimer = null;
+  let unicornFartHideTimer = null;
+
+  function spawnUnicornFartPuffs(host) {
+    if (!host) return;
+    host.innerHTML = "";
+    const colors = ["#ff4ecd", "#e879f9", "#fb7185", "#f0abfc", "#fbbf24", "#c084fc", "#fff"];
+    for (let i = 0; i < 16; i++) {
+      const puff = document.createElement("span");
+      puff.className = "unicorn-fart-puff";
+      const size = 70 + Math.random() * 140;
+      puff.style.width = size + "px";
+      puff.style.height = size + "px";
+      puff.style.left = (18 + Math.random() * 64) + "%";
+      puff.style.top = (52 + Math.random() * 30) + "%";
+      puff.style.background = colors[Math.floor(Math.random() * colors.length)];
+      puff.style.setProperty("--drift", (Math.random() * 160 - 80) + "px");
+      puff.style.animationDelay = (Math.random() * 0.45) + "s";
+      host.appendChild(puff);
+    }
+  }
+
+  function hideUnicornFartCloud() {
+    const overlay = document.getElementById("unicorn-fart-cloud");
+    if (!overlay) return;
+    overlay.classList.add("fade-out");
+    window.clearTimeout(unicornFartHideTimer);
+    unicornFartHideTimer = window.setTimeout(() => {
+      overlay.classList.remove("show", "fade-out");
+      overlay.hidden = true;
+      overlay.setAttribute("aria-hidden", "true");
+      const puffs = document.getElementById("unicorn-fart-puffs");
+      if (puffs) puffs.innerHTML = "";
+    }, 560);
+  }
+
+  function playUnicornFartCloud() {
+    const reduceMotion = typeof window.matchMedia === "function"
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const overlay = document.getElementById("unicorn-fart-cloud");
+    if (!overlay) return;
+    window.clearTimeout(unicornFartTimer);
+    window.clearTimeout(unicornFartHideTimer);
+    overlay.hidden = false;
+    overlay.setAttribute("aria-hidden", "false");
+    overlay.classList.remove("fade-out");
+    // restart CSS animations
+    void overlay.offsetWidth;
+    overlay.classList.add("show");
+    spawnUnicornFartPuffs(document.getElementById("unicorn-fart-puffs"));
+    const img = document.getElementById("unicorn-fart-gilbert");
+    if (img) {
+      // restart gif
+      const src = img.getAttribute("src") || "assets/gilbert-unicorn-dance.gif";
+      img.src = src.split("?")[0] + "?t=" + Date.now();
+    }
+    unicornFartTimer = window.setTimeout(hideUnicornFartCloud, reduceMotion ? 1600 : 3200);
+  }
+
+  function applyTheme(theme, options) {
+    const opts = options || {};
+    const prev = normalizeTheme(document.documentElement.getAttribute("data-theme"));
     const next = normalizeTheme(theme) || THEME_UNICORN;
     document.documentElement.setAttribute("data-theme", next);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch (e) { /* ignore */ }
     const btn = document.getElementById("theme-toggle");
-    if (!btn) return;
-    const isDark = next === THEME_DARK;
-    btn.setAttribute("aria-pressed", isDark ? "true" : "false");
-    btn.setAttribute("aria-label", isDark ? "Switch to unicorn theme" : "Switch to dark theme");
-    btn.textContent = isDark ? "Unicorn" : "Dark";
+    if (btn) {
+      const isDark = next === THEME_DARK;
+      btn.setAttribute("aria-pressed", isDark ? "true" : "false");
+      btn.setAttribute("aria-label", isDark ? "Switch to unicorn theme" : "Switch to dark theme");
+      btn.textContent = isDark ? "Unicorn" : "Dark";
+    }
+    if (opts.celebrate && next === THEME_UNICORN && prev !== THEME_UNICORN) {
+      playUnicornFartCloud();
+    }
   }
 
   function initThemeToggle() {
@@ -1668,8 +1733,18 @@
     if (!btn) return;
     btn.addEventListener("click", () => {
       const current = normalizeTheme(document.documentElement.getAttribute("data-theme")) || THEME_UNICORN;
-      applyTheme(current === THEME_DARK ? THEME_UNICORN : THEME_DARK);
+      applyTheme(current === THEME_DARK ? THEME_UNICORN : THEME_DARK, { celebrate: true });
     });
+    const overlay = document.getElementById("unicorn-fart-cloud");
+    if (overlay) {
+      overlay.addEventListener("click", hideUnicornFartCloud);
+    }
+    try {
+      if (new URLSearchParams(location.search).get("unicornFart") === "1") {
+        applyTheme(THEME_UNICORN);
+        playUnicornFartCloud();
+      }
+    } catch (e) { /* ignore */ }
   }
 
   function showThankYou(payload) {

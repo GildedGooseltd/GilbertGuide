@@ -82,6 +82,8 @@ Warm charcoal / gold / violet — same accent family, no navy.
 
 Bold magenta / fuchsia / hot rose / electric gold with **metallics** (`--metal-gold`, `--metal-rose`, `--metal-chrome`, `--metal-holo`) and drifting **glitter** layers on `body` + `.gilbert-survey`. Holo borders on survey, cards, sticky bar; metallic title / primary button. Still no navy.
 
+**Activation burst:** Switching Dark → Unicorn plays `#unicorn-fart-cloud` — pink/fuchsia sparkle fart cloud, line “good morning sparkle farts!”, and dancing Gilbert GIF (`assets/gilbert-unicorn-dance.gif`) in a fake unicorn headband. Click anywhere or wait ~3s to dismiss. Honors `prefers-reduced-motion`.
+
 ---
 
 ## 4. Typography
