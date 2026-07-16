@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260716-download-revisions";
+  const RENDER_VER = "20260716-financial-section";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -41,6 +41,10 @@
     "cash-collected": {
       file: "~/Downloads/ledger_account_activity_report.csv",
       fields: "Ledger Credit by month · aggregate only · Jan 2025–Jul 15 2026"
+    },
+    "financial": {
+      file: "ledger + leads-inbox (15) + account_activities May–Jul 2026",
+      fields: "Credits · cash/new case · LSA charge rate · LSA $/charged · Trust payment-method rows"
     }
   };
   const DATA = {
@@ -160,7 +164,7 @@
     ],
     /* Dual-axis: left = counts · right = $ spend. Trust omitted — needs fees-collected. */
     casesLeadsSpend: [
-      { month: "May", cases: 22, leads: 69, spend: 18633, lsaSpend: 11006, adsSpend: 7627, adsLeads: 39 },
+      { month: "May", cases: 22, leads: 50, spend: 18633, lsaSpend: 11006, adsSpend: 7627, adsLeads: 39 },
       { month: "Jun", cases: 34, leads: 83, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138 },
       { month: "Jul*", cases: 0, leads: 57, spend: 8832, lsaSpend: 7163, adsSpend: 1669, adsLeads: 26 }
     ],
@@ -168,19 +172,29 @@
     consultingLsaMonthly: 1000,
     consultingAdsMonthly: 2000,
     cashCollected: [
-      { month: "Jan", credit: 57925 },
-      { month: "Feb", credit: 83950 },
-      { month: "Mar", credit: 80500 },
-      { month: "Apr", credit: 70026 },
-      { month: "May", credit: 92140 },
-      { month: "Jun", credit: 103485 },
-      { month: "Jul*", credit: 44950 }
+      { month: "Jan", credit: 57925, newCases: 12 },
+      { month: "Feb", credit: 83950, newCases: 14 },
+      { month: "Mar", credit: 80500, newCases: 17 },
+      { month: "Apr", credit: 70026, newCases: 15 },
+      { month: "May", credit: 92140, newCases: 22 },
+      { month: "Jun", credit: 103485, newCases: 34 },
+      { month: "Jul*", credit: 44950, newCases: null }
     ],
     cashCollectedTotals: {
       total2025: 945436,
       total2026ToDate: 532976,
-      allCredits: 1478412
-    }
+      allCredits: 1478412,
+      contractedMean: 5587
+    },
+    /* NEW-C / NEW-D — LSA efficiency from inbox (15) + account_activities */
+    lsaEfficiency: [
+      { month: "May", leads: 50, charged: 19, lsaSpend: 11006 },
+      { month: "Jun", leads: 83, charged: 39, lsaSpend: 13206 },
+      { month: "Jul*", leads: 57, charged: 17, lsaSpend: 7163 }
+    ],
+    lsaChargeRateOverall: { charged: 75, leads: 190, pct: 39.5 },
+    /* NEW-E — Payment Method = Trust (aggregate only) */
+    trustTransfers: { rows: 94, credits: 7000, debits: 355760 }
   };
 
   function star(verified) {
@@ -588,33 +602,116 @@
   }
 
   function cashCollectedTable(rows) {
-    const ytd = rows.reduce((s, r) => s + r.credit, 0);
+    const mean = DATA.cashCollectedTotals.contractedMean || 5587;
+    const withCases = rows.filter(r => r.newCases);
+    const ytdCredit = rows.reduce((s, r) => s + r.credit, 0);
+    const ytdCases = withCases.reduce((s, r) => s + r.newCases, 0);
     return kpiDetailTable(
-      ["Month", "Cash collected (Ledger Credits)"],
+      ["Month", "Cash collected", "New cases", "Cash / new case", "Vs #28 contracted ($5,587)"],
       [
-        ...rows.map(r => [escapeHtml(r.month) + " 2026", fmtMoney(r.credit)]),
-        ["2026 to date", fmtMoney(ytd)],
-        ["2025 total", fmtMoney(DATA.cashCollectedTotals.total2025)],
-        ["All ledger credits", fmtMoney(DATA.cashCollectedTotals.allCredits)]
+        ...rows.map(r => {
+          const per = r.newCases ? r.credit / r.newCases : null;
+          const vs = per != null ? Math.round(per - mean) : null;
+          return [
+            escapeHtml(r.month) + " 2026",
+            fmtMoney(r.credit),
+            r.newCases != null ? String(r.newCases) : "—",
+            per != null ? fmtMoney(per) : "—",
+            vs == null ? "—" : ((vs >= 0 ? "+" : "−") + fmtMoney(Math.abs(vs)))
+          ];
+        }),
+        [
+          "Jan–Jun totals",
+          fmtMoney(withCases.reduce((s, r) => s + r.credit, 0)),
+          String(ytdCases),
+          fmtMoney(withCases.reduce((s, r) => s + r.credit, 0) / ytdCases),
+          "—"
+        ],
+        ["2026 to date (incl. Jul*)", fmtMoney(ytdCredit), "—", "—", "—"],
+        ["2025 total", fmtMoney(DATA.cashCollectedTotals.total2025), "—", "—", "—"]
       ]
     );
   }
 
-  function cashCollectedSectionHtml() {
-    const rows = DATA.cashCollected || [];
-    if (!rows.length) return "";
-    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-cash-collected" data-feedback-label="Cash collected">
-      ${kpiSectionStaticHead("Cash collected from MyCase ledger", "Credits · aggregate only")}
+  function lsaEfficiencyTable(rows) {
+    const tot = rows.reduce((a, r) => ({
+      leads: a.leads + r.leads,
+      charged: a.charged + r.charged,
+      lsaSpend: a.lsaSpend + r.lsaSpend
+    }), { leads: 0, charged: 0, lsaSpend: 0 });
+    const overall = DATA.lsaChargeRateOverall || {};
+    return kpiDetailTable(
+      ["Period", "LSA leads", "Charged", "Charge rate", "LSA media", "Cost / charged lead"],
+      [
+        ...rows.map(r => [
+          escapeHtml(r.month) + " 2026",
+          String(r.leads),
+          String(r.charged),
+          Math.round((r.charged / r.leads) * 100) + "%",
+          fmtMoney(r.lsaSpend),
+          r.charged ? fmtMoney(r.lsaSpend / r.charged) : "—"
+        ]),
+        [
+          "May–Jul* totals",
+          String(tot.leads),
+          String(tot.charged),
+          Math.round((tot.charged / tot.leads) * 100) + "%",
+          fmtMoney(tot.lsaSpend),
+          tot.charged ? fmtMoney(tot.lsaSpend / tot.charged) : "—"
+        ],
+        [
+          "Inbox (15) overall",
+          String(overall.leads || "—"),
+          String(overall.charged || "—"),
+          (overall.pct != null ? overall.pct + "%" : "—"),
+          "—",
+          "—"
+        ]
+      ]
+    );
+  }
+
+  function financialSectionHtml() {
+    const cashRows = DATA.cashCollected || [];
+    const lsaRows = DATA.lsaEfficiency || [];
+    const trust = DATA.trustTransfers || {};
+    if (!cashRows.length) return "";
+    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="Financial">
+      ${kpiSectionStaticHead("Financial", "Cash · LSA efficiency · Trust transfers")}
       <div class="kpi-section-body">
-        <p class="kpi-section-intro">New Downloads ledger file adds cash-collected truth beside #28 contracted fee. Jul is through Jul 15 only. No client names shown.</p>
-        ${chartBlock({
-          verified: true,
-          chart: cashCollectedChart(rows),
-          table: cashCollectedTable(rows)
-        })}
-        ${sourceFootnote("cash-collected")}
+        <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cash per new case vs #28 contracted mean ($5,587) · NEW-C LSA $/charged · NEW-D charge rate · NEW-E trust payment-method volume. Aggregates only — Jul* through Jul 15.</p>
+        <div class="kpi-mini-card" style="margin-bottom:1rem">
+          <h3>NEW-A · Cash collected (MoM)</h3>
+          ${chartBlock({
+            verified: true,
+            chart: cashCollectedChart(cashRows),
+            table: cashCollectedTable(cashRows)
+          })}
+        </div>
+        <div class="kpi-mini-card" style="margin-bottom:1rem">
+          <h3>NEW-C / NEW-D · LSA cost per charged lead &amp; charge rate</h3>
+          ${lsaEfficiencyTable(lsaRows)}
+        </div>
+        <div class="kpi-mini-card">
+          <h3>NEW-E · Trust transfer volume</h3>
+          ${kpiDetailTable(
+            ["Metric", "Value"],
+            [
+              ["Trust payment-method rows", String(trust.rows || 0)],
+              ["Credits labeled Trust", fmtMoney(trust.credits || 0)],
+              ["Debits labeled Trust", fmtMoney(trust.debits || 0)]
+            ]
+          )}
+          <p class="kpi-section-intro" style="margin-top:0.5rem">Debits are typically trust applications to invoices — not new cash in. Separates trust accounting from portal/card Credits.</p>
+        </div>
+        ${sourceFootnote("financial")}
       </div>
     </section>`;
+  }
+
+  function cashCollectedSectionHtml() {
+    /* Folded into financialSectionHtml */
+    return financialSectionHtml();
   }
 
   function stackedSeriesDetailTable(series, opts) {
