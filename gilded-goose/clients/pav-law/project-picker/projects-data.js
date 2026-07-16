@@ -27,7 +27,7 @@ window.PROJECT_DATA = {
     "fee": 2900,
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
-    "status": "ongoing",
+    "status": "required",
     "publishStatus": "published",
     "estimatedLeads": "~36 Military Search calls/mo (May verified) + ~80 LSA phone leads/mo · NTGUILT 282 clicks/30d (calls thin)",
     "keywords": [
@@ -44,23 +44,25 @@ window.PROJECT_DATA = {
       "lsa"
     ],
     "title": "Digital Ads Maintenance Retainer",
-    "tldr": "Provides ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
+    "tldr": "Ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
     "valueAdded": [
       "Monthly reporting catches waste before it runs another month",
-      "Keeps Google Ads, LSA, and Microsoft Ads aligned under one scope",
-      "LSA lead-status SOP so booked, spam, and follow-up leads stay accurate for billing and reporting"
+      "Keeps Google Ads, LSA, and Microsoft Ads under one scope",
+      "LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing",
+      "Includes ongoing social production for A7 (not a separate monthly on that card)"
     ],
     "valueIcons": [
       "foundation",
       "retainer",
-      "efficiency"
+      "efficiency",
+      "leads"
     ],
     "completedItems": [
       "Systems access audit",
-      "UTM tracking on contact form URLs, media, ads etc.",
+      "UTM tracking on contact form URLs, media, and ads",
       "Lead flow optimization",
       "LSA audit and county targeting cleanup",
-      "LSA Phase 1 — Speed-to-lead intake recommendations, limited implementation",
+      "LSA Phase 1 — speed-to-lead intake recommendations, limited implementation",
       "GBP content, hours, and service-area cleanup",
       "LSA call process Phase 1 — SOP + `LSA-DOCUMENTING-TRAINING.md` (see B11)",
       "Paused Mountain DUI + Demand Gen bleed (confirmed $0 in Jul Search period)"
@@ -70,9 +72,9 @@ window.PROJECT_DATA = {
       "Account shared negatives for government / JAG / PD / competitor terms (Military + NTGUILT)",
       "Confirm NTGUILT call extensions + ntguilt.com forms in HubSpot before scaling budget"
     ],
-    "goal": "Hold Military Search cost/call near **~$58–67**, grow NTGUILT call volume off efficient clicks, keep LSA phone lead flow stable, and cut navigational/government search-term waste (~38% of query spend in Jul period).",
+    "goal": "Hold Military Search cost/call near ~$58–67, grow NTGUILT call volume off efficient clicks, keep LSA phone lead flow stable, and cut navigational/government search-term waste (~38% of query spend in Jul period).",
     "informationNeeded": [
-      "Re-export Campaign + Ad group reports **with Phone calls column** for Jun 11–Jul 10 (verify est. 59–69 Military calls)",
+      "Re-export Campaign + Ad group reports with Phone calls column for Jun 11–Jul 10 (verify est. 59–69 Military calls)",
       "HubSpot contacts where `pl_lead_source` = Google Ads / LSA (matters retained)",
       "Microsoft Ads export if still in retainer scope for this month"
     ],
@@ -102,14 +104,16 @@ window.PROJECT_DATA = {
         "hubspot"
       ],
       "title": "LSA Call Process Update",
-      "tldr": "Phase 1 locked in LSA lead hygiene and training docs; Phase 2 trains Casey on call review and fixed phone blocks so Romina gets pipeline time.",
+      "tldr": "Phase 1 locked LSA lead hygiene and training docs; Phase 2 trains Casey on call review and fixed phone blocks so Romina gets pipeline time.",
       "valueAdded": [
-        "Accurate LSA lead status (booked, spam, follow-up) improves reporting and lead quality",
-        "Adding Casey to the phones schedule frees Romina for HubSpot, follow-ups, and admin with added opportunity for soft skills training and increaseing call answering and close rates"
+        "Accurate LSA lead status (booked, spam, follow-up) for billing and reporting",
+        "Casey on phone blocks frees Romina for HubSpot, follow-ups, and admin — lifts answer and close rates"
       ],
       "valueIcons": [
         "intake",
-        "foundation"
+        "foundation",
+        "efficiency",
+        "crm"
       ],
       "completedItems": [
         "Retainer WIP scoped into this project for tracking",
@@ -117,13 +121,12 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Casey trained via call review before live intake",
-        "Casey ↔ Romina coverage calendar (2–3 hrs/day ramp **or** one full day/week)",
+        "Casey ↔ Romina coverage calendar (2–3 hrs/day ramp or one full day/week)",
         "HubSpot alignment for every LSA lead",
-        "LSA lead-status SOP — how to update lead info, notes, booked/spam/dispute in Google LSA",
-        "`LSA-DOCUMENTING-TRAINING.md` written and shared with team path in repo"
+        "LSA lead-status SOP — update lead info, notes, booked/spam/dispute in Google LSA",
+        "`LSA-DOCUMENTING-TRAINING.md` written and shared with team"
       ],
-      "goal": "LSA statuses updated same business day; Casey covers a defined phone block or day(s); disputed/spam leads caught before month-end billing. Increased answer rated and increased close rate with legal expertise available on pickup.",
-      "informationNeeded": [],
+      "goal": "LSA statuses updated same business day; Casey covers a defined phone block or day(s); disputed/spam leads caught before month-end billing; higher answer and close rates with legal expertise on pickup.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,500"
@@ -163,19 +166,19 @@ window.PROJECT_DATA = {
         "traffic"
       ],
       "title": "HS: Digital Profiles Refresh & Tracking Updates",
-      "tldr": "A lot of the websites with Pav Law information are outdated and could use a refresh. The more intake channels updated and improved the better. Yelp outreach has been increasing organically with more reviews being posted there and needs to be updated quickly.",
+      "description": "Many third-party sites still show stale Pav Law info. Updating intake CTAs and NAP, then testing paid directory upgrades only where UTMs prove traffic, protects brand and spend. Complements B12 (Casey rebrand) and prior GBP cleanup under A7.",
+      "tldr": "Refresh outdated Pav Law directory and social profiles — especially Yelp, where organic review volume is rising — and tag every site link for attribution.",
       "valueAdded": [
-        "Refreshed bios, practice areas, photos, and CTAs for company and both attorneys — aligned to current positioning and ABA advertising rules",
-        "**Unique UTM-tagged website links per profile** — link sheet + validation in GA4/HubSpot so you can rank which platforms drive the most site traffic. Most of the legal sites have paid advertising or upgrades now that we can track traffic we'll be able to test out if any are worth purchasing.",
-        "Merge Andrew Brown and Pav Law profiles"
+        "Refreshed bios, practice areas, photos, and CTAs for firm and both attorneys (ABA-aligned)",
+        "Unique UTM-tagged website links per profile so GA4/HubSpot can rank which platforms earn traffic",
+        "Merge Andrew Brown and Pav Law profiles where they still compete"
       ],
       "valueIcons": [
         "foundation",
         "leads",
-        "crm",
         "referrals",
-        "efficiency",
-        "intake"
+        "intake",
+        "efficiency"
       ],
       "completedItems": [
         "Inventory of every live profile",
@@ -183,11 +186,12 @@ window.PROJECT_DATA = {
         "Lite general cleanse with account transfer(s)"
       ],
       "inProgressItems": [
-        "LinkedIn company showcase exists but shows low follower count and 2024-era launch copy",
+        "LinkedIn company showcase still shows low followers and 2024-era launch copy",
         "Andrew + Casey personal LinkedIn and directory profiles",
-        "UTM logic extend naming scheme to all profile links in this project",
-        "GBP social links previously cleaned (A7 / former B8) — lite refresh and license verification"
+        "Extend UTM naming to all profile links",
+        "GBP social links lite refresh and license verification"
       ],
+      "goal": "Refresh live profiles with UTM-tagged links and attribute about 10 leads/month from directory and social profile traffic.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,800"
@@ -199,7 +203,7 @@ window.PROJECT_DATA = {
       "category": "CRM",
       "campaignType": "HubSpot Foundation",
       "status": "wip",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "Unlocks email, referral, mailer, and form→consult paths",
       "keywords": [
         "hubspot",
@@ -212,7 +216,7 @@ window.PROJECT_DATA = {
         "onboarding"
       ],
       "title": "HubSpot Marketing Setup",
-      "description": "This parent tracks that HubSpot marketing setup as one program. Child cards keep sprint detail; this card owns sequence, packaging, and what’s still blocking full automation.",
+      "description": "Parent card for HubSpot marketing setup as one program. Child cards keep sprint detail; this card owns sequence, packaging, and remaining blockers to full automation. B2 phone/VoIP and B7 contacts are quoted incl. B13.",
       "tldr": "One HubSpot foundation so email, referrals, forms, and booking share the same contacts, stages, and reporting.",
       "valueAdded": [
         "Packages holiday email (A3), contact upload (B7), pipeline (B1), and LPs (A5) under one CRM build",
@@ -221,14 +225,13 @@ window.PROJECT_DATA = {
       ],
       "valueIcons": [
         "foundation",
-        "leads",
         "crm",
-        "seo",
-        "efficiency",
-        "intake"
+        "leads",
+        "intake",
+        "efficiency"
       ],
       "completedItems": [
-        "lead nurture templates",
+        "Lead nurture templates",
         "Romina HubSpot activation documentation (B1)",
         "A3 Summer Safety Email campaign"
       ],
@@ -236,6 +239,7 @@ window.PROJECT_DATA = {
         "B7 America / MyCase marketing contact pass",
         "B1 speed-to-lead workflows live and measured"
       ],
+      "goal": "Complete HubSpot foundation so A3, B7, B1, and A5 share contacts, stages, and reporting without orphan channel fees.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$5,500"
@@ -243,7 +247,7 @@ window.PROJECT_DATA = {
     {
       "id": "A4",
       "priority": 5,
-      "fee": 2000,
+      "fee": 1700,
       "category": "Referral",
       "campaignType": "Referral Program",
       "status": "wip",
@@ -260,15 +264,28 @@ window.PROJECT_DATA = {
         "email"
       ],
       "title": "HS: Client Referral Program",
-      "valueAdded": [],
+      "description": "Referral marketing outperforms cold paid channels because trust is already established. Track 1 owns past-client referral asks; Track 2 (sealing and probation reengagement) is A17 under this parent.",
+      "tldr": "Highest-trust lead channel for direct-hire traffic and stronger review presence.",
+      "valueAdded": [
+        "Highest-trust leads, often also the best high-dollar matters",
+        "Setup plus $500/mo upkeep so asks stay active",
+        "Track 1 (referral asks); Track 2 sealing/probation lives on A17"
+      ],
+      "valueIcons": [
+        "referrals",
+        "leads",
+        "crm",
+        "intake"
+      ],
+      "goal": "Generate about 10 referral leads per month via past-client asks with active monthly upkeep.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,000 + $500/mo"
+      "estCostLabel": "$1,700 + $500/mo"
     },
     {
       "id": "A17",
       "priority": 6,
-      "fee": 1800,
+      "fee": 1500,
       "category": "Referral / Outbound",
       "campaignType": "Past-Client Reengagement",
       "status": "wip",
@@ -287,23 +304,18 @@ window.PROJECT_DATA = {
         "nurture track"
       ],
       "title": "HS: Sealing & Probation Client Reengagement",
-      "description": "June Client Reengagement PDF defines Track 2: call past clients for Colorado simplified sealing after deferred judgment dismissal, and motions for early termination / lift supervised probation. MyCase updates required: Outcome, Status = Prospecting - Returning Client, Client Disposition, Nurture Track. Daily ops KPIs: 20 client updates/day, 20 calls/day. Wave KPIs: 100 connects @ 40% target, 200 emails, 20 resigns. Pricing schedule in PDF: full-pay discounts and plans from about $900–$1,500 depending on offer. Gabriel call scripts included. Parent A4 owns referral Track 1; this card owns sealing/probation Track 2. A6 can execute dials once lists and fields are ready. B7 unlocks email follow-up at scale.",
-      "tldr": "Past clients who finished deferred judgment or probation get a clear next legal offer — sealing or early termination — while cleaning MyCase data.",
+      "description": "Track 2: call for Colorado simplified sealing after deferred judgment dismissal, and motions for early termination / lift supervised probation. MyCase: Outcome, Status = Prospecting - Returning Client, Client Disposition, Nurture Track. Wave targets: 100 connects @ 40%, 200 emails, 20 resigns; daily ops 20 updates/day and 20 calls/day. Parent A4 owns referral Track 1; A6 can dial once lists are ready; B7 unlocks email at scale.",
+      "tldr": "Past clients who finished deferred judgment or probation get a clear next offer — sealing or early termination — while cleaning MyCase data.",
       "valueAdded": [
         "Second track beside A4 referral asks (same MyCase hygiene)",
-        "Uses case file Pav already owns — faster than new-firm shopping",
-        "Scripts + pricing already drafted in June Client Reengagement PDF"
+        "Uses cases Pav already owns — faster than new-firm shopping",
+        "Scripts and pricing drafted in June Client Reengagement PDF (~$900–$1,500 by offer)"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
+        "referrals",
         "leads",
         "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "intake"
       ],
       "completedItems": [
         "Playbook PDF with KPIs, scripts, email template, pricing schedule"
@@ -317,13 +329,13 @@ window.PROJECT_DATA = {
       "goal": "Book 20 resigns (or signed sealing/probation matters) per wave at PDF connect/email targets with Nurture Track logged on every touched contact.",
       "informationNeeded": [
         "Confirm MyCase field names match PDF (Outcome · Status · Disposition · Nurture Track)",
-        "AB - Q: Start with Gabriel volume target of 20 calls/day or softer ramp?"
+        "Start with Gabriel volume of 20 calls/day or softer ramp?"
       ],
       "abQuestions": [
         "Start with Gabriel volume target of 20 calls/day or softer ramp?"
       ],
       "kpiRefs": [],
-      "estCostLabel": "$1,800"
+      "estCostLabel": "$1,500"
     },
     {
       "id": "B5",
@@ -333,7 +345,7 @@ window.PROJECT_DATA = {
       "campaignType": "Past Client Mailer",
       "status": "available",
       "publishStatus": "published",
-      "estimatedLeads": "~200 households per wave (confirm sleeve order qty); 1–2 retained matters long-tail",
+      "estimatedLeads": "250 households",
       "keywords": [
         "mailer",
         "envelope",
@@ -343,45 +355,31 @@ window.PROJECT_DATA = {
         "print",
         "postcard"
       ],
-      "title": "Insurance Envelope Mailer - Client Re-engagement",
-      "description": "Snailmail postcard campaign using the insurance sleeves as the mailer. Puts Pav Law in front of previous clients and increases referral and repeat potential. Summer is peak driving and ticket season — a physical reminder in the car supports a long-tail campaign. Sleeves plus postage keep cost under ~$3 per piece while the reminder stays in the glovebox.\n\n**Note: Tracking the ROI for this campaign is going to be very difficult.**",
-      "tldr": "Insurance-sleeve mailer keeps Pav's number in the glovebox — an under-$5 touchpoint for onboarding thank-yous, past clients, and cold database re-engagement.",
+      "title": "Insurance Envelope Mailer",
+      "description": "Physical mail using insurance sleeves puts Pav Law in front of previous clients and raises referral and repeat potential. Summer peak driving season makes a glovebox reminder a long-tail channel.",
+      "tldr": "Insurance-sleeve mailer keeps Pav’s number in the glovebox — an under-$5 touchpoint for thank-yous, past clients, and cold database re-engagement (~$8.80 cost per lead contacted).",
       "valueAdded": [
-        "Pav's phone number in the car at site of accident or ticket",
-        "Can function as a thank-you for onboarding new customers",
-        "Can use as a cold mailing campaign for the old database for a touchpoint under $5"
+        "Phone number in the car at the moment of accident or ticket",
+        "Doubles as onboarding thank-you for new clients",
+        "Cold mailing under current CPL for old database re-touch"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
-        "crm",
-        "seo",
         "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "creative",
+        "crm"
       ],
       "completedItems": [
         "Campaign revamp from event to post & digital",
         "Mailer sleeves designed",
-        "Validated & cleansed addresses",
-        "Mini beta test — sample envelopes mailed; held up at reasonable postage"
+        "Validated and cleansed addresses",
+        "Mini beta — sample envelopes mailed; postage held up"
       ],
       "inProgressItems": [
-        "$1.40–$1.70 postage per mailer",
-        "Design insert for emergency numbers to be written in",
-        "Define P1 target audience (newest vs oldest — see AB – Q)"
+        "Design insert for emergency numbers with tracked QR (campaign tracking limited)"
       ],
-      "goal": "Generate 1–2 retained matters per ~200-household wave at ≤$3/piece all-in cost.",
-      "informationNeeded": [
-        "Answer AB – Q: Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
-        "Answer AB – Q: Newest or Oldest first?"
-      ],
-      "abQuestions": [
-        "Confirm sleeve inventory count from your order (~200?) before we size the first mail wave.",
-        "Newest or Oldest first?"
-      ],
+      "goal": "Reach 250 households with validated addresses and tracked QR where feasible for past-client and cold-database re-engagement.",
+      "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,200"
     },
@@ -392,7 +390,7 @@ window.PROJECT_DATA = {
       "category": "Operations / Compensation",
       "campaignType": "Performance Incentives",
       "status": "wip",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "Indirect — rewards tasks tied to booked consults and signed cases",
       "keywords": [
         "performance",
@@ -407,22 +405,23 @@ window.PROJECT_DATA = {
         "incentive"
       ],
       "title": "Performance Plan Payouts",
-      "description": "Which tasks should pay at Tier 1 (flat) vs Tier 2 (outcome) for Casey and Romina?\n\n| Tier                  | Audience          | Example tasks                               | Payout style                          |\n| --------------------- | ----------------- | ------------------------------------------- | ------------------------------------- |\n| **1 — Task**          | Employee          | LSA status cleared daily, X booked consults | Flat per task or small bonus          |\n| **2 — Outcome**       | Employee          | Lead→case attributed to intake block        | % or flat per signed case             |\n| **3 — Contractor**    | External          | Qualified dial sets, creative deliverables  | Per deliverable or per qualified lead |\n| **4 — Revenue share** | Referral partners | Referred matter retained                    | % of first fee (ABA rules apply)      |",
-      "tldr": "Clear performance based bonus model for clear goal(s) for team to work towards for bonuses.",
+      "description": "Defines which Casey/Romina tasks pay Tier 1 (flat) vs Tier 2 (outcome), plus contractor deliverables and referral-partner revenue share under ABA rules. Draft matrix: task bonuses, outcome/case pay, contractor per deliverable, partner % of first fee.",
+      "tldr": "Clear performance-based bonus model with goals the team can work toward.",
       "valueAdded": [
-        "Ties to measurable outcomes — booked consults, signed cases, referral asks, outbound dials",
-        "Employee appreciation program - include aparrel/gift sets at set markers etc."
+        "Ties pay to measurable outcomes — booked consults, signed cases, referral asks, outbound dials",
+        "Employee appreciation markers (apparel/gift sets at set thresholds)",
+        "Separate tiers for employee, contractor, and referral-partner payout styles"
       ],
       "valueIcons": [
         "foundation",
         "leads",
         "efficiency"
       ],
-      "completedItems": [],
       "inProgressItems": [
         "Draft tier matrix (employee vs contractor)",
-        "List cash-generating tasks Pav Law already tracks (calls, bookings, referrals, mailers)"
+        "List cash-generating tasks already tracked (calls, bookings, referrals, mailers)"
       ],
+      "goal": "Ship an Andrew-approved tier matrix and task list tied to booked consults and signed cases Pav already tracks.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,500"
@@ -434,7 +433,7 @@ window.PROJECT_DATA = {
       "category": "Brand / Merch",
       "campaignType": "Internal Store + Conversation Starters",
       "status": "available",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "Soft brand lift — referrals and walk-ups via wearable conversation starters",
       "keywords": [
         "swag",
@@ -449,32 +448,20 @@ window.PROJECT_DATA = {
         "gilded goose portal"
       ],
       "title": "Pav Law Swag & Apparel",
-      "description": "**Design:** Kate creates apparel and conversation-starter SKUs (shirts, travel mugs, socks, and related items) for Pav Law internal use and optional client/event giveaways.\n\n**Order portal:** Build a Gilded Goose–hosted storefront/portal so Pav Law staff order approved items **directly from Printify** after designs are locked — they do not route each order through Kate.\n\n**Scope:**\n\n| Area | Deliverable |\n| ---- | ----------- |\n| **Design pack** | Initial SKU set + mockups (apparel + conversation starters) |\n| **Printify catalog** | Products live; variants sized/priced |\n| **GGL portal** | Team-facing order page linking to Printify (auth/link rules TBD) |\n| **Brand / ABA** | Logo use rules; no misleading claims on apparel |\n\nComplements **B12** (Casey presence) and firm brand work — this is **merch + self-serve ordering**, not attorney coaching.",
-      "tldr": "Design Pav Law apparel and conversation-starter merch, then give the team a Gilded Goose portal to order direct from Printify — no per-order back-and-forth with Kate.",
+      "description": "Kate designs apparel and conversation-starter SKUs; Printify fulfills after designs lock. Staff order approved items from a Gilded Goose portal without routing each order through Kate. Complements B12 (Casey presence) — merch and self-serve ordering, not attorney coaching.",
+      "tldr": "Design Pav Law apparel and conversation-starter merch, then give the team a Gilded Goose portal to order direct from Printify.",
       "valueAdded": [
-        "Conversation starters (shirts, travel mugs, socks, etc.) that carry Pav Law / NTGUILT brand into everyday settings",
-        "Internal team swag store — consistent look without Kate as middleman for each order",
-        "Printify fulfillment after Kate’s design pass — catalog lives on Gilded Goose portal",
-        "Separates one-time design work from repeat ordering ops"
+        "Conversation starters that carry Pav Law / NTGUILT brand into everyday settings",
+        "Internal store — consistent look without Kate as middleman per order",
+        "Separates one-time design from repeat Printify fulfillment"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
+        "creative",
         "referrals",
         "efficiency",
-        "intake",
-        "creative"
+        "foundation"
       ],
-      "completedItems": [
-        "_Add:_"
-      ],
-      "inProgressItems": [
-        "_Add:_"
-      ],
-      "goal": "Team can reorder approved swag from the portal without Kate in the fulfillment loop; at least one conversation-starter SKU in hand for events/office.",
+      "goal": "Team reorders approved swag from the portal without Kate in the fulfillment loop; at least one conversation-starter SKU in hand for events/office.",
       "informationNeeded": [
         "Preferred brand marks (Pav Law / NTGUILT / both)",
         "Who may order (partners only vs full staff)",
@@ -506,27 +493,26 @@ window.PROJECT_DATA = {
         "racing"
       ],
       "title": "NTGUILT Display & Search Campaign Launch",
-      "description": "Display advertising sits at the top of the marketing funnel — awareness first, then retargeting and Search capture later.",
+      "description": "Display sits at the top of the funnel — awareness first, then retargeting and Search. Parent card for NTGUILT launch creative and campaign direction; related Reddit/social work lives under A7 (merged A18 / B8).",
+      "tldr": "Launches NTGUILT Display and Search so upper-funnel creative feeds intake, retargeting, and later Search capture.",
       "valueAdded": [
-        "Add lead intake channel and audience expansion",
-        "UTM pass-through on NTGUILT.com",
+        "Adds an NTGUILT lead-intake channel and expands audience beyond firm Search alone",
+        "UTM pass-through on NTGUILT.com for attribution",
         "Summer creative pairs with A7 social when budget allows"
       ],
       "valueIcons": [
         "leads",
-        "crm",
-        "seo",
+        "creative",
         "intake",
-        "creative"
+        "crm"
       ],
       "completedItems": [
         "NTGUILT campaign concept and brand direction",
         "Visual prompt and booth creative development",
-        "Coordinate/ manage event logistics",
-        "Creative design of NTGUILT campaign including posters, business cards, flyers, insurance card holders, and apparel."
+        "Event logistics coordination",
+        "Creative design for posters, business cards, flyers, insurance card holders, and apparel"
       ],
-      "inProgressItems": [],
-      "informationNeeded": [],
+      "goal": "Drive tracked NTGUILT site sessions and remarketing pool growth from Display/Search with UTM attribution on every destination.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,800"
@@ -538,7 +524,7 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Paid Search",
       "status": "available",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "",
       "keywords": [
         "search",
@@ -554,13 +540,17 @@ window.PROJECT_DATA = {
         "fix"
       ],
       "title": "Digital Ad Enhancements",
-      "tldr": "Builds out additional targeted campaigns for new audiences",
-      "valueAdded": [],
+      "tldr": "Builds additional targeted Search campaigns for new audiences and practice angles already planned for Pav Law.",
+      "valueAdded": [
+        "Expands Search beyond the current account structure without inventing a new media channel",
+        "Tightens keyword and ad copy so spend maps to stronger ad strength and tracked calls",
+        "Includes call-only troubleshooting and CDL / federal-masking creative angles already in WIP"
+      ],
       "valueIcons": [
         "leads",
-        "crm",
         "intake",
-        "creative"
+        "creative",
+        "efficiency"
       ],
       "completedItems": [
         "Search campaign planning across practice areas",
@@ -569,9 +559,9 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Call-only campaign troubleshooting",
-        "Ad Content Creative - CDL licenced drivers with personal driving ticket issues, federal masking can force these to go to court"
+        "Ad creative for CDL-licensed drivers with personal tickets (federal masking can force court appearances)"
       ],
-      "informationNeeded": [],
+      "goal": "Launch and stabilize additional Search + call-only flights so paid clicks produce tracked consult calls for the new target audiences.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,200"
@@ -596,23 +586,18 @@ window.PROJECT_DATA = {
         "local"
       ],
       "title": "Website Content Overhaul",
-      "description": "Pav Law's organic search averaged position 45–58 in early 2025 — meaning most searchers never see you without paid ads. Local business schema, consistent NAP data, and attorney attribution build the local SEO foundation that earns free visibility over time.\n\nLocal SEO combines structured data, consistent name-address-phone listings, and attorney attribution so Google can match Pav Law to local criminal defense searches. Google’s local business schema docs and Clio’s law firm SEO guide are the standard references. See Google — local business structured data, Moz — local business listings, Clio — law firm SEO, and Semrush site audit overview.",
+      "description": "Organic search averaged position 45–58 in early 2025 — most searchers never see Pav without paid ads. Local schema, consistent NAP, and attorney attribution build the foundation for free local visibility.",
       "tldr": "Organic consults compound — less reliance on paid ads over time.",
       "valueAdded": [
-        "Organic consults compound — less reliance on paid ads over time",
-        "Local schema and NAP fix barriers from May Semrush audit",
-        "Baseline avg position 45–58 in early 2025 Search Console data"
+        "Local schema and NAP fixes from the May Semrush audit",
+        "Baseline avg position 45–58 in early 2025 Search Console data",
+        "Attorney attribution and local listings that earn free visibility"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
-        "crm",
         "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "leads",
+        "foundation",
+        "efficiency"
       ],
       "completedItems": [
         "Website issue review with backlink and deep-link notes",
@@ -623,9 +608,6 @@ window.PROJECT_DATA = {
         "Schema markup rollout"
       ],
       "goal": "Move priority keywords from avg position 45–58 to top-20 for 5 core terms within 90 days.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,500"
@@ -649,23 +631,18 @@ window.PROJECT_DATA = {
         "crm"
       ],
       "title": "HubSpot Pipeline Sprint",
-      "description": "A web lead only becomes revenue if intake moves fast. Research on speed to lead shows response within five minutes dramatically improves qualification rates — yet Pav Law's HubSpot workflows, Romina booking link, and referral import path are not fully connected. This sprint proves the full path: form submit → task → bookable consult.\n\nSpeed to lead matters — firms that respond within minutes qualify far more inquiries than those that wait hours. HubSpot workflow automation routes form fills to tasks and booking links so intake is consistent, not ad hoc. See HubSpot Academy — automation, HubSpot — speed to lead statistics, and Law firm CRM setup.",
-      "tldr": "Faster follow-up on web inquiries so qualified leads book consults instead of going cold — protecting revenue already paid for in marketing.",
+      "description": "A web lead only becomes revenue if intake moves fast. This sprint connects form submit → task → bookable consult so speed-to-lead is consistent, not ad hoc. Child of B13.",
+      "tldr": "Faster follow-up on web inquiries so qualified leads book consults instead of going cold.",
       "valueAdded": [
-        "Proves web lead → HubSpot task → Romina booking without handoffs",
-        "Faster follow-up recovers leads that would have gone cold",
+        "Proves form → HubSpot task → Romina booking without handoffs",
+        "Recovers leads that would have gone cold",
         "Foundation before scaling paid spend further"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
         "crm",
-        "seo",
-        "referrals",
-        "efficiency",
         "intake",
-        "creative"
+        "leads",
+        "efficiency"
       ],
       "completedItems": [
         "Lead flow optimization",
@@ -674,12 +651,9 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Dashboard and reporting planning",
-        "Find correct CRM tool evaluation"
+        "Confirm CRM tool path for live workflows"
       ],
-      "goal": "Prove form → task → Romina booking in <15 minutes median for 90% of inbound web leads within 2 weeks of sprint.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "goal": "Prove form → task → Romina booking in under 15 minutes median for 90% of inbound web leads within 2 weeks of sprint.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,800"
@@ -704,35 +678,27 @@ window.PROJECT_DATA = {
         "links"
       ],
       "title": "Website Speed and Navigation",
-      "description": "Traffic already reaches pav.law from ads and search — but confusing navigation, dead links, and slow pages cause people to leave before contacting you. Google ties Core Web Vitals to user experience and conversion; prior work cut load times roughly in half, yet friction still blocks form submissions.\n\nCore Web Vitals measure page speed and stability — Google ties them to user experience and conversion on mobile and desktop. Clio’s law firm website guide covers navigation and intake paths that reduce drop-off between click and contact form. See Google web.dev — Core Web Vitals and Clio — law firm website UX.",
+      "description": "Ads and search already send traffic to pav.law, but confusing navigation, dead links, and slow pages cause exits before contact. Prior optimization roughly halved load times; remaining friction still blocks form submissions.",
       "tldr": "Converts more of the traffic you already pay for.",
       "valueAdded": [
-        "Converts more of the traffic you already pay for",
         "Phased nav, speed, and form-path fixes — not a one-day patch",
-        "Prior work cut load times ~200%; this finishes conversion blockers"
+        "Prior work cut load times ~200%; this finishes conversion blockers",
+        "Targets bounce and form drop-off on paid landing URLs"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
-        "crm",
-        "seo",
-        "referrals",
         "efficiency",
         "intake",
-        "creative"
+        "seo"
       ],
       "completedItems": [
         "Website issue review completed",
-        "Site performance improved about 200 percent in prior optimization pass"
+        "Site performance improved about 200% in prior optimization pass"
       ],
       "inProgressItems": [
-        "Minor website updates — navigation simplification in progress"
+        "Navigation simplification in progress"
       ],
       "goal": "Cut mobile LCP below 3s on top 5 entry pages and reduce bounce rate 10% on paid landing URLs.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$4,200"
@@ -745,7 +711,6 @@ window.PROJECT_DATA = {
       "campaignType": "Social + paid social",
       "status": "available",
       "publishStatus": "published",
-      "ongoingFee": 750,
       "estimatedLeads": "Upper-funnel traffic → site and remarketing pool",
       "keywords": [
         "creative",
@@ -760,25 +725,18 @@ window.PROJECT_DATA = {
         "utm"
       ],
       "title": "NTGUILT & Firm Social Campaigns",
-      "description": "Merged scope (was A7 + A18 + B8): NTGUILT paid social/repurpose creative, HubSpot-connected organic posting (Facebook, Instagram, LinkedIn), and the Reddit Ads test ($500 media + $500 promo credit) under one owner so calendars and UTMs do not diverge.\n\nNTGUILT event creative is already paid for — unused inventory means that investment generates no calls. HubSpot Marketing connects firm profiles so Pav Law can publish firm-safe content with approval before go-live. Reddit stays a contained 30-day recognition/retarget test around car/racing/COS audiences (May 16 budget mix), not a second parallel program.\n\nLaw firm social should be consistent, ethical, and measurable. See HubSpot — schedule social posts, Google — ad strength / RSA, Clio — law firm social media, ABA Model Rule 7.2.",
-      "tldr": "One social package: paid NTGUILT creative + HubSpot organic publish + Reddit test — one calendar, one UTM scheme.",
+      "description": "Merged scope (was A7 + A18 + B8): NTGUILT paid social/repurpose creative, HubSpot-connected organic (Facebook, Instagram, LinkedIn), and Reddit Ads test under one owner so calendars and UTMs do not diverge. Reddit is a 30-day recognition/retarget test around car/racing/COS audiences (May 16 budget mix), not a second parallel program.",
+      "tldr": "One social package: paid NTGUILT creative, HubSpot organic publish, and Reddit test — one calendar and one UTM scheme.",
       "valueAdded": [
-        "Puts sunk NTGUILT event creative to work in paid channels",
-        "Organic social between paid touches — no extra ad spend per post",
-        "Low-risk Reddit flight ($500 + $500 promo credit) without a separate card",
-        "Romina, Casey, and Andrew trained inside HubSpot with approval before go-live",
-        "Policy-safe review for criminal defense ad rules"
+        "Puts paid-for NTGUILT event creative to work in paid channels",
+        "Organic social between paid touches; Romina, Casey, and Andrew approve in HubSpot before go-live",
+        "Contained Reddit flight ($500 media + $500 promo credit) without a separate project card"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
+        "creative",
         "leads",
         "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "retainer"
       ],
       "completedItems": [
         "NTGUILT visual prompt library",
@@ -788,26 +746,25 @@ window.PROJECT_DATA = {
         "Reddit budget slot defined in May 16 mix ($500 + $500 credit)"
       ],
       "inProgressItems": [
-        "Romina event social support role defined — HubSpot-connected publishing not finished",
+        "Romina event social support — HubSpot-connected publishing not finished",
         "Reddit Ads account + pixel/UTM",
         "Creative from A2 prompt library for Reddit + Display",
         "Landing destination (NTGUILT.com vs pav.law contact)"
       ],
-      "goal": "Drive 500+ NTGUILT social engagements per wave and 10+ site sessions with UTM social=NTGUILT per month; post 8–12 firm-safe items/month across connected channels; complete one 30-day Reddit flight with UTMs and ≥10 site sessions per $100 combined spend+credit without policy rejection.",
+      "goal": "Drive 500+ NTGUILT social engagements per wave and 10+ site sessions with UTM social=NTGUILT per month; post 8–12 firm-safe items/month; complete one 30-day Reddit flight with UTMs and ≥10 site sessions per $100 combined spend+credit without policy rejection.",
       "informationNeeded": [
-        "Answer AB – Q: Run Reddit before or after next PPIR/ASCEND weekend?",
-        "AB - Q: Run Reddit before or after next PPIR/ASCEND weekend?"
+        "Answer AB – Q: Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
       "abQuestions": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
       "kpiRefs": [],
-      "estCostLabel": "$4,500 + $750/mo"
+      "estCostLabel": "$4,500"
     },
     {
       "id": "B7",
       "priority": 16,
-      "fee": 1600,
+      "fee": 0,
       "category": "CRM",
       "campaignType": "Contact Import",
       "status": "available",
@@ -829,23 +786,18 @@ window.PROJECT_DATA = {
         "referral"
       ],
       "title": "HubSpot Marketing Contacts Upload",
-      "description": "Holiday emails, referral sends, and mailers cannot run until contacts live in HubSpot as clean, segmented marketing contacts. MyCase exports, America lists, and spreadsheets need field mapping, deduplication, and lifecycle tags before any warm-channel campaign can target the right people.\n\nHubSpot marketing contacts must be correctly tagged before email, referral, or mail campaigns can target the right people. HubSpot’s import and marketing-contact docs cover deduplication, lifecycle stages, and email eligibility. See HubSpot — import contacts and Referral program setup.",
+      "description": "Warm campaigns cannot run until contacts live in HubSpot as clean, segmented marketing contacts. MyCase exports, America lists, and spreadsheets need field mapping, deduplication, and lifecycle tags first. Child of B13.",
       "tldr": "Unlocks holiday email, referral sends, and mailers.",
       "valueAdded": [
-        "Unlocks holiday email, referral sends, and mailers",
         "Deduped segments: past clients, referral, friends-and-family",
-        "Import guide for future CSV uploads"
+        "Import guide for future CSV uploads",
+        "Enabler for A3, A4, A17, and mailers once contacts are marketable"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
         "crm",
-        "seo",
         "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "leads",
+        "foundation"
       ],
       "completedItems": [
         "Missed-call follow-up text templates",
@@ -853,15 +805,12 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "America referral list import (partial — needs full marketing contact pass)",
-        "MyCase field cleanup noted in tracker but not finished"
+        "MyCase field cleanup noted but not finished"
       ],
-      "goal": "Upload and segment 100% of marketable past-client contacts with bounce rate <2% on first send.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "goal": "Upload and segment 100% of marketable past-client contacts with bounce rate under 2% on first send.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,600"
+      "estCostLabel": "incl. B13"
     },
     {
       "id": "A13",
@@ -885,28 +834,19 @@ window.PROJECT_DATA = {
         "retargeting"
       ],
       "title": "Adult Site(s) Ad Campaign",
-      "description": "Upper-funnel Display and partner placements on adult-content sites can reach drivers in the DUI and traffic-ticket audience before they search for a lawyer — a lane separate from Military Search and call-only Search. This project scopes compliant creative, placement lists, frequency caps, and conversion tracking so Pav Law can test the channel without polluting core Search performance or brand safety rules.\n\nDisplay campaigns on third-party site categories work as top-of-funnel awareness — not direct-response Search. Google’s Display campaign guide and Clio’s law firm marketing overview explain why separate campaign structure, placement controls, and remarketing tags matter when testing non-search inventory. See Google — about Display campaigns, Google — placement targeting, and Clio — law firm marketing overview.",
+      "description": "Upper-funnel Display on adult-content placements can reach DUI and traffic audiences before they search for a lawyer — separate from Military Search and call-only Search. Scopes compliant creative, placement lists, frequency caps, and conversion tracking.",
       "tldr": "Adds a testable awareness lane beyond Google Search and LSA.",
       "valueAdded": [
-        "Adds a testable awareness lane beyond Google Search and LSA",
-        "Keeps adult-site spend isolated in its own campaign with clear UTMs",
-        "Policy-safe creative and landing paths reviewed before launch"
+        "Isolates adult-site spend in its own campaign with clear UTMs",
+        "Policy-safe creative and landing paths reviewed before launch",
+        "Does not pollute core Search performance"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "creative",
+        "efficiency"
       ],
-      "goal": "Test adult-site Display placements with frequency caps and ≥10 tracked site visits per $100 spend without brand safety flags.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "goal": "Test adult-site Display with frequency caps and ≥10 tracked site visits per $100 spend without brand safety flags.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,400"
@@ -929,28 +869,20 @@ window.PROJECT_DATA = {
         "script"
       ],
       "title": "Gabriel Outbound Sales Calling",
-      "description": "Not every consult will come from Google Ads. Outbound calling to a targeted list — with a clear script and CRM logging — lets Gabriel add phone conversations without increasing media spend.\n\nOutbound calling complements paid media when lists are targeted and every dial is logged in CRM. HubSpot’s outbound guidance covers list quality, call structure, and why professional services firms track conversations — not just ad clicks. See HubSpot — cold calling tips for services, HubSpot — log calls in CRM, and CRM call logging.",
-      "tldr": "Adds phone conversations without increasing ad spend.",
+      "description": "Not every consult comes from Google Ads. Outbound to a targeted list — clear script, CRM logging — lets Gabriel add conversations without raising media spend. Can execute A17 sealing/probation dials once lists and fields are ready.",
+      "tldr": "Adds phone conversations from warm lists without increasing ad spend.",
       "valueAdded": [
-        "Adds phone conversations without increasing ad spend",
-        "Ready-to-dial list and script approved by Andrew",
-        "Every outcome logged in HubSpot for reporting"
+        "Ready-to-dial list and Andrew-approved script",
+        "Every outcome logged in HubSpot for reporting",
+        "Complements Search when connect rates justify dial volume"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
         "intake",
-        "creative"
+        "crm",
+        "efficiency"
       ],
-      "goal": "Book 4–8 outbound consults/month from warm lists at connect rate ≥25% and answer-rate uplift on returned calls.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "goal": "Book 4–8 outbound consults per month from warm lists at connect rate ≥25% and stronger answer rate on returned calls.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,200"
@@ -958,11 +890,12 @@ window.PROJECT_DATA = {
     {
       "id": "B2",
       "priority": 19,
-      "fee": 2500,
+      "fee": 0,
       "category": "Infrastructure",
       "campaignType": "Call Infrastructure",
       "status": "onhold",
       "publishStatus": "published",
+      "parentId": "B13",
       "enabler": true,
       "estimatedLeads": "30–40 calls/month (Military Search baseline)",
       "keywords": [
@@ -974,23 +907,18 @@ window.PROJECT_DATA = {
         "infrastructure"
       ],
       "title": "HubSpot Phone/ VoIP Setup",
-      "description": "Transfer phone numbers into HubSpot to get started with phone menus, call tracking, call logging, and stronger overall metrics.\n\nFor law firms running call-heavy Search campaigns, call tracking must be in place before you increase budget. The ability to track and record calls also improves training and accountability. See Google — call reporting in Google Ads and HubSpot — speed to lead.",
+      "description": "Transfer numbers into HubSpot for menus, call tracking, logging, and stronger metrics before raising call-heavy Search budgets.",
       "tldr": "Verified phone routing and call tracking so paid clicks tie to qualified consults — not dropped leads.",
       "valueAdded": [
         "Call extensions verified against Google call reporting — baseline 30–40 calls/mo from Military Search",
-        "HubSpot phone menus route to Romina desk and LSA inbox — see LSA leads-inbox export",
-        "Casey coverage blocks free Romina for pipeline — aligns with KPI #21 target 90%"
+        "HubSpot menus route to Romina desk and LSA inbox",
+        "Casey coverage blocks free Romina for pipeline (KPI #21 target 90%)"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
         "intake",
-        "creative"
+        "foundation",
+        "crm",
+        "efficiency"
       ],
       "completedItems": [
         "Phone setup documentation in HubSpot/PHONE-SETUP.md",
@@ -1000,18 +928,15 @@ window.PROJECT_DATA = {
         "Waiting on phone company number transfer",
         "VoIP live verification with Google",
         "Team training and routing documentation",
-        "Casey ↔ Romina schedule: who owns **all calls** during which hours (align with HubSpot menus when live)",
-        "Casey shadow: LSA call review + status updates before live answering (retainer `LSA-DOCUMENTING-TRAINING.md`)"
+        "Casey ↔ Romina schedule for who owns all calls by hour (align with HubSpot menus when live)",
+        "Casey shadow: LSA call review + status updates before live answering (`LSA-DOCUMENTING-TRAINING.md`)"
       ],
       "goal": "Reach 90% answered phones (#21) on Military/LSA lines and recover ~7 missed calls/month (~$2,400/mo revenue at 7.3% lead→case).",
-      "informationNeeded": [
-        "_Add:_"
-      ],
       "abQuestions": [],
       "kpiRefs": [
         "#21"
       ],
-      "estCostLabel": "$2,500"
+      "estCostLabel": "incl. B13"
     },
     {
       "id": "B6",
@@ -1020,7 +945,7 @@ window.PROJECT_DATA = {
       "category": "SEO",
       "campaignType": "Blog / Content SEO",
       "status": "available",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "Organic search discovery traffic",
       "keywords": [
         "blog",
@@ -1034,31 +959,23 @@ window.PROJECT_DATA = {
         "internal links"
       ],
       "title": "Blog Revamp",
-      "description": "People search specific questions before they call a lawyer — \"what happens after a DUI stop,\" military traffic rules, and similar long-tail queries. Existing blog posts can rank for those searches if titles, meta descriptions, and internal links point readers to practice pages. This is the content SEO layer on top of technical site work.\n\nContent SEO targets questions people search before they call a lawyer — blog posts with clear titles, meta descriptions, and internal links pass authority to practice pages. Clio’s SEO guide and Google’s article structured data docs explain the pattern. See Clio — law firm SEO, Moz — internal links for SEO, Google — article structured data, and 12AM Agency content tiers.",
+      "description": "People search specific questions before they call — DUI stop next steps, military traffic rules, and similar long-tail queries. Existing posts can rank when titles, meta, and internal links point to practice pages. Content SEO layer on top of technical site work.",
       "tldr": "Long-tail questions become organic consult paths.",
       "valueAdded": [
-        "Long-tail questions become organic consult paths",
         "Internal links from posts to DUI, military, and traffic pages",
-        "Results compound over 8–12 weeks"
+        "Results compound over 8–12 weeks",
+        "Titles and meta rewritten for search intent, not generic firm copy"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
-        "crm",
         "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "leads",
+        "creative",
+        "efficiency"
       ],
       "completedItems": [
         "Website issue review with content and deep-link notes"
       ],
       "goal": "Publish 2 posts/month and earn +15% organic entrances to blog URLs within 12 weeks.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,500"
@@ -1070,7 +987,7 @@ window.PROJECT_DATA = {
       "category": "Brand / Professional Development",
       "campaignType": "Attorney Presence",
       "status": "available",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "Profile and trust lift — discovery via Casey-specific search and directory profiles",
       "keywords": [
         "casey",
@@ -1087,37 +1004,29 @@ window.PROJECT_DATA = {
         "b10"
       ],
       "title": "Casey Attorney Rebrand & Professional Presence",
-      "description": "Similar scope to **B10** but **Casey-only**: prospects and referral partners should see one credible attorney brand. Covers **clothing and wardrobe guidance**, **hair and makeup** (photo day + daily professional standard), **presentation and speech** (intake tone, public-facing comments, video if used), and **digital presence** (LinkedIn, Avvo, Justia, firm team page, Google Business attorney attribution where applicable).\n\nComplements B10 firm + Andrew + Casey inventory — this project is the **rebrand and coaching layer** for Casey specifically.\n\n**Scope checklist:**\n\n| Area | Deliverable |\n| ---- | ----------- |\n| **Clothing / wardrobe** | Court- and office-appropriate kit list; photo-day outfits |\n| **Hair / makeup** | Professional headshot prep; ongoing standard for events and video |\n| **Presentation / speech** | Talk track alignment with Romina/Andrew; no legal advice on phone; confident intake tone |\n| **Digital presence** | Bio rewrite, headshots, practice-area lines, UTM-tagged links (inherit B10 link sheet) |\n| **ABA / ethics** | Advertising Rule 7.2 review — no misleading claims; attorney title used correctly |\n\nSee ABA Model Rule 7.2 — advertising and B10 profile audit.",
+      "description": "Casey-only rebrand and coaching: wardrobe guidance, headshot/day standards, intake/public talk track (no legal advice on phone), and digital presence (LinkedIn, Avvo, Justia, firm team page, GBP attorney attribution where applicable). Complements B10 inventory — this is the coaching and rebrand layer.",
       "tldr": "Elevate Casey as a visible Pav Law attorney — appearance, communication, and digital profiles aligned with firm brand and ABA advertising rules.",
       "valueAdded": [
-        "Casey positioned as attorney (not admin-only) on firm and personal profiles — matches B10 directory refresh",
-        "Consistent visual and verbal brand: wardrobe, grooming, on-camera and in-person presentation",
-        "Digital presence audit (bios, photos, practice areas, CTAs) separate from firm-level B10 pass",
-        "Client-facing confidence — speech, courtroom-appropriate presentation, professional photography brief"
+        "Casey positioned as attorney (not admin-only) on firm and personal profiles — complements B10",
+        "Consistent wardrobe, grooming, and on-camera / in-person presentation",
+        "Casey-only digital presence pass (bios, headshots, CTAs) with Rule 7.2-safe titles"
       ],
       "valueIcons": [
         "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
         "referrals",
-        "efficiency",
-        "intake",
-        "creative"
-      ],
-      "completedItems": [
-        "(none yet)"
+        "creative",
+        "intake"
       ],
       "inProgressItems": [
-        "(awaiting kickoff — depends on B10 inventory for Casey listings)"
+        "Awaiting kickoff — depends on B10 inventory for Casey listings"
       ],
+      "goal": "Publish Casey as attorney across agreed profiles with consistent bio, headshots, and presentation standards aligned to ABA Rule 7.2.",
       "informationNeeded": [
-        "Answer AB – Q: Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?",
-        "Define measurable Goal"
+        "Answer AB – Q: associate/of-counsel on all directories vs firm team page only for now?"
       ],
       "abQuestions": [
-        "Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?"
+        "Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?",
+        "associate/of-counsel on all directories vs firm team page only for now?"
       ],
       "kpiRefs": [],
       "estCostLabel": "$2,000"
@@ -1129,7 +1038,7 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display",
       "status": "available",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
       "keywords": [
         "seasonal",
@@ -1148,29 +1057,20 @@ window.PROJECT_DATA = {
         "bilingual"
       ],
       "title": "Seasonal Google and Microsoft Ads Campaign — Focus Area",
-      "description": "Build and launch one focused Google Ads and Microsoft Ads campaign for a single practice or seasonal topic. Potential focus areas include: military and veterans search, DUI and traffic (including mountain and rural corridors), holiday driving windows (July 4, Thanksgiving, New Year's), Local Services Ads geo targets in El Paso County and surrounding areas, NTGUILT and summer event tie-ins, record sealing and post-conviction relief, domestic violence defense (budget-controlled), and bilingual search where intake supports it. The specific topic is selected based on the season and what Pav Law wants to push that quarter — not all areas at once.\n\nSeasonal legal marketing works when the message matches what people are searching for that month — holiday DUI warnings in July, military themes around deployment cycles, event creative in summer. Google’s campaign structure docs and Clio’s law firm marketing overview explain why single-topic campaigns outperform catch-all account structures. See Google — Search campaign types, Google — about Display campaigns, and Clio — law firm marketing overview.",
-      "tldr": "$2,000 consulting fee per campaign — same price each time one is added.",
+      "description": "Build and launch one focused Google + Microsoft campaign for a single practice or seasonal topic — military/veterans, DUI/traffic corridors, holiday windows, LSA geos, NTGUILT/events, sealing, DV (budget-controlled), or bilingual where intake supports it. Topic is chosen for the quarter; not all areas at once.",
+      "tldr": "Repeatable seasonal build: one focus area per flight at the card fee each time a campaign is added.",
       "valueAdded": [
-        "$2,000 consulting fee per campaign — same price each time one is added",
-        "One focus area per build: structure, creative, UTMs, and conversion tracking",
-        "Topic chosen for the season (holiday DUI, military push, summer NTGUILT, etc.)",
-        "Mirrored setup on Google Ads and Microsoft Ads where account allows"
+        "One focus per build: structure, creative, UTMs, and conversion tracking",
+        "Topic chosen for the season (holiday DUI, military, summer NTGUILT, etc.)",
+        "Mirrored Google and Microsoft setup where the account allows"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
+        "creative",
         "intake",
-        "creative"
+        "efficiency"
       ],
-      "goal": "Launch one seasonal Search/Microsoft flight with ≥20 calls at ≤$75 cost/call for chosen focus area.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "goal": "Launch one seasonal Search/Microsoft flight with ≥20 calls at ≤$75 cost/call for the chosen focus area.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,200"
@@ -1194,32 +1094,24 @@ window.PROJECT_DATA = {
         "web"
       ],
       "title": "HubSpot Landing Page or Website Module",
-      "description": "Sending paid traffic to your homepage spreads attention across every practice area — which typically lowers landing page conversion rate. A single-offer page (referral signup, resources QR, or intake variant) gives each campaign one message, one form, and one path into HubSpot.\n\nLanding pages convert best with one offer, one message, and one call to action. HubSpot’s landing page best practices and Academy course cover form placement, page length, and testing — the same principles Google uses in landing page experience guidance. See HubSpot — landing page best practices and HubSpot Academy — landing pages.",
-      "tldr": "Single-offer pages typically convert better than a general homepage.",
+      "description": "Paid traffic to the homepage spreads attention across every practice area and typically lowers conversion. A single-offer page (referral signup, resources QR, or intake variant) keeps one message and one HubSpot path per campaign.",
+      "tldr": "Single-offer pages convert better than sending campaign traffic to the general homepage.",
       "valueAdded": [
-        "Single-offer pages typically convert better than a general homepage",
-        "One form path tested into HubSpot for each campaign",
-        "Mobile and desktop QA before ads or QR codes go live"
+        "One offer, one form path into HubSpot per campaign",
+        "Mobile and desktop QA before ads or QR codes go live",
+        "Child of B13 HubSpot foundation packaging"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
         "crm",
-        "seo",
-        "referrals",
-        "efficiency",
         "intake",
-        "creative"
+        "efficiency"
       ],
       "completedItems": [
         "Referral landing page setup documentation",
         "HubSpot form and workflow foundation"
       ],
-      "goal": "Lift landing-page conversion rate 15–25% on primary paid-traffic entry pages within 30 days of launch.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "goal": "Lift landing-page conversion 15–25% on primary paid-traffic entry pages within 30 days of launch.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,800"
@@ -1231,7 +1123,7 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Social Proof Ads",
       "status": "planning",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
       "keywords": [
         "case win",
@@ -1241,28 +1133,20 @@ window.PROJECT_DATA = {
         "trust"
       ],
       "title": "Case Win Log and Testimonials",
-      "description": "Generic ad copy underperforms because it does not prove results. Social proof — outcome type and jurisdiction, never client names — builds trust within ABA advertising rules. This project creates an approved win log and rotating ad snippets.\n\nSocial proof — outcome language without client names — builds trust in professional services ads. HubSpot’s social proof research and ABA Rule 7.2 set the boundary between persuasive copy and impermissible advertising claims. See HubSpot — social proof examples and ABA Model Rule 7.2 — advertising.",
+      "description": "Generic ad copy underperforms because it does not prove results. This project builds an approved win log and rotating snippets — outcome type and jurisdiction, never client names — within ABA advertising rules.",
       "tldr": "Real outcomes become reusable ad copy the team approves once.",
       "valueAdded": [
-        "Real outcomes become reusable ad copy the team approves once",
         "Privacy-safe snippets — outcome type and jurisdiction only",
-        "Typically lifts click-through 10–25% over generic lines"
+        "Typically lifts click-through 10–25% over generic lines",
+        "Rotating proof points for Search and social under ABA advertising rules"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "creative",
+        "foundation",
+        "referrals"
       ],
       "goal": "Publish 6+ case-win proof points and lift on-site trust signals to improve consult conversion 5–10%.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,000"
@@ -1274,7 +1158,7 @@ window.PROJECT_DATA = {
       "category": "Intake / AI",
       "campaignType": "After-Hours Chat",
       "status": "available",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "All inbound web leads and form fills",
       "keywords": [
         "pavi",
@@ -1289,28 +1173,20 @@ window.PROJECT_DATA = {
         "weekends"
       ],
       "title": "Enable Pavi Chat QA for After-Hours Support",
-      "description": "Calls and form fills drop sharply after business hours — but DUI, traffic, and military-related searches do not. **Smart Pavi** chat on the site can answer common questions, capture contact details, and route urgent intake when Romina and the desk are offline. This project enables, tests, and documents the chat QA flow so after-hours visitors get a consistent, firm-safe response path instead of silence.\n\nLaw firm chat should qualify and capture — not give legal advice. HubSpot conversational tools and Clio’s intake guidance both emphasize clear disclaimers, human handoff, and logging every after-hours touch so nothing sits unread Monday morning. See HubSpot — set up chat, Clio — law firm client intake, and ABA Model Rule 7.2 — advertising.",
+      "description": "Calls and forms drop after hours, but DUI, traffic, and military searches do not. Smart Pavi chat can answer common questions, capture contacts, and route urgent intake when Romina and the desk are offline — qualify and capture, not give legal advice.",
       "tldr": "After-hours and weekend visitors get answers instead of a dead end.",
       "valueAdded": [
-        "After-hours and weekend visitors get answers instead of a dead end",
-        "Chat Q&A reviewed for firm-safe, ABA-aligned responses before go-live",
-        "HubSpot (or site) logging so morning intake sees overnight conversations"
+        "Firm-safe, ABA-aligned Q&A reviewed before go-live",
+        "HubSpot or site logging so morning intake sees overnight conversations",
+        "Captures contact details when the desk is offline"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
+        "intake",
         "leads",
         "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "efficiency"
       ],
-      "goal": "Capture after-hours form fills and chat leads with <5 min first response during pilot hours.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "goal": "Capture after-hours form fills and chat leads with under 5 minutes first response during pilot hours.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,200"
@@ -1322,7 +1198,7 @@ window.PROJECT_DATA = {
       "category": "Finance / Operations",
       "campaignType": "Spend Audit",
       "status": "planning",
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "estimatedLeads": "N/A — cost savings (not lead-gen)",
       "keywords": [
         "credit card",
@@ -1337,26 +1213,19 @@ window.PROJECT_DATA = {
         "budget"
       ],
       "title": "Credit Card & Subscription Leak Spend Audit",
-      "tldr": "Full account and finance cycle audit to track path from spend to earn to spend.",
+      "description": "Maps the path from spend to earn to spend again — finds duplicate or dormant subscriptions and sets budgets so leaks do not recur monthly.",
+      "tldr": "Full pass on recurring charges and budgets so unused tools stop draining marketing and ops spend.",
       "valueAdded": [
-        "Full pass on recurring charges tied to marketing, CRM, phone, and ops. Bills keep showing up for tools that we do not need or use running Rocketor another app on the records will help to clean this up and save money.",
-        "Implement budget(s)"
+        "Audit recurring charges tied to marketing, CRM, phone, and ops",
+        "Cancel or replace unused SaaS (including tooling that still bills after replacement)",
+        "Implement clear budget lines from the findings"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
-        "referrals",
         "efficiency",
-        "intake",
-        "creative"
+        "foundation",
+        "retainer"
       ],
       "goal": "Recover $200+/mo in duplicate or unused subscriptions within 30 days of audit delivery.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,800"
@@ -1364,7 +1233,7 @@ window.PROJECT_DATA = {
     {
       "id": "A3",
       "priority": 50,
-      "fee": 1200,
+      "fee": 0,
       "category": "Email",
       "campaignType": "Holiday Email",
       "status": "completed",
@@ -1383,28 +1252,20 @@ window.PROJECT_DATA = {
         "past client"
       ],
       "title": "Summer Safety Email Campaign (child of B13)",
-      "description": "DUI and traffic ticket volume spikes around July 4 — exactly when past clients and their networks are most likely to need you again. Seasonal email nurture reaches people who already trust Pav Law: a pre-holiday safety message, then a post-holiday guide on what to do if pulled over, ticketed, or charged.\n\nSeasonal email nurture works best when the message is useful at the moment of need — not a generic promotion. HubSpot’s law firm marketing content covers timing, segmentation, and compliance basics for professional services email. See HubSpot — law firm marketing and ABA Model Rule 7.2 — advertising.\n\n**Market differentiation & attention:** The legal space, especially for traffic and criminal defense, is saturated with serious, formal, and frankly boring advertising. Our approach immediately cuts through that noise. An email subject line like “Don't forget to pull out this summer!” is impossible to ignore. It creates a pattern interrupt that forces engagement, which is the first and most difficult step in any marketing funnel.",
+      "description": "DUI and traffic volume spike around July 4 — when past clients and their networks are most likely to need counsel again. Seasonal nurture uses a useful safety message, then a clear next step if pulled over, ticketed, or charged.\n\nSubject lines that break formal legal ad patterns (e.g. summer safety prompts) improve open rates without changing the booking CTA.",
       "tldr": "Reaches past clients when DUI and ticket volume spikes around July 4.",
       "valueAdded": [
-        "Reaches past clients when DUI and ticket volume spikes around July 4",
-        "Pre-holiday safety message plus post-holiday ‘what to do if charged’ guide",
-        "Direct path to book with Romina in every send"
+        "Pre-holiday safety send plus post-holiday “what to do if charged” guide",
+        "Direct path to book with Romina in every message",
+        "Packaged under B13 HubSpot setup — not a standalone email fee"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
         "crm",
-        "seo",
         "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "retainer"
       ],
-      "goal": "Drive 2–4 re-engaged consults from past-client list around July 4 window at <$50 cost per booked consult.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
+      "goal": "Drive 2–4 re-engaged consults from the past-client list around the July 4 window at under $50 cost per booked consult.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "incl. B13"
@@ -1412,7 +1273,7 @@ window.PROJECT_DATA = {
     {
       "id": "A10",
       "priority": 51,
-      "fee": 1800,
+      "fee": 1500,
       "category": "Strategy",
       "campaignType": "Strategy Audit",
       "status": "completed",
@@ -1427,35 +1288,29 @@ window.PROJECT_DATA = {
         "plan"
       ],
       "title": "Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone",
-      "description": "Pav Law is running Google Ads, LSA, HubSpot, referral, outbound, website, and SEO work simultaneously — without a ranked plan, consulting spend scatters. A focused marketing audit session ranks every channel by ROI, effort, and what depends on what else.\n\nA marketing audit ranks channels by what is working, what is leaking, and what should wait. HubSpot’s audit checklist is a practical framework for professional services firms juggling paid, organic, CRM, and referral at once. See HubSpot — marketing audit checklist and Prioritization frameworks.",
+      "description": "Pav Law runs Google Ads, LSA, HubSpot, referral, outbound, website, and SEO at once. Without a ranked plan, consulting spend scatters. This audit ranked channels by ROI, effort, and dependencies.",
       "tldr": "One agreed 30-day action list across all channels.",
       "valueAdded": [
-        "One agreed 30-day action list across all channels",
-        "Defer/cut list so spend does not scatter",
-        "Ranked by ROI, effort, and dependencies"
+        "Defer/cut list so consulting spend does not scatter",
+        "Ranked by ROI, effort, and dependencies",
+        "Framework for revenue-channel planning already delivered"
       ],
       "valueIcons": [
         "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
-        "referrals",
         "efficiency",
-        "intake",
-        "creative"
+        "leads"
       ],
       "completedItems": [
         "Marketing strategy shift recommendation",
         "Revenue-channel planning framework"
       ],
-      "goal": "Deliver one ranked 30-day action list with defer/cut lines so consulting spend does not scatter across 8+ channels.",
+      "goal": "Deliver one ranked 30-day action list with defer/cut lines so spend does not scatter across 8+ channels.",
       "informationNeeded": [
         "Confirm estimated leads gained"
       ],
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,800"
+      "estCostLabel": "$1,500"
     },
     {
       "id": "A15",
@@ -1479,26 +1334,21 @@ window.PROJECT_DATA = {
         "summer"
       ],
       "title": "Summer Event Activation & Lead Capture",
-      "description": "May strategy emails proposed shifting budget toward NTGUILT car-community events (Corvette, plate, PPIR) while keeping focused end-funnel digital. May 16 plan reserved roughly $3,000–$6,000 of the $20,000 monthly marketing mix for event activation (materials, design, comfort items, giveaways, signage, QR, follow-up). May 29 Time Sensitive email asked for weekend inventory count and tent setup. This card owns activation ops; A2 owns NTGUILT creative/campaign; A16 owns partner co-host asks.",
+      "description": "May plans reserved roughly $3,000–$6,000 of the $20,000 monthly mix for event activation (materials, QR, follow-up). This card owns activation ops; A2 owns NTGUILT creative/campaign; A16 owns partner co-host asks.",
       "tldr": "Turns paid PPIR/ASCEND access into lead capture — not just brand presence.",
       "valueAdded": [
-        "Inventory, booth setup, QR, and follow-up tools inside the existing ~$20k monthly mix",
+        "Inventory, booth, QR, and follow-up inside the existing ~$20k monthly mix",
         "Protects ~$20k PPIR sponsorship from awareness-only waste",
         "Pairs with A16 partner staff when Andrew is away"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
         "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
         "intake",
-        "creative"
+        "creative",
+        "referrals"
       ],
       "completedItems": [
-        "Strategy approval path for conservative event spend inside existing budget (May emails)",
+        "Strategy approval path for conservative event spend inside existing budget",
         "ASCEND flagged as priority when Andrew absent (partner email)"
       ],
       "inProgressItems": [
@@ -1507,10 +1357,10 @@ window.PROJECT_DATA = {
         "QR + HubSpot capture path",
         "Follow-up toolkit for Romina/Casey"
       ],
-      "goal": "Each activated event produces logged leads in HubSpot within 48 hours with source = event/UTM, not anonymous booth traffic.",
+      "goal": "Each activated event produces HubSpot leads within 48 hours with source = event/UTM.",
       "informationNeeded": [
-        "Confirm remaining 2026 event calendar and which weekends need full activation",
-        "AB - Q: Cap event activation at $3k or $6k for next event?"
+        "Confirm remaining 2026 event calendar and weekends needing full activation",
+        "Cap event activation at $3k or $6k for next event?"
       ],
       "abQuestions": [
         "Cap event activation at $3k or $6k for next event?"
@@ -1541,7 +1391,7 @@ window.PROJECT_DATA = {
         "seasonal"
       ],
       "title": "Garage Partnership",
-      "description": "May 16 NTGUILT Partnerships email proposed Bailey’s Garage co-host ASCEND at PPIR June 26–27, 2026. Pav already covers primary sponsorship (~$20k season). Ask of Bailey’s: staff with Mo and/or Bailey, driving-safety display, 3+ shop-visit giveaways valued $600–$1,000, help route legal questions to Pav and service to Bailey’s. Co-host contribution framed as $600–$1,000 minimum + two days staffing. This consulting fee covers packaging, ask document, and lead-split rules — not the partner’s prize cost.",
+      "description": "May 16 ask: Bailey’s Garage co-host ASCEND at PPIR June 26–27, 2026. Pav covers primary sponsorship (~$20k season). Partner ask: staff (Mo and/or Bailey), driving-safety display, 3+ shop-visit giveaways valued $600–$1,000, route legal questions to Pav. Consulting fee covers packaging and lead-split rules — not prize cost.",
       "tldr": "Garage partnership for event co-hosts — archived for summer 2027 (was Bailey’s / ASCEND 2026 ask).",
       "valueAdded": [
         "Reusable partner template when summer events return",
@@ -1549,15 +1399,9 @@ window.PROJECT_DATA = {
         "Shared leads within 48 hours of event close"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
         "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "leads",
+        "crm"
       ],
       "completedItems": [
         "Bare-minimum ASCEND co-host proposal written and mailed to Andrew"
@@ -1567,9 +1411,9 @@ window.PROJECT_DATA = {
         "Lead-share workflow into HubSpot within 48 hours",
         "Giveaway entry form fields"
       ],
-      "goal": "Signed partner contribution before ASCEND (or next equivalent event) with written giveaway + lead-share rules.",
+      "goal": "Signed partner contribution before ASCEND (or next equivalent) with written giveaway + lead-share rules.",
       "informationNeeded": [
-        "AB - Q: Did Bailey’s accept, decline, or counter the $600–$1,000 ask?",
+        "Did Bailey’s accept, decline, or counter the $600–$1,000 ask?",
         "Confirm ASCEND staffing names (Mo / Bailey)"
       ],
       "abQuestions": [
@@ -1600,7 +1444,7 @@ window.PROJECT_DATA = {
         "mycase"
       ],
       "title": "Systems Access Audit & Cleanse",
-      "description": "Apr 19–21, 2026 kickoff email: Full Systems Access Audit & Cleanse as priority #1 for a $2,000 triage week (with email outage docs and LSA lite). Andrew approved start. Tracker lists this Completed. Keep on Guide as archive + proof of foundation fee.",
+      "description": "Apr 19–21, 2026 kickoff: Full Systems Access Audit & Cleanse as priority #1 for a $2,000 triage week (with email outage docs and LSA lite). Andrew approved start. Keep on Guide as archive and proof of foundation fee.",
       "tldr": "Clean admin access across every marketing and intake tool so campaigns and reporting are not blocked by logins.",
       "valueAdded": [
         "Documented access across Ads, LSA, GBP, GA4, Bluehost, WordPress, MyCase",
@@ -1609,26 +1453,14 @@ window.PROJECT_DATA = {
       ],
       "valueIcons": [
         "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
-        "referrals",
         "efficiency",
-        "intake",
-        "creative"
+        "crm"
       ],
       "completedItems": [
         "Systems access audit across marketing stack",
         "Security / permission review as scoped in Apr ops outline"
       ],
-      "inProgressItems": [
-        "_"
-      ],
-      "goal": "Admin access documented and cleansed for Google Ads/LSA, GBP, Analytics, Bluehost, WordPress, MyCase with risks flagged.",
-      "informationNeeded": [
-        "_"
-      ],
+      "goal": "Admin access documented and cleansed for Google Ads/LSA, GBP, Analytics, Bluehost, WordPress, and MyCase with risks flagged.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$2,000"
@@ -1652,35 +1484,23 @@ window.PROJECT_DATA = {
         "runbook"
       ],
       "title": "Email Outage Triage & DNS Runbook",
-      "description": "Apr 14 urgent email to Andrew requested triage status, prior incidents, marketing tool map, DNS/MX changes. Apr 19 ops outline item #2: Document Email Outage Triage. Tracker marks DNS/email outage triage and email recovery documentation Completed. Fee uses mid of tracker bands when flat invoice not isolated.",
+      "description": "Apr 14 urgent ask for triage status, prior incidents, tool map, and DNS/MX changes. Apr 19 ops outline item #2: Document Email Outage Triage. Tracker marks recovery documentation completed.",
       "tldr": "Diagnosed and documented the pav.law inbound email outage so the next DNS/MX failure is faster to fix.",
       "valueAdded": [
-        "Incoming mail failure triaged (accounts could send; inbound broken firm-wide)",
-        "Root-cause / resolution documentation for Carrie coordination",
+        "Inbound mail failure triaged (outbound worked; inbound broken firm-wide)",
+        "Root-cause / resolution docs for Carrie coordination",
         "Maintenance log pattern for future incidents"
       ],
       "valueIcons": [
         "foundation",
-        "retainer",
-        "leads",
-        "crm",
-        "seo",
-        "referrals",
         "efficiency",
-        "intake",
-        "creative"
+        "intake"
       ],
       "completedItems": [
         "Outage triage coordination",
         "Email recovery documentation / runbook"
       ],
-      "inProgressItems": [
-        "_"
-      ],
       "goal": "Inbound mail restored and a reusable runbook exists for MX/DNS / Workspace routing failures.",
-      "informationNeeded": [
-        "_"
-      ],
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,500"
@@ -1688,7 +1508,7 @@ window.PROJECT_DATA = {
     {
       "id": "A18",
       "priority": 56,
-      "fee": 600,
+      "fee": 0,
       "category": "Paid Social",
       "campaignType": "Reddit Ads Test",
       "status": "archived",
@@ -1704,23 +1524,17 @@ window.PROJECT_DATA = {
         "car"
       ],
       "title": "Reddit NTGUILT Ads Test (merged into A7)",
-      "description": "May 16 budget mix reserved Reddit Ads $500 + $500 promo credit for NTGUILT recognition and retargeting around car/racing/COS audiences. Parent A2 owns broader NTGUILT launch; this card is the Reddit test only.",
-      "tldr": "Low-risk Reddit test ($500 + $500 promo credit) — **merged into A7** NTGUILT & Firm Social Campaigns. Keep this file for history only.",
+      "description": "May 16 budget mix reserved Reddit Ads $500 + $500 promo credit for NTGUILT recognition and retargeting around car/racing/COS audiences. Active delivery lives on A7; parent A2 owns broader NTGUILT launch.",
+      "tldr": "Low-risk Reddit test ($500 + $500 promo credit) — merged into A7; keep this file for history only.",
       "valueAdded": [
         "Uses platform credit to stretch budget",
         "Supports event frequency without heavy Search CPC",
         "UTM-ready for A8 if landing is NTGuilt.com / tagged pav.law"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
+        "creative",
         "leads",
-        "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "efficiency"
       ],
       "completedItems": [
         "Budget slot defined in May 16 mix ($500 + $500 credit)"
@@ -1732,7 +1546,7 @@ window.PROJECT_DATA = {
       ],
       "goal": "Complete one 30-day Reddit flight with UTMs and ≥10 site sessions per $100 combined spend+credit without policy rejection.",
       "informationNeeded": [
-        "AB - Q: Run Reddit before or after next PPIR/ASCEND weekend?"
+        "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
       "abQuestions": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
@@ -1743,12 +1557,11 @@ window.PROJECT_DATA = {
     {
       "id": "B8",
       "priority": 57,
-      "fee": 2500,
+      "fee": 0,
       "category": "CRM / Social",
       "campaignType": "Social / HubSpot",
       "status": "archived",
       "publishStatus": "published",
-      "ongoingFee": 500,
       "estimatedLeads": "All inbound web leads and form fills",
       "keywords": [
         "social",
@@ -1765,45 +1578,36 @@ window.PROJECT_DATA = {
         "publish"
       ],
       "title": "HubSpot Social Media Marketing (merged into A7)",
-      "description": "Social media is a free touchpoint between paid campaigns — but only if posting is consistent, on-brand, and tracked. HubSpot Marketing connects Facebook, Instagram, and LinkedIn so Pav Law can publish firm-safe content (safety tips, NTGUILT creative, consult CTAs) with approval before go-live, following law firm social media best practices and ABA advertising rules.\n\nLaw firm social content should be consistent, ethical, and measurable. HubSpot’s social publishing tools and Clio’s law firm social media guide cover scheduling, approvals, and what firms should share under attorney advertising rules. See HubSpot — schedule social posts, Clio — law firm social media, and ABA Model Rule 7.2 — advertising.",
-      "tldr": "Organic social between paid touches — **merged into A7** NTGUILT & Firm Social Campaigns. Keep this file for history only.",
+      "description": "HubSpot-connected Facebook, Instagram, and LinkedIn for firm-safe posts (safety tips, NTGUILT creative, consult CTAs) with approval before go-live. Active delivery is under A7 (merged A7 + A18 + B8).",
+      "tldr": "Organic social between paid touches — merged into A7; keep this file for history only.",
       "valueAdded": [
         "Organic social between paid touches — no extra ad spend per post",
         "Romina, Casey, and Andrew trained inside HubSpot",
         "Approval workflow before anything goes live"
       ],
       "valueIcons": [
-        "foundation",
-        "retainer",
-        "leads",
+        "creative",
         "crm",
-        "seo",
-        "referrals",
-        "efficiency",
-        "intake",
-        "creative"
+        "retainer"
       ],
       "completedItems": [
         "GBP social-link cleanup — inactive links removed; focus on call/text CTAs",
         "NTGUILT visual prompt library available for repurposing"
       ],
       "inProgressItems": [
-        "Romina event social support role defined in summer campaign doc — not yet HubSpot-connected"
+        "Romina event social support defined — not yet HubSpot-connected (track on A7)"
       ],
       "goal": "Post 8–12 firm-safe items/month across connected channels with approval workflow and UTM on every link.",
-      "informationNeeded": [
-        "_Add:_"
-      ],
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "merged A7"
     },
     {
       "id": "A8",
-      "fee": 2200,
+      "fee": 1600,
       "category": "Analytics",
       "campaignType": "Dashboard / Reporting",
-      "status": "wip",
+      "status": "required",
       "publishStatus": "published",
       "keywords": [
         "dashboard",
@@ -1813,13 +1617,13 @@ window.PROJECT_DATA = {
         "google ads api",
         "attribution"
       ],
-      "title": "Operations Dashboard",
-      "description": "Make data more easily accessible and actionable. Provide clearer insight into the impact of marketing campaigns on cases retained.",
+      "title": "Operations Dashboard V1",
+      "description": "Make campaign and case-retained impact visible in one place so decisions run off live KPIs instead of scattered exports.",
       "tldr": "One live dashboard for calls, forms, and spend by channel.",
       "valueAdded": [
-        "Unified view of operational metrics, projects and campaign results",
-        "Clear view of team goals and progress",
-        "Missed-revenue flag (#19)"
+        "Unified view of ops metrics, projects, and campaign results",
+        "Clearer team goal progress",
+        "Missed-revenue flag (#19) on Search data"
       ],
       "valueIcons": [
         "foundation",
@@ -1845,7 +1649,7 @@ window.PROJECT_DATA = {
       "kpiRefs": [
         "#19"
       ],
-      "estCostLabel": "$2,200"
+      "estCostLabel": "$1,600"
     },
     {
       "id": "A8M",
@@ -1853,7 +1657,7 @@ window.PROJECT_DATA = {
       "category": "Analytics",
       "campaignType": "Dashboard Maintenance",
       "status": "ongoing",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "parentId": "A8",
       "monthlyOnly": true,
       "estimatedLeads": "Estimate pending",
@@ -1867,29 +1671,22 @@ window.PROJECT_DATA = {
         "attribution"
       ],
       "title": "Data Management — Retainer",
-      "description": "Reporting only stays useful when someone reviews it every month — validating tags, reconciling ad platforms to CRM, and noting when a channel’s numbers shift.",
-      "tldr": "Dashboard updates with KPIs to help improve business operations",
+      "description": "Reporting stays useful only when someone reviews it monthly — validating tags, reconciling ad platforms to CRM, and noting channel shifts. Child of A8.",
+      "tldr": "Monthly dashboard upkeep so KPIs stay accurate and useful for operations.",
       "valueAdded": [
         "Monthly lead-source report",
-        "Google Ads and LSA manual",
-        "Google Ads API monthly pull reconciled to manual CSV archive (KPI spec § Export checklist)"
+        "Google Ads and LSA manual review with API pull reconciled to CSV archive (KPI spec export checklist)"
       ],
       "valueIcons": [
-        "foundation",
         "retainer",
-        "leads",
-        "crm",
-        "seo",
-        "referrals",
+        "foundation",
         "efficiency",
-        "intake",
-        "creative"
+        "crm"
       ],
+      "goal": "Publish a reconciled monthly lead-source and Ads/LSA report tied to the A8 KPI cockpit.",
       "informationNeeded": [
-        "Define measurable Goal",
         "Confirm estimated leads gained",
-        "Link KPI dashboard rows",
-        "Link KPI dashboard rows (KPI links section)"
+        "Link KPI dashboard rows for this retainer card"
       ],
       "abQuestions": [],
       "kpiRefs": [],
