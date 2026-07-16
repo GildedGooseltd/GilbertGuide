@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gilbert Guide — Project Prioritizer</title>
+  <title>Trail Guide — Project Prioritizer</title>
   <script>
     (function () {
       function normalizeTheme(t) {
@@ -327,7 +327,7 @@
     .picker-zone-lead {
       margin: 0 0 1rem; font-size: 0.92rem; color: var(--secondary); line-height: 1.5; max-width: 40rem;
     }
-    /* Quiet trail-guide paper card — masthead + waypoint rows + 3.5rem Gilbert */
+    /* Quiet trail-guide paper card — masthead + waypoint rows (no character portrait) */
     .top-unified-card:has(.gilbert-survey) {
       background: transparent;
       border: none;
@@ -341,7 +341,7 @@
       border-radius: 20px;
       padding: 1.35rem 1.5rem 1.25rem;
       box-shadow: 0 4px 18px rgba(61, 48, 40, 0.04);
-      max-width: 58rem;
+      max-width: 52rem;
       margin: 0 auto;
     }
     html[data-theme="dark"] .gilbert-survey {
@@ -437,82 +437,9 @@
       line-height: 1.45;
       color: var(--secondary);
     }
-    .survey-with-gilbert {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 3.5rem;
-      column-gap: 1rem;
-      align-items: start;
-      margin: 0;
-    }
-    .survey-gilbert-col {
-      width: 3.5rem;
-      flex-shrink: 0;
-      grid-column: 2;
-      grid-row: 1;
-      text-align: center;
-      justify-self: end;
-      padding-top: 0.15rem;
-    }
-    .survey-body {
-      grid-column: 1;
-      grid-row: 1;
-      min-width: 0;
-    }
-    .survey-gilbert-fig {
-      position: relative;
-      display: block;
-      margin: 0 auto;
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 1.5px solid var(--gg-gold);
-      background-color: var(--gg-cream);
-      background-image: url("assets/gilbert-guide-subtle-hat.png");
-      background-size: cover;
-      background-position: center 20%;
-      background-repeat: no-repeat;
-      box-shadow: 0 1px 4px var(--shadow-soft);
-    }
-    html[data-theme="dark"] .survey-gilbert-fig {
-      border-color: var(--gg-gold);
-      background-color: var(--gg-cream-panel);
-    }
-    .survey-gilbert-img {
-      position: absolute;
-      inset: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
-    }
-    .survey-gilbert-fig.is-profile .survey-gilbert-img {
-      object-fit: cover;
-      object-position: center 20%;
-      padding: 0;
-    }
-    .survey-gilbert-caption {
-      display: block;
-      margin-top: 0.28rem;
-      text-align: center;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gg-brown-muted);
-      line-height: 1.2;
-    }
-    html[data-theme="dark"] .survey-gilbert-caption { color: var(--gg-gold-bright); }
+    .survey-body { min-width: 0; }
     @media (max-width: 640px) {
       .gilbert-survey { padding: 1.15rem 1rem 1.1rem; }
-      .survey-with-gilbert {
-        grid-template-columns: minmax(0, 1fr) 3rem;
-        column-gap: 0.65rem;
-      }
-      .survey-gilbert-col,
-      .survey-gilbert-fig { width: 3rem; }
-      .survey-gilbert-fig { height: 3rem; }
     }
     .survey-progress {
       display: flex;
@@ -1491,25 +1418,9 @@
                   </span>
                   <p class="survey-kicker" id="zone-ask-label"><span>Trail guide</span></p>
                   <h2 class="survey-title">Choose your path</h2>
-                  <p class="survey-lead">A few quick questions help Gilbert tailor the best recommendations for your next adventure.</p>
+                  <p class="survey-lead">A few quick questions help tailor the best recommendations for your next adventure.</p>
                 </header>
-                <div class="survey-with-gilbert">
-                  <div id="gilbert-survey-body" class="survey-body"></div>
-                  <div class="survey-gilbert-col">
-                    <figure class="survey-gilbert-fig is-profile" id="survey-gilbert-fig">
-                      <img
-                        id="survey-gilbert-img"
-                        class="survey-gilbert-img"
-                        src="assets/gilbert-guide-subtle-hat.png"
-                        alt="Lord Gilbert Granville in a funny trail guide hat"
-                        width="56"
-                        height="56"
-                        decoding="async"
-                      >
-                    </figure>
-                    <p class="survey-gilbert-caption">Gilbert</p>
-                  </div>
-                </div>
+                <div id="gilbert-survey-body" class="survey-body"></div>
               </div>
               <div id="why-panel" class="why-panel" hidden></div>
               <div id="toc-condensed" class="toc-condensed" hidden></div>
@@ -1575,8 +1486,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716ab"></script>
-  <script src="projects-data.js?v=20260716ab"></script>
-  <script src="app.js?v=20260716ab"></script>
+  <script src="pages-config.js?v=20260716ac"></script>
+  <script src="projects-data.js?v=20260716ac"></script>
+  <script src="app.js?v=20260716ac"></script>
 </body>
 </html>
