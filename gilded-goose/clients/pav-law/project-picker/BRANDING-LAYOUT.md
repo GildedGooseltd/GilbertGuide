@@ -68,15 +68,16 @@ Header toggle switches **`light`** and **`dark`** only (legacy `unicorn` maps to
 
 #### Dark (`html[data-theme="dark"]`)
 
-Deep **purple** night — plum / eggplant surfaces (not brown charcoal), lavender ink, fuchsia accents. No navy.
+Black + deep purple night — soft lilac ink. **No fuchsia / hot pink.** Gold/yellow only for rare important highlights (zone labels, primary CTAs) — not decorative chrome.
 
 | Token family | Dark intent |
 |--------------|-------------|
-| Surfaces | Purple (`#12061f` → `#2d1654`) |
-| Text | Lavender (`#f3e8ff` / `#d8b4fe`) |
-| Accents | Fuchsia / violet / gold (`#e879f9`, `#d946ef`, `#f0c84a`) |
-| Sticky / TOC | Purple panel tokens |
-| Buttons on accents | `--btn-on-accent` → deep purple ink |
+| Surfaces | Near-black → deep plum (`#050308` → `#1c1528`) |
+| Text | Soft lilac (`#ebe6f4` / `#9b90b0`) |
+| Accents | Violet (`#a78bfa` / `#8b5cf6`) |
+| Gold | Antique (`#c9a86c`) — reserved for important highlights only |
+| Sticky / TOC | Dark purple panel tokens |
+| Buttons on accents | `--btn-on-accent` → near-black ink |
 
 #### Light (`html[data-theme="light"]`)
 

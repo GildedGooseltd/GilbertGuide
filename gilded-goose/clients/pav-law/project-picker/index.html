@@ -109,56 +109,62 @@
       --lisa-rainbow: linear-gradient(90deg, #c9a86c 0%, #e3c58d 22%, #a78bfa 48%, #c9a86c 72%, #8b5cf6 100%);
       --glitter-dot: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 1px, transparent 1.6px);
     }
-    /* Dark version — deep purple (not brown), lavender ink (no navy) */
+    /* Dark — black + deep purple only; gold reserved for rare highlights (no fuchsia/hot pink) */
     html[data-theme="dark"] {
-      --gg-cream: #1a0b2e;
-      --gg-cream-panel: #241142;
-      --gg-paper: #2d1654;
-      --gg-brown: #f3e8ff;
-      --gg-brown-muted: #d8b4fe;
-      --gg-sage: #2a3d3a;
-      --gg-royal-deep: #f5d0fe;
-      --gg-royal: #e879f9;
-      --gg-royal-mid: #d946ef;
-      --gg-royal-light: #f0abfc;
-      --gg-royal-dim: rgba(217, 70, 239, 0.2);
-      --gg-royal-border: rgba(232, 121, 249, 0.48);
-      --gg-burnt: #fb7185;
-      --gg-burnt-dim: rgba(251, 113, 133, 0.18);
-      --gg-burnt-border: rgba(251, 113, 133, 0.45);
-      --gg-forest: #4ade80;
-      --gg-forest-dim: rgba(74, 222, 128, 0.14);
-      --gg-forest-border: rgba(74, 222, 128, 0.4);
-      --gg-gold: #f0c84a;
-      --gg-gold-bright: #ffe566;
-      --gg-gold-dark: #e3c58d;
-      --gg-gold-dim: rgba(240, 200, 74, 0.22);
-      --gg-positive: #4ade80;
-      --bg: #12061f;
-      --surface: #2d1654;
-      --surface2: #241142;
-      --surface-panel: #351a63;
-      --surface-panel-nested: #3f1f74;
-      --surface-plan: #2a134f;
-      --surface-plan-inner: #341861;
-      --input-text: #f3e8ff;
-      --input-placeholder: #c4b5fd;
-      --border: rgba(232, 121, 249, 0.22);
-      --border-strong: rgba(216, 180, 254, 0.38);
-      --text: #f3e8ff;
-      --secondary: #d8b4fe;
+      --gg-cream: #0a0612;
+      --gg-cream-panel: #120a1c;
+      --gg-paper: #161022;
+      --gg-brown: #ebe6f4;
+      --gg-brown-muted: #9b90b0;
+      --gg-sage: #1e2a28;
+      --gg-royal-deep: #cfc2ea;
+      --gg-royal: #a78bfa;
+      --gg-royal-mid: #8b5cf6;
+      --gg-royal-light: #7c3aed;
+      --gg-royal-dim: rgba(124, 58, 237, 0.18);
+      --gg-royal-border: rgba(167, 139, 250, 0.38);
+      --gg-burnt: #b8956a;
+      --gg-burnt-dim: rgba(184, 149, 106, 0.14);
+      --gg-burnt-border: rgba(184, 149, 106, 0.4);
+      --gg-forest: #6ee7a0;
+      --gg-forest-dim: rgba(110, 231, 160, 0.12);
+      --gg-forest-border: rgba(110, 231, 160, 0.36);
+      --gg-gold: #c9a86c;
+      --gg-gold-bright: #d4b87a;
+      --gg-gold-dark: #a8894a;
+      --gg-gold-dim: rgba(201, 168, 108, 0.14);
+      --gg-positive: #6ee7a0;
+      --gg-negative: #c45c7a;
+      --bg: #050308;
+      --surface: #14101c;
+      --surface2: #0e0a14;
+      --surface-panel: #1c1528;
+      --surface-panel-nested: #241c32;
+      --surface-plan: #15101f;
+      --surface-plan-inner: #1a1426;
+      --input-text: #ebe6f4;
+      --input-placeholder: #7d7394;
+      --border: rgba(140, 120, 180, 0.2);
+      --border-strong: rgba(167, 139, 250, 0.32);
+      --text: #ebe6f4;
+      --secondary: #9b90b0;
       --accent-dim: var(--gg-royal-dim);
       --green: var(--gg-forest);
       --green-dim: var(--gg-forest-dim);
       --highlight: var(--gg-royal-mid);
       --highlight-dim: var(--gg-royal-dim);
-      --focus-ring: 0 0 0 3px rgba(232, 121, 249, 0.5);
-      --sticky-bar-bg: rgba(45, 22, 84, 0.96);
-      --sticky-bar-shadow: 0 -6px 20px rgba(18, 6, 31, 0.55);
-      --header-control-bg: #2d1654;
-      --btn-on-accent: #1a0b2e;
-      --toc-panel-top: #351a63;
-      --shadow-soft: rgba(18, 6, 31, 0.45);
+      --focus-ring: 0 0 0 3px rgba(139, 92, 246, 0.45);
+      --sticky-bar-bg: rgba(10, 6, 18, 0.96);
+      --sticky-bar-shadow: 0 -6px 20px rgba(0, 0, 0, 0.55);
+      --header-control-bg: #161022;
+      --btn-on-accent: #050308;
+      --toc-panel-top: #1c1528;
+      --shadow-soft: rgba(0, 0, 0, 0.5);
+      /* Value icons: purple family in dark — no hot pink / neon yellow */
+      --vi-referrals-bg: #7c3aed; --vi-referrals-fg: #ede9fe; --vi-referrals-border: #a78bfa; --vi-referrals-chip: rgba(124, 58, 237, 0.22);
+      --vi-creative-bg: #6d28a8; --vi-creative-fg: #f3e8ff; --vi-creative-border: #8b5cf6; --vi-creative-chip: rgba(109, 40, 168, 0.28);
+      --vi-account-data-bg: #5b21b6; --vi-account-data-fg: #ede9fe; --vi-account-data-border: #8b5cf6; --vi-account-data-chip: rgba(91, 33, 182, 0.28);
+      --vi-efficiency-bg: #4c3a1f; --vi-efficiency-fg: #e8d5a8; --vi-efficiency-border: #a8894a; --vi-efficiency-chip: rgba(168, 137, 74, 0.2);
       color-scheme: dark;
     }
     html { scroll-behavior: smooth; }
@@ -176,9 +182,9 @@
     }
     html[data-theme="dark"] body {
       background:
-        radial-gradient(ellipse 120% 80% at 8% -8%, rgba(217, 70, 239, 0.22), transparent 52%),
-        radial-gradient(ellipse 90% 55% at 100% 0%, rgba(124, 58, 237, 0.28), transparent 48%),
-        radial-gradient(ellipse 70% 45% at 0% 100%, rgba(255, 45, 149, 0.14), transparent 42%),
+        radial-gradient(ellipse 110% 70% at 12% -10%, rgba(88, 48, 160, 0.28), transparent 55%),
+        radial-gradient(ellipse 90% 55% at 100% 0%, rgba(40, 20, 70, 0.45), transparent 50%),
+        radial-gradient(ellipse 70% 45% at 0% 100%, rgba(0, 0, 0, 0.55), transparent 45%),
         var(--bg);
     }
     a { color: var(--gg-royal); text-decoration: underline; text-underline-offset: 2px; }
@@ -300,8 +306,12 @@
       cursor: pointer;
       letter-spacing: 0.02em;
     }
-    .theme-toggle:hover { border-color: var(--gg-gold); color: var(--gg-gold-bright); }
+    .theme-toggle:hover { border-color: var(--gg-royal-border); color: var(--gg-royal); }
     .theme-toggle:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+    html[data-theme="light"] .theme-toggle:hover {
+      border-color: var(--gg-gold);
+      color: var(--gg-gold-bright);
+    }
     html[data-theme="light"] .theme-toggle {
       color: #3d3028;
       border: 1px solid transparent;
@@ -398,7 +408,7 @@
       margin: 0 auto 0.35rem;
       color: #9a7b3c;
     }
-    html[data-theme="dark"] .survey-leaf { color: var(--gg-gold-bright); }
+    html[data-theme="dark"] .survey-leaf { color: var(--gg-brown-muted); }
     .survey-leaf svg { display: block; width: 100%; height: 100%; }
     .survey-kicker {
       display: flex;
@@ -412,7 +422,7 @@
       text-transform: uppercase;
       color: #9a7b3c;
     }
-    html[data-theme="dark"] .survey-kicker { color: var(--gg-gold-bright); }
+    html[data-theme="dark"] .survey-kicker { color: var(--gg-brown-muted); }
     .survey-kicker::before,
     .survey-kicker::after {
       content: "";
@@ -493,7 +503,7 @@
     }
     html[data-theme="dark"] .survey-choice:hover {
       background: var(--surface-panel);
-      border-color: var(--gg-gold);
+      border-color: var(--gg-royal-border);
     }
     .survey-choice:focus-visible { outline: none; box-shadow: var(--focus-ring); }
     .survey-choice-num {
@@ -503,7 +513,7 @@
       letter-spacing: 0.03em;
       color: #9a7b3c;
     }
-    html[data-theme="dark"] .survey-choice-num { color: var(--gg-gold-bright); }
+    html[data-theme="dark"] .survey-choice-num { color: var(--gg-royal); }
     .survey-choice-copy { min-width: 0; }
     .survey-choice-label { display: block; }
     .survey-choice-hint {
@@ -519,7 +529,7 @@
       line-height: 1;
       justify-self: end;
     }
-    html[data-theme="dark"] .survey-choice-chevron { color: var(--gg-gold-bright); }
+    html[data-theme="dark"] .survey-choice-chevron { color: var(--gg-brown-muted); }
     .survey-result-meta {
       margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--secondary); line-height: 1.5;
     }
@@ -536,6 +546,9 @@
       display: flex; flex-wrap: wrap; gap: 0.5rem;
       margin-top: 0.75rem; padding-top: 0.65rem;
       border-top: 1px solid rgba(184, 134, 11, 0.18);
+    }
+    html[data-theme="dark"] .survey-actions {
+      border-top-color: var(--border);
     }
     .survey-actions .btn { width: auto; margin: 0; }
     .gilbert-guide-col {
@@ -1466,8 +1479,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716ae"></script>
-  <script src="projects-data.js?v=20260716ae"></script>
-  <script src="app.js?v=20260716ae"></script>
+  <script src="pages-config.js?v=20260716af"></script>
+  <script src="projects-data.js?v=20260716af"></script>
+  <script src="app.js?v=20260716af"></script>
 </body>
 </html>
