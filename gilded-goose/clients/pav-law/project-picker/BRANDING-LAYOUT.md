@@ -80,7 +80,7 @@ Body: Georgia / Times New Roman (serif cockpit). Titles use `--gg-royal-deep` + 
 Overlays: confirm · thank-you
 ```
 
-**Survey (trail guide theme):** `GILBERT_SURVEY` in `app.js` — branching waypoints map to `--vi-*` icon ids via `iconFilters`. One `.gilbert-survey` “trail map” box (topo grid wash, forest border, burnt blaze markers) holds title + waypoints + result (choices are list rows with trail-dot markers, not stage tiles). Copy uses trailhead / waypoint / fork / map language. Gilbert portrait sits on the **right** at **5.5rem** (4.25rem small screens), gaze inward: lightbulb while asking, thinking when path is set. “Back to trailhead” resets.
+**Survey (subtle trail guide):** `GILBERT_SURVEY` in `app.js` — branching waypoints map to `--vi-*` via `iconFilters`. One quiet `.gilbert-survey` paper box (soft forest accent on the zone label only — no topo grid or blaze graphics). List-row choices. Light trailhead / waypoint copy. Gilbert guide portrait (`gilbert-trail-guide-hat.png`, funny trail hat) on the **right** at **3.5rem** (3rem small screens), facing the questions. “Back to trailhead” resets.
 
 **Character facing rule:** Portraits and mascots always face toward the middle of the composition / adjacent content — never away off the edge of the screen. Prefer placing the figure on the side that lets the native pose look inward; mirror only when needed.
 
