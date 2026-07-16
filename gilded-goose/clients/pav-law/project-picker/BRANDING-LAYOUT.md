@@ -62,9 +62,13 @@ Do **not** put branding hex in project markdown or `projects-data.js`.
 
 **Forbidden:** navy / blue-black (`#0f172a`, `#1e3a5f`, `#2d1454`, `#3a1a6e`), neon cyan/teal, neon `#7c5cff` as the main brand light, light-on-light plan panels.
 
-### Dark theme (`html[data-theme="dark"]`)
+### Themes — Dark ↔ Unicorn
 
-Warm charcoal / gold / violet — same accent family, no navy. Toggle lives in the header (`.theme-toggle`); preference key `gilbert-guide-theme` in `localStorage` (`dark` | `light`). First visit follows `prefers-color-scheme`. Early head script sets `data-theme` before paint. Optional URL override: `?theme=dark` or `?theme=light`.
+Header toggle switches **`dark`** and **`unicorn`** only (legacy `light` maps to `unicorn`). Preference key `gilbert-guide-theme` in `localStorage`. First visit follows `prefers-color-scheme` (dark → dark, else unicorn). Early head script sets `data-theme` before paint. URL override: `?theme=dark` or `?theme=unicorn`.
+
+#### Dark (`html[data-theme="dark"]`)
+
+Warm charcoal / gold / violet — same accent family, no navy.
 
 | Token family | Dark intent |
 |--------------|-------------|
@@ -73,6 +77,10 @@ Warm charcoal / gold / violet — same accent family, no navy. Toggle lives in t
 | Purple / burnt / forest | Lifted for contrast on dark (`#c4a2f0`, `#fb923c`, `#4ade80`) |
 | Sticky bar / TOC panel tops | Theme tokens (`--sticky-bar-bg`, `--toc-panel-top`) |
 | Buttons on accents | `--btn-on-accent` → dark ink on light accents |
+
+#### Unicorn (`html[data-theme="unicorn"]`)
+
+Bold magenta / fuchsia / hot rose / electric gold with **metallics** (`--metal-gold`, `--metal-rose`, `--metal-chrome`, `--metal-holo`) and drifting **glitter** layers on `body` + `.gilbert-survey`. Holo borders on survey, cards, sticky bar; metallic title / primary button. Still no navy.
 
 ---
 
@@ -158,7 +166,7 @@ Voice: practical law-firm cockpit for Andrew/team — scannable, not startup-lan
 - [x] Button `:focus-visible` ring
 - [x] Value icons share one `--vi-*` map (filter + TOC)
 - [x] No navy brand tokens
-- [x] Dark theme via `data-theme` + header toggle
+- [x] Dark ↔ Unicorn themes via `data-theme` + header toggle
 
 ---
 

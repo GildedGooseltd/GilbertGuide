@@ -1624,34 +1624,42 @@
   }
 
   const THEME_STORAGE_KEY = "gilbert-guide-theme";
+  const THEME_DARK = "dark";
+  const THEME_UNICORN = "unicorn";
+
+  function normalizeTheme(value) {
+    if (value === THEME_UNICORN || value === "light") return THEME_UNICORN;
+    if (value === THEME_DARK) return THEME_DARK;
+    return null;
+  }
 
   function getPreferredTheme() {
     try {
-      const q = new URLSearchParams(location.search).get("theme");
-      if (q === "dark" || q === "light") return q;
+      const q = normalizeTheme(new URLSearchParams(location.search).get("theme"));
+      if (q) return q;
     } catch (e) { /* ignore */ }
     try {
-      const stored = localStorage.getItem(THEME_STORAGE_KEY);
-      if (stored === "dark" || stored === "light") return stored;
+      const stored = normalizeTheme(localStorage.getItem(THEME_STORAGE_KEY));
+      if (stored) return stored;
     } catch (e) { /* ignore */ }
     if (typeof window.matchMedia === "function" && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
+      return THEME_DARK;
     }
-    return "light";
+    return THEME_UNICORN;
   }
 
   function applyTheme(theme) {
-    const next = theme === "dark" ? "dark" : "light";
+    const next = normalizeTheme(theme) || THEME_UNICORN;
     document.documentElement.setAttribute("data-theme", next);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch (e) { /* ignore */ }
     const btn = document.getElementById("theme-toggle");
     if (!btn) return;
-    const isDark = next === "dark";
+    const isDark = next === THEME_DARK;
     btn.setAttribute("aria-pressed", isDark ? "true" : "false");
-    btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
-    btn.textContent = isDark ? "Light" : "Dark";
+    btn.setAttribute("aria-label", isDark ? "Switch to unicorn theme" : "Switch to dark theme");
+    btn.textContent = isDark ? "Unicorn" : "Dark";
   }
 
   function initThemeToggle() {
@@ -1659,8 +1667,8 @@
     const btn = document.getElementById("theme-toggle");
     if (!btn) return;
     btn.addEventListener("click", () => {
-      const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-      applyTheme(current === "dark" ? "light" : "dark");
+      const current = normalizeTheme(document.documentElement.getAttribute("data-theme")) || THEME_UNICORN;
+      applyTheme(current === THEME_DARK ? THEME_UNICORN : THEME_DARK);
     });
   }
 

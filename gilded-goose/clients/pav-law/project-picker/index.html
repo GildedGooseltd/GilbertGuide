@@ -6,23 +6,25 @@
   <title>Gilbert Guide — Project Prioritizer</title>
   <script>
     (function () {
+      function normalizeTheme(t) {
+        if (t === "unicorn" || t === "light") return "unicorn";
+        if (t === "dark") return "dark";
+        return null;
+      }
       try {
-        var q = new URLSearchParams(location.search).get("theme");
-        var stored = localStorage.getItem("gilbert-guide-theme");
-        var theme = (q === "dark" || q === "light")
-          ? q
-          : (stored === "dark" || stored === "light"
-            ? stored
-            : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+        var q = normalizeTheme(new URLSearchParams(location.search).get("theme"));
+        var stored = normalizeTheme(localStorage.getItem("gilbert-guide-theme"));
+        var theme = q || stored ||
+          (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "unicorn");
         document.documentElement.setAttribute("data-theme", theme);
       } catch (e) {
-        document.documentElement.setAttribute("data-theme", "light");
+        document.documentElement.setAttribute("data-theme", "unicorn");
       }
     })();
   </script>
   <style>
     :root {
-      /* Gilded Goose — cream / gold / brown + purple · burnt orange · forest (no navy) · value-icon-palette v=20260716j · dark via data-theme */
+      /* Gilded Goose — unicorn (default) + dark themes · purple · magenta · metallics · no navy · value-icon-palette v=20260716m */
       --gg-gold: #c9a86c;
       --gg-gold-bright: #e3c58d;
       --gg-gold-dark: #b8860b;
@@ -101,6 +103,76 @@
       --btn-on-accent: #fff;
       --toc-panel-top: #fffdf8;
       --shadow-soft: rgba(61, 48, 40, 0.08);
+      --metal-chrome: linear-gradient(135deg, #f8fafc 0%, #c0c7d2 28%, #ffffff 48%, #94a3b8 72%, #e2e8f0 100%);
+      --metal-rose: linear-gradient(135deg, #fff1f2 0%, #fda4af 30%, #fb7185 55%, #e11d48 78%, #fecdd3 100%);
+      --metal-gold: linear-gradient(120deg, #fff7d6 0%, #f6e27a 22%, #d4af37 48%, #fff1a8 68%, #b8860b 100%);
+      --metal-holo: linear-gradient(125deg, #ff4ecd 0%, #a78bfa 28%, #38bdf8 52%, #fbbf24 76%, #fb7185 100%);
+      --glitter-dot: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 1px, transparent 1.6px);
+    }
+    /* Unicorn — bold glitter, metallics, saturated accents (no navy) */
+    html[data-theme="unicorn"] {
+      --gg-gold: #f0c84a;
+      --gg-gold-bright: #ffe566;
+      --gg-gold-dark: #d4a017;
+      --gg-cream: #fff5fb;
+      --gg-cream-panel: #ffe8f6;
+      --gg-paper: #fffafd;
+      --gg-brown: #3b1048;
+      --gg-brown-muted: #6b2d7b;
+      --gg-sage: #d8f5e7;
+      --gg-royal-deep: #7c1fa0;
+      --gg-royal: #c026d3;
+      --gg-royal-mid: #e879f9;
+      --gg-royal-light: #f0abfc;
+      --gg-royal-dim: rgba(232, 121, 249, 0.2);
+      --gg-royal-border: rgba(192, 38, 211, 0.45);
+      --gg-burnt: #ff5c8a;
+      --gg-burnt-dim: rgba(255, 92, 138, 0.18);
+      --gg-burnt-border: rgba(255, 92, 138, 0.5);
+      --gg-forest: #22c55e;
+      --gg-forest-dim: rgba(34, 197, 94, 0.16);
+      --gg-forest-border: rgba(34, 197, 94, 0.45);
+      --gg-gold-dim: rgba(240, 200, 74, 0.28);
+      --gg-positive: #22c55e;
+      --bg: #fff0f8;
+      --surface: #fffafd;
+      --surface2: #ffe8f6;
+      --surface-panel: #ffd6f0;
+      --surface-panel-nested: #ffc4e8;
+      --surface-plan: #fff0d6;
+      --surface-plan-inner: #ffe4a8;
+      --input-text: #3b1048;
+      --input-placeholder: #a56bb8;
+      --border: rgba(192, 38, 211, 0.22);
+      --border-strong: rgba(212, 160, 23, 0.55);
+      --text: #3b1048;
+      --secondary: #6b2d7b;
+      --accent-dim: var(--gg-royal-dim);
+      --green: var(--gg-forest);
+      --green-dim: var(--gg-forest-dim);
+      --highlight: var(--gg-royal-mid);
+      --highlight-dim: var(--gg-royal-dim);
+      --gradient-brand: linear-gradient(135deg, #ff4ecd 0%, #a78bfa 40%, #f0c84a 100%);
+      --gradient-gold: var(--metal-gold);
+      --focus-ring: 0 0 0 3px rgba(255, 78, 205, 0.45);
+      --sticky-bar-bg: rgba(255, 250, 253, 0.92);
+      --sticky-bar-shadow: 0 -8px 28px rgba(192, 38, 211, 0.18);
+      --header-control-bg: var(--metal-holo);
+      --btn-on-accent: #fff;
+      --toc-panel-top: #fff7d6;
+      --shadow-soft: rgba(124, 31, 160, 0.16);
+      --vi-foundation-bg: #ff6b8a; --vi-foundation-fg: #7f1d1d; --vi-foundation-border: #fb7185; --vi-foundation-chip: rgba(255, 107, 138, 0.22);
+      --vi-retainer-bg: #c084fc; --vi-retainer-fg: #581c87; --vi-retainer-border: #a855f7; --vi-retainer-chip: rgba(192, 132, 252, 0.24);
+      --vi-leads-bg: #fb923c; --vi-leads-fg: #7c2d12; --vi-leads-border: #f97316; --vi-leads-chip: rgba(251, 146, 60, 0.24);
+      --vi-crm-bg: #e879f9; --vi-crm-fg: #701a75; --vi-crm-border: #d946ef; --vi-crm-chip: rgba(232, 121, 249, 0.24);
+      --vi-seo-bg: #4ade80; --vi-seo-fg: #14532d; --vi-seo-border: #22c55e; --vi-seo-chip: rgba(74, 222, 128, 0.22);
+      --vi-referrals-bg: #f472b6; --vi-referrals-fg: #831843; --vi-referrals-border: #ec4899; --vi-referrals-chip: rgba(244, 114, 182, 0.24);
+      --vi-efficiency-bg: #fde047; --vi-efficiency-fg: #713f12; --vi-efficiency-border: #facc15; --vi-efficiency-chip: rgba(253, 224, 71, 0.28);
+      --vi-intake-bg: #a78bfa; --vi-intake-fg: #4c1d95; --vi-intake-border: #8b5cf6; --vi-intake-chip: rgba(167, 139, 250, 0.24);
+      --vi-creative-bg: #f0abfc; --vi-creative-fg: #86198f; --vi-creative-border: #e879f9; --vi-creative-chip: rgba(240, 171, 252, 0.26);
+      --vi-general-bg: #fda4af; --vi-general-fg: #9f1239; --vi-general-border: #fb7185; --vi-general-chip: rgba(253, 164, 175, 0.24);
+      --vi-account-data-bg: #fbbf24; --vi-account-data-fg: #78350f; --vi-account-data-border: #f59e0b; --vi-account-data-chip: rgba(251, 191, 36, 0.28);
+      color-scheme: light;
     }
     /* Dark version — warm charcoal / gold / violet (no navy) */
     html[data-theme="dark"] {
@@ -170,6 +242,34 @@
         radial-gradient(ellipse 90% 55% at 100% 0%, rgba(109, 40, 168, 0.18), transparent 48%),
         radial-gradient(ellipse 70% 45% at 0% 100%, rgba(194, 65, 12, 0.1), transparent 42%),
         var(--bg);
+    }
+    html[data-theme="unicorn"] body {
+      background:
+        radial-gradient(circle at 8% 12%, #fff 0 1.2px, transparent 1.9px),
+        radial-gradient(circle at 22% 48%, #ffe566 0 1.3px, transparent 2.1px),
+        radial-gradient(circle at 36% 18%, #ff4ecd 0 1.1px, transparent 1.8px),
+        radial-gradient(circle at 54% 72%, #a78bfa 0 1.2px, transparent 2px),
+        radial-gradient(circle at 68% 28%, #fff 0 1px, transparent 1.7px),
+        radial-gradient(circle at 82% 58%, #fb7185 0 1.25px, transparent 2px),
+        radial-gradient(circle at 94% 16%, #fbbf24 0 1.1px, transparent 1.9px),
+        radial-gradient(circle at 14% 86%, #fff 0 0.9px, transparent 1.5px),
+        radial-gradient(circle at 48% 40%, #e879f9 0 1px, transparent 1.7px),
+        radial-gradient(ellipse 110% 70% at 8% -8%, rgba(255, 78, 205, 0.38), transparent 52%),
+        radial-gradient(ellipse 90% 60% at 100% 0%, rgba(167, 139, 250, 0.4), transparent 48%),
+        radial-gradient(ellipse 80% 50% at 50% 100%, rgba(251, 191, 36, 0.32), transparent 46%),
+        linear-gradient(160deg, #ffe6f7 0%, #ffd0f0 38%, #ffe9a8 100%);
+      background-size:
+        110px 110px, 130px 130px, 95px 95px, 120px 120px, 85px 85px,
+        140px 140px, 100px 100px, 75px 75px, 115px 115px,
+        auto, auto, auto, auto;
+      animation: unicorn-glitter-drift 12s linear infinite;
+    }
+    @keyframes unicorn-glitter-drift {
+      0% { background-position: 0 0, 40px 20px, 10px 60px, 80px 0, 0 40px, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 180px 120px, -80px 140px, 90px -40px, -60px 100px, 50px -30px, 0 0, 0 0, 0 0, 0 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html[data-theme="unicorn"] body { animation: none; }
     }
     a { color: var(--gg-royal); text-decoration: underline; text-underline-offset: 2px; }
     a:hover { color: var(--gg-royal-mid); }
@@ -273,6 +373,26 @@
       letter-spacing: 0.02em; line-height: 1.15;
       border-bottom: 3px solid var(--gg-gold); padding-bottom: 0.2rem;
     }
+    html[data-theme="unicorn"] .gg-app-title {
+      background: var(--metal-holo);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      border-image: var(--metal-gold) 1;
+      border-bottom: 3px solid transparent;
+      box-shadow: 0 3px 0 0 transparent;
+      position: relative;
+      filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.8)) drop-shadow(0 0 10px rgba(255, 78, 205, 0.35));
+    }
+    html[data-theme="unicorn"] .gg-app-title::after {
+      content: "";
+      display: block;
+      height: 3px;
+      margin-top: 0.2rem;
+      border-radius: 999px;
+      background: var(--metal-gold);
+      box-shadow: 0 0 10px rgba(240, 200, 74, 0.75), 0 0 18px rgba(255, 78, 205, 0.35);
+    }
     .gg-header-sub {
       margin: 0; font-size: 0.95rem; color: var(--secondary); line-height: 1.45;
     }
@@ -292,6 +412,25 @@
     }
     .theme-toggle:hover { border-color: var(--gg-gold); color: var(--gg-gold-bright); }
     .theme-toggle:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+    html[data-theme="unicorn"] .theme-toggle {
+      color: #3b1048;
+      border: 1px solid transparent;
+      background:
+        linear-gradient(#fffafd, #fffafd) padding-box,
+        var(--metal-holo) border-box;
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.65) inset, 0 4px 14px rgba(192, 38, 211, 0.22);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    }
+    html[data-theme="unicorn"] .theme-toggle:hover {
+      color: #7c1fa0;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8) inset, 0 0 18px rgba(255, 78, 205, 0.45);
+    }
+    html[data-theme="dark"] .theme-toggle {
+      background: var(--header-control-bg);
+      color: var(--text);
+    }
     .gilbert-guide-col-chat-only { width: 100%; }
     .picker-zone-lead {
       margin: 0 0 1rem; font-size: 0.92rem; color: var(--secondary); line-height: 1.5; max-width: 40rem;
@@ -302,6 +441,96 @@
       border: 1px solid var(--border-strong);
       border-radius: var(--radius);
       padding: 1.1rem 1.2rem 1.2rem;
+    }
+    html[data-theme="unicorn"] .gilbert-survey {
+      position: relative;
+      isolation: isolate;
+      border: 2px solid transparent;
+      background:
+        linear-gradient(180deg, #fffafd 0%, #ffe8f6 55%, #fff4d6 100%) padding-box,
+        var(--metal-holo) border-box;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+        0 10px 28px rgba(192, 38, 211, 0.16),
+        0 0 24px rgba(240, 200, 74, 0.18);
+      overflow: hidden;
+    }
+    html[data-theme="unicorn"] .gilbert-survey::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.85;
+      background-image:
+        radial-gradient(circle at 12% 18%, #fff 0 1.2px, transparent 1.9px),
+        radial-gradient(circle at 28% 62%, #ffe566 0 1.3px, transparent 2.1px),
+        radial-gradient(circle at 46% 24%, #ff4ecd 0 1.1px, transparent 1.8px),
+        radial-gradient(circle at 64% 78%, #a78bfa 0 1.2px, transparent 2px),
+        radial-gradient(circle at 78% 36%, #fff 0 1px, transparent 1.6px),
+        radial-gradient(circle at 90% 58%, #fb7185 0 1.25px, transparent 2px),
+        radial-gradient(circle at 52% 48%, #fbbf24 0 1.1px, transparent 1.8px);
+      background-size: 90px 90px, 110px 110px, 80px 80px, 100px 100px, 70px 70px, 120px 120px, 85px 85px;
+      animation: unicorn-glitter-drift 8s linear infinite;
+    }
+    html[data-theme="unicorn"] .gilbert-survey > * { position: relative; z-index: 1; }
+    html[data-theme="unicorn"] .survey-choice {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.55), rgba(255, 244, 214, 0.35));
+    }
+    html[data-theme="unicorn"] .survey-choice:hover {
+      background: linear-gradient(90deg, rgba(255, 78, 205, 0.16), rgba(240, 200, 74, 0.22));
+    }
+    html[data-theme="unicorn"] .survey-prompt {
+      color: #9d174d;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75), 0 0 12px rgba(255, 78, 205, 0.35);
+    }
+    html[data-theme="unicorn"] .picker-zone-title {
+      color: #7c1fa0;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 14px rgba(240, 200, 74, 0.45);
+    }
+    html[data-theme="unicorn"] .picker-zone-label {
+      color: #b45309;
+      text-shadow: 0 0 8px rgba(251, 191, 36, 0.55);
+    }
+    html[data-theme="unicorn"] .btn-primary {
+      background: var(--metal-holo);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      color: #3b1048;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+      box-shadow: 0 4px 16px rgba(192, 38, 211, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+    html[data-theme="unicorn"] .btn-primary:hover {
+      opacity: 1;
+      filter: brightness(1.05);
+      box-shadow: 0 0 22px rgba(255, 78, 205, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+    html[data-theme="unicorn"] .card {
+      border: 1.5px solid transparent;
+      background:
+        linear-gradient(180deg, #fffafd, #fff4d6) padding-box,
+        var(--metal-chrome) border-box;
+      box-shadow: 0 8px 22px rgba(124, 31, 160, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+    html[data-theme="unicorn"] .card.selected {
+      background:
+        linear-gradient(180deg, #ffe8f6, #fff0d6) padding-box,
+        var(--metal-holo) border-box;
+      box-shadow: 0 0 0 1px rgba(255, 78, 205, 0.25), 0 10px 26px rgba(192, 38, 211, 0.2);
+    }
+    html[data-theme="unicorn"] .project-list-controls {
+      border: 1.5px solid transparent;
+      background:
+        linear-gradient(180deg, rgba(255, 250, 253, 0.96), rgba(255, 232, 246, 0.94)) padding-box,
+        var(--metal-gold) border-box;
+      box-shadow: 0 -8px 28px rgba(192, 38, 211, 0.18), 0 0 18px rgba(240, 200, 74, 0.2);
+    }
+    html[data-theme="unicorn"] .toc-condensed,
+    html[data-theme="unicorn"] .why-gilded-frame {
+      border: 1.5px solid transparent;
+      background:
+        linear-gradient(180deg, #fffafd, #fff7d6) padding-box,
+        var(--metal-gold) border-box;
+      box-shadow: 0 0 20px rgba(240, 200, 74, 0.22);
     }
     .gilbert-survey > .picker-zone-label {
       margin-bottom: 0.4rem;
@@ -1366,8 +1595,8 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260716k"></script>
-  <script src="projects-data.js?v=20260716k"></script>
-  <script src="app.js?v=20260716k"></script>
+  <script src="pages-config.js?v=20260716m"></script>
+  <script src="projects-data.js?v=20260716m"></script>
+  <script src="app.js?v=20260716m"></script>
 </body>
 </html>
