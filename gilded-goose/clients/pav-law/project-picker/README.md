@@ -8,7 +8,7 @@ Static project picker: choose-your-path survey → filters outlines, value filte
 
 ## Edit content
 
-**Branding & formatting (colors, type, layout — edit tokens here first):** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
+**Style guide:** [STYLE-GUIDE.md](STYLE-GUIDE.md) · token/layout map: [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md)  
 **Start here for projects:** [`content/INDEX.md`](content/INDEX.md) — links to every project file.
 
 | File | Purpose |

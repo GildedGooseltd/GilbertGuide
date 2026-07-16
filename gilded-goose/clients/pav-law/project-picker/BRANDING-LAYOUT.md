@@ -1,6 +1,7 @@
 # Gilbert Guide — branding & formatting
 
-**Canonical hub** for how the picker *looks*. Change colors, type, and layout tokens here first — then edit the files this doc points to.
+**Style guide (canonical):** [`STYLE-GUIDE.md`](STYLE-GUIDE.md) — colors, type, components, hard rules.  
+This file maps tokens → files and layout structure.
 
 **Project copy** lives elsewhere: [CONTENT-EDIT.md](CONTENT-EDIT.md) · [`content/INDEX.md`](content/INDEX.md)
 
@@ -68,13 +69,13 @@ Header toggle switches **`light`** and **`dark`** only (legacy `unicorn` maps to
 
 #### Dark (`html[data-theme="dark"]`)
 
-Black + deep purple night — soft lilac ink. **No fuchsia / hot pink.** Gold/yellow only for rare important highlights (zone labels, primary CTAs) — not decorative chrome.
+Black + deep purple night. **No fuchsia / hot pink. No light purple text.** Gold only for rare important highlights.
 
 | Token family | Dark intent |
 |--------------|-------------|
 | Surfaces | Near-black → deep plum (`#050308` → `#1c1528`) |
-| Text | Soft lilac (`#ebe6f4` / `#9b90b0`) |
-| Accents | Violet (`#a78bfa` / `#8b5cf6`) |
+| Text | Warm off-white / gray (`#f4f1ea` / `#b8b2a8`) — never lilac |
+| Accents | Violet on links/borders (`#a78bfa` / `#8b5cf6`) — not body copy |
 | Gold | Antique (`#c9a86c`) — reserved for important highlights only |
 | Sticky / TOC | Dark purple panel tokens |
 | Buttons on accents | `--btn-on-accent` → near-black ink |
