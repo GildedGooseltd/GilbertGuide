@@ -2,6 +2,6 @@
 window.PAV_PICKER_CONFIG = {
   webhookUrl: "https://script.google.com/macros/s/AKfycbyXinGO9Tnh0XlI9pKRD2sp7z3ruY6ZvFZU3yIjtxMW2HTRyak94q1g7ixbFA2DTfiAXw/exec",
   depositAmount: 2500,
-  quickbooksDepositUrl: "https://script.google.com/macros/s/AKfycbyXinGO9Tnh0XlI9pKRD2sp7z3ruY6ZvFZU3yIjtxMW2HTRyak94q1g7ixbFA2DTfiAXw/exec",
+  quickbooksDepositUrl: "https://connect.intuit.com/pay/GildedGooseLimited/scs-v1-0df21a0017904621b181ae1a6966f612e00ab1e96756482eb00984d15e5bd8436ee16a8e815c4749957b0f1602fade57-0?locale=EN_US&cta=saveandcopylink",
   notifyEmail: "support@gildedgooselimited.com"
 };
