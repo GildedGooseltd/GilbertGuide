@@ -21,24 +21,25 @@ Edit **Project** titles, **Status**, **Visibility**, **Est. cost**, **Payment pl
 | 5        | A4       | wip                    | Published   | $1,700    | 20%          | HS: Client Referral Program                                      | [projects/A4.md](projects/A4.md)   |
 | 6        | A17      | wip                    | Published   | $1,500    | 20%          | HS: Sealing & Probation Client Reengagement                      | [projects/A17.md](projects/A17.md) |
 | 7        | B5       | available              | Published   | $2,200    | 30%          | Insurance Envelope Mailer                                        | [projects/B5.md](projects/B5.md)   |
-| 8        | A14      | wip                    | Published   | $1,500    | 20%          | Performance Plan Payouts                                         | [projects/A14.md](projects/A14.md) |
+| 8        | A14      | Recommended            | Published   | $1,500    | 20%          | Performance Plan Payouts                                         | [projects/A14.md](projects/A14.md) |
 | 9        | B14      | available              | Published   | $1,200    | 20%          | Pav Law Swag & Apparel                                           | [projects/B14.md](projects/B14.md) |
-| 10       | A2       | Launched               | Published   | $2,800    | 20%          | NTGUILT Display & Search Campaign Launch                         | [projects/A2.md](projects/A2.md)   |
+| 10       | A2       | Recommended            | Published   | $2,800    | 20%          | NTGUILT Display & Search Campaign Launch                         | [projects/A2.md](projects/A2.md)   |
 | 11       | A1       | available              | Published   | $2,200    | 20%          | Digital Ad Enhancements                                          | [projects/A1.md](projects/A1.md)   |
-| 12       | B4       | available              | Published   | $2,500    | 50%          | Website Content Overhaul                                         | [projects/B4.md](projects/B4.md)   |
-| 13       | B1       | available              | Published   | $1,800    | 50%          | HubSpot Pipeline Sprint                                          | [projects/B1.md](projects/B1.md)   |
-| 14       | B3       | Blocked - AB           | Published   | $4,200    | 40%          | Website Speed and Navigation                                     | [projects/B3.md](projects/B3.md)   |
-| 15       | A7       | available              | Published   | $4,500    | 30%          | NTGUILT & Firm Social Campaigns                                  | [projects/A7.md](projects/A7.md)   |
+| 12       | B4       | available              | unPublished | $2,500    | 50%          | Website Content Overhaul                                         | [projects/B4.md](projects/B4.md)   |
+| 13       | B1       | available              | unPublished | $1,800    | 50%          | HubSpot Pipeline Sprint                                          | [projects/B1.md](projects/B1.md)   |
+| 14       | B3       | available              | Published   | $4,200    | 40%          | Website Speed and Navigation                                     | [projects/B3.md](projects/B3.md)   |
+| 15       | A7       | Recommended            | Published   | $4,500    | 30%          | NTGUILT & Firm Social Campaigns                                  | [projects/A7.md](projects/A7.md)   |
 | 16       | B7       | available              | Published   | incl. B13 | —            | HubSpot Marketing Contacts Upload                                | [projects/B7.md](projects/B7.md)   |
 | 17       | A13      | available              | Published   | $2,400    | 30%          | Adult Site(s) Ad Campaign                                        | [projects/A13.md](projects/A13.md) |
-| 18       | A6       | available              | Published   | $1,200    | 20%          | Gabriel Outbound Sales Calling                                   | [projects/A6.md](projects/A6.md)   |
-| 20       | B6       | available              | Published   | $2,500    | 50%          | Blog Revamp                                                      | [projects/B6.md](projects/B6.md)   |
-| 21       | B12      | available              | Published   | $2,000    | 20%          | Casey Attorney Rebrand & Professional Presence                   | [projects/B12.md](projects/B12.md) |
+| 18       | A6       | Recommended            | Published   | $1,200    | 20%          | Gabriel Outbound Sales Calling                                   | [projects/A6.md](projects/A6.md)   |
+| 19       | A19      | Planning               | Published   | $2,200    | 20%          | Summer Seasonal Digital Ad Campaign                              | [projects/A19.md](projects/A19.md) |
+| 20       | B6       | available              | unPublished | $2,500    | 50%          | Blog Revamp                                                      | [projects/B6.md](projects/B6.md)   |
+| 21       | B12      | available              | unPublished | $2,000    | 20%          | Casey Rebrand Digital & Professional Presence                    | [projects/B12.md](projects/B12.md) |
 | 22       | A11      | available              | Published   | $2,200    | 20%          | Holiday Digital Ad(s) Campaign Expansion                         | [projects/A11.md](projects/A11.md) |
 | 23       | A5       | Planning               | Unpublished | $1,800    | 50%          | HubSpot Landing Page or Website Module                           | [projects/A5.md](projects/A5.md)   |
-| 24       | A9       | Planning               | Published   | $2,000    | 50%          | Case Win Log and Testimonials                                    | [projects/A9.md](projects/A9.md)   |
-| 25       | A12      | available              | Published   | $2,200    | 50%          | Enable Pavi Chat QA for After-Hours Support                      | [projects/A12.md](projects/A12.md) |
-| 26       | B9       | Planning               | Published   | $1,800    | 50%          | Expense Audit                                                    | [projects/B9.md](projects/B9.md)   |
+| 24       | A9       | Planning               | unPublished | $2,000    | 50%          | Case Win Log and Testimonials                                    | [projects/A9.md](projects/A9.md)   |
+| 25       | A12      | available              | unPublished | $2,200    | 50%          | Enable Pavi Chat QA for After-Hours Support                      | [projects/A12.md](projects/A12.md) |
+| 26       | B9       | available              | Published   | $1,800    | 50%          | Expense Audit                                                    | [projects/B9.md](projects/B9.md)   |
 | 50       | A3       | completed              | Published   | incl. B13 | —            | Summer Safety Email Campaign (child of B13)                      | [projects/A3.md](projects/A3.md)   |
 | 51       | A10      | completed              | Published   | $1,500    |              | Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone | [projects/A10.md](projects/A10.md) |
 | 52       | A15      | Archived               | Unpublished | $2,500    | —            | Summer Event Activation & Lead Capture                           | [projects/A15.md](projects/A15.md) |
@@ -164,6 +165,7 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - B4/B3 — website content overhaul spans B4 + B3; B3 status **Blocked - AB**
 - A4 — Track 1 referral · **A17** Track 2 sealing/probation (active / wip) · see **A14** for payout tiers
 - A15 — event activation archived · **A16 Garage Partnership** archived seasonal — reopen summer 2027
+- **A19** — Summer seasonal digital ads + **Bend & Snap** college social (move-in / early semester); separate from A11 holiday and archived A15
 - A10 — completed (audit done)
 - C1 / C2 — Apr triage completed (access audit · email outage runbook)
 - **B11** — Recommended · LSA call process: Phase 1 done (SOP + training doc); Phase 2 = Casey call review + phone schedule for Romina admin time

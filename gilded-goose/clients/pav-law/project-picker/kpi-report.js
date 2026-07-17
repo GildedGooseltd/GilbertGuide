@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260717-kpi-3col";
+  const RENDER_VER = "20260717-tile-ids";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -84,8 +84,9 @@
     },
     "#DUI": {
       title: "# DUIs Signed",
-      desc: "YTD DUI/DWAI signed matters toward the annual goal.",
-      formula: "Count of DUI/DWAI signed YTD ÷ annual target (50)."
+      desc: "YTD DUI/DWAI signed matters toward the annual goal (practice area).",
+      formula:
+        "Client contacts Created in goal year with Cases (practice area) DUI/DWAI/Alcohol — (DUI/DWI) tag or DUI-named Criminal Defense — ÷ annual target (50)."
     },
     "#16": {
       title: "#16 Reviews by channel",
@@ -263,7 +264,7 @@
       { platform: "Bing Places / Apple", rating: "—", count: null, status: "not wired", verified: false }
     ],
     verticals: [
-      { name: "DUI/DWAI", jun: 4, ytd: 18 },
+      { name: "DUI/DWAI", jun: 3, ytd: 15 },
       { name: "Military", jun: 2, ytd: 8 },
       { name: "Traffic", jun: 2, ytd: 6 },
       { name: "DV", jun: 1, ytd: 3 }
@@ -273,7 +274,7 @@
     duiGoal: (function () {
       const d = window.DUI_GOAL_DATA || {};
       return {
-        current: d.current != null ? Number(d.current) : 18,
+        current: d.current != null ? Number(d.current) : 15,
         target: d.target != null ? Number(d.target) : 50,
         year: d.year != null ? Number(d.year) : 2026,
         title: d.title || "# DUIs Signed",
@@ -396,6 +397,51 @@
 
   function fmtMoney(n) {
     return "$" + Math.round(n).toLocaleString("en-US");
+  }
+
+  /**
+   * Cash collected monthly tiers (NEW-A):
+   * ≥$100k → gold · >$80k → green · $60–70k → burnt umber · else neutral.
+   * Gaps (<$60k, $70–80k inclusive of $80k) stay default.
+   */
+  function cashTierClass(n) {
+    const amt = Number(n);
+    if (!Number.isFinite(amt)) return "";
+    if (amt >= 100000) return "kpi-cash-tier kpi-cash-tier-gold";
+    if (amt > 80000) return "kpi-cash-tier kpi-cash-tier-green";
+    if (amt >= 60000 && amt <= 70000) return "kpi-cash-tier kpi-cash-tier-umber";
+    return "kpi-cash-tier kpi-cash-tier-neutral";
+  }
+
+  function cashTierFill(n) {
+    const amt = Number(n);
+    if (!Number.isFinite(amt)) return null;
+    if (amt >= 100000) return "#b8860b";
+    if (amt > 80000) return "#2d5a3d";
+    if (amt >= 60000 && amt <= 70000) return "#9a3f14";
+    return null;
+  }
+
+  function fmtCashTier(n) {
+    const cls = cashTierClass(n);
+    return cls
+      ? `<span class="${cls}">${fmtMoney(n)}</span>`
+      : fmtMoney(n);
+  }
+
+  function kpiDetailAccordion(title, hint, headers, rows) {
+    const hintHtml = hint
+      ? `<span class="kpi-table-acc-hint">${escapeHtml(hint)}</span>`
+      : "";
+    return `<details class="kpi-table-acc">
+      <summary class="kpi-table-acc-summary">${escapeHtml(title)}${hintHtml}</summary>
+      <div class="kpi-chart-detail kpi-chart-detail-acc">
+        <table class="kpi-table kpi-chart-table kpi-table-dense">
+          <thead><tr>${headers.map(h => `<th scope="col">${h}</th>`).join("")}</tr></thead>
+          <tbody>${rows.map(r => `<tr>${r.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody>
+        </table>
+      </div>
+    </details>`;
   }
 
   function channelBarChart(channels) {
@@ -745,7 +791,9 @@
 
   function casesLeadsSpendTable(rows) {
     const newestFirst = [...(rows || [])].reverse();
-    return kpiDetailTable(
+    return kpiDetailAccordion(
+      "Media table",
+      `${newestFirst.length} periods`,
       ["Period", "LSA leads", "LSA media", "LSA media / lead", "Search media", "Search media / call"],
       [
         ...newestFirst.map(r => {
@@ -825,9 +873,11 @@
         <text x="${x + barW / 2}" y="${py - 8}" text-anchor="middle" class="kpi-chart-total" style="fill:#1e3a8a">$${Math.round(currentPace.projected / 1000)}k pace</text>`;
           })()
         : "";
+      const labelFill = cashTierFill(r.credit);
+      const labelStyle = labelFill ? ` style="fill:${labelFill}"` : "";
       return `<g>
         <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"/>
-        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total">$${Math.round(r.credit / 1000)}k</text>
+        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total"${labelStyle}>$${Math.round(r.credit / 1000)}k</text>
         ${projection}
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
@@ -847,25 +897,28 @@
     const withCases = rows.filter(r => r.newCases);
     const ytdCredit = rows.reduce((s, r) => s + r.credit, 0);
     const ytdCases = withCases.reduce((s, r) => s + r.newCases, 0);
-    return kpiDetailTable(
+    const janJunCredit = withCases.reduce((s, r) => s + r.credit, 0);
+    return kpiDetailAccordion(
+      "Cash table",
+      `${rows.length} months`,
       ["Month", "Cash collected", "New cases", "Cash / new case"],
       [
         ...rows.map(r => {
           const per = r.newCases ? r.credit / r.newCases : null;
           return [
             escapeHtml(r.month) + " 2026",
-            fmtMoney(r.credit),
+            fmtCashTier(r.credit),
             r.newCases != null ? String(r.newCases) : "—",
             per != null ? fmtMoney(per) : "—"
           ];
         }),
         [
           "Jan–Jun totals",
-          fmtMoney(withCases.reduce((s, r) => s + r.credit, 0)),
+          fmtCashTier(janJunCredit),
           String(ytdCases),
-          fmtMoney(withCases.reduce((s, r) => s + r.credit, 0) / ytdCases)
+          fmtMoney(janJunCredit / ytdCases)
         ],
-        ["2026 to date (incl. Jul*)", fmtMoney(ytdCredit), "—", "—"],
+        ["2026 to date (incl. Jul*)", fmtCashTier(ytdCredit), "—", "—"],
         ["2025 total", fmtMoney(DATA.cashCollectedTotals.total2025), "—", "—"]
       ]
     );
@@ -883,7 +936,7 @@
       ? Math.round(janJunRows.reduce((s, r) => s + r.credit, 0) / janJunRows.length)
       : null;
     const status = projected >= goal ? "on track" : "behind pace";
-    return `<p class="data-inline-note"><strong>Current month:</strong> ${escapeHtml(current.month)} is ${fmtMoney(current.credit)} through Jul 15. At that pace it projects to ${fmtMoney(projected)} for July, ${status} for the ${fmtMoney(goal)} monthly goal${historicAvg ? ` and above the Jan–Jun average of ${fmtMoney(historicAvg)}` : ""}.</p>`;
+    return `<p class="data-inline-note"><strong>Current month:</strong> ${escapeHtml(current.month)} is ${fmtCashTier(current.credit)} through Jul 15. At that pace it projects to ${fmtCashTier(projected)} for July, ${status} for the ${fmtMoney(goal)} monthly goal${historicAvg ? ` and above the Jan–Jun average of ${fmtCashTier(historicAvg)}` : ""}.</p>`;
   }
 
   function lsaEfficiencyTable(rows) {
@@ -995,15 +1048,13 @@
 
   function financialSectionHtml() {
     const cashRows = DATA.cashCollected || [];
-    const lsaRows = DATA.lsaEfficiency || [];
-    const trust = DATA.trustTransfers || {};
     if (!cashRows.length) return "";
-    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="Financial">
+    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="Financials">
       ${statusCorner(true)}
-      ${kpiSectionStaticHead("Financial", "Cash · LSA efficiency · Trust transfers")}
+      ${kpiSectionStaticHead("Financials", "Cash collected MoM · cash / new case")}
       <div class="kpi-section-body">
-        <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cash per new case · NEW-C LSA media / charged lead · NEW-D charge rate · NEW-E trust applications MoM (ledger 2025-01-03→2026-07-15) + Client trust snapshot.</p>
-        <div class="kpi-finance-grid">
+        <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cash per new case. Color tiers on monthly cash: $60–70k burnt umber · &gt;$80k green · ≥$100k gold · else neutral.</p>
+        <div class="kpi-finance-grid kpi-finance-grid-cash">
           <div class="kpi-mini-card">
             <h3>NEW-A · Cash collected (MoM)</h3>
             ${chartBlock({
@@ -1011,17 +1062,6 @@
               table: cashCollectedTable(cashRows)
             })}
             ${cashCollectedPaceNote(cashRows)}
-          </div>
-          <div class="kpi-mini-card">
-            <h3>NEW-C / NEW-D · LSA media per charged lead &amp; charge rate</h3>
-            ${lsaEfficiencyTable(lsaRows)}
-          </div>
-          <div class="kpi-mini-card">
-            <h3>NEW-E · Trust applications (MoM)</h3>
-            ${chartBlock({
-              chart: trustApplicationsChart(trust.monthly || []),
-              table: trustTransfersTable(trust)
-            })}
           </div>
         </div>
         ${sourceFootnote("financial")}
@@ -1189,7 +1229,7 @@
       `<span class="kpi-donut-legend-item"><span class="kpi-donut-swatch" style="background:${seg.color}"></span>${seg.name} ${seg.pct}%</span>`
     ).join("");
     return `<div class="kpi-donut-wrap">
-      <svg class="kpi-chart-svg kpi-donut-svg" viewBox="0 0 112 112" role="img" aria-label="Source mix donut">${arcs}<circle cx="${cx}" cy="${cy}" r="24" fill="var(--gg-paper)"/></svg>
+      <svg class="kpi-donut-svg" viewBox="0 0 112 112" width="112" height="112" role="img" aria-label="Mix donut">${arcs}<circle cx="${cx}" cy="${cy}" r="24" fill="var(--gg-paper)"/></svg>
       <div class="kpi-donut-legend">${legend}</div>
     </div>`;
   }
@@ -1914,7 +1954,20 @@
         <div class="kpi-section-body">
           <div class="kpi-stat-grid">${kpiCards}</div>
         </div>
-      </section>`;
+      </section>
+      <section class="kpi-section kpi-section-static" data-feedback-id="section-reviews-presence" data-feedback-label="#16 Reviews by channel">
+        ${kpiSectionStaticHead("Reviews by channel", "Presence mix · On / Not on / Outdated / Not wired")}
+        <div class="kpi-section-body">
+          ${reviewsByChannelPanelHtml()}
+        </div>
+      </section>
+      <section class="kpi-section kpi-section-static" data-feedback-id="section-cases-leads-spend" data-feedback-label="Cases, Leads & Spend">
+        ${kpiSectionStaticHead("Cases, Leads & Spend", "Left: counts · Right: $ spend · media table")}
+        <div class="kpi-section-body">
+          ${casesLeadsSpendSectionHtml()}
+        </div>
+      </section>
+      ${financialSectionHtml()}`;
     el.dataset.rendered = RENDER_VER;
     bindKpiInteractions(el);
     bindDashboardInteractions(el);
@@ -1930,7 +1983,7 @@
   function leadsByCampaignPanelHtml() {
     return `<article class="kpi-split-panel" data-feedback-id="section-leads-campaign" data-feedback-label="#08 Leads by campaign">
       ${statusCorner(true)}
-      ${kpiSectionStaticHead("#08 Leads by campaign", "Stacked by month")}
+      ${kpiSectionStaticHead("Leads by campaign", "Stacked by month")}
       <div class="kpi-split-panel-body">
         ${chartBlock({
           focus: "#08",
@@ -1941,6 +1994,7 @@
         <p class="kpi-table-note">Military volume used to look oversized in part because a lot of DV traffic ran inside that campaign — that traffic is now broken out as <strong>Core DV</strong>. Traffic and auto-related demand sits in <strong>NTGUILT</strong>.</p>
         ${sourceFootnote("#08")}
       </div>
+      ${kpiRefMark("#08")}
     </article>`;
   }
 
@@ -1951,7 +2005,7 @@
   function totalReferralNetworkPanelHtml() {
     return `<div class="kpi-mini-card" data-kpi-focus="#17">
       ${statusCorner(false)}
-      <h3>#17 Total Referral Network</h3>
+      <h3>Total Referral Network</h3>
       ${(() => {
         const segs = presencePieSegments(DATA.referrals);
         return chartBlock({ chart: donutChart(segs) });
@@ -1965,6 +2019,7 @@
         </tr>`).join("")}</tbody>
       </table>
       <p class="kpi-table-note">Placeholder — counts fill when A4 Client Referral Program tracking is live.</p>
+      ${kpiRefMark("#17")}
     </div>`;
   }
 
@@ -1976,7 +2031,7 @@
           <div class="kpi-split-grid">
             <article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 / #05 Cases MoM">
               ${statusCorner(false)}
-              ${kpiSectionStaticHead("#04 / #05 Cases MoM", "Closed · New · Red accounts")}
+              ${kpiSectionStaticHead("Cases MoM", "Closed · New · Red accounts")}
               <div class="kpi-split-panel-body">
                 ${chartBlock({
                   focus: "#04",
@@ -1985,9 +2040,10 @@
                   table: casesMomDetailTable(DATA.casesMom)
                 })}
               </div>
+              ${kpiRefMark("#04")}
             </article>
             <article class="kpi-split-panel kpi-verified" data-feedback-id="section-source-mix" data-feedback-label="#10 Source mix">
-              ${kpiSectionStaticHead("#10 Source mix", "Lead share by channel")}
+              ${kpiSectionStaticHead("Source mix", "Lead share by channel")}
               <div class="kpi-split-panel-body">
                 ${chartBlock({
                   focus: "#10",
@@ -1996,6 +2052,7 @@
                 })}
                 ${sourceFootnote("#10")}
               </div>
+              ${kpiRefMark("#10")}
             </article>
           </div>
           <div class="kpi-dash-grid-2 kpi-dash-grid-1" style="margin-top:1rem">
@@ -2019,38 +2076,43 @@
       </section>`;
   }
 
+  function presenceToneClass(status) {
+    if (status === "active") return "kpi-presence kpi-presence-on";
+    if (status === "building") return "kpi-presence kpi-presence-building";
+    if (status === "outdated") return "kpi-presence kpi-presence-outdated";
+    return "kpi-presence kpi-presence-gap";
+  }
+
   function reviewsByChannelPanelHtml() {
     const anyVerified = DATA.reviews.some(r => r.verified);
-    return `<div class="data-coming-soon" data-kpi-focus="#16">
-      <p class="data-coming-soon-banner" role="status">Coming soon</p>
-      <p class="data-coming-soon-copy">Full channel audit + profile refresh runs under Project Guide <strong>B10</strong>. Public Google/Yelp counts below are a scrape snapshot only.</p>
-      <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B10">Open B10 Digital Profiles Refresh in Project Guide →</a>
-    </div>
-    <div class="kpi-mini-card" data-kpi-focus="#16" style="margin-top:0.75rem">
-      ${statusCorner(anyVerified)}
-      <h3>#16 Reviews by channel</h3>
-      ${(() => {
-        const segs = presencePieSegments(DATA.reviews);
-        return chartBlock({ chart: donutChart(segs) });
-      })()}
-      <table class="kpi-table">
-        <thead><tr><th>Channel</th><th>Rating</th><th># Reviews</th><th>Status</th></tr></thead>
-        <tbody>${DATA.reviews.map(r => `<tr class="${r.status !== "active" ? "kpi-row-gap" : ""}">
+    const segs = presencePieSegments(DATA.reviews);
+    const rows = DATA.reviews.map(r => `<tr class="${r.status !== "active" ? "kpi-row-gap" : ""}">
           <td>${star(!!r.verified)} ${escapeHtml(r.platform)}</td>
           <td>${dash(r.rating)}</td>
           <td>${dash(r.count)}</td>
-          <td>${escapeHtml(r.status || "—")}</td>
-        </tr>`).join("")}</tbody>
-      </table>
+          <td><span class="${presenceToneClass(r.status)}">${escapeHtml(presenceLabel(r.status))}</span></td>
+        </tr>`).join("");
+    return `<div class="kpi-mini-card kpi-reviews-presence" data-kpi-focus="#16">
+      ${statusCorner(anyVerified)}
+      ${chartBlock({ chart: donutChart(segs) })}
+      <details class="kpi-table-acc">
+        <summary class="kpi-table-acc-summary">Channel table <span class="kpi-table-acc-hint">${DATA.reviews.length} directories</span></summary>
+        <table class="kpi-table kpi-table-dense">
+          <thead><tr><th>Channel</th><th>Rating</th><th>#</th><th>Status</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </details>
       ${sourceFootnote("#16")}
-      <p class="kpi-table-note">Google Maps + Yelp public scrape 2026-07-16. Remaining rows fill via B10 audit.</p>
+      <p class="kpi-table-note">Google Maps + Yelp public scrape 2026-07-16. Full audit via B10.</p>
+      <p class="kpi-table-note"><a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B10">Open B10 Digital Profiles Refresh →</a></p>
+      ${kpiRefMark("#16")}
     </div>`;
   }
 
   function leadsByChannelPanelHtml() {
     return `<article class="kpi-split-panel" data-feedback-id="section-leads-channel-01" data-feedback-label="#01 Leads by channel">
       ${statusCorner(true)}
-      ${kpiSectionStaticHead("#01 Leads by channel", "Stacked by month")}
+      ${kpiSectionStaticHead("Leads by channel", "Stacked by month")}
       <div class="kpi-split-panel-body">
         ${chartBlock({
           focus: "#01",
@@ -2060,6 +2122,7 @@
         })}
         ${sourceFootnote("#01")}
       </div>
+      ${kpiRefMark("#01")}
     </article>`;
   }
 
@@ -2071,7 +2134,7 @@
   function sourceMixPanelHtml() {
     return `<article class="kpi-split-panel" data-feedback-id="section-source-mix" data-feedback-label="#10 Source mix">
       ${statusCorner(true)}
-      ${kpiSectionStaticHead("#10 Source mix", "Lead share by channel")}
+      ${kpiSectionStaticHead("Source mix", "Lead share by channel")}
       <div class="kpi-split-panel-body">
         ${chartBlock({
           focus: "#10",
@@ -2080,13 +2143,14 @@
         })}
         ${sourceFootnote("#10")}
       </div>
+      ${kpiRefMark("#10")}
     </article>`;
   }
 
   function casesMomPanelHtml() {
     return `<article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 / #05 Cases MoM">
       ${statusCorner(false)}
-      ${kpiSectionStaticHead("#04 / #05 Cases MoM", "Closed · New · Red accounts")}
+      ${kpiSectionStaticHead("Cases MoM", "Closed · New · Red accounts")}
       <div class="kpi-split-panel-body">
         ${chartBlock({
           focus: "#04",
@@ -2095,6 +2159,7 @@
           table: casesMomDetailTable(DATA.casesMom)
         })}
       </div>
+      ${kpiRefMark("#04")}
     </article>`;
   }
 
@@ -2138,9 +2203,6 @@
       ${dataCardHtml("Leads By Campaign", "Parked #08 campaign lead volume.", leadsByCampaignPanelHtml())}
       ${dataCardHtml("Cases MoM", "Closed · New · Red accounts.", casesMomPanelHtml())}
       ${dataCardHtml("Referral Network", "KPI #17 · placeholder until A4 tracking wires.", totalReferralNetworkPanelHtml())}
-      ${dataCardHtml("Reviews By Channel", "KPI #16 · Coming soon · Project Guide B10.", reviewsByChannelPanelHtml())}
-      ${dataCardHtml("Cases, Leads & Spend", "Left: counts · Right: $ spend · media table.", casesLeadsSpendSectionHtml(), { full: true })}
-      ${dataCardHtml("Financials", "Cash collected, LSA efficiency, and trust transfers.", cashCollectedSectionHtml(), { full: true })}
     </div>`;
     el.dataset.rendered = RENDER_VER;
     bindKpiInteractions(el);

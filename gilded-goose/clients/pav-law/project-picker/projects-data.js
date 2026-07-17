@@ -457,7 +457,7 @@ window.PROJECT_DATA = {
       "fee": 1500,
       "category": "Operations / Compensation",
       "campaignType": "Performance Incentives",
-      "status": "wip",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "Indirect — rewards tasks tied to booked consults and signed cases",
       "keywords": [
@@ -556,7 +556,7 @@ window.PROJECT_DATA = {
       "fee": 2800,
       "category": "Paid Media",
       "campaignType": "Display / Brand",
-      "status": "launched",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "",
       "keywords": [
@@ -654,7 +654,7 @@ window.PROJECT_DATA = {
       "category": "SEO",
       "campaignType": "Local SEO",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Organic search discovery traffic",
       "keywords": [
         "seo",
@@ -702,7 +702,7 @@ window.PROJECT_DATA = {
       "category": "CRM",
       "campaignType": "CRM Automation",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
       "keywords": [
@@ -749,7 +749,7 @@ window.PROJECT_DATA = {
       "fee": 4200,
       "category": "Website",
       "campaignType": "Website UX",
-      "status": "blocked-ab",
+      "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "Organic form fills from paid traffic already landing (no new channel)",
       "keywords": [
@@ -796,7 +796,7 @@ window.PROJECT_DATA = {
       "fee": 4500,
       "category": "Creative / Social",
       "campaignType": "Social + paid social",
-      "status": "available",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "Upper-funnel traffic → site and remarketing pool",
       "keywords": [
@@ -949,7 +949,7 @@ window.PROJECT_DATA = {
       "fee": 1200,
       "category": "Outbound",
       "campaignType": "Outbound Calls",
-      "status": "available",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "30–40 calls/month (paid search dependency)",
       "keywords": [
@@ -982,13 +982,70 @@ window.PROJECT_DATA = {
       "depositPct": 0.2
     },
     {
+      "id": "A19",
+      "priority": 19,
+      "fee": 2200,
+      "category": "Paid Media",
+      "campaignType": "Seasonal Search / Display / Social",
+      "status": "planning",
+      "publishStatus": "published",
+      "estimatedLeads": "Seasonal college window — estimate after geo lock",
+      "keywords": [
+        "summer",
+        "seasonal",
+        "college",
+        "bend",
+        "snap",
+        "social",
+        "snapchat",
+        "instagram",
+        "digital",
+        "ads",
+        "dui",
+        "traffic",
+        "ntguilt",
+        "uccs",
+        "colorado college",
+        "move-in"
+      ],
+      "title": "Summer Seasonal Digital Ad Campaign",
+      "description": "Seasonal paid-media card for the summer → college transition window. Scope includes:\n\n1. **Digital ads** — one focused Google + Microsoft Search/Display flight for summer/college DUI–traffic themes (topic locked with Andrew before build).\n2. **Bend & Snap social** — short-form social creative and placement plan (Snapchat and/or Meta) around college move-in and the first weeks of the semester — awareness and consult CTAs, firm-safe tone, attorney-approved copy.\n3. **Tracking** — UTMs into HubSpot/NTGUILT destinations; separate naming so seasonal spend does not mix with always-on Military Search or A11 holiday flights.\n\nDoes not replace A11 (holiday/Oktoberfest) or archived A15 event activation — this is the summer/college digital + social lane.",
+      "tldr": "Summer seasonal digital ads with a Bend & Snap social flight timed to college move-in and early-semester traffic — Search/Display plus short-form social creative for campus geos.",
+      "valueAdded": [
+        "One summer seasonal build: Google/Microsoft structure, UTMs, and conversion tracking",
+        "Bend & Snap social series (Snapchat / Meta short-form) aimed at college-age awareness around move-in and early semester",
+        "Campus and corridor geos (UCCS, Colorado College, and nearby nightlife/traffic corridors) instead of year-round always-on",
+        "Creative + planning locked before ads go live; pairs with A7 organic calendar and A2 NTGUILT when budget allows"
+      ],
+      "valueIcons": [
+        "leads",
+        "creative",
+        "intake"
+      ],
+      "inProgressItems": [
+        "Card scoped — awaiting college calendar lock and creative brief"
+      ],
+      "goal": "Launch one summer/college seasonal flight (paid digital + Bend & Snap social) with tracked calls/leads from campus and corridor geos and clean UTM attribution for the flight window.",
+      "informationNeeded": [
+        "Confirm target campuses / geos and go-live week (move-in vs first two weeks of classes)",
+        "Bend & Snap creative direction: comedy/reference guardrails Andrew will approve",
+        "Budget split: Search/Display vs Snapchat/Meta for the window",
+        "Whether NTGUILT.com or pavlaw.com is the primary landing destination"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
+    },
+    {
       "id": "B6",
       "priority": 20,
       "fee": 2500,
       "category": "SEO",
       "campaignType": "Blog / Content SEO",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Organic search discovery traffic",
       "keywords": [
         "blog",
@@ -1032,7 +1089,7 @@ window.PROJECT_DATA = {
       "category": "Brand / Professional Development",
       "campaignType": "Attorney Presence",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Profile and trust lift — discovery via Casey-specific search and directory profiles",
       "keywords": [
         "casey",
@@ -1048,7 +1105,7 @@ window.PROJECT_DATA = {
         "digital presence",
         "b10"
       ],
-      "title": "Casey Attorney Rebrand & Professional Presence",
+      "title": "Casey Rebrand Digital & Professional Presence",
       "description": "Casey-only rebrand and coaching: wardrobe guidance, headshot/day standards, intake/public talk track (no legal advice on phone), and digital presence (LinkedIn, Avvo, Justia, firm team page, GBP attorney attribution where applicable). Complements B10 inventory — this is the coaching and rebrand layer.",
       "tldr": "Elevate Casey as a visible Pav Law attorney — appearance, communication, and digital profiles aligned with firm brand and ABA advertising rules.",
       "valueAdded": [
@@ -1172,7 +1229,7 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Social Proof Ads",
       "status": "planning",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
       "keywords": [
         "case win",
@@ -1209,7 +1266,7 @@ window.PROJECT_DATA = {
       "category": "Intake / AI",
       "campaignType": "After-Hours Chat",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "All inbound web leads and form fills",
       "keywords": [
         "pavi",
@@ -1250,7 +1307,7 @@ window.PROJECT_DATA = {
       "fee": 1800,
       "category": "Finance / Operations",
       "campaignType": "Spend Audit",
-      "status": "planning",
+      "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "N/A — cost savings (not lead-gen)",
       "keywords": [

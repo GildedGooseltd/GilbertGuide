@@ -2504,7 +2504,6 @@
     listEl.innerHTML = visibleItems.map((item, rowIdx) => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
-      const blurb = briefValueAdd(item);
       const isRetainer = !!item.isRetainer || item.id === "RETAINER";
       const required = isRequiredMaintenance(item, isRetainer);
       const chkDisabled = required ? " disabled" : "";
@@ -2520,13 +2519,19 @@
             <button type="button" class="toc-prio-btn" data-prio-move="down" data-id="${escapeHtml(item.id)}" title="Move down" aria-label="Move ${escapeHtml(item.title)} down">↓</button>
           </span>`
         : "";
-      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}${isPlanningPublish(item) ? " toc-planning" : ""}${state.priorityEdit ? " toc-prio-editing" : ""}" data-id="${item.id}" data-retainer="${isRetainer}" data-required="${required}">
+      const statusNorm = normalizeStatus(item);
+      const statusRowClass =
+        statusNorm === "recommended"
+          ? " toc-status-recommended"
+          : statusNorm === "wip"
+            ? " toc-status-wip"
+            : "";
+      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}${isPlanningPublish(item) ? " toc-planning" : ""}${statusRowClass}${state.priorityEdit ? " toc-prio-editing" : ""}" data-id="${item.id}" data-retainer="${isRetainer}" data-required="${required}" data-status="${statusNorm}">
         <td class="toc-col-select">
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
         </td>
         <td class="toc-col-priority"><span class="toc-priority">${editControls}${priorityTocHtml(item, displayPriority)}</span></td>
         <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
-        <td class="toc-col-blurb toc-blurb">${escapeHtml(blurb)}</td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
@@ -2987,10 +2992,17 @@
     const abClass = abPending ? " ab-q-pending" : (hasAbQuestions(item) ? " ab-q-cleared" : "");
     const wipStarted = !isRetainer && item.status !== "completed" && (normalizeStatus(item) === "wip" || hasPartialProgress(item));
     const wipClass = wipStarted ? " card-wip-started" : "";
+    const statusNorm = normalizeStatus(item);
+    const statusHighlightClass =
+      statusNorm === "recommended"
+        ? " card-status-recommended"
+        : statusNorm === "wip"
+          ? " card-status-wip"
+          : "";
 
     if (unpublished) {
       return `
-      <div class="card${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass}${wipClass} ${sel ? "selected" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
+      <div class="card${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass}${wipClass}${statusHighlightClass} ${sel ? "selected" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}" data-status="${statusNorm}">
         <div class="card-header">
           ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
@@ -3003,7 +3015,7 @@
     }
 
     return `
-      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass}${wipClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
+      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass}${wipClass}${statusHighlightClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}" data-status="${statusNorm}">
         <div class="card-header">
           ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
