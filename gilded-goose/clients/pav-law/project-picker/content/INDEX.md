@@ -136,9 +136,11 @@ Blank or missing → Guide default **50%** for one-time fees.
 
 ### Gilbert best-fit score (Pav Priorities shortlist)
 
-Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **110** with WIP). **Required** items are never scored (Fit shows —). Completed / archived / monthly-only → excluded (`−999`). **No status or Visibility penalties** — use INDEX **Visibility = Unpublished** to gray drafts for Andrew (backend), not ranking.
+Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **140** with WIP + season urgency + Recommended). **Required** items are never scored (Fit shows —). Completed / archived / monthly-only → excluded (`−999`). **No status or Visibility penalties** — use INDEX **Visibility = Unpublished** to gray drafts for Andrew (backend), not ranking.
 
-**Default cart** (fresh load): INDEX `Required` + `Recommended` are pre-checked. Required stays locked.
+**TOC / Best Fit Priority** = rank by final score (highest → Priority 1). INDEX Priority column still feeds the Priority weight below; display Priority is the score rank.
+
+**Default cart** (fresh load): INDEX `Required` + `Recommended` are pre-checked. Required stays locked. Best Fit resets to Recommended and orders by score.
 
 
 | Name                   | Max     | How                                                         |
@@ -152,6 +154,8 @@ Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **110** with WIP). **R
 | Fee accessibility      | **8**   |                                                             |
 | Cart synergy           | **5**   |                                                             |
 | WIP                    | **+10** | Status wip (in-progress boost)                              |
+| Season urgency         | **+10** | Closer projected start → higher                             |
+| Recommended            | **+20** | INDEX Status = Recommended                                  |
 
 
 Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of this score (cart +18 · Gilbert-recommended +10) — outside the 100 scale.
