@@ -540,7 +540,6 @@
 
   /**
    * INDEX Status = Recommended (Kate's list). Sorted by fit score (desc) — includes +20 Recommended.
-   * Used for Best Fit on fresh load — not cart, not Gilbert survey, not localStorage.
    */
   function indexRecommendedBestFit(limit) {
     const items = activeOptionalProjects()
@@ -552,6 +551,36 @@
       .sort((a, b) => b.score - a.score || (a.item.priority ?? 99) - (b.item.priority ?? 99));
     if (typeof limit === "number" && limit > 0) return items.slice(0, limit);
     return items;
+  }
+
+  /** Required (locked) + Recommended — the plan that should match the invoice on fresh load. */
+  function indexPlanBestFit() {
+    const required = [];
+    if (isRequiredProject(RETAINER, true)) {
+      required.push({ item: { ...RETAINER, isRetainer: true }, score: -999 });
+    }
+    activeOptionalProjects().forEach(item => {
+      if (!isRequiredProject(item, false)) return;
+      if (isCompletedStatus(item) || isPlanningPublish(item)) return;
+      required.push({ item, score: -999 });
+    });
+    return required.concat(indexRecommendedBestFit());
+  }
+
+  /** Best Fit rows = invoice line items (same projects), required first then by score. */
+  function rankedInvoiceForBestFit() {
+    return getInvoiceLineItems().map(row => {
+      const item = findProjectById(row.id) || { id: row.id, title: row.title, isRetainer: row.id === "RETAINER" };
+      const isRet = !!item.isRetainer || item.id === "RETAINER";
+      const score = isRequiredProject(item, isRet) ? -999 : computeProjectScore(item);
+      return { item: { ...item, isRetainer: isRet }, score };
+    }).sort((a, b) => {
+      const aReq = isRequiredProject(a.item, !!a.item.isRetainer);
+      const bReq = isRequiredProject(b.item, !!b.item.isRetainer);
+      if (aReq !== bReq) return aReq ? -1 : 1;
+      if (a.score !== b.score) return b.score - a.score;
+      return (a.item.priority ?? 99) - (b.item.priority ?? 99);
+    });
   }
 
   /** Session-only: Gilbert/survey may override Best Fit until refresh. Never persisted. */
@@ -624,21 +653,15 @@
       </div>
     </div>`;
 
-    let body = "";
-    if (bestFitSessionActive) {
-      /* This session only: cart edits or Gilbert shortlist may drive the panel. */
-      if (hasCart) {
-        body = buildPrioritiesCartHtml();
-      } else {
-        const ranked = hasGilbertActivity()
-          ? gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) }))
-          : indexRecommendedBestFit();
-        body = bestFitRankedListHtml(ranked);
-      }
-    } else {
-      /* Fresh load / refresh / redeploy: always Kate's INDEX Recommended set. */
-      body = bestFitRankedListHtml(indexRecommendedBestFit());
+    /* Best Fit and invoice always show the same projects (cart line items).
+       Fresh load seeds cart to INDEX Required + Recommended. */
+    let ranked = rankedInvoiceForBestFit();
+    if (!ranked.length) {
+      ranked = bestFitSessionActive && hasGilbertActivity()
+        ? gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) }))
+        : indexPlanBestFit();
     }
+    const body = bestFitRankedListHtml(ranked);
 
     el.innerHTML = `${head}
       <div class="total-box" id="plan-summary">${body}</div>
@@ -1333,7 +1356,7 @@
     return sortInvoiceRowsRequiredFirst(rows);
   }
 
-  /** Required (lock) rows first in Pav Priorities cart / invoice lists. */
+  /** Required (lock) rows first in Pav Priorities cart / invoice lists, then by fit score. */
   function sortInvoiceRowsRequiredFirst(rows) {
     return [...rows].sort((a, b) => {
       const aRet = a.id === "RETAINER";
@@ -1344,6 +1367,9 @@
       const bReq = bItem ? isRequiredProject(bItem, bRet) : false;
       if (aReq !== bReq) return aReq ? -1 : 1;
       if (aRet !== bRet) return aRet ? -1 : 1;
+      const aScore = aItem && !aReq ? computeProjectScore({ ...aItem, isRetainer: aRet }) : -999;
+      const bScore = bItem && !bReq ? computeProjectScore({ ...bItem, isRetainer: bRet }) : -999;
+      if (aScore !== bScore) return bScore - aScore;
       return (aItem?.priority ?? 99) - (bItem?.priority ?? 99);
     });
   }
@@ -2746,8 +2772,8 @@
         return;
       }
       const saved = JSON.parse(raw);
-      state.retainer = !!saved.retainer;
-      state.projects = new Set(saved.projects || []);
+      /* Notes / email / survey may persist. Cart always resets to INDEX Required +
+         Recommended so Best Fit and the invoice stay the same project set. */
       state.notes = saved.notes || {};
       sanitizeCartForAbQ();
       state.submitterEmail = saved.submitterEmail || "";
@@ -2787,6 +2813,9 @@
       state.clientPriorityIds = [];
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
+      state.retainer = false;
+      state.projects = new Set();
+      applyIndexDefaultSelections();
     } catch (e) {}
     ensureRequiredMaintenance();
   }
