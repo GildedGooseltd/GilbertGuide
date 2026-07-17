@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260717-assign-ids";
+  const RENDER_VER = "20260717-cash-bars";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -48,11 +48,11 @@
     },
     "cash-collected": {
       file: "~/Downloads/ledger_account_activity_report.csv",
-      fields: "Ledger Credit by month · aggregate only · Jan 2025–Jul 15 2026"
+      fields: "Ledger Credit by month · full CY 2025 (Jan–Dec) + 2026 YTD through Jul 15"
     },
     "financial": {
-      file: "ledger_account_activity_report.csv (2025-01-03→2026-07-15) · contact_report_task_export as-of-2026-07-01 · LSA inbox (15)",
-      fields: "Cash credits MoM · LSA charge rate · Trust Payment Method=Trust applications MoM · Client Trust balance snapshot"
+      file: "ledger_account_activity_report.csv (2025-01-03→2026-07-15) · new-cases-by-month.csv as-of-2026-07-01",
+      fields: "Cash credits MoM (CY 2025 chart) · new cases MoM · 2026 YTD total in table footer"
     }
   };
 
@@ -304,7 +304,23 @@
     /** Consulting allocation estimates for channel CPL (not full retainer). */
     consultingLsaMonthly: 1000,
     consultingAdsMonthly: 2000,
+    /* NEW-A primary chart = full calendar year 2025 (ledger Credits). */
     cashCollected: [
+      { month: "Jan", credit: 76030, newCases: 23 },
+      { month: "Feb", credit: 56750, newCases: 16 },
+      { month: "Mar", credit: 60550, newCases: 12 },
+      { month: "Apr", credit: 92200, newCases: 31 },
+      { month: "May", credit: 106780, newCases: 24 },
+      { month: "Jun", credit: 106900, newCases: 15 },
+      { month: "Jul", credit: 108712, newCases: 10 },
+      { month: "Aug", credit: 69689, newCases: 11 },
+      { month: "Sep", credit: 65315, newCases: 9 },
+      { month: "Oct", credit: 95435, newCases: 13 },
+      { month: "Nov", credit: 42775, newCases: 5 },
+      { month: "Dec", credit: 64300, newCases: 9 }
+    ],
+    /* 2026 YTD kept for footer compare — not plotted on NEW-A (Jul* through Jul 15). */
+    cashCollected2026Ytd: [
       { month: "Jan", credit: 57925, newCases: 12 },
       { month: "Feb", credit: 83950, newCases: 14 },
       { month: "Mar", credit: 80500, newCases: 17 },
@@ -317,7 +333,9 @@
       total2025: 945436,
       total2026ToDate: 532976,
       allCredits: 1478412,
-      contractedMean: 5587
+      contractedMean: 5587,
+      yearLabel: "2025",
+      rangeNote: "Ledger Credits · CY 2025 (full) · source through 2026-07-15"
     },
     /* NEW-C / NEW-D — LSA efficiency from inbox (15) + account_activities */
     lsaEfficiency: [
@@ -850,7 +868,7 @@
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
     const slot = plotW / rows.length;
-    const barW = Math.min(54, slot * 0.58);
+    const barW = Math.min(42, slot * 0.62);
     const ticks = [0, 0.5, 1].map(p => {
       const y = pad.t + plotH * (1 - p);
       const val = Math.round(max * p / 1000);
@@ -866,7 +884,8 @@
       const bh = Math.max(6, (plotH * r.credit) / max);
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
-      const fill = isCurrent ? "#1e3a8a" : "#2d5a3d";
+      /* Full bar fill from cash tier — never force current-month blue on the rect. */
+      const fill = cashTierFill(r.credit) || "#5c4f45";
       const projection = isCurrent && currentPace
         ? (() => {
             const py = pad.t + plotH * (1 - currentPace.projected / max);
@@ -874,8 +893,7 @@
         <text x="${x + barW / 2}" y="${py - 8}" text-anchor="middle" class="kpi-chart-total" style="fill:#1e3a8a">$${Math.round(currentPace.projected / 1000)}k pace</text>`;
           })()
         : "";
-      const labelFill = cashTierFill(r.credit);
-      const labelStyle = labelFill ? ` style="fill:${labelFill}"` : "";
+      const labelStyle = ` style="fill:${fill}"`;
       return `<g>
         <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"/>
         <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total"${labelStyle}>$${Math.round(r.credit / 1000)}k</text>
@@ -883,7 +901,7 @@
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cash collected by month">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cash collected by month — calendar year 2025">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}
       <line x1="${pad.l}" y1="${baselineY}" x2="${w - pad.r}" y2="${baselineY}" stroke="#7a6a58" stroke-width="2" stroke-dasharray="2 5"/>
@@ -895,49 +913,52 @@
   }
 
   function cashCollectedTable(rows) {
-    const withCases = rows.filter(r => r.newCases);
-    const ytdCredit = rows.reduce((s, r) => s + r.credit, 0);
-    const ytdCases = withCases.reduce((s, r) => s + r.newCases, 0);
-    const janJunCredit = withCases.reduce((s, r) => s + r.credit, 0);
+    const withCases = rows.filter(r => r.newCases != null);
+    const yearCredit = rows.reduce((s, r) => s + r.credit, 0);
+    const yearCases = withCases.reduce((s, r) => s + r.newCases, 0);
+    const yearLabel = DATA.cashCollectedTotals.yearLabel || "2025";
     return kpiDetailAccordion(
       "Cash table",
-      `${rows.length} months`,
+      `${rows.length} months · CY ${yearLabel}`,
       ["Month", "Cash collected", "New cases", "Cash / new case"],
       [
         ...rows.map(r => {
           const per = r.newCases ? r.credit / r.newCases : null;
           return [
-            escapeHtml(r.month) + " 2026",
+            escapeHtml(r.month) + " " + yearLabel,
             fmtCashTier(r.credit),
             r.newCases != null ? String(r.newCases) : "—",
             per != null ? fmtMoney(per) : "—"
           ];
         }),
         [
-          "Jan–Jun totals",
-          fmtCashTier(janJunCredit),
-          String(ytdCases),
-          fmtMoney(janJunCredit / ytdCases)
+          yearLabel + " total",
+          fmtCashTier(yearCredit),
+          yearCases ? String(yearCases) : "—",
+          yearCases ? fmtMoney(yearCredit / yearCases) : "—"
         ],
-        ["2026 to date (incl. Jul*)", fmtCashTier(ytdCredit), "—", "—"],
-        ["2025 total", fmtMoney(DATA.cashCollectedTotals.total2025), "—", "—"]
+        ["2026 to date (Jan–Jul* 15)", fmtCashTier(DATA.cashCollectedTotals.total2026ToDate), "—", "—"]
       ]
     );
   }
 
   function cashCollectedPaceNote(rows) {
     const current = rows.find(r => /\*/.test(r.month || ""));
-    if (!current) return "";
-    const goal = 80000;
-    const daysElapsed = 15;
-    const daysInMonth = 31;
-    const projected = Math.round((current.credit / daysElapsed) * daysInMonth);
-    const janJunRows = rows.filter(r => !/\*/.test(r.month || ""));
-    const historicAvg = janJunRows.length
-      ? Math.round(janJunRows.reduce((s, r) => s + r.credit, 0) / janJunRows.length)
-      : null;
-    const status = projected >= goal ? "on track" : "behind pace";
-    return `<p class="data-inline-note"><strong>Current month:</strong> ${escapeHtml(current.month)} is ${fmtCashTier(current.credit)} through Jul 15. At that pace it projects to ${fmtCashTier(projected)} for July, ${status} for the ${fmtMoney(goal)} monthly goal${historicAvg ? ` and above the Jan–Jun average of ${fmtCashTier(historicAvg)}` : ""}.</p>`;
+    if (current) {
+      const goal = 80000;
+      const daysElapsed = 15;
+      const daysInMonth = 31;
+      const projected = Math.round((current.credit / daysElapsed) * daysInMonth);
+      const historicRows = rows.filter(r => !/\*/.test(r.month || ""));
+      const historicAvg = historicRows.length
+        ? Math.round(historicRows.reduce((s, r) => s + r.credit, 0) / historicRows.length)
+        : null;
+      const status = projected >= goal ? "on track" : "behind pace";
+      return `<p class="data-inline-note"><strong>Current month:</strong> ${escapeHtml(current.month)} is ${fmtCashTier(current.credit)} through Jul 15. At that pace it projects to ${fmtCashTier(projected)} for July, ${status} for the ${fmtMoney(goal)} monthly goal${historicAvg ? ` and above the prior-months average of ${fmtCashTier(historicAvg)}` : ""}.</p>`;
+    }
+    const yearLabel = DATA.cashCollectedTotals.yearLabel || "2025";
+    const avg = rows.length ? Math.round(rows.reduce((s, r) => s + r.credit, 0) / rows.length) : null;
+    return `<p class="data-inline-note"><strong>View:</strong> full calendar year ${yearLabel} (Jan–Dec) · ledger Credits. Monthly avg ${avg != null ? fmtCashTier(avg) : "—"}. 2026 YTD through Jul 15: ${fmtCashTier(DATA.cashCollectedTotals.total2026ToDate)} (not plotted).</p>`;
   }
 
   function lsaEfficiencyTable(rows) {
@@ -1054,10 +1075,10 @@
       ${statusCorner(true)}
       ${kpiSectionStaticHead("Financials", "Cash collected MoM · cash / new case")}
       <div class="kpi-section-body">
-        <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cash per new case. Color tiers on monthly cash: $60–70k burnt umber · &gt;$80k green · ≥$100k gold · else neutral.</p>
+        <p class="kpi-section-intro">NEW-A cash MoM · <strong>calendar year 2025</strong> (full Jan–Dec) · NEW-B cash per new case. Color tiers: $60–70k burnt umber · &gt;$80k green · ≥$100k gold · else neutral.</p>
         <div class="kpi-finance-grid kpi-finance-grid-cash">
           <div class="kpi-mini-card">
-            <h3>NEW-A · Cash collected (MoM)</h3>
+            <h3>NEW-A · Cash collected (CY 2025)</h3>
             ${chartBlock({
               chart: cashCollectedChart(cashRows),
               table: cashCollectedTable(cashRows)
