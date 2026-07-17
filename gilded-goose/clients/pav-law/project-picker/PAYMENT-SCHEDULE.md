@@ -21,16 +21,20 @@ Calculator implementation: `computePaymentPlan()` / `updateInvoiceScheduleAmount
 
 ---
 
-## Per-project overrides (optional)
+## Per-project overrides (INDEX wins)
 
-In a project `.md` meta table:
+Edit the **Payment plan** column in [content/INDEX.md](content/INDEX.md), then `npm run build`.
 
-| Field | Effect |
-|-------|--------|
-| **Deposit pct** | e.g. `100` or `1` = all due now; `25` = 25% deposit |
-| **Deposit amount** | Fixed $ due now (caps at one-time fee) |
+| Cell value | Effect |
+|------------|--------|
+| `50%` / `50/50` | Default deposit |
+| `100%` / `pay in full` | All one-time fee due now |
+| `25%` · `75/25` | Custom deposit % |
+| `$800` | Fixed $ due now |
+| `monthly` | Retainer / monthly — not on project schedule |
+| `—` | No standalone deposit (package / merged) |
 
-If neither is set → default **50%**.
+Also supported on a project `.md` meta table (**Deposit pct** / **Deposit amount**) — INDEX overrides those when set.
 
 ---
 

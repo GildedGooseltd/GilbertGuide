@@ -150,7 +150,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | Charts            | `chartBlock()` in JS                   | Plot + legend + **always-visible** detail table |
 
 
-Confirm flow: estimated results · action items · next steps → submit (email + invoice). Action items appear on confirm / thank-you / email — not on the picker browse zones.
+Confirm flow: payment options · submit (email) → SOW draft / email PDF → thank-you / QuickBooks deposit. Action items appear on thank-you / email — not on the picker browse zones.
 
 ---
 
@@ -192,7 +192,7 @@ Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pa
 | `retainer`     | Retainer     | `#818cf8` / `#312e81` / `#4f46e5` |
 | `leads`        | Leads        | `#fb923c` / `#7c2d12` / `#ea580c` |
 | `crm`          | CRM          | `#a78bfa` / `#4c1d95` / `#7c3aed` |
-| `seo`          | SEO          | `#4ade80` / `#14532d` / `#16a34a` |
+| `seo`          | SEO          | `#16a34a` / `#14532d` / `#15803d` (green) |
 | `referrals`    | Referrals    | `#f472b6` / `#831843` / `#db2777` |
 | `efficiency`   | Analytics    | `#e3c58d` / `#5c4010` / `#b8860b` (gold) |
 | `intake`       | Intake       | `#c4b5fd` / `#2d1454` / `#4c1d95` (royal) |
@@ -249,9 +249,10 @@ Voice: practical law-firm cockpit for Andrew/team — polished, scannable, not s
 
 | Asset                | Path                              | Referenced from        |
 | -------------------- | --------------------------------- | ---------------------- |
-| Gilbert guide icon   | `assets/gigi-goose-guide.svg`     | `content/settings.md`  |
+| Gilbert / brand icon | `assets/gigi-seal.jpg`            | `content/settings.md`  |
 | Gilbert thinking     | `assets/gilbert-thinking.png`     | Launcher / ask-Gilbert |
 | Gilbert celebrating  | `assets/gilbert-celebrating.png`  | Thank-you              |
+| Gilded Goose logo    | `assets/gigi-logo.jpg`            | Confirm header · Logo  |
 | Gilded Goose account | `assets/gilded-goose-account.svg` | Badges                 |
 
 

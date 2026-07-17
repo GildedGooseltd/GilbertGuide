@@ -3,32 +3,40 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260716-data-tab";
+  const RENDER_VER = "20260716-review-ok";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Ad Reports/exports + ~/Downloads/leads-inbox (15).csv",
-      fields: "Campaign / Phone calls · LSA inbox rows · HubSpot form count still stale"
+      file: "Call-details_as-of-2026-07-11 · LSA leads-inbox (15) · hubspot-form-submissions-*-2026-07-16",
+      fields: "Search + LSA + HubSpot forms (intake + shorty + postcard) · Jun total 226"
     },
     "#02": {
       file: "Ad Reports/exports/mycase/as-of-2026-07-01/new-cases-by-month.csv",
       fields: "MyCase Created month · Jun 2026 = 34 · Jan–Jun 2026 = 114"
     },
     "#08": {
-      file: "Ad Reports/exports/2026-07-11 · Campaign report (Search calls by campaign)",
-      fields: "Campaign, Cost, Clicks, Phone calls (Military · Core DV · NTGUILT)"
+      file: "Campaign report (17) Jun 11 – Jul 10 · Call details May prior",
+      fields: "Campaign Cost ÷ Phone calls (Military · Core DV · NTGUILT)"
     },
     "#10": {
-      file: "Derived from #01 channel stack (same export batch)",
+      file: "Derived from #01 channel stack (Call details + LSA inbox)",
       fields: "Search share · LSA share · HubSpot / other %"
     },
     "#12": {
-      file: "Ad Reports/exports · Campaign report (spend ÷ phone calls)",
-      fields: "Cost, Phone calls → cost/call by campaign"
+      file: "Campaign report (17) Jun 11 – Jul 10 with Phone calls",
+      fields: "Cost ÷ Phone calls → $6,277 / 122 = $51 avg"
     },
-    "#15": {
-      file: "Ad Reports/exports/2026-07-11 · Campaign report (15).csv",
-      fields: "Cost, Clicks → CPL (Jun 11 – Jul 10, 2026)"
+    "#16": {
+      file: "Google Maps + Yelp public pages · scraped 2026-07-16 · 102 S Tejon St",
+      fields: "GBP 4.9 · 121 reviews · Yelp 5.0 · 6 reviews · FindLaw 0 (no firm reviews)"
+    },
+    "#19": {
+      file: "Call-details_as-of-2026-07-11 · Status=Missed",
+      fields: "Jun missed 38 · May 13 · YTD 64 · × 7.3% lead→case × $5,587"
+    },
+    "#21": {
+      file: "Call-details_as-of-2026-07-11 · Status=Received/Missed",
+      fields: "Jun answered 100/138 = 72% · May 26/39 = 67%"
     },
     "#28": {
       file: "Ad Reports/exports/mycase/as-of-2026-07-01/contact_report_task_export.csv",
@@ -43,65 +51,180 @@
       fields: "Ledger Credit by month · aggregate only · Jan 2025–Jul 15 2026"
     },
     "financial": {
-      file: "ledger + leads-inbox (15) + account_activities May–Jul 2026",
-      fields: "Credits · cash/new case · LSA charge rate · LSA $/charged · Trust payment-method rows"
+      file: "ledger_account_activity_report.csv (2025-01-03→2026-07-15) · contact_report_task_export as-of-2026-07-01 · LSA inbox (15)",
+      fields: "Cash credits MoM · LSA charge rate · Trust Payment Method=Trust applications MoM · Client Trust balance snapshot"
     }
   };
+
+  const KPI_HELP = {
+    "#01": {
+      title: "#01 Total leads",
+      desc: "Total lead count from Search call details + LSA inbox + all HubSpot forms (intake, shorty, and postcard).",
+      formula: "Search + LSA + HubSpot form submissions. Jun = 138 + 83 + 5 = 226. Target ≥ prior month × 1.2 (20% MoM growth)."
+    },
+    "#02": {
+      title: "#02 New cases",
+      desc: "New MyCase Client contacts created in the month (Created date). Target is a monthly case goal.",
+      formula: "Count of Client contacts with Created date in month. Jun 2026 = 34 · target 12."
+    },
+    "#12": {
+      title: "#12 Avg. Cost per Call",
+      desc: "Digital Search only — Campaign report cost divided by phone calls. Not LSA.",
+      formula: "Campaign Cost ÷ Phone calls → $6,277 ÷ 122 = $51. Target < $100."
+    },
+    "#19": {
+      title: "#19 Lost Revenue",
+      desc: "Estimated monthly revenue lost from unanswered Search calls. Directional for phone priority — not booked revenue.",
+      formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,587) → 38 × 7.3% × $5,587 = $15,498/mo."
+    },
+    "#21": {
+      title: "#21 Answered Calls",
+      desc: "Share of Search call details that were answered (Received) vs missed.",
+      formula: "Answered ÷ (Answered + Missed) → 100 ÷ 138 = 72%. Target ≥ 90%."
+    },
+    "#DUI": {
+      title: "# DUIs Signed",
+      desc: "YTD DUI/DWAI signed matters toward the annual goal.",
+      formula: "Count of DUI/DWAI signed YTD ÷ annual target (50)."
+    },
+    "#16": {
+      title: "#16 Reviews by channel",
+      desc: "Public review ratings and counts by directory. Full profile audit runs under Project Guide B10.",
+      formula: null
+    },
+    "#17": {
+      title: "#17 Referral Network",
+      desc: "Referral channel counts — not wired yet. Live plan is Project Guide A4 Client Referral Program.",
+      formula: null
+    }
+  };
+
+  function kpiHelpBtn(kpiId) {
+    const id = String(kpiId || "");
+    if (!KPI_HELP[id]) return "";
+    return `<span class="kpi-help" role="button" tabindex="0" data-kpi-help="${escapeHtml(id)}" aria-label="About ${escapeHtml(id)}">?</span>`;
+  }
+
+  /** Card header label only — KPI id lives in lower-right ref mark. */
+  function kpiCardTitle(label) {
+    return `<span class="kpi-stat-id">${escapeHtml(String(label || "").replace(/^#\S+\s+/, ""))}</span>`;
+  }
+
+  /** Lower-right medium-gray KPI number for reference. */
+  function kpiRefMark(kpiId) {
+    const id = String(kpiId || "").trim();
+    if (!id || id === "#GOAL3") return "";
+    return `<span class="kpi-ref-num" aria-hidden="true">${escapeHtml(id)}</span>`;
+  }
+
+  function getKpiHelp(kpiId) {
+    const id = String(kpiId || "");
+    const h = KPI_HELP[id];
+    const src = KPI_SOURCES[id];
+    let source = "";
+    if (src) {
+      source = `${src.file} · Fields: ${src.fields}`;
+    } else if (id === "#DUI") {
+      const d = window.DUI_GOAL_DATA || {};
+      if (d.sourceFile) {
+        source = `${d.sourceFile}${d.definition ? ` · ${d.definition}` : ""}`;
+      }
+    }
+    if (!h) {
+      return { title: id || "Help", desc: "No description yet.", formula: "", source };
+    }
+    return {
+      title: h.title,
+      desc: h.desc,
+      formula: h.formula || "",
+      source
+    };
+  }
+
   const DATA = {
     period: "June 2026",
-    asOf: "2026-07-15",
-    source: "Ad Reports/exports · MyCase contact_report 2026-07-01 (#28)",
+    asOf: "2026-07-16",
+    source: "Call details + Campaign report (17) · MyCase #28 · LSA inbox (15)",
     kpis: [
-      { id: "#01", label: "Total leads", value: "58%", target: "≥ 20%", mom: "+58%", count: 166, verified: true, hit: true, alert: false, gauge: true },
+      /* #01 = total lead count (Search + LSA + all HubSpot). Target = May×1.2 for ≥20% MoM. */
+      { id: "#01", label: "Total leads", value: "226", target: "≥ 107", mom: "+154%", count: 226, verified: true, hit: true, alert: false, gauge: true },
       { id: "#02", label: "New cases", value: "34", target: "12", mom: "+55%", verified: true, alert: false, gauge: true, hit: true },
-      { id: "#12", label: "Avg cost/call", value: "$72", target: "< $100", mom: null, verified: true, targetBar: true, lowerIsBetter: true },
-      { id: "#15", label: "CPL", value: "$142", target: "≤ $120", mom: null, verified: true, alert: true, targetBar: true, lowerIsBetter: true },
+      { id: "#12", label: "Avg. Cost per Call", value: "$51", target: "< $100", mom: null, verified: true, hit: true, targetBar: true, lowerIsBetter: true },
       /* Team goals: #19 lost-tracker first in render, then #21, then DUI */
-      { id: "#19", label: "Lost Revenue", value: "$6,060/mo", target: "$0", mom: null, verified: false, alert: true, lostTracker: true },
-      { id: "#21", label: "Answered Calls", value: "69%", target: "≥ 90%", mom: "+2%", verified: false, alert: true, gauge: true, goal: true },
+      { id: "#19", label: "Lost Revenue", value: "$15,498/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true },
+      { id: "#21", label: "Answered Calls", value: "72%", target: "≥ 90%", mom: "+5%", verified: true, alert: true, gauge: true, goal: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
       { id: "#28", label: "Avg case fee", value: "$5,587", target: "MyCase mean", mom: null, verified: true },
       { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, letterGrade: true, archived: true }
     ],
     channels: [
-      { name: "Search calls", count: 54, prior: 31, mom: "+74%", spend: "$2,214", color: "#3a1a6e" },
-      { name: "LSA inbox", count: 83, prior: 50, mom: "+66%", spend: "$14,206", color: "#c45c26" },
-      { name: "HubSpot forms", count: 29, prior: 24, mom: "+21%", spend: "$0", color: "#2d5a3d" }
+      { name: "Search calls", count: 138, prior: 39, mom: "+254%", spend: "$8,296", color: "#3a1a6e", verified: true },
+      { name: "LSA inbox", count: 83, prior: 50, mom: "+66%", spend: "$13,206", color: "#c45c26", verified: true },
+      { name: "HubSpot forms", count: 5, prior: 0, mom: "—", spend: "$0", color: "#2d5a3d", verified: true }
+    ],
+    /* Lead Channel Stack months — Jul* = MTD through export date (partial month) */
+    channelMonths: [
+      {
+        month: "May",
+        search: 39,
+        lsa: 50,
+        hubspot: 0,
+        searchSpend: 7627,
+        lsaSpend: 11006
+      },
+      {
+        month: "Jun",
+        search: 138,
+        lsa: 83,
+        hubspot: 5,
+        searchSpend: 8296,
+        lsaSpend: 13206
+      },
+      {
+        month: "Jul*",
+        search: 26,
+        lsa: 57,
+        hubspot: 4,
+        searchSpend: 1669,
+        lsaSpend: 7163,
+        note: "Partial through Jul 16 · HubSpot intake + shorty + postcard"
+      }
     ],
     sourceMix: [
-      { name: "Paid Search", pct: 33, color: "#3a1a6e", count: 54, prior: 31, mom: "+74%" },
-      { name: "LSA", pct: 50, color: "#c45c26", count: 83, prior: 50, mom: "+66%" },
-      { name: "HubSpot / other", pct: 17, color: "#2d5a3d", count: 29, prior: 24, mom: "+21%" }
+      { name: "Paid Search", pct: 61, color: "#3a1a6e", count: 138, prior: 39, mom: "+254%" },
+      { name: "LSA", pct: 37, color: "#c45c26", count: 83, prior: 50, mom: "+66%" },
+      { name: "HubSpot / other", pct: 2, color: "#2d5a3d", count: 5, prior: 0, mom: "—" }
     ],
     /* Campaign brand: Military royal · Core DV burnt orange · NTGUILT forest (GGL — no teal) */
     searchCallsByCampaign: [
-      { name: "Military", count: 36, color: "#3a1a6e" },
-      { name: "Core DV", count: 14, color: "#c45c26" },
-      { name: "NTGUILT", count: 4, color: "#2d5a3d" }
+      { name: "Military", count: 103, color: "#3a1a6e" },
+      { name: "Core DV", count: 12, color: "#c45c26" },
+      { name: "NTGUILT", count: 11, color: "#2d5a3d" }
     ],
     leadsByCampaign: [
-      { name: "Military", count: 36, prior: 28, mom: "+29%", spend: "$1,476", color: "#3a1a6e" },
-      { name: "Core DV", count: 14, prior: 11, mom: "+27%", spend: "$1,980", color: "#c45c26" },
-      { name: "NTGUILT", count: 4, prior: 2, mom: "+100%", spend: "$420", color: "#2d5a3d" }
+      { name: "Military", count: 99, prior: 36, mom: "+175%", spend: "$3,983", color: "#3a1a6e" },
+      { name: "Core DV", count: 3, prior: 3, mom: "0%", spend: "$179", color: "#c45c26" },
+      { name: "NTGUILT", count: 15, prior: 0, mom: "—", spend: "$1,924", color: "#2d5a3d" }
     ],
     phoneIntake: {
       targetPct: 90,
       missedTargetPct: 10,
-      answeredPct: 69,
+      answeredPct: 72,
       priorAnsweredPct: 67,
-      missedPct: 31,
+      missedPct: 28,
       priorMissedPct: 33,
-      missedMomPp: -2,
-      monthlyCalls: 54,
-      /* #19 model inputs — review formula on card footnote */
-      missedLsaCalls: 17, /* ≈ monthlyCalls × missedPct (Jun) · LSA unanswered */
-      priorMissedLsaCalls: 18, /* ≈ monthlyCalls × priorMissedPct */
-      closeRateEst: 0.70, /* estimated close rate for review — not lead→case 7.3% */
+      missedMomPp: -5,
+      monthlyCalls: 138,
+      /* #19 — Search Call details Status=Missed · lead→case 7.3% (ADS-LSA lock) */
+      missedSearchCalls: 38,
+      priorMissedSearchCalls: 13,
+      missedLsaCalls: 38, /* alias kept for older callers */
+      priorMissedLsaCalls: 13,
+      closeRateEst: 0.073, /* lead→case · locked in ADS-LSA-ACTION-CLICKPATHS */
       avgCaseFee: 5587, /* #28 MyCase Client mean */
-      leadToCaseRate: 9 / 124,
-      /* monthlyLost / prior / YTD computed in missedRevenueModel() */
-      cumulativeYtd: null
+      leadToCaseRate: 0.073,
+      cumulativeYtd: 26102 /* 64 missed × 7.3% × $5,587 May–Jul 10 */
     },
     /* KPI #29 support — Client + fee means · n≥5 · see CLIENT-VALUE-BASELINE.md */
     feeByPractice: [
@@ -114,10 +237,10 @@
       { name: "DUI / DWAI / Traffic", n: 24, mean: 3542 }
     ],
     costPerCall: [
-      { channel: "All campaigns (avg)", cost: "$72" },
-      { channel: "Military", cost: "$41" },
-      { channel: "Core DV", cost: "$141" },
-      { channel: "NTGUILT", cost: "$105" }
+      { channel: "All campaigns (avg)", cost: "$51" },
+      { channel: "Military", cost: "$40" },
+      { channel: "Core DV", cost: "$60" },
+      { channel: "NTGUILT", cost: "$128" }
     ],
     referrals: [
       { platform: "Past-client program", count: null, delta: null, status: "building", verified: false },
@@ -127,12 +250,12 @@
       { platform: "Nextdoor", count: null, delta: null, status: "not on", verified: false }
     ],
     reviews: [
-      { platform: "Google Business Profile", rating: "—", count: null, status: "active", verified: false },
-      { platform: "Yelp", rating: "—", count: null, status: "outdated", verified: false },
+      { platform: "Google Business Profile", rating: "4.9", count: 121, status: "active", verified: true },
+      { platform: "Yelp", rating: "5.0", count: 6, status: "active", verified: true },
       { platform: "Nextdoor Business", rating: "—", count: null, status: "not on", verified: false },
       { platform: "Avvo", rating: "—", count: null, status: "outdated", verified: false },
       { platform: "Justia", rating: "—", count: null, status: "outdated", verified: false },
-      { platform: "FindLaw", rating: "—", count: null, status: "not on", verified: false },
+      { platform: "FindLaw", rating: "—", count: 0, status: "active", verified: true },
       { platform: "Martindale", rating: "—", count: null, status: "not on", verified: false },
       { platform: "Facebook", rating: "—", count: null, status: "outdated", verified: false },
       { platform: "LinkedIn (firm)", rating: "—", count: null, status: "not wired", verified: false },
@@ -147,11 +270,20 @@
     ],
     bhi: { value: 71, target: 100, mom: "−3%" },
     avgDeposit: { current: 400, target: 700 },
-    duiGoal: { current: 18, target: 50 },
+    duiGoal: (function () {
+      const d = window.DUI_GOAL_DATA || {};
+      return {
+        current: d.current != null ? Number(d.current) : 18,
+        target: d.target != null ? Number(d.target) : 50,
+        year: d.year != null ? Number(d.year) : 2026,
+        title: d.title || "# DUIs Signed",
+        label: d.label || "Signed"
+      };
+    })(),
     casesMomSeries: [
-      { name: "Closed cases", color: "#3a1a6e", verified: false },
-      { name: "New cases", color: "#c45c26", verified: false },
-      { name: "Red accounts", color: "#2d5a3d", verified: false }
+      { name: "Closed cases", color: "#2d5a3d", verified: false },
+      { name: "New cases", color: "#1e3a8a", verified: true },
+      { name: "Red accounts", color: "#cf2d56", verified: false }
     ],
     casesMom: [
       { month: "Apr", closed: 6, newCases: 15, redAccounts: 3 },
@@ -193,8 +325,41 @@
       { month: "Jul*", leads: 57, charged: 17, lsaSpend: 7163 }
     ],
     lsaChargeRateOverall: { charged: 75, leads: 190, pct: 39.5 },
-    /* NEW-E — Payment Method = Trust (aggregate only) */
-    trustTransfers: { rows: 94, credits: 7000, debits: 355760 }
+    /* NEW-E — Payment Method = Trust applications (ledger) + Client trust balance snapshot */
+    trustTransfers: {
+      rangeStart: "2025-01-03",
+      rangeEnd: "2026-07-15",
+      method: "Payment Method = Trust",
+      /* Debits = trust applied to invoices. Credits on Trust method are rare refunds (excluded from MoM bars). */
+      monthly: [
+        { month: "Jan 2025", applications: 0, rows: 0 },
+        { month: "Feb 2025", applications: 0, rows: 0 },
+        { month: "Mar 2025", applications: 0, rows: 0 },
+        { month: "Apr 2025", applications: 0, rows: 0 },
+        { month: "May 2025", applications: 0, rows: 0 },
+        { month: "Jun 2025", applications: 75833, rows: 24 },
+        { month: "Jul 2025", applications: 271427, rows: 65 },
+        { month: "Aug 2025", applications: 0, rows: 0 },
+        { month: "Sep 2025", applications: 0, rows: 0 },
+        { month: "Oct 2025", applications: 0, rows: 0 },
+        { month: "Nov 2025", applications: 0, rows: 0 },
+        { month: "Dec 2025", applications: 0, rows: 0 },
+        { month: "Jan 2026", applications: 0, rows: 0 },
+        { month: "Feb 2026", applications: 0, rows: 0 },
+        { month: "Mar 2026", applications: 0, rows: 0 },
+        { month: "Apr 2026", applications: 0, rows: 0 },
+        { month: "May 2026", applications: 1500, rows: 1 },
+        { month: "Jun 2026", applications: 0, rows: 0 },
+        { month: "Jul* 2026", applications: 0, rows: 0 }
+      ],
+      snapshot: {
+        asOf: "2026-07-01",
+        clientsWithBalance: 223,
+        totalBalance: 987622,
+        meanBalance: 4429
+      },
+      refundCredits2025Feb: 7000
+    }
   };
 
   function star(verified) {
@@ -203,15 +368,16 @@
       : '<span class="kpi-unverified" title="Data not acquired" aria-label="Data not acquired">✕</span>';
   }
 
-  /** Corner badge for unverified tiles only — verified uses green outline on the card. */
+  /** Corner badge — green checkbox when verified; ✕ when not. */
   function statusCorner(verified) {
     return verified
-      ? ""
+      ? '<span class="kpi-status-corner kpi-verified-mark" title="Verified — export-backed" aria-label="Verified"></span>'
       : '<span class="kpi-status-corner kpi-unverified" title="Data not acquired" aria-label="Data not acquired">✕</span>';
   }
 
   function verifiedClass(verified) {
-    return verified ? " kpi-verified" : "";
+    /* Verified state uses corner checkbox only — no tile outline. */
+    return "";
   }
 
   function sourceFootnote(kpiId) {
@@ -266,7 +432,29 @@
     </svg>`;
   }
 
-  function leadsByMonthFromChannels(channels) {
+  function leadsByMonthFromChannels(channels, opts) {
+    const useMonths = opts && opts.useChannelMonths && DATA.channelMonths && DATA.channelMonths.length;
+    if (useMonths) {
+      const colors = {
+        search: "#3a1a6e",
+        lsa: "#c45c26",
+        hubspot: "#2d5a3d"
+      };
+      const labels = {
+        search: "Search calls",
+        lsa: "LSA inbox",
+        hubspot: "HubSpot forms"
+      };
+      return DATA.channelMonths.map(m => ({
+        month: m.month,
+        segments: [
+          { name: labels.search, count: m.search || 0, color: colors.search },
+          { name: labels.lsa, count: m.lsa || 0, color: colors.lsa },
+          { name: labels.hubspot, count: m.hubspot || 0, color: colors.hubspot }
+        ]
+      }));
+    }
+    /* Fallback — prior = May, count = Jun only */
     return [
       {
         month: "May",
@@ -356,11 +544,18 @@
       const x = pad.l + i * slot + (slot - barW) / 2;
       let y = pad.t + plotH;
       const segs = m.segments.map(seg => {
-        const hh = total ? (plotH * seg.count) / max : 0;
+        const count = Number(seg.count) || 0;
+        const hh = total ? (plotH * count) / max : 0;
         y -= hh;
-        return `<rect x="${x}" y="${y}" width="${barW}" height="${Math.max(hh, 0)}" fill="${seg.color}">
-          <title>${escapeHtml(seg.name)}: ${seg.count}</title>
-        </rect>`;
+        const label = hh >= 14
+          ? `<text x="${x + barW / 2}" y="${y + hh / 2 + 4}" text-anchor="middle" class="kpi-seg-count">${count}</text>`
+          : "";
+        return `<g>
+          <rect x="${x}" y="${y}" width="${barW}" height="${Math.max(hh, 0)}" fill="${seg.color}">
+            <title>${escapeHtml(seg.name)}: ${count}</title>
+          </rect>
+          ${label}
+        </g>`;
       }).join("");
       return `<g>
         ${segs}
@@ -373,6 +568,28 @@
       ${ticks}${bars}
       <line x1="${pad.l}" y1="${pad.t + plotH}" x2="${w - pad.r}" y2="${pad.t + plotH}" class="kpi-chart-baseline"/>
     </svg>`;
+  }
+
+  function casesMomSeriesMom(rows, key) {
+    if (!rows || rows.length < 2) return null;
+    const curr = Number(rows[rows.length - 1][key]);
+    const prior = Number(rows[rows.length - 2][key]);
+    if (!Number.isFinite(curr) || !Number.isFinite(prior) || prior === 0) return null;
+    const pct = Math.round(((curr - prior) / prior) * 100);
+    return pct > 0 ? `+${pct}%` : `${pct}%`;
+  }
+
+  function casesMomLegend(series, rows) {
+    const keyByName = {
+      "Closed cases": "closed",
+      "New cases": "newCases",
+      "Red accounts": "redAccounts"
+    };
+    return `<ul class="kpi-stack-legend" aria-label="Series colors">${series.map(c => {
+      const mom = casesMomSeriesMom(rows, keyByName[c.name]);
+      const delta = mom ? momChangeHtml(mom) : "";
+      return `<li><span class="kpi-stack-swatch" style="background:${c.color}" aria-hidden="true"></span><span>${escapeHtml(c.name)}</span>${delta}</li>`;
+    }).join("")}</ul>`;
   }
 
   function casesMomDetailTable(rows) {
@@ -415,10 +632,10 @@
   }
 
   function channelLegend(channels) {
-    return `<ul class="kpi-stack-legend" aria-label="Series colors">${channels.map(c => {
-      const mark = c.verified === false ? ` ${star(false)}` : c.verified === true ? ` ${star(true)}` : "";
-      return `<li><span class="kpi-stack-swatch" style="background:${c.color}" aria-hidden="true"></span><span>${escapeHtml(c.name)}${mark}</span></li>`;
-    }).join("")}</ul>`;
+    /* Series use color swatches only — verified state lives on the panel corner, not per legend row. */
+    return `<ul class="kpi-stack-legend" aria-label="Series colors">${channels.map(c =>
+      `<li><span class="kpi-stack-swatch" style="background:${c.color}" aria-hidden="true"></span><span>${escapeHtml(c.name)}</span></li>`
+    ).join("")}</ul>`;
   }
 
   function kpiDetailTable(headers, rows) {
@@ -436,13 +653,26 @@
     const table = opts.table || "";
     const focus = opts.focus ? ` data-kpi-focus="${opts.focus}"` : "";
     const badge = typeof opts.verified === "boolean" ? statusCorner(opts.verified) : "";
-    const vClass = opts.verified === true ? " kpi-verified" : "";
+    const vClass = "";
     return `<div class="kpi-chart-card${vClass}"${focus}>
       ${badge}
       ${head}
       <div class="kpi-chart-plot">${opts.chart || ""}${legend}</div>
       ${table}
     </div>`;
+  }
+
+  function niceAxisMax(n) {
+    const v = Math.max(Number(n) || 0, 1) * 1.12;
+    const mag = Math.pow(10, Math.floor(Math.log10(v)));
+    const norm = v / mag;
+    const nice = norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10;
+    return nice * mag;
+  }
+
+  function axisTicks(max, count) {
+    const n = Math.max(2, count || 5);
+    return Array.from({ length: n }, (_, i) => Math.round((max * i) / (n - 1)));
   }
 
   /** Dual-axis: cases + LSA leads (left count) · marketing spend (right $). */
@@ -452,23 +682,23 @@
     const pad = { l: 56, r: 64, t: 36, b: 44 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
-    const leftMax = 100;
-    const rightMax = 25000;
+    const leftMax = niceAxisMax(Math.max(...rows.map(r => Math.max(r.cases || 0, r.leads || 0)), 1));
+    const rightMax = niceAxisMax(Math.max(...rows.map(r => r.spend || 0), 1));
     const leftY = v => pad.t + plotH * (1 - v / leftMax);
     const rightY = v => pad.t + plotH * (1 - v / rightMax);
     const slot = plotW / rows.length;
     const colors = { cases: "#3a1a6e", leads: "#2d5a3d", spend: "#c45c26" };
-    const leftTicks = [0, 25, 50, 75, 100].map(t => {
+    const leftTicks = axisTicks(leftMax, 5).map(t => {
       const y = leftY(t);
       return `<g>
         <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
         <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${t}</text>
       </g>`;
     }).join("");
-    const rightTicks = [0, 5000, 10000, 15000, 20000, 25000].map(t => {
+    const rightTicks = axisTicks(rightMax, 6).map(t => {
       const y = rightY(t);
-      const label = t === 0 ? "$0" : `$${t / 1000}k`;
-      return `<text x="${w - pad.r + 8}" y="${y + 4}" class="kpi-chart-axis">${label}</text>`;
+      const label = t === 0 ? "$0" : (t >= 1000 ? `$${Math.round(t / 1000)}k` : `$${t}`);
+      return `<text x="${w - pad.r + 8}" y="${y + 4}" class="kpi-chart-axis" style="fill:${colors.spend}">${label}</text>`;
     }).join("");
     const bars = rows.map((r, i) => {
       const cx = pad.l + slot * i + slot / 2;
@@ -500,7 +730,7 @@
       <polyline points="${spendPts}" fill="none" stroke="${colors.spend}" stroke-width="3"/>
       ${spendDots}
       <text x="14" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 14 ${pad.t + plotH / 2})" class="kpi-chart-axis">Cases / leads</text>
-      <text x="${w - 12}" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(90 ${w - 12} ${pad.t + plotH / 2})" class="kpi-chart-axis">Spend ($)</text>
+      <text x="${w - 12}" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(90 ${w - 12} ${pad.t + plotH / 2})" class="kpi-chart-axis" style="fill:${colors.spend}">Spend ($)</text>
     </svg>`;
   }
 
@@ -514,38 +744,23 @@
   }
 
   function casesLeadsSpendTable(rows) {
-    const lsaConsult = DATA.consultingLsaMonthly || 0;
-    const adsConsult = DATA.consultingAdsMonthly || 0;
-    const totals = rows.reduce((a, r) => ({
-      leads: a.leads + r.leads,
-      lsaAllIn: a.lsaAllIn + (r.lsaSpend || 0) + lsaConsult,
-      adsLeads: a.adsLeads + (r.adsLeads || 0),
-      adsAllIn: a.adsAllIn + (r.adsSpend || 0) + adsConsult
-    }), { leads: 0, lsaAllIn: 0, adsLeads: 0, adsAllIn: 0 });
+    const newestFirst = [...(rows || [])].reverse();
     return kpiDetailTable(
-      ["Period", "LSA leads", "LSA + $1k consulting", "Cost per LSA lead", "Ads + $2k consulting", "Cost per digital lead"],
+      ["Period", "LSA leads", "LSA media", "LSA media / lead", "Search media", "Search media / call"],
       [
-        ...rows.map(r => {
-          const lsaAllIn = (r.lsaSpend || 0) + lsaConsult;
-          const adsAllIn = (r.adsSpend || 0) + adsConsult;
+        ...newestFirst.map(r => {
+          const lsaSpend = r.lsaSpend || 0;
+          const adsSpend = r.adsSpend || 0;
           const adsLeads = r.adsLeads || 0;
           return [
             escapeHtml(r.month) + " 2026",
             String(r.leads),
-            fmtMoney(lsaAllIn),
-            fmtMoney(lsaAllIn / r.leads),
-            fmtMoney(adsAllIn),
-            adsLeads ? fmtMoney(adsAllIn / adsLeads) : "—"
+            fmtMoney(lsaSpend),
+            r.leads ? fmtMoney(lsaSpend / r.leads) : "—",
+            fmtMoney(adsSpend),
+            adsLeads ? fmtMoney(adsSpend / adsLeads) : "—"
           ];
-        }),
-        [
-          "May–Jun totals",
-          String(totals.leads),
-          fmtMoney(totals.lsaAllIn),
-          fmtMoney(totals.lsaAllIn / totals.leads),
-          fmtMoney(totals.adsAllIn),
-          totals.adsLeads ? fmtMoney(totals.adsAllIn / totals.adsLeads) : "—"
-        ]
+        })
       ]
     );
   }
@@ -553,23 +768,33 @@
   function casesLeadsSpendSectionHtml() {
     const rows = DATA.casesLeadsSpend || [];
     if (!rows.length) return "";
-    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-cases-leads-spend" data-feedback-label="Cases and leads vs marketing spend">
-      ${kpiSectionStaticHead("Cases and leads vs marketing spend", "Left: counts · Right: $ spend")}
-      <div class="kpi-section-body">
-        <p class="kpi-section-intro">Cost per LSA lead = (LSA media + ${fmtMoney(DATA.consultingLsaMonthly || 0)} consulting) ÷ LSA leads. Cost per digital lead = (Search media + ${fmtMoney(DATA.consultingAdsMonthly || 0)} consulting) ÷ Search call details. Trust omitted.</p>
+    return `<article class="kpi-split-panel data-chart-table-panel" data-feedback-id="section-cases-leads-spend" data-feedback-label="Cases and leads vs marketing spend">
+      ${statusCorner(true)}
+      <div class="kpi-split-panel-body data-chart-table-grid">
         ${chartBlock({
-          verified: true,
           chart: dualAxisCasesSpendChart(rows),
-          legend: casesLeadsSpendLegend(),
-          table: casesLeadsSpendTable(rows)
+          legend: casesLeadsSpendLegend()
         })}
-        ${sourceFootnote("cases-leads-spend")}
+        <div class="data-chart-table-side">
+          ${casesLeadsSpendTable(rows)}
+          ${sourceFootnote("cases-leads-spend")}
+        </div>
       </div>
-    </section>`;
+    </article>`;
   }
 
   function cashCollectedChart(rows) {
-    const max = Math.max(...rows.map(r => r.credit), 1);
+    const monthlyGoal = 80000;
+    const baselineMonthly = Math.round((DATA.cashCollectedTotals.total2025 || 0) / 12);
+    const current = rows.find(r => /\*/.test(r.month || ""));
+    const currentPace = current
+      ? {
+          projected: Math.round((current.credit / 15) * 31),
+          daysElapsed: 15,
+          daysInMonth: 31
+        }
+      : null;
+    const max = Math.max(...rows.map(r => r.credit), monthlyGoal, baselineMonthly, currentPace ? currentPace.projected : 0, 1);
     const w = 720;
     const h = 260;
     const pad = { l: 58, r: 22, t: 32, b: 46 };
@@ -585,52 +810,80 @@
         <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">$${val}k</text>
       </g>`;
     }).join("");
+    const goalY = pad.t + plotH * (1 - monthlyGoal / max);
+    const baselineY = pad.t + plotH * (1 - baselineMonthly / max);
     const bars = rows.map((r, i) => {
+      const isCurrent = /\*/.test(r.month || "");
       const bh = Math.max(6, (plotH * r.credit) / max);
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
+      const fill = isCurrent ? "#1e3a8a" : "#2d5a3d";
+      const projection = isCurrent && currentPace
+        ? (() => {
+            const py = pad.t + plotH * (1 - currentPace.projected / max);
+            return `<line x1="${x - 4}" x2="${x + barW + 4}" y1="${py}" y2="${py}" stroke="#1e3a8a" stroke-width="3" stroke-dasharray="4 4"/>
+        <text x="${x + barW / 2}" y="${py - 8}" text-anchor="middle" class="kpi-chart-total" style="fill:#1e3a8a">$${Math.round(currentPace.projected / 1000)}k pace</text>`;
+          })()
+        : "";
       return `<g>
-        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="#2d5a3d"/>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"/>
         <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total">$${Math.round(r.credit / 1000)}k</text>
+        ${projection}
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
     return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cash collected by month">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
-      ${ticks}${bars}
+      ${ticks}
+      <line x1="${pad.l}" y1="${baselineY}" x2="${w - pad.r}" y2="${baselineY}" stroke="#7a6a58" stroke-width="2" stroke-dasharray="2 5"/>
+      <text x="${pad.l + 8}" y="${baselineY + 16}" class="kpi-chart-total" style="fill:#7a6a58">$${Math.round(baselineMonthly / 1000)}k 2025 baseline</text>
+      <line x1="${pad.l}" y1="${goalY}" x2="${w - pad.r}" y2="${goalY}" stroke="#cf2d56" stroke-width="2" stroke-dasharray="7 5"/>
+      <text x="${w - pad.r - 6}" y="${goalY - 8}" text-anchor="end" class="kpi-chart-total" style="fill:#cf2d56">$80k target</text>
+      ${bars}
     </svg>`;
   }
 
   function cashCollectedTable(rows) {
-    const mean = DATA.cashCollectedTotals.contractedMean || 5587;
     const withCases = rows.filter(r => r.newCases);
     const ytdCredit = rows.reduce((s, r) => s + r.credit, 0);
     const ytdCases = withCases.reduce((s, r) => s + r.newCases, 0);
     return kpiDetailTable(
-      ["Month", "Cash collected", "New cases", "Cash / new case", "Vs #28 contracted ($5,587)"],
+      ["Month", "Cash collected", "New cases", "Cash / new case"],
       [
         ...rows.map(r => {
           const per = r.newCases ? r.credit / r.newCases : null;
-          const vs = per != null ? Math.round(per - mean) : null;
           return [
             escapeHtml(r.month) + " 2026",
             fmtMoney(r.credit),
             r.newCases != null ? String(r.newCases) : "—",
-            per != null ? fmtMoney(per) : "—",
-            vs == null ? "—" : ((vs >= 0 ? "+" : "−") + fmtMoney(Math.abs(vs)))
+            per != null ? fmtMoney(per) : "—"
           ];
         }),
         [
           "Jan–Jun totals",
           fmtMoney(withCases.reduce((s, r) => s + r.credit, 0)),
           String(ytdCases),
-          fmtMoney(withCases.reduce((s, r) => s + r.credit, 0) / ytdCases),
-          "—"
+          fmtMoney(withCases.reduce((s, r) => s + r.credit, 0) / ytdCases)
         ],
-        ["2026 to date (incl. Jul*)", fmtMoney(ytdCredit), "—", "—", "—"],
-        ["2025 total", fmtMoney(DATA.cashCollectedTotals.total2025), "—", "—", "—"]
+        ["2026 to date (incl. Jul*)", fmtMoney(ytdCredit), "—", "—"],
+        ["2025 total", fmtMoney(DATA.cashCollectedTotals.total2025), "—", "—"]
       ]
     );
+  }
+
+  function cashCollectedPaceNote(rows) {
+    const current = rows.find(r => /\*/.test(r.month || ""));
+    if (!current) return "";
+    const goal = 80000;
+    const daysElapsed = 15;
+    const daysInMonth = 31;
+    const projected = Math.round((current.credit / daysElapsed) * daysInMonth);
+    const janJunRows = rows.filter(r => !/\*/.test(r.month || ""));
+    const historicAvg = janJunRows.length
+      ? Math.round(janJunRows.reduce((s, r) => s + r.credit, 0) / janJunRows.length)
+      : null;
+    const status = projected >= goal ? "on track" : "behind pace";
+    return `<p class="data-inline-note"><strong>Current month:</strong> ${escapeHtml(current.month)} is ${fmtMoney(current.credit)} through Jul 15. At that pace it projects to ${fmtMoney(projected)} for July, ${status} for the ${fmtMoney(goal)} monthly goal${historicAvg ? ` and above the Jan–Jun average of ${fmtMoney(historicAvg)}` : ""}.</p>`;
   }
 
   function lsaEfficiencyTable(rows) {
@@ -641,7 +894,7 @@
     }), { leads: 0, charged: 0, lsaSpend: 0 });
     const overall = DATA.lsaChargeRateOverall || {};
     return kpiDetailTable(
-      ["Period", "LSA leads", "Charged", "Charge rate", "LSA media", "Cost / charged lead"],
+      ["Period", "LSA leads", "Charged", "Charge rate", "LSA media", "LSA media / charged lead"],
       [
         ...rows.map(r => [
           escapeHtml(r.month) + " 2026",
@@ -671,38 +924,105 @@
     );
   }
 
+  function trustApplicationsChart(rows) {
+    const max = Math.max(...rows.map(r => r.applications || 0), 1);
+    const w = 720;
+    const h = 220;
+    const pad = { l: 58, r: 16, t: 28, b: 52 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / rows.length;
+    const barW = Math.max(4, Math.min(22, slot * 0.7));
+    const ticks = [0, 0.5, 1].map(p => {
+      const y = pad.t + plotH * (1 - p);
+      const val = Math.round((max * p) / 1000);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">$${val}k</text>
+      </g>`;
+    }).join("");
+    const bars = rows.map((r, i) => {
+      const isCurrent = /\*/.test(r.month || "");
+      const amt = r.applications || 0;
+      const bh = amt ? Math.max(3, (plotH * amt) / max) : 0;
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pad.t + plotH - bh;
+      const short = String(r.month || "").replace(" 20", " '").replace("Jul*", "Jul*");
+      return `<g>
+        ${bh ? `<rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="2" fill="${isCurrent ? "#1e3a8a" : "#7a6a58"}"/>` : ""}
+        <text x="${x + barW / 2}" y="${h - 8}" text-anchor="middle" class="kpi-chart-label" transform="rotate(-55 ${x + barW / 2} ${h - 8})" style="font-size:8px">${escapeHtml(short)}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Trust applications by month">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}${bars}
+    </svg>`;
+  }
+
+  function trustTransfersTable(trust) {
+    const rows = trust.monthly || [];
+    const y2025 = rows.filter(r => /2025/.test(r.month));
+    const y2026 = rows.filter(r => /2026/.test(r.month));
+    const sumApps = list => list.reduce((s, r) => s + (r.applications || 0), 0);
+    const sumRows = list => list.reduce((s, r) => s + (r.rows || 0), 0);
+    const active = rows.filter(r => (r.applications || 0) > 0);
+    const snap = trust.snapshot || {};
+    return `
+      ${kpiDetailTable(
+        ["Window", "Trust applications", "Ledger rows"],
+        [
+          ...active.map(r => [
+            escapeHtml(r.month),
+            fmtMoney(r.applications),
+            String(r.rows)
+          ]),
+          ["2025 total (ledger)", fmtMoney(sumApps(y2025)), String(sumRows(y2025))],
+          ["2026 to date (through Jul 15)", fmtMoney(sumApps(y2026)), String(sumRows(y2026))]
+        ]
+      )}
+      ${kpiDetailTable(
+        ["Client trust snapshot", "Value"],
+        [
+          [`As of ${escapeHtml(snap.asOf || "—")}`, "MyCase Contact export"],
+          ["Clients with trust balance", String(snap.clientsWithBalance || "—")],
+          ["Trust still on books", fmtMoney(snap.totalBalance || 0)],
+          ["Mean trust balance", fmtMoney(snap.meanBalance || 0)]
+        ]
+      )}
+      <p class="data-inline-note"><strong>Range:</strong> ledger ${escapeHtml(trust.rangeStart || "")} → ${escapeHtml(trust.rangeEnd || "")} · ${escapeHtml(trust.method || "Payment Method = Trust")}. Bars = trust applied to invoices (debits), not new cash. Insight: Jun–Jul 2025 carried almost all applications ($${Math.round(sumApps(y2025) / 1000)}k); 2026 YTD is nearly quiet ($${Math.round(sumApps(y2026) / 1000)}k) while ~$${Math.round((snap.totalBalance || 0) / 1000)}k remains on Client trust balances.</p>
+    `;
+  }
+
   function financialSectionHtml() {
     const cashRows = DATA.cashCollected || [];
     const lsaRows = DATA.lsaEfficiency || [];
     const trust = DATA.trustTransfers || {};
     if (!cashRows.length) return "";
     return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="Financial">
+      ${statusCorner(true)}
       ${kpiSectionStaticHead("Financial", "Cash · LSA efficiency · Trust transfers")}
       <div class="kpi-section-body">
-        <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cash per new case vs #28 contracted mean ($5,587) · NEW-C LSA $/charged · NEW-D charge rate · NEW-E trust payment-method volume. Aggregates only — Jul* through Jul 15.</p>
-        <div class="kpi-mini-card" style="margin-bottom:1rem">
-          <h3>NEW-A · Cash collected (MoM)</h3>
-          ${chartBlock({
-            verified: true,
-            chart: cashCollectedChart(cashRows),
-            table: cashCollectedTable(cashRows)
-          })}
-        </div>
-        <div class="kpi-mini-card" style="margin-bottom:1rem">
-          <h3>NEW-C / NEW-D · LSA cost per charged lead &amp; charge rate</h3>
-          ${lsaEfficiencyTable(lsaRows)}
-        </div>
-        <div class="kpi-mini-card">
-          <h3>NEW-E · Trust transfer volume</h3>
-          ${kpiDetailTable(
-            ["Metric", "Value"],
-            [
-              ["Trust payment-method rows", String(trust.rows || 0)],
-              ["Credits labeled Trust", fmtMoney(trust.credits || 0)],
-              ["Debits labeled Trust", fmtMoney(trust.debits || 0)]
-            ]
-          )}
-          <p class="kpi-section-intro" style="margin-top:0.5rem">Debits are typically trust applications to invoices — not new cash in. Separates trust accounting from portal/card Credits.</p>
+        <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cash per new case · NEW-C LSA media / charged lead · NEW-D charge rate · NEW-E trust applications MoM (ledger 2025-01-03→2026-07-15) + Client trust snapshot.</p>
+        <div class="kpi-finance-grid">
+          <div class="kpi-mini-card">
+            <h3>NEW-A · Cash collected (MoM)</h3>
+            ${chartBlock({
+              chart: cashCollectedChart(cashRows),
+              table: cashCollectedTable(cashRows)
+            })}
+            ${cashCollectedPaceNote(cashRows)}
+          </div>
+          <div class="kpi-mini-card">
+            <h3>NEW-C / NEW-D · LSA media per charged lead &amp; charge rate</h3>
+            ${lsaEfficiencyTable(lsaRows)}
+          </div>
+          <div class="kpi-mini-card">
+            <h3>NEW-E · Trust applications (MoM)</h3>
+            ${chartBlock({
+              chart: trustApplicationsChart(trust.monthly || []),
+              table: trustTransfersTable(trust)
+            })}
+          </div>
         </div>
         ${sourceFootnote("financial")}
       </div>
@@ -727,7 +1047,7 @@
       String(c.prior),
       String(c.count),
       String(c.count - c.prior >= 0 ? "+" + (c.count - c.prior) : c.count - c.prior),
-      `<span class="${momClass(c.mom)}">${escapeHtml(c.mom)}</span>`,
+      momChangeHtml(c.mom) || "—",
       escapeHtml(c.spend)
     ]);
     rows.push([
@@ -735,17 +1055,52 @@
       `<strong>${mayTotal}</strong>`,
       `<strong>${junTotal}</strong>`,
       `<strong>${junTotal - mayTotal >= 0 ? "+" : ""}${junTotal - mayTotal}</strong>`,
-      `<strong class="${momClass(momLabel)}">${escapeHtml(momLabel)}</strong>`,
+      momChangeHtml(momLabel) || "—",
       "—"
     ]);
     return kpiDetailTable(
-      [firstCol, "May", "Jun", "Δ", "MoM", "Spend"],
+      [firstCol, "May", "Jun", "Δ", "Change", "Spend"],
       rows
     );
   }
 
   function channelsDetailTable(channels) {
-    return stackedSeriesDetailTable(channels, { firstCol: "Lead type", totalMom: "+18%" });
+    const months = DATA.channelMonths;
+    if (months && months.length >= 3) {
+      const keys = [
+        { key: "search", name: "Search calls", color: "#3a1a6e", spendKey: "searchSpend" },
+        { key: "lsa", name: "LSA inbox", color: "#c45c26", spendKey: "lsaSpend" },
+        { key: "hubspot", name: "HubSpot forms", color: "#2d5a3d", spendKey: null }
+      ];
+      const monthLabels = months.map(m => m.month);
+      const rows = keys.map(k => {
+        const vals = months.map(m => Number(m[k.key]) || 0);
+        const junSpend = k.spendKey && months[1] ? months[1][k.spendKey] : null;
+        return [
+          `<span class="kpi-stack-swatch" style="background:${k.color}" aria-hidden="true"></span> ${escapeHtml(k.name)}`,
+          ...vals.map(String),
+          String(vals[vals.length - 1] - vals[vals.length - 2] >= 0
+            ? "+" + (vals[vals.length - 1] - vals[vals.length - 2])
+            : vals[vals.length - 1] - vals[vals.length - 2]),
+          junSpend != null ? fmtMoney(junSpend) : "—"
+        ];
+      });
+      const totals = months.map(m => (m.search || 0) + (m.lsa || 0) + (m.hubspot || 0));
+      rows.push([
+        "<strong>Total</strong>",
+        ...totals.map(t => `<strong>${t}</strong>`),
+        `<strong>${totals[totals.length - 1] - totals[totals.length - 2] >= 0 ? "+" : ""}${totals[totals.length - 1] - totals[totals.length - 2]}</strong>`,
+        "—"
+      ]);
+      const julNote = months[2] && months[2].note
+        ? `<p class="kpi-table-note">${escapeHtml(months[2].note)}</p>`
+        : "";
+      return kpiDetailTable(
+        ["Lead type", ...monthLabels, "Δ vs Jun", "Jun spend"],
+        rows
+      ) + julNote;
+    }
+    return stackedSeriesDetailTable(channels, { firstCol: "Lead type" });
   }
 
   function campaignLeadsDetailTable(campaigns) {
@@ -780,7 +1135,7 @@
         String(prior || "—"),
         String(curr || "—"),
         deltaLabel,
-        s.mom ? `<span class="${momClass(s.mom)}">${escapeHtml(s.mom)}</span>` : "—"
+        s.mom ? momChangeHtml(s.mom) : "—"
       ];
     });
     const priorTotal = segments.reduce((n, s) => n + (Number(s.prior) || 0), 0);
@@ -792,13 +1147,13 @@
       `<strong>${priorTotal}</strong>`,
       `<strong>${leadTotal}</strong>`,
       `<strong>${leadTotal - priorTotal >= 0 ? "+" : ""}${leadTotal - priorTotal}</strong>`,
-      `<strong class="${momClass(momTotalPct)}">${momTotalPct}</strong>`
+      momChangeHtml(momTotalPct) || "—"
     ]);
     const note = `<p class="kpi-table-note">Est. potential client revenue = leads × ${(rate * 100).toFixed(1)}% lead→case × ${fmtMoney(fee)} avg case (#28).</p>`;
     return (
       kpiDetailTable(["Source", "Leads", "Share", "Est. potential revenue"], leadRows) +
-      `<h4 class="kpi-subtable-title">MoM comparison</h4>` +
-      kpiDetailTable(["Source", "Prior", "Current", "Δ leads", "MoM"], momRows) +
+      `<h4 class="kpi-subtable-title">Month comparison</h4>` +
+      kpiDetailTable(["Source", "Prior", "Current", "Δ leads", "Change"], momRows) +
       note
     );
   }
@@ -856,37 +1211,38 @@
 
   function missedRevenueModel(pi) {
     const p = pi || DATA.phoneIntake;
-    const missed = Number(p.missedLsaCalls);
-    const priorMissed = Number(p.priorMissedLsaCalls);
-    const close = Number(p.closeRateEst);
+    const missed = Number(p.missedSearchCalls != null ? p.missedSearchCalls : p.missedLsaCalls);
+    const priorMissed = Number(p.priorMissedSearchCalls != null ? p.priorMissedSearchCalls : p.priorMissedLsaCalls);
+    const close = Number(p.closeRateEst != null ? p.closeRateEst : p.leadToCaseRate);
     const fee = Number(p.avgCaseFee);
     const monthlyLost = Math.round(missed * close * fee);
     const priorMonthlyLost = Math.round(priorMissed * close * fee);
-    const ytdMonths = 6;
+    const closePct = (close * 100).toFixed(close * 100 < 10 ? 1 : 0);
     const cumulativeYtd = p.cumulativeYtd != null
       ? Number(p.cumulativeYtd)
-      : Math.round(((monthlyLost + priorMonthlyLost) / 2) * ytdMonths);
+      : monthlyLost + priorMonthlyLost;
     return {
+      missedSearchCalls: missed,
       missedLsaCalls: missed,
+      priorMissedSearchCalls: priorMissed,
       priorMissedLsaCalls: priorMissed,
       closeRateEst: close,
       avgCaseFee: fee,
       monthlyLost,
       priorMonthlyLost,
       cumulativeYtd,
-      ytdMonths,
-      formulaText: `Missed LSA calls × ${Math.round(close * 100)}% close rate × avg case value`,
-      formulaWorked: `${missed} × ${Math.round(close * 100)}% × ${fmtMoney(fee)} = ${fmtMoney(monthlyLost)}/mo`
+      formulaText: `Missed Search calls × ${closePct}% lead→case × avg case value`,
+      formulaWorked: `${missed} × ${closePct}% × ${fmtMoney(fee)} = ${fmtMoney(monthlyLost)}/mo`
     };
   }
 
   function missedRevenuePanel(pi) {
     const model = missedRevenueModel(pi);
     const momLabel = pi.missedMomPp < 0
-      ? `↓ ${Math.abs(pi.missedMomPp)} pp fewer missed (MoM)`
+      ? `↓ ${Math.abs(pi.missedMomPp)} pp fewer missed`
       : pi.missedMomPp > 0
-        ? `↑ +${pi.missedMomPp} pp more missed (MoM)`
-        : "No change MoM";
+        ? `↑ +${pi.missedMomPp} pp more missed`
+        : "No change";
     const momClassName = pi.missedMomPp <= 0 ? "kpi-mom-up" : "kpi-mom-down";
     const maxLost = Math.max(model.monthlyLost, model.priorMonthlyLost, model.cumulativeYtd / 6, 1);
     const priorW = Math.max(12, (model.priorMonthlyLost / maxLost) * 160);
@@ -924,11 +1280,11 @@
       ${kpiDetailTable(
         ["Measure", "Value", "Notes"],
         [
-          ["Missed LSA calls", String(model.missedLsaCalls), `rate ${pi.missedPct}% · goal ≤ ${pi.missedTargetPct}%`],
-          ["Close rate (est.)", `${Math.round(model.closeRateEst * 100)}%`, "Review assumption"],
+          ["Missed Search calls", String(model.missedSearchCalls), `rate ${pi.missedPct}% · goal ≤ ${pi.missedTargetPct}%`],
+          ["Lead→case", `${(model.closeRateEst * 100).toFixed(1)}%`, "ADS-LSA lock"],
           ["Avg case value", fmtMoney(model.avgCaseFee), "KPI #28"],
           ["Est. lost (Jun)", fmtMoney(model.monthlyLost), escapeHtml(model.formulaWorked)],
-          ["YTD cumulative", fmtMoney(model.cumulativeYtd), `avg of Jun/prior × ${model.ytdMonths} mo`]
+          ["YTD cumulative", fmtMoney(model.cumulativeYtd), "64 missed May–Jul 10"]
         ]
       )}
     </div>`;
@@ -940,6 +1296,27 @@
     if (/^[+↑]/.test(s)) return "kpi-mom-up";
     if (/^[-−↓]/.test(s) || s.startsWith("-")) return "kpi-mom-down";
     return "";
+  }
+
+  /** Small change badge: green ↑ / red ↓ + percent — no “MoM” label. */
+  function momChangeHtml(mom) {
+    if (mom == null || mom === "") return "";
+    const raw = String(mom).trim();
+    if (!raw || raw === "—" || raw === "-") return "";
+    const cls = momClass(raw);
+    const val = raw.replace(/^[↑↓]\s*/, "");
+    const num = parseFloat(val.replace(/[^0-9.\-−]/g, "").replace("−", "-"));
+    let arrow = "";
+    if (cls === "kpi-mom-up" || (Number.isFinite(num) && num > 0)) arrow = "↑";
+    else if (cls === "kpi-mom-down" || (Number.isFinite(num) && num < 0)) arrow = "↓";
+    const tone = arrow === "↑" ? "kpi-mom-up" : arrow === "↓" ? "kpi-mom-down" : "kpi-mom-flat";
+    return `<span class="kpi-mom-change ${tone}"><span class="kpi-mom-arrow" aria-hidden="true">${arrow}</span><span class="kpi-mom-pct">${escapeHtml(val)}</span></span>`;
+  }
+
+  function metricWithDeltaHtml(mainHtml, mom) {
+    const delta = momChangeHtml(mom);
+    if (!delta) return mainHtml;
+    return `<div class="kpi-metric-with-delta">${mainHtml}${delta}</div>`;
   }
 
   function presenceLabel(status) {
@@ -1031,7 +1408,7 @@
     const rimGradId = `${gradId}-rim`;
     const goldStops = `<stop offset="0%" stop-color="${GOLD_GAUGE.pale}"/><stop offset="40%" stop-color="${GOLD_GAUGE.mid}"/><stop offset="100%" stop-color="${GOLD_GAUGE.dark}"/>`;
     const progressStops = `<stop offset="0%" stop-color="${PROGRESS_GAUGE.red}"/><stop offset="45%" stop-color="${PROGRESS_GAUGE.mid}"/><stop offset="100%" stop-color="${PROGRESS_GAUGE.green}"/>`;
-    const fillAmt = celebrate ? 1 : clamped;
+    const fillAmt = celebrate && opts.goalMark == null ? 1 : clamped;
     const arcLen = Math.PI * r;
     const dashLen = Math.max(0, Math.min(arcLen, fillAmt * arcLen));
     const endLabel = opts.endLabel != null ? opts.endLabel : "";
@@ -1039,22 +1416,36 @@
     const aria = celebrate ? "Target reached" : "Progress rim gauge";
     const track = "var(--gg-cream-panel)";
     const arcD = `M ${left.x} ${left.y} A ${r} ${r} 0 0 1 ${right.x} ${right.y}`;
+    let goalSvg = "";
+    if (opts.goalMark != null && Number.isFinite(Number(opts.goalMark))) {
+      const g = Math.max(0, Math.min(1, Number(opts.goalMark)));
+      const inner = halfMoonPoint(cx, cy, r - strokeW / 2 - 2, g);
+      const outer = halfMoonPoint(cx, cy, r + strokeW / 2 + 6, g);
+      const labelPt = halfMoonPoint(cx, cy, r + strokeW / 2 + 18, g);
+      const goalLabel = opts.goalLabel != null ? String(opts.goalLabel) : "";
+      goalSvg = `<line x1="${inner.x.toFixed(1)}" y1="${inner.y.toFixed(1)}" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}" class="kpi-gauge-goal-mark"/>`;
+      if (goalLabel) {
+        const anchor = g >= 0.85 ? "start" : g <= 0.15 ? "end" : "middle";
+        goalSvg += `<text x="${labelPt.x.toFixed(1)}" y="${(labelPt.y + 3).toFixed(1)}" class="kpi-gauge-goal-label" text-anchor="${anchor}">${escapeHtml(goalLabel)}</text>`;
+      }
+    }
 
-    return `<svg class="kpi-gauge-svg kpi-half-moon-gauge${celebrate ? " kpi-gauge-celebrate" : ""}" viewBox="0 0 188 118" role="img" aria-label="${aria}">
+    return `<svg class="kpi-gauge-svg kpi-half-moon-gauge${celebrate ? " kpi-gauge-celebrate" : ""}" viewBox="0 0 188 124" role="img" aria-label="${aria}">
       <defs><linearGradient id="${rimGradId}" x1="0%" y1="0%" x2="100%" y2="0%">${celebrate ? goldStops : progressStops}</linearGradient></defs>
       <path d="${arcD}" fill="none" stroke="${track}" stroke-width="${strokeW}" stroke-linecap="round"/>
       <path d="${arcD}" fill="none" stroke="url(#${rimGradId})" stroke-width="${strokeW}" stroke-linecap="round"
         stroke-dasharray="${dashLen.toFixed(2)} ${(arcLen + 1).toFixed(2)}"/>
-      <text x="22" y="108" class="kpi-gauge-tick">0</text>
-      ${endLabel !== "" ? `<text x="166" y="108" class="kpi-gauge-tick" text-anchor="end">${endLabel}</text>` : ""}
-      ${valueLabel !== "" ? `<text x="${cx}" y="${cy - 6}" class="kpi-gauge-center" text-anchor="middle">${escapeHtml(valueLabel)}</text>` : ""}
+      ${goalSvg}
+      <text x="22" y="114" class="kpi-gauge-tick">0</text>
+      ${endLabel !== "" ? `<text x="166" y="114" class="kpi-gauge-tick" text-anchor="end">${endLabel}</text>` : ""}
+      ${valueLabel !== "" ? `<text x="${cx}" y="${cy - 20}" class="kpi-gauge-center" text-anchor="middle">${escapeHtml(valueLabel)}</text>` : ""}
     </svg>`;
   }
 
   function duiGoalTargetBarChart() {
-    const { current, target } = DATA.duiGoal;
+    const { current, target, label } = DATA.duiGoal;
     return barWithTargetChart(
-      [{ label: "Signed", value: current }],
+      [{ label: label || "Signed", value: current }],
       {
         target,
         lowerIsBetter: false,
@@ -1066,15 +1457,19 @@
   }
 
   function teamDuiGoalCardHtml() {
-    const pct = DATA.duiGoal.current / DATA.duiGoal.target;
+    const g = DATA.duiGoal;
+    const pct = g.current / g.target;
     const hit = pct >= 1;
     return `<button type="button" class="kpi-goal-card kpi-stat-target-bar" data-kpi-focus="#DUI">
       ${statusCorner(false)}
+      ${kpiHelpBtn("#DUI")}
       <div class="kpi-goal-visual">
-        <span class="kpi-stat-id"># DUIs Signed 2026</span>
+        ${kpiCardTitle((g.title || "DUIs Signed").replace(/^#\s*/, "") + (g.year ? ` ${g.year}` : ""))}
         ${duiGoalTargetBarChart()}
       </div>
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
+      <a class="kpi-dui-edit" href="dui-goal.html" onclick="event.stopPropagation()">Edit inputs</a>
+      ${kpiRefMark("#DUI")}
     </button>`;
   }
 
@@ -1093,7 +1488,7 @@
         ${halfMoonGauge(0, "goal-placeholder", { endLabel: "—", valueLabel: "— / —" })}
       </div>
       ${goalTrackRows([
-        ["MoM", "—"]
+        ["Change", "—"]
       ])}
     </button>`;
   }
@@ -1137,6 +1532,36 @@
     const t = tMatch ? parseFloat(tMatch[1]) : NaN;
     if (!Number.isFinite(v) || !Number.isFinite(t) || t <= 0) return null;
     return { current: v, target: t, pct: v / t };
+  }
+
+  /** Percent gauges: dial 0–100, goal tick at target %, fill = current/100. */
+  function percentScaleGauge(k, nums) {
+    const looksPct = /%/.test(String(k.value)) || /%/.test(String(k.target));
+    return !!(looksPct && nums && nums.target > 0 && nums.target <= 100);
+  }
+
+  function halfMoonOptsForKpi(k, nums, hit) {
+    const current = nums.current;
+    const target = nums.target;
+    const scaleMax = Math.max(current, target, 1);
+    const isPct = /%/.test(String(k.value)) || /%/.test(String(k.target));
+    const valueLabel = isPct
+      ? `${Math.round(current)}%`
+      : String(Math.round(current));
+    const endLabel = isPct
+      ? `${Math.round(scaleMax)}%`
+      : String(Math.round(scaleMax));
+    const goalLabel = isPct
+      ? `${Math.round(target)}%`
+      : String(Math.round(target));
+    return {
+      pct: current / scaleMax,
+      endLabel,
+      goalMark: target / scaleMax,
+      goalLabel,
+      celebrate: hit,
+      valueLabel
+    };
   }
 
   /* GGL brand: on-target = --gg-positive · over-target = --gg-negative */
@@ -1189,15 +1614,16 @@
     if (!bars.length || !Number.isFinite(target)) return "";
 
     const maxVal = Math.max(...bars.map(b => b.actual), target, 1) * 1.15;
-    const w = opts.width || (compact ? 210 : 420);
-    const h = opts.height || (compact ? 112 : 200);
+    const w = opts.width || (compact ? 268 : 420);
+    const h = opts.height || (compact ? 118 : 200);
+    /* Left pad must fit full money labels ($120). Too-tight pad clipped to “20”. */
     const pad = compact
-      ? { l: 10, r: 10, t: 10, b: 30 }
-      : { l: 20, r: 20, t: 20, b: 44 };
+      ? { l: 46, r: 14, t: 14, b: 30 }
+      : { l: 52, r: 20, t: 20, b: 44 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
     const slot = plotW / bars.length;
-    const barW = Math.min(compact ? 34 : 56, slot * 0.52);
+    const barW = Math.min(compact ? 36 : 56, slot * 0.52);
     const baselineY = pad.t + plotH;
     const targetY = baselineY - (plotH * target) / maxVal;
     const targetLabel = fmt(target);
@@ -1211,22 +1637,17 @@
       const textFill = "#ffffff";
       const valLabel = fmt(b.actual);
       const shortLabel = b.label.length > 10 ? b.label.replace(/\s.*/, "") : b.label;
-      const lineW = barW + 14;
-      const lineX = x + barW / 2 - lineW / 2;
-      const targetText = i === 0
-        ? `<text x="${lineX - 3}" y="${targetY + 4}" text-anchor="end" class="kpi-target-label">${escapeHtml(targetLabel)}</text>`
-        : "";
       return `<g class="kpi-target-bar-group">
         <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="2" fill="${fill}"/>
         <text x="${x + barW / 2}" y="${baselineY - 5}" text-anchor="middle" class="kpi-target-bar-val" fill="${textFill}">${escapeHtml(valLabel)}</text>
-        <line x1="${lineX}" y1="${targetY}" x2="${lineX + lineW}" y2="${targetY}" class="kpi-target-line"/>
-        ${targetText}
         <text x="${x + barW / 2}" y="${h - 8}" text-anchor="middle" class="kpi-target-bar-cat">${escapeHtml(shortLabel)}</text>
       </g>`;
     }).join("");
 
     return `<svg class="kpi-chart-svg kpi-target-bar-chart${compact ? " kpi-target-bar-chart-compact" : ""}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${escapeHtml(opts.ariaLabel || "Actual vs target bar chart")}">
       <line x1="${pad.l}" y1="${baselineY}" x2="${w - pad.r}" y2="${baselineY}" class="kpi-target-baseline"/>
+      <line x1="${pad.l}" y1="${targetY}" x2="${w - pad.r}" y2="${targetY}" class="kpi-target-line"/>
+      <text x="${pad.l - 4}" y="${targetY + 4}" text-anchor="end" class="kpi-target-label">${escapeHtml(targetLabel)}</text>
       ${barEls}
     </svg>`;
   }
@@ -1248,15 +1669,13 @@
 
   function targetBarChartForKpi(k) {
     const target = parseTargetNum(k.target);
-    const items = k.id === "#12" ? costPerCallBarItems() : k.id === "#15" ? cplByCampaignItems() : (k.targetBarItems || []);
+    const items = k.id === "#12" ? costPerCallBarItems() : (k.targetBarItems || []);
     return barWithTargetChart(items, {
       target,
       lowerIsBetter: k.lowerIsBetter !== false,
       targetStr: k.target,
       compact: true,
-      ariaLabel: k.id === "#12"
-        ? `${k.label} ${k.value} vs ${k.target}`
-        : `${k.label} by campaign vs ${k.target}`
+      ariaLabel: `${k.label} ${k.value} vs ${k.target}`
     });
   }
 
@@ -1273,51 +1692,43 @@
     );
   }
 
-  function kpiGoalTrackFor(k) {
-    const rows = [
-      ["MoM", k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)}</span>` : "—"]
-    ];
-    return goalTrackRows(rows);
-  }
-
   function kpiGoalCardHtml(k) {
     /* Keep #19 lost-tracker chrome in goals grid — do not force gauge layout */
     if (k.lostTracker) return missedRevenueTrackerHtml();
     const nums = k.gauge ? parseGaugeNums(k.value, k.target) : null;
     const vClass = verifiedClass(!!k.verified);
-    const foot = k.verified ? sourceFootnote(k.id) : "";
+    /* Source/formula live in ? help popup — not on the goal card face. */
     if (nums) {
       const grad = "goal-" + String(k.id).replace(/\W/g, "");
-      const hit = !!(k.hit || nums.pct >= 1);
+      const hit = !!(k.hit || meetsTarget(nums.current, nums.target, k.lowerIsBetter === true));
+      const gOpts = halfMoonOptsForKpi(k, nums, hit);
+      const gauge = halfMoonGauge(gOpts.pct, grad, gOpts);
       return `<button type="button" class="kpi-goal-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
+        ${kpiHelpBtn(k.id)}
         <div class="kpi-goal-visual">
-          <span class="kpi-stat-id">${k.id} ${escapeHtml(k.label)}</span>
-          ${halfMoonGauge(Math.min(nums.pct, 1), grad, {
-            endLabel: String(nums.target),
-            celebrate: hit,
-            valueLabel: `${k.value} / ${k.target.replace(/^[≥≤<>]\s*/, "")}`
-          })}
+          ${kpiCardTitle(k.label)}
+          ${metricWithDeltaHtml(gauge, k.mom)}
         </div>
-        ${kpiGoalTrackFor(k)}
-        ${foot}
+        ${kpiRefMark(k.id)}
       </button>`;
     }
     const lostCap = 6000;
     const lostN = parseFloat(String(k.value).replace(/[^0-9.]/g, "")) || 0;
     const lostPct = Math.min(1, lostN / lostCap);
     const grad = "goal-" + String(k.id).replace(/\W/g, "");
+    const gauge = halfMoonGauge(lostPct, grad, {
+      endLabel: k.target || "$0",
+      valueLabel: k.value
+    });
     return `<button type="button" class="kpi-goal-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
       ${statusCorner(!!k.verified)}
+      ${kpiHelpBtn(k.id)}
       <div class="kpi-goal-visual">
-        <span class="kpi-stat-id">${k.id}${k.alert ? " · Requires action" : ""}</span>
-        ${halfMoonGauge(lostPct, grad, {
-          endLabel: k.target || "$0",
-          valueLabel: k.value
-        })}
+        ${kpiCardTitle(k.label || (k.alert ? "Requires action" : k.id))}
+        ${metricWithDeltaHtml(gauge, k.mom)}
       </div>
-      ${kpiGoalTrackFor(k)}
-      ${foot}
+      ${kpiRefMark(k.id)}
     </button>`;
   }
 
@@ -1348,12 +1759,14 @@
     const grade = scoreToLetterGrade(score);
     return `<button type="button" class="kpi-stat-card kpi-bhi-grade${verifiedClass(!!k.verified)}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
       ${statusCorner(!!k.verified)}
-      <span class="kpi-stat-id">${k.id} ${escapeHtml(k.label)}</span>
+      ${kpiHelpBtn(k.id)}
+      ${kpiCardTitle(k.label)}
       <span class="kpi-bhi-grade-letter">${escapeHtml(grade)}</span>
       <span class="kpi-bhi-grade-pct">${score}%</span>
       <span class="kpi-stat-label">target ${escapeHtml(k.target || "100")}</span>
-      ${k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)} MoM</span>` : ""}
+      ${momChangeHtml(k.mom)}
       ${k.verified ? sourceFootnote(k.id) : ""}
+      ${kpiRefMark(k.id)}
     </button>`;
   }
 
@@ -1373,39 +1786,59 @@
   function missedRevenueTrackerHtml() {
     const p = DATA.phoneIntake;
     const model = missedRevenueModel(p);
-    const fmtPct = n => `${Math.round(Number(n) * 100)}%`;
+    const fmtPct = n => {
+      const pct = Number(n) * 100;
+      return `${pct < 10 ? pct.toFixed(1) : Math.round(pct)}%`;
+    };
     const delta = model.priorMonthlyLost != null ? model.monthlyLost - model.priorMonthlyLost : null;
-    let deltaHtml = "—";
+    let trendDelta = "";
     if (delta != null) {
       const abs = Math.abs(delta);
       const cls = delta <= 0 ? "kpi-mom-up" : "kpi-mom-down";
+      const arrow = delta <= 0 ? "↓" : "↑";
       const sign = delta <= 0 ? "−" : "+";
-      deltaHtml = `<span class="${cls}">${sign}${fmtMoney(abs)}/mo vs prior</span>`;
+      trendDelta = `<span class="kpi-mom-change ${cls}"><span class="kpi-mom-arrow" aria-hidden="true">${arrow}</span><span class="kpi-mom-pct">${sign}${fmtMoney(abs)}/mo</span></span>`;
     }
-    return `<button type="button" class="kpi-stat-card kpi-lost-tracker kpi-stat-attention kpi-stat-target-bar" data-kpi-focus="#19">
-      ${statusCorner(false)}
-      <span class="kpi-stat-id">#19 Lost Revenue</span>
-      <span class="kpi-lost-amount">${fmtMoney(model.monthlyLost)}<small>/mo</small></span>
-      <span class="kpi-stat-label">Ongoing money lost from unanswered LSA calls</span>
-      ${missedCallsTargetBarChart(p)}
-      <ul class="kpi-lost-facts">
-        <li><strong>Missed LSA calls</strong> ${model.missedLsaCalls} <span class="kpi-lost-muted">(${p.missedPct}% of ${p.monthlyCalls})</span></li>
-        <li><strong>Avg case value</strong> ${fmtMoney(model.avgCaseFee)} <span class="kpi-lost-muted">(#28)</span></li>
-        <li><strong>Close rate (est.)</strong> ${fmtPct(model.closeRateEst)}</li>
-        <li><strong>YTD lost</strong> ${fmtMoney(model.cumulativeYtd)}</li>
-        <li><strong>Trend</strong> ${deltaHtml}</li>
-      </ul>
-      <span class="kpi-formula-footnote" title="Review assumption — close rate is estimated, not lead→case ${((p.leadToCaseRate || 0) * 100).toFixed(1)}%">
-        <span class="kpi-source-label">Formula</span>
-        ${escapeHtml(model.formulaText)} → ${escapeHtml(model.formulaWorked)}
-      </span>
+    return `<button type="button" class="kpi-goal-card kpi-stat-card kpi-lost-tracker kpi-stat-attention kpi-stat-target-bar" data-kpi-focus="#19">
+      ${statusCorner(true)}
+      ${kpiHelpBtn("#19")}
+      <div class="kpi-goal-visual">
+        ${kpiCardTitle("Lost Revenue")}
+        <div class="kpi-metric-with-delta">
+          <span class="kpi-lost-amount">${fmtMoney(model.monthlyLost)}<small>/mo</small></span>
+          ${trendDelta}
+        </div>
+        <div class="kpi-lost-data" aria-label="Lost revenue details">
+          <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">Missed Search</span>
+            <span class="kpi-lost-datum-val">${model.missedSearchCalls}</span>
+            <span class="kpi-lost-muted">${p.missedPct}% of ${p.monthlyCalls}</span>
+          </div>
+          <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">Avg case</span>
+            <span class="kpi-lost-datum-val">${fmtMoney(model.avgCaseFee)}</span>
+            <span class="kpi-lost-muted">#28</span>
+          </div>
+          <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">Lead→case</span>
+            <span class="kpi-lost-datum-val">${fmtPct(model.closeRateEst)}</span>
+          </div>
+          <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">YTD lost</span>
+            <span class="kpi-lost-datum-val">${fmtMoney(model.cumulativeYtd)}</span>
+            <span class="kpi-lost-muted">64 missed May–Jul 10</span>
+          </div>
+        </div>
+        <span class="kpi-stat-label">Est. money lost from unanswered Search calls</span>
+        ${missedCallsTargetBarChart(p)}
+      </div>
+      ${kpiRefMark("#19")}
     </button>`;
   }
 
   function kpiStatCardHtml(k) {
     if (k.lostTracker) return missedRevenueTrackerHtml();
     if (k.letterGrade || k.id === "#BHI") return bhiLetterGradeCardHtml(k);
-    const headline = `${k.id} ${k.label}`;
     const targetLine = k.target ? `target ${k.target}` : "";
     const vClass = verifiedClass(!!k.verified);
     const foot = k.verified ? sourceFootnote(k.id) : "";
@@ -1414,47 +1847,44 @@
       const hit = meetsTarget(parseMetricNum(k.value), targetNum, k.lowerIsBetter !== false);
       return `<button type="button" class="kpi-stat-card kpi-stat-target-bar${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
-        <span class="kpi-stat-id">${headline}</span>
-        ${targetBarChartForKpi(k)}
+        ${kpiHelpBtn(k.id)}
+        ${kpiCardTitle(k.label)}
+        ${metricWithDeltaHtml(targetBarChartForKpi(k), k.mom)}
         <span class="kpi-stat-label">Avg ${escapeHtml(k.value)} · ${escapeHtml(targetLine)}</span>
-        ${k.mom ? `<span class="${momClass(k.mom)}">${escapeHtml(k.mom)} MoM</span>` : ""}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
         ${foot}
+        ${kpiRefMark(k.id)}
       </button>`;
     }
     const nums = k.gauge ? parseGaugeNums(k.value, k.target) : null;
     if (nums) {
       const grad = "km-" + String(k.id).replace(/\W/g, "");
-      const hit = !!(k.hit || nums.pct >= 1);
-      const isMomGoal = k.id === "#01";
-      const valueLabel = isMomGoal
-        ? `${nums.current}% / ${nums.target}%`
-        : `${k.value} / ${String(k.target).replace(/^[≥≤<>]\s*/, "")}`;
-      const goalLine = isMomGoal
-        ? `${k.count != null ? `${k.count} net · ` : ""}goal ≥ ${nums.target}% MoM new leads`
+      const hit = !!(k.hit || meetsTarget(nums.current, nums.target, k.lowerIsBetter === true));
+      const goalLine = k.id === "#01"
+        ? `${nums.current} total · target ≥ ${Math.round(nums.target)} (20% MoM vs prior)`
         : targetLine;
+      const gOpts = halfMoonOptsForKpi(k, nums, hit);
+      const gauge = halfMoonGauge(gOpts.pct, grad, gOpts);
       return `<button type="button" class="kpi-stat-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
         ${statusCorner(!!k.verified)}
-        <span class="kpi-stat-id">${headline}</span>
-        ${halfMoonGauge(Math.min(nums.pct, 1), grad, {
-          endLabel: isMomGoal ? `${nums.target}%` : String(nums.target),
-          celebrate: hit,
-          valueLabel
-        })}
+        ${kpiHelpBtn(k.id)}
+        ${kpiCardTitle(k.label)}
+        ${metricWithDeltaHtml(gauge, k.mom)}
         <span class="kpi-stat-label">${goalLine}</span>
-        ${k.mom ? `<span class="${momClass(k.mom)}">${k.mom} MoM</span>` : ""}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
         ${foot}
+        ${kpiRefMark(k.id)}
       </button>`;
     }
     return `<button type="button" class="kpi-stat-card${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
       ${statusCorner(!!k.verified)}
-      <span class="kpi-stat-id">${headline}</span>
-      <span class="kpi-stat-val">${k.value}</span>
+      ${kpiHelpBtn(k.id)}
+      ${kpiCardTitle(k.label)}
+      ${metricWithDeltaHtml(`<span class="kpi-stat-val">${k.value}</span>`, k.mom)}
       <span class="kpi-stat-label">${targetLine}</span>
-      ${k.mom ? `<span class="${momClass(k.mom)}">${k.mom} MoM</span>` : ""}
       ${k.hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
       ${foot}
+      ${kpiRefMark(k.id)}
     </button>`;
   }
 
@@ -1498,7 +1928,8 @@
    * Data: DATA.leadsByCampaign · source KPI_SOURCES["#08"]
    */
   function leadsByCampaignPanelHtml() {
-    return `<article class="kpi-split-panel kpi-verified" data-feedback-id="section-leads-campaign" data-feedback-label="#08 Leads by campaign">
+    return `<article class="kpi-split-panel" data-feedback-id="section-leads-campaign" data-feedback-label="#08 Leads by campaign">
+      ${statusCorner(true)}
       ${kpiSectionStaticHead("#08 Leads by campaign", "Stacked by month")}
       <div class="kpi-split-panel-body">
         ${chartBlock({
@@ -1507,15 +1938,15 @@
           legend: channelLegend(DATA.leadsByCampaign),
           table: campaignLeadsDetailTable(DATA.leadsByCampaign)
         })}
+        <p class="kpi-table-note">Military volume used to look oversized in part because a lot of DV traffic ran inside that campaign — that traffic is now broken out as <strong>Core DV</strong>. Traffic and auto-related demand sits in <strong>NTGUILT</strong>.</p>
         ${sourceFootnote("#08")}
       </div>
     </article>`;
   }
 
   /**
-   * Parked #17 tile — not shown on KPIs tab.
-   * Doc snapshot: parked/KPI-17-REFERRAL-NETWORK.md
-   * Restore: insert `${totalReferralNetworkPanelHtml()}` on another dashboard.
+   * #17 Referral Network — placeholder counts (null) until A4 tracking wires.
+   * Doc: parked/KPI-17-REFERRAL-NETWORK.md
    */
   function totalReferralNetworkPanelHtml() {
     return `<div class="kpi-mini-card" data-kpi-focus="#17">
@@ -1526,13 +1957,14 @@
         return chartBlock({ chart: donutChart(segs) });
       })()}
       <table class="kpi-table">
-        <thead><tr><th>Channel</th><th>Referrers</th><th>Δ MoM</th></tr></thead>
+        <thead><tr><th>Channel</th><th>Referrers</th><th>Change</th></tr></thead>
         <tbody>${DATA.referrals.map(r => `<tr class="${r.status !== "active" ? "kpi-row-gap" : ""}">
-          <td>${star(!!r.verified)} ${r.platform}</td>
+          <td>${star(!!r.verified)} ${escapeHtml(r.platform)}</td>
           <td>${dash(r.count)}</td>
-          <td class="${momClass(r.delta)}">${dash(r.delta)}</td>
+          <td>${r.delta != null ? (momChangeHtml(r.delta) || dash(r.delta)) : dash(r.delta)}</td>
         </tr>`).join("")}</tbody>
       </table>
+      <p class="kpi-table-note">Placeholder — counts fill when A4 Client Referral Program tracking is live.</p>
     </div>`;
   }
 
@@ -1548,10 +1980,8 @@
               <div class="kpi-split-panel-body">
                 ${chartBlock({
                   focus: "#04",
-                  verified: false,
-                  head: `<span class="kpi-mom-up">Closed ↑ +38%</span> · <span class="kpi-mom-down">New ↓ −25%</span> · Red accounts placeholder`,
                   chart: stackedCasesMomChart(casesMomByMonth(DATA.casesMom, DATA.casesMomSeries)),
-                  legend: channelLegend(DATA.casesMomSeries),
+                  legend: casesMomLegend(DATA.casesMomSeries, DATA.casesMom),
                   table: casesMomDetailTable(DATA.casesMom)
                 })}
               </div>
@@ -1590,31 +2020,41 @@
   }
 
   function reviewsByChannelPanelHtml() {
-    return `<div class="kpi-mini-card" data-kpi-focus="#16">
-      ${statusCorner(false)}
+    const anyVerified = DATA.reviews.some(r => r.verified);
+    return `<div class="data-coming-soon" data-kpi-focus="#16">
+      <p class="data-coming-soon-banner" role="status">Coming soon</p>
+      <p class="data-coming-soon-copy">Full channel audit + profile refresh runs under Project Guide <strong>B10</strong>. Public Google/Yelp counts below are a scrape snapshot only.</p>
+      <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B10">Open B10 Digital Profiles Refresh in Project Guide →</a>
+    </div>
+    <div class="kpi-mini-card" data-kpi-focus="#16" style="margin-top:0.75rem">
+      ${statusCorner(anyVerified)}
       <h3>#16 Reviews by channel</h3>
       ${(() => {
         const segs = presencePieSegments(DATA.reviews);
         return chartBlock({ chart: donutChart(segs) });
       })()}
       <table class="kpi-table">
-        <thead><tr><th>Channel</th><th>Rating</th><th># Reviews</th></tr></thead>
+        <thead><tr><th>Channel</th><th>Rating</th><th># Reviews</th><th>Status</th></tr></thead>
         <tbody>${DATA.reviews.map(r => `<tr class="${r.status !== "active" ? "kpi-row-gap" : ""}">
-          <td>${star(!!r.verified)} ${r.platform}</td>
+          <td>${star(!!r.verified)} ${escapeHtml(r.platform)}</td>
           <td>${dash(r.rating)}</td>
           <td>${dash(r.count)}</td>
+          <td>${escapeHtml(r.status || "—")}</td>
         </tr>`).join("")}</tbody>
       </table>
+      ${sourceFootnote("#16")}
+      <p class="kpi-table-note">Google Maps + Yelp public scrape 2026-07-16. Remaining rows fill via B10 audit.</p>
     </div>`;
   }
 
   function leadsByChannelPanelHtml() {
-    return `<article class="kpi-split-panel kpi-verified" data-feedback-id="section-leads-channel-01" data-feedback-label="#01 Leads by channel">
+    return `<article class="kpi-split-panel" data-feedback-id="section-leads-channel-01" data-feedback-label="#01 Leads by channel">
+      ${statusCorner(true)}
       ${kpiSectionStaticHead("#01 Leads by channel", "Stacked by month")}
       <div class="kpi-split-panel-body">
         ${chartBlock({
           focus: "#01",
-          chart: stackedLeadsByMonthChart(leadsByMonthFromChannels(DATA.channels)),
+          chart: stackedLeadsByMonthChart(leadsByMonthFromChannels(DATA.channels, { useChannelMonths: true })),
           legend: channelLegend(DATA.channels),
           table: channelsDetailTable(DATA.channels)
         })}
@@ -1623,8 +2063,14 @@
     </article>`;
   }
 
+  /**
+   * Parked — Lead Share & Potential Revenue (#10).
+   * Doc: parked/KPI-10-LEAD-SHARE-REVENUE.md
+   * Restore: insert `${sourceMixPanelHtml()}` (or KPI_REPORT.parked.sourceMixPanelHtml()).
+   */
   function sourceMixPanelHtml() {
-    return `<article class="kpi-split-panel kpi-verified" data-feedback-id="section-source-mix" data-feedback-label="#10 Source mix">
+    return `<article class="kpi-split-panel" data-feedback-id="section-source-mix" data-feedback-label="#10 Source mix">
+      ${statusCorner(true)}
       ${kpiSectionStaticHead("#10 Source mix", "Lead share by channel")}
       <div class="kpi-split-panel-body">
         ${chartBlock({
@@ -1644,10 +2090,8 @@
       <div class="kpi-split-panel-body">
         ${chartBlock({
           focus: "#04",
-          verified: false,
-          head: `<span class="kpi-mom-up">Closed ↑ +38%</span> · <span class="kpi-mom-down">New ↓ −25%</span> · Red accounts placeholder`,
           chart: stackedCasesMomChart(casesMomByMonth(DATA.casesMom, DATA.casesMomSeries)),
-          legend: channelLegend(DATA.casesMomSeries),
+          legend: casesMomLegend(DATA.casesMomSeries, DATA.casesMom),
           table: casesMomDetailTable(DATA.casesMom)
         })}
       </div>
@@ -1678,30 +2122,25 @@
     return `<section class="data-card${full}">
       <h3>${escapeHtml(title)}</h3>
       ${note ? `<p class="data-card-note">${escapeHtml(note)}</p>` : ""}
-      ${body || ""}
+      <div class="data-card-body">${body || ""}</div>
     </section>`;
   }
 
   function renderData(el) {
     if (!el || el.dataset.rendered === RENDER_VER) return;
     el.innerHTML = `<header class="data-page-head">
-      <img class="data-brand-logo" src="assets/gigi-logo.jpg" alt="Gilded Goose Ltd.">
       <div>
-        <p class="data-eyebrow">Saved Data View</p>
         <h2 class="data-page-title">Pav Law Data Dashboard</h2>
-        <p class="data-page-sub">Charts flagged as useful enough to save while the new visual system is tested here only.</p>
       </div>
     </header>
     <div class="data-grid">
-      ${dataCardHtml("Lead Channel Stack", "High-level lead source movement and MoM table.", leadsByChannelPanelHtml(), { full: true })}
-      ${dataCardHtml("Cases, Leads & Spend", "Saved chart comparing case creation, LSA lead volume, and marketing spend.", casesLeadsSpendSectionHtml(), { full: true })}
-      ${dataCardHtml("Financials", "Cash collected, LSA charge efficiency, and trust-transfer aggregates.", cashCollectedSectionHtml(), { full: true })}
-      ${dataCardHtml("Lead Share & Potential Revenue", "Source mix with lead counts, MoM comparison, and estimated potential client revenue.", sourceMixPanelHtml(), { full: true })}
-      ${dataCardHtml("Leads By Campaign", "Parked #08 chart saved for dashboard use.", leadsByCampaignPanelHtml())}
-      ${dataCardHtml("Referral Network", "Parked #17 tile saved for a later referral dashboard.", totalReferralNetworkPanelHtml())}
-      ${dataCardHtml("Reviews By Channel", "Manual profile/review input now lives in B10; this keeps the old #16 data view.", reviewsByChannelPanelHtml())}
-      ${dataCardHtml("Cases MoM", "Saved operational trend tile for closed/new/red-account counts.", casesMomPanelHtml())}
-      ${dataCardHtml("Average Deposit", "Saved target chart for a later finance pass.", avgDepositPanelHtml())}
+      ${dataCardHtml("Lead Channel Stack", "Lead source movement and MoM.", leadsByChannelPanelHtml())}
+      ${dataCardHtml("Leads By Campaign", "Parked #08 campaign lead volume.", leadsByCampaignPanelHtml())}
+      ${dataCardHtml("Cases MoM", "Closed · New · Red accounts.", casesMomPanelHtml())}
+      ${dataCardHtml("Referral Network", "KPI #17 · placeholder until A4 tracking wires.", totalReferralNetworkPanelHtml())}
+      ${dataCardHtml("Reviews By Channel", "KPI #16 · Coming soon · Project Guide B10.", reviewsByChannelPanelHtml())}
+      ${dataCardHtml("Cases, Leads & Spend", "Left: counts · Right: $ spend · media table.", casesLeadsSpendSectionHtml(), { full: true })}
+      ${dataCardHtml("Financials", "Cash collected, LSA efficiency, and trust transfers.", cashCollectedSectionHtml(), { full: true })}
     </div>`;
     el.dataset.rendered = RENDER_VER;
     bindKpiInteractions(el);
@@ -1769,11 +2208,13 @@
     renderDashboards,
     renderAll,
     focusKpi,
+    getHelp: getKpiHelp,
     getData: () => ({ ...DATA }),
     /** Parked panels for other dashboard views */
     parked: {
       leadsByCampaignPanelHtml,
-      totalReferralNetworkPanelHtml
+      totalReferralNetworkPanelHtml,
+      sourceMixPanelHtml
     },
     refresh() {
       document.querySelectorAll("[data-rendered]").forEach(el => {

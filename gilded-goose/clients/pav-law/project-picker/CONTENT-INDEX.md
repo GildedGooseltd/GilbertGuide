@@ -104,16 +104,16 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Fees / revenue calculator       | `app.js`     | `renderConfirmPlanReview()` → `buildRevenueCalculatorHtml()` (confirm only) |
 | Payment options (per project)   | `app.js`     | `buildPaymentOptionsHtml()` · rules in [PAYMENT-SCHEDULE.md](PAYMENT-SCHEDULE.md) |
 | Schedule calculator             | `app.js` / `index.html` | `computePaymentPlan()` · `#invoice-payment-months` |
-| Estimated results               | `app.js`     | `renderConfirmPlanReview()` → `#confirm-estimated-results` |
-| Action items                    | `app.js`     | `#confirm-action-items`                                    |
-| Next steps                      | `app.js`     | `#confirm-next-steps`                                      |
+| Estimated results               | —            | **Removed** from confirm (no `#confirm-estimated-results` / ROI inject) |
+| Action items                    | `app.js`     | thank-you / email — not on confirm ROI block |
+| Next steps                      | `app.js`     | cart / thank-you flow |
 | “Confirm & submit” section      | `index.html` | `.confirm-submit-section`                                  |
 | Email field label / placeholder | `index.html` | `#submitted-email`                                         |
 | Invoice schedule labels         | `index.html` | `#invoice-payment-months`, hints                           |
-| E-sign consent clickwrap        | `index.html` | `#esign-consent`, `#esign-consent-label` — required before submit |
-| Submit gating / payload consent | `app.js`     | `canSubmit()`, `buildPayload()` → `consentAgreed`, `consentAt`, `consentVersion`, `consentText` |
+| E-sign consent clickwrap        | —            | **Not required** on confirm (no vendor checkbox) |
+| Submit gating                   | `app.js`     | `canSubmit()` — email + cart/notes/Gilbert only |
 | Submit / Back buttons           | `index.html` | `#submit-selections`, `#confirm-back`                      |
-| Deposit / QuickBooks notes      | `index.html` | `.submit-note`, `#invoice-schedule-hint`                   |
+| Deposit / QuickBooks notes      | `index.html` | `.submit-note` |
 | Webhook warning                 | `app.js`     | `updateWebhookWarning()`                                   |
 
 
@@ -127,12 +127,22 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Headline                 | `index.html`            | `.thank-you-headline`              |
 | Subline (also set in JS) | `index.html` + `app.js` | `#thank-you-sub`, `showThankYou()` |
 | Affirmation paragraph    | `app.js`                | `buildThankYouAffirmation()`       |
-| ROI / return estimates   | `app.js`                | `buildThankYouReturnsHtml()`       |
+| ROI / return estimates   | —                       | Not injected on thank-you by default |
 | Selection summary        | `app.js`                | `showThankYou()`                   |
 | Action items block       | `app.js`                | `buildActionItemsHtml()`           |
 | Deposit copy             | `app.js`                | `showThankYou()` deposit block     |
-| Pay deposit button       | `app.js`                | `showThankYou()`                   |
+| Pay deposit button       | `app.js`                | `showThankYou()` · URL from `CONFIG.quickbooksDepositUrl` |
 | “Browse more projects”   | `index.html`            | `#btn-back-picker`                 |
+
+### SOW page
+
+| What users see | File | Field / location |
+| -------------- | ---- | ---------------- |
+| Flow | confirm → SOW draft → thank-you/deposit | `submitSelections()` → `showSowPage()` → `continueToThankYou()` |
+| MSA wording | `index.html` / `app.js` | `.sow-msa-note`, `buildSowDraft()` |
+| Email SOW PDF | `app.js` | `#sow-send-esign` → `emailSowPdf()` |
+| Continue to deposit | `index.html` | `#sow-continue-thankyou` |
+| Custom e-sign later | stub note only | not Dropbox/DocuSign plugin |
 
 
 

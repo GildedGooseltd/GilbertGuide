@@ -1,6 +1,14 @@
 # Edit Gilbert Content
 
-**Markdown only.** Your `.md` edits are the source of truth — build never overwrites project files.
+**Markdown only.** Your `.md` edits are the source of truth.
+
+| Command | Overwrites project `.md`? |
+|---------|---------------------------|
+| `npm run build` / `watch` | **No** — writes `projects-data.js` only |
+| `npm run sync-impact` | **Yes** — full rewrite of projects + retainer |
+| `npm run migrate` / `format-content` / `apply-campaign-metrics` | **Yes** — full rewrite |
+
+Agents: run rewrite scripts **only** when Kate asks in that message. See `.cursor/rules/preserve-user-edits.mdc` + `gilbert-guide-content.mdc`.
 
 **Also see:** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) (colors, spacing, zones) · [CONTENT-INDEX.md](CONTENT-INDEX.md) (every text string by page)
 
