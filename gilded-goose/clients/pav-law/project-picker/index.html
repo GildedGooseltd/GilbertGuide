@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Operations Dashboard</title>
   <style>
     :root {
@@ -3567,9 +3570,12 @@
     }
     .toc-table {
       width: 100%; min-width: 22rem;
-      border-collapse: collapse; table-layout: fixed;
+      border-collapse: collapse; table-layout: fixed; /* toc-table-layout-3col */
       font-size: 0.88rem;
     }
+    .toc-table col.toc-col-select { width: 3.25rem; }
+    .toc-table col.toc-col-priority { width: 5.5rem; }
+    .toc-table col.toc-col-project { width: auto; }
     .toc-table th, .toc-table td {
       padding: 0.55rem 0.5rem; vertical-align: middle;
       border-bottom: 1px solid var(--border);
@@ -3616,8 +3622,10 @@
     .picker-zone-outlines .picker-zone-head {
       display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;
     }
+    .toc-reorder-row {
+      display: flex; justify-content: flex-end; margin-top: 0.5rem;
+    }
     .toc-priority-edit {
-      margin-left: auto;
       font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
       padding: 0.15rem 0.45rem; border-radius: 999px; cursor: pointer; font-family: inherit;
       border: 1px solid var(--gg-royal-border); background: var(--gg-paper); color: var(--gg-royal);
@@ -3825,7 +3833,6 @@
         <div class="picker-zone-head">
           <h2 class="picker-zone-title">Project Outlines</h2>
           <span class="project-outlines-hint" id="toc-summary-hint"></span>
-          <button type="button" class="toc-priority-edit" id="toc-priority-edit" aria-pressed="false" title="Reorder projects for your preferred priority">Edit</button>
         </div>
         <div class="project-outlines" id="project-toc">
           <div class="project-outlines-body">
@@ -3833,7 +3840,12 @@
             <p class="priority-table-intro" id="package-intro"></p>
             <p class="table-filter-status" id="table-filter-status"></p>
             <div class="toc-scroll">
-              <table class="toc-table">
+              <table class="toc-table" data-toc-cols="3">
+                <colgroup>
+                  <col class="toc-col-select" />
+                  <col class="toc-col-priority" />
+                  <col class="toc-col-project" />
+                </colgroup>
                 <thead>
                   <tr>
                     <th class="toc-col-select" scope="col">Add</th>
@@ -3847,6 +3859,9 @@
               </table>
             </div>
             <div id="toc-expand-row" class="toc-expand-row" hidden></div>
+            <div class="toc-reorder-row">
+              <button type="button" class="toc-priority-edit" id="toc-priority-edit" aria-pressed="false" title="Reorder projects for your preferred priority">Reorder priorities</button>
+            </div>
           </div>
         </div>
       </div>
@@ -3912,12 +3927,12 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="pages-config.js?v=20260717-qb-deposit"></script>
+  <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20260717-index-visibility"></script>
-  <script src="dui-goal-data.js?v=20260717-practice-area"></script>
-  <script src="kpi-report.js?v=20260717-cash-bars"></script>
+  <script src="projects-data.js?v=20260717-toc3col-r2"></script>
+  <script src="dui-goal-data.js?v=20260717-toc3col-r2"></script>
+  <script src="kpi-report.js?v=20260717-toc3col-r2"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260717-toc-simple"></script>
+  <script src="app.js?v=20260717-toc3col-r2"></script>
 </body>
 </html>

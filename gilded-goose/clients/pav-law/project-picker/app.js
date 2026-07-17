@@ -286,6 +286,7 @@
     return rank;
   }
 
+  /** TOC_COLS_3_ONLY — Priority cell is digits only (no badges, no Edit, no Show). */
   function priorityTocHtml(item, displayPriority) {
     const p = displayPriority != null ? displayPriority : "";
     return String(p);
@@ -2568,7 +2569,7 @@
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
     if (editBtn) {
-      editBtn.textContent = state.priorityEdit ? "Done" : "Edit";
+      editBtn.textContent = state.priorityEdit ? "Done" : "Reorder priorities";
       editBtn.setAttribute("aria-pressed", state.priorityEdit ? "true" : "false");
       editBtn.title = state.priorityEdit
         ? "Finish reordering priorities"
