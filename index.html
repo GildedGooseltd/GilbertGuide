@@ -846,7 +846,9 @@
     }
     .card.card-wip-started.selected,
     .card.card-status-wip.selected {
-      background: rgba(250, 204, 21, 0.22);
+      background: var(--gg-royal-dim);
+      border-color: var(--gg-royal-border);
+      box-shadow: inset 4px 0 0 var(--gg-royal-mid), 0 1px 4px rgba(61, 48, 40, 0.05);
     }
     .card.card-wip-started.ab-q-pending,
     .card.card-status-wip.ab-q-pending {
@@ -3933,6 +3935,6 @@
   <script src="dui-goal-data.js?v=20260717-toc3col-r2"></script>
   <script src="kpi-report.js?v=20260717-toc3col-r2"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260717-toc3col-r2"></script>
+  <script src="app.js?v=20260717-selected-wip-r1"></script>
 </body>
 </html>
