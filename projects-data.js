@@ -457,7 +457,7 @@ window.PROJECT_DATA = {
       "fee": 1500,
       "category": "Operations / Compensation",
       "campaignType": "Performance Incentives",
-      "status": "wip",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "Indirect — rewards tasks tied to booked consults and signed cases",
       "keywords": [
@@ -556,7 +556,7 @@ window.PROJECT_DATA = {
       "fee": 2800,
       "category": "Paid Media",
       "campaignType": "Display / Brand",
-      "status": "launched",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "",
       "keywords": [
@@ -654,7 +654,7 @@ window.PROJECT_DATA = {
       "category": "SEO",
       "campaignType": "Local SEO",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Organic search discovery traffic",
       "keywords": [
         "seo",
@@ -702,7 +702,7 @@ window.PROJECT_DATA = {
       "category": "CRM",
       "campaignType": "CRM Automation",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
       "keywords": [
@@ -749,7 +749,7 @@ window.PROJECT_DATA = {
       "fee": 4200,
       "category": "Website",
       "campaignType": "Website UX",
-      "status": "blocked-ab",
+      "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "Organic form fills from paid traffic already landing (no new channel)",
       "keywords": [
@@ -796,7 +796,7 @@ window.PROJECT_DATA = {
       "fee": 4500,
       "category": "Creative / Social",
       "campaignType": "Social + paid social",
-      "status": "available",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "Upper-funnel traffic → site and remarketing pool",
       "keywords": [
@@ -949,7 +949,7 @@ window.PROJECT_DATA = {
       "fee": 1200,
       "category": "Outbound",
       "campaignType": "Outbound Calls",
-      "status": "available",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "30–40 calls/month (paid search dependency)",
       "keywords": [
@@ -988,7 +988,7 @@ window.PROJECT_DATA = {
       "category": "SEO",
       "campaignType": "Blog / Content SEO",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Organic search discovery traffic",
       "keywords": [
         "blog",
@@ -1032,7 +1032,7 @@ window.PROJECT_DATA = {
       "category": "Brand / Professional Development",
       "campaignType": "Attorney Presence",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Profile and trust lift — discovery via Casey-specific search and directory profiles",
       "keywords": [
         "casey",
@@ -1048,7 +1048,7 @@ window.PROJECT_DATA = {
         "digital presence",
         "b10"
       ],
-      "title": "Casey Attorney Rebrand & Professional Presence",
+      "title": "Casey Rebrand Digital & Professional Presence",
       "description": "Casey-only rebrand and coaching: wardrobe guidance, headshot/day standards, intake/public talk track (no legal advice on phone), and digital presence (LinkedIn, Avvo, Justia, firm team page, GBP attorney attribution where applicable). Complements B10 inventory — this is the coaching and rebrand layer.",
       "tldr": "Elevate Casey as a visible Pav Law attorney — appearance, communication, and digital profiles aligned with firm brand and ABA advertising rules.",
       "valueAdded": [
@@ -1172,7 +1172,7 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Social Proof Ads",
       "status": "planning",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
       "keywords": [
         "case win",
@@ -1209,7 +1209,7 @@ window.PROJECT_DATA = {
       "category": "Intake / AI",
       "campaignType": "After-Hours Chat",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "All inbound web leads and form fills",
       "keywords": [
         "pavi",
@@ -1250,7 +1250,7 @@ window.PROJECT_DATA = {
       "fee": 1800,
       "category": "Finance / Operations",
       "campaignType": "Spend Audit",
-      "status": "planning",
+      "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "N/A — cost savings (not lead-gen)",
       "keywords": [

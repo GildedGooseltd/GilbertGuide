@@ -4,17 +4,17 @@
  */
 window.DUI_GOAL_DATA = {
   year: 2026,
-  current: 18,
+  current: 15,
   target: 50,
   label: "Signed",
   title: "# DUIs Signed",
   definition:
-    "Count MyCase matters where Case Type is DUI, DWAI, Alcohol, or DUI Pre-file, and Created date falls in the goal year. Cross-check Cases (practice area) tagged (DUI/DWI) when Case Type is blank.",
+    "Client contacts with Created date in 2026 whose Cases (practice area) includes a DUI/DWAI/Alcohol matter — tagged (DUI/DWI), or Criminal Defense mis-tagged with DUI/DWAI in the matter name. Excludes ancient-only case refs (e.g. 16T). Source export as of 2026-07-01.",
   sourceFile:
     "Ad Reports/exports/mycase/as-of-2026-07-01/contact_report_task_export.csv",
-  exportStrictCount: 8,
+  exportStrictCount: 11,
   exportNote:
-    "Strict Case Type filter on the Jul 1 contact export yields 8 rows for 2026. Dashboard current (18) matches feeByPractice DUI/DWAI YTD — treat as override until a clean MyCase signed-case export is filed.",
-  updatedAt: "2026-07-16",
-  notes: ""
+    "Practice-area count = 15 (11 with (DUI/DWI) tag + 4 DUI-named under Criminal Defense). Case Type–only strict was 8. Jun = 3 of the 15.",
+  updatedAt: "2026-07-17",
+  notes: "Recalculated from practice area on request 2026-07-17."
 };
