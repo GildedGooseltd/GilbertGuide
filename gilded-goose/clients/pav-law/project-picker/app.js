@@ -2362,7 +2362,11 @@
   }
 
   function ensureClientPriorityIds(baseItems) {
-    const items = baseItems || sortTocItems(tocSortableItems());
+    /* Seed reorder list from current score ranks (not stale INDEX Priority). */
+    const pool = tocSortableItems();
+    const scoreMap = buildUniqueTocPriorityMap(pool);
+    const scoreSorted = sortTocItems(pool, scoreMap);
+    const items = baseItems || scoreSorted;
     const ids = items.map(i => i.id);
     if (!Array.isArray(state.clientPriorityIds) || !state.clientPriorityIds.length) {
       state.clientPriorityIds = ids.slice();
@@ -2760,9 +2764,9 @@
       } else if (state.surveyDone || (Array.isArray(saved.gilbertChat) && saved.gilbertChat.some(m => m.role === "user"))) {
         state.doNextVisible = true;
       }
-      if (Array.isArray(saved.clientPriorityIds)) {
-        state.clientPriorityIds = saved.clientPriorityIds.filter(Boolean);
-      }
+      /* Client reorder is session-only. Restoring it from localStorage kept the old
+         Priority column after refresh and hid score ranking (+20 Recommended). */
+      state.clientPriorityIds = [];
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
     } catch (e) {}
