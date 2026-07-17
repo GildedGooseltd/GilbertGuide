@@ -31,7 +31,11 @@ const META_KEYS = {
   "reference link": "referenceLink",
   "estimated leads": "estimatedLeads",
   "estimated leads gained": "estimatedLeads",
-  "publish status": "publishStatus"
+  "publish status": "publishStatus",
+  "start date": "startDate",
+  "campaign start": "startDate",
+  "projected start": "startDate",
+  "season start": "startDate"
 };
 
 const BRAND_FIXES = [
@@ -757,11 +761,11 @@ export function parseSettingsMarkdown(text) {
   return {
     guideName: meta.guideName || "Lord Gilbert Granville",
     guideShortName: meta.guideShortName || "Gilbert",
-    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
+    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-seal.jpg",
     guideHero: meta.guideHero || "assets/gigi-goose-walk.png",
-    guideSeal: meta.guideSeal || "assets/gigi-logo-frame.png",
-    guideLogo: meta.guideLogo || "assets/gigi-logo-frame.png",
-    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
+    guideSeal: meta.guideSeal || "assets/gilbert-celebrating.png",
+    guideLogo: meta.guideLogo || "assets/gigi-logo.jpg",
+    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-seal.jpg",
     recommendedPackage: {
       label,
       retainer: retainerLine ? /^yes/i.test(retainerLine[1]) : true,
@@ -815,9 +819,45 @@ function indexHeaderColumnMap(cells) {
       pick("estimated cost") ??
       pick("cost") ??
       pick("fee"),
+    paymentPlan:
+      pick("payment plan") ??
+      pick("payment") ??
+      pick("pay plan") ??
+      pick("deposit"),
     title: pick("project") ?? 2,
     file: pick("file") ?? 3
   };
+}
+
+/** Parse INDEX Payment plan cells: `50%`, `50/50`, `100%`, `$800`, `monthly`, `—`. */
+export function parseIndexPaymentPlan(raw) {
+  const s = String(raw || "").trim();
+  if (!s || s === "—" || s === "-" || /^n\/?a$/i.test(s) || /^incl/i.test(s) || /^merged/i.test(s) || /^package/i.test(s)) {
+    return { label: s || "—", depositPct: null, depositAmount: null, monthly: false };
+  }
+  if (/monthly|retainer|ongoing/i.test(s)) {
+    return { label: s, depositPct: null, depositAmount: null, monthly: true };
+  }
+  if (/pay\s*in\s*full|full\s*pay|100\s*%|due\s*now/i.test(s)) {
+    return { label: s, depositPct: 1, depositAmount: null, monthly: false };
+  }
+  const slash = s.match(/^(\d{1,3})\s*\/\s*(\d{1,3})$/);
+  if (slash) {
+    const a = parseInt(slash[1], 10);
+    const b = parseInt(slash[2], 10);
+    if (a + b === 100) return { label: s, depositPct: a / 100, depositAmount: null, monthly: false };
+  }
+  const pct = s.match(/^(\d{1,3})\s*%$/);
+  if (pct) {
+    const n = parseInt(pct[1], 10);
+    if (n >= 0 && n <= 100) return { label: s, depositPct: n / 100, depositAmount: null, monthly: false };
+  }
+  const amt = s.match(/^\$?\s*([\d,]+(?:\.\d+)?)\s*$/);
+  if (amt && !/%/.test(s)) {
+    const n = parseFloat(amt[1].replace(/,/g, ""));
+    if (Number.isFinite(n)) return { label: s, depositPct: null, depositAmount: Math.round(n), monthly: false };
+  }
+  return { label: s, depositPct: null, depositAmount: null, monthly: false };
 }
 
 /** Parse INDEX Est. cost cells like `$2,900/mo`, `$2,000 + $500/mo`, `$1,500`, `incl. B13`. */
@@ -922,6 +962,10 @@ export function parseIndexMarkdown(text) {
       row.estCost = cells[colMap.estCost];
       row.estCostParsed = parseIndexEstCost(cells[colMap.estCost]);
     }
+    if (colMap.paymentPlan != null && cells[colMap.paymentPlan] != null) {
+      row.paymentPlan = cells[colMap.paymentPlan];
+      row.paymentPlanParsed = parseIndexPaymentPlan(cells[colMap.paymentPlan]);
+    }
     result.rowsById[id] = row;
   }
 
@@ -961,6 +1005,23 @@ export function applyIndexOverrides(projects, retainer, existingText) {
         delete next.ongoingFee;
       }
     }
+    const pp = o.paymentPlanParsed || (o.paymentPlan ? parseIndexPaymentPlan(o.paymentPlan) : null);
+    if (pp) {
+      if (o.paymentPlan) next.paymentPlanLabel = o.paymentPlan;
+      if (pp.monthly) {
+        delete next.depositPct;
+        delete next.depositAmount;
+      } else if (pp.depositAmount != null) {
+        next.depositAmount = pp.depositAmount;
+        delete next.depositPct;
+      } else if (pp.depositPct != null) {
+        next.depositPct = pp.depositPct;
+        delete next.depositAmount;
+      } else if (pp.label === "—" || pp.label === "-" || !pp.label) {
+        delete next.depositPct;
+        delete next.depositAmount;
+      }
+    }
     return next;
   };
   const merged = projects.map(applyTo);
@@ -977,9 +1038,9 @@ export function buildIndex(projects, retainer, existingText) {
 
 Open a file below to edit. Sorted by priority (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
 
-Edit **Project** titles, **Status**, **Visibility**, **Est. cost**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
+Edit **Project** titles, **Status**, **Visibility**, **Est. cost**, **Payment plan**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
-  md += `\n\n| Priority | ID | Status | Visibility | Est. cost | Project | File |\n| -------- | -- | ------ | ---------- | --------- | ------- | ---- |\n`;
+  md += `\n\n| Priority | ID | Status | Visibility | Est. cost | Payment plan | Project | File |\n| -------- | -- | ------ | ---------- | --------- | ------------ | ------- | ---- |\n`;
 
   const seen = new Set();
   for (const p of all) {
@@ -1003,13 +1064,21 @@ Edit **Project** titles, **Status**, **Visibility**, **Est. cost**, and add **##
       else if (p.fee) est = `$${Number(p.fee).toLocaleString("en-US")}`;
       else est = "—";
     }
-    md += `| ${pri} | ${id} | ${status} | ${vis} | ${est} | ${title} | ${fileCell} |\n`;
+    let pay = o?.paymentPlan || "";
+    if (!pay) {
+      if (p.monthlyOnly || id === "RETAINER" || id === "A8M") pay = "monthly";
+      else if (/^incl/i.test(est) || /^merged/i.test(est)) pay = "—";
+      else if (p.depositAmount != null) pay = `$${Number(p.depositAmount).toLocaleString("en-US")}`;
+      else if (p.depositPct != null) pay = `${Math.round(Number(p.depositPct) * 100)}%`;
+      else pay = "50%";
+    }
+    md += `| ${pri} | ${id} | ${status} | ${vis} | ${est} | ${pay} | ${title} | ${fileCell} |\n`;
   }
 
   for (const [id, o] of Object.entries(overrides.rowsById)) {
     if (seen.has(id) || !isValidProjectId(id)) continue;
     const vis = o.visibility || (o.publishStatus === "unpublished" ? "Unpublished" : "Published");
-    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${vis} | ${o.estCost || "—"} | ${o.title} | ${o.file} |\n`;
+    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${vis} | ${o.estCost || "—"} | ${o.paymentPlan || "—"} | ${o.title} | ${o.file} |\n`;
   }
 
   md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Priority** row (shows as —)."}\n`;

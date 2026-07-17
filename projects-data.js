@@ -5,11 +5,11 @@
 window.PROJECT_DATA = {
   "guideName": "Lord Gilbert Granville",
   "guideShortName": "Gilbert",
-  "guideIcon": "assets/gigi-goose-guide.svg",
+  "guideIcon": "assets/gigi-seal.jpg",
   "guideHero": "assets/gilbert-thinking.png",
   "guideSeal": "assets/gilbert-celebrating.png",
-  "guideLogo": "assets/gigi-logo-frame.png",
-  "paviIcon": "assets/gigi-goose-guide.svg",
+  "guideLogo": "assets/gigi-logo.jpg",
+  "paviIcon": "assets/gigi-seal.jpg",
   "recommendedPackage": {
     "label": "Recommended package (P1 B2 · P6 B1 · P10 B4 · P11 A4 · P3 A2 + Retainer)",
     "retainer": true,
@@ -72,9 +72,69 @@ window.PROJECT_DATA = {
     ],
     "abQuestions": [],
     "kpiRefs": [],
-    "estCostLabel": "$2,900/mo"
+    "estCostLabel": "$2,900/mo",
+    "paymentPlanLabel": "monthly"
   },
   "projects": [
+    {
+      "id": "B2",
+      "priority": 1,
+      "fee": 0,
+      "category": "Infrastructure",
+      "campaignType": "Call Infrastructure",
+      "status": "recommended",
+      "publishStatus": "published",
+      "parentId": "B13",
+      "enabler": true,
+      "estimatedLeads": "Recover ~20 answered calls/mo from current miss rate · KPI #21 ≥90%",
+      "keywords": [
+        "phone",
+        "VoIP",
+        "HubSpot calling",
+        "719",
+        "888-7888",
+        "missed call",
+        "intake"
+      ],
+      "title": "HubSpot Phone/ VoIP Setup",
+      "description": "Finish phone routing into HubSpot, start using HubSpot calling for intake logging, and staff coverage so paid clicks become answered consults — not missed revenue.",
+      "tldr": "Stand up HubSpot calling now (interim number if port pending) so Search + LSA calls are answered, logged, and tasked — before scaling paid budgets. Jul 2026 Ads review: **64 missed Search calls** in Call details (~**$26.1k** est. missed revenue YTD; ~**$125k** FY if miss rate holds).",
+      "valueAdded": [
+        "Call extensions stay on **(719) 888-7888** only — HubSpot numbers never public",
+        "HubSpot Calling logs timeline · missed-call → task (Romina / Casey)",
+        "Direct HubSpot routing: **Romina first → Casey backup → voicemail**, with same-day callback tasks",
+        "Unlocks safe budget scale on display ads Search after answered ≥90%"
+      ],
+      "valueIcons": [
+        "intake",
+        "foundation",
+        "crm",
+        "efficiency"
+      ],
+      "completedItems": [
+        "Phone setup documentation in HubSpot/PHONE-SETUP.md",
+        "Phone number policy: 888 public only",
+        "Google Ads call extension strategy drafted",
+        "Romina HubSpot app installed · 888 answered pre-port (carrier path)"
+      ],
+      "inProgressItems": [
+        "[ ] Interim HubSpot number live · forward **888 → HubSpot** (or confirm port FOC)",
+        "[ ] W3 missed-call → task workflow (owner + due same day)",
+        "[ ] HubSpot routing saved: Romina first → Casey backup → voicemail",
+        "[ ] Test: dial 888 → HubSpot app rings → contact timeline updates",
+        "[ ] Google Ads: Calls from ads Primary · 60s · on display ads / NTGUILT / DV",
+        "[ ] VoIP live verification with Google call reporting",
+        "Casey shadow: LSA call review + status updates (`LSA-DOCUMENTING-TRAINING.md`)"
+      ],
+      "goal": "Answered phones **≥90%** (#21) on Search + LSA lines; cut est. missed revenue (#19) from current ~$10k+/mo June run-rate.",
+      "abQuestions": [],
+      "kpiRefs": [
+        "#19",
+        "#21"
+      ],
+      "estCostLabel": "incl. B13",
+      "paymentPlanLabel": "—"
+    },
     {
       "id": "B11",
       "priority": 2,
@@ -121,7 +181,9 @@ window.PROJECT_DATA = {
       "goal": "LSA statuses updated same business day; Casey covers a defined phone block or day(s); disputed/spam leads caught before month-end billing; higher answer and close rates with legal expertise on pickup.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,500"
+      "estCostLabel": "$1,500",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "B10",
@@ -194,7 +256,9 @@ window.PROJECT_DATA = {
       ],
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,800"
+      "estCostLabel": "$1,800",
+      "paymentPlanLabel": "40%",
+      "depositPct": 0.4
     },
     {
       "id": "B13",
@@ -242,7 +306,9 @@ window.PROJECT_DATA = {
       "goal": "Complete HubSpot foundation so A3, B7, B1, and A5 share contacts, stages, and reporting without orphan channel fees.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$5,500"
+      "estCostLabel": "$5,500",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "A4",
@@ -252,7 +318,6 @@ window.PROJECT_DATA = {
       "campaignType": "Referral Program",
       "status": "wip",
       "publishStatus": "published",
-      "ongoingFee": 500,
       "estimatedLeads": "10/ mo",
       "keywords": [
         "referral",
@@ -280,7 +345,9 @@ window.PROJECT_DATA = {
       "goal": "Generate about 10 referral leads per month via past-client asks with active monthly upkeep.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,700 + $500/mo"
+      "estCostLabel": "$1,700",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "A17",
@@ -328,14 +395,13 @@ window.PROJECT_DATA = {
       ],
       "goal": "Book 20 resigns (or signed sealing/probation matters) per wave at PDF connect/email targets with Nurture Track logged on every touched contact.",
       "informationNeeded": [
-        "Confirm MyCase field names match PDF (Outcome · Status · Disposition · Nurture Track)",
-        "Start with Gabriel volume of 20 calls/day or softer ramp?"
+        "Confirm MyCase field names match PDF (Outcome · Status · Disposition · Nurture Track)"
       ],
-      "abQuestions": [
-        "Start with Gabriel volume target of 20 calls/day or softer ramp?"
-      ],
+      "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,500"
+      "estCostLabel": "$1,500",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "B5",
@@ -381,7 +447,9 @@ window.PROJECT_DATA = {
       "goal": "Reach 250 households with validated addresses and tracked QR where feasible for past-client and cold-database re-engagement.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,200"
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "30%",
+      "depositPct": 0.3
     },
     {
       "id": "A14",
@@ -429,7 +497,9 @@ window.PROJECT_DATA = {
       "goal": "Ship an Andrew-approved matrix: (1) goals + KPIs in INCENTIVE-COMP-PLAN.md, (2) L1–L5 flat ladder + FTE worksheet, (3) other-role task list.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,500"
+      "estCostLabel": "$1,500",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "B14",
@@ -476,7 +546,9 @@ window.PROJECT_DATA = {
         "Which mark first — Pav Law firm logo, NTGUILT, or both catalogs? Any hard no’s on merch types (socks, drinkware)?"
       ],
       "kpiRefs": [],
-      "estCostLabel": "$1,200"
+      "estCostLabel": "$1,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "A2",
@@ -520,7 +592,9 @@ window.PROJECT_DATA = {
       "goal": "Drive tracked NTGUILT site sessions and remarketing pool growth from Display/Search with UTM attribution on every destination.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,800"
+      "estCostLabel": "$2,800",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "A1",
@@ -569,7 +643,9 @@ window.PROJECT_DATA = {
       "goal": "Launch and stabilize additional Search + call-only flights so paid clicks produce tracked consult calls for the new target audiences.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,200"
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "B4",
@@ -615,7 +691,9 @@ window.PROJECT_DATA = {
       "goal": "Move priority keywords from avg position 45–58 to top-20 for 5 core terms within 90 days.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,500"
+      "estCostLabel": "$2,500",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "B1",
@@ -661,7 +739,9 @@ window.PROJECT_DATA = {
       "goal": "Prove form → task → Romina booking in under 15 minutes median for 90% of inbound web leads within 2 weeks of sprint.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,800"
+      "estCostLabel": "$1,800",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "B3",
@@ -706,7 +786,9 @@ window.PROJECT_DATA = {
       "goal": "Cut mobile LCP below 3s on top 5 entry pages and reduce bounce rate 10% on paid landing URLs.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$4,200"
+      "estCostLabel": "$4,200",
+      "paymentPlanLabel": "40%",
+      "depositPct": 0.4
     },
     {
       "id": "A7",
@@ -764,7 +846,9 @@ window.PROJECT_DATA = {
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
       "kpiRefs": [],
-      "estCostLabel": "$4,500"
+      "estCostLabel": "$4,500",
+      "paymentPlanLabel": "30%",
+      "depositPct": 0.3
     },
     {
       "id": "B7",
@@ -815,7 +899,8 @@ window.PROJECT_DATA = {
       "goal": "Upload and segment 100% of marketable past-client contacts with bounce rate under 2% on first send.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "incl. B13"
+      "estCostLabel": "incl. B13",
+      "paymentPlanLabel": "—"
     },
     {
       "id": "A13",
@@ -854,7 +939,9 @@ window.PROJECT_DATA = {
       "goal": "Test adult-site Display with frequency caps and ≥10 tracked site visits per $100 spend without brand safety flags.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,400"
+      "estCostLabel": "$2,400",
+      "paymentPlanLabel": "30%",
+      "depositPct": 0.3
     },
     {
       "id": "A6",
@@ -890,58 +977,9 @@ window.PROJECT_DATA = {
       "goal": "Book 4–8 outbound consults per month from warm lists at connect rate ≥25% and stronger answer rate on returned calls.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,200"
-    },
-    {
-      "id": "B2",
-      "priority": 19,
-      "fee": 0,
-      "category": "Infrastructure",
-      "campaignType": "Call Infrastructure",
-      "status": "onhold",
-      "publishStatus": "published",
-      "parentId": "B13",
-      "enabler": true,
-      "estimatedLeads": "30–40 calls/month (Military Search baseline)",
-      "keywords": [
-        "phone",
-        "VoIP",
-        "call extension",
-        "719",
-        "888-7888",
-        "infrastructure"
-      ],
-      "title": "HubSpot Phone/ VoIP Setup",
-      "description": "Transfer numbers into HubSpot for menus, call tracking, logging, and stronger metrics before raising call-heavy Search budgets.",
-      "tldr": "Verified phone routing and call tracking so paid clicks tie to qualified consults — not dropped leads.",
-      "valueAdded": [
-        "Call extensions verified against Google call reporting — baseline 30–40 calls/mo from Military Search",
-        "HubSpot menus route to Romina desk and LSA inbox",
-        "Casey coverage blocks free Romina for pipeline (KPI #21 target 90%)"
-      ],
-      "valueIcons": [
-        "intake",
-        "foundation",
-        "crm",
-        "efficiency"
-      ],
-      "completedItems": [
-        "Phone setup documentation in HubSpot/PHONE-SETUP.md",
-        "Google Ads call extension strategy drafted"
-      ],
-      "inProgressItems": [
-        "Waiting on phone company number transfer",
-        "VoIP live verification with Google",
-        "Team training and routing documentation",
-        "Casey ↔ Romina schedule for who owns all calls by hour (align with HubSpot menus when live)",
-        "Casey shadow: LSA call review + status updates before live answering (`LSA-DOCUMENTING-TRAINING.md`)"
-      ],
-      "goal": "Reach 90% answered phones (#21) on Military/LSA lines and recover ~7 missed calls/month (~$2,400/mo revenue at 7.3% lead→case).",
-      "abQuestions": [],
-      "kpiRefs": [
-        "#21"
-      ],
-      "estCostLabel": "incl. B13"
+      "estCostLabel": "$1,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "B6",
@@ -983,7 +1021,9 @@ window.PROJECT_DATA = {
       "goal": "Publish 2 posts/month and earn +15% organic entrances to blog URLs within 12 weeks.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,500"
+      "estCostLabel": "$2,500",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "B12",
@@ -1026,15 +1066,11 @@ window.PROJECT_DATA = {
         "Awaiting kickoff — depends on B10 inventory for Casey listings"
       ],
       "goal": "Publish Casey as attorney across agreed profiles with consistent bio, headshots, and presentation standards aligned to ABA Rule 7.2.",
-      "informationNeeded": [
-        "Answer AB – Q: associate/of-counsel on all directories vs firm team page only for now?"
-      ],
-      "abQuestions": [
-        "Does Andrew want Casey listed as associate/of-counsel on all directories, or firm team page only for now?",
-        "associate/of-counsel on all directories vs firm team page only for now?"
-      ],
+      "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,000"
+      "estCostLabel": "$2,000",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "A11",
@@ -1045,6 +1081,7 @@ window.PROJECT_DATA = {
       "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "~36 calls/month baseline (Military Search)",
+      "startDate": "2026-08-11",
       "keywords": [
         "seasonal",
         "campaign",
@@ -1053,6 +1090,8 @@ window.PROJECT_DATA = {
         "military",
         "dui",
         "holiday",
+        "oktoberfest",
+        "colorado",
         "focus",
         "target",
         "area",
@@ -1061,12 +1100,13 @@ window.PROJECT_DATA = {
         "lsa",
         "bilingual"
       ],
-      "title": "Seasonal Google and Microsoft Ads Campaign — Focus Area",
-      "description": "Build and launch one focused Google + Microsoft campaign for a single practice or seasonal topic — military/veterans, DUI/traffic corridors, holiday windows, LSA geos, NTGUILT/events, sealing, DV (budget-controlled), or bilingual where intake supports it. Topic is chosen for the quarter; not all areas at once.",
-      "tldr": "Repeatable seasonal build: one focus area per flight at the card fee each time a campaign is added.",
+      "title": "Holiday Digital Ad(s) Campaign Expansion",
+      "description": "Build and launch one focused Google + Microsoft campaign for a single practice or seasonal topic — holiday/Oktoberfest windows first, then military/veterans, DUI/traffic corridors, LSA geos, NTGUILT/events, sealing, DV (budget-controlled), or bilingual where intake supports it. Topic is chosen for the season; not all areas at once.\n\n**Projected campaign start (ads live):** 2026-08-11 — one month before the earliest major verified Colorado Oktoberfest weekend (Steamboat OktoberWest Sep 11–12), so creative/planning is due by ~2026-07-11 and this card is next for the holiday runway.\n\n**Colorado Oktoberfest / fall festival dates (2026):**\n\n- Steamboat OktoberWest — Sep 11–12, 2026 (verified: Steamboat Springs Chamber)\n- Denver Oktoberfest (56th annual) — Sep 18–20 and Sep 25–27, 2026, Larimer / Ballpark District (verified: thedenveroktoberfest.com)\n- Breckenridge Oktoberfest (30th annual) — Sep 25–27, 2026 (verified: gobreck.com)\n- Colorado Springs Oktoberfest — reported Sep 25–27, 2026 (confirm closer to event)\n- Arapahoe Basin Oktoberfest — reported Sep 19–20, 2026 (confirm closer to event)\n- Greeley Oktobrewfest — reported Sep 25–26, 2026 (confirm closer to event)",
+      "tldr": "Next holiday/seasonal push: Colorado Oktoberfest season, then later holiday windows. One focus area per flight at the card fee. Creative + planning must start at least one month before ads go live.",
       "valueAdded": [
         "One focus per build: structure, creative, UTMs, and conversion tracking",
-        "Topic chosen for the season (holiday DUI, military, summer NTGUILT, etc.)",
+        "2026 holiday season opens with Colorado Oktoberfest / fall festival DUI and corridor targeting",
+        "Creative and planning locked ≥1 month before projected go-live (2026-08-11)",
         "Mirrored Google and Microsoft setup where the account allows"
       ],
       "valueIcons": [
@@ -1075,10 +1115,12 @@ window.PROJECT_DATA = {
         "intake",
         "efficiency"
       ],
-      "goal": "Launch one seasonal Search/Microsoft flight with ≥20 calls at ≤$75 cost/call for the chosen focus area.",
+      "goal": "Launch one seasonal Search/Microsoft flight with ≥20 calls at ≤$75 cost/call for the chosen focus area — first flight: Colorado Oktoberfest / early fall holiday window.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,200"
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
     },
     {
       "id": "A5",
@@ -1087,7 +1129,7 @@ window.PROJECT_DATA = {
       "category": "CRM / Web",
       "campaignType": "Landing Page",
       "status": "planning",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "parentId": "B13",
       "estimatedLeads": "All inbound web leads and form fills",
       "keywords": [
@@ -1119,7 +1161,9 @@ window.PROJECT_DATA = {
       "goal": "Lift landing-page conversion 15–25% on primary paid-traffic entry pages within 30 days of launch.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,800"
+      "estCostLabel": "$1,800",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "A9",
@@ -1154,7 +1198,9 @@ window.PROJECT_DATA = {
       "goal": "Publish 6+ case-win proof points and lift on-site trust signals to improve consult conversion 5–10%.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,000"
+      "estCostLabel": "$2,000",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "A12",
@@ -1194,7 +1240,9 @@ window.PROJECT_DATA = {
       "goal": "Capture after-hours form fills and chat leads with under 5 minutes first response during pilot hours.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,200"
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "B9",
@@ -1233,7 +1281,9 @@ window.PROJECT_DATA = {
       ],
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,800"
+      "estCostLabel": "$1,800",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "A3",
@@ -1273,7 +1323,8 @@ window.PROJECT_DATA = {
       "goal": "Drive 2–4 re-engaged consults from the past-client list around the July 4 window at under $50 cost per booked consult.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "incl. B13"
+      "estCostLabel": "incl. B13",
+      "paymentPlanLabel": "—"
     },
     {
       "id": "A10",
@@ -1371,7 +1422,8 @@ window.PROJECT_DATA = {
         "Cap event activation at $3k or $6k for next event?"
       ],
       "kpiRefs": [],
-      "estCostLabel": "$2,500"
+      "estCostLabel": "$2,500",
+      "paymentPlanLabel": "—"
     },
     {
       "id": "A16",
@@ -1425,7 +1477,8 @@ window.PROJECT_DATA = {
         "Did Bailey’s accept, decline, or counter the $600–$1,000 ask?"
       ],
       "kpiRefs": [],
-      "estCostLabel": "$1,000"
+      "estCostLabel": "$1,000",
+      "paymentPlanLabel": "—"
     },
     {
       "id": "C1",
@@ -1557,7 +1610,8 @@ window.PROJECT_DATA = {
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
       "kpiRefs": [],
-      "estCostLabel": "merged A7"
+      "estCostLabel": "merged A7",
+      "paymentPlanLabel": "—"
     },
     {
       "id": "B8",
@@ -1605,7 +1659,8 @@ window.PROJECT_DATA = {
       "goal": "Post 8–12 firm-safe items/month across connected channels with approval workflow and UTM on every link.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "merged A7"
+      "estCostLabel": "merged A7",
+      "paymentPlanLabel": "—"
     },
     {
       "id": "A8",
@@ -1655,7 +1710,9 @@ window.PROJECT_DATA = {
       "kpiRefs": [
         "#19"
       ],
-      "estCostLabel": "$1,600"
+      "estCostLabel": "$1,600",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5
     },
     {
       "id": "A8M",
@@ -1696,7 +1753,8 @@ window.PROJECT_DATA = {
       ],
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$500/mo"
+      "estCostLabel": "$500/mo",
+      "paymentPlanLabel": "monthly"
     }
   ]
 };

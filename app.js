@@ -1,7 +1,17 @@
 (function () {
   function getConfig() {
     return Object.assign(
-      { webhookUrl: "", depositAmount: 2500, quickbooksDepositUrl: "", notifyEmail: "support@gildedgooselimited.com" },
+      {
+        webhookUrl: "",
+        depositAmount: 2500,
+        quickbooksDepositUrl: "",
+        notifyEmail: "support@gildedgooselimited.com",
+        /** Future custom e-sign build — not a Dropbox/DocuSign plugin. Draft + email PDF for now. */
+        esignProvider: "custom_later",
+        esignCreateUrl: "",
+        msaLabel: "Master Services Agreement (MSA)",
+        sowTemplateNote: "GGL SOW template + Schedule A from payment plan"
+      },
       typeof window !== "undefined" && window.PAV_PICKER_CONFIG ? window.PAV_PICKER_CONFIG : {}
     );
   }
@@ -18,14 +28,13 @@
   const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
   const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
 
-  const CONSENT_VERSION = "plan-clickwrap-v1";
-  const CONSENT_TEXT = "By checking this box, I consent to electronic records and signatures for this project plan selection and confirm my intent to authorize the projects, fees, and payment terms shown on this page.";
+  let lastSubmittedPayload = null;
 
   /** Quick fit survey → tags in goalText → recommended projects */
   const GILBERT_SURVEY = [
     {
       id: "bottleneck",
-      prompt: "What's the biggest bottleneck right now?",
+      prompt: GILBERT_GREETING,
       options: [
         { id: "leads", label: "Not enough qualified leads / consults", tags: "leads ads LSA search paid consults volume campaigns" },
         { id: "intake", label: "Phones / intake — missing or slow follow-up", tags: "phones VoIP HubSpot intake CRM routing calls" },
@@ -116,7 +125,7 @@
 
   function gilbertAbQNoticeText(item) {
     const qs = (item.abQuestions || []).map((q, i) => `${i + 1}. ${q}`).join(" ");
-    return `${item.title} has AB – Q (question for Andrew Brown): ${qs} — answer in the AB – Q box on that card before it can go in the cart.`;
+    return `${item.title} is Blocked (needs Andrew): ${qs} — answer in the Blocked box on that card before it can go in the cart.`;
   }
 
   function announceGilbertAbQ(item) {
@@ -144,7 +153,7 @@
     }
     if (add && !canSelectProject(item, isRetainer)) {
       if (!opts?.silent) {
-        showToast("AB – Q: answer Andrew's question before adding to cart", true);
+        showToast("Blocked: answer Andrew's question before adding to cart", true);
         openAbQComment(id);
         announceGilbertAbQ(item);
       }
@@ -163,16 +172,13 @@
   function abQuestionsBannerHtml(item) {
     if (!hasAbQuestions(item)) return "";
     const id = item.id;
-    const answered = abQuestionAnswered(id);
+    if (abQuestionAnswered(id)) return "";
     const qs = item.abQuestions.map(q => `<li>${escapeHtml(q)}</li>`).join("");
-    return `<div class="ab-q-flag${answered ? " ab-q-flag--answered" : ""}" role="note">
-      <div class="ab-q-flag-head"><span class="ab-q-badge">AB – Q</span> Question for Andrew Brown</div>
+    return `<div class="ab-q-flag" role="note">
+      <div class="ab-q-flag-head"><span class="ab-q-badge">Blocked</span> Needs Andrew before cart</div>
       <ul class="ab-q-list">${qs}</ul>
-      <label for="ab-q-${id}" class="ab-q-answer-label">${answered ? "Your answer" : "Answer for Andrew Brown (required before cart)"}</label>
+      <label for="ab-q-${id}" class="ab-q-answer-label">Answer for Andrew Brown (required before cart)</label>
       <textarea id="ab-q-${id}" class="project-note ab-q-answer" data-id="${id}" placeholder="Reply for Andrew Brown…">${escapeHtml(state.notes[id] || "")}</textarea>
-      <p class="ab-q-hint">${answered
-        ? "Answer recorded — you can add this to the cart."
-        : `${GUIDE_SHORT}: answer above before this goes in the cart.`}</p>
     </div>`;
   }
 
@@ -301,7 +307,7 @@
     { id: "creative", svgId: "creative", cls: "icon-creative", label: "Creative", match: item => /creative|email|social media|display|repurpose/i.test(iconMatchText(item)) }
   ];
 
-  /** Dashboard KPIs tied to each value icon (picker filter + project cards). */
+  /** Dashboard KPIs tied to each value icon (kept for docs / future use — not shown on filter chips). */
   const ICON_KPI_MAP = {
     foundation: ["#21", "#27"],
     retainer: ["#08", "#12", "#14", "#15"],
@@ -386,7 +392,7 @@
     return "available";
   }
 
-  /** Named 0–100 best-fit weights (positives sum to 100 at full credit). */
+  /** Named 0–100 best-fit weights (positives sum to 100 at full credit). WIP + season urgency are bonuses on top. */
   const SCORE_WEIGHTS = {
     priority: 30,
     leadGenerator: 17,
@@ -396,7 +402,9 @@
     dataReturn: 4,
     feeAccess: 8,
     cartSynergy: 5,
-    wip: 10
+    wip: 10,
+    /** Extra points as a project's projected start date approaches (see seasonUrgencyBoost). */
+    seasonUrgency: 10
   };
 
   function normalizePublishStatus(item) {
@@ -468,6 +476,28 @@
     return getValueIcons(item).some(v => v.id === "leads");
   }
 
+  /**
+   * Bonus points as projected start date approaches (closer = higher).
+   * Ramp: 0 beyond 90 days out → full seasonUrgency at start date; hold 45 days after, then fade by day 90.
+   */
+  function seasonUrgencyBoost(item) {
+    const raw = item && (item.startDate || item.campaignStart || item.seasonStart);
+    if (!raw) return 0;
+    const start = new Date(String(raw).trim() + (String(raw).includes("T") ? "" : "T12:00:00"));
+    if (Number.isNaN(start.getTime())) return 0;
+    const now = new Date();
+    const daysUntil = (start.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+    const max = SCORE_WEIGHTS.seasonUrgency;
+    const rampDays = 90;
+    if (daysUntil > rampDays) return 0;
+    if (daysUntil <= 0) {
+      if (daysUntil >= -45) return max;
+      if (daysUntil >= -90) return max * Math.max(0, (daysUntil + 90) / 45);
+      return 0;
+    }
+    return max * (1 - daysUntil / rampDays);
+  }
+
   /** Best-fit score on a named 0–100 scale (see SCORE_WEIGHTS / INDEX.md). Required items are not scored. */
   function computeProjectScore(item) {
     if (!item || isRequiredProject(item, !!item.isRetainer) || isCompletedStatus(item) || item.monthlyOnly) return -999;
@@ -498,9 +528,10 @@
 
     if (state.projects.size && item.enabler) score += W.cartSynergy;
     if (normalizeStatus(item) === "wip") score += W.wip;
+    score += seasonUrgencyBoost(item);
 
-    /* Max 110 when WIP (+10 on top of the 100 named positives). No status penalties. */
-    score = Math.min(110, score);
+    /* Max 120 when WIP + season urgency (+10 each on top of the 100 named positives). No status penalties. */
+    score = Math.min(120, score);
 
     return Math.round(Math.max(0, score) * 10) / 10;
   }
@@ -536,12 +567,7 @@
     const hasCart = cartItems.length > 0;
     const head = `<div class="do-next-head">
       <div class="do-next-head-copy">
-        <h3>Pav's Priority Project Picklist</h3>
-        <p class="do-next-blurb">${hasCart
-          ? "Defaults follow INDEX Status (Required + Recommended). Fit is for optional picks only — Required shows —. Uncheck non-required to remove. Fees appear after you review &amp; submit."
-          : (asked
-            ? "Best-fit from your survey — add projects from Outlines or cards below. Fees appear on the review page."
-            : "Answer Gilbert’s survey on the left for a shortlist, or add projects below. Fees appear on the review page.")}</p>
+        <h3>Best Fit Projects for Pav</h3>
       </div>
     </div>`;
 
@@ -660,9 +686,9 @@
     const note = (state.notes[id] || "").trim();
     const abQ = hasAbQuestions(item);
     const answered = abQuestionAnswered(id);
-    const tagLabel = abQ && !answered ? "Comment — AB-Q" : (note ? "Comment ✓" : "+ Comment");
+    const tagLabel = abQ && !answered ? "Comment — Blocked" : (note ? "Comment ✓" : "+ Comment");
     return `<div class="research-row${sel ? " selected" : ""}${abQ && !answered ? " ab-q-pending" : ""}" data-id="${id}">
-      <input type="checkbox" class="proj-chk research-chk" data-id="${id}" ${sel ? "checked" : ""}${abQ && !answered ? ' title="Answer AB – Q in Comment first"' : ""}>
+      <input type="checkbox" class="proj-chk research-chk" data-id="${id}" ${sel ? "checked" : ""}${abQ && !answered ? ' title="Answer Blocked note in Comment first"' : ""}>
       <div>
         <span class="research-row-id">${escapeHtml(id)}</span>
         <div class="research-row-title">${escapeHtml(item.title)}</div>
@@ -670,7 +696,7 @@
       </div>
       <button type="button" class="research-comment-tag${note ? " has-note" : ""}${abQ && !answered ? " needs-ab-q" : ""}" data-id="${id}">${tagLabel}</button>
       <div class="research-comment-popover" data-id="${id}" hidden>
-        <textarea class="project-note" data-id="${id}" placeholder="${abQ ? "Answer for Andrew Brown (AB – Q)…" : "Planning notes for Gilded Goose…"}">${escapeHtml(state.notes[id] || "")}</textarea>
+        <textarea class="project-note" data-id="${id}" placeholder="${abQ ? "Answer for Andrew Brown (Blocked)…" : "Planning notes for Gilded Goose…"}">${escapeHtml(state.notes[id] || "")}</textarea>
         <button type="button" class="comment-popover-done" data-id="${id}">Done</button>
       </div>
     </div>`;
@@ -752,9 +778,9 @@
 
   const PERFORMANCE_PAY_IDS = new Set(["RETAINER", "A1", "A2", "A3", "A4", "A6", "A7", "A11"]);
 
-  /** Payment calculator defaults — full rules in PAYMENT-SCHEDULE.md */
+  /** Payment calculator defaults — full rules in PAYMENT-SCHEDULE.md (doc may lag; code wins) */
   const PAYMENT_DEPOSIT_PCT = 0.5;
-  const PAYMENT_NO_SURCHARGE_DAYS = 60;
+  const PAYMENT_NO_SURCHARGE_DAYS = 30;
 
   function getProjectsInvoiceTotal() {
     return getSelectedProjects().reduce((s, p) => s + projectScheduleFee(p), 0);
@@ -798,10 +824,7 @@
         remaining: 0,
         monthly,
         depositPct: null,
-        paymentType: payType,
-        note: monthly
-          ? `${fmt(monthly)}/mo — bills separately (not on project schedule)`
-          : "No project fee on this line"
+        paymentType: payType
       };
     }
 
@@ -811,10 +834,6 @@
       : Math.round(scheduleFee * depositPct);
     dueNow = Math.max(0, Math.min(scheduleFee, dueNow));
     const remaining = scheduleFee - dueNow;
-    const pctLabel = Math.round((dueNow / scheduleFee) * 100);
-    const notes = [`${pctLabel}% due now`];
-    if (monthly) notes.push(`${fmt(monthly)}/mo ongoing separate`);
-    if (payType === "performance") notes.push("Performance-linked");
     return {
       id: item.id,
       title: item.title,
@@ -824,8 +843,7 @@
       remaining,
       monthly,
       depositPct: dueNow / scheduleFee,
-      paymentType: payType,
-      note: notes.join(" · ")
+      paymentType: payType
     };
   }
 
@@ -860,16 +878,14 @@
       <td class="col-fee">${r.scheduleFee ? fmt(r.scheduleFee) : (r.monthly ? `${fmt(r.monthly)}/mo` : "—")}</td>
       <td class="col-due">${r.dueNow ? fmt(r.dueNow) : (r.kind === "monthly" ? "Monthly" : "—")}</td>
       <td class="col-remain">${r.remaining ? fmt(r.remaining) : "—"}</td>
-      <td class="col-note">${escapeHtml(r.note)}</td>
     </tr>`).join("");
     return `<div class="payment-options-scroll"><table class="payment-options-table">
       <thead>
         <tr>
           <th scope="col">Project</th>
-          <th scope="col">One-time fee</th>
-          <th scope="col">Due now</th>
-          <th scope="col">On schedule</th>
-          <th scope="col">Notes</th>
+          <th scope="col">Total fee</th>
+          <th scope="col">Deposit due</th>
+          <th scope="col">Scheduled</th>
         </tr>
       </thead>
       <tbody>
@@ -879,21 +895,19 @@
           <td>${totals.scheduleFees ? fmt(totals.scheduleFees) : "—"}</td>
           <td>${totals.dueNow ? fmt(totals.dueNow) : "—"}</td>
           <td>${totals.remaining ? fmt(totals.remaining) : "—"}</td>
-          <td>${totals.monthly ? `${fmt(totals.monthly)}/mo separate` : ""}</td>
         </tr>
       </tbody>
     </table></div>`;
   }
 
-  /** Payment calculator: deposit from payment options; remaining on schedule; surcharge if payoff > 60 days.
-   *  Rules: PAYMENT-SCHEDULE.md */
+  /** Payment calculator: deposit from payment options; remaining on schedule.
+   *  Surcharge: 0% for first 30 days (1 month); then +10% per additional month on remaining balance.
+   *  rate = max(0, months - 1) × 0.10 */
 
   function paymentSurchargeRateForMonths(months) {
     const m = Number(months) || 0;
-    const days = m * 30;
-    if (days <= PAYMENT_NO_SURCHARGE_DAYS) return 0;
-    if (m <= 6) return 0.05;
-    return 0.10; /* 7–12 months */
+    if (m <= 1) return 0;
+    return (m - 1) * 0.10;
   }
 
   function computePaymentPlan(months, projectTotal) {
@@ -914,13 +928,15 @@
         financedRemaining: remainingBase,
         perInvoice: null,
         totalDue: deposit + remainingBase,
+        noSurcharge: true,
+        within30Days: true,
         within60Days: true,
         daysEstimate: m && m >= 1 ? m * 30 : null,
         monthlySeparate: cart.monthly || 0
       };
     }
     const daysEstimate = m * 30;
-    const within60Days = daysEstimate <= PAYMENT_NO_SURCHARGE_DAYS;
+    const noSurcharge = daysEstimate <= PAYMENT_NO_SURCHARGE_DAYS;
     const surchargeRate = paymentSurchargeRateForMonths(m);
     const surchargeAmount = Math.round(remainingBase * surchargeRate);
     const financedRemaining = remainingBase + surchargeAmount;
@@ -937,7 +953,9 @@
       financedRemaining,
       perInvoice,
       totalDue,
-      within60Days,
+      noSurcharge,
+      within30Days: noSurcharge,
+      within60Days: noSurcharge,
       daysEstimate,
       monthlySeparate: cart.monthly || 0
     };
@@ -960,8 +978,8 @@
     }
     if (plan.months) {
       rows.push(["Payoff window", `~${plan.daysEstimate} days (${plan.months} invoice${plan.months === 1 ? "" : "s"})`]);
-      if (plan.within60Days) {
-        rows.push(["Schedule surcharge", "None — paid within 60 days"]);
+      if (plan.noSurcharge) {
+        rows.push(["Schedule surcharge", "None — paid within 30 days"]);
       } else {
         rows.push([`Schedule surcharge (+${ratePct}% on remaining)`, fmt(plan.surchargeAmount)]);
         rows.push(["Financed remaining", fmt(plan.financedRemaining)]);
@@ -977,7 +995,7 @@
       if (/Total due/i.test(label)) return "payment-calc-row--total";
       if (/Due now/i.test(label)) return "payment-calc-row--deposit";
       if (/Schedule surcharge/i.test(label)) {
-        return plan.within60Days ? "payment-calc-row--surcharge-none" : "payment-calc-row--surcharge";
+        return plan.noSurcharge ? "payment-calc-row--surcharge-none" : "payment-calc-row--surcharge";
       }
       return "";
     }
@@ -994,7 +1012,6 @@
   function updateInvoiceScheduleAmount() {
     const monthsEl = document.getElementById("invoice-payment-months");
     const amountEl = document.getElementById("invoice-payment-amount");
-    const hintEl = document.getElementById("invoice-schedule-hint");
     const breakdownHost = document.getElementById("payment-calc-breakdown-host");
     if (!monthsEl || !amountEl) return;
 
@@ -1007,9 +1024,6 @@
     if (projectTotal <= 0) {
       amountEl.value = "";
       amountEl.placeholder = "No project fees to invoice";
-      if (hintEl) {
-        hintEl.textContent = "No one-time project fees selected — only retainer/maintenance apply. Deposit and schedule apply to project fees only.";
-      }
       syncPaymentTermsFromDom();
       return;
     }
@@ -1017,21 +1031,11 @@
     if (!months || months < 1) {
       amountEl.value = "";
       amountEl.placeholder = "Select schedule first";
-      if (hintEl) {
-        hintEl.textContent = `${fmt(plan.deposit)} due now from payment options. Choose a payoff schedule for the remaining ${fmt(plan.remainingBase)}. Schedules longer than 60 days add a surcharge on the remaining balance.`;
-      }
       syncPaymentTermsFromDom();
       return;
     }
 
     amountEl.value = String(plan.perInvoice != null ? plan.perInvoice : "");
-    if (hintEl) {
-      if (plan.within60Days) {
-        hintEl.textContent = `${fmt(plan.deposit)} deposit now + ${plan.months} invoice${plan.months === 1 ? "" : "s"} of ${fmt(plan.perInvoice)} (no surcharge — within 60 days). Retainer/maintenance bill separately.`;
-      } else {
-        hintEl.textContent = `${fmt(plan.deposit)} deposit now + ${plan.months} invoice${plan.months === 1 ? "" : "s"} of ${fmt(plan.perInvoice)} after +${Math.round(plan.surchargeRate * 100)}% schedule surcharge on the remaining balance. Total ${fmt(plan.totalDue)}. Retainer/maintenance bill separately.`;
-      }
-    }
     syncPaymentTermsFromDom();
   }
 
@@ -1048,7 +1052,7 @@
     if (months && monthlyAmount != null && plan.projectFees > 0) {
       const surchargeNote = plan.surchargeAmount
         ? `; +${Math.round(plan.surchargeRate * 100)}% schedule surcharge ${fmt(plan.surchargeAmount)} on remaining`
-        : "; no surcharge (≤60 days)";
+        : "; no surcharge (≤30 days)";
       label = `Due now ${fmt(plan.deposit)}; then ${months} QuickBooks invoice${months === 1 ? "" : "s"} of ${fmt(monthlyAmount)} (financed remaining ${fmt(plan.financedRemaining)}${surchargeNote}; total ${fmt(plan.totalDue)})`;
     } else if (months) {
       label = `${months} invoice${months === 1 ? "" : "s"} — deposit billed immediately per payment options`;
@@ -1064,6 +1068,7 @@
       surchargeAmount: plan.surchargeAmount,
       financedRemaining: plan.financedRemaining,
       totalDue: plan.totalDue,
+      within30Days: plan.within30Days,
       within60Days: plan.within60Days,
       monthlySeparate: plan.monthlySeparate || 0,
       lineItems: getCartPaymentOptions(),
@@ -1200,22 +1205,13 @@
     const hint = state.iconFilters.length
       ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear filters (${state.iconFilters.length})</button>`
       : "";
-    const kpiHintHtml = (iconId) => {
-      const kpis = ICON_KPI_MAP[iconId] || [];
-      if (!kpis.length) return "";
-      return `<span class="key-kpi-hint">${kpis.slice(0, 4).map(id => {
-        const label = String(id).replace(/^#/, "");
-        return `<a href="#" class="kpi-ref-link" data-kpi="${id}" title="Open ${id} in KPIs">${escapeHtml(label)}</a>`;
-      }).join("")}</span>`;
-    };
-    el.innerHTML = `<span class="value-icon-key-title">Filter by value</span>${hint}` +
+    el.innerHTML = `<span class="value-icon-key-title">Filter by value <span class="tab-help" data-help-title="Filter by value" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use value filters">?</span></span>${hint}` +
       VALUE_ICON_DEFS.map(d => {
         const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
-        return `<button type="button" class="key-item key-filter-btn key-filter-${d.id}${active}" data-icon-filter="${d.id}">${valueIconMarkup(d)}<span class="key-item-meta"><span class="key-item-label">${escapeHtml(d.label)}</span>${kpiHintHtml(d.id)}</span></button>`;
+        return `<button type="button" class="key-item key-filter-btn key-filter-${d.id}${active}" data-icon-filter="${d.id}" title="Show projects that add ${escapeHtml(d.label)} value">${valueIconMarkup(d)}<span class="key-item-meta"><span class="key-item-label">${escapeHtml(d.label)}</span></span></button>`;
       }).join("");
     el.querySelectorAll(".key-filter-btn").forEach(btn => {
-      btn.addEventListener("click", e => {
-        if (e.target.closest(".kpi-ref-link")) return;
+      btn.addEventListener("click", () => {
         toggleIconFilter(btn.dataset.iconFilter);
       });
     });
@@ -1329,12 +1325,29 @@
     monthlyLeadsBaseline: 124
   };
 
-  const ACCOUNT_KPI_ACTIONS = [
-    { kpi: "#21", text: "Answered phones 69% — assign Casey phone block Wed AM", projectIds: ["B2", "RETAINER", "A8", "B1", "A6"] },
-    { kpi: "#19", text: "Est. missed revenue $6,060/mo — review Search routing + after-hours callback", projectIds: ["B2", "RETAINER", "A6", "A8", "A1"] },
-    { kpi: "#15", text: "CPL $142 over target — pause Core DV bleed", projectIds: ["RETAINER", "A1"] },
-    { kpi: "#17", text: "GBP referrals −3 MoM — refresh profile + UTM pass", projectIds: ["B10", "A2", "B5"] }
-  ];
+  /** KPI labels + tracking quality for impact list (ICON_KPI_MAP + live report names). */
+  const KPI_IMPACT_META = {
+    "#01": { name: "Total leads", tracking: "Clean — Search + LSA + HubSpot forms when all three exports are current." },
+    "#02": { name: "New cases", tracking: "Clean — MyCase Client Created-date count." },
+    "#06": { name: "Pipeline / CRM completeness", tracking: "Partial — depends on HubSpot field hygiene and deal stage use." },
+    "#07": { name: "Lead volume by campaign", tracking: "Clean for Search when Campaign report + call details align; LSA separate." },
+    "#08": { name: "Campaign cost efficiency", tracking: "Clean for digital Search cost ÷ calls; not LSA." },
+    "#09": { name: "Intake conversion", tracking: "Partial — needs consistent consult booking and outcome logging." },
+    "#10": { name: "Lead channel mix", tracking: "Clean once #01 channel stack is reconciled monthly." },
+    "#11": { name: "Organic / local search presence", tracking: "Partial — rankings and GBP metrics need scheduled pulls." },
+    "#12": { name: "Avg. Cost per Call", tracking: "Clean for Search Campaign report ÷ phone calls." },
+    "#14": { name: "Creative / channel response", tracking: "Partial — creative tests need UTM or asset labels to attribute cleanly." },
+    "#15": { name: "Cost per lead", tracking: "Clean when spend and lead definition match the same window." },
+    "#16": { name: "Reviews by channel", tracking: "Partial until B10 audit wires directory scrapes into DATA.reviews." },
+    "#17": { name: "Referral Network", tracking: "Proxy until A4 referral tracking is live in HubSpot/MyCase." },
+    "#18": { name: "Website / SEO contribution", tracking: "Partial — form + organic attribution depends on GA4/UTM setup." },
+    "#19": { name: "Lost Revenue", tracking: "Directional — missed Search calls × lead→case × avg fee; not booked cash." },
+    "#20": { name: "CRM follow-up discipline", tracking: "Partial — task completion and owner fields must stay filled." },
+    "#21": { name: "Answered Calls", tracking: "Clean — Call details Received vs Missed for Search; LSA status separate." },
+    "#23": { name: "Intake coverage / after-hours", tracking: "Partial — needs routing logs and after-hours disposition." },
+    "#27": { name: "Ops backlog / open tasks", tracking: "Partial — HubSpot task queues when owners and due dates are used." },
+    "#28": { name: "Avg case fee", tracking: "Clean — MyCase Client mean fee baseline." }
+  };
 
   function getCartSelectionItems() {
     const items = [];
@@ -1346,42 +1359,109 @@
     return items;
   }
 
+  function normalizeKpiRef(id) {
+    const raw = String(id || "").trim();
+    if (!raw) return "";
+    if (/^#\d{2}$/.test(raw)) return raw;
+    const m = raw.match(/(\d{2})/);
+    return m ? `#${m[1]}` : "";
+  }
+
+  function projectTimelineLabel(item) {
+    if (!item) return "2–4 weeks setup";
+    if (item.timeline && String(item.timeline).trim()) return String(item.timeline).trim();
+    if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return "Ongoing monthly";
+    if (item.enabler) return "1–3 weeks setup · then ongoing ops";
+    return "2–4 weeks setup · then measure in following 30 days";
+  }
+
+  function projectImpactBlurb(item) {
+    const brief = briefValueAdd(item);
+    if (brief) return brief;
+    const bullets = valueAddedBullets(item);
+    if (bullets[0]) return String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim();
+    if (item.tldr) return String(item.tldr).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
+    if (item.goal) return String(item.goal).replace(/\s+/g, " ").trim().slice(0, 160);
+    return item.title || item.id;
+  }
+
+  function kpiIdsForProject(item) {
+    const ids = new Set();
+    (item.kpiRefs || []).forEach(ref => {
+      const id = normalizeKpiRef(ref);
+      if (id) ids.add(id);
+    });
+    getValueIcons(item).forEach(icon => {
+      (ICON_KPI_MAP[icon.id] || []).forEach(kpi => {
+        const id = normalizeKpiRef(kpi);
+        if (id) ids.add(id);
+      });
+    });
+    const text = `${item.estimatedLeads || ""} ${item.goal || ""} ${item.tldr || ""}`;
+    const re = /#(\d{2})/g;
+    let m;
+    while ((m = re.exec(text))) ids.add(`#${m[1]}`);
+    return [...ids];
+  }
+
+  /** Selected projects → impacted KPIs with impact, timeline, tracking quality. */
   function buildActionItems(selectionItems) {
     const items = selectionItems || getCartSelectionItems();
     if (!items.length) return [];
 
-    const selectedIds = new Set(items.map(i => i.id));
-    const actions = [];
-    const seen = new Set();
-
-    function pushAction(action) {
-      const key = (action.kpi || "") + "|" + action.text;
-      if (seen.has(key)) return;
-      seen.add(key);
-      actions.push(action);
-    }
-
-    ACCOUNT_KPI_ACTIONS.forEach(a => {
-      if (a.projectIds.some(id => selectedIds.has(id))) {
-        pushAction({ kpi: a.kpi, text: a.text, source: "kpi" });
-      }
+    const byKpi = new Map();
+    items.forEach(item => {
+      kpiIdsForProject(item).forEach(kpiId => {
+        if (!byKpi.has(kpiId)) byKpi.set(kpiId, []);
+        byKpi.get(kpiId).push(item);
+      });
     });
 
-    return actions.slice(0, 14);
+    const rows = [...byKpi.entries()]
+      .sort((a, b) => Number(a[0].slice(1)) - Number(b[0].slice(1)))
+      .slice(0, 14)
+      .map(([kpi, projects]) => {
+        const meta = KPI_IMPACT_META[kpi] || { name: kpi, tracking: "Partial — confirm source export before treating as contractual." };
+        const titles = projects.map(p => p.title).filter(Boolean);
+        const blurbs = projects.map(projectImpactBlurb).filter(Boolean);
+        const impact = blurbs.length
+          ? `${titles.join("; ")} — ${blurbs.slice(0, 2).join("; ")}`
+          : `${titles.join("; ")} support this metric through the selected scope.`;
+        const timelines = [...new Set(projects.map(projectTimelineLabel))];
+        return {
+          kpi,
+          name: meta.name,
+          impact,
+          timeline: timelines.join(" · "),
+          tracking: meta.tracking,
+          projectIds: projects.map(p => p.id),
+          text: `${meta.name}: ${impact}`,
+          source: "kpi"
+        };
+      });
+
+    return rows;
   }
 
   function buildActionItemsHtml(actions) {
-    if (!actions || !actions.length) return "";
+    if (!actions || !actions.length) {
+      return `<h3>KPIs impacted by the selected projects</h3>
+        <p class="action-items-intro">Add projects to see which account KPIs this plan is built to move, how, and how cleanly they track.</p>
+        <p class="kpi-impact-empty">No projects selected yet.</p>`;
+    }
     const list = actions.map(a => {
-      const tag = a.source === "kpi" ? a.kpi : escapeHtml(a.kpi);
-      const projectHint = a.projectTitle && a.source === "blocker"
-        ? ` <span class="action-project-hint">(${escapeHtml(a.projectTitle)})</span>`
-        : "";
-      return `<li><span class="kpi-stat-id">${tag}</span> ${escapeHtml(a.text)}${projectHint}</li>`;
+      const label = a.name ? `${a.kpi} ${a.name}` : a.kpi;
+      return `<li class="kpi-impact-item">
+        <div class="kpi-impact-head"><span class="kpi-stat-id">${escapeHtml(a.kpi)}</span> ${escapeHtml(a.name || a.kpi)}</div>
+        <p class="kpi-impact-how">${escapeHtml(a.impact || a.text || "")}</p>
+        <p class="kpi-impact-meta"><span class="kpi-impact-label">Timeline</span> ${escapeHtml(a.timeline || "—")}
+        <span class="kpi-impact-sep">·</span>
+        <span class="kpi-impact-label">Tracking</span> ${escapeHtml(a.tracking || "—")}</p>
+      </li>`;
     }).join("");
-    return `<h3>Action items</h3>
-      <p class="action-items-intro">From your selections and Jun 2026 account KPIs — address these as projects kick off.</p>
-      <ul class="kpi-action-list">${list}</ul>`;
+    return `<h3>KPIs impacted by the selected projects</h3>
+      <p class="action-items-intro">Account KPIs tied to your selected projects via value icons and KPI links — impact path, timeline, and tracking quality.</p>
+      <ul class="kpi-action-list kpi-impact-list" aria-label="KPIs impacted by the selected projects">${list}</ul>`;
   }
 
   function buildConfirmNextStepsHtml() {
@@ -1406,7 +1486,7 @@
       const pitch = briefValueAdd(item) || item.timeline || "Kick off after deposit clears";
       return `<li><strong>${escapeHtml(item.title)}</strong> — ${escapeHtml(pitch)}</li>`;
     }).join("")}</ol>`;
-    html += `<p class="confirm-next-foot">After submit: pay the QuickBooks deposit, Gilded Goose schedules kickoff, and project invoices follow your chosen schedule.</p>`;
+    html += `<p class="confirm-next-foot">After submit: review the SOW draft, email the PDF report, pay the QuickBooks deposit, then Gilded Goose schedules kickoff. Project invoices follow your chosen schedule.</p>`;
     return html;
   }
 
@@ -1445,15 +1525,10 @@
   }
 
   function renderConfirmPlanReview() {
-    const selected = getSelectedProjects();
     const estEl = document.getElementById("confirm-estimated-results");
     if (estEl) {
-      const totals = buildRevenueCalculatorHtml();
-      const returns = buildThankYouReturnsHtml(selected, state.retainer);
-      const hasCart = getInvoiceLineItems().length > 0;
-      estEl.innerHTML = hasCart
-        ? `<h3>Estimated results</h3><div class="confirm-priorities-wrap">${totals}</div>${returns}`
-        : `<h3>Estimated results</h3><p class="confirm-next-foot">Notes or Gilbert chat only — add projects for impact estimates.</p>`;
+      estEl.innerHTML = "";
+      estEl.hidden = true;
     }
     const payEl = document.getElementById("confirm-payment-options-body");
     if (payEl) payEl.innerHTML = buildPaymentOptionsHtml();
@@ -1463,8 +1538,11 @@
   function formatActionItemsText(actions) {
     if (!actions || !actions.length) return "(none)";
     return actions.map(a => {
-      const prefix = a.source === "kpi" ? a.kpi : a.kpi + (a.projectTitle ? " · " + a.projectTitle : "");
-      return `  ${prefix}: ${a.text}`;
+      const head = a.name ? `${a.kpi} ${a.name}` : a.kpi;
+      const impact = a.impact || a.text || "";
+      const timeline = a.timeline ? ` | Timeline: ${a.timeline}` : "";
+      const tracking = a.tracking ? ` | Tracking: ${a.tracking}` : "";
+      return `  ${head}: ${impact}${timeline}${tracking}`;
     }).join("\n");
   }
 
@@ -1692,7 +1770,7 @@
   function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending) {
     const id = item.id;
     const reqMark = required ? requiredMarkerHtml(item, isRetainer) : "";
-    const abTitle = abPending ? ' title="AB – Q: answer before cart"' : "";
+    const abTitle = abPending ? ' title="Blocked: answer before cart"' : "";
     return `<div class="card-check-col">
       <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled}${abTitle} ${sel ? "checked" : ""}>
       ${reqMark}
@@ -2431,7 +2509,7 @@
       const required = isRequiredMaintenance(item, isRetainer);
       const chkDisabled = required ? " disabled" : "";
       const abPending = hasAbQuestions(item) && !abQuestionAnswered(item.id);
-      const abTitle = abPending ? ' title="AB – Q: answer before cart"' : "";
+      const abTitle = abPending ? ' title="Blocked: answer before cart"' : "";
       const chkClass = isRetainer ? "toc-proj-chk" : "proj-chk toc-proj-chk";
       const displayPriority = useClientRanks
         ? (clientPriorityRank(item) || rowIdx + 1)
@@ -2907,10 +2985,12 @@
     const planningClass = unpublished ? " publish-planning card-header-only" : "";
     const abPending = hasAbQuestions(item) && !abQuestionAnswered(id);
     const abClass = abPending ? " ab-q-pending" : (hasAbQuestions(item) ? " ab-q-cleared" : "");
+    const wipStarted = !isRetainer && item.status !== "completed" && (normalizeStatus(item) === "wip" || hasPartialProgress(item));
+    const wipClass = wipStarted ? " card-wip-started" : "";
 
     if (unpublished) {
       return `
-      <div class="card${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass} ${sel ? "selected" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
+      <div class="card${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass}${wipClass} ${sel ? "selected" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
         <div class="card-header">
           ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
@@ -2923,7 +3003,7 @@
     }
 
     return `
-      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
+      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass}${wipClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}">
         <div class="card-header">
           ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
@@ -3010,7 +3090,7 @@
         const item = findProjectById(pid);
         if (item && hasAbQuestions(item) && !abQuestionAnswered(pid) && state.projects.has(pid)) {
           state.projects.delete(pid);
-          showToast("Removed from cart — AB – Q needs an answer", true);
+          showToast("Removed from cart — Blocked until Andrew's question is answered", true);
         }
         syncCommentTag(pid, root);
         saveState();
@@ -3109,26 +3189,9 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
   }
 
-  function isConsentAgreed() {
-    const el = document.getElementById("esign-consent");
-    return !!(el && el.checked);
-  }
-
-  function updateConsentLabel() {
-    const label = document.getElementById("esign-consent-label");
-    if (!label) return;
-    const termsUrl = String((getConfig().planTermsUrl || "")).trim();
-    if (termsUrl) {
-      label.innerHTML = `${escapeHtml(CONSENT_TEXT)} <a href="${escapeHtml(termsUrl)}" target="_blank" rel="noopener noreferrer">View terms</a>.`;
-    } else {
-      label.textContent = CONSENT_TEXT;
-    }
-  }
-
   function canSubmit() {
     const email = (document.getElementById("submitted-email") || {}).value || "";
     if (!isValidSubmitEmail(email)) return false;
-    if (!isConsentAgreed()) return false;
     return getInvoiceLineItems().length > 0 || hasAnyNotes() || hasGilbertActivity();
   }
 
@@ -3163,9 +3226,6 @@
       guideImg.src = GILBERT_LOGO;
       guideImg.alt = "Gilded Goose Ltd.";
     }
-    const consentEl = document.getElementById("esign-consent");
-    if (consentEl) consentEl.checked = false;
-    updateConsentLabel();
     renderConfirmPlanReview();
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
@@ -3241,6 +3301,7 @@
       paymentSurchargeAmount: paymentTerms.surchargeAmount != null ? paymentTerms.surchargeAmount : null,
       paymentFinancedRemaining: paymentTerms.financedRemaining != null ? paymentTerms.financedRemaining : null,
       paymentTotalDue: paymentTerms.totalDue != null ? paymentTerms.totalDue : null,
+      paymentWithin30Days: paymentTerms.within30Days,
       paymentWithin60Days: paymentTerms.within60Days,
       quickbooksDepositUrl: CONFIG.quickbooksDepositUrl || null,
       projects: [...maintRows, ...projectRows],
@@ -3255,10 +3316,8 @@
       projectNotes: getNotesPayload(),
       actionItems: buildActionItems(),
       nextStepsText: formatNextStepsText(),
-      consentAgreed: true,
-      consentAt: new Date().toISOString(),
-      consentVersion: CONSENT_VERSION,
-      consentText: CONSENT_TEXT
+      sowDraft: null,
+      esignStatus: "draft_email"
     };
   }
 
@@ -3277,20 +3336,42 @@
   function buildThankYouAffirmation(payload, selected) {
     const count = selected.length + (payload.retainer ? 1 : 0);
     const hasFoundation = selected.some(p => p.enabler);
-    const hasLeads = selected.some(p => /paid media|search|display|referral|seo/i.test((p.category || "") + (p.campaignType || "")));
+    const hasIntake = selected.some(p => getValueIcons(p).some(v => v.id === "intake" || v.id === "crm"));
+    const hasLeads = selected.some(p => getValueIcons(p).some(v => v.id === "leads"));
+    const hasAnalytics = selected.some(p => getValueIcons(p).some(v => v.id === "efficiency"));
     const parts = [];
-    parts.push(`You selected ${count} investment${count === 1 ? "" : "s"} that directly support measurable growth — leads, intake, and marketing you can track.`);
-    if (hasFoundation) {
-      parts.push("Starting with foundation work means every ad dollar and referral can be tracked, answered, and improved — not wasted on broken intake or blind spend.");
+
+    parts.push(
+      count === 1
+        ? "This selection is a strong mix because it targets one bottleneck with work you can measure — not a scatter of vanity tactics."
+        : `This ${count}-project mix is strong because the pieces reinforce each other: measurement, demand, and conversion are treated as one system.`
+    );
+
+    if (hasFoundation || hasAnalytics) {
+      parts.push(
+        "Foundation and reporting work first follows the same logic Google Ads and HubSpot inbound playbooks push: fix attribution and CRM truth before you scale spend, so CPL and answered-call rates mean something."
+      );
     }
-    if (hasLeads) {
-      parts.push("The marketing pieces you chose focus on measurable leads and consults, not vanity metrics.");
+    if (hasLeads && hasIntake) {
+      parts.push(
+        "Pairing lead generation with intake closes the classic leak — paid clicks that never become answered consults. That is the same measurement-over-vanity stance used in accountable search programs: track calls and consults, not impressions alone."
+      );
+    } else if (hasLeads) {
+      parts.push(
+        "Lead-driving work here is framed around calls and consults you can audit in Call details and campaign exports — not awareness metrics that do not move signed matters."
+      );
+    } else if (hasIntake) {
+      parts.push(
+        "Intake and phone coverage protect the lead volume you already buy. Industry answer-rate targets and your own #21 / #19 stack make that measurable."
+      );
     }
     if (payload.goalText) {
       const g = payload.goalText.trim();
-      parts.push(`This package aligns with your stated goal: "${g.length > 120 ? g.slice(0, 120) + "…" : g}"`);
+      parts.push(`It also lines up with the problem you named for Gilbert: "${g.length > 120 ? g.slice(0, 120) + "…" : g}".`);
     }
-    parts.push("Gilded Goose will execute with clear deliverables, monthly visibility, and a team that already knows your account.");
+    parts.push(
+      "For a law firm, public creative still needs attorney review under advertising rules — this plan keeps execution on ops and measurement while compliance stays with Pav."
+    );
     return parts.join(" ");
   }
 
@@ -3363,13 +3444,10 @@
     const rows = items.map(item => {
       const signals = getReturnSignals(item);
       if (!signals.length) return "";
-      return `<div class="thank-you-roi-item"><strong>${escapeHtml(item.title)}</strong>${signals.map(s => escapeHtml(s)).join(" · ")}</div>`;
+      return `<div class="thank-you-roi-item"><strong>${escapeHtml(item.title)}</strong><span class="thank-you-roi-signals">${signals.map(s => escapeHtml(s)).join(" · ")}</span></div>`;
     }).filter(Boolean);
-    const summary = escapeHtml(buildSelectionImpactSummary(items));
-    if (!rows.length) {
-      return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3><p class="thank-you-roi-summary">${summary}</p></div>`;
-    }
-    return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
+    if (!rows.length) return "";
+    return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}</div>`;
   }
 
   function renderGilbertChat() {
@@ -3442,7 +3520,7 @@
       const abBlocked = scored.filter(s => hasAbQuestions(s.item) && !abQuestionAnswered(s.item.id));
       if (abBlocked.length) {
         const names = abBlocked.slice(0, 2).map(s => s.item.title).join(", ");
-        return `I'd look at ${list} — but ${names} ${abBlocked.length === 1 ? "has" : "have"} AB – Q for Andrew. Answer on ${abBlocked.length === 1 ? "that card" : "those cards"} before cart.`;
+        return `I'd look at ${list} — but ${names} ${abBlocked.length === 1 ? "is" : "are"} Blocked for Andrew. Answer on ${abBlocked.length === 1 ? "that card" : "those cards"} before cart.`;
       }
       if (count > 0) {
         return `Understood. I'd prioritize ${list} — ${count} item${count === 1 ? "" : "s"} in your cart so far. Add more detail or pick from the list below.`;
@@ -3503,80 +3581,61 @@
     renderDoNextPanel();
   }
 
+  function depositFromPayload(payload) {
+    const p = payload || lastSubmittedPayload || {};
+    return p.depositAmount != null ? p.depositAmount : CONFIG.depositAmount;
+  }
+
   function showThankYou(payload) {
     const selected = getSelectedProjects();
-    const depositAmt = payload.depositAmount != null ? payload.depositAmount : CONFIG.depositAmount;
+    const depositAmt = depositFromPayload(payload);
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
     document.getElementById("thank-you-gilbert").src = GILBERT_SEAL;
-    document.getElementById("thank-you-sub").textContent =
-      "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
 
-    const lines = [];
-    if (payload.retainer) lines.push(`<li><strong>${escapeHtml(RETAINER.title)}</strong> — ${fmt(RETAINER.fee)}</li>`);
-    (payload.projects || []).forEach(p => lines.push(`<li><strong>${escapeHtml(p.title)}</strong> — ${p.fee}</li>`));
-    if (!lines.length) lines.push("<li><em>Notes submitted — Gilded Goose will follow up</em></li>");
-
-    const itemCount = lines.length;
-    const totalLine = payload.grandTotalNote || "—";
-    const termsLine = payload.invoicePaymentTermsLabel
-      ? escapeHtml(payload.invoicePaymentTermsLabel)
-      : "Not specified";
-
-    let notesHtml = "";
-    const chatLines = (payload.gilbertChat || []).filter(m => m.role === "user" || (m.role === "gilbert" && payload.gilbertChat.indexOf(m) > 0));
-    if (chatLines.length) {
-      notesHtml += `<div class="thank-you-chat-log"><h3>Gilbert chat</h3><ul class="thank-you-list">${chatLines.map(m =>
-        `<li><strong>${escapeHtml(m.role === "gilbert" ? GUIDE_SHORT : "You")}:</strong> ${escapeHtml(m.text)}</li>`
-      ).join("")}</ul></div>`;
-    }
     const noteEntries = Object.entries(payload.projectNotes || {});
+    let notesHtml = "";
     if (noteEntries.length) {
       notesHtml += `<div class="thank-you-comments"><h3>Your comments</h3><ul class="thank-you-list">` +
         noteEntries.map(([id, text]) => `<li><strong>${escapeHtml(id)}:</strong> ${escapeHtml(text)}</li>`).join("") + "</ul></div>";
-    }
-
-    let depositHtml = "";
-    if (depositAmt && depositUrl) {
-      depositHtml = `<div class="thank-you-deposit-box">
-        <p>Secure your spot with the 50% kickoff deposit</p>
-        <p class="deposit-amount">${fmt(depositAmt)}</p>
-        <p>Full invoice for selected projects follows separately. Pay now via QuickBooks:</p>
-        <a class="thank-you-qb-link" href="${escapeHtml(depositUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(depositUrl)}</a>
-      </div>`;
-    } else if (depositAmt) {
-      depositHtml = `<div class="thank-you-deposit-box"><p>Standard deposit: <span class="deposit-amount">${fmt(depositAmt)}</span> — payment link coming by email.</p></div>`;
     }
 
     const emailNote = payload.submitterEmail
       ? `<p class="confirm-note">Confirmation sent to <strong>${escapeHtml(payload.submitterEmail)}</strong> and Gilded Goose.</p>`
       : `<p class="confirm-note">Confirmation sent to Gilded Goose.</p>`;
 
-    const actionItemsHtml = (payload.actionItems && payload.actionItems.length)
-      ? `<div class="thank-you-action-items action-items-panel">${buildActionItemsHtml(payload.actionItems)}</div>`
+    const signedNote = payload.esignStatus === "emailed"
+      ? `<p class="confirm-note">SOW PDF email draft opened — Gilded Goose will finalize the report.</p>`
+      : payload.esignStatus === "signed"
+      ? `<p class="confirm-note">SOW signature recorded.</p>`
       : "";
-    const nextStepsHtml = payload.nextStepsText
-      ? `<div class="confirm-review-block thank-you-next-steps">${buildConfirmNextStepsHtml()}</div>`
+
+    const actionItemsHtml = `<div class="thank-you-action-items action-items-panel">${buildActionItemsHtml(payload.actionItems)}</div>`;
+
+    const depositSummary = depositAmt
+      ? `<div class="thank-you-deposit-line"><span class="thank-you-deposit-caption">Kickoff deposit due now</span><span class="deposit-amount">${fmt(depositAmt)}</span></div>`
       : "";
 
     document.getElementById("thank-you-body").innerHTML = `
-      <div class="thank-you-affirm"><strong>Why this is a strong choice</strong>${escapeHtml(buildThankYouAffirmation(payload, selected))}</div>
-      ${buildThankYouReturnsHtml(selected, payload.retainer)}
-      <div class="thank-you-selection">
-        <h3>Your consulting estimate</h3>
-        <p class="thank-you-total-single">${itemCount} item${itemCount === 1 ? "" : "s"} · <strong>${totalLine}</strong></p>
-        <p class="thank-you-terms-line">Invoice schedule: <strong>${termsLine}</strong></p>
-      </div>
+      <div class="thank-you-affirm"><strong>Why this is a strong mix</strong>${escapeHtml(buildThankYouAffirmation(payload, selected))}</div>
       ${actionItemsHtml}
-      ${nextStepsHtml}
-      ${depositHtml}
+      ${depositSummary}
       ${notesHtml}
-      ${emailNote}`;
+      ${emailNote}
+      ${signedNote}`;
 
     const payBtn = document.getElementById("btn-pay-deposit");
     if (payBtn && depositUrl && depositAmt) {
       payBtn.href = depositUrl;
-      payBtn.textContent = "Pay " + fmt(depositAmt) + " deposit — open QuickBooks";
+      payBtn.textContent = "Pay " + fmt(depositAmt) + " deposit — QuickBooks";
+      payBtn.removeAttribute("aria-disabled");
+      payBtn.classList.remove("btn-disabled");
+      payBtn.style.display = "block";
+    } else if (payBtn && depositAmt) {
+      payBtn.removeAttribute("href");
+      payBtn.textContent = "Pay " + fmt(depositAmt) + " deposit — link by email";
+      payBtn.setAttribute("aria-disabled", "true");
+      payBtn.classList.add("btn-disabled");
       payBtn.style.display = "block";
     } else if (payBtn) {
       payBtn.style.display = "none";
@@ -3584,11 +3643,130 @@
 
     document.getElementById("thank-you").classList.add("show");
     document.getElementById("thank-you").setAttribute("aria-hidden", "false");
+    hideSowPage();
     hideConfirmPage();
     document.getElementById("main-app").classList.add("hidden");
     document.querySelector(".pav-guide-ask-section")?.setAttribute("hidden", "");
     closeGilbertChat();
     window.scrollTo(0, 0);
+  }
+
+  /* ---- SOW draft + email PDF (custom e-sign build later) ---- */
+
+  function buildSowDraft(payload) {
+    const p = payload || lastSubmittedPayload || {};
+    const cfg = getConfig();
+    const lines = [];
+    lines.push("STATEMENT OF WORK — Gilded Goose Limited × Pav Law");
+    lines.push("Governed by: " + (cfg.msaLabel || "Master Services Agreement (MSA)"));
+    lines.push("");
+    lines.push("Client contact: " + (p.submitterEmail || "[email]"));
+    lines.push("Date: " + new Date().toLocaleDateString("en-US"));
+    lines.push("");
+    lines.push("1. SCOPE — Selected projects");
+    (p.projects || []).forEach(proj => {
+      const t = proj.timeline ? ` (${proj.timeline})` : "";
+      lines.push(`  • ${proj.id} — ${proj.title} — ${proj.fee}${t}`);
+    });
+    if (!(p.projects || []).length) lines.push("  • [projects]");
+    lines.push("");
+    lines.push("2. FEES & PAYMENT PLAN (Schedule A)");
+    lines.push("  Consulting subtotal: " + (p.projectsSubtotal || p.grandTotalNote || "$[___]"));
+    if (p.depositAmount) {
+      lines.push(`  Deposit due at signing: ${fmt(p.depositAmount)}${p.depositPct ? ` (${Math.round(p.depositPct * 100)}%)` : ""}`);
+    }
+    lines.push("  Invoice schedule: " + (p.invoicePaymentTermsLabel || "Per payment options selected"));
+    if (p.maintenanceMonthlyNum) lines.push("  Retainer / maintenance: " + p.maintenanceMonthly + "/mo, billed separately");
+    lines.push("  Media spend billed by platforms directly to Client.");
+    lines.push("");
+    lines.push("3. TERMS");
+    lines.push("  This SOW is governed by the MSA between the parties. Attorney advertising");
+    lines.push("  approval and compliance remain with Pav Law. Deposit is non-refundable");
+    lines.push("  after kickoff. Full terms: MSA + Schedule A.");
+    lines.push("");
+    lines.push("Status: Draft for email PDF report. Custom e-sign build later (not a third-party plugin).");
+    return lines.join("\n");
+  }
+
+  function updateEsignStatusText(text) {
+    const el = document.getElementById("sow-esign-status");
+    if (el) el.textContent = text;
+  }
+
+  function showSowPage(payload) {
+    lastSubmittedPayload = payload;
+    const draftEl = document.getElementById("sow-draft");
+    if (draftEl) draftEl.value = buildSowDraft(payload);
+
+    const projList = document.getElementById("sow-project-list");
+    if (projList) {
+      const rows = (payload.projects || []).map(p =>
+        `<li><strong>${escapeHtml(p.title)}</strong> <span class="sow-proj-fee">${escapeHtml(p.fee)}</span></li>`
+      ).join("");
+      projList.innerHTML = rows || `<li><em>No projects selected</em></li>`;
+    }
+
+    const payLine = document.getElementById("sow-payment-line");
+    if (payLine) {
+      const dep = payload.depositAmount ? `${fmt(payload.depositAmount)} deposit at kickoff` : "Deposit per payment options";
+      payLine.textContent = `${dep} · ${payload.invoicePaymentTermsLabel || "invoice schedule per payment options"}. Retainer/maintenance billed separately.`;
+    }
+
+    const esignBtn = document.getElementById("sow-send-esign");
+    if (esignBtn) {
+      esignBtn.textContent = "Email SOW PDF";
+    }
+    updateEsignStatusText(
+      "Draft SOW for email PDF report. Custom e-sign will be built later — not Dropbox Sign, DocuSign, or another plugin."
+    );
+
+    document.getElementById("sow-page").classList.add("show");
+    document.getElementById("sow-page").setAttribute("aria-hidden", "false");
+    hideConfirmPage();
+    document.getElementById("main-app").classList.add("hidden");
+    document.querySelector(".pav-guide-ask-section")?.setAttribute("hidden", "");
+    closeGilbertChat();
+    window.scrollTo(0, 0);
+  }
+
+  function hideSowPage() {
+    const el = document.getElementById("sow-page");
+    if (!el) return;
+    el.classList.remove("show");
+    el.setAttribute("aria-hidden", "true");
+  }
+
+  function emailSowPdf() {
+    const draftEl = document.getElementById("sow-draft");
+    if (lastSubmittedPayload) {
+      lastSubmittedPayload.sowDraft = draftEl ? draftEl.value : null;
+      lastSubmittedPayload.esignStatus = "emailed";
+    }
+    const to = CONFIG.notifyEmail || "support@gildedgooselimited.com";
+    const email = (lastSubmittedPayload && lastSubmittedPayload.submitterEmail) || "";
+    const subject = encodeURIComponent("Pav Law SOW draft PDF — " + (email || "submission"));
+    const body = encodeURIComponent(
+      "Please email the SOW PDF report for this selection.\n\n" +
+      "Submitter: " + (email || "(none)") + "\n\n" +
+      "--- SOW DRAFT ---\n" +
+      ((draftEl && draftEl.value) || "(empty)") +
+      "\n\n---\nNote: Custom e-sign build later — not a third-party plugin."
+    );
+    updateEsignStatusText("Opening email draft with SOW text… Continue to deposit when ready.");
+    const a = document.createElement("a");
+    a.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  function continueToThankYou() {
+    const payload = lastSubmittedPayload;
+    if (!payload) return;
+    const draftEl = document.getElementById("sow-draft");
+    if (draftEl) payload.sowDraft = draftEl.value;
+    showThankYou(payload);
   }
 
   function buildPrioritiesCartHtml() {
@@ -3770,7 +3948,10 @@
       }
     }
 
-    if (ok) showThankYou(payload);
+    if (ok) {
+      lastSubmittedPayload = payload;
+      showSowPage(payload);
+    }
     btn.textContent = "Submit selections";
     updateSubmitButtons();
   }
@@ -3810,8 +3991,9 @@
   document.getElementById("confirm-back").addEventListener("click", hideConfirmPage);
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
+  document.getElementById("sow-send-esign")?.addEventListener("click", emailSowPdf);
+  document.getElementById("sow-continue-thankyou")?.addEventListener("click", continueToThankYou);
   document.getElementById("submitted-email").addEventListener("input", () => { saveState(); updateSubmitButtons(); });
-  document.getElementById("esign-consent")?.addEventListener("change", updateSubmitButtons);
   document.getElementById("invoice-payment-months").addEventListener("change", () => {
     updateInvoiceScheduleAmount();
     saveState();
@@ -3830,6 +4012,11 @@
       renderAllCards();
       renderSummary();
       const dest = state.activeViewTab;
+      const projectId = goView.dataset.projectId;
+      if (dest === "picker" && projectId) {
+        requestAnimationFrame(() => openProjectDescription(projectId));
+        return;
+      }
       if (dest === "impact") {
         const sub = String(goView.dataset.goView || "").toLowerCase();
         const anchor = sub === "revenue"
@@ -3852,11 +4039,80 @@
   });
 
   document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", e => {
+      if (e.target.closest(".tab-help, .kpi-help")) return;
       setActiveViewTab(btn.dataset.view || "kpis");
       renderAllCards();
       renderSummary();
     });
+  });
+
+  function closeHelpPopup() {
+    const popup = document.getElementById("help-popup");
+    const backdrop = document.getElementById("help-popup-backdrop");
+    if (popup) popup.hidden = true;
+    if (backdrop) backdrop.hidden = true;
+  }
+
+  function openHelpPopup({ title, desc, formula, source }) {
+    const popup = document.getElementById("help-popup");
+    const backdrop = document.getElementById("help-popup-backdrop");
+    const titleEl = document.getElementById("help-popup-title");
+    const descEl = document.getElementById("help-popup-desc");
+    const formulaEl = document.getElementById("help-popup-formula");
+    const sourceEl = document.getElementById("help-popup-source");
+    if (!popup || !titleEl || !descEl || !formulaEl) return;
+    titleEl.textContent = title || "Help";
+    descEl.textContent = desc || "";
+    if (formula) {
+      formulaEl.hidden = false;
+      formulaEl.textContent = formula;
+    } else {
+      formulaEl.hidden = true;
+      formulaEl.textContent = "";
+    }
+    if (sourceEl) {
+      if (source) {
+        sourceEl.hidden = false;
+        sourceEl.textContent = source;
+      } else {
+        sourceEl.hidden = true;
+        sourceEl.textContent = "";
+      }
+    }
+    if (backdrop) backdrop.hidden = false;
+    popup.hidden = false;
+  }
+
+  function helpFromTarget(el) {
+    if (!el) return null;
+    const kpiId = el.getAttribute("data-kpi-help");
+    if (kpiId && window.KPI_REPORT && typeof window.KPI_REPORT.getHelp === "function") {
+      return window.KPI_REPORT.getHelp(kpiId);
+    }
+    return {
+      title: el.getAttribute("data-help-title") || el.getAttribute("aria-label") || "Help",
+      desc: el.getAttribute("data-help-desc") || el.getAttribute("title") || "",
+      formula: el.getAttribute("data-help-formula") || "",
+      source: el.getAttribute("data-help-source") || ""
+    };
+  }
+
+  document.addEventListener("click", e => {
+    const help = e.target.closest(".tab-help, .kpi-help");
+    if (help) {
+      e.preventDefault();
+      e.stopPropagation();
+      openHelpPopup(helpFromTarget(help) || {});
+      return;
+    }
+    if (e.target.closest("#help-popup-close") || e.target.id === "help-popup-backdrop") {
+      closeHelpPopup();
+    }
+  }, true);
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeHelpPopup();
   });
 
   document.getElementById("toc-expand-row")?.addEventListener("click", e => {

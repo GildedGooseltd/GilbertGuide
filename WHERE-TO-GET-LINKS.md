@@ -93,6 +93,16 @@ Open: [New repository secret](https://github.com/GildedGooseltd/GilbertGuide/set
 
 GitHub never shows secret values again — only names.
 
+### Review branch (local / preview) — where the URL lives now
+
+| Where | Purpose |
+|-------|---------|
+| [`pages-config.js`](pages-config.js) → `quickbooksDepositUrl` | **Saved here for review** so Pay deposit works without deploy inject |
+| [`pages-config.defaults.js`](pages-config.defaults.js) | Same URL as committed fallback when Secret 2 is empty |
+| GitHub Secret `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL` | **Live GilbertGuide later** — workflow injects into `pages-config.js` on gh-pages deploy |
+
+Do **not** treat review-branch `pages-config.js` as the only long-term live store — add/update Secret 2 before promoting to main/gh-pages.
+
 ---
 
 ## Optional — `PAV_PICKER_DEPOSIT_AMOUNT`
