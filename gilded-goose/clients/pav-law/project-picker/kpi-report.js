@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260717-tile-ids";
+  const RENDER_VER = "20260717-assign-ids";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -816,7 +816,7 @@
   function casesLeadsSpendSectionHtml() {
     const rows = DATA.casesLeadsSpend || [];
     if (!rows.length) return "";
-    return `<article class="kpi-split-panel data-chart-table-panel" data-feedback-id="section-cases-leads-spend" data-feedback-label="Cases and leads vs marketing spend">
+    return `<article class="kpi-split-panel data-chart-table-panel" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Cases, Leads & Spend">
       ${statusCorner(true)}
       <div class="kpi-split-panel-body data-chart-table-grid">
         ${chartBlock({
@@ -828,6 +828,7 @@
           ${sourceFootnote("cases-leads-spend")}
         </div>
       </div>
+      ${kpiRefMark("#05")}
     </article>`;
   }
 
@@ -1049,7 +1050,7 @@
   function financialSectionHtml() {
     const cashRows = DATA.cashCollected || [];
     if (!cashRows.length) return "";
-    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="Financials">
+    return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="#09 Financials">
       ${statusCorner(true)}
       ${kpiSectionStaticHead("Financials", "Cash collected MoM · cash / new case")}
       <div class="kpi-section-body">
@@ -1066,6 +1067,7 @@
         </div>
         ${sourceFootnote("financial")}
       </div>
+      ${kpiRefMark("#09")}
     </section>`;
   }
 
@@ -1961,7 +1963,7 @@
           ${reviewsByChannelPanelHtml()}
         </div>
       </section>
-      <section class="kpi-section kpi-section-static" data-feedback-id="section-cases-leads-spend" data-feedback-label="Cases, Leads & Spend">
+      <section class="kpi-section kpi-section-static" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Cases, Leads & Spend">
         ${kpiSectionStaticHead("Cases, Leads & Spend", "Left: counts · Right: $ spend · media table")}
         <div class="kpi-section-body">
           ${casesLeadsSpendSectionHtml()}
@@ -2029,7 +2031,7 @@
         ${kpiSectionStaticHead("Pipeline & source mix")}
         <div class="kpi-section-body">
           <div class="kpi-split-grid">
-            <article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 / #05 Cases MoM">
+            <article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 Cases MoM">
               ${statusCorner(false)}
               ${kpiSectionStaticHead("Cases MoM", "Closed · New · Red accounts")}
               <div class="kpi-split-panel-body">
@@ -2056,7 +2058,7 @@
             </article>
           </div>
           <div class="kpi-dash-grid-2 kpi-dash-grid-1" style="margin-top:1rem">
-            <div class="kpi-dash-card kpi-dash-target-bar" data-kpi-focus="#DEPOSIT">
+            <div class="kpi-dash-card kpi-dash-target-bar" data-kpi-focus="#20">
               ${statusCorner(false)}
               <span class="kpi-stat-id">Avg deposit</span>
               ${avgDepositTargetBarChart()}
@@ -2070,6 +2072,7 @@
                   ["Gap", `$${DATA.avgDeposit.target - DATA.avgDeposit.current}`]
                 ]
               )}
+              ${kpiRefMark("#20")}
             </div>
           </div>
         </div>
@@ -2148,7 +2151,7 @@
   }
 
   function casesMomPanelHtml() {
-    return `<article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 / #05 Cases MoM">
+    return `<article class="kpi-split-panel" data-feedback-id="section-cases-mom" data-feedback-label="#04 Cases MoM">
       ${statusCorner(false)}
       ${kpiSectionStaticHead("Cases MoM", "Closed · New · Red accounts")}
       <div class="kpi-split-panel-body">
@@ -2165,7 +2168,7 @@
 
   function avgDepositPanelHtml() {
     const depositHit = meetsTarget(DATA.avgDeposit.current, DATA.avgDeposit.target, false);
-    return `<div class="kpi-dash-card kpi-dash-target-bar" data-kpi-focus="#DEPOSIT">
+    return `<div class="kpi-dash-card kpi-dash-target-bar" data-kpi-focus="#20">
       ${statusCorner(false)}
       <span class="kpi-stat-id">Avg deposit</span>
       ${avgDepositTargetBarChart()}
@@ -2179,6 +2182,7 @@
           ["Gap", `$${DATA.avgDeposit.target - DATA.avgDeposit.current}`]
         ]
       )}
+      ${kpiRefMark("#20")}
     </div>`;
   }
 

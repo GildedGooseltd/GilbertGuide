@@ -600,6 +600,14 @@ body.feedback-mode-on .feedback-target:hover {
   right: 0.75rem;
   bottom: 0.55rem;
 }
+.kpi-section > .kpi-ref-num {
+  right: 0.75rem;
+  bottom: 0.55rem;
+}
+.kpi-dash-card > .kpi-ref-num {
+  right: 0.55rem;
+  bottom: 0.4rem;
+}
 .kpi-split-panel .kpi-chart-card {
   border: none; padding: 0; background: transparent; box-shadow: none;
 }
