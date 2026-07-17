@@ -287,11 +287,8 @@
   }
 
   function priorityTocHtml(item, displayPriority) {
-    const required = isRequiredProject(item, !!item.isRetainer);
     const p = displayPriority != null ? displayPriority : "";
-    const urgent = isPriorityUrgent(item) ? '<span class="priority-urgent" title="Urgent or fixing an active issue">!</span>' : "";
-    const req = required ? requiredMarkerHtml(item, !!item.isRetainer) : "";
-    return `<span class="toc-priority-inner">${urgent}${p}</span>${req ? `<span class="toc-required-icon">${req}</span>` : ""}`;
+    return String(p);
   }
 
   /* Colors live in index.html :root --vi-* + .value-icon.icon-{id}. Filter + table share those classes — never hardcode badge colors here. */
@@ -545,6 +542,49 @@
       .slice(0, limit || 3);
   }
 
+  /**
+   * INDEX Status = Recommended (Kate's list). Sorted by INDEX priority.
+   * Used for Best Fit on fresh load — not cart, not Gilbert survey, not localStorage.
+   */
+  function indexRecommendedBestFit(limit) {
+    const items = activeOptionalProjects()
+      .filter(item => {
+        if (isRequiredProject(item, false)) return false;
+        return String(item.status || "").toLowerCase().includes("recommended");
+      })
+      .sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99))
+      .map(item => ({ item, score: computeProjectScore(item) }));
+    if (typeof limit === "number" && limit > 0) return items.slice(0, limit);
+    return items;
+  }
+
+  /** Session-only: Gilbert/survey may override Best Fit until refresh. Never persisted. */
+  let bestFitSessionActive = false;
+
+  function activateBestFitSession() {
+    bestFitSessionActive = true;
+  }
+
+  function resetBestFitSession() {
+    bestFitSessionActive = false;
+  }
+
+  function bestFitRankedListHtml(ranked) {
+    if (!ranked.length) {
+      return `<p class="kpi-dashboard-note">No recommended projects in INDEX yet — set Status to Recommended, or finish the survey.</p>`;
+    }
+    return `<ol class="do-next-list">${ranked.map(({ item, score }, i) =>
+      `<li>
+        <span class="do-next-rank">${i + 1}.</span>
+        <div class="do-next-item-copy">
+          <a href="#project-${item.id}">${escapeHtml(item.title)}</a>
+          <span class="do-next-item-blurb">${escapeHtml(elevatorPitch(item))}</span>
+        </div>
+        <span class="do-next-score">${score <= -999 ? "—" : `score ${score}`}</span>
+      </li>`
+    ).join("")}</ol>`;
+  }
+
   function renderKpiDashboard() {
     if (!window.KPI_REPORT) return;
     const kpis = document.getElementById("kpi-report-kpis");
@@ -562,7 +602,6 @@
     const el = document.getElementById("do-next-panel");
     if (!el) return;
     el.hidden = false;
-    const asked = hasGilbertActivity();
     const cartItems = getInvoiceLineItems();
     const hasCart = cartItems.length > 0;
     const head = `<div class="do-next-head">
@@ -572,26 +611,19 @@
     </div>`;
 
     let body = "";
-    if (hasCart) {
-      body = buildPrioritiesCartHtml();
-    } else {
-      const ranked = asked
-        ? gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) }))
-        : topScoredProjects(5);
-      if (!ranked.length) {
-        body = `<p class="kpi-dashboard-note">No matches yet — finish the survey or add projects from Outlines.</p>`;
+    if (bestFitSessionActive) {
+      /* This session only: cart edits or Gilbert shortlist may drive the panel. */
+      if (hasCart) {
+        body = buildPrioritiesCartHtml();
       } else {
-        body = `<ol class="do-next-list">${ranked.map(({ item, score }, i) =>
-          `<li>
-            <span class="do-next-rank">${i + 1}.</span>
-            <div class="do-next-item-copy">
-              <a href="#project-${item.id}">${escapeHtml(item.title)}</a>
-              <span class="do-next-item-blurb">${escapeHtml(elevatorPitch(item))}</span>
-            </div>
-            <span class="do-next-score">${score <= -999 ? "—" : `score ${score}`}</span>
-          </li>`
-        ).join("")}</ol>`;
+        const ranked = hasGilbertActivity()
+          ? gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) }))
+          : indexRecommendedBestFit();
+        body = bestFitRankedListHtml(ranked);
       }
+    } else {
+      /* Fresh load / refresh / redeploy: always Kate's INDEX Recommended set. */
+      body = bestFitRankedListHtml(indexRecommendedBestFit());
     }
 
     el.innerHTML = `${head}
@@ -2530,8 +2562,8 @@
         <td class="toc-col-select">
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
         </td>
-        <td class="toc-col-priority"><span class="toc-priority">${editControls}${priorityTocHtml(item, displayPriority)}</span></td>
-        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
+        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span></td>
+        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a>${editControls}</td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
@@ -2668,6 +2700,7 @@
   }
 
   function clearFilters() {
+    resetBestFitSession();
     document.getElementById("goal-input").value = "";
     state.goalText = "";
     state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
@@ -2801,6 +2834,7 @@
   }
 
   function applySurveyAndRecommend() {
+    activateBestFitSession();
     const goal = buildSurveyGoalText();
     state.goalText = goal;
     const goalInput = document.getElementById("goal-input");
@@ -2830,6 +2864,7 @@
   }
 
   function resetGilbertSurvey() {
+    resetBestFitSession();
     state.surveyStep = 0;
     state.surveyAnswers = {};
     state.surveyDone = false;
@@ -3549,6 +3584,7 @@
     const input = document.getElementById("goal-input");
     const text = (input?.value || "").trim();
     if (!text) return;
+    activateBestFitSession();
     state.goalText = text;
     if (input) input.value = "";
     state.gilbertChat.push({ role: "user", text });

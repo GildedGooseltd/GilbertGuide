@@ -3566,12 +3566,12 @@
       -webkit-overflow-scrolling: touch;
     }
     .toc-table {
-      width: 100%; min-width: 36rem;
+      width: 100%; min-width: 22rem;
       border-collapse: collapse; table-layout: fixed;
       font-size: 0.88rem;
     }
     .toc-table th, .toc-table td {
-      padding: 0.55rem 0.5rem; vertical-align: top;
+      padding: 0.55rem 0.5rem; vertical-align: middle;
       border-bottom: 1px solid var(--border);
       text-align: left; color: var(--text);
     }
@@ -3587,7 +3587,7 @@
     .toc-table tbody tr.row-selected td { background: var(--gg-gold-dim); }
     .toc-table tbody tr.row-package td:first-child { box-shadow: none; }
     .toc-col-select {
-      width: 2.25rem; text-align: center; vertical-align: middle;
+      width: 3rem; text-align: center; vertical-align: middle;
       padding-left: 0.35rem; padding-right: 0.15rem;
     }
     .toc-col-select input[type="checkbox"] {
@@ -3600,24 +3600,7 @@
     .toc-table thead .toc-col-select {
       font-size: var(--font-min-rem); text-transform: uppercase;
       letter-spacing: 0.04em; font-weight: 700; color: var(--gg-brown);
-    }
-    .toc-col-show {
-      width: 2.75rem; text-align: center; vertical-align: middle;
-      padding-left: 0.2rem; padding-right: 0.2rem;
-    }
-    .toc-col-show input[type="checkbox"] {
-      width: 1.15rem; height: 1.15rem; margin: 0;
-      accent-color: var(--gg-gold-dark); cursor: pointer; vertical-align: middle;
-    }
-    .toc-table thead .toc-col-show {
-      font-size: var(--font-min-rem); text-transform: uppercase;
-      letter-spacing: 0.04em; font-weight: 700; color: var(--gg-brown);
-    }
-    .toc-table tbody tr.toc-details-hidden td {
-      opacity: 0.42; color: var(--gg-brown-muted);
-    }
-    .toc-table tbody tr.toc-details-hidden td.toc-col-show {
-      opacity: 1;
+      text-align: center;
     }
     .card.details-hidden {
       opacity: 0.4; filter: grayscale(0.35);
@@ -3626,11 +3609,15 @@
     .card.details-hidden .expand-btn {
       opacity: 0.55;
     }
-    .toc-col-priority { width: 5.5rem; text-align: center; }
-    .toc-priority-head {
-      display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+    .toc-col-priority {
+      width: 4.5rem; text-align: center; vertical-align: middle;
+    }
+    .toc-table thead .toc-col-priority { text-align: center; }
+    .picker-zone-outlines .picker-zone-head {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;
     }
     .toc-priority-edit {
+      margin-left: auto;
       font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
       padding: 0.15rem 0.45rem; border-radius: 999px; cursor: pointer; font-family: inherit;
       border: 1px solid var(--gg-royal-border); background: var(--gg-paper); color: var(--gg-royal);
@@ -3639,11 +3626,13 @@
     .toc-priority-edit[aria-pressed="true"] {
       background: var(--gg-royal); color: #fff; border-color: var(--gg-royal);
     }
-    .project-toc.priority-editing .toc-scroll {
+    .project-toc.priority-editing .toc-scroll,
+    #project-toc.priority-editing .toc-scroll {
       outline: 2px dashed var(--gg-royal-border); outline-offset: 2px; border-radius: 8px;
     }
     .toc-prio-edit {
-      display: flex; flex-direction: column; gap: 0.1rem; margin-bottom: 0.2rem;
+      display: inline-flex; flex-direction: row; gap: 0.15rem; margin-left: 0.35rem;
+      vertical-align: middle;
     }
     .toc-prio-btn {
       width: 1.35rem; height: 1.1rem; padding: 0; line-height: 1;
@@ -3653,8 +3642,7 @@
     }
     .toc-prio-btn:hover { background: var(--gg-royal-dim); }
     .toc-item.toc-prio-editing td { background: rgba(45, 20, 84, 0.04); }
-    .toc-col-project { width: 28%; }
-    .toc-col-icons { width: auto; min-width: 11rem; text-align: right; white-space: nowrap; }
+    .toc-col-project { width: auto; }
     .toc-sort-btn {
       background: none; border: none; padding: 0.15rem 0;
       font: inherit; color: inherit; cursor: pointer; text-align: center;
@@ -3664,11 +3652,8 @@
     .toc-sort-btn .sort-arrow { font-size: var(--font-min-rem); margin-left: 0.15rem; }
     .toc-priority {
       font-weight: 800; color: var(--green);
-      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-      gap: 0.2rem;
+      display: block; text-align: center; line-height: 1.2;
     }
-    .toc-priority-inner { white-space: nowrap; line-height: 1.2; }
-    .toc-priority .table-required { font-size: var(--font-min-rem); padding: 0.12rem 0.35rem; margin: 0; line-height: 1.2; }
     .toc-title { line-height: 1.4; }
     .toc-title a { color: var(--gg-royal); text-decoration: underline; text-decoration-color: var(--gg-royal-border); text-underline-offset: 2px; font-weight: 600; }
     .toc-title a:hover, .toc-title a:focus-visible { color: var(--gg-royal-deep); text-decoration-color: var(--gg-royal); }
@@ -3681,8 +3666,7 @@
       color: #ff6b6b; font-weight: 900; font-size: 0.95rem; margin-right: 0.1rem;
     }
     @media (max-width: 700px) {
-      .toc-table { min-width: 28rem; }
-      .toc-col-icons { min-width: 8rem; }
+      .toc-table { min-width: 18rem; }
       .toc-value .value-icon { width: 1.65rem; height: 1.65rem; }
       .toc-value .value-icon svg { width: 0.95rem; height: 0.95rem; }
     }
@@ -3841,6 +3825,7 @@
         <div class="picker-zone-head">
           <h2 class="picker-zone-title">Project Outlines</h2>
           <span class="project-outlines-hint" id="toc-summary-hint"></span>
+          <button type="button" class="toc-priority-edit" id="toc-priority-edit" aria-pressed="false" title="Reorder projects for your preferred priority">Edit</button>
         </div>
         <div class="project-outlines" id="project-toc">
           <div class="project-outlines-body">
@@ -3852,12 +3837,8 @@
                 <thead>
                   <tr>
                     <th class="toc-col-select" scope="col">Add</th>
-                    <th class="toc-col-show" scope="col" title="Checked = project details visible; unchecked = grayed out">Show</th>
                     <th class="toc-col-priority" scope="col">
-                      <div class="toc-priority-head">
-                        <button type="button" class="toc-sort-btn active" data-sort="priority" id="toc-sort-priority">Priority <span class="sort-arrow" id="sort-arrow-priority">▲</span></button>
-                        <button type="button" class="toc-priority-edit" id="toc-priority-edit" aria-pressed="false" title="Reorder projects for your preferred priority">Edit</button>
-                      </div>
+                      <button type="button" class="toc-sort-btn active" data-sort="priority" id="toc-sort-priority">Priority <span class="sort-arrow" id="sort-arrow-priority">▲</span></button>
                     </th>
                     <th class="toc-col-project" scope="col">Project</th>
                   </tr>
@@ -3935,8 +3916,8 @@
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260717-index-visibility"></script>
   <script src="dui-goal-data.js?v=20260717-practice-area"></script>
-  <script src="kpi-report.js?v=20260717-assign-ids"></script>
+  <script src="kpi-report.js?v=20260717-cash-bars"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260717-status-highlights"></script>
+  <script src="app.js?v=20260717-toc-simple"></script>
 </body>
 </html>
