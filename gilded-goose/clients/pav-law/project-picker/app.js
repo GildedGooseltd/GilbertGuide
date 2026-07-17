@@ -238,8 +238,8 @@
   }
 
   /**
-   * Display-only Priority 1…n from fit score (highest score → 1). INDEX item.priority is
-   * unchanged and still feeds the score weight. Required / unscored rows stay unmapped.
+   * Display-only Project score 1…n from fit score (highest score → 1). INDEX item.priority
+   * (Project score column) is unchanged and still feeds the score weight. Required / unscored rows stay unmapped.
    */
   function buildUniqueTocPriorityMap(items) {
     const map = new Map();
@@ -569,16 +569,34 @@
     if (!ranked.length) {
       return `<p class="kpi-dashboard-note">No recommended projects in INDEX yet — set Status to Recommended, or finish the survey.</p>`;
     }
-    return `<ol class="do-next-list">${ranked.map(({ item, score }, i) =>
-      `<li>
-        <span class="do-next-rank">${i + 1}.</span>
-        <div class="do-next-item-copy">
-          <a href="#project-${item.id}">${escapeHtml(item.title)}</a>
-          <span class="do-next-item-blurb">${escapeHtml(elevatorPitch(item))}</span>
-        </div>
-        <span class="do-next-score">${score <= -999 ? "—" : `score ${score}`}</span>
-      </li>`
-    ).join("")}</ol>`;
+    const bodyRows = ranked.map(({ item, score }, i) => {
+      const isRetainer = !!item.isRetainer || item.id === "RETAINER";
+      const required = isRequiredMaintenance(item, isRetainer);
+      const selected = isItemSelected(item);
+      const chkDisabled = required ? " disabled" : "";
+      const req = requiredMarkerHtml(item, isRetainer);
+      const scoreLabel = score <= -999 ? "—" : String(score);
+      const scoreTitle = required ? "Required — no fit score" : "Best-fit / impact — higher is better";
+      return `<tr data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer}" data-required="${required}">
+        <td class="col-select">
+          <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled} ${selected ? "checked" : ""}>
+        </td>
+        <td class="col-rank">${i + 1}</td>
+        <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(item.title)}</span></a></td>
+        <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
+      </tr>`;
+    }).join("");
+    return `<div class="pav-priorities-scroll"><table class="pav-priorities-table pav-priorities-cart-only pav-priorities-best-fit">
+      <thead>
+        <tr>
+          <th class="col-select" scope="col">Add</th>
+          <th class="col-rank" scope="col">#</th>
+          <th class="col-project" scope="col">Project</th>
+          <th class="col-score" scope="col" title="Best-fit / impact — higher is better. Required items show —.">Fit</th>
+        </tr>
+      </thead>
+      <tbody>${bodyRows}</tbody>
+    </table></div>`;
   }
 
   function renderKpiDashboard() {
@@ -2362,7 +2380,7 @@
   }
 
   function ensureClientPriorityIds(baseItems) {
-    /* Seed reorder list from current score ranks (not stale INDEX Priority). */
+    /* Seed reorder list from current score ranks (not stale INDEX Project score). */
     const pool = tocSortableItems();
     const scoreMap = buildUniqueTocPriorityMap(pool);
     const scoreSorted = sortTocItems(pool, scoreMap);
@@ -2461,7 +2479,7 @@
     const dir = state.tocSort.field === "priority" ? state.tocSort.dir : "asc";
     arrow.textContent = dir === "asc" ? "▲" : "▼";
     btn.setAttribute("aria-sort", dir === "asc" ? "ascending" : "descending");
-    btn.title = dir === "asc" ? "Priority ascending — click for descending" : "Priority descending — click for ascending";
+    btn.title = dir === "asc" ? "Project score ascending — click for descending" : "Project score descending — click for ascending";
   }
 
   function toggleTocSort(field) {
@@ -2568,11 +2586,11 @@
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
     if (editBtn) {
-      editBtn.textContent = state.priorityEdit ? "Done" : "Reorder priorities";
+      editBtn.textContent = state.priorityEdit ? "Done" : "Reorder scores";
       editBtn.setAttribute("aria-pressed", state.priorityEdit ? "true" : "false");
       editBtn.title = state.priorityEdit
-        ? "Finish reordering priorities"
-        : "Reorder projects for your preferred priority";
+        ? "Finish reordering project scores"
+        : "Reorder projects for your preferred project score";
     }
     document.getElementById("project-toc")?.classList.toggle("priority-editing", state.priorityEdit);
     if (hintEl) {

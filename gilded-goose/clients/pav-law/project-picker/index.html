@@ -1847,6 +1847,11 @@
       width: 3.2rem; text-align: right; white-space: nowrap;
       font-variant-numeric: tabular-nums; font-weight: 600; color: var(--gg-royal);
     }
+    .pav-priorities-table.pav-priorities-best-fit th.col-rank,
+    .pav-priorities-table.pav-priorities-best-fit td.col-rank {
+      width: 2rem; text-align: center; white-space: nowrap;
+      font-variant-numeric: tabular-nums; font-weight: 800; color: var(--gg-gold-dark);
+    }
     .invoice-cart-panel,
     .pav-priorities-panel {
       border: 1px solid var(--border); border-radius: var(--radius);
@@ -3852,7 +3857,7 @@
                   <tr>
                     <th class="toc-col-select" scope="col">Add</th>
                     <th class="toc-col-priority" scope="col">
-                      <button type="button" class="toc-sort-btn active" data-sort="priority" id="toc-sort-priority">Priority <span class="sort-arrow" id="sort-arrow-priority">▲</span></button>
+                      <button type="button" class="toc-sort-btn active" data-sort="priority" id="toc-sort-priority">Project score <span class="sort-arrow" id="sort-arrow-priority">▲</span></button>
                     </th>
                     <th class="toc-col-project" scope="col">Project</th>
                   </tr>
@@ -3862,7 +3867,7 @@
             </div>
             <div id="toc-expand-row" class="toc-expand-row" hidden></div>
             <div class="toc-reorder-row">
-              <button type="button" class="toc-priority-edit" id="toc-priority-edit" aria-pressed="false" title="Reorder projects for your preferred priority">Reorder priorities</button>
+              <button type="button" class="toc-priority-edit" id="toc-priority-edit" aria-pressed="false" title="Reorder projects for your preferred project score">Reorder scores</button>
             </div>
           </div>
         </div>
@@ -3935,6 +3940,6 @@
   <script src="dui-goal-data.js?v=20260717-toc3col-r2"></script>
   <script src="kpi-report.js?v=20260717-toc3col-r2"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260717-score-rank-r2"></script>
+  <script src="app.js?v=20260717-bestfit-chk-r1"></script>
 </body>
 </html>
