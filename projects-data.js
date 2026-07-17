@@ -982,6 +982,63 @@ window.PROJECT_DATA = {
       "depositPct": 0.2
     },
     {
+      "id": "A19",
+      "priority": 19,
+      "fee": 2200,
+      "category": "Paid Media",
+      "campaignType": "Seasonal Search / Display / Social",
+      "status": "planning",
+      "publishStatus": "published",
+      "estimatedLeads": "Seasonal college window — estimate after geo lock",
+      "keywords": [
+        "summer",
+        "seasonal",
+        "college",
+        "bend",
+        "snap",
+        "social",
+        "snapchat",
+        "instagram",
+        "digital",
+        "ads",
+        "dui",
+        "traffic",
+        "ntguilt",
+        "uccs",
+        "colorado college",
+        "move-in"
+      ],
+      "title": "Summer Seasonal Digital Ad Campaign",
+      "description": "Seasonal paid-media card for the summer → college transition window. Scope includes:\n\n1. **Digital ads** — one focused Google + Microsoft Search/Display flight for summer/college DUI–traffic themes (topic locked with Andrew before build).\n2. **Bend & Snap social** — short-form social creative and placement plan (Snapchat and/or Meta) around college move-in and the first weeks of the semester — awareness and consult CTAs, firm-safe tone, attorney-approved copy.\n3. **Tracking** — UTMs into HubSpot/NTGUILT destinations; separate naming so seasonal spend does not mix with always-on Military Search or A11 holiday flights.\n\nDoes not replace A11 (holiday/Oktoberfest) or archived A15 event activation — this is the summer/college digital + social lane.",
+      "tldr": "Summer seasonal digital ads with a Bend & Snap social flight timed to college move-in and early-semester traffic — Search/Display plus short-form social creative for campus geos.",
+      "valueAdded": [
+        "One summer seasonal build: Google/Microsoft structure, UTMs, and conversion tracking",
+        "Bend & Snap social series (Snapchat / Meta short-form) aimed at college-age awareness around move-in and early semester",
+        "Campus and corridor geos (UCCS, Colorado College, and nearby nightlife/traffic corridors) instead of year-round always-on",
+        "Creative + planning locked before ads go live; pairs with A7 organic calendar and A2 NTGUILT when budget allows"
+      ],
+      "valueIcons": [
+        "leads",
+        "creative",
+        "intake"
+      ],
+      "inProgressItems": [
+        "Card scoped — awaiting college calendar lock and creative brief"
+      ],
+      "goal": "Launch one summer/college seasonal flight (paid digital + Bend & Snap social) with tracked calls/leads from campus and corridor geos and clean UTM attribution for the flight window.",
+      "informationNeeded": [
+        "Confirm target campuses / geos and go-live week (move-in vs first two weeks of classes)",
+        "Bend & Snap creative direction: comedy/reference guardrails Andrew will approve",
+        "Budget split: Search/Display vs Snapchat/Meta for the window",
+        "Whether NTGUILT.com or pavlaw.com is the primary landing destination"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2
+    },
+    {
       "id": "B6",
       "priority": 20,
       "fee": 2500,

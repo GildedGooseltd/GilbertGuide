@@ -232,43 +232,35 @@
     return asOfMs * 1e7 + reverseList * 100 + (idScore % 1000);
   }
 
+  /** INDEX Status includes Recommended (Kate's list) — not Gilbert survey flags. */
+  function isIndexRecommendedStatus(item) {
+    return String(item?.status || "").toLowerCase().includes("recommended");
+  }
+
   /**
-   * Display-only unique ranks from source priorities. Newest claimant keeps the contested
-   * number; older claimants take the next free integers. Source item.priority is unchanged.
+   * Display-only Priority 1…n from fit score (highest score → 1). INDEX item.priority is
+   * unchanged and still feeds the score weight. Required / unscored rows stay unmapped.
    */
   function buildUniqueTocPriorityMap(items) {
     const map = new Map();
-    const used = new Set();
-    const bySource = new Map();
-    for (const item of items) {
-      const p = sourceTocPriority(item);
-      if (p == null) continue;
-      if (!bySource.has(p)) bySource.set(p, []);
-      bySource.get(p).push(item);
-    }
-    const keys = [...bySource.keys()].sort((a, b) => a - b);
-    const rankedGroups = keys.map(p => ({
-      p,
-      group: bySource.get(p).slice().sort((a, b) => projectNewnessScore(b) - projectNewnessScore(a))
-    }));
-    /* Pass 1: newest in each source-priority group keeps that number (or next free if taken). */
-    for (const { p, group } of rankedGroups) {
-      const winner = group[0];
-      if (!winner) continue;
-      let rank = p;
-      while (used.has(rank)) rank += 1;
-      used.add(rank);
-      map.set(winner.id, rank);
-    }
-    /* Pass 2: older duplicates take the next available slots. */
-    for (const { p, group } of rankedGroups) {
-      for (let i = 1; i < group.length; i++) {
-        let rank = p;
-        while (used.has(rank)) rank += 1;
-        used.add(rank);
-        map.set(group[i].id, rank);
-      }
-    }
+    const rows = items
+      .filter(item => !item.isRetainer && item.id !== "RETAINER")
+      .map(item => ({
+        item,
+        score: computeProjectScore(item),
+        src: sourceTocPriority(item)
+      }))
+      .filter(row => row.score > -999 || row.src != null);
+    rows.sort((a, b) => {
+      const aScore = a.score > -999 ? a.score : Number.NEGATIVE_INFINITY;
+      const bScore = b.score > -999 ? b.score : Number.NEGATIVE_INFINITY;
+      if (aScore !== bScore) return bScore - aScore;
+      const ap = a.src ?? 99;
+      const bp = b.src ?? 99;
+      if (ap !== bp) return ap - bp;
+      return projectNewnessScore(b.item) - projectNewnessScore(a.item);
+    });
+    rows.forEach((row, i) => map.set(row.item.id, i + 1));
     return map;
   }
 
@@ -390,7 +382,7 @@
     return "available";
   }
 
-  /** Named 0–100 best-fit weights (positives sum to 100 at full credit). WIP + season urgency are bonuses on top. */
+  /** Named 0–100 best-fit weights (positives sum to 100 at full credit). Bonuses stack on top. */
   const SCORE_WEIGHTS = {
     priority: 30,
     leadGenerator: 17,
@@ -402,7 +394,9 @@
     cartSynergy: 5,
     wip: 10,
     /** Extra points as a project's projected start date approaches (see seasonUrgencyBoost). */
-    seasonUrgency: 10
+    seasonUrgency: 10,
+    /** INDEX Status = Recommended — boost so recommended projects rank above peers. */
+    recommended: 20
   };
 
   function normalizePublishStatus(item) {
@@ -527,9 +521,10 @@
     if (state.projects.size && item.enabler) score += W.cartSynergy;
     if (normalizeStatus(item) === "wip") score += W.wip;
     score += seasonUrgencyBoost(item);
+    if (isIndexRecommendedStatus(item)) score += W.recommended;
 
-    /* Max 120 when WIP + season urgency (+10 each on top of the 100 named positives). No status penalties. */
-    score = Math.min(120, score);
+    /* Max 140: 100 named positives + WIP 10 + season 10 + Recommended 20. No status penalties. */
+    score = Math.min(140, score);
 
     return Math.round(Math.max(0, score) * 10) / 10;
   }
@@ -544,17 +539,17 @@
   }
 
   /**
-   * INDEX Status = Recommended (Kate's list). Sorted by INDEX priority.
+   * INDEX Status = Recommended (Kate's list). Sorted by fit score (desc) — includes +20 Recommended.
    * Used for Best Fit on fresh load — not cart, not Gilbert survey, not localStorage.
    */
   function indexRecommendedBestFit(limit) {
     const items = activeOptionalProjects()
       .filter(item => {
         if (isRequiredProject(item, false)) return false;
-        return String(item.status || "").toLowerCase().includes("recommended");
+        return isIndexRecommendedStatus(item);
       })
-      .sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99))
-      .map(item => ({ item, score: computeProjectScore(item) }));
+      .map(item => ({ item, score: computeProjectScore(item) }))
+      .sort((a, b) => b.score - a.score || (a.item.priority ?? 99) - (b.item.priority ?? 99));
     if (typeof limit === "number" && limit > 0) return items.slice(0, limit);
     return items;
   }
