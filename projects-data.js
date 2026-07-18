@@ -475,10 +475,11 @@ window.PROJECT_DATA = {
         "incentive"
       ],
       "title": "Performance Plan Payouts",
-      "description": "Defines Tier 1 (flat task) vs Tier 2 (outcome) payouts, plus contractor deliverables and referral-partner rules under ABA / Colorado ethics. **Commission-only sales track:** L1–L5 lifecycle flats (lead → booked → held → signed → first funds) calibrated to a target monthly FTE cash figure — **not** % of legal fees or trust deposits. Intake/phone staff stay on separate base + bonus track.",
+      "description": "Defines Tier 1 (flat task) vs Tier 2 (outcome) payouts, plus contractor deliverables and referral-partner rules under ABA / Colorado ethics. **Commission-only sales track:** L1–L5 lifecycle flats (lead → booked → held → signed → first funds) calibrated to a target monthly FTE cash figure — **not** % of legal fees or trust deposits. Intake/phone staff stay on separate base + bonus track. For Romina, the dashboard's **collectible pace vs target** can be a supporting performance indicator, but not a percentage-of-collections pay formula.",
       "tldr": "Clear performance-based bonus model with goals the team can work toward — including a **commission-only sales track** that can equal full-time pay without a salary.",
       "valueAdded": [
         "Ties pay to measurable outcomes — booked consults, signed matters, outbound pipeline",
+        "Uses **collectible pace vs target** as a Romina performance indicator, paired with intake and payment-follow-up actions she directly controls",
         "Commission-only sales: rising flat $ through client lifecycle (not % of fees/trust)",
         "Employee appreciation markers (apparel/gift sets at set thresholds)",
         "Separate tracks for employee, contractor, and referral-partner payout styles"
@@ -493,10 +494,12 @@ window.PROJECT_DATA = {
         "[ ] Fill target FTE $/mo + expected volume → publish L1–L5 flats",
         "[ ] Counsel review of L4 (signed) and L5 (first funds) gates",
         "[ ] Re-add outbound / attributed matter KPIs to `kpi-list.md` if paying on them",
+        "[ ] Set Romina's collectible pace target, controlled action gates, source of truth, and fixed-dollar tier",
+        "[ ] Replace the 80% collectible estimate with QuickBooks actual cash before activating the tier",
         "[ ] Draft tier matrix for remaining employees vs contractors",
         "[ ] List cash-generating tasks already tracked (calls, bookings, referrals)"
       ],
-      "goal": "Ship an Andrew-approved matrix: (1) goals + KPIs in INCENTIVE-COMP-PLAN.md, (2) L1–L5 flat ladder + FTE worksheet, (3) other-role task list.",
+      "goal": "Ship an Andrew-approved matrix: (1) goals + KPIs in INCENTIVE-COMP-PLAN.md, (2) L1–L5 flat ladder + FTE worksheet, (3) Romina's collectible-pace support tier, and (4) other-role task list.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,500",
