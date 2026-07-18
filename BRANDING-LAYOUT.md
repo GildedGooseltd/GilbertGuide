@@ -150,7 +150,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | Charts            | `chartBlock()` in JS                   | Plot + legend + **always-visible** detail table |
 
 
-Confirm flow: payment options · submit (email) → SOW draft / email PDF → thank-you / QuickBooks deposit. Action items appear on thank-you / email — not on the picker browse zones.
+Confirm flow: payment options → submit → fixed SOW emailed by private link → Andrew checkbox signature → Kate private countersign link → final PDF email + Drive archive. Andrew can continue to the QuickBooks deposit after his signature. Action items appear on thank-you / email — not on the picker browse zones.
 
 ---
 

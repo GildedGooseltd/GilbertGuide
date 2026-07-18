@@ -55,7 +55,7 @@ Trust balance ≠ contracted fee. AR incomplete per DATA-PULL-LIST — not used 
 | Client contacts total | 455 |
 | Client + fee coverage | 142 / 455 (31%) |
 | Case Type filled (all contacts) | ~328 / 5,081 (sparse) |
-| Fees-collected billing export | **Still missing** |
+| Fees-collected billing export | **Not available from MyCase — use QuickBooks** |
 
 ## Downstream Guide updates
 
@@ -71,7 +71,9 @@ When #28 changes, scale modeled #19 missed revenue by `5587 / 3870`:
 
 ## Still needed for cash-collected truth
 
-1. MyCase payments collected by practice (2025 + 2026)  
+**Fees collected cannot be calculated in MyCase** — this export exposes only contract fields (flat/trial/retainer) + A/R, not payments received. Collections must come from **QuickBooks** billing.
+
+1. QuickBooks payments collected by practice / matter (2025 + 2026)  
 2. HubSpot deals × lead source / military status  
 3. Better Case Type + practice fill rate  
 

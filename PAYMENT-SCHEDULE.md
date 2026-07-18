@@ -38,6 +38,20 @@ Also supported on a project `.md` meta table (**Deposit pct** / **Deposit amount
 
 ---
 
+## B9 financial-audit savings share
+
+B9 keeps its **$1,800 fixed fee** and **50% deposit**. It also uses the Savings-Share Rider in [`SCHEDULES-PAYMENT.md`](../../../website/contracts/SCHEDULES-PAYMENT.md):
+
+- **20% of verified net savings or recovered cash**
+- **12 months** for changed recurring subscriptions, software seats, and phone/services
+- **6 months** for continuing vendor or contract-rate revisions
+- **3 months** for variable ad, LSA, staffing-schedule, or operating-process revisions
+- One-time refunds and credits: 20% once the money or credit posts
+
+The Guide calculator shows the fixed fee only because future realized savings are unknown. The signed B9 SOW and Savings-Share Rider control the additional quarterly invoices.
+
+---
+
 ## Related docs
 
 | Doc | Role |

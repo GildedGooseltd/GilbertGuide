@@ -22,6 +22,8 @@
   --gg-head-accent: #c45c26;
   --gg-negative: #cf2d56;
   --gg-positive: #2d5a3d;
+  --gg-contrast-dark: #000000;
+  --gg-gold-dim: rgba(201, 168, 108, 0.18);
   --bg: var(--gg-cream);
   --surface: var(--gg-paper);
   --surface2: var(--gg-cream-panel);
@@ -231,6 +233,44 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-chart-table .kpi-stack-swatch {
   display: inline-block; vertical-align: -0.1em; margin-right: 0.25rem;
 }
+.kpi-chart-segment-count,
+.kpi-chart-segment-count-dark,
+.kpi-chart-segment-count-outside {
+  font-size: 12px;
+  font-weight: 900;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke-linejoin: round;
+}
+.kpi-chart-segment-count {
+  fill: var(--gg-paper);
+  stroke: rgba(34, 25, 20, 0.82);
+  stroke-width: 2.5px;
+}
+.kpi-chart-segment-count-dark {
+  fill: var(--gg-contrast-dark);
+  stroke: var(--gg-paper);
+  stroke-width: 2.5px;
+}
+.kpi-chart-segment-count-outside {
+  fill: var(--gg-royal-deep);
+  stroke: var(--gg-paper);
+  stroke-width: 3.5px;
+}
+.kpi-chart-table th:not(:first-child),
+.kpi-chart-table td:not(:first-child) {
+  text-align: right;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.kpi-chart-table th {
+  white-space: nowrap;
+}
+.kpi-chart-table td {
+  color: var(--gg-brown);
+}
+.kpi-chart-table tbody tr:nth-child(even) {
+  background: rgba(45, 20, 84, 0.035);
+}
 .kpi-stack-legend {
   display: flex; flex-wrap: wrap; gap: 0.65rem 1.25rem; list-style: none;
   margin: 0; padding: 0; font-size: 0.875rem; color: var(--gg-brown); font-weight: 700;
@@ -261,6 +301,114 @@ body.feedback-mode-on .feedback-target:hover {
   height: 100%;
   box-sizing: border-box;
 }
+.kpi-tile-with-projects {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+.kpi-tile-with-projects > .kpi-stat-card,
+.kpi-tile-with-projects > .kpi-goal-card {
+  flex: 1 1 auto;
+  width: 100%;
+}
+.kpi-related-projects {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  position: relative;
+  margin-top: 0.45rem;
+  padding: 0.72rem 0.8rem;
+  border: 4px double var(--gg-gold-dark);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 248, 218, 0.98), rgba(218, 165, 32, 0.16));
+  box-shadow:
+    inset 0 0 0 1px var(--gg-gold-bright),
+    inset 0 0 12px rgba(184, 134, 11, 0.12),
+    0 3px 10px rgba(138, 99, 16, 0.2);
+  text-align: left;
+}
+.kpi-related-projects::before,
+.kpi-related-projects::after {
+  content: "◆";
+  position: absolute;
+  padding: 0 0.18rem;
+  background: var(--gg-cream-panel);
+  color: var(--gg-gold-dark);
+  font-size: 0.55rem;
+  line-height: 1;
+}
+.kpi-related-projects::before {
+  top: -0.42rem;
+  left: 0.55rem;
+}
+.kpi-related-projects::after {
+  right: 0.55rem;
+  bottom: -0.42rem;
+}
+.kpi-related-projects-title {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--gg-royal-deep);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.kpi-related-projects ul {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+}
+.kpi-related-projects li {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.kpi-related-project-egg {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.8rem;
+  border: 1px solid #a56f08;
+  border-radius: 52% 52% 46% 46%;
+  background:
+    radial-gradient(circle at 34% 27%, #fff8bd 0 12%, transparent 14%),
+    linear-gradient(145deg, #ffe77a 8%, #d9a61c 58%, #9b6505 100%);
+  box-shadow:
+    inset -2px -3px 4px rgba(110, 72, 4, 0.24),
+    0 1px 3px rgba(110, 72, 4, 0.35);
+  color: var(--gg-royal-deep);
+  font-size: 0.54rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+.kpi-related-projects a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.3rem 0.48rem;
+  border: 1px solid rgba(165, 111, 8, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--gg-royal);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.35;
+  text-decoration: none;
+}
+.kpi-related-projects a:hover {
+  border-color: var(--gg-gold-dark);
+  background: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+}
 @media (max-width: 900px) {
   .kpi-stat-grid { grid-template-columns: 1fr; max-width: 22rem; }
 }
@@ -273,6 +421,7 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-stat-card:hover { border-color: var(--gg-royal-border); }
 .kpi-stat-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
 .kpi-stat-card.kpi-stat-attention { border-left: 4px solid var(--gg-gold-dark); }
+.kpi-stat-card.kpi-stat-negative { border-left: 4px solid var(--gg-negative, #b91c1c); }
 .kpi-lost-tracker {
   text-align: left; min-height: auto;
 }
@@ -338,7 +487,7 @@ body.feedback-mode-on .feedback-target:hover {
   display: block; width: 100%; max-width: 12rem; height: auto; margin: 0.45rem 0 0.15rem;
 }
 .kpi-stat-card.kpi-stat-gauge { text-align: center; align-items: center; }
-.kpi-stat-card.kpi-stat-gauge .kpi-gauge-svg { max-width: 132px; width: 100%; margin: 0.1rem auto 0; }
+.kpi-stat-card.kpi-stat-gauge .kpi-gauge-svg { max-width: 168px; width: 100%; margin: 0.35rem auto 0; overflow: visible; }
 .kpi-stat-card.kpi-stat-gauge .kpi-gauge-val { font-size: 1.05rem; margin-top: 0.15rem; }
 .kpi-stat-card.kpi-stat-target-bar {
   text-align: center;
@@ -640,6 +789,10 @@ body.feedback-mode-on .feedback-target:hover {
   fill: var(--gg-royal-deep);
   font-size: 11px;
   font-weight: 800;
+  paint-order: stroke;
+  stroke: var(--gg-paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
 }
 .kpi-half-moon-gauge .kpi-gauge-center {
   fill: var(--gg-royal-deep); font-size: 22px; font-weight: 800;
@@ -651,12 +804,41 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-bhi-card { max-width: 16rem; margin-bottom: 0.75rem; }
 .kpi-chart-head { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 14pt; }
 .kpi-chart-head strong { color: var(--gg-royal); }
+.kpi-chart-title-large > strong {
+  display: block;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+.kpi-chart-footnote {
+  margin: 0.35rem 0 0;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--border);
+  color: var(--secondary);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  text-align: left;
+}
 .kpi-chart-placeholder {
   min-height: 4.5rem; padding: 0.65rem; border-radius: 6px; border: 1px dashed var(--border);
   background: var(--gg-cream-panel); color: var(--secondary); font-size: 0.875rem;
   display: flex; align-items: center; justify-content: center; text-align: center;
 }
 .kpi-chart-svg { display: block; width: 100%; max-width: 100%; height: auto; margin-top: 0.35rem; }
+.kpi-finance-grid-cash .kpi-chart-plot {
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+}
+.kpi-cash-long-chart {
+  width: 70rem;
+  min-width: 70rem;
+  max-width: none;
+}
+.kpi-cash-long-chart .kpi-chart-total,
+.kpi-cash-long-chart .kpi-chart-axis {
+  font-family: Arial, "Helvetica Neue", sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
 .kpi-chart-svg-sm { max-width: 220px; }
 .kpi-chart-val { fill: var(--gg-royal-deep); font-size: 14px; font-weight: 800; }
 .kpi-chart-val-sm { fill: var(--gg-brown-muted); font-size: 14px; font-weight: 700; }
@@ -725,7 +907,42 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   white-space: nowrap;
 }
 .kpi-reviews-presence {
-  max-width: 28rem;
+  max-width: none;
+}
+.kpi-reviews-main {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.75fr) minmax(24rem, 1.25fr);
+  gap: 1rem;
+  align-items: start;
+}
+.kpi-reviews-main > .kpi-chart-card {
+  margin: 0;
+}
+.kpi-reviews-table-wrap {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--gg-cream-panel);
+  overflow: hidden;
+}
+.kpi-reviews-table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--gg-royal);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.kpi-reviews-table-scroll {
+  overflow-x: auto;
+}
+@media (max-width: 900px) {
+  .kpi-reviews-main {
+    grid-template-columns: 1fr;
+  }
 }
 .kpi-finance-grid {
   display: grid;
@@ -736,6 +953,77 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
 .kpi-finance-grid-cash {
   grid-template-columns: minmax(0, 1fr);
   max-width: 48rem;
+}
+.kpi-cash-pace-tile {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.9fr) minmax(10rem, 12rem) minmax(17rem, 1.25fr);
+  align-items: center;
+  gap: 1rem;
+  max-width: 48rem;
+  margin-bottom: 0.85rem;
+  padding: 0.9rem 1rem;
+  border: 2px solid var(--gg-gold-dark);
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gg-paper), var(--gg-gold-dim));
+  box-shadow: 0 3px 10px rgba(61, 48, 40, 0.12);
+}
+.kpi-cash-pace-kicker {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--gg-burnt);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.kpi-cash-pace-copy h3 {
+  margin: 0;
+  color: var(--gg-royal);
+  font-size: 1.15rem;
+}
+.kpi-cash-pace-copy p {
+  margin: 0.35rem 0 0;
+  color: var(--secondary);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+.kpi-cash-pace-gauge .kpi-gauge-svg {
+  width: 100%;
+  max-width: 12rem;
+  margin: 0 auto;
+}
+.kpi-cash-pace-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+.kpi-cash-pace-stats > div {
+  min-width: 0;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.62);
+}
+.kpi-cash-pace-stats span,
+.kpi-cash-pace-stats strong {
+  display: block;
+}
+.kpi-cash-pace-stats span {
+  color: var(--secondary);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.kpi-cash-pace-stats strong {
+  margin-top: 0.12rem;
+  color: var(--gg-brown);
+  font-size: 0.9rem;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+@media (max-width: 760px) {
+  .kpi-cash-pace-tile { grid-template-columns: 1fr; }
+  .kpi-cash-pace-copy { text-align: center; }
 }
 .kpi-finance-grid .kpi-mini-card {
   min-width: 0;
@@ -749,6 +1037,13 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   color: var(--gg-royal);
   font-size: 0.95rem;
   line-height: 1.25;
+}
+.kpi-finance-card-subtitle {
+  display: block;
+  margin-top: 0.12rem;
+  color: var(--secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 @media (max-width: 1100px) {
   .kpi-finance-grid { grid-template-columns: 1fr; }
