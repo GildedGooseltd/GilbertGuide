@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260717-recs-call-gate-r3";
+  const RENDER_VER = "20260718-predictions-tab-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -78,8 +78,8 @@
     },
     "#12": {
       title: "#12 Avg. Cost per Call",
-      desc: "Digital Search only — Campaign report cost divided by phone calls. Not LSA.",
-      formula: "Campaign Cost ÷ Phone calls → $6,277 ÷ 122 = $51. Target < $100."
+      desc: "Digital Search only — Campaign report cost divided by phone calls. Not LSA. NTGUILT → DUI ad group runs $4.86 / interaction (Jun 11–Jul 10) — expand via A2; insurance cards via B5.",
+      formula: "Campaign Cost ÷ Phone calls → $6,277 ÷ 122 = $51. Target < $100. Ad-group efficiency: NTGUILT → DUI $1,064 ÷ 219 interactions = $4.86."
     },
     "#19": {
       title: "#19 Lost Revenue",
@@ -93,7 +93,7 @@
     },
     "#DUI": {
       title: "# DUIs Signed",
-      desc: "YTD DUI/DWAI signed matters toward the annual goal (practice area).",
+      desc: "YTD DUI/DWAI signed matters toward the annual goal (practice area). Active paid DUI efficiency: NTGUILT → DUI ad group at $4.86 / interaction (Jun 11–Jul 10) — expand via A2; insurance card mailer is B5.",
       formula:
         "Client contacts Created in goal year with Cases (practice area) DUI/DWAI/Alcohol — (DUI/DWI) tag or DUI-named Criminal Defense — ÷ annual target (50)."
     },
@@ -145,10 +145,10 @@
   const KPI_RELATED_PROJECTS = {
     "#19": ["B2", "B11"],
     "#07": ["B11", "RETAINER"],
-    "#DUI": ["A11", "A19"],
+    "#DUI": ["A2", "B5", "A11", "A19"],
     "#01": ["A11", "A19", "B13"],
     "#02": ["B2", "B13", "A11"],
-    "#12": ["RETAINER", "A11"]
+    "#12": ["A2", "B5", "RETAINER", "A11"]
   };
 
   function relatedProjectById(id) {
@@ -1937,10 +1937,12 @@
       </div>
       ${goalTrackRows([
         ["YTD", String(g.current) + " / " + String(g.target)],
-        ["Pace", pace + "%"]
+        ["Pace", pace + "%"],
+        ["NTGUILT → DUI", "$4.86 / interaction"]
       ])}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
-      <p class="kpi-table-note" style="margin:0.35rem 0 0;text-align:left">Counted from Cases (practice area) · (DUI/DWI) tag or DUI-named Criminal Defense</p>
+      <p class="kpi-table-note kpi-stat-highlight" style="margin:0.35rem 0 0;text-align:left">Strong DUI lane: NTGUILT → DUI · $4.86 / interaction (219 · Jun 11–Jul 10) — not the blended NTGUILT campaign CPL</p>
+      <p class="kpi-table-note" style="margin:0.2rem 0 0;text-align:left">Counted from Cases (practice area) · (DUI/DWI) tag or DUI-named Criminal Defense</p>
       ${kpiRefMark("#DUI")}
     </button>`;
   }
@@ -2762,6 +2764,100 @@
     dispatchRendered(el, "impact");
   }
 
+  /** Intake-driven cash projection — 2026-signed cohorts only (Ad Reports model). */
+  function cashProjectionPanelHtml() {
+    const cashByMonth = [
+      ["Jan", 21454],
+      ["Feb", 35757],
+      ["Mar", 50953],
+      ["Apr", 56764],
+      ["May", 74151],
+      ["Jun", 105170],
+      ["Jul", 61904],
+      ["Aug", 42998],
+      ["Sep", 27712],
+      ["Oct", 17566],
+      ["Nov", 10548],
+      ["Dec", 4559]
+    ];
+    const cohorts = [
+      ["Jan", "12", "$67,044", "$53,635"],
+      ["Feb", "14", "$78,218", "$62,574"],
+      ["Mar", "17", "$94,979", "$75,983"],
+      ["Apr", "15", "$83,805", "$67,044"],
+      ["May", "22", "$122,914", "$98,331"],
+      ["Jun", "34", "$189,958", "$151,966"],
+      ["Jan–Jun", "114", "$636,918", "$509,534"],
+      ["Jul* (est. @ 34)", "34*", "$189,958*", "$151,966*"]
+    ];
+    const runRates = [
+      ["Jun run-rate (34/mo)", "$151,966"],
+      ["Recent avg (24/mo)", "$107,270"],
+      ["H1 avg (19/mo)", "$84,922"]
+    ];
+    const cashTable = kpiDetailTable(
+      ["Cash arrives", "Projected cash-in", "Notes"],
+      cashByMonth.map(([m, v]) => [
+        m,
+        fmtMoney(v),
+        m === "Jul" || m === "Aug" || m === "Sep" || m === "Oct" || m === "Nov" || m === "Dec"
+          ? "Tail of Jan–Jun cohorts only"
+          : "Active cohorts paying"
+      ])
+    );
+    const cohortTable = kpiDetailTable(
+      ["Signing month", "New cases", "Billed", "Collectible (80%)"],
+      cohorts
+    );
+    const runRateTable = kpiDetailTable(["Steady-state intake", "Monthly cash-in"], runRates);
+    return `${cashTable}
+      <p class="data-inline-note"><strong>Assumptions:</strong> $5,587 avg fee × 80% payment = $4,470 collectible/case · curve 40/20/15/10/7/5/3% over months 0–6 · 85% by month 3.</p>
+      <p class="data-formula-line">Collectible/case = $5,587 × 0.80 = $4,469.60</p>
+      <p class="data-formula-line">Steady-state monthly cash ≈ cases/mo × $4,469.60</p>
+      <h3 class="kpi-subtable-title">2026 cohorts</h3>
+      ${cohortTable}
+      <h3 class="kpi-subtable-title">Steady-state run rates</h3>
+      ${runRateTable}
+      <p class="data-warning-note"><strong>Research note:</strong> Jul–Dec cash above is residual from Jan–Jun signed cases only — real cash rises when Jul+ intake is added. Model excludes pre-2026 collections.</p>
+      <p class="data-inline-note">Source: Ad Reports/CASH-PROJECTION-FROM-CASES-2026-07-17.md</p>`;
+  }
+
+  function predictionsPageHtml() {
+    return `<header class="data-page-head">
+      <div>
+        <h2 class="data-page-title">Predictions</h2>
+        <p class="data-page-sub">Intake-driven cash projection · 2026-signed cohorts · 80% payment · 6-month collection curve</p>
+      </div>
+    </header>
+    <div class="data-grid">
+      ${dataCardHtml(
+        "Headline",
+        "Collectible cash from 2026 case intake — not total firm cash.",
+        `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem">
+          <div class="kpi-mini-card"><h3>Collectible / case</h3><p class="kpi-mini-value">$4,470</p></div>
+          <div class="kpi-mini-card"><h3>Jan–Jun collectible</h3><p class="kpi-mini-value">$509,534</p></div>
+          <div class="kpi-mini-card"><h3>Jun steady-state</h3><p class="kpi-mini-value">~$152k/mo</p></div>
+        </div>`,
+        { full: true, id: "prediction-headline" }
+      )}
+      ${dataCardHtml(
+        "Projected cash-in by month",
+        "Calendar month cash arriving from Jan–Jun 2026 signed cohorts.",
+        cashProjectionPanelHtml(),
+        { full: true, id: "prediction-cash-by-month" }
+      )}
+    </div>`;
+  }
+
+  function renderPredictions(el) {
+    if (!el || el.dataset.rendered === RENDER_VER) return;
+    el.innerHTML = predictionsPageHtml();
+    el.dataset.rendered = RENDER_VER;
+    bindKpiInteractions(el);
+    bindDashboardInteractions(el);
+    dispatchRendered(el, "predictions");
+  }
+
   /** June LSA → digital reallocation recommendations (media + management retainer). */
   function junPaidChannelRecs() {
     const jun = (DATA.casesLeadsSpend || []).find(r => r.month === "Jun");
@@ -3014,6 +3110,7 @@
     renderKpis,
     renderData,
     renderImpact,
+    renderPredictions,
     renderRecommendations,
     renderDashboards,
     renderAll,
