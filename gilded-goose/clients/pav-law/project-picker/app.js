@@ -6,8 +6,8 @@
         depositAmount: 2500,
         quickbooksDepositUrl: "",
         notifyEmail: "support@gildedgooselimited.com",
-        /** Future custom e-sign build — not a Dropbox/DocuSign plugin. Draft + email PDF for now. */
-        esignProvider: "custom_later",
+        /** Custom typed e-sign in-guide — not Dropbox/DocuSign/Adobe. */
+        esignProvider: "custom",
         esignCreateUrl: "",
         msaLabel: "Master Services Agreement (MSA)",
         sowTemplateNote: "GGL SOW template + Schedule A from payment plan"
@@ -166,6 +166,23 @@
       if (add) state.projects.add(id);
       else state.projects.delete(id);
     }
+    return true;
+  }
+
+  function applyCartCheckboxChange(id, wantAdd, chk) {
+    const row = chk?.closest?.("tr");
+    if (row && row.dataset.required === "true") {
+      if (chk) chk.checked = true;
+      return false;
+    }
+    if (!trySetProjectInCart(id, wantAdd)) {
+      if (chk) chk.checked = !wantAdd;
+      return false;
+    }
+    saveState();
+    /* Keep Best Fit (top) and Project Outlines (bottom) checkboxes in sync. */
+    renderAllCards();
+    renderSummary();
     return true;
   }
 
@@ -357,7 +374,8 @@
     const t = String(tab || "kpis").toLowerCase().trim();
     if (t === "revenue" || t === "completed") return "impact";
     if (t === "dashboards") return "kpis";
-    if (t === "kpis" || t === "data" || t === "picker" || t === "impact") return t;
+    if (t === "recs" || t === "recommendation") return "recommendations";
+    if (t === "kpis" || t === "data" || t === "recommendations" || t === "picker" || t === "impact") return t;
     return "kpis";
   }
 
@@ -567,20 +585,34 @@
     return required.concat(indexRecommendedBestFit());
   }
 
+  /** Nest {item,score} rows so HubSpot (and other) children stay under their parent. */
+  function nestRankedList(ranked) {
+    if (!ranked?.length) return [];
+    const scoreOf = new Map(ranked.map(r => [r.item.id, r.score]));
+    const nested = nestChildrenUnderParents(
+      ranked.map(r => r.item),
+      (a, b) => {
+        const aReq = isRequiredProject(a, !!a.isRetainer);
+        const bReq = isRequiredProject(b, !!b.isRetainer);
+        if (aReq !== bReq) return aReq ? -1 : 1;
+        const as = scoreOf.get(a.id) ?? 0;
+        const bs = scoreOf.get(b.id) ?? 0;
+        if (as !== bs) return bs - as;
+        return (a.priority ?? 99) - (b.priority ?? 99);
+      }
+    );
+    return nested.map(item => ({ item, score: scoreOf.get(item.id) ?? 0 }));
+  }
+
   /** Best Fit rows = invoice line items (same projects), required first then by score. */
   function rankedInvoiceForBestFit() {
-    return getInvoiceLineItems().map(row => {
+    const ranked = getInvoiceLineItems().map(row => {
       const item = findProjectById(row.id) || { id: row.id, title: row.title, isRetainer: row.id === "RETAINER" };
       const isRet = !!item.isRetainer || item.id === "RETAINER";
       const score = isRequiredProject(item, isRet) ? -999 : computeProjectScore(item);
       return { item: { ...item, isRetainer: isRet }, score };
-    }).sort((a, b) => {
-      const aReq = isRequiredProject(a.item, !!a.item.isRetainer);
-      const bReq = isRequiredProject(b.item, !!b.item.isRetainer);
-      if (aReq !== bReq) return aReq ? -1 : 1;
-      if (a.score !== b.score) return b.score - a.score;
-      return (a.item.priority ?? 99) - (b.item.priority ?? 99);
     });
+    return nestRankedList(ranked);
   }
 
   /** Session-only: Gilbert/survey may override Best Fit until refresh. Never persisted. */
@@ -611,7 +643,7 @@
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled} ${selected ? "checked" : ""}>
         </td>
         <td class="col-rank">${i + 1}</td>
-        <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(item.title)}</span></a></td>
+        <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</span></a></td>
         <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
       </tr>`;
     }).join("");
@@ -658,8 +690,8 @@
     let ranked = rankedInvoiceForBestFit();
     if (!ranked.length) {
       ranked = bestFitSessionActive && hasGilbertActivity()
-        ? gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) }))
-        : indexPlanBestFit();
+        ? nestRankedList(gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) })))
+        : nestRankedList(indexPlanBestFit());
     }
     const body = bestFitRankedListHtml(ranked);
 
@@ -673,13 +705,12 @@
     renderDoNextPanel();
   }
 
-  function campaignMetricsHtml(item) {
-    if (!item.goal) return "";
-    return `<div class="campaign-metrics-panel"><div class="campaign-metrics-block campaign-goal-block"><h4>Goal</h4><p>${escapeHtml(item.goal)}</p></div></div>`;
+  function campaignMetricsHtml() {
+    return "";
   }
 
   function resultsBlockHtml(item) {
-    let html = campaignMetricsHtml(item);
+    let html = "";
     const auto = [...(item.completedItems || []), ...(item.inProgressItems || [])];
     if (auto.length) {
       html += `<div class="completed-auto"><h4>Work logged</h4><ul>${auto.map(r => `<li>${escapeHtml(r)}</li>`).join("")}</ul></div>`;
@@ -709,7 +740,6 @@
       <h4>${escapeHtml(item.id)} — ${escapeHtml(item.title)}</h4>
       <p class="completed-report-out-project-meta">${escapeHtml(metaParts.join(" · "))}</p>
       <ul>
-        ${item.goal ? `<li><strong>Goal:</strong> ${escapeHtml(item.goal)}</li>` : ""}
         ${shipped.length ? `<li><strong>Completed:</strong> ${escapeHtml(shipped.join("; "))}</li>` : ""}
       </ul>
     </div>`;
@@ -721,7 +751,7 @@
           <span class="completed-report-out-badge">Draft</span>
           <h3>Report out — completed projects</h3>
         </div>
-        <p class="completed-report-out-lede">No projects marked <strong>completed</strong> in INDEX yet. When a project ships, set Status to completed — this report-out will populate from Goal and Completed.</p>`;
+        <p class="completed-report-out-lede">No projects marked <strong>completed</strong> in INDEX yet. When a project ships, set Status to completed — this report-out will populate from Completed.</p>`;
     }
     const names = items.map(p => `<strong>${escapeHtml(p.id)} ${escapeHtml(p.title)}</strong>`).join("; ");
     const closer =
@@ -732,7 +762,7 @@
         <span class="completed-report-out-badge">Draft</span>
         <h3>Report out — completed projects</h3>
       </div>
-      <p class="completed-report-out-lede">${items.length} project${items.length === 1 ? "" : "s"} closed: ${names}. Detail cards below show Goal and Completed.</p>
+      <p class="completed-report-out-lede">${items.length} project${items.length === 1 ? "" : "s"} closed: ${names}. Detail cards below show Completed work.</p>
       ${items.map(completedReportOutProjectHtml).join("")}
       <p class="completed-report-out-bottom"><strong>Bottom line:</strong> ${escapeHtml(closer)}</p>
       <p class="completed-report-out-footnote">Draft for review — edit project markdown to update.</p>`;
@@ -817,14 +847,17 @@
     state.activeViewTab = normalizeViewTab(state.activeViewTab);
     const isKpis = state.activeViewTab === "kpis";
     const isData = state.activeViewTab === "data";
+    const isRecs = state.activeViewTab === "recommendations";
     const isPicker = state.activeViewTab === "picker";
     const isImpact = state.activeViewTab === "impact";
     const kpisPanel = document.getElementById("cockpit-panel-kpis");
     const dataPanel = document.getElementById("cockpit-panel-data");
+    const recsPanel = document.getElementById("cockpit-panel-recommendations");
     const pickerPanel = document.getElementById("cockpit-panel-picker");
     const impactPanel = document.getElementById("cockpit-panel-impact");
     if (kpisPanel) kpisPanel.hidden = !isKpis;
     if (dataPanel) dataPanel.hidden = !isData;
+    if (recsPanel) recsPanel.hidden = !isRecs;
     if (pickerPanel) pickerPanel.hidden = !isPicker;
     if (impactPanel) impactPanel.hidden = !isImpact;
     syncViewTabs();
@@ -834,7 +867,15 @@
       const dataEl = document.getElementById("kpi-report-data");
       if (dataEl) KPI_REPORT.renderData(dataEl);
     }
+    if (isRecs && window.KPI_REPORT) {
+      const recsEl = document.getElementById("kpi-report-recommendations");
+      if (recsEl) KPI_REPORT.renderRecommendations(recsEl);
+    }
     if (isImpact) {
+      if (window.KPI_REPORT) {
+        const impactEl = document.getElementById("kpi-report-impact");
+        if (impactEl) KPI_REPORT.renderImpact(impactEl);
+      }
       renderCompletedList();
       renderRevenueCalculator();
     }
@@ -1353,7 +1394,17 @@
     getSelectedProjects().forEach(p => {
       rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p) });
     });
-    return sortInvoiceRowsRequiredFirst(rows);
+    const sorted = sortInvoiceRowsRequiredFirst(rows);
+    const order = new Map(sorted.map((row, i) => [row.id, i]));
+    const withMeta = sorted.map(row => {
+      const item = findProjectById(row.id);
+      return {
+        ...row,
+        parentId: item?.parentId || null,
+        priority: item?.priority ?? 99
+      };
+    });
+    return nestChildrenUnderParents(withMeta, (a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
   }
 
   /** Required (lock) rows first in Pav Priorities cart / invoice lists, then by fit score. */
@@ -1558,7 +1609,7 @@
       const pitch = briefValueAdd(item) || item.timeline || "Kick off after deposit clears";
       return `<li><strong>${escapeHtml(item.title)}</strong> — ${escapeHtml(pitch)}</li>`;
     }).join("")}</ol>`;
-    html += `<p class="confirm-next-foot">After submit: review the SOW draft, email the PDF report, pay the QuickBooks deposit, then Gilded Goose schedules kickoff. Project invoices follow your chosen schedule.</p>`;
+    html += `<p class="confirm-next-foot">After submit: Andrew receives a private link for the fixed SOW. After he signs, Gilded Goose receives a separate countersign link. PDF copies are emailed and the final version is archived in Drive.</p>`;
     return html;
   }
 
@@ -2361,7 +2412,40 @@
     sorted.forEach(p => {
       if (!used.has(p.id)) out.push(p);
     });
-    return sortByPriority(out);
+    /* Keep children under their parent — do not flat re-sort the nested list. */
+    return out;
+  }
+
+  /**
+   * Keep parentId children directly under their parent after a flat sort.
+   * Orphans (parent missing from this list) keep their sorted position among roots.
+   */
+  function nestChildrenUnderParents(items, compareFn) {
+    const list = Array.isArray(items) ? items.slice() : [];
+    if (list.length < 2) return list;
+    const cmp = typeof compareFn === "function"
+      ? compareFn
+      : (a, b) => (a.priority ?? 99) - (b.priority ?? 99);
+    const byId = new Map(list.map(item => [item.id, item]));
+    const childrenOf = new Map();
+    const roots = [];
+    list.forEach(item => {
+      const pid = item.parentId;
+      if (pid && byId.has(pid)) {
+        if (!childrenOf.has(pid)) childrenOf.set(pid, []);
+        childrenOf.get(pid).push(item);
+        return;
+      }
+      roots.push(item);
+    });
+    roots.sort(cmp);
+    const out = [];
+    roots.forEach(root => {
+      out.push(root);
+      const kids = (childrenOf.get(root.id) || []).slice().sort(cmp);
+      out.push(...kids);
+    });
+    return out;
   }
 
   function parentProject(item) {
@@ -2469,7 +2553,7 @@
     const ranks = priorityMap || (field === "priority" && !useClientOrder
       ? buildUniqueTocPriorityMap(items)
       : null);
-    return [...items].sort((a, b) => {
+    const flat = [...items].sort((a, b) => {
       /* Selected-first only for non-priority sorts so Priority ▲/▼ can fully invert. */
       if (field !== "priority" && !useClientOrder) {
         const aSel = isItemSelected(a);
@@ -2495,6 +2579,27 @@
       if (newness !== 0) return newness;
       return mult * (tocItemFee(a) - tocItemFee(b));
     });
+    /* Client reorder is explicit row order — do not regroup under parents. */
+    if (useClientOrder || state.priorityEdit) return flat;
+    const order = new Map(flat.map((item, i) => [item.id, i]));
+    return nestChildrenUnderParents(flat, (a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
+  }
+
+  /** Collapsed TOC still shows every selected project (and its HubSpot parent if needed). */
+  function visibleTocItems(items) {
+    if (state.tocExpanded || state.priorityEdit || items.length <= 5) return items;
+    const keep = new Set();
+    items.slice(0, 5).forEach(item => keep.add(item.id));
+    items.forEach(item => {
+      if (!isItemSelected(item)) return;
+      keep.add(item.id);
+      if (item.parentId) keep.add(item.parentId);
+    });
+    /* Keep already-included parents’ children that were in the opening slice. */
+    items.forEach((item, idx) => {
+      if (idx < 5 && item.parentId && keep.has(item.parentId)) keep.add(item.id);
+    });
+    return items.filter(item => keep.has(item.id));
   }
 
   function updateTocSortUi() {
@@ -2575,7 +2680,7 @@
     const priorityMap = useClientRanks ? null : buildUniqueTocPriorityMap(baseItems);
     const items = sortTocItems(baseItems, priorityMap);
     if (state.priorityEdit) ensureClientPriorityIds(items);
-    const visibleItems = state.tocExpanded || state.priorityEdit ? items : items.slice(0, 5);
+    const visibleItems = visibleTocItems(items);
     const usedPriorities = new Set();
     listEl.innerHTML = visibleItems.map((item, rowIdx) => {
       const selected = isItemSelected(item);
@@ -3220,14 +3325,7 @@
         const id = chk.dataset.id;
         const card = chk.closest(".card");
         if (card && card.dataset.required === "true") return;
-        const wantAdd = chk.checked;
-        if (!trySetProjectInCart(id, wantAdd)) {
-          chk.checked = !wantAdd;
-          return;
-        }
-        saveState();
-        renderAllCards();
-        renderSummary();
+        applyCartCheckboxChange(id, chk.checked, chk);
       });
     });
 
@@ -3398,6 +3496,7 @@
       paymentWithin30Days: paymentTerms.within30Days,
       paymentWithin60Days: paymentTerms.within60Days,
       quickbooksDepositUrl: CONFIG.quickbooksDepositUrl || null,
+      signingBaseUrl: window.location.origin + window.location.pathname,
       projects: [...maintRows, ...projectRows],
       projectsSubtotal: fmt(projectTotal),
       projectsSubtotalNum: projectTotal,
@@ -3411,7 +3510,7 @@
       actionItems: buildActionItems(),
       nextStepsText: formatNextStepsText(),
       sowDraft: null,
-      esignStatus: "draft_email"
+      esignStatus: "pending"
     };
   }
 
@@ -3699,10 +3798,12 @@
       ? `<p class="confirm-note">Confirmation sent to <strong>${escapeHtml(payload.submitterEmail)}</strong> and Gilded Goose.</p>`
       : `<p class="confirm-note">Confirmation sent to Gilded Goose.</p>`;
 
-    const signedNote = payload.esignStatus === "emailed"
-      ? `<p class="confirm-note">SOW PDF email draft opened — Gilded Goose will finalize the report.</p>`
+    const signedNote = payload.esignStatus === "client_signed"
+      ? `<p class="confirm-note">Andrew’s electronic signature is recorded. His PDF copy was emailed; Gilded Goose’s countersignature is next.</p>`
       : payload.esignStatus === "signed"
-      ? `<p class="confirm-note">SOW signature recorded.</p>`
+      ? `<p class="confirm-note">SOW signed electronically — copies emailed to you and Gilded Goose.</p>`
+      : payload.esignStatus === "signed_local"
+      ? `<p class="confirm-note">SOW signed in this browser — email via webhook failed; signed copy was downloaded. Gilded Goose will confirm from the Sheet.</p>`
       : "";
 
     const actionItemsHtml = `<div class="thank-you-action-items action-items-panel">${buildActionItemsHtml(payload.actionItems)}</div>`;
@@ -3746,41 +3847,24 @@
     window.scrollTo(0, 0);
   }
 
-  /* ---- SOW draft + email PDF (custom e-sign build later) ---- */
+  /* ---- Fixed SOW + private, staged e-sign links ---- */
 
-  function buildSowDraft(payload) {
-    const p = payload || lastSubmittedPayload || {};
-    const cfg = getConfig();
-    const lines = [];
-    lines.push("STATEMENT OF WORK — Gilded Goose Limited × Pav Law");
-    lines.push("Governed by: " + (cfg.msaLabel || "Master Services Agreement (MSA)"));
-    lines.push("");
-    lines.push("Client contact: " + (p.submitterEmail || "[email]"));
-    lines.push("Date: " + new Date().toLocaleDateString("en-US"));
-    lines.push("");
-    lines.push("1. SCOPE — Selected projects");
+  const ESIGN_CONSENT_VERSION = "2026-07-17-v2";
+  const CLIENT_SIGNER = "Andrew Brown";
+  const CONSULTANT_SIGNER = "Kate Stannard";
+  let activeSowSigning = null;
+  let activeSowToken = "";
+  let signedPdfBase64 = "";
+  let signedPdfName = "Pav-Law-SOW-signed.pdf";
+
+  function projectTitlesForSow(payload) {
+    const titles = [];
+    const p = payload || {};
+    if (p.retainer && p.retainerTitle) titles.push(p.retainerTitle);
     (p.projects || []).forEach(proj => {
-      const t = proj.timeline ? ` (${proj.timeline})` : "";
-      lines.push(`  • ${proj.id} — ${proj.title} — ${proj.fee}${t}`);
+      if (proj && proj.title) titles.push(proj.title);
     });
-    if (!(p.projects || []).length) lines.push("  • [projects]");
-    lines.push("");
-    lines.push("2. FEES & PAYMENT PLAN (Schedule A)");
-    lines.push("  Consulting subtotal: " + (p.projectsSubtotal || p.grandTotalNote || "$[___]"));
-    if (p.depositAmount) {
-      lines.push(`  Deposit due at signing: ${fmt(p.depositAmount)}${p.depositPct ? ` (${Math.round(p.depositPct * 100)}%)` : ""}`);
-    }
-    lines.push("  Invoice schedule: " + (p.invoicePaymentTermsLabel || "Per payment options selected"));
-    if (p.maintenanceMonthlyNum) lines.push("  Retainer / maintenance: " + p.maintenanceMonthly + "/mo, billed separately");
-    lines.push("  Media spend billed by platforms directly to Client.");
-    lines.push("");
-    lines.push("3. TERMS");
-    lines.push("  This SOW is governed by the MSA between the parties. Attorney advertising");
-    lines.push("  approval and compliance remain with Pav Law. Deposit is non-refundable");
-    lines.push("  after kickoff. Full terms: MSA + Schedule A.");
-    lines.push("");
-    lines.push("Status: Draft for email PDF report. Custom e-sign build later (not a third-party plugin).");
-    return lines.join("\n");
+    return titles;
   }
 
   function updateEsignStatusText(text) {
@@ -3788,32 +3872,93 @@
     if (el) el.textContent = text;
   }
 
-  function showSowPage(payload) {
-    lastSubmittedPayload = payload;
-    const draftEl = document.getElementById("sow-draft");
-    if (draftEl) draftEl.value = buildSowDraft(payload);
+  function setSowContinueEnabled(on) {
+    const btn = document.getElementById("sow-continue-thankyou");
+    const hint = document.getElementById("sow-continue-hint");
+    if (btn) btn.disabled = !on;
+    if (hint) {
+      hint.textContent = on
+        ? "Signed — continue to pay the QuickBooks deposit."
+        : "Andrew signs first; Gilded Goose countersigns from a separate private link.";
+    }
+  }
+
+  function clearSowChecks() {
+    ["sow-check-reviewed", "sow-check-firm", "sow-check-individual", "sow-check-consent"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.checked = false;
+    });
+  }
+
+  function showSowPage(record) {
+    if (!record || typeof record !== "object") {
+      throw new Error("Private signing record is missing.");
+    }
+    activeSowSigning = record;
+    lastSubmittedPayload = record.payload || null;
+    const role = record.role || "client";
+    const isClient = role === "client";
+    const titles = projectTitlesForSow(record.payload || {});
+
+    const intro = document.getElementById("sow-intro");
+    if (intro) {
+      intro.textContent = isClient
+        ? "Private link for Andrew Brown. Review the fixed SOW, check each statement, then sign. Gilded Goose receives a separate private countersign link next."
+        : "Private Gilded Goose countersign link. Review the SOW already signed by Andrew Brown, then countersign to finalize it.";
+    }
+
+    const doc = document.getElementById("sow-document");
+    if (doc) doc.textContent = record.sowText || "Agreement unavailable.";
 
     const projList = document.getElementById("sow-project-list");
     if (projList) {
-      const rows = (payload.projects || []).map(p =>
-        `<li><strong>${escapeHtml(p.title)}</strong> <span class="sow-proj-fee">${escapeHtml(p.fee)}</span></li>`
-      ).join("");
-      projList.innerHTML = rows || `<li><em>No projects selected</em></li>`;
+      projList.innerHTML = titles.length
+        ? titles.map(title => `<li><strong>${escapeHtml(title)}</strong></li>`).join("")
+        : `<li><em>No projects selected</em></li>`;
     }
 
     const payLine = document.getElementById("sow-payment-line");
     if (payLine) {
-      const dep = payload.depositAmount ? `${fmt(payload.depositAmount)} deposit at kickoff` : "Deposit per payment options";
-      payLine.textContent = `${dep} · ${payload.invoicePaymentTermsLabel || "invoice schedule per payment options"}. Retainer/maintenance billed separately.`;
+      const p = record.payload || {};
+      const dep = p.depositAmount ? `${fmt(p.depositAmount)} deposit at kickoff` : "Deposit per payment terms";
+      payLine.textContent = `${dep} · ${p.invoicePaymentTermsLabel || "invoice schedule per payment terms"}.`;
     }
 
-    const esignBtn = document.getElementById("sow-send-esign");
-    if (esignBtn) {
-      esignBtn.textContent = "Email SOW PDF";
+    clearSowChecks();
+    const signerName = document.getElementById("sow-signer-name");
+    if (signerName) signerName.textContent = isClient ? CLIENT_SIGNER : CONSULTANT_SIGNER;
+    const signRole = document.getElementById("sow-sign-role");
+    if (signRole) {
+      signRole.textContent = isClient
+        ? "Andrew signs once: for Pav Law as authorized signer and individually as Co-Client 2."
+        : "Kate Stannard countersigns for Gilded Goose Limited.";
     }
-    updateEsignStatusText(
-      "Draft SOW for email PDF report. Custom e-sign will be built later — not Dropbox Sign, DocuSign, or another plugin."
-    );
+
+    const firmWrap = document.getElementById("sow-check-firm-wrap");
+    const individualWrap = document.getElementById("sow-check-individual-wrap");
+    if (firmWrap) firmWrap.hidden = !isClient;
+    if (individualWrap) individualWrap.hidden = !isClient;
+    const consentText = document.getElementById("sow-esign-consent-text");
+    if (consentText) {
+      consentText.textContent = isClient
+        ? "I consent to transact electronically and intend this checkbox-and-button process to be my electronic signature, with the same effect as my handwritten signature."
+        : "I, Kate Stannard, consent to transact electronically and intend this checkbox-and-button process to be my countersignature for Gilded Goose Limited.";
+    }
+
+    const signBtn = document.getElementById("sow-send-esign");
+    if (signBtn) {
+      signBtn.disabled = false;
+      signBtn.textContent = isClient ? "Andrew Brown — sign fixed SOW" : "Kate Stannard — countersign fixed SOW";
+    }
+    const continueBtn = document.getElementById("sow-continue-thankyou");
+    const continueHint = document.getElementById("sow-continue-hint");
+    if (continueBtn) continueBtn.hidden = !isClient;
+    if (continueHint) continueHint.hidden = !isClient;
+    setSowContinueEnabled(false);
+
+    const downloadBtn = document.getElementById("sow-download-copy");
+    if (downloadBtn) downloadBtn.classList.remove("show");
+    updateEsignStatusText("The signing link is single-use and expires " + (record.expiresAt || "after the signing period") + ".");
 
     document.getElementById("sow-page").classList.add("show");
     document.getElementById("sow-page").setAttribute("aria-hidden", "false");
@@ -3831,36 +3976,142 @@
     el.setAttribute("aria-hidden", "true");
   }
 
-  function emailSowPdf() {
-    const draftEl = document.getElementById("sow-draft");
-    if (lastSubmittedPayload) {
-      lastSubmittedPayload.sowDraft = draftEl ? draftEl.value : null;
-      lastSubmittedPayload.esignStatus = "emailed";
+  function signingChecks(role) {
+    return {
+      reviewed: !!document.getElementById("sow-check-reviewed")?.checked,
+      firmAuthority: role === "client" ? !!document.getElementById("sow-check-firm")?.checked : true,
+      individualCapacity: role === "client" ? !!document.getElementById("sow-check-individual")?.checked : true,
+      electronicConsent: !!document.getElementById("sow-check-consent")?.checked
+    };
+  }
+
+  function validateSigningChecks(checks, role) {
+    if (!checks.reviewed) return "Check that you reviewed the complete fixed SOW.";
+    if (role === "client" && !checks.firmAuthority) return "Andrew must confirm authority to sign for Pav Law.";
+    if (role === "client" && !checks.individualCapacity) return "Andrew must confirm his individual Co-Client signature.";
+    if (!checks.electronicConsent) return "Check the electronic-signature consent statement.";
+    return "";
+  }
+
+  async function getPublicIp() {
+    try {
+      const res = await fetch("https://api64.ipify.org?format=json", { cache: "no-store" });
+      if (!res.ok) throw new Error("IP lookup failed");
+      const data = await res.json();
+      return data.ip || "unavailable";
+    } catch (e) {
+      return "unavailable";
     }
-    const to = CONFIG.notifyEmail || "support@gildedgooselimited.com";
-    const email = (lastSubmittedPayload && lastSubmittedPayload.submitterEmail) || "";
-    const subject = encodeURIComponent("Pav Law SOW draft PDF — " + (email || "submission"));
-    const body = encodeURIComponent(
-      "Please email the SOW PDF report for this selection.\n\n" +
-      "Submitter: " + (email || "(none)") + "\n\n" +
-      "--- SOW DRAFT ---\n" +
-      ((draftEl && draftEl.value) || "(empty)") +
-      "\n\n---\nNote: Custom e-sign build later — not a third-party plugin."
-    );
-    updateEsignStatusText("Opening email draft with SOW text… Continue to deposit when ready.");
+  }
+
+  function downloadBase64Pdf(base64, filename) {
+    if (!base64) return;
+    const raw = atob(base64);
+    const bytes = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i += 1) bytes[i] = raw.charCodeAt(i);
+    const blob = new Blob([bytes], { type: "application/pdf" });
     const a = document.createElement("a");
-    a.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
-    a.rel = "noopener";
-    document.body.appendChild(a);
+    a.href = URL.createObjectURL(blob);
+    a.download = filename || "Pav-Law-SOW-signed.pdf";
     a.click();
-    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  async function signSowAndEmail() {
+    CONFIG = getConfig();
+    if (!activeSowSigning || !activeSowToken) {
+      updateEsignStatusText("This page is not attached to a valid private signing link.");
+      return;
+    }
+    const role = activeSowSigning.role || "client";
+    const checks = signingChecks(role);
+    const validation = validateSigningChecks(checks, role);
+    if (validation) {
+      updateEsignStatusText(validation);
+      showToast(validation, true);
+      return;
+    }
+
+    const btn = document.getElementById("sow-send-esign");
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = role === "client" ? "Recording Andrew’s signature…" : "Recording Kate’s countersignature…";
+    }
+    updateEsignStatusText("Recording server timestamp, public IP, document hash, and signature…");
+
+    try {
+      const publicIp = await getPublicIp();
+      const result = await postToWebhook(CONFIG.webhookUrl, {
+        type: "sow_sign",
+        token: activeSowToken,
+        role,
+        checks,
+        consentVersion: ESIGN_CONSENT_VERSION,
+        publicIp,
+        clientSignedAt: new Date().toISOString(),
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+        userAgent: navigator.userAgent || ""
+      }, true);
+      const data = result.data || {};
+      signedPdfBase64 = data.pdfBase64 || "";
+      signedPdfName = data.pdfName || "Pav-Law-SOW-signed.pdf";
+      if (signedPdfBase64) downloadBase64Pdf(signedPdfBase64, signedPdfName);
+
+      const downloadBtn = document.getElementById("sow-download-copy");
+      if (downloadBtn && signedPdfBase64) downloadBtn.classList.add("show");
+      if (btn) btn.disabled = true;
+
+      if (role === "client") {
+        updateEsignStatusText("Andrew’s signature is recorded. His PDF copy was downloaded and emailed. Kate’s private countersign link was emailed to Gilded Goose.");
+        if (lastSubmittedPayload) lastSubmittedPayload.esignStatus = "client_signed";
+        setSowContinueEnabled(true);
+      } else {
+        updateEsignStatusText("Countersigned and complete. Final PDF downloaded and emailed to both parties; the finished SOW was saved to the private Drive folder.");
+        if (lastSubmittedPayload) lastSubmittedPayload.esignStatus = "signed";
+      }
+      showToast(role === "client" ? "Andrew signature recorded" : "SOW finalized and archived");
+    } catch (err) {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = role === "client" ? "Andrew Brown — sign fixed SOW" : "Kate Stannard — countersign fixed SOW";
+      }
+      updateEsignStatusText("Signature was not recorded. Nothing was finalized. " + (err.message || "Try again."));
+      showToast("Signature failed — try again", true);
+    }
+  }
+
+  async function loadPrivateSowLink() {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("sow");
+    if (!token) return false;
+    CONFIG = getConfig();
+    activeSowToken = token;
+    document.getElementById("main-app").classList.add("hidden");
+    document.getElementById("sow-page").classList.add("show");
+    document.getElementById("sow-page").setAttribute("aria-hidden", "false");
+    updateEsignStatusText("Opening private signing record…");
+    try {
+      const url = CONFIG.webhookUrl + "?action=sow&token=" + encodeURIComponent(token);
+      const res = await fetch(url, { method: "GET", cache: "no-store" });
+      const data = await res.json();
+      if (!res.ok || !data.ok || !data.signing) {
+        throw new Error(data.error || "Private signing link is invalid or the webhook is not on private-staged-v2 yet.");
+      }
+      showSowPage(data.signing);
+    } catch (err) {
+      updateEsignStatusText((err.message || "Could not load this signing link.") + " Ask Gilded Goose for a new link.");
+      const btn = document.getElementById("sow-send-esign");
+      if (btn) btn.disabled = true;
+    }
+    return true;
   }
 
   function continueToThankYou() {
     const payload = lastSubmittedPayload;
-    if (!payload) return;
-    const draftEl = document.getElementById("sow-draft");
-    if (draftEl) payload.sowDraft = draftEl.value;
+    if (!payload || payload.esignStatus !== "client_signed") {
+      updateEsignStatusText("Andrew must sign before continuing to deposit.");
+      return;
+    }
     showThankYou(payload);
   }
 
@@ -3881,7 +4132,7 @@
         <td class="col-select">
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(row.id)}" aria-label="Keep ${escapeHtml(row.title)} in cart"${chkDisabled} checked>
         </td>
-        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
+        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${row.parentId ? "↳ " : ""}${escapeHtml(row.title)}</span></a></td>
         <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
       </tr>`;
     }).join("");
@@ -3915,7 +4166,7 @@
         ? requiredMarkerHtml(RETAINER, true)
         : (() => { const p = PROJECTS.find(x => x.id === row.id); return p ? requiredMarkerHtml(p, false) : ""; })();
       return `<tr>
-        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
+        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${row.parentId ? "↳ " : ""}${escapeHtml(row.title)}</span></a></td>
         <td class="col-fee">${row.fee}</td>
       </tr>`;
     }).join("");
@@ -3976,7 +4227,7 @@
     URL.revokeObjectURL(a.href);
   }
 
-  async function postToWebhook(url, payload) {
+  async function postToWebhook(url, payload, requireResponse) {
     const body = JSON.stringify(payload);
     let res;
     try {
@@ -3987,18 +4238,19 @@
         body
       });
     } catch (err) {
+      if (requireResponse) throw err;
       await fetch(url, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body
       });
-      return { ok: true, noCors: true };
+      return { ok: true, noCors: true, data: null };
     }
     const text = await res.text();
     let data = {};
     try { data = JSON.parse(text); } catch (e) { /* GAS may return empty on some errors */ }
-    if (res.ok && (data.ok || text.includes('"ok":true'))) return { ok: true };
+    if (res.ok && (data.ok || text.includes('"ok":true'))) return { ok: true, data };
     throw new Error(data.error || text.slice(0, 120) || `HTTP ${res.status}`);
   }
 
@@ -4023,29 +4275,27 @@
     const btn = document.getElementById("submit-selections");
     btn.disabled = true;
     btn.textContent = "Submitting…";
-    let ok = false;
+    let signingUrl = "";
 
     if (!CONFIG.webhookUrl) {
-      try {
-        saveSubmissionLocally(payload);
-        downloadSubmissionJson(payload);
-        emailActivityLog(payload);
-        ok = true;
-      } catch (err) {
-        showToast("Could not save submission — try again or email support@gildedgooselimited.com", true);
-      }
+      saveSubmissionLocally(payload);
+      downloadSubmissionJson(payload);
+      showToast("Private signing link requires the configured webhook. Submission downloaded as backup.", true);
     } else {
       try {
-        const result = await postToWebhook(CONFIG.webhookUrl, payload);
-        if (result.ok) ok = true;
+        const result = await postToWebhook(CONFIG.webhookUrl, payload, true);
+        signingUrl = result.data?.signing?.url || "";
+        if (!signingUrl) throw new Error("Signing link was not returned.");
       } catch (err) {
         showToast("Submit failed — try again or email support@gildedgooselimited.com. " + err.message, true);
       }
     }
 
-    if (ok) {
+    if (signingUrl) {
       lastSubmittedPayload = payload;
-      showSowPage(payload);
+      saveSubmissionLocally(payload);
+      showToast("Private signing link emailed to Andrew Brown");
+      window.location.assign(signingUrl);
     }
     btn.textContent = "Submit selections";
     updateSubmitButtons();
@@ -4068,26 +4318,22 @@
     const chk = e.target.closest('input[type="checkbox"].cart-proj-chk');
     if (!chk) return;
     e.stopPropagation();
-    const row = chk.closest("tr");
-    if (row && row.dataset.required === "true") {
-      chk.checked = true;
-      return;
-    }
-    const id = chk.dataset.id;
-    const wantAdd = chk.checked;
-    if (!trySetProjectInCart(id, wantAdd)) {
-      chk.checked = !wantAdd;
-      return;
-    }
-    saveState();
-    renderAllCards();
-    renderSummary();
+    applyCartCheckboxChange(chk.dataset.id, chk.checked, chk);
+  });
+  document.getElementById("cockpit-panel-impact")?.addEventListener("change", e => {
+    const chk = e.target.closest('input[type="checkbox"].cart-proj-chk');
+    if (!chk) return;
+    e.stopPropagation();
+    applyCartCheckboxChange(chk.dataset.id, chk.checked, chk);
   });
   document.getElementById("confirm-back").addEventListener("click", hideConfirmPage);
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
-  document.getElementById("sow-send-esign")?.addEventListener("click", emailSowPdf);
+  document.getElementById("sow-send-esign")?.addEventListener("click", signSowAndEmail);
   document.getElementById("sow-continue-thankyou")?.addEventListener("click", continueToThankYou);
+  document.getElementById("sow-download-copy")?.addEventListener("click", () => {
+    downloadBase64Pdf(signedPdfBase64, signedPdfName);
+  });
   document.getElementById("submitted-email").addEventListener("input", () => { saveState(); updateSubmitButtons(); });
   document.getElementById("invoice-payment-months").addEventListener("change", () => {
     updateInvoiceScheduleAmount();
@@ -4235,17 +4481,7 @@
     const chk = e.target.closest('input[type="checkbox"].toc-proj-chk');
     if (!chk) return;
     e.stopPropagation();
-    const row = chk.closest("tr.toc-item");
-    if (row && row.dataset.required === "true") return;
-    const id = chk.dataset.id;
-    const wantAdd = chk.checked;
-    if (!trySetProjectInCart(id, wantAdd)) {
-      chk.checked = !wantAdd;
-      return;
-    }
-    saveState();
-    renderAllCards();
-    renderSummary();
+    applyCartCheckboxChange(chk.dataset.id, chk.checked, chk);
   });
 
   document.querySelectorAll(".toc-sort-btn").forEach(btn => {
@@ -4285,4 +4521,5 @@
   else {
     renderSummary();
   }
+  loadPrivateSowLink();
 })();

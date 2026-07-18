@@ -37,6 +37,7 @@
       --gg-gold-dim: rgba(201, 168, 108, 0.18);
       --gg-negative: #cf2d56;
       --gg-positive: var(--gg-forest);
+      --gg-contrast-dark: #000000;
       --gg-magenta: #c02670;
       /* Chart series — royal · burnt orange · forest · soft gold */
       --gg-series-1: var(--gg-royal);
@@ -1227,7 +1228,7 @@
       background: linear-gradient(180deg, var(--bg) 70%, transparent);
     }
     .cockpit-tabs {
-      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem;
+      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.5rem;
       align-items: stretch;
     }
     @media (max-width: 900px) { .cockpit-tabs { grid-template-columns: 1fr; } }
@@ -1411,6 +1412,15 @@
     }
     .cockpit-tabs .view-tab.view-tab-wip .tab-count { opacity: 0.7; }
     .impact-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .impact-panel-live {
+      position: relative;
+      z-index: 1;
+    }
+    .impact-panel-wip {
       position: relative;
       min-height: 18rem;
     }
@@ -1612,9 +1622,27 @@
     .data-report-root .data-inline-note {
       margin: 0.5rem 0 0;
       color: var(--secondary);
-      font-size: 0.78rem;
+      font-size: 12px;
       font-weight: 600;
       line-height: 1.4;
+    }
+    .data-report-root .data-formula-line {
+      margin: 0.55rem 0 0;
+      color: var(--data-ink);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .data-report-root .data-warning-note {
+      margin: 0.75rem 0 0;
+      padding: 0.75rem 0.85rem;
+      border: 2px solid var(--data-gold);
+      border-radius: 10px;
+      background: var(--data-gold-soft);
+      color: var(--data-ink);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.45;
     }
     .data-report-root .kpi-chart-svg,
     .data-report-root .kpi-chart-svg-stacked,
@@ -2237,6 +2265,44 @@
     .kpi-chart-table .kpi-stack-swatch {
       display: inline-block; vertical-align: -0.1em; margin-right: 0.25rem;
     }
+    .kpi-chart-segment-count,
+    .kpi-chart-segment-count-dark,
+    .kpi-chart-segment-count-outside {
+      font-size: 12px;
+      font-weight: 900;
+      pointer-events: none;
+      paint-order: stroke;
+      stroke-linejoin: round;
+    }
+    .kpi-chart-segment-count {
+      fill: var(--gg-paper);
+      stroke: rgba(34, 25, 20, 0.82);
+      stroke-width: 2.5px;
+    }
+    .kpi-chart-segment-count-dark {
+      fill: var(--gg-contrast-dark);
+      stroke: var(--gg-paper);
+      stroke-width: 2.5px;
+    }
+    .kpi-chart-segment-count-outside {
+      fill: var(--gg-royal-deep);
+      stroke: var(--gg-paper);
+      stroke-width: 3.5px;
+    }
+    .kpi-chart-table th:not(:first-child),
+    .kpi-chart-table td:not(:first-child) {
+      text-align: right;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    .kpi-chart-table th {
+      white-space: nowrap;
+    }
+    .kpi-chart-table td {
+      color: var(--gg-brown);
+    }
+    .kpi-chart-table tbody tr:nth-child(even) {
+      background: rgba(45, 20, 84, 0.035);
+    }
     .kpi-subtable-title {
       font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
       color: var(--gg-brown); margin: 0.85rem 0 0.35rem;
@@ -2276,6 +2342,114 @@
       height: 100%;
       box-sizing: border-box;
     }
+    .kpi-tile-with-projects {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100%;
+    }
+    .kpi-tile-with-projects > .kpi-stat-card,
+    .kpi-tile-with-projects > .kpi-goal-card {
+      flex: 1 1 auto;
+      width: 100%;
+    }
+    .kpi-related-projects {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      position: relative;
+      margin-top: 0.45rem;
+      padding: 0.72rem 0.8rem;
+      border: 4px double var(--gg-gold-dark);
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255, 248, 218, 0.98), rgba(218, 165, 32, 0.16));
+      box-shadow:
+        inset 0 0 0 1px var(--gg-gold-bright),
+        inset 0 0 12px rgba(184, 134, 11, 0.12),
+        0 3px 10px rgba(138, 99, 16, 0.2);
+      text-align: left;
+    }
+    .kpi-related-projects::before,
+    .kpi-related-projects::after {
+      content: "◆";
+      position: absolute;
+      padding: 0 0.18rem;
+      background: var(--gg-cream-panel);
+      color: var(--gg-gold-dark);
+      font-size: 0.55rem;
+      line-height: 1;
+    }
+    .kpi-related-projects::before {
+      top: -0.42rem;
+      left: 0.55rem;
+    }
+    .kpi-related-projects::after {
+      right: 0.55rem;
+      bottom: -0.42rem;
+    }
+    .kpi-related-projects-title {
+      flex: 0 0 auto;
+      margin: 0;
+      color: var(--gg-royal-deep);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .kpi-related-projects ul {
+      display: flex;
+      flex: 1 1 auto;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      overflow-x: auto;
+    }
+    .kpi-related-projects li {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .kpi-related-project-egg {
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 1.5rem;
+      height: 1.8rem;
+      border: 1px solid #a56f08;
+      border-radius: 52% 52% 46% 46%;
+      background:
+        radial-gradient(circle at 34% 27%, #fff8bd 0 12%, transparent 14%),
+        linear-gradient(145deg, #ffe77a 8%, #d9a61c 58%, #9b6505 100%);
+      box-shadow:
+        inset -2px -3px 4px rgba(110, 72, 4, 0.24),
+        0 1px 3px rgba(110, 72, 4, 0.35);
+      color: var(--gg-royal-deep);
+      font-size: 0.54rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+    .kpi-related-projects a {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      padding: 0.3rem 0.48rem;
+      border: 1px solid rgba(165, 111, 8, 0.24);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--gg-royal);
+      font-size: 0.8rem;
+      font-weight: 800;
+      line-height: 1.35;
+      text-decoration: none;
+    }
+    .kpi-related-projects a:hover {
+      border-color: var(--gg-gold-dark);
+      background: rgba(255, 255, 255, 0.9);
+      text-decoration: underline;
+    }
     @media (max-width: 900px) {
       .kpi-stat-grid { grid-template-columns: 1fr; max-width: 22rem; }
     }
@@ -2288,6 +2462,7 @@
     .kpi-stat-card:hover { border-color: var(--gg-royal-border); }
     .kpi-stat-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
     .kpi-stat-card.kpi-stat-attention { border-left: 4px solid var(--gg-gold-dark); }
+    .kpi-stat-card.kpi-stat-negative { border-left: 4px solid var(--gg-negative, #b91c1c); }
     .kpi-lost-tracker {
       text-align: left; min-height: auto;
     }
@@ -2357,7 +2532,7 @@
       text-align: center; align-items: center;
     }
     .kpi-stat-card.kpi-stat-gauge .kpi-gauge-svg {
-      max-width: 132px; width: 100%; margin: 0.1rem auto 0;
+      max-width: 168px; width: 100%; margin: 0.35rem auto 0; overflow: visible;
     }
     .kpi-stat-card.kpi-stat-gauge .kpi-gauge-val {
       font-size: 1.05rem; margin-top: 0.15rem;
@@ -2688,6 +2863,9 @@
       border: none; padding: 0.35rem 0 0; background: transparent; box-shadow: none;
     }
     .kpi-mini-card h3 { margin: 0 0 0.45rem; font-size: calc(0.875rem + 2pt); color: var(--gg-royal); }
+    .kpi-mini-card .kpi-mini-value {
+      margin: 0; font-size: 1.35rem; font-weight: 800; color: var(--gg-brown); line-height: 1.2;
+    }
     .kpi-row-gap td { color: var(--gg-brown-muted); }
     .kpi-presence {
       display: inline-block; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.02em;
@@ -2713,6 +2891,10 @@
       fill: var(--gg-royal-deep);
       font-size: 11px;
       font-weight: 800;
+      paint-order: stroke;
+      stroke: var(--gg-paper);
+      stroke-width: 4px;
+      stroke-linejoin: round;
     }
     .kpi-half-moon-gauge .kpi-gauge-center {
       fill: var(--gg-royal-deep); font-size: 20px; font-weight: 800;
@@ -2731,6 +2913,20 @@
     .kpi-bhi-card { max-width: 16rem; margin-bottom: 0.75rem; }
     .kpi-chart-head { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.4rem; font-size: 14pt; }
     .kpi-chart-head strong { color: var(--gg-royal); }
+    .kpi-chart-title-large > strong {
+      display: block;
+      font-size: 1.45rem;
+      line-height: 1.2;
+    }
+    .kpi-chart-footnote {
+      margin: 0.35rem 0 0;
+      padding-top: 0.35rem;
+      border-top: 1px solid var(--border);
+      color: var(--secondary);
+      font-size: 0.78rem;
+      line-height: 1.4;
+      text-align: left;
+    }
     .kpi-chart-placeholder {
       min-height: 4.5rem; padding: 0.65rem; border-radius: 6px; border: 1px dashed var(--border);
       background: var(--gg-cream-panel); color: var(--secondary); font-size: 0.875rem;
@@ -2739,6 +2935,21 @@
     .kpi-chart-bar { font-weight: 600; color: var(--gg-brown-muted); }
     .kpi-chart-svg {
       display: block; width: 100%; max-width: 100%; height: auto; margin-top: 0.35rem;
+    }
+    .kpi-finance-grid-cash .kpi-chart-plot {
+      overflow-x: auto;
+      padding-bottom: 0.35rem;
+    }
+    .kpi-cash-long-chart {
+      width: 70rem;
+      min-width: 70rem;
+      max-width: none;
+    }
+    .kpi-cash-long-chart .kpi-chart-total,
+    .kpi-cash-long-chart .kpi-chart-axis {
+      font-family: Arial, "Helvetica Neue", sans-serif;
+      font-variant-numeric: lining-nums tabular-nums;
+      font-feature-settings: "lnum" 1, "tnum" 1;
     }
     .kpi-chart-svg-sm { max-width: 220px; }
     .kpi-chart-val { fill: var(--gg-royal-deep); font-size: 14px; font-weight: 800; }
@@ -2813,7 +3024,42 @@
       white-space: nowrap;
     }
     .kpi-reviews-presence {
-      max-width: 28rem;
+      max-width: none;
+    }
+    .kpi-reviews-main {
+      display: grid;
+      grid-template-columns: minmax(13rem, 0.75fr) minmax(24rem, 1.25fr);
+      gap: 1rem;
+      align-items: start;
+    }
+    .kpi-reviews-main > .kpi-chart-card {
+      margin: 0;
+    }
+    .kpi-reviews-table-wrap {
+      min-width: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--gg-cream-panel);
+      overflow: hidden;
+    }
+    .kpi-reviews-table-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.55rem 0.7rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--gg-royal);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .kpi-reviews-table-scroll {
+      overflow-x: auto;
+    }
+    @media (max-width: 900px) {
+      .kpi-reviews-main {
+        grid-template-columns: 1fr;
+      }
     }
     .kpi-finance-grid {
       display: grid;
@@ -2824,6 +3070,77 @@
     .kpi-finance-grid-cash {
       grid-template-columns: minmax(0, 1fr);
       max-width: 48rem;
+    }
+    .kpi-cash-pace-tile {
+      display: grid;
+      grid-template-columns: minmax(10rem, 0.9fr) minmax(10rem, 12rem) minmax(17rem, 1.25fr);
+      align-items: center;
+      gap: 1rem;
+      max-width: 48rem;
+      margin-bottom: 0.85rem;
+      padding: 0.9rem 1rem;
+      border: 2px solid var(--gg-gold-dark);
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--gg-paper), var(--gg-gold-dim));
+      box-shadow: 0 3px 10px rgba(61, 48, 40, 0.12);
+    }
+    .kpi-cash-pace-kicker {
+      display: block;
+      margin-bottom: 0.2rem;
+      color: var(--gg-burnt);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .kpi-cash-pace-copy h3 {
+      margin: 0;
+      color: var(--gg-royal);
+      font-size: 1.15rem;
+    }
+    .kpi-cash-pace-copy p {
+      margin: 0.35rem 0 0;
+      color: var(--secondary);
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+    .kpi-cash-pace-gauge .kpi-gauge-svg {
+      width: 100%;
+      max-width: 12rem;
+      margin: 0 auto;
+    }
+    .kpi-cash-pace-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.45rem;
+    }
+    .kpi-cash-pace-stats > div {
+      min-width: 0;
+      padding: 0.45rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.62);
+    }
+    .kpi-cash-pace-stats span,
+    .kpi-cash-pace-stats strong {
+      display: block;
+    }
+    .kpi-cash-pace-stats span {
+      color: var(--secondary);
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .kpi-cash-pace-stats strong {
+      margin-top: 0.12rem;
+      color: var(--gg-brown);
+      font-size: 0.9rem;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    @media (max-width: 760px) {
+      .kpi-cash-pace-tile { grid-template-columns: 1fr; }
+      .kpi-cash-pace-copy { text-align: center; }
     }
     .kpi-finance-grid .kpi-mini-card {
       min-width: 0;
@@ -2837,6 +3154,13 @@
       color: var(--gg-royal);
       font-size: 0.95rem;
       line-height: 1.25;
+    }
+    .kpi-finance-card-subtitle {
+      display: block;
+      margin-top: 0.12rem;
+      color: var(--secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
     }
     @media (max-width: 1100px) {
       .kpi-finance-grid { grid-template-columns: 1fr; }
@@ -3490,11 +3814,11 @@
     .sow-section ul { margin: 0; padding-left: 1.15rem; font-size: 0.9rem; line-height: 1.55; }
     .sow-section li { margin-bottom: 0.35rem; }
     .sow-payment-line { margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--gg-brown); }
-    .sow-draft {
+    .sow-document {
       width: 100%; min-height: 14rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 0.78rem; line-height: 1.45; padding: 0.75rem; border-radius: 6px;
       border: 2px solid var(--border-strong); background: var(--gg-paper); color: var(--input-text);
-      resize: vertical;
+      white-space: pre-wrap; overflow-wrap: anywhere; box-sizing: border-box;
     }
     .sow-esign-box {
       margin: 1rem 0; padding: 0.85rem 0.95rem; border-radius: var(--radius);
@@ -3504,6 +3828,13 @@
     .sow-esign-status { margin: 0.55rem 0 0; font-size: var(--font-min-rem); color: var(--secondary); }
     .sow-actions { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.75rem; }
     .sow-actions .btn { margin: 0; }
+    .sow-signer-name { margin: 0.25rem 0 0.65rem; font-size: 1rem; font-weight: 800; color: var(--gg-royal); }
+    .sow-checks { display: flex; flex-direction: column; gap: 0.55rem; margin: 0.75rem 0; }
+    .sow-checks .consent-field { margin-top: 0; }
+    .sow-download { display: none; margin-top: 0.55rem; }
+    .sow-download.show { display: block; }
+    .sow-secret-note { font-size: var(--font-min-rem); color: var(--secondary); }
+    .sow-continue-hint { margin: 0; font-size: var(--font-min-rem); color: var(--secondary); }
     .confirm-header { display: flex; align-items: center; gap: 0.85rem; margin-bottom: var(--space-md); }
     .confirm-header h2 { font-size: 1.1rem; margin: 0; font-weight: 800; color: var(--gg-brown); }
     .confirm-gilbert {
@@ -3732,14 +4063,14 @@
       <div class="submit-compact confirm-submit-section">
         <h3>Confirm &amp; submit</h3>
         <div class="submit-field">
-          <label for="submitted-email">Your email</label>
-          <input type="email" id="submitted-email" class="general-note" placeholder="you@example.com" autocomplete="email">
+          <label for="submitted-email">Andrew Brown’s email for the private signing link</label>
+          <input type="email" id="submitted-email" class="general-note" placeholder="andrew@example.com" autocomplete="email">
         </div>
         <div class="confirm-actions">
           <button class="btn btn-primary" id="submit-selections" disabled>Submit selections</button>
           <button type="button" class="btn btn-secondary" id="confirm-back">Back to projects</button>
         </div>
-        <p class="submit-note">Next: review the SOW draft and email the PDF report. Deposit is paid via QuickBooks on the thank-you screen. Remaining project fees follow your schedule. Retainer and maintenance bill separately each month.</p>
+        <p class="submit-note">Next: Andrew receives a private, single-use link to review and sign the fixed SOW. Kate receives a different countersign link after Andrew signs. PDF copies are downloaded and emailed; the completed version is archived in Drive.</p>
       </div>
     </div>
   </div>
@@ -3765,8 +4096,8 @@
   <div id="sow-page" class="sow-page" aria-hidden="true">
     <div class="sow-panel">
       <h2>Statement of Work</h2>
-      <p class="sow-intro">Review scope and payment terms from your selections. Customize the draft below, then email the SOW PDF report. Deposit payment is on the next screen after you continue.</p>
-      <p class="sow-msa-note">This SOW is governed by the <strong>Master Services Agreement (MSA)</strong> between Gilded Goose Limited and Pav Law. This step is a draft + email PDF — not live e-sign.</p>
+      <p class="sow-intro" id="sow-intro">Loading the private signing record…</p>
+      <p class="sow-msa-note">This SOW is governed by the <strong>Master Services Agreement (MSA)</strong> between Gilded Goose Limited and Pav Law. The agreement is fixed before signing and cannot be edited from this page.</p>
       <div class="sow-section">
         <h3>Selected projects</h3>
         <ul id="sow-project-list"></ul>
@@ -3776,16 +4107,46 @@
         <p class="sow-payment-line" id="sow-payment-line"></p>
       </div>
       <div class="sow-section">
-        <h3>SOW draft</h3>
-        <textarea id="sow-draft" class="sow-draft" aria-label="Statement of Work draft"></textarea>
+        <h3>Agreement</h3>
+        <pre id="sow-document" class="sow-document" aria-label="Statement of Work"></pre>
       </div>
       <div class="sow-esign-box">
-        <p>Email this draft as a PDF report. Custom e-sign will be built later — not a Dropbox Sign, DocuSign, or Adobe plugin.</p>
-        <button type="button" class="btn btn-primary" id="sow-send-esign">Email SOW PDF</button>
+        <p id="sow-sign-role">Private electronic-signature link.</p>
+        <p class="sow-signer-name" id="sow-signer-name"></p>
+        <div class="sow-checks" id="sow-client-checks">
+          <div class="consent-field" id="sow-check-reviewed-wrap">
+            <div class="consent-checkbox-row">
+              <input type="checkbox" id="sow-check-reviewed">
+              <label class="consent-label" for="sow-check-reviewed">I reviewed the complete, fixed Statement of Work shown above.</label>
+            </div>
+          </div>
+          <div class="consent-field" id="sow-check-firm-wrap">
+            <div class="consent-checkbox-row">
+              <input type="checkbox" id="sow-check-firm">
+              <label class="consent-label" for="sow-check-firm">I am Andrew Brown and am authorized to sign this SOW for Pav Law.</label>
+            </div>
+          </div>
+          <div class="consent-field" id="sow-check-individual-wrap">
+            <div class="consent-checkbox-row">
+              <input type="checkbox" id="sow-check-individual">
+              <label class="consent-label" for="sow-check-individual">I, Andrew Brown, also sign this SOW individually as Co-Client 2.</label>
+            </div>
+          </div>
+          <div class="consent-field" id="sow-check-consent-wrap">
+            <div class="consent-checkbox-row">
+              <input type="checkbox" id="sow-check-consent" aria-describedby="sow-esign-consent-text">
+              <label class="consent-label" for="sow-check-consent" id="sow-esign-consent-text">I consent to transact electronically and intend this checkbox-and-button process to be my electronic signature, with the same effect as my handwritten signature.</label>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" id="sow-send-esign">Sign fixed SOW</button>
         <p class="sow-esign-status" id="sow-esign-status"></p>
+        <p class="sow-secret-note">This bearer link is private, expires, and becomes unusable after signature. Do not forward it.</p>
+        <button type="button" class="btn btn-secondary sow-download" id="sow-download-copy">Download signed PDF</button>
       </div>
       <div class="sow-actions">
-        <button type="button" class="btn btn-primary" id="sow-continue-thankyou">Continue to deposit</button>
+        <button type="button" class="btn btn-primary" id="sow-continue-thankyou" disabled>Continue to deposit</button>
+        <p class="sow-continue-hint" id="sow-continue-hint">Sign and email first — then continue to the deposit screen.</p>
       </div>
     </div>
   </div>
@@ -3802,6 +4163,7 @@
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
         <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs <span class="tab-help" data-help-title="KPIs" data-help-desc="Key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export. Tap a card for context, or the ? on a KPI for description and formula." aria-label="How to use KPIs">?</span></button>
         <button type="button" class="view-tab" data-view="data" role="tab" aria-selected="false">Data <span class="tab-help" data-help-title="Data" data-help-desc="Saved operating charts and tables kept while the visual system is tested. Each card ties to a KPI or finance metric — use the ? on a KPI card for that metric’s description and formula." aria-label="How to use Data">?</span></button>
+        <button type="button" class="view-tab" data-view="recommendations" role="tab" aria-selected="false">Recommendations <span class="tab-help" data-help-title="Recommendations" data-help-desc="Paid-channel actions from June LSA vs digital economics — divert split, break-even, and Digital Ads Maintenance Retainer." aria-label="How to use Recommendations">?</span></button>
         <button type="button" class="view-tab" data-view="picker" role="tab" aria-selected="false">Project Guide <span class="tab-help" data-help-title="Project Guide" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use Project Guide">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="impact" role="tab" aria-selected="false" aria-description="Under construction">Impact <span class="tab-help" data-help-title="Impact" data-help-desc="Under construction — completed results and cart revenue calculator coming soon." aria-label="How to use Impact">?</span></button>
       </div>
@@ -3813,6 +4175,10 @@
 
     <section class="cockpit-panel data-panel" id="cockpit-panel-data" aria-label="Saved data charts" hidden>
       <div class="data-report-root" id="kpi-report-data"></div>
+    </section>
+
+    <section class="cockpit-panel recommendations-panel" id="cockpit-panel-recommendations" aria-label="Recommendations" hidden>
+      <div class="data-report-root" id="kpi-report-recommendations"></div>
     </section>
 
     <section class="cockpit-panel picker-panel outlines-panel" id="cockpit-panel-picker" aria-label="Project guide" hidden>
@@ -3891,30 +4257,35 @@
     </section>
 
     <section class="cockpit-panel impact-panel" id="cockpit-panel-impact" aria-label="Impact" hidden>
-      <div class="impact-under-construction" role="status" aria-live="polite">
-        <div class="impact-under-construction-card">
-          <strong>Under Construction</strong>
-          <p>Completed report-out and revenue calculator will land here next.</p>
-        </div>
+      <div class="impact-panel-live data-panel">
+        <div class="data-report-root" id="kpi-report-impact"></div>
       </div>
-      <div class="impact-panel-body" aria-hidden="true">
-      <div class="impact-section impact-section-completed" id="impact-completed" data-feedback-id="impact-completed" data-feedback-label="Completed projects report-out">
-        <p class="completed-panel-head">Completed</p>
-        <p class="completed-panel-intro">Draft report-out for projects marked completed in INDEX — present to Andrew/Pav or edit Goal / Completed in project markdown. Detail cards below update from live project data.</p>
-        <div id="completed-report-out" class="completed-report-out" aria-label="Completed projects report-out draft" data-feedback-id="impact-report-out" data-feedback-label="Completed report-out draft">
-          <div class="completed-report-out-head">
-            <span class="completed-report-out-badge">Draft</span>
-            <h3>Report out — completed projects</h3>
+      <div class="impact-panel-wip">
+        <div class="impact-under-construction" role="status" aria-live="polite">
+          <div class="impact-under-construction-card">
+            <strong>Under Construction</strong>
+            <p>Completed report-out and revenue calculator will land here next.</p>
           </div>
-          <p class="completed-report-out-lede">Loading completed projects…</p>
         </div>
-        <div id="completed-list" class="completed-list"></div>
-      </div>
-      <div class="impact-section impact-section-revenue" id="impact-revenue" data-feedback-id="impact-revenue" data-feedback-label="Revenue calculator">
-        <p class="revenue-panel-head">Revenue calculator</p>
-        <p class="revenue-panel-intro">Fees for projects currently in your Pav Priorities cart. Add or remove projects in <strong>Project Guide</strong> to update these numbers.</p>
-        <div id="revenue-calculator" class="revenue-calculator"></div>
-      </div>
+        <div class="impact-panel-body" aria-hidden="true">
+          <div class="impact-section impact-section-completed" id="impact-completed" data-feedback-id="impact-completed" data-feedback-label="Completed projects report-out">
+            <p class="completed-panel-head">Completed</p>
+            <p class="completed-panel-intro">Draft report-out for projects marked completed in INDEX — present to Andrew/Pav or edit Completed in project markdown. Detail cards below update from live project data.</p>
+            <div id="completed-report-out" class="completed-report-out" aria-label="Completed projects report-out draft" data-feedback-id="impact-report-out" data-feedback-label="Completed report-out draft">
+              <div class="completed-report-out-head">
+                <span class="completed-report-out-badge">Draft</span>
+                <h3>Report out — completed projects</h3>
+              </div>
+              <p class="completed-report-out-lede">Loading completed projects…</p>
+            </div>
+            <div id="completed-list" class="completed-list"></div>
+          </div>
+          <div class="impact-section impact-section-revenue" id="impact-revenue" data-feedback-id="impact-revenue" data-feedback-label="Revenue calculator">
+            <p class="revenue-panel-head">Revenue calculator</p>
+            <p class="revenue-panel-intro">Fees for projects currently in your Pav Priorities cart. Add or remove projects in <strong>Project Guide</strong> to update these numbers.</p>
+            <div id="revenue-calculator" class="revenue-calculator"></div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -3937,9 +4308,9 @@
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260717-toc3col-r2"></script>
-  <script src="dui-goal-data.js?v=20260717-toc3col-r2"></script>
-  <script src="kpi-report.js?v=20260717-toc3col-r2"></script>
+  <script src="dui-goal-data.js?v=20260717-practice-dui-r2"></script>
+  <script src="kpi-report.js?v=20260717-recs-call-gate-r3"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260717-bestfit-invoice-r1"></script>
+  <script src="app.js?v=20260717-no-goals-r1"></script>
 </body>
 </html>

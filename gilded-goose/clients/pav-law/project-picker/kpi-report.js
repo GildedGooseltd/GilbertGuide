@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260717-toc3col-r2";
+  const RENDER_VER = "20260717-recs-call-gate-r3";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -13,6 +13,10 @@
     "#02": {
       file: "Ad Reports/exports/mycase/as-of-2026-07-01/new-cases-by-month.csv",
       fields: "MyCase Created month · Jun 2026 = 34 · Jan–Jun 2026 = 114"
+    },
+    "#07": {
+      file: "LSA leads-inbox (15) · Google Ads Call details · Google account_activities Jun–Jul 2026",
+      fields: "LSA media and responses compared with digital media and calls · Jul* partial through Jul 16"
     },
     "#08": {
       file: "Campaign report (17) Jun 11 – Jul 10 · Call details May prior",
@@ -43,8 +47,8 @@
       fields: "Contact group=Client · Pre-Trial Flat Fee / flat / trial / retainer (mean $5,587 · n=142) · see CLIENT-VALUE-BASELINE.md"
     },
     "cases-leads-spend": {
-      file: "MyCase new-cases-by-month · LSA leads-inbox (15) · Google account_activities May–Jul 2026",
-      fields: "New cases (Created) · LSA inbox rows · Search + LSA spend excl. starting/ending balance"
+      file: "MyCase new-cases-by-month · LSA leads-inbox (15) · Google Ads Call details · HubSpot form submits · Google account_activities Jan–Jul 2026",
+      fields: "New cases · LSA calls · Digital ad calls · Website forms · media spend · June LSA vs digital cost trade-off (media only; HubSpot $1k from Jun)"
     },
     "cash-collected": {
       file: "~/Downloads/ledger_account_activity_report.csv",
@@ -52,7 +56,7 @@
     },
     "financial": {
       file: "ledger_account_activity_report.csv (2025-01-03→2026-07-15) · new-cases-by-month.csv as-of-2026-07-01",
-      fields: "Cash credits MoM (CY 2025 chart) · new cases MoM · 2026 YTD total in table footer"
+      fields: "Cash credits and MyCase new cases by month · Jan 2025–Jul 2026 · Jul 2026 cases not yet available"
     }
   };
 
@@ -65,7 +69,12 @@
     "#02": {
       title: "#02 New cases",
       desc: "New MyCase Client contacts created in the month (Created date). Target is a monthly case goal.",
-      formula: "Count of Client contacts with Created date in month. Jun 2026 = 34 · target 12."
+      formula: "Count of Client contacts with Created date in month. Jun 2026 = 34 · target 50."
+    },
+    "#07": {
+      title: "#07 Spend Waste",
+      desc: "Modeled excess LSA media cost versus producing the same response volume at digital Search’s observed cost per response.",
+      formula: "LSA spend − (LSA responses × digital cost per response). Jun: $13,206 − (83 × $60.12) = $8,216 waste. Jul*: $7,163 − (57 × $64.19) = $3,504. Total = −$11,720."
     },
     "#12": {
       title: "#12 Avg. Cost per Call",
@@ -97,12 +106,22 @@
       title: "#17 Referral Network",
       desc: "Referral channel counts — not wired yet. Live plan is Project Guide A4 Client Referral Program.",
       formula: null
+    },
+    "cases-leads-spend": {
+      title: "#05 Cases, Leads & Spend",
+      desc: "Monthly cases and response volume on the left axis, with marketing spend on the right axis.",
+      formula: "Bars show cases and channel responses. The line shows media spend; supporting charts compare June cost per response."
+    },
+    "financial": {
+      title: "#09 Financials",
+      desc: "Cash collected and cases created by month across the same Jan 2025–Jul 2026 range.",
+      formula: "Cash = ledger credits by month. Cases = MyCase Client contacts grouped by Created month; red means the monthly case count is not available."
     }
   };
 
   function kpiHelpBtn(kpiId) {
     const id = String(kpiId || "");
-    if (!KPI_HELP[id]) return "";
+    if (!KPI_HELP[id] && !KPI_SOURCES[id]) return "";
     return `<span class="kpi-help" role="button" tabindex="0" data-kpi-help="${escapeHtml(id)}" aria-label="About ${escapeHtml(id)}">?</span>`;
   }
 
@@ -116,6 +135,46 @@
     const id = String(kpiId || "").trim();
     if (!id || id === "#GOAL3") return "";
     return `<span class="kpi-ref-num" aria-hidden="true">${escapeHtml(id)}</span>`;
+  }
+
+  /** Current month first, then count down. */
+  function newestFirst(rows) {
+    return [...(rows || [])].reverse();
+  }
+
+  const KPI_RELATED_PROJECTS = {
+    "#19": ["B2", "B11"],
+    "#07": ["B11", "RETAINER"],
+    "#DUI": ["A11", "A19"],
+    "#01": ["A11", "A19", "B13"],
+    "#02": ["B2", "B13", "A11"],
+    "#12": ["RETAINER", "A11"]
+  };
+
+  function relatedProjectById(id) {
+    const data = window.PROJECT_DATA || {};
+    if (id === "RETAINER" && data.retainer) return { ...data.retainer, id };
+    return (data.projects || []).find(project => project.id === id) || null;
+  }
+
+  function relatedProjectsHtml(kpiId) {
+    const ids = KPI_RELATED_PROJECTS[kpiId] || [];
+    const projects = ids.map(relatedProjectById).filter(Boolean);
+    if (!projects.length) return "";
+    const onMetricsPage = /(?:^|\/)metrics\.html$/.test(window.location.pathname);
+    const links = projects.map(project => {
+      const href = `${onMetricsPage ? "index.html" : ""}#project-${encodeURIComponent(project.id)}`;
+      return `<li><a href="${href}">${escapeHtml(project.title)}</a></li>`;
+    }).join("");
+    return `<section class="kpi-related-projects" aria-label="Related projects for ${escapeHtml(kpiId)}">
+      <strong class="kpi-related-projects-title">Related projects</strong>
+      <span class="kpi-related-project-egg" aria-label="KPI ${escapeHtml(kpiId)}">${escapeHtml(kpiId)}</span>
+      <ul>${links}</ul>
+    </section>`;
+  }
+
+  function kpiTileWithProjects(kpiId, cardHtml) {
+    return `<div class="kpi-tile-with-projects">${cardHtml}${relatedProjectsHtml(kpiId)}</div>`;
   }
 
   function getKpiHelp(kpiId) {
@@ -149,11 +208,11 @@
     kpis: [
       /* #01 = total lead count (Search + LSA + all HubSpot). Target = May×1.2 for ≥20% MoM. */
       { id: "#01", label: "Total leads", value: "226", target: "≥ 107", mom: "+154%", count: 226, verified: true, hit: true, alert: false, gauge: true },
-      { id: "#02", label: "New cases", value: "34", target: "12", mom: "+55%", verified: true, alert: false, gauge: true, hit: true },
+      { id: "#02", label: "New cases", value: "34", target: "50", mom: "+55%", verified: true, alert: false, gauge: true, hit: false },
       { id: "#12", label: "Avg. Cost per Call", value: "$51", target: "< $100", mom: null, verified: true, hit: true, targetBar: true, lowerIsBetter: true },
       /* Team goals: #19 lost-tracker first in render, then #21, then DUI */
       { id: "#19", label: "Lost Revenue", value: "$15,498/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true },
-      { id: "#21", label: "Answered Calls", value: "72%", target: "≥ 90%", mom: "+5%", verified: true, alert: true, gauge: true, goal: true },
+      { id: "#21", label: "Answered Calls", value: "72%", target: "≥ 90%", mom: "+5%", verified: true, alert: true, gauge: true, goal: true, archived: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
       { id: "#28", label: "Avg case fee", value: "$5,587", target: "MyCase mean", mom: null, verified: true },
@@ -275,10 +334,12 @@
       const d = window.DUI_GOAL_DATA || {};
       return {
         current: d.current != null ? Number(d.current) : 15,
+        jun: d.jun != null ? Number(d.jun) : 3,
         target: d.target != null ? Number(d.target) : 50,
         year: d.year != null ? Number(d.year) : 2026,
         title: d.title || "# DUIs Signed",
-        label: d.label || "Signed"
+        label: d.label || "Signed",
+        exportNote: d.exportNote || ""
       };
     })(),
     casesMomSeries: [
@@ -297,10 +358,18 @@
     ],
     /* Dual-axis: left = counts · right = $ spend. Trust omitted — needs fees-collected. */
     casesLeadsSpend: [
-      { month: "May", cases: 22, leads: 50, spend: 18633, lsaSpend: 11006, adsSpend: 7627, adsLeads: 39 },
-      { month: "Jun", cases: 34, leads: 83, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138 },
-      { month: "Jul*", cases: 0, leads: 57, spend: 8832, lsaSpend: 7163, adsSpend: 1669, adsLeads: 26 }
+      { month: "Jan", cases: 12, leads: null, spend: 0, lsaSpend: 0, adsSpend: 0, adsLeads: null, websiteLeads: null },
+      { month: "Feb", cases: 14, leads: null, spend: 3197, lsaSpend: 3197, adsSpend: 0, adsLeads: null, websiteLeads: null },
+      { month: "Mar", cases: 17, leads: null, spend: 921, lsaSpend: 921, adsSpend: 0, adsLeads: null, websiteLeads: null },
+      { month: "Apr", cases: 15, leads: null, spend: 3449, lsaSpend: 3449, adsSpend: 0, adsLeads: null, websiteLeads: null },
+      { month: "May", cases: 22, leads: 50, spend: 18633, lsaSpend: 11006, adsSpend: 7627, adsLeads: 39, websiteLeads: null },
+      { month: "Jun", cases: 34, leads: 83, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
+      { month: "Jul*", cases: 0, leads: 57, spend: 8832, lsaSpend: 7163, adsSpend: 1669, adsLeads: 26, websiteLeads: 4 }
     ],
+    /** HubSpot forms fee — $1k/mo starting Jun 2026 (not charged Jan–May). */
+    websiteHubspotMonthlyFromJun: 1000,
+    /** Guide Digital Ads Maintenance Retainer — contractor management for Search/LSA/Microsoft. */
+    digitalMgmtMonthly: 2900,
     /** Consulting allocation estimates for channel CPL (not full retainer). */
     consultingLsaMonthly: 1000,
     consultingAdsMonthly: 2000,
@@ -400,9 +469,8 @@
   }
 
   function sourceFootnote(kpiId) {
-    const s = KPI_SOURCES[kpiId];
-    if (!s) return "";
-    return `<span class="kpi-source-footnote"><span class="kpi-source-label">Source</span> ${escapeHtml(s.file)} · <span class="kpi-source-fields">Fields: ${escapeHtml(s.fields)}</span></span>`;
+    /* Chart sources now live in the upper-right ? help popup. */
+    return "";
   }
 
   function escapeHtml(s) {
@@ -509,7 +577,7 @@
         lsa: "LSA inbox",
         hubspot: "HubSpot forms"
       };
-      return DATA.channelMonths.map(m => ({
+      return newestFirst(DATA.channelMonths).map(m => ({
         month: m.month,
         segments: [
           { name: labels.search, count: m.search || 0, color: colors.search },
@@ -519,7 +587,7 @@
       }));
     }
     /* Fallback — prior = May, count = Jun only */
-    return [
+    return newestFirst([
       {
         month: "May",
         segments: channels.map(c => ({ name: c.name, count: c.prior, color: c.color }))
@@ -528,7 +596,7 @@
         month: "Jun",
         segments: channels.map(c => ({ name: c.name, count: c.count, color: c.color }))
       }
-    ];
+    ]);
   }
 
   function stackedLeadsByMonthChart(months) {
@@ -554,15 +622,29 @@
       const x = pad.l + i * slot + (slot - barW) / 2;
       let y = pad.t + plotH;
       const segs = m.segments.map(seg => {
-        const hh = total ? (plotH * seg.count) / max : 0;
+        const count = Number(seg.count) || 0;
+        const hh = total ? (plotH * count) / max : 0;
         y -= hh;
-        return `<rect x="${x}" y="${y}" width="${barW}" height="${Math.max(hh, 0)}" fill="${seg.color}">
-          <title>${escapeHtml(seg.name)}: ${seg.count}</title>
-        </rect>`;
+        if (!count) return "";
+        const compact = hh < 18;
+        const labelX = compact ? x + barW + 7 : x + barW / 2;
+        const labelY = compact ? y + Math.max(8, hh / 2 + 4) : y + hh / 2 + 4;
+        const labelClass = compact
+          ? "kpi-chart-segment-count-outside"
+          : seg.name === "LSA inbox"
+            ? "kpi-chart-segment-count-dark"
+            : "kpi-chart-segment-count";
+        return `<g>
+          <rect x="${x}" y="${y}" width="${barW}" height="${Math.max(hh, 0)}" fill="${seg.color}">
+            <title>${escapeHtml(seg.name)}: ${count}</title>
+          </rect>
+          <text x="${labelX}" y="${labelY}" text-anchor="${compact ? "start" : "middle"}" class="${labelClass}">${count}</text>
+        </g>`;
       }).join("");
+      const stackTop = pad.t + plotH - (plotH * total) / max;
       return `<g>
         ${segs}
-        <text x="${x + barW / 2}" y="${pad.t - 14}" text-anchor="middle" class="kpi-chart-total">${total}</text>
+        <text x="${x + barW / 2}" y="${Math.max(14, stackTop - 11)}" text-anchor="middle" class="kpi-chart-total">${total}</text>
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${m.month}</text>
       </g>`;
     }).join("");
@@ -575,7 +657,7 @@
 
   function casesMomByMonth(rows, series) {
     const colorByName = Object.fromEntries(series.map(s => [s.name, s.color]));
-    return rows.map(r => ({
+    return newestFirst(rows).map(r => ({
       month: r.month,
       segments: [
         { name: "Closed cases", count: r.closed, color: colorByName["Closed cases"] },
@@ -678,6 +760,7 @@
         notes
       ];
     });
+    tableRows.reverse();
     const totClosed = rows.reduce((s, r) => s + r.closed, 0);
     const totNew = rows.reduce((s, r) => s + r.newCases, 0);
     const totRed = rows.reduce((s, r) => s + r.redAccounts, 0);
@@ -716,12 +799,17 @@
     const legend = opts.legend || "";
     const table = opts.table || "";
     const focus = opts.focus ? ` data-kpi-focus="${opts.focus}"` : "";
+    const helpId = opts.helpId || opts.focus || "";
+    const help = helpId ? kpiHelpBtn(helpId) : "";
+    const footnote = opts.footnote ? `<p class="kpi-chart-footnote">${escapeHtml(opts.footnote)}</p>` : "";
     const badge = typeof opts.verified === "boolean" ? statusCorner(opts.verified) : "";
     const vClass = "";
     return `<div class="kpi-chart-card${vClass}"${focus}>
       ${badge}
+      ${help}
       ${head}
       <div class="kpi-chart-plot">${opts.chart || ""}${legend}</div>
+      ${footnote}
       ${table}
     </div>`;
   }
@@ -741,6 +829,7 @@
 
   /** Dual-axis: cases + LSA leads (left count) · marketing spend (right $). */
   function dualAxisCasesSpendChart(rows) {
+    rows = newestFirst(rows);
     const w = 720;
     const h = 300;
     const pad = { l: 56, r: 64, t: 36, b: 44 };
@@ -766,13 +855,17 @@
     }).join("");
     const bars = rows.map((r, i) => {
       const cx = pad.l + slot * i + slot / 2;
-      const casesY = leftY(r.cases);
-      const leadsY = leftY(r.leads);
+      const casesBar = (r.cases != null && r.cases > 0)
+        ? `<rect x="${cx - 36}" y="${leftY(r.cases)}" width="28" height="${pad.t + plotH - leftY(r.cases)}" rx="3" fill="${colors.cases}"/>
+           <text x="${cx - 22}" y="${leftY(r.cases) - 6}" text-anchor="middle" class="kpi-chart-total">${r.cases}</text>`
+        : "";
+      const leadsBar = (r.leads != null && r.leads > 0)
+        ? `<rect x="${cx + 8}" y="${leftY(r.leads)}" width="28" height="${pad.t + plotH - leftY(r.leads)}" rx="3" fill="${colors.leads}"/>
+           <text x="${cx + 22}" y="${leftY(r.leads) - 6}" text-anchor="middle" class="kpi-chart-total">${r.leads}</text>`
+        : "";
       return `<g>
-        <rect x="${cx - 36}" y="${casesY}" width="28" height="${pad.t + plotH - casesY}" rx="3" fill="${colors.cases}"/>
-        <text x="${cx - 22}" y="${casesY - 6}" text-anchor="middle" class="kpi-chart-total">${r.cases}</text>
-        <rect x="${cx + 8}" y="${leadsY}" width="28" height="${pad.t + plotH - leadsY}" rx="3" fill="${colors.leads}"/>
-        <text x="${cx + 22}" y="${leadsY - 6}" text-anchor="middle" class="kpi-chart-total">${r.leads}</text>
+        ${casesBar}
+        ${leadsBar}
         <text x="${cx}" y="${h - 14}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
@@ -785,7 +878,7 @@
       const cy = rightY(r.spend);
       return `<g>
         <circle cx="${cx}" cy="${cy}" r="5" fill="${colors.spend}"/>
-        <text x="${cx}" y="${cy - 10}" text-anchor="middle" class="kpi-chart-total">$${Math.round(r.spend / 1000)}k</text>
+        <text x="${cx}" y="${cy - 10}" text-anchor="middle" class="kpi-chart-total">${r.spend >= 1000 ? "$" + Math.round(r.spend / 1000) + "k" : "$" + (r.spend || 0)}</text>
       </g>`;
     }).join("");
     return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cases and leads vs marketing spend dual-axis chart">
@@ -801,32 +894,213 @@
   function casesLeadsSpendLegend() {
     const items = [
       { name: "New cases", color: "#3a1a6e" },
-      { name: "LSA leads", color: "#2d5a3d" },
-      { name: "Marketing spend", color: "#c45c26" }
+      { name: "LSA calls", color: "#2d5a3d" },
+      { name: "Digital ad calls", color: "#c45c26" },
+      { name: "Website forms", color: "#b06ab3" },
+      { name: "Marketing spend", color: "#6a5acd" }
     ];
     return channelLegend(items);
   }
 
   function casesLeadsSpendTable(rows) {
-    const newestFirst = [...(rows || [])].reverse();
+    const newest = newestFirst(rows);
     return kpiDetailAccordion(
-      "Media table",
-      `${newestFirst.length} periods`,
-      ["Period", "LSA leads", "LSA media", "LSA media / lead", "Search media", "Search media / call"],
-      [
-        ...newestFirst.map(r => {
-          const lsaSpend = r.lsaSpend || 0;
-          const adsSpend = r.adsSpend || 0;
-          const adsLeads = r.adsLeads || 0;
-          return [
-            escapeHtml(r.month) + " 2026",
-            String(r.leads),
-            fmtMoney(lsaSpend),
-            r.leads ? fmtMoney(lsaSpend / r.leads) : "—",
-            fmtMoney(adsSpend),
-            adsLeads ? fmtMoney(adsSpend / adsLeads) : "—"
-          ];
+      "Cases · calls · spend table",
+      `${newest.length} periods`,
+      ["Period", "Cases", "LSA calls", "Digital ad calls", "Website forms", "LSA media", "Search media"],
+      newest.map(r => {
+        const dash = "—";
+        return [
+          escapeHtml(r.month) + " 2026",
+          r.cases ? String(r.cases) : dash,
+          r.leads != null ? String(r.leads) : dash,
+          r.adsLeads != null ? String(r.adsLeads) : dash,
+          r.websiteLeads != null ? String(r.websiteLeads) : dash,
+          fmtMoney(r.lsaSpend || 0),
+          fmtMoney(r.adsSpend || 0)
+        ];
+      })
+    );
+  }
+
+  function junCostPerResponseChart(rows) {
+    const jun = (rows || []).find(r => r.month === "Jun");
+    if (!jun || !jun.leads || !jun.adsLeads) return "";
+    const hubFee = DATA.websiteHubspotMonthlyFromJun || 1000;
+    const websiteForms = jun.websiteLeads || 0;
+    const channels = [
+      { label: "LSA", unit: "$/call", value: jun.lsaSpend / jun.leads, color: "#2d5a3d" },
+      { label: "Digital", unit: "$/call", value: jun.adsSpend / jun.adsLeads, color: "#c45c26" },
+      { label: "Website", unit: "$/form", value: websiteForms ? hubFee / websiteForms : 0, color: "var(--secondary)" }
+    ].filter(c => c.value > 0);
+    const w = 540;
+    const h = 260;
+    const pad = { l: 54, r: 18, t: 34, b: 58 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const max = Math.max(200, ...channels.map(c => c.value));
+    const axisMax = Math.ceil(max / 50) * 50;
+    const ticks = [0, 0.25, 0.5, 0.75, 1].map(p => {
+      const y = pad.t + plotH * (1 - p);
+      const value = Math.round(axisMax * p);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">$${value}</text>
+      </g>`;
+    }).join("");
+    const slot = plotW / channels.length;
+    const barW = Math.min(84, slot * 0.56);
+    const bars = channels.map((c, i) => {
+      const bh = Math.max(6, (plotH * c.value) / axisMax);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pad.t + plotH - bh;
+      return `<g>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="5" fill="${c.color}" fill-opacity="${c.wip ? "0.4" : "1"}"/>
+        <text x="${x + barW / 2}" y="${y - 9}" text-anchor="middle" class="kpi-chart-total"${c.wip ? ' opacity="0.6"' : ""}>${fmtMoney(c.value)}</text>
+        <text x="${x + barW / 2}" y="${h - 28}" text-anchor="middle" class="kpi-chart-label">${c.label}</text>
+        <text x="${x + barW / 2}" y="${h - 12}" text-anchor="middle" class="kpi-chart-axis">${c.unit}</text>
+      </g>`;
+    }).join("");
+    const aria = channels
+      .map(c => `${c.label} ${fmtMoney(c.value)} ${c.unit}`)
+      .join(", ");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="June cost per response: ${aria}">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}${bars}
+      <text x="14" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 14 ${pad.t + plotH / 2})" class="kpi-chart-axis">Cost per response ($)</text>
+    </svg>`;
+  }
+
+  /** Months with both LSA + digital volume & spend (for cost trend). */
+  function costCompareMonths(rows) {
+    /* Current month first, then count down. */
+    return newestFirst(
+      (rows || [])
+        .filter(r => r.leads > 0 && r.adsLeads > 0 && r.lsaSpend > 0 && r.adsSpend > 0)
+        .map(r => {
+          const lsaCpl = r.lsaSpend / r.leads;
+          const digCpl = r.adsSpend / r.adsLeads;
+          return {
+            month: r.month,
+            partial: /\*/.test(r.month || ""),
+            lsaCpl,
+            digCpl,
+            lsaVsDigRatio: lsaCpl / digCpl
+          };
         })
+    );
+  }
+
+  /** Grouped bars: LSA $/call vs digital $/call by month. */
+  function lsaVsDigitalCostTrendChart(rows) {
+    const months = costCompareMonths(rows);
+    if (!months.length) return "";
+    const w = 540;
+    const h = 260;
+    const pad = { l: 54, r: 18, t: 34, b: 48 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const max = Math.max(...months.map(m => Math.max(m.lsaCpl, m.digCpl)), 1);
+    const axisMax = niceAxisMax(max);
+    const colors = { lsa: "#2d5a3d", dig: "#c45c26" };
+    const ticks = axisTicks(axisMax, 5).map(t => {
+      const y = pad.t + plotH * (1 - t / axisMax);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">$${t}</text>
+      </g>`;
+    }).join("");
+    const slot = plotW / months.length;
+    const barW = Math.min(28, slot * 0.28);
+    const bars = months.map((m, i) => {
+      const cx = pad.l + slot * i + slot / 2;
+      const lsaH = Math.max(4, (plotH * m.lsaCpl) / axisMax);
+      const digH = Math.max(4, (plotH * m.digCpl) / axisMax);
+      const lsaY = pad.t + plotH - lsaH;
+      const digY = pad.t + plotH - digH;
+      const label = m.partial ? `${escapeHtml(m.month)} partial` : escapeHtml(m.month);
+      return `<g>
+        <rect x="${cx - barW - 3}" y="${lsaY}" width="${barW}" height="${lsaH}" rx="4" fill="${colors.lsa}"/>
+        <text x="${cx - barW / 2 - 3}" y="${lsaY - 7}" text-anchor="middle" class="kpi-chart-total">${fmtMoney(m.lsaCpl)}</text>
+        <rect x="${cx + 3}" y="${digY}" width="${barW}" height="${digH}" rx="4" fill="${colors.dig}"/>
+        <text x="${cx + barW / 2 + 3}" y="${digY - 7}" text-anchor="middle" class="kpi-chart-total">${fmtMoney(m.digCpl)}</text>
+        <text x="${cx}" y="${h - 14}" text-anchor="middle" class="kpi-chart-label">${label}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="LSA vs digital cost per call trend by month">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}${bars}
+      <text x="14" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 14 ${pad.t + plotH / 2})" class="kpi-chart-axis">$/call</text>
+    </svg>`;
+  }
+
+  function lsaVsDigitalCostTrendLegend() {
+    return channelLegend([
+      { name: "LSA $/call", color: "#2d5a3d" },
+      { name: "Digital $/call", color: "#c45c26" }
+    ]);
+  }
+
+  function lsaVsDigitalCostTrendNote(rows) {
+    const months = costCompareMonths(rows);
+    if (!months.length) return "";
+    const complete = months.filter(m => !m.partial);
+    const blendLsa = complete.reduce((s, m) => s + m.lsaCpl * ((rows.find(r => r.month === m.month) || {}).leads || 0), 0);
+    const blendLsaCalls = complete.reduce((s, m) => s + ((rows.find(r => r.month === m.month) || {}).leads || 0), 0);
+    const blendDig = complete.reduce((s, m) => s + m.digCpl * ((rows.find(r => r.month === m.month) || {}).adsLeads || 0), 0);
+    const blendDigCalls = complete.reduce((s, m) => s + ((rows.find(r => r.month === m.month) || {}).adsLeads || 0), 0);
+    const blendRatio = blendDigCalls && blendLsaCalls
+      ? (blendLsa / blendLsaCalls) / (blendDig / blendDigCalls)
+      : 0;
+    const trend = months
+      .map(m => `${escapeHtml(m.month)}${m.partial ? " partial" : ""} ${m.lsaVsDigRatio.toFixed(2)}×`)
+      .join(" · ");
+    return `<p class="data-inline-note">LSA cost ${trend} digital. May–Jun blended ratio: ${blendRatio.toFixed(2)}×.</p>`;
+  }
+
+  /** June digital vs LSA cost advantage — media only (from cases-spend-trust canvas). */
+  function junChannelTradeoffTable(rows) {
+    const jun = (rows || []).find(r => r.month === "Jun");
+    if (!jun || !jun.leads || !jun.adsLeads) return "";
+    const lsaCpl = jun.lsaSpend / jun.leads;
+    const digCpl = jun.adsSpend / jun.adsLeads;
+    const digAtLsaCost = jun.adsLeads * lsaCpl;
+    const modeledAdvantage = digAtLsaCost - jun.adsSpend;
+    const digCallsAtLsaRate = jun.adsSpend / lsaCpl;
+    const extraCalls = jun.adsLeads - digCallsAtLsaRate;
+    const ratio = lsaCpl / digCpl;
+    const hubFee = DATA.websiteHubspotMonthlyFromJun || 1000;
+    const websiteForms = jun.websiteLeads || 0;
+    const websiteCpr = websiteForms > 0 ? hubFee / websiteForms : null;
+    return kpiDetailAccordion(
+      "June · digital vs LSA cost trade-off",
+      "Primary finding",
+      ["Metric", "Digital (observed)", "At LSA rate", "Advantage"],
+      [
+        [
+          "Calls produced",
+          String(jun.adsLeads),
+          digCallsAtLsaRate.toFixed(1),
+          `+${Math.round(extraCalls)}`
+        ],
+        [
+          "Cost per call",
+          fmtMoney(digCpl),
+          fmtMoney(lsaCpl),
+          `${ratio.toFixed(2)}× LSA premium`
+        ],
+        [
+          "Cost for digital’s call volume",
+          fmtMoney(jun.adsSpend),
+          fmtMoney(digAtLsaCost),
+          fmtMoney(modeledAdvantage) + " lower"
+        ],
+        [
+          "Website (HubSpot fee)",
+          websiteForms ? `${websiteForms} forms · ${fmtMoney(websiteCpr)}/form` : "—",
+          fmtMoney(hubFee) + "/mo from Jun",
+          "Forms ≠ calls"
+        ]
       ]
     );
   }
@@ -836,12 +1110,25 @@
     if (!rows.length) return "";
     return `<article class="kpi-split-panel data-chart-table-panel" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Cases, Leads & Spend">
       ${statusCorner(true)}
+      ${kpiHelpBtn("cases-leads-spend")}
       <div class="kpi-split-panel-body data-chart-table-grid">
         ${chartBlock({
           chart: dualAxisCasesSpendChart(rows),
-          legend: casesLeadsSpendLegend()
+          legend: casesLeadsSpendLegend(),
+          footnote: "Left axis: counts · Right axis: $ spend."
         })}
         <div class="data-chart-table-side">
+          ${chartBlock({
+            head: `<div class="kpi-chart-title-large"><strong>June cost per response by channel</strong><div class="kpi-chart-subtitle">Media only · website = HubSpot forms fee</div></div>`,
+            chart: junCostPerResponseChart(rows)
+          })}
+          ${chartBlock({
+            head: `<div><strong>LSA vs digital cost trend</strong><div class="kpi-chart-subtitle">$/call by month · media only</div></div>`,
+            chart: lsaVsDigitalCostTrendChart(rows),
+            legend: lsaVsDigitalCostTrendLegend()
+          })}
+          ${lsaVsDigitalCostTrendNote(rows)}
+          ${junChannelTradeoffTable(rows)}
           ${casesLeadsSpendTable(rows)}
           ${sourceFootnote("cases-leads-spend")}
         </div>
@@ -851,8 +1138,9 @@
   }
 
   function cashCollectedChart(rows) {
-    const monthlyGoal = 80000;
-    const baselineMonthly = Math.round((DATA.cashCollectedTotals.total2025 || 0) / 12);
+    rows = newestFirst(rows);
+    const minimum2025 = 65000;
+    const target2026 = 80000;
     const current = rows.find(r => /\*/.test(r.month || ""));
     const currentPace = current
       ? {
@@ -861,14 +1149,14 @@
           daysInMonth: 31
         }
       : null;
-    const max = Math.max(...rows.map(r => r.credit), monthlyGoal, baselineMonthly, currentPace ? currentPace.projected : 0, 1);
-    const w = 720;
-    const h = 260;
-    const pad = { l: 58, r: 22, t: 32, b: 46 };
+    const max = Math.max(...rows.map(r => r.credit), target2026, currentPace ? currentPace.projected : 0, 1);
+    const w = Math.max(1120, rows.length * 56 + 110);
+    const h = 290;
+    const pad = { l: 58, r: 22, t: 42, b: 48 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
     const slot = plotW / rows.length;
-    const barW = Math.min(42, slot * 0.62);
+    const barW = Math.min(36, slot * 0.58);
     const ticks = [0, 0.5, 1].map(p => {
       const y = pad.t + plotH * (1 - p);
       const val = Math.round(max * p / 1000);
@@ -877,8 +1165,11 @@
         <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">$${val}k</text>
       </g>`;
     }).join("");
-    const goalY = pad.t + plotH * (1 - monthlyGoal / max);
-    const baselineY = pad.t + plotH * (1 - baselineMonthly / max);
+    const minimumY = pad.t + plotH * (1 - minimum2025 / max);
+    const targetY = pad.t + plotH * (1 - target2026 / max);
+    /* Newest first: 2026 YTD on the left, 2025 on the right. */
+    const dividerIndex = Math.max(0, rows.findIndex(r => Number(r.year) === 2025));
+    const dividerX = pad.l + dividerIndex * slot;
     const bars = rows.map((r, i) => {
       const isCurrent = /\*/.test(r.month || "");
       const bh = Math.max(6, (plotH * r.credit) / max);
@@ -901,13 +1192,65 @@
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cash collected by month — calendar year 2025">
+    const firstYearCenter = pad.l + (dividerIndex * slot) / 2;
+    const secondYearCenter = dividerX + ((rows.length - dividerIndex) * slot) / 2;
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cash collected by month — 2025 through July 2026">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}
-      <line x1="${pad.l}" y1="${baselineY}" x2="${w - pad.r}" y2="${baselineY}" stroke="#7a6a58" stroke-width="2" stroke-dasharray="2 5"/>
-      <text x="${pad.l + 8}" y="${baselineY + 16}" class="kpi-chart-total" style="fill:#7a6a58">$${Math.round(baselineMonthly / 1000)}k 2025 baseline</text>
-      <line x1="${pad.l}" y1="${goalY}" x2="${w - pad.r}" y2="${goalY}" stroke="#cf2d56" stroke-width="2" stroke-dasharray="7 5"/>
-      <text x="${w - pad.r - 6}" y="${goalY - 8}" text-anchor="end" class="kpi-chart-total" style="fill:#cf2d56">$80k target</text>
+      <text x="${firstYearCenter}" y="22" text-anchor="middle" class="kpi-chart-total">2026 YTD</text>
+      <text x="${secondYearCenter}" y="22" text-anchor="middle" class="kpi-chart-total">2025</text>
+      <line x1="${dividerX}" y1="10" x2="${dividerX}" y2="${h - pad.b + 10}" stroke="#7a6a58" stroke-width="2" stroke-dasharray="4 6"/>
+      <line x1="${pad.l}" y1="${targetY}" x2="${dividerX}" y2="${targetY}" stroke="#cf2d56" stroke-width="2" stroke-dasharray="7 5"/>
+      <text x="${dividerX - 8}" y="${targetY - 8}" text-anchor="end" class="kpi-chart-total" style="fill:#cf2d56">$80k target</text>
+      <line x1="${dividerX}" y1="${minimumY}" x2="${w - pad.r}" y2="${minimumY}" stroke="#9a3f14" stroke-width="2" stroke-dasharray="7 5"/>
+      <text x="${w - pad.r - 6}" y="${minimumY - 8}" text-anchor="end" class="kpi-chart-total" style="fill:#9a3f14">$65k minimum</text>
+      ${bars}
+    </svg>`;
+  }
+
+  function casesCreatedChart(rows) {
+    rows = newestFirst(rows);
+    const values = rows.filter(r => r.newCases != null).map(r => Number(r.newCases) || 0);
+    const max = Math.max(...values, 1);
+    const w = Math.max(1120, rows.length * 56 + 110);
+    const h = 290;
+    const pad = { l: 58, r: 22, t: 42, b: 48 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / rows.length;
+    const barW = Math.min(36, slot * 0.58);
+    const dividerIndex = Math.max(0, rows.findIndex(r => Number(r.year) === 2025));
+    const dividerX = pad.l + dividerIndex * slot;
+    const ticks = [0, 0.5, 1].map(p => {
+      const y = pad.t + plotH * (1 - p);
+      const val = Math.round(max * p);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}</text>
+      </g>`;
+    }).join("");
+    const bars = rows.map((r, i) => {
+      const missing = r.newCases == null;
+      const value = missing ? 0 : Number(r.newCases) || 0;
+      const bh = missing ? Math.max(34, plotH * 0.18) : Math.max(6, (plotH * value) / max);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pad.t + plotH - bh;
+      const fill = missing ? "var(--gg-negative)" : "var(--gg-royal-blue)";
+      const label = missing ? "No data" : String(value);
+      return `<g>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"${missing ? ' opacity="0.72"' : ""}/>
+        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total" style="fill:${fill}">${escapeHtml(label)}</text>
+        <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
+      </g>`;
+    }).join("");
+    const firstYearCenter = pad.l + (dividerIndex * slot) / 2;
+    const secondYearCenter = dividerX + ((rows.length - dividerIndex) * slot) / 2;
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart kpi-cases-created-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cases created by month — 2025 through July 2026; missing data shown in red">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}
+      <text x="${firstYearCenter}" y="22" text-anchor="middle" class="kpi-chart-total">2026 YTD</text>
+      <text x="${secondYearCenter}" y="22" text-anchor="middle" class="kpi-chart-total">2025</text>
+      <line x1="${dividerX}" y1="10" x2="${dividerX}" y2="${h - pad.b + 10}" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="4 6"/>
       ${bars}
     </svg>`;
   }
@@ -942,27 +1285,47 @@
     );
   }
 
-  function cashCollectedPaceNote(rows) {
+  function cashCollectedPaceTile(rows) {
     const current = rows.find(r => /\*/.test(r.month || ""));
-    if (current) {
-      const goal = 80000;
-      const daysElapsed = 15;
-      const daysInMonth = 31;
-      const projected = Math.round((current.credit / daysElapsed) * daysInMonth);
-      const historicRows = rows.filter(r => !/\*/.test(r.month || ""));
-      const historicAvg = historicRows.length
-        ? Math.round(historicRows.reduce((s, r) => s + r.credit, 0) / historicRows.length)
-        : null;
-      const status = projected >= goal ? "on track" : "behind pace";
-      return `<p class="data-inline-note"><strong>Current month:</strong> ${escapeHtml(current.month)} is ${fmtCashTier(current.credit)} through Jul 15. At that pace it projects to ${fmtCashTier(projected)} for July, ${status} for the ${fmtMoney(goal)} monthly goal${historicAvg ? ` and above the prior-months average of ${fmtCashTier(historicAvg)}` : ""}.</p>`;
-    }
-    const yearLabel = DATA.cashCollectedTotals.yearLabel || "2025";
-    const avg = rows.length ? Math.round(rows.reduce((s, r) => s + r.credit, 0) / rows.length) : null;
-    return `<p class="data-inline-note"><strong>View:</strong> full calendar year ${yearLabel} (Jan–Dec) · ledger Credits. Monthly avg ${avg != null ? fmtCashTier(avg) : "—"}. 2026 YTD through Jul 15: ${fmtCashTier(DATA.cashCollectedTotals.total2026ToDate)} (not plotted).</p>`;
+    if (!current) return "";
+    const goal = 80000;
+    const daysElapsed = 15;
+    const daysInMonth = 31;
+    const projected = Math.round((current.credit / daysElapsed) * daysInMonth);
+    const historicRows = rows.filter(r => !/\*/.test(r.month || ""));
+    const historicAvg = historicRows.length
+      ? Math.round(historicRows.reduce((s, r) => s + r.credit, 0) / historicRows.length)
+      : null;
+    const scaleMax = Math.max(goal, projected, 1);
+    const pacePct = Math.round((projected / goal) * 100);
+    const status = projected >= goal ? "On track" : "Behind pace";
+    const gauge = halfMoonGauge(projected / scaleMax, "cash-current-pace", {
+      celebrate: projected >= goal,
+      valueLabel: `$${Math.round(projected / 1000)}k pace`,
+      endLabel: `$${Math.round(scaleMax / 1000)}k`,
+      goalMark: goal / scaleMax,
+      goalLabel: "$80k goal"
+    });
+    return `<div class="kpi-cash-pace-tile" aria-label="July cash pace toward the monthly goal">
+      <div class="kpi-cash-pace-copy">
+        <span class="kpi-cash-pace-kicker">Current month</span>
+        <h3>July cash goal pace</h3>
+        <p>${escapeHtml(current.month)} collected through Jul 15, projected through Jul 31.</p>
+      </div>
+      <div class="kpi-cash-pace-gauge">${gauge}</div>
+      <div class="kpi-cash-pace-stats">
+        <div><span>Collected</span><strong>${fmtCashTier(current.credit)}</strong></div>
+        <div><span>Projected</span><strong>${fmtCashTier(projected)}</strong></div>
+        <div><span>Monthly goal</span><strong>${fmtMoney(goal)}</strong></div>
+        <div><span>Status</span><strong>${pacePct}% · ${status}</strong></div>
+        ${historicAvg ? `<div><span>Prior-month avg</span><strong>${fmtCashTier(historicAvg)}</strong></div>` : ""}
+      </div>
+    </div>`;
   }
 
   function lsaEfficiencyTable(rows) {
-    const tot = rows.reduce((a, r) => ({
+    const newest = newestFirst(rows);
+    const tot = newest.reduce((a, r) => ({
       leads: a.leads + r.leads,
       charged: a.charged + r.charged,
       lsaSpend: a.lsaSpend + r.lsaSpend
@@ -971,7 +1334,7 @@
     return kpiDetailTable(
       ["Period", "LSA leads", "Charged", "Charge rate", "LSA media", "LSA media / charged lead"],
       [
-        ...rows.map(r => [
+        ...newest.map(r => [
           escapeHtml(r.month) + " 2026",
           String(r.leads),
           String(r.charged),
@@ -1000,6 +1363,7 @@
   }
 
   function trustApplicationsChart(rows) {
+    rows = newestFirst(rows);
     const max = Math.max(...rows.map(r => r.applications || 0), 1);
     const w = 720;
     const h = 220;
@@ -1070,20 +1434,31 @@
 
   function financialSectionHtml() {
     const cashRows = DATA.cashCollected || [];
+    const chartRows = [
+      ...cashRows.map(row => ({ ...row, year: 2025 })),
+      ...(DATA.cashCollected2026Ytd || []).map(row => ({ ...row, year: 2026 }))
+    ];
     if (!cashRows.length) return "";
     return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="#09 Financials">
       ${statusCorner(true)}
+      ${kpiHelpBtn("financial")}
       ${kpiSectionStaticHead("Financials", "Cash collected MoM · cash / new case")}
       <div class="kpi-section-body">
-        <p class="kpi-section-intro">NEW-A cash MoM · <strong>calendar year 2025</strong> (full Jan–Dec) · NEW-B cash per new case. Color tiers: $60–70k burnt umber · &gt;$80k green · ≥$100k gold · else neutral.</p>
+        ${cashCollectedPaceTile(chartRows)}
+        <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cases created · <strong>2025 through Jul 2026 YTD</strong>. Missing case data is red.</p>
         <div class="kpi-finance-grid kpi-finance-grid-cash">
           <div class="kpi-mini-card">
-            <h3>NEW-A · Cash collected (CY 2025)</h3>
+            <h3>Cash Collected <span class="kpi-finance-card-subtitle">2025 - 2026</span></h3>
             ${chartBlock({
-              chart: cashCollectedChart(cashRows),
+              chart: cashCollectedChart(chartRows),
               table: cashCollectedTable(cashRows)
             })}
-            ${cashCollectedPaceNote(cashRows)}
+          </div>
+          <div class="kpi-mini-card">
+            <h3>NEW-B · Cases created (2025–2026 YTD)</h3>
+            ${chartBlock({
+              chart: casesCreatedChart(chartRows)
+            })}
           </div>
         </div>
         ${sourceFootnote("financial")}
@@ -1128,7 +1503,7 @@
   }
 
   function channelsDetailTable(channels) {
-    const months = DATA.channelMonths;
+    const months = DATA.channelMonths ? newestFirst(DATA.channelMonths) : null;
     if (months && months.length >= 3) {
       const keys = [
         { key: "search", name: "Search calls", color: "#3a1a6e", spendKey: "searchSpend" },
@@ -1136,30 +1511,37 @@
         { key: "hubspot", name: "HubSpot forms", color: "#2d5a3d", spendKey: null }
       ];
       const monthLabels = months.map(m => m.month);
+      const pctVsJun = (curr, jun) => {
+        if (!jun) return "—";
+        const pct = Math.round(((curr - jun) / jun) * 100);
+        return (pct >= 0 ? "+" : "") + pct + "%";
+      };
       const rows = keys.map(k => {
         const vals = months.map(m => Number(m[k.key]) || 0);
-        const junSpend = k.spendKey && months[1] ? months[1][k.spendKey] : null;
+        const jun = months.find(m => m.month === "Jun");
+        const junSpend = k.spendKey && jun ? jun[k.spendKey] : null;
+        const deltaPct = pctVsJun(vals[0], vals[1]);
         return [
           `<span class="kpi-stack-swatch" style="background:${k.color}" aria-hidden="true"></span> ${escapeHtml(k.name)}`,
           ...vals.map(String),
-          String(vals[vals.length - 1] - vals[vals.length - 2] >= 0
-            ? "+" + (vals[vals.length - 1] - vals[vals.length - 2])
-            : vals[vals.length - 1] - vals[vals.length - 2]),
+          momChangeHtml(deltaPct) || "—",
           junSpend != null ? fmtMoney(junSpend) : "—"
         ];
       });
       const totals = months.map(m => (m.search || 0) + (m.lsa || 0) + (m.hubspot || 0));
+      const totalDeltaPct = pctVsJun(totals[0], totals[1]);
       rows.push([
         "<strong>Total</strong>",
         ...totals.map(t => `<strong>${t}</strong>`),
-        `<strong>${totals[totals.length - 1] - totals[totals.length - 2] >= 0 ? "+" : ""}${totals[totals.length - 1] - totals[totals.length - 2]}</strong>`,
+        `<strong>${momChangeHtml(totalDeltaPct) || "—"}</strong>`,
         "—"
       ]);
-      const julNote = months[2] && months[2].note
-        ? `<p class="kpi-table-note">${escapeHtml(months[2].note)}</p>`
+      const currentMonth = months[0];
+      const julNote = currentMonth && currentMonth.note
+        ? `<p class="kpi-table-note">${escapeHtml(currentMonth.note)}</p>`
         : "";
       return kpiDetailTable(
-        ["Lead type", ...monthLabels, "Δ vs Jun", "Jun spend"],
+        ["Lead type", ...monthLabels, "% vs Jun", "Jun spend"],
         rows
       ) + julNote;
     }
@@ -1384,30 +1766,36 @@
 
   function presenceLabel(status) {
     const map = {
-      active: "On",
-      building: "Building",
+      active: "Listed",
+      building: "Listed",
       outdated: "Outdated",
-      "not wired": "Not wired",
-      "not on": "Not on"
+      "not wired": "Unlisted",
+      "not on": "Unlisted"
     };
     return map[status] || status || "—";
   }
 
+  /** Collapse tracking-only "not wired" into Unlisted for the presence pie. */
+  function presenceBucket(status) {
+    const s = status || "not on";
+    if (s === "active" || s === "building") return "active";
+    if (s === "outdated") return "outdated";
+    return "not on";
+  }
+
   const PRESENCE_PIE_COLORS = {
     active: "#2d5a3d",
-    building: "#c45c26",
     outdated: "#4c1d95",
-    "not on": "#3a1a6e",
-    "not wired": "#8b7355"
+    "not on": "#3a1a6e"
   };
 
   function presencePieSegments(rows) {
     const counts = {};
     (rows || []).forEach(r => {
-      const k = r.status || "not wired";
+      const k = presenceBucket(r.status);
       counts[k] = (counts[k] || 0) + 1;
     });
-    const keys = Object.keys(counts);
+    const keys = ["active", "not on", "outdated"].filter(k => counts[k]);
     const total = keys.reduce((s, k) => s + counts[k], 0) || 1;
     let allocated = 0;
     return keys.map((status, i) => {
@@ -1463,8 +1851,8 @@
     const clamped = Math.max(0, Math.min(1, pct));
     const celebrate = !!(opts.celebrate || clamped >= 1);
     const cx = 94;
-    const cy = 78;
-    const r = 64;
+    const cy = 88;
+    const r = 58;
     const strokeW = 12;
     const left = halfMoonPoint(cx, cy, r, 0);
     const right = halfMoonPoint(cx, cy, r, 1);
@@ -1484,23 +1872,39 @@
       const g = Math.max(0, Math.min(1, Number(opts.goalMark)));
       const inner = halfMoonPoint(cx, cy, r - strokeW / 2 - 2, g);
       const outer = halfMoonPoint(cx, cy, r + strokeW / 2 + 6, g);
-      const labelPt = halfMoonPoint(cx, cy, r + strokeW / 2 + 18, g);
       const goalLabel = opts.goalLabel != null ? String(opts.goalLabel) : "";
       goalSvg = `<line x1="${inner.x.toFixed(1)}" y1="${inner.y.toFixed(1)}" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}" class="kpi-gauge-goal-mark"/>`;
       if (goalLabel) {
-        const anchor = g >= 0.85 ? "start" : g <= 0.15 ? "end" : "middle";
-        goalSvg += `<text x="${labelPt.x.toFixed(1)}" y="${(labelPt.y + 3).toFixed(1)}" class="kpi-gauge-goal-label" text-anchor="${anchor}">${escapeHtml(goalLabel)}</text>`;
+        /* Keep apex labels inside the SVG and clear of card titles. */
+        const apex = g > 0.35 && g < 0.65;
+        const labelPt = halfMoonPoint(cx, cy, r + strokeW / 2 + (apex ? 12 : 16), g);
+        let labelX = labelPt.x;
+        let labelY = labelPt.y + 3;
+        let anchor = "middle";
+        if (apex) {
+          labelX = g >= 0.5 ? Math.min(170, outer.x + 18) : Math.max(18, outer.x - 18);
+          labelY = Math.max(16, outer.y - 2);
+          anchor = g >= 0.5 ? "start" : "end";
+        } else if (g >= 0.75) {
+          anchor = "end";
+          labelX = Math.min(170, labelPt.x);
+        } else if (g <= 0.25) {
+          anchor = "start";
+          labelX = Math.max(18, labelPt.x);
+        }
+        labelY = Math.max(14, Math.min(112, labelY));
+        goalSvg += `<text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" class="kpi-gauge-goal-label" text-anchor="${anchor}">${escapeHtml(goalLabel)}</text>`;
       }
     }
 
-    return `<svg class="kpi-gauge-svg kpi-half-moon-gauge${celebrate ? " kpi-gauge-celebrate" : ""}" viewBox="0 0 188 124" role="img" aria-label="${aria}">
+    return `<svg class="kpi-gauge-svg kpi-half-moon-gauge${celebrate ? " kpi-gauge-celebrate" : ""}" viewBox="0 0 188 136" role="img" aria-label="${aria}">
       <defs><linearGradient id="${rimGradId}" x1="0%" y1="0%" x2="100%" y2="0%">${celebrate ? goldStops : progressStops}</linearGradient></defs>
       <path d="${arcD}" fill="none" stroke="${track}" stroke-width="${strokeW}" stroke-linecap="round"/>
       <path d="${arcD}" fill="none" stroke="url(#${rimGradId})" stroke-width="${strokeW}" stroke-linecap="round"
         stroke-dasharray="${dashLen.toFixed(2)} ${(arcLen + 1).toFixed(2)}"/>
       ${goalSvg}
-      <text x="22" y="114" class="kpi-gauge-tick">0</text>
-      ${endLabel !== "" ? `<text x="166" y="114" class="kpi-gauge-tick" text-anchor="end">${endLabel}</text>` : ""}
+      <text x="28" y="126" class="kpi-gauge-tick">0</text>
+      ${endLabel !== "" ? `<text x="160" y="126" class="kpi-gauge-tick" text-anchor="end">${endLabel}</text>` : ""}
       ${valueLabel !== "" ? `<text x="${cx}" y="${cy - 20}" class="kpi-gauge-center" text-anchor="middle">${escapeHtml(valueLabel)}</text>` : ""}
     </svg>`;
   }
@@ -1523,15 +1927,20 @@
     const g = DATA.duiGoal;
     const pct = g.current / g.target;
     const hit = pct >= 1;
+    const pace = Math.round((g.current / (g.target || 1)) * 100);
     return `<button type="button" class="kpi-goal-card kpi-stat-target-bar" data-kpi-focus="#DUI">
-      ${statusCorner(false)}
+      ${statusCorner(true)}
       ${kpiHelpBtn("#DUI")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle((g.title || "DUIs Signed").replace(/^#\s*/, "") + (g.year ? ` ${g.year}` : ""))}
         ${duiGoalTargetBarChart()}
       </div>
+      ${goalTrackRows([
+        ["YTD", String(g.current) + " / " + String(g.target)],
+        ["Pace", pace + "%"]
+      ])}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
-      <a class="kpi-dui-edit" href="dui-goal.html" onclick="event.stopPropagation()">Edit inputs</a>
+      <p class="kpi-table-note" style="margin:0.35rem 0 0;text-align:left">Counted from Cases (practice area) · (DUI/DWI) tag or DUI-named Criminal Defense</p>
       ${kpiRefMark("#DUI")}
     </button>`;
   }
@@ -1849,10 +2258,16 @@
   function missedRevenueTrackerHtml() {
     const p = DATA.phoneIntake;
     const model = missedRevenueModel(p);
-    const fmtPct = n => {
-      const pct = Number(n) * 100;
-      return `${pct < 10 ? pct.toFixed(1) : Math.round(pct)}%`;
-    };
+    const lsaRows = (DATA.lsaEfficiency || []).slice();
+    const lsaJun = lsaRows.find(r => r.month === "Jun")
+      || lsaRows[lsaRows.length - 1]
+      || {};
+    const lsaCalls = Number(lsaJun.leads) || 0;
+    const lsaCharged = Number(lsaJun.charged) || 0;
+    const lsaMonth = lsaJun.month || "Jun";
+    const lsaSeries = newestFirst(lsaRows)
+      .map(r => `${r.month} ${Number(r.leads) || 0}`)
+      .join(" · ");
     const delta = model.priorMonthlyLost != null ? model.monthlyLost - model.priorMonthlyLost : null;
     let trendDelta = "";
     if (delta != null) {
@@ -1867,6 +2282,7 @@
       ${kpiHelpBtn("#19")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Lost Revenue")}
+        ${missedCallsTargetBarChart(p)}
         <div class="kpi-metric-with-delta">
           <span class="kpi-lost-amount">${fmtMoney(model.monthlyLost)}<small>/mo</small></span>
           ${trendDelta}
@@ -1878,13 +2294,15 @@
             <span class="kpi-lost-muted">${p.missedPct}% of ${p.monthlyCalls}</span>
           </div>
           <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">LSA calls</span>
+            <span class="kpi-lost-datum-val">${lsaCalls}</span>
+            <span class="kpi-lost-muted">${lsaCharged} charged · ${lsaMonth}</span>
+            <span class="kpi-lost-muted">${escapeHtml(lsaSeries)}</span>
+          </div>
+          <div class="kpi-lost-datum">
             <span class="kpi-lost-datum-label">Avg case</span>
             <span class="kpi-lost-datum-val">${fmtMoney(model.avgCaseFee)}</span>
             <span class="kpi-lost-muted">#28</span>
-          </div>
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">Lead→case</span>
-            <span class="kpi-lost-datum-val">${fmtPct(model.closeRateEst)}</span>
           </div>
           <div class="kpi-lost-datum">
             <span class="kpi-lost-datum-label">YTD lost</span>
@@ -1893,9 +2311,102 @@
           </div>
         </div>
         <span class="kpi-stat-label">Est. money lost from unanswered Search calls</span>
-        ${missedCallsTargetBarChart(p)}
       </div>
       ${kpiRefMark("#19")}
+    </button>`;
+  }
+
+  function lsaReallocationWasteModel(rows) {
+    const periods = (rows || [])
+      .filter(r => r.month === "Jun" || r.month === "Jul*")
+      .map(r => {
+        const lsaResponses = Number(r.leads) || 0;
+        const digitalResponses = Number(r.adsLeads) || 0;
+        const lsaSpend = Number(r.lsaSpend) || 0;
+        const digitalSpend = Number(r.adsSpend) || 0;
+        const digitalCostPerResponse = digitalResponses ? digitalSpend / digitalResponses : 0;
+        const sameVolumeAtDigitalRate = lsaResponses * digitalCostPerResponse;
+        const waste = Math.max(0, lsaSpend - sameVolumeAtDigitalRate);
+        const digitalResponsesAtLsaSpend = digitalCostPerResponse ? lsaSpend / digitalCostPerResponse : 0;
+        return {
+          month: r.month,
+          lsaResponses,
+          lsaSpend,
+          digitalCostPerResponse,
+          waste,
+          extraResponses: Math.max(0, digitalResponsesAtLsaSpend - lsaResponses)
+        };
+      });
+    return {
+      periods: newestFirst(periods),
+      totalWaste: Math.round(periods.reduce((sum, r) => sum + r.waste, 0)),
+      extraResponses: Math.round(periods.reduce((sum, r) => sum + r.extraResponses, 0))
+    };
+  }
+
+  function lsaWasteChart(model) {
+    const rows = model.periods;
+    const max = Math.max(...rows.map(r => r.waste), 1);
+    const w = 268;
+    const h = 118;
+    const pad = { l: 28, r: 12, t: 18, b: 30 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / Math.max(rows.length, 1);
+    const bars = rows.map((r, i) => {
+      const bh = Math.max(5, (plotH * r.waste) / max);
+      const x = pad.l + i * slot + (slot - 48) / 2;
+      const y = pad.t + plotH - bh;
+      return `<g>
+        <rect x="${x}" y="${y}" width="48" height="${bh}" rx="3" fill="var(--gg-negative, #b91c1c)" opacity="0.82"/>
+        <text x="${x + 24}" y="${Math.max(13, y - 5)}" text-anchor="middle" class="kpi-chart-val-sm" style="fill:var(--gg-negative, #b91c1c)">−${fmtMoney(Math.round(r.waste))}</text>
+        <text x="${x + 24}" y="${h - 8}" text-anchor="middle" class="kpi-target-bar-cat">${escapeHtml(r.month)}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-target-bar-chart kpi-target-bar-chart-compact" viewBox="0 0 ${w} ${h}" role="img" aria-label="Modeled LSA waste compared with digital cost per response">
+      <line x1="${pad.l}" y1="${pad.t + plotH}" x2="${w - pad.r}" y2="${pad.t + plotH}" class="kpi-target-baseline"/>
+      ${bars}
+    </svg>`;
+  }
+
+  function lsaMismanagementTrackerHtml() {
+    const model = lsaReallocationWasteModel(DATA.casesLeadsSpend);
+    const june = model.periods.find(r => r.month === "Jun") || {};
+    const july = model.periods.find(r => r.month === "Jul*") || {};
+    return `<button type="button" class="kpi-goal-card kpi-stat-card kpi-lost-tracker kpi-stat-negative kpi-stat-target-bar" data-kpi-focus="#07">
+      ${statusCorner(true)}
+      ${kpiHelpBtn("#07")}
+      <div class="kpi-goal-visual">
+        ${kpiCardTitle("Spend Waste")}
+        ${lsaWasteChart(model)}
+        <div class="kpi-metric-with-delta">
+          <span class="kpi-lost-amount">−${fmtMoney(model.totalWaste)}<small>Jun–Jul*</small></span>
+        </div>
+        <div class="kpi-lost-data" aria-label="LSA reallocation waste details">
+          <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">June waste</span>
+            <span class="kpi-lost-datum-val">−${fmtMoney(Math.round(june.waste || 0))}</span>
+            <span class="kpi-lost-muted">${fmtMoney(june.digitalCostPerResponse || 0)}/digital response</span>
+          </div>
+          <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">July* waste</span>
+            <span class="kpi-lost-datum-val">−${fmtMoney(Math.round(july.waste || 0))}</span>
+            <span class="kpi-lost-muted">${fmtMoney(july.digitalCostPerResponse || 0)}/digital response</span>
+          </div>
+          <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">Responses missed</span>
+            <span class="kpi-lost-datum-val">+${model.extraResponses}</span>
+            <span class="kpi-lost-muted">modeled at digital rate</span>
+          </div>
+          <div class="kpi-lost-datum">
+            <span class="kpi-lost-datum-label">Period</span>
+            <span class="kpi-lost-datum-val">Jun–Jul*</span>
+            <span class="kpi-lost-muted">Jul partial through Jul 16</span>
+          </div>
+        </div>
+        <span class="kpi-stat-label">Modeled media waste vs digital’s observed response cost</span>
+      </div>
+      ${kpiRefMark("#07")}
     </button>`;
   }
 
@@ -1923,9 +2434,7 @@
     if (nums) {
       const grad = "km-" + String(k.id).replace(/\W/g, "");
       const hit = !!(k.hit || meetsTarget(nums.current, nums.target, k.lowerIsBetter === true));
-      const goalLine = k.id === "#01"
-        ? `${nums.current} total · target ≥ ${Math.round(nums.target)} (20% MoM vs prior)`
-        : targetLine;
+      const goalLine = k.id === "#01" ? "" : targetLine;
       const gOpts = halfMoonOptsForKpi(k, nums, hit);
       const gauge = halfMoonGauge(gOpts.pct, grad, gOpts);
       return `<button type="button" class="kpi-stat-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}" data-kpi-focus="${k.id}">
@@ -1933,7 +2442,7 @@
         ${kpiHelpBtn(k.id)}
         ${kpiCardTitle(k.label)}
         ${metricWithDeltaHtml(gauge, k.mom)}
-        <span class="kpi-stat-label">${goalLine}</span>
+        ${goalLine ? `<span class="kpi-stat-label">${goalLine}</span>` : ""}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
         ${foot}
         ${kpiRefMark(k.id)}
@@ -1961,14 +2470,19 @@
     const liveKpis = DATA.kpis.filter(k => !k.archived);
     const goals = liveKpis.filter(k => k.goal);
     const metrics = liveKpis.filter(k => !k.goal && !k.lostTracker && k.id !== "#28");
-    const goalsCards = [missedRevenueTrackerHtml(), ...goals.map(kpiGoalCardHtml), teamDuiGoalCardHtml()].join("");
+    const goalsCards = [
+      kpiTileWithProjects("#19", missedRevenueTrackerHtml()),
+      kpiTileWithProjects("#07", lsaMismanagementTrackerHtml()),
+      ...goals.map(k => kpiTileWithProjects(k.id, kpiGoalCardHtml(k))),
+      kpiTileWithProjects("#DUI", teamDuiGoalCardHtml())
+    ].join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="Team goals">
-          ${kpiSectionStaticHead("Team goals", "Lost Revenue · Phones · DUI YTD")}
+          ${kpiSectionStaticHead("Team goals", "Lost Revenue · Spend waste · DUI YTD")}
           <div class="kpi-section-body">
             <div class="kpi-goals-grid">${goalsCards}</div>
           </div>
         </section>`;
-    const kpiCards = metrics.map(kpiStatCardHtml).join("");
+    const kpiCards = metrics.map(k => kpiTileWithProjects(k.id, kpiStatCardHtml(k))).join("");
 
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
@@ -1979,13 +2493,13 @@
         </div>
       </section>
       <section class="kpi-section kpi-section-static" data-feedback-id="section-reviews-presence" data-feedback-label="#16 Reviews by channel">
-        ${kpiSectionStaticHead("Reviews by channel", "Presence mix · On / Not on / Outdated / Not wired")}
+        ${kpiSectionStaticHead("Reviews by channel", "Presence mix · Listed / Unlisted / Outdated")}
         <div class="kpi-section-body">
           ${reviewsByChannelPanelHtml()}
         </div>
       </section>
       <section class="kpi-section kpi-section-static" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Cases, Leads & Spend">
-        ${kpiSectionStaticHead("Cases, Leads & Spend", "Left: counts · Right: $ spend · media table")}
+        ${kpiSectionStaticHead("Cases, Leads & Spend", "")}
         <div class="kpi-section-body">
           ${casesLeadsSpendSectionHtml()}
         </div>
@@ -1997,15 +2511,14 @@
     dispatchRendered(el, "kpis");
   }
 
-  /** Unique former-Dashboards visuals (dupes of #01 already on KPIs are omitted). */
   /**
-   * Parked #08 panel — not shown on KPIs tab.
-   * Restore on another dashboard: insert `${leadsByCampaignPanelHtml()}` into that view’s grid.
+   * #08 panel — Impact tab (campaign lead volume).
    * Data: DATA.leadsByCampaign · source KPI_SOURCES["#08"]
    */
   function leadsByCampaignPanelHtml() {
     return `<article class="kpi-split-panel" data-feedback-id="section-leads-campaign" data-feedback-label="#08 Leads by campaign">
       ${statusCorner(true)}
+      ${kpiHelpBtn("#08")}
       ${kpiSectionStaticHead("Leads by campaign", "Stacked by month")}
       <div class="kpi-split-panel-body">
         ${chartBlock({
@@ -2118,16 +2631,19 @@
         </tr>`).join("");
     return `<div class="kpi-mini-card kpi-reviews-presence" data-kpi-focus="#16">
       ${statusCorner(anyVerified)}
-      ${chartBlock({ chart: donutChart(segs) })}
-      <details class="kpi-table-acc">
-        <summary class="kpi-table-acc-summary">Channel table <span class="kpi-table-acc-hint">${DATA.reviews.length} directories</span></summary>
-        <table class="kpi-table kpi-table-dense">
-          <thead><tr><th>Channel</th><th>Rating</th><th>#</th><th>Status</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </details>
-      ${sourceFootnote("#16")}
-      <p class="kpi-table-note">Google Maps + Yelp public scrape 2026-07-16. Full audit via B10.</p>
+      ${kpiHelpBtn("#16")}
+      <div class="kpi-reviews-main">
+        ${chartBlock({ chart: donutChart(segs) })}
+        <div class="kpi-reviews-table-wrap">
+          <div class="kpi-reviews-table-head">Channel table <span class="kpi-table-acc-hint">${DATA.reviews.length} directories</span></div>
+          <div class="kpi-reviews-table-scroll">
+            <table class="kpi-table kpi-table-dense">
+              <thead><tr><th>Channel</th><th>Rating</th><th>#</th><th>Status</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       <p class="kpi-table-note"><a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B10">Open B10 Digital Profiles Refresh →</a></p>
       ${kpiRefMark("#16")}
     </div>`;
@@ -2209,7 +2725,8 @@
 
   function dataCardHtml(title, note, body, opts) {
     const full = opts && opts.full ? " data-grid-full" : "";
-    return `<section class="data-card${full}">
+    const id = opts && opts.id ? ` id="${escapeHtml(opts.id)}"` : "";
+    return `<section class="data-card${full}"${id}>
       <h3>${escapeHtml(title)}</h3>
       ${note ? `<p class="data-card-note">${escapeHtml(note)}</p>` : ""}
       <div class="data-card-body">${body || ""}</div>
@@ -2225,7 +2742,6 @@
     </header>
     <div class="data-grid">
       ${dataCardHtml("Lead Channel Stack", "Lead source movement and MoM.", leadsByChannelPanelHtml())}
-      ${dataCardHtml("Leads By Campaign", "Parked #08 campaign lead volume.", leadsByCampaignPanelHtml())}
       ${dataCardHtml("Cases MoM", "Closed · New · Red accounts.", casesMomPanelHtml())}
       ${dataCardHtml("Referral Network", "KPI #17 · placeholder until A4 tracking wires.", totalReferralNetworkPanelHtml())}
     </div>`;
@@ -2233,6 +2749,211 @@
     bindKpiInteractions(el);
     bindDashboardInteractions(el);
     dispatchRendered(el, "data");
+  }
+
+  function renderImpact(el) {
+    if (!el || el.dataset.rendered === RENDER_VER) return;
+    el.innerHTML = `<div class="data-grid">
+      ${dataCardHtml("Leads By Campaign", "#08 campaign lead volume · Military · Core DV · NTGUILT.", leadsByCampaignPanelHtml())}
+    </div>`;
+    el.dataset.rendered = RENDER_VER;
+    bindKpiInteractions(el);
+    bindDashboardInteractions(el);
+    dispatchRendered(el, "impact");
+  }
+
+  /** June LSA → digital reallocation recommendations (media + management retainer). */
+  function junPaidChannelRecs() {
+    const jun = (DATA.casesLeadsSpend || []).find(r => r.month === "Jun");
+    if (!jun || !jun.leads || !jun.adsLeads) return null;
+    const mgmt = DATA.digitalMgmtMonthly || 2900;
+    const lsaCpl = jun.lsaSpend / jun.leads;
+    const digCpl = jun.adsSpend / jun.adsLeads;
+    const digAllIn = (jun.adsSpend + mgmt) / jun.adsLeads;
+    const breakEvenCalls = mgmt / (lsaCpl - digCpl);
+    const breakEvenMedia = breakEvenCalls * digCpl;
+    const minDivert = mgmt + breakEvenMedia;
+    const closeMultiple = lsaCpl / digAllIn;
+    const paidCalls = jun.leads + jun.adsLeads;
+    const paidSpend = jun.lsaSpend + jun.adsSpend;
+    const digEff = jun.adsLeads / paidCalls / (jun.adsSpend / paidSpend);
+    const lsaEff = jun.leads / paidCalls / (jun.lsaSpend / paidSpend);
+    const divertRows = [mgmt, Math.round(minDivert), 5000, 8000, 10000, mgmt + jun.adsSpend].map(total => {
+      const toMgmt = Math.min(mgmt, total);
+      const toMedia = Math.max(0, total - mgmt);
+      const calls = toMedia > 0 ? toMedia / digCpl : 0;
+      const allIn = calls > 0 ? (toMedia + mgmt) / calls : null;
+      let decision = "Consulting only — no media";
+      if (allIn != null) {
+        const d = lsaCpl - allIn;
+        if (Math.abs(d) < 1) decision = "Cost break-even vs LSA";
+        else if (d > 0) decision = `Digital cheaper by ${fmtMoney(d)}/call`;
+        else decision = `LSA cheaper by ${fmtMoney(-d)}/call`;
+      }
+      return {
+        total,
+        toMgmt,
+        toMedia,
+        mgmtPct: Math.round((toMgmt / total) * 100),
+        mediaPct: Math.round((toMedia / total) * 100),
+        calls,
+        allIn,
+        decision
+      };
+    });
+    return {
+      jun,
+      mgmt,
+      lsaCpl,
+      digCpl,
+      digAllIn,
+      breakEvenCalls,
+      breakEvenMedia,
+      minDivert,
+      closeMultiple,
+      digEff,
+      lsaEff,
+      divertRows,
+      digAtLsaCost: jun.adsLeads * lsaCpl,
+      digAdvantage: jun.adsLeads * lsaCpl - jun.adsSpend,
+      digAllInAdvantage: jun.adsLeads * lsaCpl - (jun.adsSpend + mgmt)
+    };
+  }
+
+  function recommendationsPageHtml() {
+    const r = junPaidChannelRecs();
+    if (!r) {
+      return `<header class="data-page-head"><div><h2 class="data-page-title">Recommendations</h2></div></header>
+        <p class="data-inline-note">Need a complete June LSA + digital month to build recommendations.</p>`;
+    }
+    const divertTable = kpiDetailTable(
+      ["Divert from LSA", "→ Consulting", "→ Digital ads", "Consulting %", "Media %", "All-in $/call", "Decision"],
+      r.divertRows.map(row => [
+        fmtMoney(row.total),
+        fmtMoney(row.toMgmt),
+        fmtMoney(row.toMedia),
+        `${row.mgmtPct}%`,
+        `${row.mediaPct}%`,
+        row.allIn != null ? fmtMoney(row.allIn) : "—",
+        escapeHtml(row.decision)
+      ])
+    );
+    const compareTable = kpiDetailTable(
+      ["Channel", "June media", "Consulting", "Calls", "All-in $/call"],
+      [
+        ["LSA", fmtMoney(r.jun.lsaSpend), "$0", String(r.jun.leads), fmtMoney(r.lsaCpl)],
+        ["Digital media only", fmtMoney(r.jun.adsSpend), "$0", String(r.jun.adsLeads), fmtMoney(r.digCpl)],
+        [
+          "Digital + consulting",
+          fmtMoney(r.jun.adsSpend),
+          fmtMoney(r.mgmt),
+          String(r.jun.adsLeads),
+          fmtMoney(r.digAllIn)
+        ]
+      ]
+    );
+    return `<header class="data-page-head">
+      <div>
+        <h2 class="data-page-title">Recommendations</h2>
+        <p class="data-page-sub">Paid call mix · June 2026 · LSA vs digital + Digital Ads Maintenance Retainer</p>
+      </div>
+    </header>
+    <div class="data-grid">
+      ${dataCardHtml(
+        "Contents",
+        "Jump to a recommendation section.",
+        `<ol class="data-inline-note" style="margin:0;padding-left:1.2rem">
+          <li><a class="data-guide-link" href="#recommendation-primary">Primary recommendation</a></li>
+          <li><a class="data-guide-link" href="#recommendation-costs">Cost comparison</a></li>
+          <li><a class="data-guide-link" href="#recommendation-divert">LSA diversion model</a></li>
+          <li><a class="data-guide-link" href="#recommendation-projects">Project information</a></li>
+          <li><a class="data-guide-link" href="#recommendation-actions">Next actions</a></li>
+        </ol>`,
+        { full: true, id: "recommendation-contents" }
+      )}
+      ${dataCardHtml(
+        "Primary recommendation",
+        "Patch the LSA call-intake failure before continuing LSA spend; then shift qualified media toward digital Search.",
+        `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
+          <div class="kpi-mini-card"><h3>LSA $/call</h3><p class="kpi-mini-value">${fmtMoney(r.lsaCpl)}</p></div>
+          <div class="kpi-mini-card"><h3>Digital media $/call</h3><p class="kpi-mini-value">${fmtMoney(r.digCpl)}</p></div>
+          <div class="kpi-mini-card"><h3>Digital all-in $/call</h3><p class="kpi-mini-value">${fmtMoney(r.digAllIn)}</p></div>
+        </div>
+        <p class="data-inline-note"><strong>First:</strong> Fix unanswered calls through <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B2">B2 · HubSpot Phone / VoIP Setup</a>. Resume spending after Search + LSA lines reach <strong>≥90% answered for seven days</strong>.</p>
+        <p class="data-inline-note"><strong>Then:</strong> Keep the <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="RETAINER">Digital Ads Maintenance Retainer</a> active and move at least ${fmtMoney(r.minDivert)}/mo from LSA to consulting plus digital media.</p>
+        <p class="data-formula-line">Minimum shift = ${fmtMoney(r.mgmt)} consulting + ${fmtMoney(r.breakEvenMedia)} digital media = ${fmtMoney(r.minDivert)}/mo</p>
+        <p class="data-formula-line">LSA cost = ${fmtMoney(r.jun.lsaSpend)} ÷ ${r.jun.leads} calls = ${fmtMoney(r.lsaCpl)}/call</p>
+        <p class="data-formula-line">Digital all-in = (${fmtMoney(r.jun.adsSpend)} media + ${fmtMoney(r.mgmt)} consulting) ÷ ${r.jun.adsLeads} calls = ${fmtMoney(r.digAllIn)}/call</p>`,
+        { full: true, id: "recommendation-primary" }
+      )}
+      ${dataCardHtml(
+        "Cost comparison · LSA vs digital vs digital + consulting",
+        "Media only for LSA · digital all-in includes Guide RETAINER.",
+        compareTable,
+        { full: true, id: "recommendation-costs" }
+      )}
+      ${dataCardHtml(
+        "Divert from LSA · consulting vs digital ads split",
+        "Pay consulting first; put the remaining diverted dollars into digital media.",
+        `${divertTable}
+        <p class="data-warning-note"><strong>Warning — clarify before implementation:</strong> This math compares calls, not signed cases. Confirm each channel’s call-to-signed-case rate before moving the budget. LSA is only worth its higher cost if it signs cases at least <strong>${r.closeMultiple.toFixed(2)}× better</strong> than digital. Example: if digital signs 10%, LSA must sign at least ${(10 * r.closeMultiple).toFixed(1)}%.</p>`,
+        { full: true, id: "recommendation-divert" }
+      )}
+      ${dataCardHtml(
+        "Project information",
+        "Guide projects required to repair intake, clean LSA operations, and manage paid media.",
+        `${kpiDetailTable(
+          ["Project", "Priority / status", "Fee", "Role in recommendation", "Success gate"],
+          [
+            [
+              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B2">B2 · HubSpot Phone / VoIP Setup</a>',
+              "Priority 1 · Recommended",
+              "$0 · included in B13",
+              "Route and log inbound Search + LSA calls; create same-day missed-call tasks.",
+              "≥90% answered for seven days; live 888 → HubSpot test passes."
+            ],
+            [
+              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B11">B11 · LSA Call Process Update</a>',
+              "Priority 2 · Recommended",
+              "$1,500",
+              "Same-day booked/spam/follow-up statuses, call review, and Casey coverage.",
+              "Statuses current; disputes caught before billing; coverage calendar active."
+            ],
+            [
+              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="RETAINER">RETAINER · Digital Ads Maintenance</a>',
+              "Required",
+              `${fmtMoney(r.mgmt)}/mo`,
+              "Monitor LSA/Search spend, lead quality, bids, and monthly reporting.",
+              "Fund before shifting media; do not add a second consulting fee."
+            ]
+          ]
+        )}
+        <p class="data-inline-note"><strong>Order:</strong> Complete B2 call routing first → operate B11 status and coverage controls → continue media under RETAINER only after the seven-day answer-rate gate.</p>`,
+        { full: true, id: "recommendation-projects" }
+      )}
+      ${dataCardHtml(
+        "Next actions",
+        "Guide projects tied to this recommendation.",
+        `<ol class="data-inline-note" style="margin:0;padding-left:1.2rem">
+          <li>Hold additional LSA media while <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B2">B2</a> patches routing, backup coverage, and missed-call tasks.</li>
+          <li>Dial the public 888 number end-to-end; confirm HubSpot rings, logs the contact timeline, and assigns a same-day callback task.</li>
+          <li>Run <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B11">B11</a>: same-day LSA statuses, Casey call review, and a fixed coverage calendar.</li>
+          <li>After ≥90% answered for seven days, confirm <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="RETAINER">Digital Ads Maintenance Retainer</a> is funded (${fmtMoney(r.mgmt)}/mo).</li>
+          <li>Test diverting ≥ ${fmtMoney(r.minDivert)}/mo from LSA → consulting + Search media; hold for 30 days and track signed-case rate by channel.</li>
+          <li>Open Data tab · Cases, Leads & Spend for source charts and June trade-off tables.</li>
+        </ol>`,
+        { full: true, id: "recommendation-actions" }
+      )}
+    </div>`;
+  }
+
+  function renderRecommendations(el) {
+    if (!el || el.dataset.rendered === RENDER_VER) return;
+    el.innerHTML = recommendationsPageHtml();
+    el.dataset.rendered = RENDER_VER;
+    bindKpiInteractions(el);
+    bindDashboardInteractions(el);
+    dispatchRendered(el, "recommendations");
   }
 
   /** @deprecated Dashboards tab removed — content is in renderKpis(). Kept for callers. */
@@ -2292,6 +3013,8 @@
   window.KPI_REPORT = {
     renderKpis,
     renderData,
+    renderImpact,
+    renderRecommendations,
     renderDashboards,
     renderAll,
     focusKpi,
