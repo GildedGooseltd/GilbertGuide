@@ -497,6 +497,100 @@ export function migrateAllToB2Format(root) {
   return ids;
 }
 
+/**
+ * Parse content/path-map.md → { l1, l2, l3 } project-id clusters for path filtering.
+ * Sections: ## L1 — priority / ## L2 — audience / ## L3 — horizon with ### choice-id lists.
+ */
+export function parsePathMapMarkdown(text) {
+  const map = { l1: {}, l2: {}, l3: {}, minMatches: 3 };
+  if (!text) return map;
+
+  let layer = null;
+  let choiceId = null;
+  for (const raw of text.split("\n")) {
+    const line = raw.trim();
+    const layerMatch = line.match(/^##\s+L([123])\b/i);
+    if (layerMatch) {
+      layer = `l${layerMatch[1]}`;
+      choiceId = null;
+      continue;
+    }
+    const choiceMatch = line.match(/^###\s+([a-zA-Z0-9_-]+)\s*$/);
+    if (choiceMatch && layer) {
+      choiceId = choiceMatch[1];
+      if (!map[layer][choiceId]) map[layer][choiceId] = [];
+      continue;
+    }
+    if (!layer || !choiceId || !line || line.startsWith("#") || line.startsWith("|") || line.startsWith("**") || line.startsWith("---")) {
+      continue;
+    }
+    const ids = line
+      .split(/[, ]+/)
+      .map(s => s.trim())
+      .filter(id => /^[A-Z][A-Z0-9]*\d*[A-Z]?$|^RETAINER$/i.test(id));
+    for (const id of ids) {
+      const norm = id.toUpperCase() === "RETAINER" ? "RETAINER" : id;
+      if (!map[layer][choiceId].includes(norm)) map[layer][choiceId].push(norm);
+    }
+  }
+  return map;
+}
+
+/**
+ * Parse content/survey.md → { start, nodes } for the choose-your-path guide.
+ * Node sections: ## q1 … with Step / Prompt fields and a Choices table.
+ */
+export function parseSurveyMarkdown(text) {
+  const survey = { start: "q1", nodes: {} };
+  if (!text) return survey;
+
+  const startMatch = text.match(/^##\s+Start\s*\n+([a-zA-Z0-9_-]+)/m);
+  if (startMatch) survey.start = startMatch[1].trim();
+
+  const parts = text.split(/^##\s+/m).slice(1);
+  for (const part of parts) {
+    const nl = part.indexOf("\n");
+    const heading = (nl === -1 ? part : part.slice(0, nl)).trim();
+    const body = nl === -1 ? "" : part.slice(nl + 1);
+    if (!heading || /^start$/i.test(heading)) continue;
+
+    const id = heading.trim();
+    const stepMatch = body.match(/\*\*Step:\*\*\s*(\d+)\s*\/\s*(\d+)/i);
+    const promptMatch = body.match(/\*\*Prompt:\*\*\s*(.+)/i);
+    const node = {
+      step: stepMatch ? parseInt(stepMatch[1], 10) : 1,
+      steps: stepMatch ? parseInt(stepMatch[2], 10) : 2,
+      prompt: promptMatch ? promptMatch[1].trim() : id,
+      choices: []
+    };
+
+    const tableBlock = body.match(/\|[^\n]+\|\n\|[\s\-:|]+\|\n([\s\S]*?)(?=\n##|\n#|$)/);
+    if (tableBlock) {
+      const rows = tableBlock[1].split("\n").filter(l => /^\|/.test(l));
+      for (const row of rows) {
+        const cells = row.split("|").map(c => c.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
+        if (cells.length < 4) continue;
+        const [choiceId, label, hint, next, iconsRaw = "", goal = ""] = cells;
+        if (!choiceId || choiceId === "id") continue;
+        const icons = iconsRaw
+          .split(/[, ]+/)
+          .map(s => s.trim())
+          .filter(Boolean);
+        node.choices.push({
+          id: choiceId,
+          label,
+          hint: hint || "",
+          next: next || "done",
+          icons,
+          goal: goal || label
+        });
+      }
+    }
+    survey.nodes[id] = node;
+  }
+  return survey;
+}
+
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 if (process.argv[1]?.includes("migrate-to-b2-format")) {
   migrateAllToB2Format(ROOT);

@@ -22,6 +22,268 @@ window.PROJECT_DATA = {
       "Include retainer: yes"
     ]
   },
+  "survey": {
+    "start": "q1",
+    "nodes": {
+      "q1": {
+        "step": 1,
+        "steps": 3,
+        "prompt": "What’s the current business priority?",
+        "choices": [
+          {
+            "id": "leads",
+            "label": "Increase leads",
+            "hint": "Demand and intake",
+            "next": "q2_audience",
+            "icons": [
+              "leads"
+            ],
+            "goal": "Increase leads"
+          },
+          {
+            "id": "website",
+            "label": "Improve website",
+            "hint": "Site experience & findability",
+            "next": "q2_audience",
+            "icons": [
+              "seo"
+            ],
+            "goal": "Improve website"
+          },
+          {
+            "id": "reputation",
+            "label": "Grow reputation",
+            "hint": "Proof, trust, brand",
+            "next": "q2_audience",
+            "icons": [
+              "referrals",
+              "creative"
+            ],
+            "goal": "Grow reputation"
+          },
+          {
+            "id": "spend",
+            "label": "Reduce spend",
+            "hint": "Waste and efficiency",
+            "next": "q2_audience",
+            "icons": [
+              "efficiency"
+            ],
+            "goal": "Reduce spend"
+          }
+        ]
+      },
+      "q2_audience": {
+        "step": 2,
+        "steps": 3,
+        "prompt": "Who is the priority audience?",
+        "choices": [
+          {
+            "id": "current",
+            "label": "Current clients",
+            "hint": "Active relationships",
+            "next": "q3_horizon",
+            "icons": [
+              "crm",
+              "referrals"
+            ],
+            "goal": "Current clients"
+          },
+          {
+            "id": "past",
+            "label": "Past clients",
+            "hint": "Re-engage warm people",
+            "next": "q3_horizon",
+            "icons": [
+              "referrals"
+            ],
+            "goal": "Past clients"
+          },
+          {
+            "id": "netnew",
+            "label": "Net-new prospects",
+            "hint": "People who don’t know you yet",
+            "next": "q3_horizon",
+            "icons": [
+              "leads"
+            ],
+            "goal": "Net-new prospects"
+          },
+          {
+            "id": "awareness",
+            "label": "General awareness",
+            "hint": "Broader market presence",
+            "next": "q3_horizon",
+            "icons": [
+              "creative"
+            ],
+            "goal": "General awareness"
+          }
+        ]
+      },
+      "q3_horizon": {
+        "step": 3,
+        "steps": 3,
+        "prompt": "What kind of timeline / reactivity fits?",
+        "choices": [
+          {
+            "id": "soon",
+            "label": "Need movement soon",
+            "hint": "Near-term push",
+            "next": "done",
+            "icons": [
+              "leads",
+              "creative"
+            ],
+            "goal": "Near-term movement"
+          },
+          {
+            "id": "compounds",
+            "label": "Build something that compounds",
+            "hint": "Foundations that keep paying off",
+            "next": "done",
+            "icons": [
+              "seo",
+              "foundation"
+            ],
+            "goal": "Compounding build"
+          },
+          {
+            "id": "leak",
+            "label": "Fix an ongoing ops drag",
+            "hint": "Stop wasted time or money",
+            "next": "done",
+            "icons": [
+              "efficiency"
+            ],
+            "goal": "Fix ongoing ops drag"
+          }
+        ]
+      }
+    }
+  },
+  "pathMap": {
+    "l1": {
+      "leads": [
+        "A1",
+        "A2",
+        "A3",
+        "A5",
+        "A6",
+        "A7",
+        "A11",
+        "A12",
+        "A13",
+        "A8",
+        "B1",
+        "B2"
+      ],
+      "website": [
+        "B3",
+        "B4",
+        "B6",
+        "A5",
+        "B10",
+        "A8",
+        "B1"
+      ],
+      "reputation": [
+        "A4",
+        "A7",
+        "A9",
+        "B5",
+        "B8",
+        "B10",
+        "A3",
+        "A5"
+      ],
+      "spend": [
+        "B9",
+        "A10",
+        "A8",
+        "B2",
+        "B1",
+        "B3"
+      ]
+    },
+    "l2": {
+      "current": [
+        "B1",
+        "A4",
+        "A3",
+        "B7",
+        "B8",
+        "A9",
+        "A12",
+        "B2"
+      ],
+      "past": [
+        "B5",
+        "A3",
+        "A4",
+        "A9",
+        "B7",
+        "B8"
+      ],
+      "netnew": [
+        "A1",
+        "A2",
+        "A5",
+        "A6",
+        "A11",
+        "A12",
+        "A13",
+        "B4",
+        "B6"
+      ],
+      "awareness": [
+        "A2",
+        "A7",
+        "A13",
+        "B8",
+        "B10",
+        "B6",
+        "A5",
+        "A9"
+      ]
+    },
+    "l3": {
+      "soon": [
+        "A1",
+        "A2",
+        "A3",
+        "A5",
+        "A6",
+        "A7",
+        "A11",
+        "A12",
+        "A13",
+        "B5"
+      ],
+      "compounds": [
+        "B3",
+        "B4",
+        "B6",
+        "A4",
+        "A5",
+        "A8",
+        "A9",
+        "B1",
+        "B8",
+        "B10"
+      ],
+      "leak": [
+        "B9",
+        "A10",
+        "A8",
+        "B1",
+        "B2",
+        "B3",
+        "A12"
+      ]
+    },
+    "minMatches": 3
+  },
   "retainer": {
     "id": "RETAINER",
     "fee": 2700,

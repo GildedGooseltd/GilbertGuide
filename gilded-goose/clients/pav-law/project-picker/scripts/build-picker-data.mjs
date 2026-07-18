@@ -9,6 +9,8 @@ import { fileURLToPath } from "url";
 import {
   parseProjectMarkdown,
   parseSettingsMarkdown,
+  parseSurveyMarkdown,
+  parsePathMapMarkdown,
   applyIndexOverrides
 } from "./markdown-project.mjs";
 
@@ -39,10 +41,24 @@ function loadRetainer() {
   return parseProjectMarkdown(fs.readFileSync(md, "utf8"), "retainer");
 }
 
+function loadSurvey() {
+  const md = path.join(CONTENT, "survey.md");
+  if (!fs.existsSync(md)) throw new Error("Missing content/survey.md");
+  return parseSurveyMarkdown(fs.readFileSync(md, "utf8"));
+}
+
+function loadPathMap() {
+  const md = path.join(CONTENT, "path-map.md");
+  if (!fs.existsSync(md)) return { l1: {}, l2: {}, l3: {}, minMatches: 3 };
+  return parsePathMapMarkdown(fs.readFileSync(md, "utf8"));
+}
+
 function build() {
   const settings = loadSettings();
   let retainer = loadRetainer();
   let projects = loadProjects();
+  const survey = loadSurvey();
+  const pathMap = loadPathMap();
 
   const indexPath = path.join(CONTENT, "INDEX.md");
   if (fs.existsSync(indexPath)) {
@@ -59,6 +75,8 @@ function build() {
     guideLogo: settings.guideLogo,
     paviIcon: settings.guideIcon,
     recommendedPackage: settings.recommendedPackage,
+    survey,
+    pathMap,
     retainer,
     projects
   };
@@ -70,7 +88,12 @@ function build() {
 window.PROJECT_DATA = `;
 
   fs.writeFileSync(OUT, header + JSON.stringify(data, null, 2) + ";\n", "utf8");
-  console.log(`Built ${OUT} (${projects.length} projects)`);
+  const nodeCount = Object.keys(survey.nodes || {}).length;
+  const clusterCount = ["l1", "l2", "l3"].reduce(
+    (n, k) => n + Object.keys(pathMap[k] || {}).length,
+    0
+  );
+  console.log(`Built ${OUT} (${projects.length} projects, ${nodeCount} survey nodes, ${clusterCount} path clusters)`);
 }
 
 function watch() {
