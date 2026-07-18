@@ -372,10 +372,20 @@
 
   function normalizeViewTab(tab) {
     const t = String(tab || "kpis").toLowerCase().trim();
-    if (t === "revenue" || t === "completed") return "impact";
+    if (t === "revenue" || t === "completed" || t === "results") return "impact";
     if (t === "dashboards") return "kpis";
     if (t === "recs" || t === "recommendation") return "recommendations";
-    if (t === "kpis" || t === "data" || t === "recommendations" || t === "picker" || t === "impact") return t;
+    if (t === "prediction" || t === "forecast" || t === "cash-projection") return "predictions";
+    if (
+      t === "kpis" ||
+      t === "data" ||
+      t === "recommendations" ||
+      t === "picker" ||
+      t === "impact" ||
+      t === "predictions"
+    ) {
+      return t;
+    }
     return "kpis";
   }
 
@@ -827,7 +837,7 @@
     const doneCount = completedProjects().length;
     document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
       const view = btn.dataset.view;
-      if (view === "kpis" || view === "data") {
+      if (view === "kpis" || view === "data" || view === "recommendations" || view === "predictions") {
         const badge = btn.querySelector(".tab-count");
         if (badge) badge.remove();
         return;
@@ -850,16 +860,19 @@
     const isRecs = state.activeViewTab === "recommendations";
     const isPicker = state.activeViewTab === "picker";
     const isImpact = state.activeViewTab === "impact";
+    const isPredictions = state.activeViewTab === "predictions";
     const kpisPanel = document.getElementById("cockpit-panel-kpis");
     const dataPanel = document.getElementById("cockpit-panel-data");
     const recsPanel = document.getElementById("cockpit-panel-recommendations");
     const pickerPanel = document.getElementById("cockpit-panel-picker");
     const impactPanel = document.getElementById("cockpit-panel-impact");
+    const predictionsPanel = document.getElementById("cockpit-panel-predictions");
     if (kpisPanel) kpisPanel.hidden = !isKpis;
     if (dataPanel) dataPanel.hidden = !isData;
     if (recsPanel) recsPanel.hidden = !isRecs;
     if (pickerPanel) pickerPanel.hidden = !isPicker;
     if (impactPanel) impactPanel.hidden = !isImpact;
+    if (predictionsPanel) predictionsPanel.hidden = !isPredictions;
     syncViewTabs();
     renderResearchSection();
     renderKpiDashboard();
@@ -878,6 +891,10 @@
       }
       renderCompletedList();
       renderRevenueCalculator();
+    }
+    if (isPredictions && window.KPI_REPORT) {
+      const predEl = document.getElementById("kpi-report-predictions");
+      if (predEl) KPI_REPORT.renderPredictions(predEl);
     }
   }
 

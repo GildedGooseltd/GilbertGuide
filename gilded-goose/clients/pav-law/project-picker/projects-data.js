@@ -220,7 +220,7 @@ window.PROJECT_DATA = {
         "traffic"
       ],
       "title": "HS: Digital Profiles Refresh & Tracking Updates",
-      "description": "Many third-party sites still show stale Pav Law info. Updating intake CTAs and NAP, then testing paid directory upgrades only where UTMs prove traffic, protects brand and spend. Complements B12 (Casey rebrand) and prior GBP cleanup under A7.",
+      "description": "Many third-party sites still show stale Pav Law info. Updating intake CTAs and NAP, then testing paid directory upgrades only where UTMs prove traffic, protects brand and spend. Complements B12 (Casey rebrand) and prior GBP cleanup under A7.\n\n**Platform ad credits (Jul 2026):**\n\n- **Yelp** — **$300** advertising credit, good through **end of July 2026**. Use while refreshing the Yelp listing so spend and profile updates land together.\n- **Reddit** — previously offered a promo/ad credit (account had ~$500 credit in the May mix under A7). May have **expired in June** — recheck Ads account before assuming it is gone; if live, coordinate spend with A7 Reddit flight.",
       "tldr": "Refresh outdated Pav Law directory and social profiles — especially Yelp, where organic review volume is rising — and tag every site link for attribution.",
       "valueAdded": [
         "Refreshed bios, practice areas, photos, and CTAs for firm and both attorneys (ABA-aligned)",
@@ -240,6 +240,8 @@ window.PROJECT_DATA = {
         "Lite general cleanse with account transfer(s)"
       ],
       "inProgressItems": [
+        "**Yelp $300 ad credit** — claim/use before **end of July 2026** (pair with listing refresh)",
+        "**Reddit promo credit** — recheck Ads account (may have expired June); if still live, run under A7",
         "LinkedIn company showcase still shows low followers and 2024-era launch copy",
         "Andrew + Casey personal LinkedIn and directory profiles",
         "Extend UTM naming to all profile links",
