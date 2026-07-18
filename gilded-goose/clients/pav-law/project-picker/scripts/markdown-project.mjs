@@ -498,6 +498,45 @@ export function migrateAllToB2Format(root) {
 }
 
 /**
+ * Parse content/path-map.md → { l1, l2, l3 } project-id clusters for path filtering.
+ * Sections: ## L1 — priority / ## L2 — audience / ## L3 — horizon with ### choice-id lists.
+ */
+export function parsePathMapMarkdown(text) {
+  const map = { l1: {}, l2: {}, l3: {}, minMatches: 3 };
+  if (!text) return map;
+
+  let layer = null;
+  let choiceId = null;
+  for (const raw of text.split("\n")) {
+    const line = raw.trim();
+    const layerMatch = line.match(/^##\s+L([123])\b/i);
+    if (layerMatch) {
+      layer = `l${layerMatch[1]}`;
+      choiceId = null;
+      continue;
+    }
+    const choiceMatch = line.match(/^###\s+([a-zA-Z0-9_-]+)\s*$/);
+    if (choiceMatch && layer) {
+      choiceId = choiceMatch[1];
+      if (!map[layer][choiceId]) map[layer][choiceId] = [];
+      continue;
+    }
+    if (!layer || !choiceId || !line || line.startsWith("#") || line.startsWith("|") || line.startsWith("**") || line.startsWith("---")) {
+      continue;
+    }
+    const ids = line
+      .split(/[, ]+/)
+      .map(s => s.trim())
+      .filter(id => /^[A-Z][A-Z0-9]*\d*[A-Z]?$|^RETAINER$/i.test(id));
+    for (const id of ids) {
+      const norm = id.toUpperCase() === "RETAINER" ? "RETAINER" : id;
+      if (!map[layer][choiceId].includes(norm)) map[layer][choiceId].push(norm);
+    }
+  }
+  return map;
+}
+
+/**
  * Parse content/survey.md → { start, nodes } for the choose-your-path guide.
  * Node sections: ## q1 … with Step / Prompt fields and a Choices table.
  */

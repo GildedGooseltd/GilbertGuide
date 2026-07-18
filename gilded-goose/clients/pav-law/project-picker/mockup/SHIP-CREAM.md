@@ -10,6 +10,7 @@ Focus: **light / cream** Trail Guide only. Preview page: [`cream-ship-preview.ht
 | Trail Guide masthead (title, kicker, lead) | `index.html` |
 | **Goose profile** small icon (not leaf/flower) | `assets/gigi-goose-guide.svg` |
 | Business path: priority → audience → horizon | `content/QUESTIONS.md` → `survey.md` |
+| Path → project clusters | `content/path-map.md` → live filter |
 | Value icons: referrals/creative off hot pink → purple | `:root` `--vi-*` |
 | Gold reserved for important cream highlights | title underline, zone labels, primary CTA |
 | Style guide | [`../STYLE-GUIDE.md`](../STYLE-GUIDE.md) |
@@ -26,7 +27,6 @@ Focus: **light / cream** Trail Guide only. Preview page: [`cream-ship-preview.ht
 | Update | Why |
 |--------|-----|
 | Dark theme polish | Cream-first per request |
-| Path → project cluster mapping | Content follow-up |
 
 ## Chart color tokens (proposed)
 

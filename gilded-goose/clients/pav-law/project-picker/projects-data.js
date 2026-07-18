@@ -124,7 +124,7 @@ window.PROJECT_DATA = {
       "q3_horizon": {
         "step": 3,
         "steps": 3,
-        "prompt": "What kind of timeline fits?",
+        "prompt": "What kind of timeline / reactivity fits?",
         "choices": [
           {
             "id": "soon",
@@ -150,17 +150,139 @@ window.PROJECT_DATA = {
           },
           {
             "id": "leak",
-            "label": "Fix an ongoing leak or drag",
-            "hint": "Stop the drip",
+            "label": "Fix an ongoing ops drag",
+            "hint": "Stop wasted time or money",
             "next": "done",
             "icons": [
               "efficiency"
             ],
-            "goal": "Fix ongoing leak"
+            "goal": "Fix ongoing ops drag"
           }
         ]
       }
     }
+  },
+  "pathMap": {
+    "l1": {
+      "leads": [
+        "A1",
+        "A2",
+        "A3",
+        "A5",
+        "A6",
+        "A7",
+        "A11",
+        "A12",
+        "A13",
+        "A8",
+        "B1",
+        "B2"
+      ],
+      "website": [
+        "B3",
+        "B4",
+        "B6",
+        "A5",
+        "B10",
+        "A8",
+        "B1"
+      ],
+      "reputation": [
+        "A4",
+        "A7",
+        "A9",
+        "B5",
+        "B8",
+        "B10",
+        "A3",
+        "A5"
+      ],
+      "spend": [
+        "B9",
+        "A10",
+        "A8",
+        "B2",
+        "B1",
+        "B3"
+      ]
+    },
+    "l2": {
+      "current": [
+        "B1",
+        "A4",
+        "A3",
+        "B7",
+        "B8",
+        "A9",
+        "A12",
+        "B2"
+      ],
+      "past": [
+        "B5",
+        "A3",
+        "A4",
+        "A9",
+        "B7",
+        "B8"
+      ],
+      "netnew": [
+        "A1",
+        "A2",
+        "A5",
+        "A6",
+        "A11",
+        "A12",
+        "A13",
+        "B4",
+        "B6"
+      ],
+      "awareness": [
+        "A2",
+        "A7",
+        "A13",
+        "B8",
+        "B10",
+        "B6",
+        "A5",
+        "A9"
+      ]
+    },
+    "l3": {
+      "soon": [
+        "A1",
+        "A2",
+        "A3",
+        "A5",
+        "A6",
+        "A7",
+        "A11",
+        "A12",
+        "A13",
+        "B5"
+      ],
+      "compounds": [
+        "B3",
+        "B4",
+        "B6",
+        "A4",
+        "A5",
+        "A8",
+        "A9",
+        "B1",
+        "B8",
+        "B10"
+      ],
+      "leak": [
+        "B9",
+        "A10",
+        "A8",
+        "B1",
+        "B2",
+        "B3",
+        "A12"
+      ]
+    },
+    "minMatches": 3
   },
   "retainer": {
     "id": "RETAINER",

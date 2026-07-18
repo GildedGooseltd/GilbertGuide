@@ -20,4 +20,4 @@ Open: [`index.html`](index.html) · questions: [`../content/QUESTIONS.md`](../co
 
 - [ ] Leaf icon on / off (toggle in mockup dock)
 - [ ] Row density / masthead scale
-- [ ] Map path cells → project clusters
+- [x] Map path cells → project clusters (`content/path-map.md`)

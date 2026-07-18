@@ -9,7 +9,7 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
 **Edit questions here** → [`QUESTIONS.md`](QUESTIONS.md)  
 **Design mockup framework** → [`../mockup/index.html`](../mockup/index.html) · cream ship preview [`../mockup/cream-ship-preview.html`](../mockup/cream-ship-preview.html) · [`../mockup/SHIP-CREAM.md`](../mockup/SHIP-CREAM.md)  
 **Legacy questions-only mockup** → [`../questions-mockup.html`](../questions-mockup.html)  
-Machine format (after sync) → [`survey.md`](survey.md) · mapping notes → [`survey-DRAFT.md`](survey-DRAFT.md)
+Machine format (after sync) → [`survey.md`](survey.md) · clusters → [`path-map.md`](path-map.md) · mapping notes → [`survey-DRAFT.md`](survey-DRAFT.md)
 
 
 | Priority | ID       | Project                                                          | File                               |

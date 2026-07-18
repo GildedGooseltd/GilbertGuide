@@ -10,6 +10,10 @@
   const GILBERT_SURVEY = (typeof PROJECT_DATA !== "undefined" && PROJECT_DATA.survey && PROJECT_DATA.survey.nodes)
     ? PROJECT_DATA.survey
     : { start: "q1", nodes: {} };
+  /** Path → project clusters from content/path-map.md */
+  const PATH_MAP = (typeof PROJECT_DATA !== "undefined" && PROJECT_DATA.pathMap)
+    ? PROJECT_DATA.pathMap
+    : { l1: {}, l2: {}, l3: {}, minMatches: 3 };
 
   function isRequiredProject(item, isRetainer) {
     return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
@@ -113,6 +117,7 @@
     surveyPath: [],
     surveyDone: false,
     iconFilters: [],
+    pathMatchIds: [],
     tocSort: { field: "priority", dir: "asc" },
     tocExpanded: false,
     showAllProjects: false
@@ -247,6 +252,10 @@
   }
 
   function itemMatchesIconFilters(item) {
+    if (item.isRetainer || item.id === "RETAINER") return true;
+    if (state.pathMatchIds && state.pathMatchIds.length) {
+      return state.pathMatchIds.includes(item.id);
+    }
     if (!state.iconFilters.length) return true;
     if (state.iconFilters.includes("account-data") && item.backedMetric) return true;
     const iconIds = getValueIcons(item).map(i => i.id);
@@ -270,6 +279,7 @@
       return;
     }
     state.iconFilters = [];
+    state.pathMatchIds = [];
     saveState();
     renderValueIconKey();
     renderAllCards();
@@ -732,10 +742,18 @@
   function sortTocItems(items) {
     const { field, dir } = state.tocSort;
     const mult = dir === "asc" ? 1 : -1;
+    const pathOrder = state.pathMatchIds && state.pathMatchIds.length
+      ? new Map(state.pathMatchIds.map((id, i) => [id, i]))
+      : null;
     return [...items].sort((a, b) => {
       const aSel = isItemSelected(a);
       const bSel = isItemSelected(b);
       if (aSel !== bSel) return aSel ? -1 : 1;
+      if (pathOrder) {
+        const ia = pathOrder.has(a.id) ? pathOrder.get(a.id) : 999;
+        const ib = pathOrder.has(b.id) ? pathOrder.get(b.id) : 999;
+        if (ia !== ib) return ia - ib;
+      }
       if (field === "fee") {
         const diff = tocItemFee(a) - tocItemFee(b);
         return diff !== 0 ? mult * diff : mult * ((a.priority ?? 99) - (b.priority ?? 99));
@@ -916,7 +934,10 @@
         }
       });
     } else {
-      allItemsByPriority().filter(item => itemMatchesIconFilters(item)).slice(0, 8).forEach(item => {
+      const ranked = state.pathMatchIds && state.pathMatchIds.length
+        ? state.pathMatchIds.map(id => PROJECTS.find(p => p.id === id)).filter(Boolean)
+        : allItemsByPriority().filter(item => itemMatchesIconFilters(item));
+      ranked.slice(0, 8).forEach(item => {
         if (!item.isRetainer && item.id !== "RETAINER") state.recommended.add(item.id);
       });
     }
@@ -937,6 +958,7 @@
     state.surveyPath = [];
     state.surveyDone = false;
     state.iconFilters = [];
+    state.pathMatchIds = [];
     if (!keepCart) {
       state.projects = new Set();
       state.recommended = new Set();
@@ -975,9 +997,44 @@
     return parts.join(" · ");
   }
 
+  function pathChoiceIds() {
+    const steps = surveyChoiceByPath();
+    return {
+      l1: steps[0]?.choice?.id || null,
+      l2: steps[1]?.choice?.id || null,
+      l3: steps[2]?.choice?.id || null
+    };
+  }
+
+  function resolvePathMatchIds() {
+    const { l1, l2, l3 } = pathChoiceIds();
+    const set1 = new Set((PATH_MAP.l1 && PATH_MAP.l1[l1]) || []);
+    const set2 = new Set((PATH_MAP.l2 && PATH_MAP.l2[l2]) || []);
+    const set3 = new Set((PATH_MAP.l3 && PATH_MAP.l3[l3]) || []);
+    if (!set1.size) return [];
+    const intersected = [...set1].filter(id => set2.has(id) || set3.has(id));
+    const min = PATH_MAP.minMatches || 3;
+    const ids = intersected.length >= min ? intersected : [...set1];
+    const layerScore = id => {
+      if (set1.has(id) && set2.has(id) && set3.has(id)) return 3;
+      if (set1.has(id) && set2.has(id)) return 2;
+      if (set1.has(id) && set3.has(id)) return 1;
+      return 0;
+    };
+    ids.sort((a, b) => {
+      const d = layerScore(b) - layerScore(a);
+      if (d) return d;
+      const pa = PROJECTS.find(p => p.id === a)?.priority ?? 99;
+      const pb = PROJECTS.find(p => p.id === b)?.priority ?? 99;
+      return pa - pb;
+    });
+    return ids;
+  }
+
   function applySurveyFilters() {
     const icons = iconsFromSurveyPath();
     state.iconFilters = icons.slice();
+    state.pathMatchIds = resolvePathMatchIds();
     state.goalText = goalFromSurveyPath();
     state.surveyDone = true;
     state.tocExpanded = true;
@@ -1073,6 +1130,7 @@
       state.surveyNode = last ? last.nodeId : GILBERT_SURVEY.start;
       state.surveyDone = false;
       state.iconFilters = [];
+      state.pathMatchIds = [];
       state.goalText = "";
       renderGilbertSurvey();
       renderValueIconKey();
@@ -1116,6 +1174,11 @@
       if (Array.isArray(saved.iconFilters)) {
         state.iconFilters = saved.iconFilters;
       }
+      if (Array.isArray(saved.pathMatchIds)) {
+        state.pathMatchIds = saved.pathMatchIds;
+      } else if (state.surveyDone) {
+        state.pathMatchIds = resolvePathMatchIds();
+      }
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
     } catch (e) {}
@@ -1141,7 +1204,8 @@
       surveyNode: state.surveyNode,
       surveyPath: state.surveyPath,
       surveyDone: state.surveyDone,
-      iconFilters: state.iconFilters
+      iconFilters: state.iconFilters,
+      pathMatchIds: state.pathMatchIds
     }));
     updateSubmitButtons();
   }

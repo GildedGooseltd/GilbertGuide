@@ -155,6 +155,7 @@ See [`content/QUESTIONS.md`](content/QUESTIONS.md).
 | Colors, type, survey layout | [`index.html`](index.html) `:root` + dark block |
 | Behavior / survey render | [`app.js`](app.js) |
 | Path copy | [`content/QUESTIONS.md`](content/QUESTIONS.md) → sync [`content/survey.md`](content/survey.md) → `npm run build` |
+| Path → projects | [`content/path-map.md`](content/path-map.md) → `npm run build` |
 | Design experiments | [`mockup/index.html`](mockup/index.html) + [`mockup/FEEDBACK.md`](mockup/FEEDBACK.md) |
 | This guide | [`STYLE-GUIDE.md`](STYLE-GUIDE.md) |
 

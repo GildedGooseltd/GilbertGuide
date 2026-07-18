@@ -12,6 +12,8 @@
 |------|---------|
 | [INDEX.md](INDEX.md) | **You edit only** — table titles + **## Notes** (build reads; never writes) |
 | [survey.md](survey.md) | **Guide questionnaire Q&A** — short prompts/choices (build → picker survey) |
+| [QUESTIONS.md](QUESTIONS.md) | Editable path prompts (sync → survey.md) |
+| [path-map.md](path-map.md) | Path → project clusters (build → live filter) |
 | [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches B2) |
 | settings.md | Default package |
 | retainer.md | Retainer card |

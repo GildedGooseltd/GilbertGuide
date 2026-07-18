@@ -35,11 +35,11 @@ q1
 
 ## q3_horizon
 - **Step:** 3 / 3
-- **Prompt:** What kind of timeline fits?
+- **Prompt:** What kind of timeline / reactivity fits?
 
 ### Choices
 | id | Label | Hint | Next | Icons | Goal |
 | -- | ----- | ---- | ---- | ----- | ---- |
 | soon | Need movement soon | Near-term push | done | leads, creative | Near-term movement |
 | compounds | Build something that compounds | Foundations that keep paying off | done | seo, foundation | Compounding build |
-| leak | Fix an ongoing leak or drag | Stop the drip | done | efficiency | Fix ongoing leak |
+| leak | Fix an ongoing ops drag | Stop wasted time or money | done | efficiency | Fix ongoing ops drag |
