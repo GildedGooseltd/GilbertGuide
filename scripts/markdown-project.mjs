@@ -9,7 +9,6 @@ const META_KEYS = {
   id: "id",
   priority: "priority",
   fee: "fee",
-  timeline: "timeline",
   category: "category",
   "campaign type": "campaignType",
   status: "status",
@@ -20,12 +19,23 @@ const META_KEYS = {
   "monthly only": "monthlyOnly",
   "ongoing fee": "ongoingFee",
   "per campaign fee": "perCampaignFee",
+  "deposit pct": "depositPct",
+  "deposit amount": "depositAmount",
   icon: "guideIcon",
   "guide hero": "guideHero",
   seal: "guideSeal",
   logo: "guideLogo",
   "guide name": "guideName",
-  "guide short name": "guideShortName"
+  "guide short name": "guideShortName",
+  "featured image": "featuredImage",
+  "reference link": "referenceLink",
+  "estimated leads": "estimatedLeads",
+  "estimated leads gained": "estimatedLeads",
+  "publish status": "publishStatus",
+  "start date": "startDate",
+  "campaign start": "startDate",
+  "projected start": "startDate",
+  "season start": "startDate"
 };
 
 const BRAND_FIXES = [
@@ -49,6 +59,38 @@ function applyProperCase(text) {
   return safe.replace(/\x00(\d+)\x00/g, (_, i) => preserved[Number(i)]);
 }
 
+function parseReferenceLinkValue(val) {
+  if (!val || val === "—" || val === "-") return null;
+  const md = val.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+  if (md) return { label: md[1].trim(), url: md[2].trim() };
+  if (/^https?:\/\//i.test(val.trim())) return { label: "Project reference", url: val.trim() };
+  return null;
+}
+
+function formatReferenceLinkValue(link) {
+  if (!link?.url) return "";
+  const label = (link.label || "Project reference").trim();
+  return `[${label}](${link.url})`;
+}
+
+function normalizePublishStatus(raw) {
+  const s = String(raw || "published").toLowerCase().trim();
+  if (
+    s === "unpublished" ||
+    s === "unpublish" ||
+    s === "hidden" ||
+    s === "gray" ||
+    s === "grey" ||
+    s === "planning" ||
+    s === "plan" ||
+    s === "draft" ||
+    s === "outline"
+  ) {
+    return "unpublished";
+  }
+  return "published";
+}
+
 function parseMetaTable(text) {
   const meta = {};
   const rows = text.match(/^\|\s*\*\*(.+?)\*\*\s*\|\s*(.+?)\s*\|$/gm) || [];
@@ -62,8 +104,12 @@ function parseMetaTable(text) {
     if (field === "priority") {
       if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank")
         meta.priority = parseInt(val, 10);
-    } else if (field === "fee" || field === "ongoingFee" || field === "perCampaignFee")
+    } else if (field === "fee" || field === "ongoingFee" || field === "perCampaignFee" || field === "depositAmount")
       meta[field] = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
+    else if (field === "depositPct") {
+      const n = parseFloat(val.replace(/[^0-9.]/g, ""));
+      if (Number.isFinite(n)) meta.depositPct = n > 1 ? n / 100 : n;
+    }
     else if (field === "enabler" || field === "monthlyOnly")
       meta[field] = /^(yes|true|1)$/i.test(val);
     else if (field === "paymentType") {
@@ -75,16 +121,118 @@ function parseMetaTable(text) {
       meta.keywords = val.split(/,\s*/).filter(Boolean);
     else if (field === "status")
       meta[field] = val.toLowerCase();
+    else if (field === "publishStatus")
+      meta.publishStatus = normalizePublishStatus(val);
+    else if (field === "referenceLink")
+      meta.referenceLink = parseReferenceLinkValue(val);
+    else if (field === "featuredImage")
+      meta.featuredImage = val && val !== "—" && val !== "-" ? val.trim() : "";
     else meta[field] = val;
   }
   return meta;
+}
+
+const VALID_VALUE_ICON_IDS = new Set([
+  "foundation", "retainer", "leads", "crm", "seo", "referrals",
+  "efficiency", "intake", "creative", "general"
+]);
+
+function normalizeValueIconId(raw) {
+  return String(raw || "").trim().toLowerCase().replace(/\s+/g, "-");
 }
 
 function parseListSection(body) {
   return body
     .split("\n")
     .map(l => l.replace(/^-\s+/, "").trim())
-    .filter(l => l && !l.startsWith("|"));
+    .filter(l => l && l !== "-" && !l.startsWith("|"));
+}
+
+function parseImpactMetricBullet(text) {
+  const asOf = text.match(/as of\s*(\d{4}-\d{2}-\d{2})/i);
+  const cleaned = text
+    .replace(/\(as of\s*\d{4}-\d{2}-\d{2}\)/gi, "")
+    .replace(/as of\s*\d{4}-\d{2}-\d{2}/gi, "")
+    .trim();
+  const range = cleaned.match(/~?(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)(?!\d)/);
+  const single = cleaned.match(/~?(\d+(?:\.\d+)?)/);
+  const period = /\/wave/i.test(text) ? "wave" : /\/mo/i.test(text) ? "mo" : null;
+  const value = range
+    ? (Number(range[1]) + Number(range[2])) / 2
+    : single
+      ? Number(single[1])
+      : null;
+  return { label: text.trim(), value, period, asOf: asOf ? asOf[1] : null };
+}
+
+function parseImpactEstimatesSection(body) {
+  const est = { period: "mo", asOf: null, source: "", note: "" };
+  for (const line of body.split("\n")) {
+    const t = line.trim();
+    if (!t.startsWith("-")) continue;
+    const m = t.match(/^-\s*(.+?):\s*(.+)$/);
+    if (!m) continue;
+    const key = m[1].toLowerCase();
+    const val = m[2].trim();
+    if (key.includes("leads impacted")) {
+      const p = parseImpactMetricBullet(val);
+      est.leadsImpacted = p.value;
+      if (p.period) est.period = p.period;
+      if (p.asOf) est.asOf = p.asOf;
+    } else if (key.includes("leads connected")) {
+      est.leadsConnected = parseImpactMetricBullet(val).value;
+    } else if (key.includes("clients retained")) {
+      est.clientsRetained = parseImpactMetricBullet(val).value;
+    } else if (key === "source") {
+      est.source = val;
+    } else if (key === "note") {
+      est.note = val;
+    }
+  }
+  if (est.leadsImpacted == null && est.leadsConnected == null && est.clientsRetained == null) return null;
+  return est;
+}
+
+function parseGilbertMetricNotes(body) {
+  const notes = [];
+  for (const line of body.split("\n")) {
+    const m = line.match(/^-\s*\*\*(\d{4}-\d{2}-\d{2})\s*·\s*([^*]+)\*\*\s*[—–-]\s*(.+)$/);
+    if (m) notes.push({ date: m[1], field: m[2].trim(), text: m[3].trim() });
+  }
+  return notes;
+}
+
+function formatImpactEstimatesSection(p) {
+  const e = p.impactEstimates;
+  if (!e) return "";
+  const period = e.period === "wave" ? "/wave" : "/mo";
+  const fmt = v => {
+    if (v == null) return "—";
+    const n = Number(v);
+    return n < 1 && n > 0 ? `~${n.toFixed(1)}${period}` : `~${n}${period}`;
+  };
+  let md = `## Impact estimates\n\n`;
+  md += `- Leads impacted: ${fmt(e.leadsImpacted)} (as of ${e.asOf || "—"})\n`;
+  md += `- Leads connected: ${fmt(e.leadsConnected)}\n`;
+  md += `- Clients retained: ${fmt(e.clientsRetained)}\n`;
+  if (e.source) md += `- Source: ${e.source}\n`;
+  if (e.note) md += `- Note: ${e.note}\n`;
+  return md + "\n";
+}
+
+function formatGilbertMetricNotesSection(p) {
+  if (!p.gilbertMetricNotes?.length) return "";
+  let md = `## Gilbert on metrics\n\n`;
+  md += p.gilbertMetricNotes
+    .map(n => `- **${n.date} · ${n.field}** — ${n.text}`)
+    .join("\n");
+  return md + "\n\n";
+}
+
+function parseValueIconsSection(body) {
+  return parseListSection(body)
+    .map(normalizeValueIconId)
+    .filter(id => VALID_VALUE_ICON_IDS.has(id));
 }
 
 function parseLearnings(body) {
@@ -94,6 +242,91 @@ function parseLearnings(body) {
     if (m) links.push({ label: m[1], url: m[2], ...(m[3] ? { note: m[3] } : {}) });
   }
   return links;
+}
+
+function parseAbQuestions(fullText, sections) {
+  const questions = [];
+  const sectionBody = sections["ab - q"] || sections["ab-q"] || sections["ab q"];
+  if (sectionBody) {
+    for (const line of sectionBody.split("\n")) {
+      const t = line.replace(/^-\s+/, "").trim();
+      if (t) questions.push(t.replace(/^AB\s*[-–]\s*Q:\s*/i, "").trim());
+    }
+  }
+  const re = /^(?:[-•]\s*)?AB\s*[-–]\s*Q:\s*(.+)$/gim;
+  let m;
+  while ((m = re.exec(fullText)) !== null) {
+    questions.push(m[1].trim());
+  }
+  const inlineRe = /AB\s*[-–]\s*Q:\s*([^\n]+)/gi;
+  while ((m = inlineRe.exec(fullText)) !== null) {
+    questions.push(m[1].trim());
+  }
+  return [...new Set(questions.filter(Boolean))];
+}
+
+function findSectionBody(sections, baseName) {
+  if (!sections) return "";
+  if (sections[baseName]) return sections[baseName];
+  const key = Object.keys(sections).find(k => {
+    const kl = k.toLowerCase();
+    const b = baseName.toLowerCase();
+    return kl === b || kl.startsWith(`${b} `) || kl.startsWith(`${b}—`) || kl.startsWith(`${b} —`);
+  });
+  return key ? sections[key] : "";
+}
+
+function projectStatusBucket(status) {
+  const s = String(status || "available").toLowerCase();
+  if (s.includes("completed")) return "completed";
+  if (s.includes("wip")) return "wip";
+  if (s.includes("ongoing")) return "ongoing";
+  if (s.includes("research") || s.includes("draft")) return "research";
+  return "available";
+}
+
+function isInfoPlaceholder(item) {
+  return /^_Add:_?$/i.test(String(item || "").trim());
+}
+
+function inferInformationNeeded(p) {
+  const bucket = projectStatusBucket(p.status);
+  const items = [];
+  for (const q of p.abQuestions || []) items.push(`Answer AB – Q: ${q}`);
+  if (!p.goal?.trim()) items.push("Define measurable Goal");
+  if (p.estimatedLeads === "Estimate pending") items.push("Confirm estimated leads gained");
+  if (!(p.kpiRefs || []).length && /dashboard|kpi|metric/i.test(`${p.category} ${p.title}`))
+    items.push("Link KPI dashboard rows");
+
+  const manual = (p.informationNeeded || [])
+    .map(s => String(s || "").trim())
+    .filter(Boolean)
+    .filter(item => !isInfoPlaceholder(item))
+    .filter(item => !/^Resolve blocker:/i.test(item))
+    .filter(item => !/^Answer AB – Q:/i.test(item))
+    .filter(item => !items.includes(item));
+
+  items.push(...manual);
+
+  const deduped = [];
+  for (const item of items) {
+    const norm = item.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    if (deduped.some(x => x.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim() === norm)) continue;
+    if (/fill impact/i.test(item) && deduped.some(x => /fill impact/i.test(x))) continue;
+    deduped.push(item);
+  }
+  if (!deduped.length) deduped.push("_Add:_");
+  else if (deduped.length < 3 && /wip|research|draft/i.test(String(p.status || "")) && !deduped.some(isInfoPlaceholder))
+    deduped.push("_Add:_");
+
+  return deduped.slice(0, 8);
+}
+
+function formatInformationNeededSection(p) {
+  const items = inferInformationNeeded(p);
+  let md = `## Information needed\n\n`;
+  md += items.map(i => `- ${i}`).join("\n");
+  return md + "\n\n";
 }
 
 function parseAccountSection(body) {
@@ -141,6 +374,8 @@ export function parseProjectMarkdown(text, fallbackId) {
   const project = { ...meta };
 
   if (sections.description) project.description = applyProperCase(sections.description.trim());
+  const summaryBody = sections.summary || sections.tldr;
+  if (summaryBody) project.tldr = applyProperCase(summaryBody.trim());
 
   const valueAdded = [];
   if (sections["value added"]) valueAdded.push(...parseListSection(sections["value added"]));
@@ -161,6 +396,10 @@ export function parseProjectMarkdown(text, fallbackId) {
   }
   project.valueAdded = cleanValue;
   if (deliverables.length) project.deliverables = deliverables;
+
+  if (sections["value icons"]) {
+    project.valueIcons = parseValueIconsSection(sections["value icons"]);
+  }
 
   if (sections["marketing education"]) {
     const body = sections["marketing education"].trim();
@@ -185,10 +424,25 @@ export function parseProjectMarkdown(text, fallbackId) {
       ...parseListSection(sections.deliverables)
     ];
   }
-  if (sections.completed || sections.done)
-    project.completedItems = parseListSection(sections.completed || sections.done);
-  if (sections.wip || sections["in progress"])
-    project.inProgressItems = parseListSection(sections.wip || sections["in progress"]);
+  const completedBody = findSectionBody(sections, "completed") || findSectionBody(sections, "done");
+  if (completedBody) project.completedItems = parseListSection(completedBody);
+  const wipBody = findSectionBody(sections, "wip") || findSectionBody(sections, "in progress");
+  if (wipBody) project.inProgressItems = parseListSection(wipBody);
+  if (sections.results)
+    project.resultsItems = parseListSection(sections.results);
+  if (sections.goal) project.goal = applyProperCase(sections.goal.trim());
+  if (sections["information needed"])
+    project.informationNeeded = parseListSection(sections["information needed"]);
+  if (sections.blockers || sections["blockers (next round)"])
+    project.blockers = parseListSection(sections.blockers || sections["blockers (next round)"]);
+  const insightsKey =
+    sections["insights & improvements"] ||
+    sections["insights and improvements"] ||
+    sections.insights;
+  if (insightsKey) project.insightsImprovements = parseListSection(insightsKey);
+  if (sections["impact estimates"]) {
+    project.impactEstimates = parseImpactEstimatesSection(sections["impact estimates"]);
+  }
 
   if (sections.learnings) project.learningsLinks = parseLearnings(sections.learnings);
   if (sections.references) project.references = parseLearnings(sections.references);
@@ -201,7 +455,17 @@ export function parseProjectMarkdown(text, fallbackId) {
     if (bm?.label) project.backedMetric = bm;
   }
 
-  return project;
+  project.abQuestions = parseAbQuestions(text, sections);
+
+  if (sections["kpi links"]) {
+    const ids = parseValueIconsSection(sections["kpi links"]).map(id => {
+      const n = String(id).replace(/\D/g, "");
+      return n.length === 2 ? `#${n}` : id.startsWith("#") ? id : `#${id}`;
+    });
+    project.kpiRefs = [...new Set([...(project.kpiRefs || []), ...ids])];
+  }
+
+  return sanitizeProjectRecord(project);
 }
 
 function isRetainerPhase(p) {
@@ -223,16 +487,21 @@ function metaTableRows(p) {
     ["ID", p.id],
     ...(isRetainerPhase(p) || p.priority == null ? [] : [["Priority", p.priority]]),
     ["Fee", p.fee],
-    ["Timeline", p.timeline],
     ["Category", p.category],
     ["Campaign type", p.campaignType],
     ["Status", p.status || "available"],
+    ["Publish status", normalizePublishStatus(p.publishStatus)],
     ...(p.parentId ? [["Parent", p.parentId]] : []),
     ...(p.enabler ? [["Enabler", "yes"]] : []),
     ...(p.monthlyOnly ? [["Monthly only", "yes"]] : []),
     ...(p.paymentType ? [["Payment type", p.paymentType === "performance" ? "performance" : "flat"]] : []),
     ...(p.ongoingFee ? [["Ongoing fee", p.ongoingFee]] : []),
     ...(p.perCampaignFee ? [["Per campaign fee", p.perCampaignFee]] : []),
+    ...(p.depositPct != null && p.depositPct !== 0.5 ? [["Deposit pct", Math.round(Number(p.depositPct) * 100)]] : []),
+    ...(p.depositAmount != null && p.depositAmount !== "" ? [["Deposit amount", p.depositAmount]] : []),
+    ...(p.featuredImage ? [["Featured image", p.featuredImage]] : []),
+    ...(p.referenceLink?.url ? [["Reference link", formatReferenceLinkValue(p.referenceLink)]] : []),
+    ...(p.estimatedLeads ? [["Estimated leads gained", p.estimatedLeads]] : []),
     ["Keywords", (p.keywords || []).join(", ")]
   ];
   return rows.map(([l, v]) => padMetaRow(l, v));
@@ -252,6 +521,102 @@ function dedupeLinks(links) {
     seen.add(key);
     return true;
   });
+}
+
+function extractKpiId(label, url) {
+  const blob = `${label || ""} ${url || ""}`;
+  const m = blob.match(/#(\d{2})\b/);
+  return m ? `#${m[1]}` : null;
+}
+
+function isKpiUrl(url) {
+  if (!url) return false;
+  const u = String(url).toLowerCase().trim();
+  return (
+    u.includes("kpi-wireframe") ||
+    u.includes("kpi-report") ||
+    u.includes("kpi-list") ||
+    u.startsWith("#kpi") ||
+    /^#?\d{2}$/.test(u)
+  );
+}
+
+/** Strip external and cross-project links; keep KPI refs as plain "KPI #NN" text. */
+export function sanitizeProjectText(text) {
+  if (!text) return text;
+  let out = String(text);
+  out = out.replace(/<a\s+[^>]*href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi, (_m, url, label) => {
+    if (isKpiUrl(url)) {
+      const id = extractKpiId(label, url);
+      return id ? `KPI ${id}` : String(label).trim();
+    }
+    return String(label).trim();
+  });
+  out = out.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label, url) => {
+    const u = String(url).trim();
+    if (isKpiUrl(u) || /#\d{2}/.test(label)) {
+      const id = extractKpiId(label, u);
+      return id ? `KPI ${id}` : String(label).trim();
+    }
+    return String(label).trim();
+  });
+  out = out.replace(/\s*See\s+(?:[^.\n]*\[([^\]]+)\]\(https?:\/\/[^)]+\)[^.\n]*)+\./gi, ".");
+  out = out.replace(/\s*See\s+[^.\n]*https?:\/\/[^.\n]+\./gi, ".");
+  return out.replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function collectKpiRefs(p) {
+  const refs = new Set(p.kpiRefs || []);
+  const blob = [
+    p.tldr,
+    p.description,
+    p.goal,
+    ...(p.valueAdded || [])
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const re = /KPI\s+#(\d{2})|(?<![\w/])#(\d{2})(?![\w/])/g;
+  let m;
+  while ((m = re.exec(blob)) !== null) {
+    refs.add(`#${m[1] || m[2]}`);
+  }
+  return [...refs].sort((a, b) => parseInt(a.slice(1), 10) - parseInt(b.slice(1), 10));
+}
+
+export function sanitizeProjectRecord(p) {
+  if (!p) return p;
+  for (const key of ["tldr", "description", "goal", "marketingEducation"]) {
+    if (p[key]) p[key] = sanitizeProjectText(p[key]);
+  }
+  for (const key of [
+    "valueAdded",
+    "completedItems",
+    "inProgressItems",
+    "deliverables"
+  ]) {
+    if (Array.isArray(p[key])) p[key] = p[key].map(sanitizeProjectText).filter(Boolean);
+  }
+  if (p.referenceLink) delete p.referenceLink;
+  delete p.learningsLinks;
+  delete p.references;
+  if (p.backedMetric?.label) {
+    p.backedMetric = {
+      ...p.backedMetric,
+      label: sanitizeProjectText(p.backedMetric.label)
+    };
+  }
+  p.kpiRefs = collectKpiRefs(p);
+  p.publishStatus = normalizePublishStatus(p.publishStatus);
+  delete p.clientTouchpoints;
+  delete p.planningPhases;
+  delete p.timeline;
+  delete p.recommendedMetrics;
+  delete p.gilbertMetricNotes;
+  delete p.resultsItems;
+  delete p.blockers;
+  delete p.insightsImprovements;
+  delete p.impactEstimates;
+  return p;
 }
 
 function parseInlineMarkdownLinks(text) {
@@ -294,6 +659,68 @@ function buildAccountSection(p) {
   return body;
 }
 
+function mergeDescriptionAndEducation(p) {
+  const desc = (p.description || "").trim();
+  const edu = (p.marketingEducation || "").trim();
+  if (!edu) return desc;
+  if (desc && desc.toLowerCase().includes(edu.slice(0, Math.min(48, edu.length)).toLowerCase())) return desc;
+  return [desc, edu].filter(Boolean).join("\n\n");
+}
+
+function sentenceFromBullet(text) {
+  let b = String(text).replace(/^Deliverable:\s*/i, "").trim().replace(/^[-•]\s*/, "");
+  if (!b) return "";
+  if (!/[.!?]$/.test(b)) b += ".";
+  return b;
+}
+
+function inferTldr(p) {
+  if (p.tldr && String(p.tldr).trim()) return String(p.tldr).trim();
+  if (p.valueAdded && p.valueAdded.length) return sentenceFromBullet(p.valueAdded[0]);
+  const desc = String(p.description || "").replace(/<[^>]+>/g, " ");
+  const m = desc.match(/[^.!?]+[.!?]+/);
+  return m ? m[0].trim() : "";
+}
+
+function inferEstimatedLeads(p) {
+  if (p.estimatedLeads && String(p.estimatedLeads).trim()) return String(p.estimatedLeads).trim();
+  if (p.id === "RETAINER") return "No direct leads";
+  const blob = `${p.category || ""} ${p.campaignType || ""} ${(p.keywords || []).join(" ")}`.toLowerCase();
+  if (/direct mail|mailer|postcard|envelope/.test(blob)) return "1–2 leads gained per wave";
+  return "Estimate pending";
+}
+
+const GILBERT_BOILERPLATE = [
+  "Everyone this campaign reached — calls, clicks, opens, mail, or profile views.",
+  "Prospects who actually connected with intake (answered, booked, or submitted).",
+  "Signed matters at historical lead→case rate (7.3% · Jun 2026) unless noted otherwise."
+];
+
+function shortenGilbertMetricNotes(notes) {
+  return (notes || []).map(n => {
+    let text = String(n.text || "").trim();
+    for (const phrase of GILBERT_BOILERPLATE) {
+      text = text.replace(new RegExp(`\\s*${phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "g"), "");
+    }
+    return { ...n, text: text.trim() };
+  });
+}
+
+function normalizeProjectForTemplate(p) {
+  p.tldr = inferTldr(p);
+  if (!p.estimatedLeads) p.estimatedLeads = inferEstimatedLeads(p);
+  delete p.clientTouchpoints;
+  p.description = sanitizeProjectText(mergeDescriptionAndEducation(p));
+  delete p.planningPhases;
+  delete p.timeline;
+  delete p.recommendedMetrics;
+  delete p.gilbertMetricNotes;
+  p.informationNeeded = inferInformationNeeded(p);
+  delete p.marketingEducation;
+  delete p.learningsLinks;
+  return sanitizeProjectRecord(p);
+}
+
 export function projectToMarkdown(p) {
   const id = p.id || "NEW";
   const title = applyProperCase(p.title || "Untitled Project");
@@ -304,14 +731,23 @@ export function projectToMarkdown(p) {
   md += metaTableRows(p).join("\n");
   md += `\n\n---\n\n`;
 
-  if (p.description) md += `## Description\n\n${applyProperCase(p.description.trim())}\n\n`;
+  if (p.tldr) md += `## Summary\n\n${applyProperCase(p.tldr.trim())}\n\n`;
   md += listSection("Value Added", p.valueAdded || []);
-  const edu = buildMarketingEducationB2(p);
-  if (edu) md += `## Marketing Education\n\n${edu}\n\n`;
+  if (p.valueIcons?.length) {
+    md += `## Value icons\n\n${p.valueIcons.map(id => `- ${id}`).join("\n")}\n\n`;
+  }
+  if (p.kpiRefs?.length) {
+    md += `## KPI links\n\n${p.kpiRefs.map(id => `- ${id.replace(/^#/, "")}`).join("\n")}\n\n`;
+  }
+  if (p.abQuestions?.length) {
+    md += `## AB - Q\n\n${p.abQuestions.map(q => `- AB - Q: ${q}`).join("\n")}\n\n`;
+  }
+  const fullDesc = mergeDescriptionAndEducation(p);
+  if (fullDesc) md += `## Description\n\n${applyProperCase(fullDesc.trim())}\n\n`;
+  if (p.goal) md += `## Goal\n\n${applyProperCase(String(p.goal).trim())}\n\n`;
+  md += formatInformationNeededSection(p);
   md += listSection("WIP", p.inProgressItems);
   md += listSection("Completed", p.completedItems);
-  const account = buildAccountSection(p);
-  if (account) md += `## Account Data & Marketing Principles Applied\n\n${account}\n\n`;
 
   return md.trim() + "\n";
 }
@@ -325,11 +761,11 @@ export function parseSettingsMarkdown(text) {
   return {
     guideName: meta.guideName || "Lord Gilbert Granville",
     guideShortName: meta.guideShortName || "Gilbert",
-    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
+    guideIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-seal.jpg",
     guideHero: meta.guideHero || "assets/gigi-goose-walk.png",
-    guideSeal: meta.guideSeal || "assets/gigi-logo-frame.png",
-    guideLogo: meta.guideLogo || "assets/gigi-logo-frame.png",
-    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-goose-guide.svg",
+    guideSeal: meta.guideSeal || "assets/gilbert-celebrating.png",
+    guideLogo: meta.guideLogo || "assets/gigi-logo.jpg",
+    paviIcon: meta.guideIcon || meta.paviIcon || "assets/gigi-seal.jpg",
     recommendedPackage: {
       label,
       retainer: retainerLine ? /^yes/i.test(retainerLine[1]) : true,
@@ -362,7 +798,111 @@ Include retainer: ${pkg.retainer !== false ? "yes" : "no"}
 
 /** Valid picker project IDs — rejects scratch rows like "WIP Live" in the ID column. */
 export function isValidProjectId(id) {
-  return /^(RETAINER|[AB]\d+M?)$/i.test(String(id || "").trim());
+  return /^(RETAINER|[ABC]\d+M?)$/i.test(String(id || "").trim());
+}
+
+function indexHeaderColumnMap(cells) {
+  const lower = cells.map(c => c.toLowerCase());
+  if (!lower.includes("id")) return null;
+  const pick = key => {
+    const i = lower.findIndex(c => c === key || c.replace(/\s+/g, "") === key.replace(/\s+/g, ""));
+    return i >= 0 ? i : null;
+  };
+  return {
+    priority: pick("priority") ?? pick("p") ?? 0,
+    id: pick("id") ?? 1,
+    status: pick("status"),
+    visibility: pick("visibility") ?? pick("publish") ?? pick("publishstatus"),
+    estCost:
+      pick("est. cost") ??
+      pick("est cost") ??
+      pick("estimated cost") ??
+      pick("cost") ??
+      pick("fee"),
+    paymentPlan:
+      pick("payment plan") ??
+      pick("payment") ??
+      pick("pay plan") ??
+      pick("deposit"),
+    title: pick("project") ?? 2,
+    file: pick("file") ?? 3
+  };
+}
+
+/** Parse INDEX Payment plan cells: `50%`, `50/50`, `100%`, `$800`, `monthly`, `—`. */
+export function parseIndexPaymentPlan(raw) {
+  const s = String(raw || "").trim();
+  if (!s || s === "—" || s === "-" || /^n\/?a$/i.test(s) || /^incl/i.test(s) || /^merged/i.test(s) || /^package/i.test(s)) {
+    return { label: s || "—", depositPct: null, depositAmount: null, monthly: false };
+  }
+  if (/monthly|retainer|ongoing/i.test(s)) {
+    return { label: s, depositPct: null, depositAmount: null, monthly: true };
+  }
+  if (/pay\s*in\s*full|full\s*pay|100\s*%|due\s*now/i.test(s)) {
+    return { label: s, depositPct: 1, depositAmount: null, monthly: false };
+  }
+  const slash = s.match(/^(\d{1,3})\s*\/\s*(\d{1,3})$/);
+  if (slash) {
+    const a = parseInt(slash[1], 10);
+    const b = parseInt(slash[2], 10);
+    if (a + b === 100) return { label: s, depositPct: a / 100, depositAmount: null, monthly: false };
+  }
+  const pct = s.match(/^(\d{1,3})\s*%$/);
+  if (pct) {
+    const n = parseInt(pct[1], 10);
+    if (n >= 0 && n <= 100) return { label: s, depositPct: n / 100, depositAmount: null, monthly: false };
+  }
+  const amt = s.match(/^\$?\s*([\d,]+(?:\.\d+)?)\s*$/);
+  if (amt && !/%/.test(s)) {
+    const n = parseFloat(amt[1].replace(/,/g, ""));
+    if (Number.isFinite(n)) return { label: s, depositPct: null, depositAmount: Math.round(n), monthly: false };
+  }
+  return { label: s, depositPct: null, depositAmount: null, monthly: false };
+}
+
+/** Parse INDEX Est. cost cells like `$2,900/mo`, `$2,000 + $500/mo`, `$1,500`, `incl. B13`. */
+export function parseIndexEstCost(raw) {
+  const s = String(raw || "").trim();
+  if (!s || s === "—" || s === "-" || /^incl/i.test(s) || /^merged/i.test(s) || /^n\/?a$/i.test(s)) {
+    return { label: s || "—", fee: null, ongoingFee: null };
+  }
+  const nums = [...s.matchAll(/\$?\s*([\d,]+(?:\.\d+)?)/g)].map(m => parseFloat(m[1].replace(/,/g, "")));
+  if (!nums.length) return { label: s, fee: null, ongoingFee: null };
+  if (/\/\s*mo/i.test(s) && !/\+/.test(s) && nums.length === 1) {
+    // Pure monthly (retainer): store as fee for monthly-only / retainer cards
+    return { label: s, fee: nums[0], ongoingFee: null, monthlyOnly: true };
+  }
+  if (/\+/.test(s) && nums.length >= 2) {
+    return { label: s, fee: nums[0], ongoingFee: nums[1] };
+  }
+  if (/\/\s*mo/i.test(s) && nums.length >= 1) {
+    return { label: s, fee: nums[0], ongoingFee: null, monthlyOnly: true };
+  }
+  return { label: s, fee: nums[0], ongoingFee: null };
+}
+
+function normalizeIndexVisibility(raw) {
+  if (!raw) return null;
+  return normalizePublishStatus(raw);
+}
+
+function normalizeIndexStatus(raw) {
+  if (!raw) return null;
+  const s = String(raw).toLowerCase().trim();
+  if (s.includes("completed")) return "completed";
+  if (s.includes("research")) return "research";
+  if (s.includes("draft") || s.includes("outline")) return "draft";
+  if (s.includes("ongoing")) return "ongoing";
+  if (/\bwip\b/.test(s)) return "wip";
+  if (s.includes("available")) return "available";
+  if (s.includes("recommended")) return "recommended";
+  if (s.includes("launched")) return "launched";
+  if (s.includes("planning")) return "planning";
+  if (s.includes("on hold") || s === "onhold") return "onhold";
+  if (s.includes("blocked")) return "blocked-ab";
+  if (s.includes("archived") || s.includes("merged")) return "archived";
+  const first = s.split(/[·•|/]/)[0].trim().replace(/\s+/g, "");
+  return first || null;
 }
 
 export function parseIndexMarkdown(text) {
@@ -381,22 +921,56 @@ export function parseIndexMarkdown(text) {
   }
 
   const lines = text.split("\n");
-  const tableLines = lines.filter(l => /^\|/.test(l) && !/^\|[\s\-:|]+\|$/.test(l.replace(/\s/g, "")));
-  for (const line of tableLines) {
-    const cells = line.split("|").map(c => c.trim()).filter(Boolean);
-    if (cells.length < 4 || cells[0] === "P") continue;
-    const id = cells[1];
-    if (!id || id === "ID" || !isValidProjectId(id)) continue;
+  let colMap = null;
+  for (const line of lines) {
+    if (!/^\|/.test(line)) continue;
+    const cells = line.split("|").slice(1, -1).map(c => c.trim());
+    if (!cells.length) continue;
+    if (cells.every(c => /^[\-:]+$/.test(c) || c === "")) continue;
+
+    if (cells.some(c => /^id$/i.test(c))) {
+      colMap = indexHeaderColumnMap(cells);
+      continue;
+    }
+
+    if (!colMap) {
+      colMap = {
+        priority: 0,
+        id: 1,
+        status: cells.length >= 5 ? 2 : null,
+        visibility: null,
+        title: cells.length >= 5 ? 3 : 2,
+        file: cells.length >= 5 ? 4 : 3
+      };
+    }
+
+    const id = cells[colMap.id];
+    if (!id || !isValidProjectId(id)) continue;
     if (result.rowsById[id]) continue;
-    result.rowsById[id] = {
-      p: cells[0],
-      title: cells[2],
-      file: cells[3]
+
+    const row = {
+      p: cells[colMap.priority] ?? "",
+      title: cells[colMap.title] ?? "",
+      file: cells[colMap.file] ?? ""
     };
+    if (colMap.status != null && cells[colMap.status]) row.status = cells[colMap.status];
+    if (colMap.visibility != null && cells[colMap.visibility]) {
+      row.visibility = cells[colMap.visibility];
+      row.publishStatus = normalizeIndexVisibility(cells[colMap.visibility]);
+    }
+    if (colMap.estCost != null && cells[colMap.estCost] != null) {
+      row.estCost = cells[colMap.estCost];
+      row.estCostParsed = parseIndexEstCost(cells[colMap.estCost]);
+    }
+    if (colMap.paymentPlan != null && cells[colMap.paymentPlan] != null) {
+      row.paymentPlan = cells[colMap.paymentPlan];
+      row.paymentPlanParsed = parseIndexPaymentPlan(cells[colMap.paymentPlan]);
+    }
+    result.rowsById[id] = row;
   }
 
-  const introEnd = text.indexOf("| P |");
-  if (introEnd > 0) result.intro = text.slice(0, introEnd).trim();
+  const tableStart = text.search(/\|[^\n]*\bID\b[^\n]*\|/i);
+  if (tableStart > 0) result.intro = text.slice(0, tableStart).trim();
 
   const footerStart = text.indexOf("**Retainer");
   if (footerStart > 0) result.footer = text.slice(footerStart).trim();
@@ -404,7 +978,7 @@ export function parseIndexMarkdown(text) {
   return result;
 }
 
-/** INDEX table titles + P column → picker data (INDEX wins over project .md H1). */
+/** INDEX table titles, priority, status, visibility → picker data (INDEX wins over project .md). */
 export function applyIndexOverrides(projects, retainer, existingText) {
   const { rowsById } = parseIndexMarkdown(existingText || "");
   const applyTo = item => {
@@ -412,8 +986,42 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     if (!o) return item;
     const next = { ...item };
     if (o.title) next.title = o.title;
-    const pm = String(o.p || "").match(/^P?(\d+)$/i);
+    const rawP = String(o.p || "").trim();
+    const pm = rawP.match(/^P?(\d+)$/i);
     if (pm) next.priority = parseInt(pm[1], 10);
+    else if (!rawP || rawP === "—" || rawP === "-" || /^archive$/i.test(rawP)) {
+      delete next.priority;
+    }
+    const status = normalizeIndexStatus(o.status);
+    if (status) next.status = status;
+    if (o.publishStatus) next.publishStatus = o.publishStatus;
+    if (o.estCost) next.estCostLabel = o.estCost;
+    const ec = o.estCostParsed || (o.estCost ? parseIndexEstCost(o.estCost) : null);
+    if (ec && ec.fee != null && !/^incl/i.test(String(ec.label || "")) && !/^merged/i.test(String(ec.label || ""))) {
+      next.fee = ec.fee;
+      if (ec.ongoingFee != null) next.ongoingFee = ec.ongoingFee;
+      else if (!ec.monthlyOnly) {
+        /* INDEX setup-only (no + $/mo) clears a prior Ongoing fee */
+        delete next.ongoingFee;
+      }
+    }
+    const pp = o.paymentPlanParsed || (o.paymentPlan ? parseIndexPaymentPlan(o.paymentPlan) : null);
+    if (pp) {
+      if (o.paymentPlan) next.paymentPlanLabel = o.paymentPlan;
+      if (pp.monthly) {
+        delete next.depositPct;
+        delete next.depositAmount;
+      } else if (pp.depositAmount != null) {
+        next.depositAmount = pp.depositAmount;
+        delete next.depositPct;
+      } else if (pp.depositPct != null) {
+        next.depositPct = pp.depositPct;
+        delete next.depositAmount;
+      } else if (pp.label === "—" || pp.label === "-" || !pp.label) {
+        delete next.depositPct;
+        delete next.depositAmount;
+      }
+    }
     return next;
   };
   const merged = projects.map(applyTo);
@@ -428,11 +1036,11 @@ export function buildIndex(projects, retainer, existingText) {
 
   let md = overrides.intro || `# Project Index
 
-Open a file below to edit. Sorted by priority (P). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
+Open a file below to edit. Sorted by priority (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
 
-Edit **Project** titles and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
+Edit **Project** titles, **Status**, **Visibility**, **Est. cost**, **Payment plan**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
-  md += `\n\n| P | ID | Project | File |\n|---|-----|---------|------|\n`;
+  md += `\n\n| Priority | ID | Status | Visibility | Est. cost | Payment plan | Project | File |\n| -------- | -- | ------ | ---------- | --------- | ------------ | ------- | ---- |\n`;
 
   const seen = new Set();
   for (const p of all) {
@@ -441,14 +1049,36 @@ Edit **Project** titles and add **## Notes** at the bottom — build keeps your 
     const file = id === "RETAINER" ? "retainer.md" : `projects/${id}.md`;
     const fileCell = `[${file}](${file})`;
     const o = overrides.rowsById[id];
-    const pri = o?.p ?? (p.priority != null ? `P${p.priority}` : "—");
+    const pri = o?.p ?? (p.priority != null ? String(p.priority) : "—");
     const title = o?.title || p.title;
-    md += `| ${pri} | ${id} | ${title} | ${fileCell} |\n`;
+    const status = o?.status || p.status || "available";
+    const vis =
+      o?.visibility ||
+      (normalizePublishStatus(o?.publishStatus || p.publishStatus) === "published"
+        ? "Published"
+        : "Unpublished");
+    let est = o?.estCost || "";
+    if (!est) {
+      if (p.fee && p.ongoingFee) est = `$${Number(p.fee).toLocaleString("en-US")} + $${Number(p.ongoingFee).toLocaleString("en-US")}/mo`;
+      else if (p.monthlyOnly || id === "RETAINER" || id === "A8M") est = `$${Number(p.fee || 0).toLocaleString("en-US")}/mo`;
+      else if (p.fee) est = `$${Number(p.fee).toLocaleString("en-US")}`;
+      else est = "—";
+    }
+    let pay = o?.paymentPlan || "";
+    if (!pay) {
+      if (p.monthlyOnly || id === "RETAINER" || id === "A8M") pay = "monthly";
+      else if (/^incl/i.test(est) || /^merged/i.test(est)) pay = "—";
+      else if (p.depositAmount != null) pay = `$${Number(p.depositAmount).toLocaleString("en-US")}`;
+      else if (p.depositPct != null) pay = `${Math.round(Number(p.depositPct) * 100)}%`;
+      else pay = "50%";
+    }
+    md += `| ${pri} | ${id} | ${status} | ${vis} | ${est} | ${pay} | ${title} | ${fileCell} |\n`;
   }
 
   for (const [id, o] of Object.entries(overrides.rowsById)) {
     if (seen.has(id) || !isValidProjectId(id)) continue;
-    md += `| ${o.p} | ${id} | ${o.title} | ${o.file} |\n`;
+    const vis = o.visibility || (o.publishStatus === "unpublished" ? "Unpublished" : "Published");
+    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${vis} | ${o.estCost || "—"} | ${o.paymentPlan || "—"} | ${o.title} | ${o.file} |\n`;
   }
 
   md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Priority** row (shows as —)."}\n`;
@@ -479,8 +1109,11 @@ export function migrateAllToB2Format(root) {
       const pm = String(row.p).match(/^P(\d+)$/i);
       if (pm) p.priority = parseInt(pm[1], 10);
     }
+    const status = normalizeIndexStatus(row?.status);
+    if (status) p.status = status;
     if (p.learningsLinks) p.learningsLinks = dedupeLinks(p.learningsLinks);
     if (p.references) p.references = dedupeLinks(p.references);
+    normalizeProjectForTemplate(p);
     fs.writeFileSync(fp, projectToMarkdown(p));
     return p.id;
   }
@@ -495,100 +1128,6 @@ export function migrateAllToB2Format(root) {
     ids.push(normalizeOne(path.join(projectsDir, f), f));
   }
   return ids;
-}
-
-/**
- * Parse content/path-map.md → { l1, l2, l3 } project-id clusters for path filtering.
- * Sections: ## L1 — priority / ## L2 — audience / ## L3 — horizon with ### choice-id lists.
- */
-export function parsePathMapMarkdown(text) {
-  const map = { l1: {}, l2: {}, l3: {}, minMatches: 3 };
-  if (!text) return map;
-
-  let layer = null;
-  let choiceId = null;
-  for (const raw of text.split("\n")) {
-    const line = raw.trim();
-    const layerMatch = line.match(/^##\s+L([123])\b/i);
-    if (layerMatch) {
-      layer = `l${layerMatch[1]}`;
-      choiceId = null;
-      continue;
-    }
-    const choiceMatch = line.match(/^###\s+([a-zA-Z0-9_-]+)\s*$/);
-    if (choiceMatch && layer) {
-      choiceId = choiceMatch[1];
-      if (!map[layer][choiceId]) map[layer][choiceId] = [];
-      continue;
-    }
-    if (!layer || !choiceId || !line || line.startsWith("#") || line.startsWith("|") || line.startsWith("**") || line.startsWith("---")) {
-      continue;
-    }
-    const ids = line
-      .split(/[, ]+/)
-      .map(s => s.trim())
-      .filter(id => /^[A-Z][A-Z0-9]*\d*[A-Z]?$|^RETAINER$/i.test(id));
-    for (const id of ids) {
-      const norm = id.toUpperCase() === "RETAINER" ? "RETAINER" : id;
-      if (!map[layer][choiceId].includes(norm)) map[layer][choiceId].push(norm);
-    }
-  }
-  return map;
-}
-
-/**
- * Parse content/survey.md → { start, nodes } for the choose-your-path guide.
- * Node sections: ## q1 … with Step / Prompt fields and a Choices table.
- */
-export function parseSurveyMarkdown(text) {
-  const survey = { start: "q1", nodes: {} };
-  if (!text) return survey;
-
-  const startMatch = text.match(/^##\s+Start\s*\n+([a-zA-Z0-9_-]+)/m);
-  if (startMatch) survey.start = startMatch[1].trim();
-
-  const parts = text.split(/^##\s+/m).slice(1);
-  for (const part of parts) {
-    const nl = part.indexOf("\n");
-    const heading = (nl === -1 ? part : part.slice(0, nl)).trim();
-    const body = nl === -1 ? "" : part.slice(nl + 1);
-    if (!heading || /^start$/i.test(heading)) continue;
-
-    const id = heading.trim();
-    const stepMatch = body.match(/\*\*Step:\*\*\s*(\d+)\s*\/\s*(\d+)/i);
-    const promptMatch = body.match(/\*\*Prompt:\*\*\s*(.+)/i);
-    const node = {
-      step: stepMatch ? parseInt(stepMatch[1], 10) : 1,
-      steps: stepMatch ? parseInt(stepMatch[2], 10) : 2,
-      prompt: promptMatch ? promptMatch[1].trim() : id,
-      choices: []
-    };
-
-    const tableBlock = body.match(/\|[^\n]+\|\n\|[\s\-:|]+\|\n([\s\S]*?)(?=\n##|\n#|$)/);
-    if (tableBlock) {
-      const rows = tableBlock[1].split("\n").filter(l => /^\|/.test(l));
-      for (const row of rows) {
-        const cells = row.split("|").map(c => c.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1);
-        if (cells.length < 4) continue;
-        const [choiceId, label, hint, next, iconsRaw = "", goal = ""] = cells;
-        if (!choiceId || choiceId === "id") continue;
-        const icons = iconsRaw
-          .split(/[, ]+/)
-          .map(s => s.trim())
-          .filter(Boolean);
-        node.choices.push({
-          id: choiceId,
-          label,
-          hint: hint || "",
-          next: next || "done",
-          icons,
-          goal: goal || label
-        });
-      }
-    }
-    survey.nodes[id] = node;
-  }
-  return survey;
 }
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
