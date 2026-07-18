@@ -1,185 +1,22 @@
 (function () {
   function getConfig() {
     return Object.assign(
-      {
-        webhookUrl: "",
-        depositAmount: 2500,
-        quickbooksDepositUrl: "",
-        notifyEmail: "support@gildedgooselimited.com",
-        /** Future custom e-sign build — not a Dropbox/DocuSign plugin. Draft + email PDF for now. */
-        esignProvider: "custom_later",
-        esignCreateUrl: "",
-        msaLabel: "Master Services Agreement (MSA)",
-        sowTemplateNote: "GGL SOW template + Schedule A from payment plan"
-      },
+      { webhookUrl: "", depositAmount: 2500, quickbooksDepositUrl: "" },
       typeof window !== "undefined" && window.PAV_PICKER_CONFIG ? window.PAV_PICKER_CONFIG : {}
     );
   }
   let CONFIG = getConfig();
-  function currentBrandAsset(value, fallback) {
-    const deprecated = new Set(["assets/gigi-goose-guide.svg", "assets/gigi-logo-frame.png"]);
-    return value && !deprecated.has(value) ? value : fallback;
-  }
-  const GILBERT_ICON = currentBrandAsset(PROJECT_DATA.guideIcon || PROJECT_DATA.paviIcon, "assets/gigi-seal.jpg");
-  const GILBERT_HERO = PROJECT_DATA.guideHero || "assets/gigi-goose-walk.png";
-  const GILBERT_SEAL = currentBrandAsset(PROJECT_DATA.guideSeal, "assets/gilbert-celebrating.png");
-  const GILBERT_LOGO = currentBrandAsset(PROJECT_DATA.guideLogo, "assets/gigi-logo.jpg");
-  const GUIDE_NAME = PROJECT_DATA.guideName || "Lord Gilbert Granville";
-  const GUIDE_SHORT = PROJECT_DATA.guideShortName || "Gilbert";
-  const GILBERT_GREETING = "Hello! What's your biggest business problem today we can work on fixing?";
-
-  let lastSubmittedPayload = null;
-
-  /** Quick fit survey → tags in goalText → recommended projects */
-  const GILBERT_SURVEY = [
-    {
-      id: "bottleneck",
-      prompt: GILBERT_GREETING,
-      options: [
-        { id: "leads", label: "Not enough qualified leads / consults", tags: "leads ads LSA search paid consults volume campaigns" },
-        { id: "intake", label: "Phones / intake — missing or slow follow-up", tags: "phones VoIP HubSpot intake CRM routing calls" },
-        { id: "web", label: "Website, content, or SEO", tags: "website content SEO organic pages landing" },
-        { id: "referrals", label: "Referrals / past clients", tags: "referral clients past email nurture" },
-        { id: "data", label: "Tracking, dashboards, or reporting", tags: "tracking KPI dashboard CRM data analytics reporting" }
-      ]
-    },
-    {
-      id: "outcome",
-      prompt: "What do you want most in the next 30–60 days?",
-      options: [
-        { id: "consults", label: "More signed consults", tags: "consults leads conversion cases" },
-        { id: "cpl", label: "Lower cost per lead", tags: "CPL efficiency waste pause optimize spend" },
-        { id: "speed", label: "Faster intake response", tags: "intake phones speed VoIP HubSpot routing" },
-        { id: "clarity", label: "Clearer metrics to decide", tags: "KPI dashboard reporting tracking data" },
-        { id: "refer", label: "More referral volume", tags: "referral program past clients email" }
-      ]
-    },
-    {
-      id: "posture",
-      prompt: "How should we prioritize work?",
-      options: [
-        { id: "protect", label: "Fix foundation / tracking before scaling spend", tags: "enabler tracking phones CRM foundation protect spend" },
-        { id: "grow", label: "Grow volume now — ship campaigns", tags: "ads launch campaign Military NTGUILT display search growth" },
-        { id: "wins", label: "Quick wins this month", tags: "email referral quick audit stack safety" }
-      ]
-    }
-  ];
+  /** Choose-your-path survey — sourced from content/survey.md via projects-data.js */
+  const GILBERT_SURVEY = (typeof PROJECT_DATA !== "undefined" && PROJECT_DATA.survey && PROJECT_DATA.survey.nodes)
+    ? PROJECT_DATA.survey
+    : { start: "q1", nodes: {} };
+  /** Path → project clusters from content/path-map.md */
+  const PATH_MAP = (typeof PROJECT_DATA !== "undefined" && PROJECT_DATA.pathMap)
+    ? PROJECT_DATA.pathMap
+    : { l1: {}, l2: {}, l3: {}, minMatches: 3 };
 
   function isRequiredProject(item, isRetainer) {
-    if (!item) return false;
-    if (isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
-      const st = String(item.status || "required").toLowerCase();
-      return st.includes("required") || st.includes("ongoing");
-    }
-    return String(item.status || "").toLowerCase().includes("required");
-  }
-
-  /** INDEX Status → default cart: Required + Recommended (not available / planning / etc.). */
-  function isIndexDefaultSelected(item, isRetainer) {
-    if (!item) return false;
-    if (isRequiredProject(item, isRetainer)) return true;
-    const st = String(item.status || "").toLowerCase();
-    return st.includes("recommended");
-  }
-
-  function fitScoreLabel(item, isRetainer) {
-    if (!item || isRequiredProject(item, isRetainer)) return "—";
-    const scoreRaw = computeProjectScore(item);
-    if (scoreRaw == null || scoreRaw <= -999) return "—";
-    return String(scoreRaw);
-  }
-
-  function findProjectById(id) {
-    if (id === "RETAINER") return { ...RETAINER, isRetainer: true };
-    const p = PROJECTS.find(x => x.id === id);
-    return p ? { ...p, isRetainer: false } : null;
-  }
-
-  function hasAbQuestions(item) {
-    return !!(item && item.abQuestions && item.abQuestions.length);
-  }
-
-  function abQuestionAnswered(id) {
-    return !!(state.notes[id] || "").trim();
-  }
-
-  function canSelectProject(item, isRetainer) {
-    if (!item || isRetainer || item.isRetainer || item.monthlyOnly) return true;
-    if (!hasAbQuestions(item)) return true;
-    return abQuestionAnswered(item.id);
-  }
-
-  function sanitizeCartForAbQ() {
-    [...state.projects].forEach(id => {
-      const item = findProjectById(id);
-      if (item && !canSelectProject(item, false)) state.projects.delete(id);
-    });
-  }
-
-  function openAbQComment(id, root) {
-    const scope = root || document;
-    const card = document.getElementById(`project-${id}`) || scope.querySelector(`.research-row[data-id="${id}"]`);
-    card?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    card?.querySelector(`.project-note[data-id="${id}"]`)?.focus();
-  }
-
-  function gilbertAbQNoticeText(item) {
-    const qs = (item.abQuestions || []).map((q, i) => `${i + 1}. ${q}`).join(" ");
-    return `${item.title} is Blocked (needs Andrew): ${qs} — answer in the Blocked box on that card before it can go in the cart.`;
-  }
-
-  function announceGilbertAbQ(item) {
-    if (!hasAbQuestions(item) || abQuestionAnswered(item.id)) return;
-    const msg = gilbertAbQNoticeText(item);
-    const dup = state.gilbertChat.some(m => m.role === "gilbert" && m.text === msg);
-    if (!dup) {
-      state.gilbertChat.push({ role: "gilbert", text: msg });
-      renderGilbertChat();
-    }
-    openGilbertChat();
-  }
-
-  function projectsWithPendingAbQ() {
-    return PROJECTS.filter(p => hasAbQuestions(p) && !abQuestionAnswered(p.id));
-  }
-
-  function trySetProjectInCart(id, add, opts) {
-    const item = findProjectById(id);
-    if (!item) return false;
-    const isRetainer = !!item.isRetainer;
-    if (!add && isRequiredProject(item, isRetainer)) {
-      if (!opts?.silent) showToast("Required items stay in the cart", true);
-      return false;
-    }
-    if (add && !canSelectProject(item, isRetainer)) {
-      if (!opts?.silent) {
-        showToast("Blocked: answer Andrew's question before adding to cart", true);
-        openAbQComment(id);
-        announceGilbertAbQ(item);
-      }
-      return false;
-    }
-    if (isRetainer) {
-      if (add) state.retainer = true;
-      else state.retainer = false;
-    } else {
-      if (add) state.projects.add(id);
-      else state.projects.delete(id);
-    }
-    return true;
-  }
-
-  function abQuestionsBannerHtml(item) {
-    if (!hasAbQuestions(item)) return "";
-    const id = item.id;
-    if (abQuestionAnswered(id)) return "";
-    const qs = item.abQuestions.map(q => `<li>${escapeHtml(q)}</li>`).join("");
-    return `<div class="ab-q-flag" role="note">
-      <div class="ab-q-flag-head"><span class="ab-q-badge">Blocked</span> Needs Andrew before cart</div>
-      <ul class="ab-q-list">${qs}</ul>
-      <label for="ab-q-${id}" class="ab-q-answer-label">Answer for Andrew Brown (required before cart)</label>
-      <textarea id="ab-q-${id}" class="project-note ab-q-answer" data-id="${id}" placeholder="Reply for Andrew Brown…">${escapeHtml(state.notes[id] || "")}</textarea>
-    </div>`;
+    return isRetainer || item.id === "RETAINER" || item.category === "Retainer";
   }
 
   function isPriorityUrgent(item) {
@@ -188,15 +25,21 @@
 
   const REQUIRED_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
 
+  const ACCOUNT_DATA_ICON = "assets/gg-shield-emblem.png";
+
+  function accountDataBadgeImg() {
+    return `<img class="pav-law-shield-img" src="${ACCOUNT_DATA_ICON}" alt="" width="24" height="29">`;
+  }
+
   const VALUE_ICON_SVGS = {
-    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="17" width="7" height="4.5" rx="0.5"/><rect x="9.5" y="17" width="7" height="4.5" rx="0.5"/><rect x="17" y="17" width="6" height="4.5" rx="0.5"/><rect x="5" y="11.5" width="7" height="4.5" rx="0.5"/><rect x="13.5" y="11.5" width="7" height="4.5" rx="0.5"/><rect x="1" y="6" width="7" height="4.5" rx="0.5"/><rect x="9.5" y="6" width="7" height="4.5" rx="0.5"/><path d="M18 2.5 21.5 6"/><path d="M14.5 6.5 20 12"/><path d="M17.5 3.5h4v4"/></svg>`,
+    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.8 2.2 22 6.4"/><path d="m20.8 4.2-5.8 5.8"/></svg>`,
     retainer: REQUIRED_ICON_SVG,
     leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.5"/><path d="M2 20v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5V20"/><circle cx="17.5" cy="8.5" r="2.5"/><path d="M21 20v-1a3.5 3.5 0 0 0-2.5-3.35"/><circle cx="5" cy="10.5" r="2"/><path d="M1 20v-0.5a2.5 2.5 0 0 1 2-2.45"/></svg>`,
     crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/><path d="M13 13h5"/><path d="M13 17h5"/></svg>`,
     seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
     referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7-4 4 4 4"/><path d="M3 11h13"/><path d="m17 17 4-4-4-4"/><path d="M21 13H8"/></svg>`,
     efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
-    intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+    intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v9H8l-4 4V5z"/></svg>`,
     creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.5 0-8 3.6-8 8.2 0 2.8 1.3 4.8 3 6 .6.4 1.2.6 1.8.6.9 0 1.6-.5 1.9-1.3.5-1 1.6-1.6 2.6-1.3 1.1.4 1.8 1.5 1.8 2.7 0 .3 0 .6-.1.9-.4 1.4 1 2.9 2.8 2.9 3.2 0 5.8-2.6 5.8-5.8C22 8.2 17.5 3 12 3z"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="12.5" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="13.5" r="1" fill="currentColor" stroke="none"/></svg>`,
     general: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 6.8H21l-5.5 4 2.1 6.7L12 17.8 6.4 20.5l2.1-6.7L3 9.8h6.6L12 3z"/></svg>`
   };
@@ -210,81 +53,23 @@
     return `<span class="required-icon" title="${escapeHtml(tip)}" aria-label="${escapeHtml(tip)}">${REQUIRED_ICON_SVG}</span>`;
   }
 
-  function sourceTocPriority(item) {
+  function uniqueTocPriority(item, usedPriorities) {
     if (item.isRetainer || item.id === "RETAINER") return null;
     if (item.priority == null || item.priority === "" || Number.isNaN(Number(item.priority))) return null;
-    return Math.trunc(Number(item.priority));
+    let p = Math.trunc(Number(item.priority));
+    while (usedPriorities.has(p)) p += 1;
+    usedPriorities.add(p);
+    return p;
   }
 
-  /** Higher = newer / wins a contested source priority number. Does not mutate item.priority. */
-  function projectNewnessScore(item) {
-    if (state.priorityEdit && state.clientPriorityIds?.length) {
-      const idx = state.clientPriorityIds.indexOf(item.id);
-      if (idx >= 0) return (state.clientPriorityIds.length - idx) * 1e15;
-    }
-    const asOfRaw = (item.impactEstimates && item.impactEstimates.asOf) || item.asOf || "";
-    const asOfMs = Date.parse(asOfRaw) || 0;
-    const listIdx = PROJECTS.findIndex(p => p.id === item.id);
-    const reverseList = listIdx >= 0 ? listIdx : 0;
-    let idScore = 0;
-    const id = String(item.id || "");
-    for (let i = 0; i < id.length; i++) idScore = idScore * 33 + id.charCodeAt(i);
-    return asOfMs * 1e7 + reverseList * 100 + (idScore % 1000);
-  }
-
-  /** INDEX Status includes Recommended (Kate's list) — not Gilbert survey flags. */
-  function isIndexRecommendedStatus(item) {
-    return String(item?.status || "").toLowerCase().includes("recommended");
-  }
-
-  /**
-   * Display-only Project score 1…n from fit score (highest score → 1). INDEX item.priority
-   * (Project score column) is unchanged and still feeds the score weight. Required / unscored rows stay unmapped.
-   */
-  function buildUniqueTocPriorityMap(items) {
-    const map = new Map();
-    const rows = items
-      .filter(item => !item.isRetainer && item.id !== "RETAINER")
-      .map(item => ({
-        item,
-        score: computeProjectScore(item),
-        src: sourceTocPriority(item)
-      }))
-      .filter(row => row.score > -999 || row.src != null);
-    rows.sort((a, b) => {
-      const aScore = a.score > -999 ? a.score : Number.NEGATIVE_INFINITY;
-      const bScore = b.score > -999 ? b.score : Number.NEGATIVE_INFINITY;
-      if (aScore !== bScore) return bScore - aScore;
-      const ap = a.src ?? 99;
-      const bp = b.src ?? 99;
-      if (ap !== bp) return ap - bp;
-      return projectNewnessScore(b.item) - projectNewnessScore(a.item);
-    });
-    rows.forEach((row, i) => map.set(row.item.id, i + 1));
-    return map;
-  }
-
-  function uniqueTocPriority(item, usedPriorities, priorityMap) {
-    if (priorityMap && priorityMap.has(item.id)) {
-      const rank = priorityMap.get(item.id);
-      usedPriorities.add(rank);
-      return rank;
-    }
-    const p = sourceTocPriority(item);
-    if (p == null) return null;
-    let rank = p;
-    while (usedPriorities.has(rank)) rank += 1;
-    usedPriorities.add(rank);
-    return rank;
-  }
-
-  /** TOC_COLS_3_ONLY — Priority cell is digits only (no badges, no Edit, no Show). */
   function priorityTocHtml(item, displayPriority) {
+    const required = isRequiredProject(item, !!item.isRetainer);
     const p = displayPriority != null ? displayPriority : "";
-    return String(p);
+    const urgent = isPriorityUrgent(item) ? '<span class="priority-urgent" title="Urgent or fixing an active issue">!</span>' : "";
+    const req = required ? requiredMarkerHtml(item, !!item.isRetainer) : "";
+    return `<span class="toc-priority-inner">${urgent}${p}</span>${req ? `<span class="toc-required-icon">${req}</span>` : ""}`;
   }
 
-  /* Colors live in index.html :root --vi-* + .value-icon.icon-{id}. Filter + table share those classes — never hardcode badge colors here. */
   const VALUE_ICON_DEFS = [
     { id: "foundation", svgId: "foundation", cls: "icon-foundation", label: "Foundation", match: item => !!item.enabler },
     { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer", match: item => item.isRetainer || item.id === "RETAINER" || item.category === "Retainer" },
@@ -297,19 +82,6 @@
     { id: "creative", svgId: "creative", cls: "icon-creative", label: "Creative", match: item => /creative|email|social media|display|repurpose/i.test(iconMatchText(item)) }
   ];
 
-  /** Dashboard KPIs tied to each value icon (kept for docs / future use — not shown on filter chips). */
-  const ICON_KPI_MAP = {
-    foundation: ["#21", "#27"],
-    retainer: ["#08", "#12", "#14", "#15"],
-    leads: ["#01", "#07", "#08", "#12", "#15"],
-    crm: ["#06", "#20", "#27"],
-    seo: ["#11", "#18"],
-    referrals: ["#16", "#17"],
-    efficiency: ["#01", "#10", "#19", "#28"],
-    intake: ["#09", "#21", "#23"],
-    creative: ["#08", "#14"]
-  };
-
   function iconMatchText(item) {
     const desc = item.description ? String(item.description).replace(/<[^>]+>/g, " ") : "";
     return [
@@ -321,6 +93,7 @@
     ].filter(Boolean).join(" ");
   }
 
+  /* Colors live in index.html :root --vi-* + .value-icon.icon-{id}. Filter + TOC share those classes — never hardcode badge colors here. */
   function valueIconMarkup(def) {
     const svg = VALUE_ICON_SVGS[def.svgId || def.id] || VALUE_ICON_SVGS.general;
     return `<span class="value-icon ${def.cls}" title="${escapeHtml(def.label)}" aria-label="${escapeHtml(def.label)}">${svg}</span>`;
@@ -335,510 +108,20 @@
     expanded: new Set(),
     recommended: new Set(),
     notes: {},
+    generalSuggestions: "",
     submitterEmail: "",
     invoicePaymentMonths: "",
     invoicePaymentMonthlyAmount: "",
     goalText: "",
-    gilbertChat: [],
-    surveyStep: 0,
-    surveyAnswers: {},
+    surveyNode: GILBERT_SURVEY.start,
+    surveyPath: [],
     surveyDone: false,
     iconFilters: [],
+    pathMatchIds: [],
     tocSort: { field: "priority", dir: "asc" },
     tocExpanded: false,
-    showAllProjects: false,
-    activeViewTab: "kpis",
-    doNextVisible: false,
-    priorityEdit: false,
-    clientPriorityIds: []
+    showAllProjects: false
   };
-
-  function normalizeViewTab(tab) {
-    const t = String(tab || "kpis").toLowerCase().trim();
-    if (t === "revenue" || t === "completed") return "impact";
-    if (t === "dashboards") return "kpis";
-    if (t === "kpis" || t === "data" || t === "picker" || t === "impact") return t;
-    return "kpis";
-  }
-
-  function setActiveViewTab(tab) {
-    state.activeViewTab = normalizeViewTab(tab);
-  }
-
-  function normalizeStatus(item) {
-    const s = String(item.status || "available").toLowerCase();
-    if (s.includes("completed")) return "completed";
-    if (s.includes("archived")) return "archived";
-    if (s.includes("research")) return "research";
-    if (s.includes("draft") || s.includes("outline")) return "draft";
-    if (s.includes("hold")) return "onhold";
-    if (s.includes("blocked")) return "blocked";
-    if (s.includes("required")) return "required";
-    if (s.includes("recommended")) return "recommended";
-    if (s.includes("launched")) return "launched";
-    if (s.includes("planning")) return "planning";
-    if (s.includes("ongoing")) return "ongoing";
-    if (s.includes("wip")) return "wip";
-    return "available";
-  }
-
-  /** Named 0–100 best-fit weights (positives sum to 100 at full credit). Bonuses stack on top. */
-  const SCORE_WEIGHTS = {
-    priority: 30,
-    leadGenerator: 17,
-    enabler: 15,
-    goalMatch: 15,
-    dataBacked: 6,
-    dataReturn: 4,
-    feeAccess: 8,
-    cartSynergy: 5,
-    wip: 10,
-    /** Extra points as a project's projected start date approaches (see seasonUrgencyBoost). */
-    seasonUrgency: 10,
-    /** INDEX Status = Recommended — boost so recommended projects rank above peers. */
-    recommended: 20
-  };
-
-  function normalizePublishStatus(item) {
-    const s = String(item.publishStatus || "published").toLowerCase().trim();
-    if (
-      s === "unpublished" ||
-      s === "unpublish" ||
-      s === "hidden" ||
-      s === "gray" ||
-      s === "grey" ||
-      s === "planning" ||
-      s === "plan" ||
-      s === "draft" ||
-      s === "outline"
-    ) {
-      return "unpublished";
-    }
-    return "published";
-  }
-
-  function isPlanningPublish(item) {
-    return normalizePublishStatus(item) === "unpublished";
-  }
-
-  function isCompletedStatus(item) {
-    const s = normalizeStatus(item);
-    return s === "completed" || s === "archived";
-  }
-
-  function isResearchStatus(item) {
-    const s = normalizeStatus(item);
-    return s === "research" || s === "draft";
-  }
-
-  function activeOptionalProjects() {
-    return orderedProjects().filter(p => {
-      if (p.monthlyOnly || isCompletedStatus(p)) return false;
-      if (isResearchStatus(p) && !isPlanningPublish(p)) return false;
-      return true;
-    });
-  }
-
-  function researchProjects() {
-    return sortByPriority(orderedProjects().filter(p => !p.monthlyOnly && isResearchStatus(p) && !isPlanningPublish(p)));
-  }
-
-  function completedProjects() {
-    return sortByPriority(orderedProjects().filter(p => !p.monthlyOnly && isCompletedStatus(p)));
-  }
-
-  function maxProjectFee() {
-    return Math.max(500, ...PROJECTS.filter(p => !p.monthlyOnly).map(p => itemSelectionCost(p)));
-  }
-
-  function liveRankableProjects() {
-    return PROJECTS.filter(p => !p.monthlyOnly && !isCompletedStatus(p));
-  }
-
-  function livePriorityBounds() {
-    const pris = liveRankableProjects()
-      .map(p => p.priority)
-      .filter(p => p != null && Number.isFinite(Number(p)))
-      .map(Number);
-    if (!pris.length) return { min: 1, max: 1 };
-    return { min: Math.min(...pris), max: Math.max(...pris) };
-  }
-
-  function isLeadGenerator(item) {
-    return getValueIcons(item).some(v => v.id === "leads");
-  }
-
-  /**
-   * Bonus points as projected start date approaches (closer = higher).
-   * Ramp: 0 beyond 90 days out → full seasonUrgency at start date; hold 45 days after, then fade by day 90.
-   */
-  function seasonUrgencyBoost(item) {
-    const raw = item && (item.startDate || item.campaignStart || item.seasonStart);
-    if (!raw) return 0;
-    const start = new Date(String(raw).trim() + (String(raw).includes("T") ? "" : "T12:00:00"));
-    if (Number.isNaN(start.getTime())) return 0;
-    const now = new Date();
-    const daysUntil = (start.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
-    const max = SCORE_WEIGHTS.seasonUrgency;
-    const rampDays = 90;
-    if (daysUntil > rampDays) return 0;
-    if (daysUntil <= 0) {
-      if (daysUntil >= -45) return max;
-      if (daysUntil >= -90) return max * Math.max(0, (daysUntil + 90) / 45);
-      return 0;
-    }
-    return max * (1 - daysUntil / rampDays);
-  }
-
-  /** Best-fit score on a named 0–100 scale (see SCORE_WEIGHTS / INDEX.md). Required items are not scored. */
-  function computeProjectScore(item) {
-    if (!item || isRequiredProject(item, !!item.isRetainer) || isCompletedStatus(item) || item.monthlyOnly) return -999;
-    const W = SCORE_WEIGHTS;
-    let score = 0;
-
-    const { min: pMin, max: pMax } = livePriorityBounds();
-    const pri = Number(item.priority);
-    const priSafe = Number.isFinite(pri) ? pri : pMax;
-    if (pMax === pMin) score += W.priority;
-    else score += W.priority * Math.max(0, Math.min(1, (pMax - priSafe) / (pMax - pMin)));
-
-    if (isLeadGenerator(item)) score += W.leadGenerator;
-    if (item.enabler) score += W.enabler;
-
-    if (state.goalText.trim()) {
-      const words = state.goalText.toLowerCase().split(/\W+/).filter(w => w.length > 2);
-      const raw = scoreItemForGoal(item, words);
-      score += Math.min(W.goalMatch, raw * (W.goalMatch / 12));
-    }
-
-    if (item.backedMetric && item.backedMetric.label) score += W.dataBacked;
-    if (item.returnEstimate) score += W.dataReturn;
-
-    const fee = itemSelectionCost(item);
-    const feeMax = maxProjectFee();
-    score += Math.max(0, W.feeAccess * (1 - fee / feeMax));
-
-    if (state.projects.size && item.enabler) score += W.cartSynergy;
-    if (normalizeStatus(item) === "wip") score += W.wip;
-    score += seasonUrgencyBoost(item);
-    if (isIndexRecommendedStatus(item)) score += W.recommended;
-
-    /* Max 140: 100 named positives + WIP 10 + season 10 + Recommended 20. No status penalties. */
-    score = Math.min(140, score);
-
-    return Math.round(Math.max(0, score) * 10) / 10;
-  }
-
-  function topScoredProjects(limit) {
-    return activeOptionalProjects()
-      .filter(item => !isRequiredProject(item, false))
-      .map(item => ({ item, score: computeProjectScore(item) }))
-      .filter(x => x.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, limit || 3);
-  }
-
-  /**
-   * INDEX Status = Recommended (Kate's list). Sorted by fit score (desc) — includes +20 Recommended.
-   */
-  function indexRecommendedBestFit(limit) {
-    const items = activeOptionalProjects()
-      .filter(item => {
-        if (isRequiredProject(item, false)) return false;
-        return isIndexRecommendedStatus(item);
-      })
-      .map(item => ({ item, score: computeProjectScore(item) }))
-      .sort((a, b) => b.score - a.score || (a.item.priority ?? 99) - (b.item.priority ?? 99));
-    if (typeof limit === "number" && limit > 0) return items.slice(0, limit);
-    return items;
-  }
-
-  /** Required (locked) + Recommended — the plan that should match the invoice on fresh load. */
-  function indexPlanBestFit() {
-    const required = [];
-    if (isRequiredProject(RETAINER, true)) {
-      required.push({ item: { ...RETAINER, isRetainer: true }, score: -999 });
-    }
-    activeOptionalProjects().forEach(item => {
-      if (!isRequiredProject(item, false)) return;
-      if (isCompletedStatus(item) || isPlanningPublish(item)) return;
-      required.push({ item, score: -999 });
-    });
-    return required.concat(indexRecommendedBestFit());
-  }
-
-  /** Best Fit rows = invoice line items (same projects), required first then by score. */
-  function rankedInvoiceForBestFit() {
-    return getInvoiceLineItems().map(row => {
-      const item = findProjectById(row.id) || { id: row.id, title: row.title, isRetainer: row.id === "RETAINER" };
-      const isRet = !!item.isRetainer || item.id === "RETAINER";
-      const score = isRequiredProject(item, isRet) ? -999 : computeProjectScore(item);
-      return { item: { ...item, isRetainer: isRet }, score };
-    }).sort((a, b) => {
-      const aReq = isRequiredProject(a.item, !!a.item.isRetainer);
-      const bReq = isRequiredProject(b.item, !!b.item.isRetainer);
-      if (aReq !== bReq) return aReq ? -1 : 1;
-      if (a.score !== b.score) return b.score - a.score;
-      return (a.item.priority ?? 99) - (b.item.priority ?? 99);
-    });
-  }
-
-  /** Session-only: Gilbert/survey may override Best Fit until refresh. Never persisted. */
-  let bestFitSessionActive = false;
-
-  function activateBestFitSession() {
-    bestFitSessionActive = true;
-  }
-
-  function resetBestFitSession() {
-    bestFitSessionActive = false;
-  }
-
-  function bestFitRankedListHtml(ranked) {
-    if (!ranked.length) {
-      return `<p class="kpi-dashboard-note">No recommended projects in INDEX yet — set Status to Recommended, or finish the survey.</p>`;
-    }
-    const bodyRows = ranked.map(({ item, score }, i) => {
-      const isRetainer = !!item.isRetainer || item.id === "RETAINER";
-      const required = isRequiredMaintenance(item, isRetainer);
-      const selected = isItemSelected(item);
-      const chkDisabled = required ? " disabled" : "";
-      const req = requiredMarkerHtml(item, isRetainer);
-      const scoreLabel = score <= -999 ? "—" : String(score);
-      const scoreTitle = required ? "Required — no fit score" : "Best-fit / impact — higher is better";
-      return `<tr data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer}" data-required="${required}">
-        <td class="col-select">
-          <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled} ${selected ? "checked" : ""}>
-        </td>
-        <td class="col-rank">${i + 1}</td>
-        <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(item.title)}</span></a></td>
-        <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
-      </tr>`;
-    }).join("");
-    return `<div class="pav-priorities-scroll"><table class="pav-priorities-table pav-priorities-cart-only pav-priorities-best-fit">
-      <thead>
-        <tr>
-          <th class="col-select" scope="col">Add</th>
-          <th class="col-rank" scope="col">#</th>
-          <th class="col-project" scope="col">Project</th>
-          <th class="col-score" scope="col" title="Best-fit / impact — higher is better. Required items show —.">Fit</th>
-        </tr>
-      </thead>
-      <tbody>${bodyRows}</tbody>
-    </table></div>`;
-  }
-
-  function renderKpiDashboard() {
-    if (!window.KPI_REPORT) return;
-    const kpis = document.getElementById("kpi-report-kpis");
-    if (kpis) KPI_REPORT.renderKpis(kpis);
-  }
-
-  function pinKpiTabToTop() {
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }
-
-  function renderDoNextPanel() {
-    const el = document.getElementById("do-next-panel");
-    if (!el) return;
-    el.hidden = false;
-    const cartItems = getInvoiceLineItems();
-    const hasCart = cartItems.length > 0;
-    const head = `<div class="do-next-head">
-      <div class="do-next-head-copy">
-        <h3>Best Fit Projects for Pav</h3>
-      </div>
-    </div>`;
-
-    /* Best Fit and invoice always show the same projects (cart line items).
-       Fresh load seeds cart to INDEX Required + Recommended. */
-    let ranked = rankedInvoiceForBestFit();
-    if (!ranked.length) {
-      ranked = bestFitSessionActive && hasGilbertActivity()
-        ? gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) }))
-        : indexPlanBestFit();
-    }
-    const body = bestFitRankedListHtml(ranked);
-
-    el.innerHTML = `${head}
-      <div class="total-box" id="plan-summary">${body}</div>
-      <button type="button" class="btn btn-primary project-continue-btn" id="continue-to-confirm" ${hasCart ? "" : "disabled"}>Review Plan</button>`;
-
-  }
-
-  function renderPlanSummary() {
-    renderDoNextPanel();
-  }
-
-  function campaignMetricsHtml(item) {
-    if (!item.goal) return "";
-    return `<div class="campaign-metrics-panel"><div class="campaign-metrics-block campaign-goal-block"><h4>Goal</h4><p>${escapeHtml(item.goal)}</p></div></div>`;
-  }
-
-  function resultsBlockHtml(item) {
-    let html = campaignMetricsHtml(item);
-    const auto = [...(item.completedItems || []), ...(item.inProgressItems || [])];
-    if (auto.length) {
-      html += `<div class="completed-auto"><h4>Work logged</h4><ul>${auto.map(r => `<li>${escapeHtml(r)}</li>`).join("")}</ul></div>`;
-    }
-    if (item.backedMetric && item.backedMetric.label) {
-      html += `<div class="completed-auto"><h4>Verified data</h4><p>${escapeHtml(item.backedMetric.label)}</p>${item.backedMetric.source ? `<p class="completed-source">${escapeHtml(item.backedMetric.source)}</p>` : ""}</div>`;
-    }
-    return html;
-  }
-
-  function completedCardHtml(item) {
-    return `<article class="completed-card" id="completed-${item.id}">
-      <h3>${escapeHtml(item.title)}</h3>
-      <p class="completed-card-meta">${escapeHtml(item.id)} · ${escapeHtml(normalizeStatus(item))}${item.timeline ? ` · ${escapeHtml(item.timeline)}` : ""}</p>
-      ${resultsBlockHtml(item)}
-    </article>`;
-  }
-
-  function completedReportOutProjectHtml(item) {
-    const shipped = (item.completedItems || []).slice(0, 3);
-    const metaParts = [
-      normalizeStatus(item),
-      item.timeline,
-      [item.category, item.campaignType].filter(Boolean).join(" / ")
-    ].filter(Boolean);
-    return `<div class="completed-report-out-project">
-      <h4>${escapeHtml(item.id)} — ${escapeHtml(item.title)}</h4>
-      <p class="completed-report-out-project-meta">${escapeHtml(metaParts.join(" · "))}</p>
-      <ul>
-        ${item.goal ? `<li><strong>Goal:</strong> ${escapeHtml(item.goal)}</li>` : ""}
-        ${shipped.length ? `<li><strong>Completed:</strong> ${escapeHtml(shipped.join("; "))}</li>` : ""}
-      </ul>
-    </div>`;
-  }
-
-  function completedReportOutHtml(items) {
-    if (!items.length) {
-      return `<div class="completed-report-out-head">
-          <span class="completed-report-out-badge">Draft</span>
-          <h3>Report out — completed projects</h3>
-        </div>
-        <p class="completed-report-out-lede">No projects marked <strong>completed</strong> in INDEX yet. When a project ships, set Status to completed — this report-out will populate from Goal and Completed.</p>`;
-    }
-    const names = items.map(p => `<strong>${escapeHtml(p.id)} ${escapeHtml(p.title)}</strong>`).join("; ");
-    const closer =
-      items.some(p => p.id === "A3") && items.some(p => p.id === "A10")
-        ? "Holiday email path is live and the stack priorities are set. Continued lift depends on WIP enablers — phones (B2), LSA/intake coverage, and the KPI cockpit (A8)."
-        : "Confirm outcomes in HubSpot before locking revenue figures.";
-    return `<div class="completed-report-out-head">
-        <span class="completed-report-out-badge">Draft</span>
-        <h3>Report out — completed projects</h3>
-      </div>
-      <p class="completed-report-out-lede">${items.length} project${items.length === 1 ? "" : "s"} closed: ${names}. Detail cards below show Goal and Completed.</p>
-      ${items.map(completedReportOutProjectHtml).join("")}
-      <p class="completed-report-out-bottom"><strong>Bottom line:</strong> ${escapeHtml(closer)}</p>
-      <p class="completed-report-out-footnote">Draft for review — edit project markdown to update.</p>`;
-  }
-
-  function renderCompletedList() {
-    const el = document.getElementById("completed-list");
-    const reportEl = document.getElementById("completed-report-out");
-    const items = completedProjects();
-    if (reportEl) reportEl.innerHTML = completedReportOutHtml(items);
-    if (!el) return;
-    el.innerHTML = items.length
-      ? items.map(completedCardHtml).join("")
-      : `<p class="kpi-dashboard-note">No completed projects in INDEX yet — set Status to <strong>completed</strong>.</p>`;
-  }
-
-  function researchRowHtml(item) {
-    const id = item.id;
-    const sel = state.projects.has(id);
-    const note = (state.notes[id] || "").trim();
-    const abQ = hasAbQuestions(item);
-    const answered = abQuestionAnswered(id);
-    const tagLabel = abQ && !answered ? "Comment — Blocked" : (note ? "Comment ✓" : "+ Comment");
-    return `<div class="research-row${sel ? " selected" : ""}${abQ && !answered ? " ab-q-pending" : ""}" data-id="${id}">
-      <input type="checkbox" class="proj-chk research-chk" data-id="${id}" ${sel ? "checked" : ""}${abQ && !answered ? ' title="Answer Blocked note in Comment first"' : ""}>
-      <div>
-        <span class="research-row-id">${escapeHtml(id)}</span>
-        <div class="research-row-title">${escapeHtml(item.title)}</div>
-        ${abQ ? abQuestionsBannerHtml(item) : ""}
-      </div>
-      <button type="button" class="research-comment-tag${note ? " has-note" : ""}${abQ && !answered ? " needs-ab-q" : ""}" data-id="${id}">${tagLabel}</button>
-      <div class="research-comment-popover" data-id="${id}" hidden>
-        <textarea class="project-note" data-id="${id}" placeholder="${abQ ? "Answer for Andrew Brown (Blocked)…" : "Planning notes for Gilded Goose…"}">${escapeHtml(state.notes[id] || "")}</textarea>
-        <button type="button" class="comment-popover-done" data-id="${id}">Done</button>
-      </div>
-    </div>`;
-  }
-
-  function renderResearchSection() {
-    const wrap = document.getElementById("research-section-wrap");
-    if (!wrap) return;
-    const items = researchProjects();
-    if (!items.length || state.activeViewTab !== "picker") {
-      wrap.innerHTML = "";
-      return;
-    }
-    wrap.innerHTML = `<details class="research-section">
-      <summary>Research &amp; planning <span class="research-row-id">(${items.length})</span></summary>
-      <p class="research-section-note">Titles only — still selectable. Full card copy coming later.</p>
-      ${items.map(researchRowHtml).join("")}
-    </details>`;
-  }
-
-  function syncViewTabs() {
-    state.activeViewTab = normalizeViewTab(state.activeViewTab);
-    document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
-      const on = btn.dataset.view === state.activeViewTab;
-      btn.classList.toggle("active", on);
-      btn.setAttribute("aria-selected", on ? "true" : "false");
-    });
-    const activeCount = activeOptionalProjects().length + researchProjects().length;
-    const doneCount = completedProjects().length;
-    document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
-      const view = btn.dataset.view;
-      if (view === "kpis" || view === "data") {
-        const badge = btn.querySelector(".tab-count");
-        if (badge) badge.remove();
-        return;
-      }
-      const count = view === "impact" ? doneCount : activeCount;
-      let badge = btn.querySelector(".tab-count");
-      if (!badge) {
-        badge = document.createElement("span");
-        badge.className = "tab-count";
-        btn.appendChild(badge);
-      }
-      badge.textContent = String(count);
-    });
-  }
-
-  function renderViewLayout() {
-    state.activeViewTab = normalizeViewTab(state.activeViewTab);
-    const isKpis = state.activeViewTab === "kpis";
-    const isData = state.activeViewTab === "data";
-    const isPicker = state.activeViewTab === "picker";
-    const isImpact = state.activeViewTab === "impact";
-    const kpisPanel = document.getElementById("cockpit-panel-kpis");
-    const dataPanel = document.getElementById("cockpit-panel-data");
-    const pickerPanel = document.getElementById("cockpit-panel-picker");
-    const impactPanel = document.getElementById("cockpit-panel-impact");
-    if (kpisPanel) kpisPanel.hidden = !isKpis;
-    if (dataPanel) dataPanel.hidden = !isData;
-    if (pickerPanel) pickerPanel.hidden = !isPicker;
-    if (impactPanel) impactPanel.hidden = !isImpact;
-    syncViewTabs();
-    renderResearchSection();
-    renderKpiDashboard();
-    if (isData && window.KPI_REPORT) {
-      const dataEl = document.getElementById("kpi-report-data");
-      if (dataEl) KPI_REPORT.renderData(dataEl);
-    }
-    if (isImpact) {
-      renderCompletedList();
-      renderRevenueCalculator();
-    }
-  }
 
   const OMNI_CHANNEL_WHY =
     "Pav Law grows when the same trusted message meets clients wherever they search — paid search, display, directories, email, referrals, and the website. Omnichannel works because each channel feeds the others: ads drive qualified visits; a fast site and clear intake convert them; phones and CRM route every lead; retargeting and mailers bring back prospects who did not book the first time. Connected channels produce signed cases you can trace to spend — not siloed clicks.";
@@ -847,264 +130,43 @@
 
   const PERFORMANCE_PAY_IDS = new Set(["RETAINER", "A1", "A2", "A3", "A4", "A6", "A7", "A11"]);
 
-  /** Payment calculator defaults — full rules in PAYMENT-SCHEDULE.md (doc may lag; code wins) */
-  const PAYMENT_DEPOSIT_PCT = 0.5;
-  const PAYMENT_NO_SURCHARGE_DAYS = 30;
-
   function getProjectsInvoiceTotal() {
-    return getSelectedProjects().reduce((s, p) => s + projectScheduleFee(p), 0);
-  }
-
-  /** One-time fee that participates in deposit + schedule (excludes retainer / monthly / ongoing). */
-  function projectScheduleFee(item) {
-    if (!item || item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return 0;
-    return Math.max(0, Math.round(Number(item.fee) || 0));
-  }
-
-  function projectMonthlyBill(item) {
-    if (!item) return 0;
-    if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) {
-      return Math.max(0, Math.round(Number(item.fee) || 0));
-    }
-    return Math.max(0, Math.round(Number(item.ongoingFee) || 0));
-  }
-
-  function normalizeDepositPct(raw) {
-    if (raw == null || raw === "") return PAYMENT_DEPOSIT_PCT;
-    const n = Number(raw);
-    if (!Number.isFinite(n) || n < 0) return PAYMENT_DEPOSIT_PCT;
-    return n > 1 ? Math.min(1, n / 100) : Math.min(1, n);
-  }
-
-  /** Per-project payment option: due now, remaining on schedule, optional monthly bill. */
-  function getProjectPaymentOption(item) {
-    const isRetainer = !!(item.isRetainer || item.id === "RETAINER");
-    const scheduleFee = projectScheduleFee(item);
-    const monthly = projectMonthlyBill(item);
-    const payType = getPaymentType(item, isRetainer);
-
-    if (scheduleFee <= 0) {
-      return {
-        id: item.id,
-        title: item.title,
-        kind: "monthly",
-        scheduleFee: 0,
-        dueNow: 0,
-        remaining: 0,
-        monthly,
-        depositPct: null,
-        paymentType: payType
-      };
-    }
-
-    const depositPct = normalizeDepositPct(item.depositPct);
-    let dueNow = item.depositAmount != null && item.depositAmount !== ""
-      ? Math.round(Number(item.depositAmount))
-      : Math.round(scheduleFee * depositPct);
-    dueNow = Math.max(0, Math.min(scheduleFee, dueNow));
-    const remaining = scheduleFee - dueNow;
-    return {
-      id: item.id,
-      title: item.title,
-      kind: "project",
-      scheduleFee,
-      dueNow,
-      remaining,
-      monthly,
-      depositPct: dueNow / scheduleFee,
-      paymentType: payType
-    };
-  }
-
-  function getCartPaymentOptions() {
-    const items = [];
-    if (state.retainer) items.push(getProjectPaymentOption({ ...RETAINER, isRetainer: true }));
-    getSelectedProjects().forEach(p => items.push(getProjectPaymentOption({ ...p, isRetainer: false })));
-    getMaintenanceProjects().forEach(p => {
-      if (state.projects.has(p.id)) items.push(getProjectPaymentOption({ ...p, isRetainer: false }));
-    });
-    return items;
-  }
-
-  function cartPaymentTotals(options) {
-    const rows = options || getCartPaymentOptions();
-    return {
-      dueNow: rows.reduce((s, r) => s + r.dueNow, 0),
-      remaining: rows.reduce((s, r) => s + r.remaining, 0),
-      scheduleFees: rows.reduce((s, r) => s + r.scheduleFee, 0),
-      monthly: rows.reduce((s, r) => s + r.monthly, 0)
-    };
-  }
-
-  function buildPaymentOptionsHtml() {
-    const rows = getCartPaymentOptions();
-    if (!rows.length) {
-      return `<p class="payment-options-empty">Add projects to see deposit and schedule amounts.</p>`;
-    }
-    const totals = cartPaymentTotals(rows);
-    const body = rows.map(r => `<tr>
-      <td class="col-project"><a href="${projectAnchor(r.id)}" class="priority-desc-link" data-project-id="${escapeHtml(r.id)}">${escapeHtml(r.title)}</a></td>
-      <td class="col-fee">${r.scheduleFee ? fmt(r.scheduleFee) : (r.monthly ? `${fmt(r.monthly)}/mo` : "—")}</td>
-      <td class="col-due">${r.dueNow ? fmt(r.dueNow) : (r.kind === "monthly" ? "Monthly" : "—")}</td>
-      <td class="col-remain">${r.remaining ? fmt(r.remaining) : "—"}</td>
-    </tr>`).join("");
-    return `<div class="payment-options-scroll"><table class="payment-options-table">
-      <thead>
-        <tr>
-          <th scope="col">Project</th>
-          <th scope="col">Total fee</th>
-          <th scope="col">Deposit due</th>
-          <th scope="col">Scheduled</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${body}
-        <tr class="payment-options-totals">
-          <td>Totals</td>
-          <td>${totals.scheduleFees ? fmt(totals.scheduleFees) : "—"}</td>
-          <td>${totals.dueNow ? fmt(totals.dueNow) : "—"}</td>
-          <td>${totals.remaining ? fmt(totals.remaining) : "—"}</td>
-        </tr>
-      </tbody>
-    </table></div>`;
-  }
-
-  /** Payment calculator: deposit from payment options; remaining on schedule.
-   *  Surcharge: 0% for first 30 days (1 month); then +10% per additional month on remaining balance.
-   *  rate = max(0, months - 1) × 0.10 */
-
-  function paymentSurchargeRateForMonths(months) {
-    const m = Number(months) || 0;
-    if (m <= 1) return 0;
-    return (m - 1) * 0.10;
-  }
-
-  function computePaymentPlan(months, projectTotal) {
-    const cart = cartPaymentTotals();
-    const fees = Math.max(0, Math.round(cart.scheduleFees || Number(projectTotal) || 0));
-    const m = months != null && months !== "" ? Number(months) : null;
-    const deposit = Math.max(0, Math.round(cart.dueNow != null ? cart.dueNow : fees * PAYMENT_DEPOSIT_PCT));
-    const remainingBase = Math.max(0, Math.round(cart.remaining != null ? cart.remaining : fees - deposit));
-    if (!m || m < 1 || fees <= 0) {
-      return {
-        months: m && m >= 1 ? m : null,
-        projectFees: fees,
-        depositPct: fees ? deposit / fees : PAYMENT_DEPOSIT_PCT,
-        deposit,
-        remainingBase,
-        surchargeRate: 0,
-        surchargeAmount: 0,
-        financedRemaining: remainingBase,
-        perInvoice: null,
-        totalDue: deposit + remainingBase,
-        noSurcharge: true,
-        within30Days: true,
-        within60Days: true,
-        daysEstimate: m && m >= 1 ? m * 30 : null,
-        monthlySeparate: cart.monthly || 0
-      };
-    }
-    const daysEstimate = m * 30;
-    const noSurcharge = daysEstimate <= PAYMENT_NO_SURCHARGE_DAYS;
-    const surchargeRate = paymentSurchargeRateForMonths(m);
-    const surchargeAmount = Math.round(remainingBase * surchargeRate);
-    const financedRemaining = remainingBase + surchargeAmount;
-    const perInvoice = Math.round(financedRemaining / m);
-    const totalDue = deposit + financedRemaining;
-    return {
-      months: m,
-      projectFees: fees,
-      depositPct: fees ? deposit / fees : PAYMENT_DEPOSIT_PCT,
-      deposit,
-      remainingBase,
-      surchargeRate,
-      surchargeAmount,
-      financedRemaining,
-      perInvoice,
-      totalDue,
-      noSurcharge,
-      within30Days: noSurcharge,
-      within60Days: noSurcharge,
-      daysEstimate,
-      monthlySeparate: cart.monthly || 0
-    };
-  }
-
-  function paymentPlanBreakdownHtml(plan) {
-    if (!plan || plan.projectFees <= 0) {
-      return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">
-        <p class="payment-calc-empty">Select one-time projects to calculate deposit and invoice schedule.</p>
-      </div>`;
-    }
-    const ratePct = Math.round(plan.surchargeRate * 100);
-    const rows = [
-      ["Project fees (one-time)", fmt(plan.projectFees)],
-      [`Due now (from payment options)`, fmt(plan.deposit)],
-      ["Remaining on schedule", fmt(plan.remainingBase)]
-    ];
-    if (plan.monthlySeparate) {
-      rows.push(["Monthly (retainer / ongoing)", `${fmt(plan.monthlySeparate)}/mo separate`]);
-    }
-    if (plan.months) {
-      rows.push(["Payoff window", `~${plan.daysEstimate} days (${plan.months} invoice${plan.months === 1 ? "" : "s"})`]);
-      if (plan.noSurcharge) {
-        rows.push(["Schedule surcharge", "None — paid within 30 days"]);
-      } else {
-        rows.push([`Schedule surcharge (+${ratePct}% on remaining)`, fmt(plan.surchargeAmount)]);
-        rows.push(["Financed remaining", fmt(plan.financedRemaining)]);
-      }
-      if (plan.perInvoice != null) {
-        rows.push([`Amount per invoice × ${plan.months}`, fmt(plan.perInvoice)]);
-      }
-      rows.push(["Total due (deposit + invoices)", fmt(plan.totalDue)]);
-    } else {
-      rows.push(["Choose a schedule", `Select how long to pay the remaining ${fmt(plan.remainingBase)}`]);
-    }
-    function paymentCalcRowClass(label) {
-      if (/Total due/i.test(label)) return "payment-calc-row--total";
-      if (/Due now/i.test(label)) return "payment-calc-row--deposit";
-      if (/Schedule surcharge/i.test(label)) {
-        return plan.noSurcharge ? "payment-calc-row--surcharge-none" : "payment-calc-row--surcharge";
-      }
-      return "";
-    }
-    return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">
-      <table class="payment-calc-table"><tbody>
-        ${rows.map(([k, v]) => {
-          const cls = paymentCalcRowClass(k);
-          return `<tr${cls ? ` class="${cls}"` : ""}><th scope="row">${escapeHtml(k)}</th><td>${escapeHtml(String(v))}</td></tr>`;
-        }).join("")}
-      </tbody></table>
-    </div>`;
+    return getSelectedProjects().reduce((s, p) => s + itemSelectionCost(p), 0);
   }
 
   function updateInvoiceScheduleAmount() {
     const monthsEl = document.getElementById("invoice-payment-months");
     const amountEl = document.getElementById("invoice-payment-amount");
-    const breakdownHost = document.getElementById("payment-calc-breakdown-host");
+    const hintEl = document.getElementById("invoice-schedule-hint");
     if (!monthsEl || !amountEl) return;
 
     const months = monthsEl.value !== "" ? Number(monthsEl.value) : null;
     const projectTotal = getProjectsInvoiceTotal();
-    const plan = computePaymentPlan(months, projectTotal);
+    const baseHint = "Deposit is billed immediately. Project invoices are sent via QuickBooks on the schedule you choose. Retainer and maintenance bill separately each month.";
 
-    if (breakdownHost) breakdownHost.innerHTML = paymentPlanBreakdownHtml(plan);
+    if (!months || months < 1) {
+      amountEl.value = "";
+      amountEl.placeholder = "Select invoices first";
+      if (hintEl) hintEl.textContent = baseHint;
+      syncPaymentTermsFromDom();
+      return;
+    }
 
     if (projectTotal <= 0) {
       amountEl.value = "";
       amountEl.placeholder = "No project fees to invoice";
+      if (hintEl) {
+        hintEl.textContent = "No one-time project fees selected — only retainer/maintenance apply. " + baseHint;
+      }
       syncPaymentTermsFromDom();
       return;
     }
 
-    if (!months || months < 1) {
-      amountEl.value = "";
-      amountEl.placeholder = "Select schedule first";
-      syncPaymentTermsFromDom();
-      return;
+    const perInvoice = Math.round(projectTotal / months);
+    amountEl.value = String(perInvoice);
+    if (hintEl) {
+      hintEl.textContent = `${fmt(projectTotal)} in project fees split over ${months} invoice${months === 1 ? "" : "s"} (${fmt(perInvoice)} each). ${baseHint}`;
     }
-
-    amountEl.value = String(plan.perInvoice != null ? plan.perInvoice : "");
     syncPaymentTermsFromDom();
   }
 
@@ -1116,33 +178,13 @@
     const months = monthsRaw !== "" && monthsRaw != null ? Number(monthsRaw) : null;
     const monthlyAmount = amountRaw !== "" && amountRaw != null ? Math.max(0, Number(amountRaw)) : null;
     const projectTotal = getProjectsInvoiceTotal();
-    const plan = computePaymentPlan(months, projectTotal);
     let label = null;
-    if (months && monthlyAmount != null && plan.projectFees > 0) {
-      const surchargeNote = plan.surchargeAmount
-        ? `; +${Math.round(plan.surchargeRate * 100)}% schedule surcharge ${fmt(plan.surchargeAmount)} on remaining`
-        : "; no surcharge (≤30 days)";
-      label = `Due now ${fmt(plan.deposit)}; then ${months} QuickBooks invoice${months === 1 ? "" : "s"} of ${fmt(monthlyAmount)} (financed remaining ${fmt(plan.financedRemaining)}${surchargeNote}; total ${fmt(plan.totalDue)})`;
+    if (months && monthlyAmount != null) {
+      label = `${months} QuickBooks invoice${months === 1 ? "" : "s"} of ${fmt(monthlyAmount)} (${fmt(monthlyAmount * months)} project fees; deposit billed immediately)`;
     } else if (months) {
-      label = `${months} invoice${months === 1 ? "" : "s"} — deposit billed immediately per payment options`;
+      label = `${months} invoice${months === 1 ? "" : "s"} — deposit billed immediately`;
     }
-    return {
-      months,
-      monthlyAmount,
-      projectTotal: plan.projectFees,
-      depositAmount: plan.deposit,
-      depositPct: plan.depositPct,
-      remainingBase: plan.remainingBase,
-      surchargeRate: plan.surchargeRate,
-      surchargeAmount: plan.surchargeAmount,
-      financedRemaining: plan.financedRemaining,
-      totalDue: plan.totalDue,
-      within30Days: plan.within30Days,
-      within60Days: plan.within60Days,
-      monthlySeparate: plan.monthlySeparate || 0,
-      lineItems: getCartPaymentOptions(),
-      label
-    };
+    return { months, monthlyAmount, projectTotal, label };
   }
 
   function syncPaymentTermsFromDom() {
@@ -1174,60 +216,18 @@
     return optional.length - visibleOptionalProjects(optional).length;
   }
 
-  function sortValueIconsByFilterOrder(icons) {
-    const order = VALUE_ICON_DEFS.map(d => d.id);
-    return [...icons].sort((a, b) => {
-      const ia = order.indexOf(a.id);
-      const ib = order.indexOf(b.id);
-      return (ia < 0 ? 999 : ia) - (ib < 0 ? 999 : ib);
-    });
-  }
-
-  function inferValueIconIds(item) {
-    const ids = [];
-    const cat = `${item.category || ""} ${item.campaignType || ""}`.toLowerCase();
-    const text = iconMatchText(item).toLowerCase();
-
-    if (item.enabler) ids.push("foundation");
-    if (/crm|hubspot|pipeline/.test(cat)) ids.push("crm");
-    if (/paid media|outbound|ppc|search|lsa|display|google ads|microsoft|seasonal/.test(cat)) ids.push("leads");
-    if (/seo|website|blog|local search|local presence/.test(cat)) ids.push("seo");
-    if (/referral|direct mail|testimonial|social proof|past client/.test(cat)) ids.push("referrals");
-    if (/analytics|strategy|finance|operations|kpi/.test(cat)) ids.push("efficiency");
-    if (/intake|infrastructure|phone|call|voip|\bai\b/.test(cat)) ids.push("intake");
-    if (/creative|email|social media|brand/.test(cat)) ids.push("creative");
-    if (/booking|speed.to.lead|form fill|web lead|call tracking|voip/.test(text) && !ids.includes("intake")) ids.push("intake");
-    if (/display|ntguilt|brand awareness|upper.funnel/.test(text) && /paid|display|brand|creative/.test(cat) && !ids.includes("creative")) {
-      ids.push("creative");
-    }
-    return [...new Set(ids)];
-  }
-
   function getValueIcons(item) {
-    let icons = [];
-    if (item.valueIcons && item.valueIcons.length) {
-      icons = item.valueIcons.map(id => {
-        const def = VALUE_ICON_DEFS.find(d => d.id === id);
-        return def || { id, svgId: id, cls: `icon-${id}`, label: id };
-      }).filter(Boolean);
-    } else if (item.isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
+    if (item.isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
       const def = VALUE_ICON_DEFS.find(d => d.id === "retainer");
-      icons = [def || { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer" }];
-    } else {
-      const inferred = inferValueIconIds(item);
-      if (inferred.length) {
-        icons = inferred
-          .map(id => VALUE_ICON_DEFS.find(d => d.id === id))
-          .filter(Boolean);
-      } else {
-        for (const def of VALUE_ICON_DEFS) {
-          if (def.id === "retainer") continue;
-          if (def.match(item) && !icons.some(i => i.id === def.id)) icons.push(def);
-        }
-      }
+      return [def || { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer" }];
+    }
+    const icons = [];
+    for (const def of VALUE_ICON_DEFS) {
+      if (def.id === "retainer") continue;
+      if (def.match(item) && !icons.some(i => i.id === def.id)) icons.push(def);
     }
     if (!icons.length) icons.push({ id: "general", svgId: "general", cls: "icon-general", label: "Growth" });
-    return sortValueIconsByFilterOrder(icons);
+    return icons;
   }
 
   function valueIconsHtml(item) {
@@ -1235,17 +235,31 @@
     return `<span class="value-icons">${icons.map(valueIconMarkup).join("")}</span>`;
   }
 
+  function accountDataIconHtml(item) {
+    if (!item.backedMetric) return "";
+    const label = item.backedMetric.label || "Verified account data";
+    const src = item.backedMetric.source ? ` (${item.backedMetric.source})` : "";
+    const tip = escapeHtml(label + src);
+    return `<span class="account-data-shield" title="${tip}" aria-label="Account data: ${tip}">${accountDataBadgeImg()}</span>`;
+  }
+
   function cardCornerIconsHtml(item, isRetainer, inline) {
     const valueHtml = valueIconsHtml({ ...item, isRetainer });
-    if (!valueHtml) return "";
+    const dataHtml = accountDataIconHtml(item);
+    if (!valueHtml && !dataHtml) return "";
     const cls = inline ? "card-icons-inline" : "card-icons-corner";
-    return `<div class="${cls}">${valueHtml}</div>`;
+    return `<div class="${cls}">${valueHtml}${dataHtml}</div>`;
   }
 
   function itemMatchesIconFilters(item) {
+    if (item.isRetainer || item.id === "RETAINER") return true;
+    if (state.pathMatchIds && state.pathMatchIds.length) {
+      return state.pathMatchIds.includes(item.id);
+    }
     if (!state.iconFilters.length) return true;
+    if (state.iconFilters.includes("account-data") && item.backedMetric) return true;
     const iconIds = getValueIcons(item).map(i => i.id);
-    return state.iconFilters.some(f => iconIds.includes(f));
+    return state.iconFilters.some(f => f !== "account-data" && iconIds.includes(f));
   }
 
   function toggleIconFilter(id) {
@@ -1260,7 +274,12 @@
   }
 
   function clearIconFilters() {
+    if (state.surveyDone) {
+      resetSurvey(true);
+      return;
+    }
     state.iconFilters = [];
+    state.pathMatchIds = [];
     saveState();
     renderValueIconKey();
     renderAllCards();
@@ -1273,36 +292,20 @@
     if (!el) return;
     const hint = state.iconFilters.length
       ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear filters (${state.iconFilters.length})</button>`
-      : "";
-    el.innerHTML = `<span class="value-icon-key-title">Filter by value <span class="tab-help" data-help-title="Filter by value" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use value filters">?</span></span>${hint}` +
+      : `<span class="icon-filter-hint">Click an icon to filter the project list</span>`;
+    el.innerHTML = `<span class="value-icon-key-title">Filter by value</span>${hint}` +
       VALUE_ICON_DEFS.map(d => {
         const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
-        return `<button type="button" class="key-item key-filter-btn key-filter-${d.id}${active}" data-icon-filter="${d.id}" title="Show projects that add ${escapeHtml(d.label)} value">${valueIconMarkup(d)}<span class="key-item-meta"><span class="key-item-label">${escapeHtml(d.label)}</span></span></button>`;
-      }).join("");
+        return `<button type="button" class="key-item key-filter-btn${active}" data-icon-filter="${d.id}">${valueIconMarkup(d)}<span class="key-item-label">${escapeHtml(d.label)}</span></button>`;
+      }).join("") +
+      (() => {
+        const active = state.iconFilters.includes("account-data") ? " filter-active" : "";
+        return `<button type="button" class="key-item key-filter-btn${active}" data-icon-filter="account-data"><span class="account-data-shield key-shield">${accountDataBadgeImg()}</span><span class="key-item-label">Account data</span></button>`;
+      })();
     el.querySelectorAll(".key-filter-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        toggleIconFilter(btn.dataset.iconFilter);
-      });
+      btn.addEventListener("click", () => toggleIconFilter(btn.dataset.iconFilter));
     });
     el.querySelector("#icon-filter-clear")?.addEventListener("click", clearIconFilters);
-  }
-
-  function normalizeKpiId(kpiId) {
-    const raw = String(kpiId || "").trim();
-    if (!raw) return "";
-    if (raw.startsWith("#")) return raw.length === 3 ? raw : `#${raw.slice(1).padStart(2, "0")}`;
-    const n = raw.replace(/\D/g, "");
-    return n ? `#${n.padStart(2, "0")}` : "";
-  }
-
-  function focusKpi(kpiId) {
-    const id = normalizeKpiId(kpiId);
-    if (!id) return;
-    setActiveViewTab("kpis");
-    renderViewLayout();
-    requestAnimationFrame(() => {
-      window.KPI_REPORT?.focusKpi?.(id);
-    });
   }
 
   function isItemSelected(item) {
@@ -1330,8 +333,6 @@
       const aRec = state.recommended.has(a.id);
       const bRec = state.recommended.has(b.id);
       if (aRec !== bRec) return aRec ? -1 : 1;
-      const planDiff = (isPlanningPublish(a) ? 1 : 0) - (isPlanningPublish(b) ? 1 : 0);
-      if (planDiff !== 0) return planDiff;
       return (a.priority ?? 99) - (b.priority ?? 99);
     });
   }
@@ -1353,25 +354,7 @@
     getSelectedProjects().forEach(p => {
       rows.push({ id: p.id, title: p.title, fee: feeLabelFor(p) });
     });
-    return sortInvoiceRowsRequiredFirst(rows);
-  }
-
-  /** Required (lock) rows first in Pav Priorities cart / invoice lists, then by fit score. */
-  function sortInvoiceRowsRequiredFirst(rows) {
-    return [...rows].sort((a, b) => {
-      const aRet = a.id === "RETAINER";
-      const bRet = b.id === "RETAINER";
-      const aItem = aRet ? RETAINER : findProjectById(a.id);
-      const bItem = bRet ? RETAINER : findProjectById(b.id);
-      const aReq = aItem ? isRequiredProject(aItem, aRet) : false;
-      const bReq = bItem ? isRequiredProject(bItem, bRet) : false;
-      if (aReq !== bReq) return aReq ? -1 : 1;
-      if (aRet !== bRet) return aRet ? -1 : 1;
-      const aScore = aItem && !aReq ? computeProjectScore({ ...aItem, isRetainer: aRet }) : -999;
-      const bScore = bItem && !bReq ? computeProjectScore({ ...bItem, isRetainer: bRet }) : -999;
-      if (aScore !== bScore) return bScore - aScore;
-      return (aItem?.priority ?? 99) - (bItem?.priority ?? 99);
-    });
+    return rows;
   }
 
   function getSuggestedItems() {
@@ -1386,322 +369,6 @@
 
   function projectAnchor(id) {
     return `#project-${id}`;
-  }
-
-  const PAV_HISTORICAL = {
-    answerRate: 0.69,
-    consultToRetained: 0.51,
-    leadToCaseRate: 9 / 124,
-    /* MyCase Client mean fee — CLIENT-VALUE-BASELINE.md · as of 2026-07-01 */
-    avgCaseFee: 5587,
-    monthlyLeadsBaseline: 124
-  };
-
-  /** KPI labels + tracking quality for impact list (ICON_KPI_MAP + live report names). */
-  const KPI_IMPACT_META = {
-    "#01": { name: "Total leads", tracking: "Clean — Search + LSA + HubSpot forms when all three exports are current." },
-    "#02": { name: "New cases", tracking: "Clean — MyCase Client Created-date count." },
-    "#06": { name: "Pipeline / CRM completeness", tracking: "Partial — depends on HubSpot field hygiene and deal stage use." },
-    "#07": { name: "Lead volume by campaign", tracking: "Clean for Search when Campaign report + call details align; LSA separate." },
-    "#08": { name: "Campaign cost efficiency", tracking: "Clean for digital Search cost ÷ calls; not LSA." },
-    "#09": { name: "Intake conversion", tracking: "Partial — needs consistent consult booking and outcome logging." },
-    "#10": { name: "Lead channel mix", tracking: "Clean once #01 channel stack is reconciled monthly." },
-    "#11": { name: "Organic / local search presence", tracking: "Partial — rankings and GBP metrics need scheduled pulls." },
-    "#12": { name: "Avg. Cost per Call", tracking: "Clean for Search Campaign report ÷ phone calls." },
-    "#14": { name: "Creative / channel response", tracking: "Partial — creative tests need UTM or asset labels to attribute cleanly." },
-    "#15": { name: "Cost per lead", tracking: "Clean when spend and lead definition match the same window." },
-    "#16": { name: "Reviews by channel", tracking: "Partial until B10 audit wires directory scrapes into DATA.reviews." },
-    "#17": { name: "Referral Network", tracking: "Proxy until A4 referral tracking is live in HubSpot/MyCase." },
-    "#18": { name: "Website / SEO contribution", tracking: "Partial — form + organic attribution depends on GA4/UTM setup." },
-    "#19": { name: "Lost Revenue", tracking: "Directional — missed Search calls × lead→case × avg fee; not booked cash." },
-    "#20": { name: "CRM follow-up discipline", tracking: "Partial — task completion and owner fields must stay filled." },
-    "#21": { name: "Answered Calls", tracking: "Clean — Call details Received vs Missed for Search; LSA status separate." },
-    "#23": { name: "Intake coverage / after-hours", tracking: "Partial — needs routing logs and after-hours disposition." },
-    "#27": { name: "Ops backlog / open tasks", tracking: "Partial — HubSpot task queues when owners and due dates are used." },
-    "#28": { name: "Avg case fee", tracking: "Clean — MyCase Client mean fee baseline." }
-  };
-
-  function getCartSelectionItems() {
-    const items = [];
-    if (state.retainer) items.push({ ...RETAINER, isRetainer: true });
-    getMaintenanceProjects().forEach(p => {
-      if (state.projects.has(p.id)) items.push({ ...p, isRetainer: false });
-    });
-    getSelectedProjects().forEach(p => items.push({ ...p, isRetainer: false }));
-    return items;
-  }
-
-  function normalizeKpiRef(id) {
-    const raw = String(id || "").trim();
-    if (!raw) return "";
-    if (/^#\d{2}$/.test(raw)) return raw;
-    const m = raw.match(/(\d{2})/);
-    return m ? `#${m[1]}` : "";
-  }
-
-  function projectTimelineLabel(item) {
-    if (!item) return "2–4 weeks setup";
-    if (item.timeline && String(item.timeline).trim()) return String(item.timeline).trim();
-    if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return "Ongoing monthly";
-    if (item.enabler) return "1–3 weeks setup · then ongoing ops";
-    return "2–4 weeks setup · then measure in following 30 days";
-  }
-
-  function projectImpactBlurb(item) {
-    const brief = briefValueAdd(item);
-    if (brief) return brief;
-    const bullets = valueAddedBullets(item);
-    if (bullets[0]) return String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim();
-    if (item.tldr) return String(item.tldr).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
-    if (item.goal) return String(item.goal).replace(/\s+/g, " ").trim().slice(0, 160);
-    return item.title || item.id;
-  }
-
-  function kpiIdsForProject(item) {
-    const ids = new Set();
-    (item.kpiRefs || []).forEach(ref => {
-      const id = normalizeKpiRef(ref);
-      if (id) ids.add(id);
-    });
-    getValueIcons(item).forEach(icon => {
-      (ICON_KPI_MAP[icon.id] || []).forEach(kpi => {
-        const id = normalizeKpiRef(kpi);
-        if (id) ids.add(id);
-      });
-    });
-    const text = `${item.estimatedLeads || ""} ${item.goal || ""} ${item.tldr || ""}`;
-    const re = /#(\d{2})/g;
-    let m;
-    while ((m = re.exec(text))) ids.add(`#${m[1]}`);
-    return [...ids];
-  }
-
-  /** Selected projects → impacted KPIs with impact, timeline, tracking quality. */
-  function buildActionItems(selectionItems) {
-    const items = selectionItems || getCartSelectionItems();
-    if (!items.length) return [];
-
-    const byKpi = new Map();
-    items.forEach(item => {
-      kpiIdsForProject(item).forEach(kpiId => {
-        if (!byKpi.has(kpiId)) byKpi.set(kpiId, []);
-        byKpi.get(kpiId).push(item);
-      });
-    });
-
-    const rows = [...byKpi.entries()]
-      .sort((a, b) => Number(a[0].slice(1)) - Number(b[0].slice(1)))
-      .slice(0, 14)
-      .map(([kpi, projects]) => {
-        const meta = KPI_IMPACT_META[kpi] || { name: kpi, tracking: "Partial — confirm source export before treating as contractual." };
-        const titles = projects.map(p => p.title).filter(Boolean);
-        const blurbs = projects.map(projectImpactBlurb).filter(Boolean);
-        const impact = blurbs.length
-          ? `${titles.join("; ")} — ${blurbs.slice(0, 2).join("; ")}`
-          : `${titles.join("; ")} support this metric through the selected scope.`;
-        const timelines = [...new Set(projects.map(projectTimelineLabel))];
-        return {
-          kpi,
-          name: meta.name,
-          impact,
-          timeline: timelines.join(" · "),
-          tracking: meta.tracking,
-          projectIds: projects.map(p => p.id),
-          text: `${meta.name}: ${impact}`,
-          source: "kpi"
-        };
-      });
-
-    return rows;
-  }
-
-  function buildActionItemsHtml(actions) {
-    if (!actions || !actions.length) {
-      return `<h3>KPIs impacted by the selected projects</h3>
-        <p class="action-items-intro">Add projects to see which account KPIs this plan is built to move, how, and how cleanly they track.</p>
-        <p class="kpi-impact-empty">No projects selected yet.</p>`;
-    }
-    const list = actions.map(a => {
-      const label = a.name ? `${a.kpi} ${a.name}` : a.kpi;
-      return `<li class="kpi-impact-item">
-        <div class="kpi-impact-head"><span class="kpi-stat-id">${escapeHtml(a.kpi)}</span> ${escapeHtml(a.name || a.kpi)}</div>
-        <p class="kpi-impact-how">${escapeHtml(a.impact || a.text || "")}</p>
-        <p class="kpi-impact-meta"><span class="kpi-impact-label">Timeline</span> ${escapeHtml(a.timeline || "—")}
-        <span class="kpi-impact-sep">·</span>
-        <span class="kpi-impact-label">Tracking</span> ${escapeHtml(a.tracking || "—")}</p>
-      </li>`;
-    }).join("");
-    return `<h3>KPIs impacted by the selected projects</h3>
-      <p class="action-items-intro">Account KPIs tied to your selected projects via value icons and KPI links — impact path, timeline, and tracking quality.</p>
-      <ul class="kpi-action-list kpi-impact-list" aria-label="KPIs impacted by the selected projects">${list}</ul>`;
-  }
-
-  function buildConfirmNextStepsHtml() {
-    const rec = buildRecommendation();
-    const ordered = getCartSelectionItems()
-      .filter(i => !i.monthlyOnly)
-      .sort((a, b) => {
-        if (a.enabler && !b.enabler) return -1;
-        if (b.enabler && !a.enabler) return 1;
-        if (a.isRetainer && !b.isRetainer) return -1;
-        if (b.isRetainer && !a.isRetainer) return 1;
-        return (a.priority ?? 99) - (b.priority ?? 99);
-      });
-    if (!ordered.length) {
-      return `<h3>Next steps</h3><p class="confirm-next-foot">Add projects to your cart, then return here for an execution sequence.</p>`;
-    }
-    let html = `<h3>Next steps</h3>`;
-    if (rec?.strategy) {
-      html += `<p class="confirm-next-intro">${escapeHtml(rec.strategy)}</p>`;
-    }
-    html += `<ol class="confirm-next-list">${ordered.map(item => {
-      const pitch = briefValueAdd(item) || item.timeline || "Kick off after deposit clears";
-      return `<li><strong>${escapeHtml(item.title)}</strong> — ${escapeHtml(pitch)}</li>`;
-    }).join("")}</ol>`;
-    html += `<p class="confirm-next-foot">After submit: review the SOW draft, email the PDF report, pay the QuickBooks deposit, then Gilded Goose schedules kickoff. Project invoices follow your chosen schedule.</p>`;
-    return html;
-  }
-
-  function formatNextStepsText() {
-    const ordered = getCartSelectionItems()
-      .filter(i => !i.monthlyOnly)
-      .sort((a, b) => {
-        if (a.enabler && !b.enabler) return -1;
-        if (b.enabler && !a.enabler) return 1;
-        if (a.isRetainer && !b.isRetainer) return -1;
-        if (b.isRetainer && !a.isRetainer) return 1;
-        return (a.priority ?? 99) - (b.priority ?? 99);
-      });
-    const rec = buildRecommendation();
-    const lines = [];
-    if (rec?.strategy) lines.push(rec.strategy);
-    ordered.forEach((item, i) => {
-      const pitch = briefValueAdd(item) || item.timeline || "Kick off after deposit";
-      lines.push(`  ${i + 1}. ${item.title} — ${pitch}`);
-    });
-    return lines.length ? lines.join("\n") : "(none)";
-  }
-
-  function renderActionItemsPanel() {
-    const actions = buildActionItems();
-    const html = buildActionItemsHtml(actions);
-    const el = document.getElementById("confirm-action-items");
-    if (!el) return;
-    if (!html || !actions.length) {
-      el.hidden = true;
-      el.innerHTML = "";
-      return;
-    }
-    el.hidden = false;
-    el.innerHTML = html;
-  }
-
-  function renderConfirmPlanReview() {
-    const estEl = document.getElementById("confirm-estimated-results");
-    if (estEl) {
-      estEl.innerHTML = "";
-      estEl.hidden = true;
-    }
-    const payEl = document.getElementById("confirm-payment-options-body");
-    if (payEl) payEl.innerHTML = buildPaymentOptionsHtml();
-    updateInvoiceScheduleAmount();
-  }
-
-  function formatActionItemsText(actions) {
-    if (!actions || !actions.length) return "(none)";
-    return actions.map(a => {
-      const head = a.name ? `${a.kpi} ${a.name}` : a.kpi;
-      const impact = a.impact || a.text || "";
-      const timeline = a.timeline ? ` | Timeline: ${a.timeline}` : "";
-      const tracking = a.tracking ? ` | Tracking: ${a.tracking}` : "";
-      return `  ${head}: ${impact}${timeline}${tracking}`;
-    }).join("\n");
-  }
-
-  function openProjectDescription(id) {
-    if (!id) return;
-    if (id !== "RETAINER") {
-      const item = findProjectById(id);
-      if (item && isPlanningPublish(item)) {
-        requestAnimationFrame(() => {
-          document.getElementById(`project-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-        return;
-      }
-      state.expanded.add(id);
-      saveState();
-      renderAllCards();
-    }
-    requestAnimationFrame(() => {
-      document.getElementById(`project-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
-
-  function parseLeadsFromEstimatedText(text) {
-    if (!text || /n\/a|not lead|cost savings|strategy audit/i.test(text)) return null;
-    const range = text.match(/(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)/);
-    if (range) return { value: (Number(range[1]) + Number(range[2])) / 2, isCalls: /calls?/i.test(text) };
-    const perMonth = text.match(/(\d+(?:\.\d+)?)\s*\/\s*mo/i);
-    if (perMonth) return { value: Number(perMonth[1]), isCalls: /calls?/i.test(text) };
-    const calls = text.match(/~?(\d+)\s*calls?/i);
-    if (calls) return { value: Number(calls[1]), isCalls: true };
-    if (/all tracked|all inbound|unified|hubspot \+ lsa|124\/mo/i.test(text)) {
-      return { value: PAV_HISTORICAL.monthlyLeadsBaseline, isCalls: false };
-    }
-    return null;
-  }
-
-  function estimateProjectLeadsGained(item) {
-    if (!item) return { value: null, label: "—", isCalls: false };
-    const nonCampaignIds = new Set(["RETAINER", "A6", "A8", "A8M", "A10", "B1", "B3", "B9", "B10"]);
-    if (item.isRetainer || nonCampaignIds.has(item.id))
-      return { value: null, label: "No direct leads", isCalls: false };
-    if (item.id === "B2") {
-      const baselineCalls = 35;
-      const recovered = baselineCalls * (0.90 - PAV_HISTORICAL.answerRate);
-      return { value: recovered, label: `~${Math.round(recovered)} gained/mo`, isCalls: false };
-    }
-    const r = item.returnEstimate;
-    if (r?.calls) {
-      const calls = (r.calls.min + r.calls.max) / 2;
-      const value = calls * PAV_HISTORICAL.answerRate;
-      return {
-        value,
-        label: `~${Math.round(value)} gained/mo`,
-        isCalls: false
-      };
-    }
-    if (r?.consults) {
-      const value = (r.consults.min + r.consults.max) / 2;
-      return { value, label: `${r.consults.min}–${r.consults.max} consults/mo`, isCalls: false };
-    }
-    const text = item.estimatedLeads || "";
-    if (/retained matters/i.test(text)) {
-      return { value: 1.5, label: "1–2 gained/wave", isCalls: false };
-    }
-    const parsed = parseLeadsFromEstimatedText(text);
-    if (parsed) {
-      const value = parsed.isCalls ? parsed.value * PAV_HISTORICAL.answerRate : parsed.value;
-      return { value, label: `~${Math.round(value)} gained/mo`, isCalls: false };
-    }
-    return { value: null, label: "Estimate pending", isCalls: false };
-  }
-
-  function estimateProjectLeadRevenue(item) {
-    const leads = estimateProjectLeadsGained(item);
-    if (leads.value != null && leads.value > 0) {
-      let funnelLeads = leads.value;
-      if (leads.isCalls) funnelLeads = leads.value * PAV_HISTORICAL.answerRate;
-      const cases = funnelLeads * PAV_HISTORICAL.leadToCaseRate;
-      const revenue = Math.round(cases * PAV_HISTORICAL.avgCaseFee);
-      return { value: revenue, label: `${fmt(revenue)}/mo` };
-    }
-    const pf = item?.returnEstimate?.potentialFees;
-    if (pf) {
-      const mid = Math.round((pf.min + pf.max) / 2);
-      return { value: mid, label: `${fmt(pf.min)}–${fmt(pf.max)}${pf.period ? " " + pf.period : ""}` };
-    }
-    return { value: null, label: "—" };
   }
 
   function buildRecommendation() {
@@ -1722,7 +389,7 @@
     if (hasGoal) {
       const g = state.goalText.trim();
       rec.goalIntro =
-        `You told Gilbert the core problem is: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below close that gap — not as a random list, but as a sequenced marketing stack.`;
+        `You named the core problem as: "${g.length > 160 ? g.slice(0, 160) + "…" : g}". The projects below close that gap — not as a random list, but as a sequenced marketing stack.`;
     }
 
     if (!projectItems.length && selected.length) {
@@ -1733,8 +400,7 @@
     if (projectItems.length) {
       rec.projectBullets = projectItems.map(item => ({
         title: item.title,
-        blurb: briefValueAdd(item),
-        pitch: elevatorPitch(item)
+        blurb: briefValueAdd(item)
       }));
 
       const hasEnabler = selected.some(i => i.enabler);
@@ -1771,7 +437,7 @@
 
       rec.strategy = strategy;
     } else if (hasGoal) {
-      rec.pickPrompt = "Pick projects from the list below — Gilbert will explain how they fit together as you add them.";
+      rec.pickPrompt = "Pick projects from the list below — each one shows how it fits the path as you add it.";
     }
 
     return rec;
@@ -1793,7 +459,7 @@
       body += `<p>Your cart is retainer and required maintenance only — ongoing ads management and monthly upkeep so performance stays stable while you decide on upgrade projects.</p>`;
     } else if (rec.projectBullets.length) {
       body += `<h4 class="why-subhead">What each project adds</h4><ul class="why-project-list">${rec.projectBullets.map(b =>
-        `<li><strong>${escapeHtml(b.title)}</strong>${b.pitch ? ` — ${escapeHtml(b.pitch)}` : ""}</li>`
+        `<li><strong>${escapeHtml(b.title)}</strong>${b.blurb ? ` — ${escapeHtml(b.blurb)}` : ""}</li>`
       ).join("")}</ul>`;
       body += `<h4 class="why-subhead">Why omnichannel marketing works</h4><p>${escapeHtml(rec.omnichannel)}</p>`;
       if (rec.strategy) {
@@ -1813,10 +479,8 @@
     el.innerHTML = `<div class="why-gilded-frame"><div class="recommendation-box"><h3>Why this combination</h3>${body}</div></div>`;
   }
 
-  function renderRevenueCalculator() {
-    const el = document.getElementById("revenue-calculator");
-    if (!el) return;
-    el.innerHTML = buildRevenueCalculatorHtml();
+  function renderPlanSummary() {
+    renderWhyPanel();
   }
 
   function renderRecommendation() {
@@ -1839,12 +503,11 @@
     return "";
   }
 
-  function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending) {
+  function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled) {
     const id = item.id;
     const reqMark = required ? requiredMarkerHtml(item, isRetainer) : "";
-    const abTitle = abPending ? ' title="Blocked: answer before cart"' : "";
     return `<div class="card-check-col">
-      <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled}${abTitle} ${sel ? "checked" : ""}>
+      <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled} ${sel ? "checked" : ""}>
       ${reqMark}
       ${wipBadgeUnderCheckbox(item)}
     </div>`;
@@ -1865,363 +528,65 @@
     return text.length > 160 ? text.slice(0, 157).trim() + "…" : text;
   }
 
-  function elevatorPitch(item) {
-    const bullets = valueAddedBullets(item);
-    if (bullets.length) {
-      let b = String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim().replace(/^[-•]\s*/, "");
-      if (!/[.!?]$/.test(b)) b += ".";
-      if (/^(builds?|creates?|adds?|delivers?|launches?|fixes?|improves?|enables?|reduces?|increases?|pairs?|combines?|strengthens?)/i.test(b)) {
-        return `For Pav Law, this project ${b.charAt(0).toLowerCase()}${b.slice(1)}`;
-      }
-      return `For Pav Law, this means ${b.charAt(0).toLowerCase()}${b.slice(1)}`;
-    }
-    if (item.enabler) {
-      return "Foundation work that connects phones, forms, and ad tracking — so every marketing dollar ties to a qualified consult, not a dead lead.";
-    }
-    const iconIds = getValueIcons(item).map(i => i.id);
-    if (iconIds.includes("leads")) {
-      return "More qualified calls and consults from paid media — with spend tied to signed cases, not vanity clicks.";
-    }
-    if (iconIds.includes("intake")) {
-      return "Faster, more reliable intake — so leads that arrive after hours or from referrals convert to booked consults.";
-    }
-    if (iconIds.includes("seo")) {
-      return "Stronger organic visibility — so Pav Law earns discovery traffic beyond paid auction costs.";
-    }
-    if (iconIds.includes("referrals")) {
-      return "Structured referral and past-client outreach — lower acquisition cost than cold paid leads alone.";
-    }
-    if (iconIds.includes("crm")) {
-      return "A tighter CRM and pipeline — so Romina's desk sees every lead, every follow-up, and every consult in one place.";
-    }
-    if (item.isRetainer || item.id === "RETAINER") {
-      return "Ongoing ads management and optimization — campaigns stay live, measured, and adjusted month over month.";
-    }
-    const r = item.returnEstimate;
-    if (r && r.summary) return r.summary;
-    const desc = stripInlineLinks(item.description || "");
-    const first = desc.match(/[^.!?]+[.!?]+/);
-    if (first) {
-      let s = first[0].trim();
-      if (s.length > 200) s = s.slice(0, 197).trim() + "…";
-      return s;
-    }
-    return `${item.title} — scoped deliverables, clear timeline, and marketing tied to consult volume and signed cases.`;
-  }
-
-  const EXECUTION_BLURB_PATTERN = /→|utm|hubspot task|workflow|extension|verif|dashboard plan|export|sheet|romina desk|lsa's/i;
-
-  function cleanBusinessText(text) {
-    return String(text || "")
-      .replace(/^Deliverable:\s*/i, "")
-      .replace(/^[-•]\s*/, "")
-      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function isExecutionBlurb(text) {
-    return EXECUTION_BLURB_PATTERN.test(text);
-  }
-
-  function businessBullets(item) {
-    return valueAddedBullets(item)
-      .map(cleanBusinessText)
-      .filter(b => b && !isExecutionBlurb(b));
-  }
-
-  function iconValuePitch(item) {
-    const iconIds = getValueIcons(item).map(i => i.id);
-    if (item.enabler) {
-      return "Foundation work that connects phones, forms, and ad tracking so every marketing dollar ties to a qualified consult — not a lost lead.";
-    }
-    if (iconIds.includes("leads")) {
-      return "Drives more qualified calls and consults from paid media, with spend measured against signed cases rather than vanity clicks.";
-    }
-    if (iconIds.includes("intake")) {
-      return "Strengthens intake reliability so inquiries that arrive after hours or from referrals convert to booked consults instead of dropping off.";
-    }
-    if (iconIds.includes("seo")) {
-      return "Builds organic visibility so Pav Law earns discovery traffic beyond rising paid auction costs.";
-    }
-    if (iconIds.includes("referrals")) {
-      return "Activates referral and past-client channels to lower acquisition cost compared with cold paid leads alone.";
-    }
-    if (iconIds.includes("crm")) {
-      return "Tightens pipeline visibility so every lead, follow-up, and consult is tracked in one place — improving speed to consult and close rate.";
-    }
-    if (iconIds.includes("creative")) {
-      return "Extends brand presence and creative reach so prospects recognize Pav Law before they search or call.";
-    }
-    if (iconIds.includes("efficiency")) {
-      return "Improves reporting and decision-making so leadership sees which channels and campaigns actually produce revenue.";
-    }
-    if (item.isRetainer || item.id === "RETAINER") {
-      return "Keeps campaigns live, measured, and optimized month over month so ad spend continues to produce consults at sustainable cost.";
-    }
-    return "";
-  }
-
-  function tableValueAdd(item) {
-    if (item.tableValue && String(item.tableValue).trim()) return String(item.tableValue).trim();
-
-    const parts = [];
-    const tldr = item.tldr ? cleanBusinessText(item.tldr) : "";
-    if (tldr && !isExecutionBlurb(tldr)) {
-      parts.push(/[.!?]$/.test(tldr) ? tldr : `${tldr}.`);
-    }
-
-    const bullets = businessBullets(item);
-    if (!parts.length && bullets.length) {
-      let b = bullets[0];
-      if (!/[.!?]$/.test(b)) b += ".";
-      parts.push(b);
-    }
-
-    if (!parts.length) {
-      const pitch = iconValuePitch(item);
-      if (pitch) parts.push(pitch);
-    }
-
-    if (!parts.length) {
-      const desc = stripInlineLinks(item.description || "");
-      const sent = desc.match(/[^.!?]+[.!?]+/);
-      if (sent) parts.push(sent[0].trim());
-    }
-
-    if (parts.length === 1 && bullets.length > 1) {
-      const extra = bullets.find(b => !parts[0].includes(b.slice(0, Math.min(28, b.length))));
-      if (extra) {
-        let e = extra;
-        if (!/[.!?]$/.test(e)) e += ".";
-        parts.push(e);
-      }
-    }
-
-    if (!parts.length) {
-      return `${item.title} — scoped work with clear timeline and marketing tied to consult volume and signed cases.`;
-    }
-
-    let out = parts.slice(0, 2).join(" ");
-    if (out.length > 300) out = out.slice(0, 297).trim() + "…";
-    return out;
-  }
-
   function briefValueAdd(item) {
-    return tableValueAdd(item);
-  }
-
-  function fullDescriptionText(item) {
-    const desc = item.description ? String(item.description).trim() : "";
-    const edu = item.marketingEducation ? String(item.marketingEducation).trim() : "";
-    if (!edu) return desc;
-    if (desc && desc.toLowerCase().includes(edu.slice(0, Math.min(48, edu.length)).toLowerCase())) return desc;
-    return [desc, edu].filter(Boolean).join("\n\n");
-  }
-
-  function itemTldr(item) {
-    if (item.tldr && String(item.tldr).trim()) return String(item.tldr).trim();
     const bullets = valueAddedBullets(item);
     if (bullets.length) {
-      let b = String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim().replace(/^[-•]\s*/, "");
-      if (!/[.!?]$/.test(b)) b += ".";
-      return b;
+      const b = String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim();
+      return b.length > 110 ? b.slice(0, 107).trim() + "…" : b;
     }
-    return elevatorPitch(item);
+    const v = buildBusinessValue(item);
+    if (v.why) return v.why.length > 110 ? v.why.slice(0, 107).trim() + "…" : v.why;
+    return conciseDescription(item);
   }
 
-  function valueAddedListHtml(item) {
-    const bullets = valueAddedBullets(item);
-    if (!bullets.length) return "";
-    return `<ul class="card-objectives card-summary-bullets">${bullets.map(b => {
-      const text = String(b).replace(/^Deliverable:\s*/i, "").trim();
-      return `<li>${mdLinksToHtml(text)}</li>`;
-    }).join("")}</ul>`;
-  }
-
-  function cardMetaFieldsHtml() {
-    return "";
-  }
-
-  /** Prefer a short bullet list from Value Added + Description (deduped). */
-  function conciseDescriptionBullets(item) {
-    const seen = new Set();
-    const out = [];
-    const push = raw => {
-      let t = cleanBusinessText(String(raw || "").replace(/^Deliverable:\s*/i, "").trim());
-      t = t.replace(/^[-•*]\s*/, "").trim();
-      if (!t || isExecutionBlurb(t)) return;
-      const key = t.toLowerCase().replace(/\s+/g, " ").slice(0, 72);
-      if (seen.has(key)) return;
-      seen.add(key);
-      out.push(t);
-    };
-
-    valueAddedBullets(item).forEach(push);
-
-    const desc = fullDescriptionText(item);
+  function descriptionHtml(item) {
+    const parts = [];
+    const desc = item.description ? String(item.description).trim() : "";
     if (desc) {
-      const lines = String(desc)
-        .split(/\n+/)
-        .map(l => l.replace(/^[-•*\d.)\s]+/, "").trim())
-        .filter(Boolean);
-      if (lines.length > 1) {
-        lines.forEach(push);
-      } else if (!out.length) {
-        const sents = String(desc).match(/[^.!?]+[.!?]+/g) || [desc];
-        sents.slice(0, 4).forEach(s => push(s.trim()));
-      } else {
-        const sents = String(desc).match(/[^.!?]+[.!?]+/g) || [];
-        sents.slice(0, 2).forEach(s => {
-          const t = s.trim();
-          const overlap = out.some(b => {
-            const a = b.toLowerCase().slice(0, 32);
-            const c = t.toLowerCase().slice(0, 32);
-            return a && c && (b.toLowerCase().includes(c) || t.toLowerCase().includes(a));
-          });
-          if (!overlap) push(t);
-        });
-      }
+      const descHtml = desc.includes("<a ") ? desc : mdLinksToHtml(escapeHtml(desc));
+      parts.push(`<p>${descHtml}</p>`);
     }
-
-    if (!out.length) {
-      const tldr = itemTldr(item);
-      if (tldr) push(tldr);
+    const bullets = valueAddedBullets(item);
+    if (bullets.length) {
+      parts.push(`<div class="card-tldr"><ul class="card-objectives">${bullets.map(b =>
+        `<li>${escapeHtml(String(b).replace(/^Deliverable:\s*/i, "").trim())}</li>`
+      ).join("")}</ul></div>`);
     }
-
-    return out.slice(0, 6);
+    const edu = item.marketingEducation && String(item.marketingEducation).trim();
+    if (edu) {
+      parts.push(`<div class="card-principles">${marketingEducationToHtml(edu)}</div>`);
+    }
+    if (!parts.length) return "";
+    return `<div class="card-description">${parts.join("")}</div>`;
   }
 
-  function conciseDescriptionBulletsHtml(item) {
-    const bullets = conciseDescriptionBullets(item);
-    if (!bullets.length) return "";
-    return `<ul class="card-objectives card-summary-bullets">${bullets.map(b =>
-      `<li>${mdLinksToHtml(b)}</li>`
-    ).join("")}</ul>`;
+  function marketingEducationToHtml(text) {
+    if (!text) return "";
+    return mdLinksToHtml(String(text))
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .split(/\n\n+/)
+      .map(p => `<p>${p.trim()}</p>`)
+      .join("");
   }
 
   function progressHtml(item) {
     const done = (item.completedItems || []).map(t =>
       `<li><span class="progress-check done" aria-hidden="true">✓</span><span>${escapeHtml(t)}</span></li>`
     ).join("");
-    const todo = (item.inProgressItems || []).map(t =>
+    const wip = (item.inProgressItems || []).map(t =>
       `<li><span class="progress-check open" aria-hidden="true"></span><span>${escapeHtml(t)}</span></li>`
     ).join("");
-    if (!done && !todo) return "";
-    return `<div class="progress-split card-progress-lists">
-      ${todo ? `<div class="progress-col progress-todo"><h4>To Do</h4><ul class="progress-list">${todo}</ul></div>` : ""}
+    if (!done && !wip) return "";
+    return `<div class="progress-split">
+      ${wip ? `<div class="progress-col progress-wip"><h4>WIP</h4><ul class="progress-list">${wip}</ul></div>` : ""}
       ${done ? `<div class="progress-col progress-completed"><h4>Completed</h4><ul class="progress-list">${done}</ul></div>` : ""}
     </div>`;
   }
 
-  function descriptionHtml(item) {
-    const progress = progressHtml(item);
-    return `<div class="card-summary card-merged-desc">
-      ${conciseDescriptionBulletsHtml(item)}
-      ${progress ? `<div class="card-progress-under">${progress}</div>` : ""}
-    </div>`;
-  }
-
-  function marketingEducationToHtml(text) {
-    if (!text) return "";
-    return projectTextToHtml(String(text))
-      .split(/\n\n+/)
-      .map(p => `<p>${p.trim()}</p>`)
-      .join("");
-  }
-
   function expandBtnLabel(item, exp) {
-    const chevron = `<span class="expand-btn-chevron" aria-hidden="true">${exp ? "▴" : "▾"}</span>`;
-    if (exp) return `${chevron}<span class="expand-btn-text">Hide current status</span>`;
-    return `${chevron}<span class="expand-btn-text">Expand for current status</span>`;
-  }
-
-  function cardDetailBodyHtml() {
-    return "";
-  }
-
-  function cardFeaturedImageHtml(item) {
-    const src = item.featuredImage && String(item.featuredImage).trim();
-    if (!src) return "";
-    return `<img class="card-featured-image" src="${escapeHtml(src)}" alt="" loading="lazy">`;
-  }
-
-  function cardReferenceLinkHtml() {
-    return "";
-  }
-
-  function closeAllCommentPopovers() {
-    document.querySelectorAll(".research-comment-popover").forEach(el => {
-      el.hidden = true;
-    });
-    document.querySelectorAll(".research-comment-tag").forEach(btn => btn.setAttribute("aria-expanded", "false"));
-  }
-
-  function toggleCommentPopover(id, root) {
-    const scope = root || document;
-    const pop = scope.querySelector(`.research-comment-popover[data-id="${id}"]`);
-    const btn = scope.querySelector(`.research-comment-tag[data-id="${id}"]`);
-    if (!pop) return;
-    const willOpen = pop.hidden;
-    closeAllCommentPopovers();
-    if (willOpen) {
-      pop.hidden = false;
-      if (btn) btn.setAttribute("aria-expanded", "true");
-      const ta = pop.querySelector(".project-note");
-      if (ta) ta.focus();
-    }
-  }
-
-  function syncCommentTag(id, root) {
-    const scope = root || document;
-    const note = (state.notes[id] || "").trim();
-    scope.querySelectorAll(`.research-comment-tag[data-id="${id}"]`).forEach(btn => {
-      btn.textContent = note ? "Comment ✓" : "+ Comment";
-      btn.classList.toggle("has-note", !!note);
-    });
-  }
-
-  function formatGilbertChatText(chat) {
-    if (!Array.isArray(chat) || !chat.length) return "(none)";
-    return chat.map(msg => {
-      const who = msg.role === "gilbert" ? GUIDE_SHORT : "Client";
-      return `${who}: ${msg.text || ""}`;
-    }).join("\n");
-  }
-
-  function formatActivityEmailBody(payload) {
-    const lines = [
-      "Gilbert project guide — activity log",
-      "",
-      "Submitted: " + (payload.submittedAt || new Date().toISOString()),
-      "Email: " + (payload.submitterEmail || "(not provided)"),
-      "",
-      "Gilbert chat:",
-      formatGilbertChatText(payload.gilbertChat),
-      "",
-      "Per-project comments:"
-    ];
-    const noteEntries = Object.entries(payload.projectNotes || {});
-    if (noteEntries.length) {
-      noteEntries.forEach(([id, text]) => lines.push(`  ${id}: ${text}`));
-    } else {
-      lines.push("  (none)");
-    }
-    lines.push("", "Projects selected:");
-    (payload.projects || []).forEach(p => lines.push(`  • ${p.id} — ${p.title} — ${p.fee}`));
-    if (payload.retainer) lines.unshift("Retainer: YES — " + (payload.retainerFee || ""));
-    lines.push("", "Action items (from selections):");
-    lines.push(formatActionItemsText(payload.actionItems));
-    lines.push("", "Next steps:");
-    lines.push(payload.nextStepsText || "(none)");
-    return lines.join("\n");
-  }
-
-  function emailActivityLog(payload) {
-    const to = CONFIG.notifyEmail || "support@gildedgooselimited.com";
-    const subject = encodeURIComponent("Gilbert picker — chat & comments — " + (payload.submitterEmail || "submission"));
-    const body = encodeURIComponent(formatActivityEmailBody(payload));
-    window.location.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
+    const hasProgress = hasPartialProgress(item);
+    if (hasProgress) return exp ? "Hide details" : "Show details";
+    return exp ? "Hide notes" : "Questions & notes";
   }
 
   function valueAddedBullets(item) {
@@ -2284,17 +649,11 @@
   }
 
   function mdLinksToHtml(text) {
-    return projectTextToHtml(text);
-  }
-
-  function projectTextToHtml(text) {
     if (!text) return "";
-    let s = String(text);
-    s = s.replace(/<a\s+[^>]*href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi, (_m, _url, label) => String(label).trim());
-    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label) => String(label).trim());
-    s = escapeHtml(s)
-      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-    return s;
+    return String(text).replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
   }
 
   function isRequiredMaintenance(item, isRetainer) {
@@ -2302,38 +661,28 @@
   }
 
   function ensureRequiredMaintenance() {
-    if (isRequiredProject(RETAINER, true)) {
-      state.retainer = true;
-      state.recommended.add("RETAINER");
-    }
-    PROJECTS.forEach(p => {
-      if (!isRequiredProject(p, false)) return;
-      trySetProjectInCart(p.id, true, { silent: true });
-      if (state.projects.has(p.id)) state.recommended.add(p.id);
-    });
+    state.retainer = true;
   }
 
   function isInRecommendedPackage(item) {
-    return isIndexDefaultSelected(item, !!item.isRetainer);
-  }
-
-  /** Fresh cart from INDEX Status: Required (locked) + Recommended. */
-  function applyIndexDefaultSelections() {
-    if (isIndexDefaultSelected(RETAINER, true)) {
-      state.retainer = true;
-      state.recommended.add("RETAINER");
-    }
-    PROJECTS.forEach(p => {
-      if (!isIndexDefaultSelected(p, false)) return;
-      if (isCompletedStatus(p) || isPlanningPublish(p)) return;
-      trySetProjectInCart(p.id, true, { silent: true });
-      if (state.projects.has(p.id)) state.recommended.add(p.id);
-    });
-    ensureRequiredMaintenance();
+    const pkg = PROJECT_DATA.recommendedPackage;
+    if (!pkg) return false;
+    if (item.isRetainer || item.id === "RETAINER") return !!pkg.retainer;
+    return (pkg.projectIds || []).includes(item.id);
   }
 
   function applyRecommendedPackage() {
-    applyIndexDefaultSelections();
+    const pkg = PROJECT_DATA.recommendedPackage;
+    if (!pkg) return;
+    if (pkg.retainer) {
+      state.retainer = true;
+      state.recommended.add("RETAINER");
+    }
+    (pkg.projectIds || []).forEach(id => {
+      state.projects.add(id);
+      state.recommended.add(id);
+    });
+    ensureRequiredMaintenance();
   }
 
   function renderPackageIntro() {
@@ -2378,19 +727,11 @@
 
   function allItemsByPriority() {
     return [{ ...RETAINER, isRetainer: true }, ...PROJECTS.map(p => ({ ...p, isRetainer: false }))]
-      .sort((a, b) => {
-        const planDiff = (isPlanningPublish(a) ? 1 : 0) - (isPlanningPublish(b) ? 1 : 0);
-        if (planDiff !== 0) return planDiff;
-        return (a.priority ?? 99) - (b.priority ?? 99);
-      });
+      .sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
   }
 
   function sortByPriority(items) {
-    return [...items].sort((a, b) => {
-      const planDiff = (isPlanningPublish(a) ? 1 : 0) - (isPlanningPublish(b) ? 1 : 0);
-      if (planDiff !== 0) return planDiff;
-      return (a.priority ?? 99) - (b.priority ?? 99);
-    });
+    return [...items].sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
   }
 
   function tocItemFee(item) {
@@ -2398,101 +739,28 @@
     return itemSelectionCost(item);
   }
 
-  function tocSortableItems() {
-    return allItemsByPriority().filter(item => {
-      if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return true;
-      return !isCompletedStatus(item);
-    }).filter(item => itemMatchesIconFilters(item));
-  }
-
-  function ensureClientPriorityIds(baseItems) {
-    /* Seed reorder list from current score ranks (not stale INDEX Project score). */
-    const pool = tocSortableItems();
-    const scoreMap = buildUniqueTocPriorityMap(pool);
-    const scoreSorted = sortTocItems(pool, scoreMap);
-    const items = baseItems || scoreSorted;
-    const ids = items.map(i => i.id);
-    if (!Array.isArray(state.clientPriorityIds) || !state.clientPriorityIds.length) {
-      state.clientPriorityIds = ids.slice();
-      return state.clientPriorityIds;
-    }
-    const known = new Set(state.clientPriorityIds);
-    const merged = state.clientPriorityIds.filter(id => ids.includes(id));
-    ids.forEach(id => {
-      if (!known.has(id)) merged.push(id);
-    });
-    state.clientPriorityIds = merged;
-    return state.clientPriorityIds;
-  }
-
-  function clientPriorityRank(item) {
-    if (!state.clientPriorityIds?.length) return null;
-    const idx = state.clientPriorityIds.indexOf(item.id);
-    return idx >= 0 ? idx + 1 : null;
-  }
-
-  function effectivePriority(item) {
-    const clientRank = clientPriorityRank(item);
-    if (clientRank != null) return clientRank;
-    return item.priority ?? 99;
-  }
-
-  function moveClientPriority(id, dir) {
-    ensureClientPriorityIds();
-    const list = state.clientPriorityIds.slice();
-    const i = list.indexOf(id);
-    if (i < 0) return;
-    const j = i + dir;
-    if (j < 0 || j >= list.length) return;
-    [list[i], list[j]] = [list[j], list[i]];
-    state.clientPriorityIds = list;
-    state.tocSort = { field: "priority", dir: "asc" };
-    saveState();
-    renderProjectToc();
-  }
-
-  function setPriorityEdit(on) {
-    state.priorityEdit = !!on;
-    if (state.priorityEdit) {
-      state.tocExpanded = true;
-      ensureClientPriorityIds();
-      state.tocSort = { field: "priority", dir: "asc" };
-    }
-    saveState();
-    renderProjectToc();
-  }
-
-  function sortTocItems(items, priorityMap) {
+  function sortTocItems(items) {
     const { field, dir } = state.tocSort;
     const mult = dir === "asc" ? 1 : -1;
-    const useClientOrder = state.clientPriorityIds?.length && field === "priority";
-    const ranks = priorityMap || (field === "priority" && !useClientOrder
-      ? buildUniqueTocPriorityMap(items)
-      : null);
+    const pathOrder = state.pathMatchIds && state.pathMatchIds.length
+      ? new Map(state.pathMatchIds.map((id, i) => [id, i]))
+      : null;
     return [...items].sort((a, b) => {
-      /* Selected-first only for non-priority sorts so Priority ▲/▼ can fully invert. */
-      if (field !== "priority" && !useClientOrder) {
-        const aSel = isItemSelected(a);
-        const bSel = isItemSelected(b);
-        if (aSel !== bSel) return aSel ? -1 : 1;
+      const aSel = isItemSelected(a);
+      const bSel = isItemSelected(b);
+      if (aSel !== bSel) return aSel ? -1 : 1;
+      if (pathOrder) {
+        const ia = pathOrder.has(a.id) ? pathOrder.get(a.id) : 999;
+        const ib = pathOrder.has(b.id) ? pathOrder.get(b.id) : 999;
+        if (ia !== ib) return ia - ib;
       }
-      const planDiff = (isPlanningPublish(a) ? 1 : 0) - (isPlanningPublish(b) ? 1 : 0);
-      if (planDiff !== 0) return planDiff;
       if (field === "fee") {
         const diff = tocItemFee(a) - tocItemFee(b);
-        return diff !== 0 ? mult * diff : mult * (effectivePriority(a) - effectivePriority(b));
+        return diff !== 0 ? mult * diff : mult * ((a.priority ?? 99) - (b.priority ?? 99));
       }
-      if (useClientOrder) {
-        const ap = effectivePriority(a);
-        const bp = effectivePriority(b);
-        if (ap !== bp) return mult * (ap - bp);
-        return mult * (tocItemFee(a) - tocItemFee(b));
-      }
-      const ap = ranks?.has(a.id) ? ranks.get(a.id) : (a.priority ?? 99);
-      const bp = ranks?.has(b.id) ? ranks.get(b.id) : (b.priority ?? 99);
+      const ap = a.priority ?? 99;
+      const bp = b.priority ?? 99;
       if (ap !== bp) return mult * (ap - bp);
-      const newness = projectNewnessScore(b) - projectNewnessScore(a);
-      if (newness !== 0) return newness;
       return mult * (tocItemFee(a) - tocItemFee(b));
     });
   }
@@ -2502,10 +770,7 @@
     const arrow = document.getElementById("sort-arrow-priority");
     if (!btn || !arrow) return;
     btn.classList.add("active");
-    const dir = state.tocSort.field === "priority" ? state.tocSort.dir : "asc";
-    arrow.textContent = dir === "asc" ? "▲" : "▼";
-    btn.setAttribute("aria-sort", dir === "asc" ? "ascending" : "descending");
-    btn.title = dir === "asc" ? "Project score ascending — click for descending" : "Project score descending — click for ascending";
+    arrow.textContent = state.tocSort.dir === "asc" ? "▲" : "▼";
   }
 
   function toggleTocSort(field) {
@@ -2518,50 +783,36 @@
     renderProjectToc();
   }
 
-  function gilbertRankedPicks(limit) {
-    const goal = state.goalText.trim();
-    const pool = getAllItems().filter(item => {
-      if (isCompletedStatus(item)) return false;
-      if (isRequiredProject(item, !!item.isRetainer)) return false;
-      if (item.monthlyOnly && !isItemSelected(item)) return false;
-      if (item.isRetainer) return true;
-      if (isPlanningPublish(item) && !isItemSelected(item)) return false;
-      return !isResearchStatus(item) || isItemSelected(item);
-    });
-
-    if (goal) {
-      const words = goal.toLowerCase().split(/\W+/).filter(w => w.length > 2);
-      const ranked = pool
-        .map(item => {
-          let score = scoreItemForGoal(item, words) * 5;
-          score += Math.max(0, computeProjectScore(item)) * 0.5;
-          const id = item.isRetainer ? "RETAINER" : item.id;
-          if (isItemSelected(item)) score += 18;
-          if (state.recommended.has(id)) score += 10;
-          return { item, score };
-        })
-        .filter(x => x.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, limit || 5)
-        .map(x => x.item);
-      if (ranked.length) return ranked;
-    }
-
-    const fallback = sortByPriority(pool.filter(item => {
+  function renderCondensedToc() {
+    const el = document.getElementById("toc-condensed");
+    if (!el) return;
+    const hasRun = !!state.goalText.trim() || state.projects.size > 0 || state.recommended.size > 1;
+    const picked = sortByPriority(getAllItems().filter(item => {
       const id = item.isRetainer ? "RETAINER" : item.id;
       return state.recommended.has(id) || isItemSelected(item);
     }));
-    return fallback.slice(0, limit || 5);
-  }
-
-  function renderCondensedToc() {
-    /* Gilbert's picks live only in Pav Priorities (do-next-panel). */
-    const el = document.getElementById("toc-condensed");
-    if (el) {
+    if (!hasRun || !picked.length) {
       el.hidden = true;
       el.innerHTML = "";
+      return;
     }
-    renderDoNextPanel();
+    const top5 = picked.slice(0, 5);
+    el.hidden = false;
+    el.innerHTML = `<div class="toc-condensed-inner">
+      <h4 class="toc-condensed-title">Path matches — quick view</h4>
+      <ol class="toc-condensed-list">${top5.map(item =>
+        `<li><a href="#project-${item.id}">${escapeHtml(item.title)}</a><span class="toc-condensed-blurb">${escapeHtml(briefValueAdd(item))}</span></li>`
+      ).join("")}</ol>
+      ${picked.length > 5 ? `<p class="toc-condensed-more">+ ${picked.length - 5} more in the full table below</p>` : ""}
+      <button type="button" class="btn btn-secondary btn-sm" id="toc-condensed-open">Open full table of contents</button>
+    </div>`;
+    el.querySelector("#toc-condensed-open")?.addEventListener("click", () => {
+      const toc = document.getElementById("project-toc");
+      if (toc) {
+        toc.open = true;
+        toc.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
   }
 
   function renderProjectToc() {
@@ -2570,73 +821,39 @@
     const hintEl = document.getElementById("toc-summary-hint");
     const expandEl = document.getElementById("toc-expand-row");
     if (!listEl) return;
-    const baseItems = tocSortableItems();
-    const useClientRanks = !!(state.clientPriorityIds?.length);
-    const priorityMap = useClientRanks ? null : buildUniqueTocPriorityMap(baseItems);
-    const items = sortTocItems(baseItems, priorityMap);
-    if (state.priorityEdit) ensureClientPriorityIds(items);
-    const visibleItems = state.tocExpanded || state.priorityEdit ? items : items.slice(0, 5);
+    const items = sortTocItems(allItemsByPriority().filter(item => itemMatchesIconFilters(item)));
+    const visibleItems = state.tocExpanded ? items : items.slice(0, 5);
     const usedPriorities = new Set();
-    listEl.innerHTML = visibleItems.map((item, rowIdx) => {
+    listEl.innerHTML = visibleItems.map(item => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
-      const isRetainer = !!item.isRetainer || item.id === "RETAINER";
-      const required = isRequiredMaintenance(item, isRetainer);
-      const chkDisabled = required ? " disabled" : "";
-      const abPending = hasAbQuestions(item) && !abQuestionAnswered(item.id);
-      const abTitle = abPending ? ' title="Blocked: answer before cart"' : "";
-      const chkClass = isRetainer ? "toc-proj-chk" : "proj-chk toc-proj-chk";
-      const displayPriority = useClientRanks
-        ? (clientPriorityRank(item) || rowIdx + 1)
-        : uniqueTocPriority(item, usedPriorities, priorityMap);
-      const editControls = state.priorityEdit
-        ? `<span class="toc-prio-edit">
-            <button type="button" class="toc-prio-btn" data-prio-move="up" data-id="${escapeHtml(item.id)}" title="Move up" aria-label="Move ${escapeHtml(item.title)} up">↑</button>
-            <button type="button" class="toc-prio-btn" data-prio-move="down" data-id="${escapeHtml(item.id)}" title="Move down" aria-label="Move ${escapeHtml(item.title)} down">↓</button>
-          </span>`
-        : "";
-      const statusNorm = normalizeStatus(item);
-      const statusRowClass =
-        statusNorm === "recommended"
-          ? " toc-status-recommended"
-          : statusNorm === "wip"
-            ? " toc-status-wip"
-            : "";
-      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}${isPlanningPublish(item) ? " toc-planning" : ""}${statusRowClass}${state.priorityEdit ? " toc-prio-editing" : ""}" data-id="${item.id}" data-retainer="${isRetainer}" data-required="${required}" data-status="${statusNorm}">
-        <td class="toc-col-select">
-          <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
-        </td>
+      const blurb = briefValueAdd(item);
+      const displayPriority = uniqueTocPriority(item, usedPriorities);
+      return `<tr class="toc-item${selected ? " row-selected" : ""}${inPkg ? " row-package" : ""}" data-id="${item.id}">
         <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span></td>
-        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a>${editControls}</td>
+        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
+        <td class="toc-col-blurb toc-blurb">${escapeHtml(blurb)}</td>
+        <td class="toc-col-icons toc-value">${valueIconsHtml(item)}</td>
       </tr>`;
     }).join("");
-    const editBtn = document.getElementById("toc-priority-edit");
-    if (editBtn) {
-      editBtn.textContent = state.priorityEdit ? "Done" : "Reorder scores";
-      editBtn.setAttribute("aria-pressed", state.priorityEdit ? "true" : "false");
-      editBtn.title = state.priorityEdit
-        ? "Finish reordering project scores"
-        : "Reorder projects for your preferred project score";
-    }
-    document.getElementById("project-toc")?.classList.toggle("priority-editing", state.priorityEdit);
     if (hintEl) {
       const selCount = items.filter(i => isItemSelected(i)).length;
-      const countLabel = state.tocExpanded || state.priorityEdit || items.length <= 5
-        ? `${items.length} projects`
-        : `Top 5 of ${items.length} projects`;
-      hintEl.textContent = state.priorityEdit
-        ? "Use ↑ ↓ to set your priority order, then Done"
-        : (selCount ? `${countLabel} · ${selCount} selected` : countLabel);
+      const countLabel = state.tocExpanded || items.length <= 5 ? `${items.length} projects` : `Top 5 of ${items.length} projects`;
+      hintEl.textContent = selCount ? `${countLabel} · ${selCount} selected` : countLabel;
     }
     if (statusEl) {
       const total = allItemsByPriority().length;
       const shown = items.length;
-      statusEl.textContent = state.iconFilters.length && shown !== total
-        ? `Showing ${shown} of ${total} projects (icon filter)`
-        : (state.priorityEdit ? "Editing client priority order — saved with your submission." : "");
+      if (state.iconFilters.length && shown !== total) {
+        statusEl.textContent = state.surveyDone
+          ? `Showing ${shown} of ${total} projects (your path)`
+          : `Showing ${shown} of ${total} projects (icon filter)`;
+      } else {
+        statusEl.textContent = "";
+      }
     }
     if (expandEl) {
-      if (items.length > 5 && !state.priorityEdit) {
+      if (items.length > 5) {
         expandEl.hidden = false;
         expandEl.innerHTML = state.tocExpanded
           ? `<button type="button" class="btn btn-secondary btn-sm toc-expand-btn" data-expand="top">Show top 5 only</button>`
@@ -2704,145 +921,292 @@
   }
 
   function suggestPlan(silent) {
-    const goal = document.getElementById("goal-input").value.trim();
-    state.goalText = goal;
+    /* Survey drives filters — keep package recommendations only when no path is set. */
     state.recommended = new Set();
     ensureRequiredMaintenance();
     state.recommended.add("RETAINER");
-    let added = 0;
-
-    if (goal) {
-      const words = goal.toLowerCase().split(/\W+/).filter(Boolean);
-      const scored = getAllItems().map(item => ({
-        item, score: scoreItemForGoal(item, words), isRetainer: item.isRetainer
-      })).filter(s => s.score > 0).sort((a, b) => b.score - a.score);
-
-      scored.slice(0, 6).forEach(({ item, isRetainer }) => {
-        if (isRetainer || item.monthlyOnly) return;
-        if (!itemPassesCostPriorityFilter({ ...item, isRetainer: false })) return;
-        if (!state.projects.has(item.id) && trySetProjectInCart(item.id, true, { silent: true })) added += 1;
-        else if (state.projects.has(item.id)) state.recommended.add(item.id);
+    if (!state.surveyDone) {
+      const pkg = PROJECT_DATA.recommendedPackage;
+      (pkg?.projectIds || []).forEach(id => {
+        const p = PROJECTS.find(x => x.id === id);
+        if (p && itemPassesCostPriorityFilter({ ...p, isRetainer: false })) {
+          state.recommended.add(id);
+        }
       });
-
-      if (!scored.length && !silent) showToast("No strong matches — try different keywords", true);
-      else if (added > 0 && !silent) {
-        showToast(`Added ${added} project${added === 1 ? "" : "s"} to your cart`);
-      }
     } else {
-      applyIndexDefaultSelections();
+      const ranked = state.pathMatchIds && state.pathMatchIds.length
+        ? state.pathMatchIds.map(id => PROJECTS.find(p => p.id === id)).filter(Boolean)
+        : allItemsByPriority().filter(item => itemMatchesIconFilters(item));
+      ranked.slice(0, 8).forEach(item => {
+        if (!item.isRetainer && item.id !== "RETAINER") state.recommended.add(item.id);
+      });
     }
-
+    if (!silent) { /* no toast — survey applySurveyFilters handles feedback */ }
     saveState();
     renderAllCards();
     renderSummary();
-  }
-
-  let suggestTimer;
-  function scheduleSuggestPlan() {
-    clearTimeout(suggestTimer);
-    suggestTimer = setTimeout(() => suggestPlan(true), 350);
+    renderCondensedToc();
   }
 
   function clearFilters() {
-    resetBestFitSession();
-    document.getElementById("goal-input").value = "";
+    resetSurvey(true);
+  }
+
+  function resetSurvey(keepCart) {
     state.goalText = "";
-    state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+    state.surveyNode = GILBERT_SURVEY.start;
+    state.surveyPath = [];
+    state.surveyDone = false;
     state.iconFilters = [];
-    state.projects = new Set();
-    state.recommended = new Set();
-    state.doNextVisible = false;
-    applyIndexDefaultSelections();
-    renderGilbertChat();
+    state.pathMatchIds = [];
+    if (!keepCart) {
+      state.projects = new Set();
+      state.recommended = new Set();
+      ensureRequiredMaintenance();
+    }
+    renderGilbertSurvey();
     renderValueIconKey();
-    suggestPlan(true);
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+    saveState();
+  }
+
+  function surveyChoiceByPath() {
+    const out = [];
+    for (const step of state.surveyPath) {
+      const node = GILBERT_SURVEY.nodes[step.nodeId];
+      const choice = node?.choices?.find(c => c.id === step.choiceId);
+      if (choice) out.push({ nodeId: step.nodeId, choice });
+    }
+    return out;
+  }
+
+  function iconsFromSurveyPath() {
+    const icons = [];
+    surveyChoiceByPath().forEach(({ choice }) => {
+      (choice.icons || []).forEach(id => {
+        if (!icons.includes(id)) icons.push(id);
+      });
+    });
+    return icons;
+  }
+
+  function goalFromSurveyPath() {
+    const parts = surveyChoiceByPath().map(({ choice }) => choice.goal || choice.label).filter(Boolean);
+    return parts.join(" · ");
+  }
+
+  function pathChoiceIds() {
+    const steps = surveyChoiceByPath();
+    return {
+      l1: steps[0]?.choice?.id || null,
+      l2: steps[1]?.choice?.id || null,
+      l3: steps[2]?.choice?.id || null
+    };
+  }
+
+  function resolvePathMatchIds() {
+    const { l1, l2, l3 } = pathChoiceIds();
+    const set1 = new Set((PATH_MAP.l1 && PATH_MAP.l1[l1]) || []);
+    const set2 = new Set((PATH_MAP.l2 && PATH_MAP.l2[l2]) || []);
+    const set3 = new Set((PATH_MAP.l3 && PATH_MAP.l3[l3]) || []);
+    if (!set1.size) return [];
+    const intersected = [...set1].filter(id => set2.has(id) || set3.has(id));
+    const min = PATH_MAP.minMatches || 3;
+    const ids = intersected.length >= min ? intersected : [...set1];
+    const layerScore = id => {
+      if (set1.has(id) && set2.has(id) && set3.has(id)) return 3;
+      if (set1.has(id) && set2.has(id)) return 2;
+      if (set1.has(id) && set3.has(id)) return 1;
+      return 0;
+    };
+    ids.sort((a, b) => {
+      const d = layerScore(b) - layerScore(a);
+      if (d) return d;
+      const pa = PROJECTS.find(p => p.id === a)?.priority ?? 99;
+      const pb = PROJECTS.find(p => p.id === b)?.priority ?? 99;
+      return pa - pb;
+    });
+    return ids;
+  }
+
+  function applySurveyFilters() {
+    const icons = iconsFromSurveyPath();
+    state.iconFilters = icons.slice();
+    state.pathMatchIds = resolvePathMatchIds();
+    state.goalText = goalFromSurveyPath();
+    state.surveyDone = true;
+    state.tocExpanded = true;
+    const toc = document.getElementById("project-toc");
+    if (toc) toc.open = true;
+    renderValueIconKey();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+    renderCondensedToc();
+    saveState();
+    const matchCount = allItemsByPriority().filter(item => itemMatchesIconFilters(item)).length;
+    showToast(`${matchCount} project${matchCount === 1 ? "" : "s"} match this path`);
+  }
+
+  function selectSurveyChoice(choiceId) {
+    const node = GILBERT_SURVEY.nodes[state.surveyNode];
+    if (!node) return;
+    const choice = node.choices.find(c => c.id === choiceId);
+    if (!choice) return;
+    state.surveyPath.push({ nodeId: state.surveyNode, choiceId: choice.id });
+    if (choice.next === "done") {
+      applySurveyFilters();
+      renderGilbertSurvey();
+      return;
+    }
+    state.surveyNode = choice.next;
+    state.surveyDone = false;
+    renderGilbertSurvey();
+    saveState();
+  }
+
+  function renderGilbertSurvey() {
+    const el = document.getElementById("gilbert-survey-body") || document.getElementById("gilbert-survey");
+    if (!el) return;
+    const pathLabels = surveyChoiceByPath().map(({ choice }) => choice.label);
+    const crumbs = pathLabels.length
+      ? `<p class="survey-crumbs">Path so far: <strong>${escapeHtml(pathLabels.join(" → "))}</strong></p>`
+      : "";
+
+    if (state.surveyDone && state.surveyPath.length) {
+      const icons = iconsFromSurveyPath();
+      const matchCount = allItemsByPriority().filter(item => itemMatchesIconFilters(item)).length;
+      const tags = icons.map(id => {
+        const def = VALUE_ICON_DEFS.find(d => d.id === id);
+        if (!def) return `<span class="survey-tag">${escapeHtml(id)}</span>`;
+        return `<span class="survey-tag">${valueIconMarkup(def)}<span>${escapeHtml(def.label)}</span></span>`;
+      }).join("");
+      el.innerHTML = `${crumbs}
+        <p class="survey-result-meta"><strong>${matchCount}</strong> project${matchCount === 1 ? "" : "s"} match this path. Pick from the table below, or refine with value icons.</p>
+        <div class="survey-result-tags">${tags}</div>
+        <div class="survey-actions">
+          <button type="button" class="btn btn-primary" id="survey-jump-toc">View matching projects</button>
+          <button type="button" class="btn btn-secondary" id="survey-restart">Start over</button>
+        </div>`;
+      el.querySelector("#survey-restart")?.addEventListener("click", () => resetSurvey(true));
+      el.querySelector("#survey-jump-toc")?.addEventListener("click", () => {
+        const toc = document.getElementById("project-toc");
+        if (toc) {
+          toc.open = true;
+          toc.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+      return;
+    }
+
+    const nodeId = state.surveyNode || GILBERT_SURVEY.start;
+    const node = GILBERT_SURVEY.nodes[nodeId];
+    if (!node) {
+      el.innerHTML = `<p class="survey-result-meta">Questionnaire unavailable.</p>`;
+      return;
+    }
+    const choicesHtml = node.choices.map((c, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      return `<button type="button" class="survey-choice" data-choice="${escapeHtml(c.id)}">
+          <span class="survey-choice-num">${num}</span>
+          <span class="survey-choice-copy">
+            <span class="survey-choice-label">${escapeHtml(c.label)}</span>
+            ${c.hint ? `<span class="survey-choice-hint">${escapeHtml(c.hint)}</span>` : ""}
+          </span>
+          <span class="survey-choice-chevron" aria-hidden="true">›</span>
+        </button>`;
+    }).join("");
+    el.innerHTML = `${crumbs}
+      <p class="survey-prompt">${escapeHtml(node.prompt)}</p>
+      <div class="survey-choices" role="group" aria-label="${escapeHtml(node.prompt)}">${choicesHtml}</div>
+      ${state.surveyPath.length ? `<div class="survey-actions"><button type="button" class="btn btn-secondary btn-sm" id="survey-back">Back</button></div>` : ""}`;
+    el.querySelectorAll(".survey-choice").forEach(btn => {
+      btn.addEventListener("click", () => selectSurveyChoice(btn.dataset.choice));
+    });
+    el.querySelector("#survey-back")?.addEventListener("click", () => {
+      const last = state.surveyPath.pop();
+      state.surveyNode = last ? last.nodeId : GILBERT_SURVEY.start;
+      state.surveyDone = false;
+      state.iconFilters = [];
+      state.pathMatchIds = [];
+      state.goalText = "";
+      renderGilbertSurvey();
+      renderValueIconKey();
+      renderAllCards();
+      renderProjectToc();
+      renderSummary();
+      saveState();
+    });
   }
 
   function renderFilterStatus() {
     /* status shown via search suggestions + invoice summary */
   }
 
-  const CART_STORAGE_KEY = "pav-project-picker-v3";
-
   function loadState() {
     try {
-      const raw = localStorage.getItem(CART_STORAGE_KEY);
+      const raw = localStorage.getItem("pav-project-picker");
       if (!raw) {
-        applyIndexDefaultSelections();
+        applyRecommendedPackage();
+        ensureRequiredMaintenance();
         return;
       }
       const saved = JSON.parse(raw);
-      /* Notes / email / survey may persist. Cart always resets to INDEX Required +
-         Recommended so Best Fit and the invoice stay the same project set. */
+      state.retainer = !!saved.retainer;
+      state.projects = new Set(saved.projects || []);
       state.notes = saved.notes || {};
-      sanitizeCartForAbQ();
+      state.generalSuggestions = saved.generalSuggestions || "";
       state.submitterEmail = saved.submitterEmail || "";
+      if (state.generalSuggestions) document.getElementById("general-suggestions").value = state.generalSuggestions;
       if (state.submitterEmail) document.getElementById("submitted-email").value = state.submitterEmail;
       if (saved.invoicePaymentMonths != null) {
-        let monthsVal = String(saved.invoicePaymentMonths);
-        const monthsNum = Number(monthsVal);
-        if (monthsNum > 12) monthsVal = "12";
-        state.invoicePaymentMonths = monthsVal;
+        state.invoicePaymentMonths = saved.invoicePaymentMonths;
         const monthsEl = document.getElementById("invoice-payment-months");
-        if (monthsEl) monthsEl.value = monthsVal;
+        if (monthsEl) monthsEl.value = saved.invoicePaymentMonths;
       }
       updateInvoiceScheduleAmount();
-      if (saved.goalText) {
-        const gi = document.getElementById("goal-input");
-        if (gi) gi.value = saved.goalText;
-        state.goalText = saved.goalText;
-      }
-      if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.length) {
-        state.gilbertChat = saved.gilbertChat;
-      }
-      if (saved.surveyAnswers && typeof saved.surveyAnswers === "object") {
-        state.surveyAnswers = saved.surveyAnswers;
-      }
-      if (typeof saved.surveyStep === "number") state.surveyStep = saved.surveyStep;
-      if (saved.surveyDone != null) state.surveyDone = !!saved.surveyDone;
+      if (saved.goalText) state.goalText = saved.goalText;
+      if (Array.isArray(saved.surveyPath)) state.surveyPath = saved.surveyPath;
+      if (saved.surveyNode) state.surveyNode = saved.surveyNode;
+      if (saved.surveyDone) state.surveyDone = !!saved.surveyDone;
       if (Array.isArray(saved.iconFilters)) {
-        state.iconFilters = saved.iconFilters.filter(f => f && f !== "account-data");
+        state.iconFilters = saved.iconFilters;
       }
-      if (saved.doNextVisible != null) {
-        state.doNextVisible = !!saved.doNextVisible;
-      } else if (state.surveyDone || (Array.isArray(saved.gilbertChat) && saved.gilbertChat.some(m => m.role === "user"))) {
-        state.doNextVisible = true;
+      if (Array.isArray(saved.pathMatchIds)) {
+        state.pathMatchIds = saved.pathMatchIds;
+      } else if (state.surveyDone) {
+        state.pathMatchIds = resolvePathMatchIds();
       }
-      /* Client reorder is session-only. Restoring it from localStorage kept the old
-         Priority column after refresh and hid score ranking (+20 Recommended). */
-      state.clientPriorityIds = [];
       if (saved.expanded) state.expanded = new Set(saved.expanded);
       if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
-      state.retainer = false;
-      state.projects = new Set();
-      applyIndexDefaultSelections();
     } catch (e) {}
     ensureRequiredMaintenance();
   }
 
   function saveState() {
     ensureRequiredMaintenance();
+    state.generalSuggestions = document.getElementById("general-suggestions").value;
     state.submitterEmail = document.getElementById("submitted-email").value;
     syncPaymentTermsFromDom();
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({
+    localStorage.setItem("pav-project-picker", JSON.stringify({
       retainer: state.retainer,
       projects: [...state.projects],
       expanded: [...state.expanded],
       expandAll: isExpandAll(),
       notes: state.notes,
+      generalSuggestions: state.generalSuggestions,
       submitterEmail: state.submitterEmail,
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
       goalText: state.goalText,
-      gilbertChat: state.gilbertChat,
-      surveyStep: state.surveyStep,
-      surveyAnswers: state.surveyAnswers,
+      surveyNode: state.surveyNode,
+      surveyPath: state.surveyPath,
       surveyDone: state.surveyDone,
       iconFilters: state.iconFilters,
-      doNextVisible: state.doNextVisible,
-      clientPriorityIds: state.clientPriorityIds
+      pathMatchIds: state.pathMatchIds
     }));
-    try { localStorage.removeItem("pav-project-picker"); } catch (e) {}
     updateSubmitButtons();
   }
 
@@ -2853,151 +1217,8 @@
   }
 
   function hasAnyNotes() {
+    if (state.generalSuggestions || document.getElementById("general-suggestions").value.trim()) return true;
     return Object.values(state.notes).some(n => n && String(n).trim());
-  }
-
-  function hasGilbertActivity() {
-    if (state.surveyDone && state.goalText.trim()) return true;
-    return state.gilbertChat.some(m => m.role === "user" && String(m.text || "").trim());
-  }
-
-  function surveyOption(stepId, optionId) {
-    const q = GILBERT_SURVEY.find(s => s.id === stepId);
-    return q?.options?.find(o => o.id === optionId) || null;
-  }
-
-  function buildSurveyGoalText() {
-    const labels = [];
-    const tags = [];
-    GILBERT_SURVEY.forEach(q => {
-      const ans = state.surveyAnswers[q.id];
-      const opt = surveyOption(q.id, ans);
-      if (!opt) return;
-      labels.push(opt.label);
-      tags.push(opt.tags);
-    });
-    if (!labels.length) return "";
-    return `Survey fit: ${labels.join(" · ")}. Keywords: ${tags.join(" ")}`;
-  }
-
-  function applySurveyAndRecommend() {
-    activateBestFitSession();
-    const goal = buildSurveyGoalText();
-    state.goalText = goal;
-    const goalInput = document.getElementById("goal-input");
-    if (goalInput) goalInput.value = goal;
-    state.surveyDone = true;
-    state.doNextVisible = true;
-    const summaryBits = GILBERT_SURVEY.map(q => {
-      const opt = surveyOption(q.id, state.surveyAnswers[q.id]);
-      return opt ? opt.label : null;
-    }).filter(Boolean);
-    state.gilbertChat = [
-      { role: "gilbert", text: GILBERT_GREETING },
-      { role: "user", text: summaryBits.join(" → ") },
-      {
-        role: "gilbert",
-        text: pickGilbertReply(goal) ||
-          "Here's a shortlist that fits those answers — check Pav Priorities on the right."
-      }
-    ];
-    suggestPlan(true);
-    saveState();
-    renderGilbertSurvey();
-    renderCondensedToc();
-    renderDoNextPanel();
-    renderPlanSummary();
-    renderProjectToc();
-  }
-
-  function resetGilbertSurvey() {
-    resetBestFitSession();
-    state.surveyStep = 0;
-    state.surveyAnswers = {};
-    state.surveyDone = false;
-    state.goalText = "";
-    const goalInput = document.getElementById("goal-input");
-    if (goalInput) goalInput.value = "";
-    state.doNextVisible = false;
-    state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
-    saveState();
-    renderGilbertSurvey();
-    renderDoNextPanel();
-    renderCondensedToc();
-  }
-
-  function renderGilbertSurvey() {
-    const el = document.getElementById("gilbert-survey");
-    if (!el) return;
-
-    if (state.surveyDone && state.goalText.trim()) {
-      const picks = gilbertRankedPicks(3).map(p => p.title);
-      const pickLine = picks.length
-        ? ` Top fits: <strong>${picks.map(escapeHtml).join("</strong>, <strong>")}</strong>.`
-        : "";
-      el.innerHTML = `
-        <p class="gilbert-survey-progress">Survey complete</p>
-        <p class="gilbert-survey-summary">Gilbert matched projects from your answers.${pickLine} See the ranked list on the right — or retake the survey.</p>
-        <div class="gilbert-survey-nav">
-          <button type="button" class="btn-survey-ghost" data-survey-action="retake">Retake survey</button>
-        </div>`;
-      return;
-    }
-
-    const step = Math.min(Math.max(0, state.surveyStep | 0), GILBERT_SURVEY.length - 1);
-    const q = GILBERT_SURVEY[step];
-    const selected = state.surveyAnswers[q.id] || "";
-    const isLast = step === GILBERT_SURVEY.length - 1;
-    el.innerHTML = `
-      <p class="gilbert-survey-progress">Question ${step + 1} of ${GILBERT_SURVEY.length}</p>
-      <p class="gilbert-survey-prompt">${escapeHtml(q.prompt)}</p>
-      <ul class="gilbert-survey-options">${q.options.map(o =>
-        `<li><button type="button" data-survey-opt="${escapeHtml(o.id)}" class="${selected === o.id ? "is-selected" : ""}">${escapeHtml(o.label)}</button></li>`
-      ).join("")}</ul>
-      <div class="gilbert-survey-nav">
-        ${step > 0 ? `<button type="button" class="btn-survey-ghost" data-survey-action="back">Back</button>` : ""}
-        <button type="button" class="btn-survey-primary" data-survey-action="next" ${selected ? "" : "disabled"}>
-          ${isLast ? "See best-fit projects" : "Next"}
-        </button>
-      </div>`;
-  }
-
-  function bindGilbertSurvey() {
-    const el = document.getElementById("gilbert-survey");
-    if (!el || el.dataset.bound === "1") return;
-    el.dataset.bound = "1";
-    el.addEventListener("click", e => {
-      const optBtn = e.target.closest("[data-survey-opt]");
-      if (optBtn) {
-        const q = GILBERT_SURVEY[state.surveyStep];
-        if (!q) return;
-        state.surveyAnswers[q.id] = optBtn.getAttribute("data-survey-opt");
-        renderGilbertSurvey();
-        return;
-      }
-      const action = e.target.closest("[data-survey-action]");
-      if (!action) return;
-      const act = action.getAttribute("data-survey-action");
-      if (act === "retake") {
-        resetGilbertSurvey();
-        return;
-      }
-      if (act === "back") {
-        state.surveyStep = Math.max(0, state.surveyStep - 1);
-        renderGilbertSurvey();
-        return;
-      }
-      if (act === "next") {
-        const q = GILBERT_SURVEY[state.surveyStep];
-        if (!q || !state.surveyAnswers[q.id]) return;
-        if (state.surveyStep >= GILBERT_SURVEY.length - 1) {
-          applySurveyAndRecommend();
-          return;
-        }
-        state.surveyStep += 1;
-        renderGilbertSurvey();
-      }
-    });
   }
 
   function getNotesPayload() {
@@ -3016,129 +1237,67 @@
   }
 
   function isExpandAll() {
-    const ids = allProjectIds().filter(id => {
-      if (id === "RETAINER") return true;
-      const item = findProjectById(id);
-      return item && !isPlanningPublish(item);
-    });
+    const ids = allProjectIds();
     return ids.length > 0 && ids.every(id => state.expanded.has(id));
   }
 
   function syncExpandAllCheckbox() {
     const chk = document.getElementById("expand-all-projects");
-    if (!chk) return;
-    const on = isExpandAll();
-    chk.checked = on;
-    chk.setAttribute("aria-checked", on ? "true" : "false");
+    if (chk) chk.checked = isExpandAll();
   }
 
   function setExpandAll(open) {
-    if (open) {
-      allProjectIds().forEach(id => {
-        if (id === "RETAINER") {
-          state.expanded.add(id);
-          return;
-        }
-        const item = findProjectById(id);
-        if (item && isPlanningPublish(item)) return;
-        state.expanded.add(id);
-      });
-    } else state.expanded.clear();
+    if (open) allProjectIds().forEach(id => state.expanded.add(id));
+    else state.expanded.clear();
     saveState();
     renderAllCards();
-  }
-
-  function publishStatusBadgeHtml(item) {
-    if (!isPlanningPublish(item)) return "";
-    return `<span class="publish-status-badge" title="Research &amp; Planning">Research &amp; Planning</span>`;
   }
 
   function cardHtml(item, isRetainer, isFirstSelected) {
     const id = item.id;
     const required = isRequiredMaintenance(item, isRetainer);
     const sel = isRetainer ? state.retainer : state.projects.has(id);
-    const unpublished = !isRetainer && isPlanningPublish(item);
-    if (unpublished) state.expanded.delete(id);
-    const exp = !unpublished && state.expanded.has(id);
+    const exp = state.expanded.has(id);
     const extra = getItemFilterClasses(item, isRetainer);
     const pkgClass = isInRecommendedPackage({ ...item, isRetainer }) ? " package-included" : "";
-    const iconsHtml = cardCornerIconsHtml(item, isRetainer, true) || "";
+    const iconMarkup = cardCornerIconsHtml(item, isRetainer);
+    const iconsHtml = iconMarkup || "";
     const retainerClass = isRetainer ? " retainer-card required-retainer" : "";
     const maintClass = item.monthlyOnly ? ` maintenance-card${required ? " required-maintenance" : ""}` : "";
     const subClass = item.parentId ? " card-sub-related" : "";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const chkDisabled = required ? " disabled" : "";
-    const mutedClass = isPlanningPublish(item) || isResearchStatus(item) || isCompletedStatus(item) ? " status-muted" : "";
-    const planningClass = unpublished ? " publish-planning card-header-only" : "";
-    const abPending = hasAbQuestions(item) && !abQuestionAnswered(id);
-    const abClass = abPending ? " ab-q-pending" : (hasAbQuestions(item) ? " ab-q-cleared" : "");
-    const wipStarted = !isRetainer && item.status !== "completed" && (normalizeStatus(item) === "wip" || hasPartialProgress(item));
-    const wipClass = wipStarted ? " card-wip-started" : "";
-    const statusNorm = normalizeStatus(item);
-    const statusHighlightClass =
-      statusNorm === "recommended"
-        ? " card-status-recommended"
-        : statusNorm === "wip"
-          ? " card-status-wip"
-          : "";
-
-    if (unpublished) {
-      return `
-      <div class="card${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass}${wipClass}${statusHighlightClass} ${sel ? "selected" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}" data-status="${statusNorm}">
-        <div class="card-header">
-          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
-            <div class="card-body">
-              <div class="card-top-row">
-                <div class="card-title"><span>${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
-              </div>
-            </div>
-        </div>
-      </div>`;
-    }
 
     return `
-      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst}${mutedClass}${planningClass}${abClass}${wipClass}${statusHighlightClass} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}" data-ab-q="${hasAbQuestions(item) ? "1" : "0"}" data-publish="${normalizePublishStatus(item)}" data-status="${statusNorm}">
+      <div class="card${retainerClass}${maintClass}${subClass}${pkgClass}${selFirst} ${sel ? "selected" : ""} ${exp ? "expanded" : ""} ${extra}" id="project-${id}" data-id="${id}" data-retainer="${isRetainer}" data-required="${required}">
         <div class="card-header">
-          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
+          ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled)}
             <div class="card-body">
-              ${cardFeaturedImageHtml(item)}
-              ${cardReferenceLinkHtml(item)}
               <div class="card-top-row">
-                <div class="card-title"><span>${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
-                ${iconsHtml ? `<div class="card-title-icons">${iconsHtml}</div>` : ""}
+                <div class="card-title"><span>${escapeHtml(item.title)}</span></div>
+                ${iconsHtml}
               </div>
               ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
-              ${abQuestionsBannerHtml(item)}
               ${descriptionHtml(item)}
-            <button type="button" class="expand-btn" aria-expanded="${exp ? "true" : "false"}">${expandBtnLabel(item, exp)}</button>
+            <button type="button" class="expand-btn">${expandBtnLabel(item, exp)}</button>
           </div>
         </div>
         <div class="card-detail">
-          ${campaignMetricsHtml(item)}
-          ${cardDetailBodyHtml(item)}
+          ${progressHtml(item)}
+          <div class="detail-block">
+            <h4>Questions or suggestions</h4>
+            <textarea class="project-note" data-id="${id}" placeholder="Ask about scope, timing, or changes…">${escapeHtml(state.notes[id] || "")}</textarea>
+          </div>
         </div>
       </div>`;
   }
 
   function renderAllCards() {
-    renderViewLayout();
     const list = document.getElementById("project-list");
-    if (!list || state.activeViewTab !== "picker") {
-      if (state.activeViewTab === "impact") {
-        renderCompletedList();
-        renderRevenueCalculator();
-      }
-      return;
-    }
     const maintenance = sortCartFirst(getMaintenanceProjects());
-    const optional = sortCartFirst(activeOptionalProjects());
-    // Live cards first; Research & Planning (unpublished) always at bottom
-    const maintLive = maintenance.filter(p => !isPlanningPublish(p));
-    const maintPlan = maintenance.filter(p => isPlanningPublish(p));
-    const optLive = optional.filter(p => !isPlanningPublish(p));
-    const optPlan = optional.filter(p => isPlanningPublish(p));
-    const visible = visibleOptionalProjects(optLive);
-    const hidden = hiddenOptionalCount(optLive);
+    const optional = sortCartFirst(orderedProjects().filter(p => !p.monthlyOnly));
+    const visible = visibleOptionalProjects(optional);
+    const hidden = hiddenOptionalCount(optional);
     let markedFirst = false;
     const projectCards = visible.map(p => {
       const sel = state.projects.has(p.id);
@@ -3146,27 +1305,17 @@
       if (isFirst) markedFirst = true;
       return cardHtml(p, false, isFirst);
     }).join("");
-    const maintCards = maintLive.map(p => cardHtml(p, false, false)).join("");
+    const maintCards = maintenance.map(p => cardHtml(p, false, false)).join("");
     const showMoreBtn = hidden > 0
       ? `<div class="project-list-show-more"><button type="button" class="btn btn-secondary" id="show-more-projects">Show ${hidden} more project${hidden === 1 ? "" : "s"}</button></div>`
-      : state.showAllProjects && optLive.length > PROJECT_LIST_LIMIT
+      : state.showAllProjects && optional.length > PROJECT_LIST_LIMIT
         ? `<div class="project-list-show-more"><button type="button" class="btn btn-secondary" id="show-more-projects">Show fewer</button></div>`
         : "";
-    const planCards = maintPlan.concat(optPlan).map(p => cardHtml(p, false, false)).join("");
-    const planBlock = planCards
-      ? `<div class="research-planning-list" role="group" aria-label="Research and Planning"><div class="research-planning-heading">Research &amp; Planning</div>${planCards}</div>`
-      : "";
-    list.innerHTML = cardHtml(RETAINER, true, true) + maintCards + projectCards + showMoreBtn + planBlock;
+    list.innerHTML = cardHtml(RETAINER, true, true) + maintCards + projectCards + showMoreBtn;
     syncExpandAllCheckbox();
-    attachProjectListListeners(list);
-    attachProjectListListeners(document.getElementById("research-section-wrap"));
-  }
 
-  function attachProjectListListeners(root) {
-    if (!root) return;
-    const showMoreEl = root.querySelector("#show-more-projects") || document.getElementById("show-more-projects");
-    if (showMoreEl && !showMoreEl.dataset.bound) {
-      showMoreEl.dataset.bound = "1";
+    const showMoreEl = document.getElementById("show-more-projects");
+    if (showMoreEl) {
       showMoreEl.addEventListener("click", e => {
         e.preventDefault();
         state.showAllProjects = !state.showAllProjects;
@@ -3174,95 +1323,49 @@
       });
     }
 
-    root.querySelectorAll(".project-note").forEach(ta => {
-      if (ta.dataset.noteBound) return;
-      ta.dataset.noteBound = "1";
+    list.querySelectorAll(".project-note").forEach(ta => {
       ta.addEventListener("click", e => e.stopPropagation());
       ta.addEventListener("input", e => {
-        const pid = ta.dataset.id;
-        state.notes[pid] = e.target.value;
-        const item = findProjectById(pid);
-        if (item && hasAbQuestions(item) && !abQuestionAnswered(pid) && state.projects.has(pid)) {
-          state.projects.delete(pid);
-          showToast("Removed from cart — Blocked until Andrew's question is answered", true);
-        }
-        syncCommentTag(pid, root);
+        state.notes[ta.dataset.id] = e.target.value;
         saveState();
         updateSubmitButtons();
-        renderAllCards();
-        renderSummary();
       });
     });
 
-    root.querySelectorAll(".research-comment-tag").forEach(btn => {
-      if (btn.dataset.commentBound) return;
-      btn.dataset.commentBound = "1";
-      btn.addEventListener("click", e => {
-        e.stopPropagation();
-        toggleCommentPopover(btn.dataset.id, root);
-      });
-    });
-
-    root.querySelectorAll(".comment-popover-done").forEach(btn => {
-      if (btn.dataset.doneBound) return;
-      btn.dataset.doneBound = "1";
-      btn.addEventListener("click", e => {
-        e.stopPropagation();
-        closeAllCommentPopovers();
-      });
-    });
-
-    root.querySelectorAll('input[type="checkbox"]').forEach(chk => {
-      if (chk.dataset.chkBound) return;
-      chk.dataset.chkBound = "1";
+    list.querySelectorAll('input[type="checkbox"]').forEach(chk => {
       chk.addEventListener("change", e => {
         e.stopPropagation();
         const id = chk.dataset.id;
         const card = chk.closest(".card");
         if (card && card.dataset.required === "true") return;
-        const wantAdd = chk.checked;
-        if (!trySetProjectInCart(id, wantAdd)) {
-          chk.checked = !wantAdd;
-          return;
-        }
+        if (chk.checked) state.projects.add(id);
+        else state.projects.delete(id);
         saveState();
         renderAllCards();
         renderSummary();
       });
     });
 
-    root.querySelectorAll(".card").forEach(card => {
-      if (card.dataset.cardBound) return;
-      card.dataset.cardBound = "1";
+    list.querySelectorAll(".card").forEach(card => {
       card.addEventListener("click", e => {
-        if (e.target.type === "checkbox" || e.target.classList.contains("expand-btn") || e.target.closest("a") || e.target.closest(".required-icon") || e.target.closest(".ab-q-flag") || e.target.closest(".project-note") || e.target.closest(".research-comment-tag") || e.target.closest(".research-comment-popover")) return;
+        if (e.target.type === "checkbox" || e.target.classList.contains("expand-btn") || e.target.closest("a") || e.target.closest(".required-icon")) return;
         if (card.classList.contains("over-budget")) return;
         const id = card.dataset.id;
         if (card.dataset.required === "true") return;
-        const isRetainer = card.dataset.retainer === "true";
-        if (isRetainer) {
-          if (state.retainer) state.retainer = false;
-          else state.retainer = true;
-        } else if (state.projects.has(id)) {
-          trySetProjectInCart(id, false);
-        } else if (!trySetProjectInCart(id, true)) {
-          return;
-        }
+        if (state.projects.has(id)) state.projects.delete(id);
+        else state.projects.add(id);
         saveState();
         renderAllCards();
         renderSummary();
       });
-      const expandBtn = card.querySelector(".expand-btn");
-      if (expandBtn) {
-        expandBtn.addEventListener("click", e => {
-          e.stopPropagation();
-          const id = card.dataset.id;
-          if (state.expanded.has(id)) state.expanded.delete(id);
-          else state.expanded.add(id);
-          saveState();
-          renderAllCards();
-        });
-      }
+      card.querySelector(".expand-btn").addEventListener("click", e => {
+        e.stopPropagation();
+        const id = card.dataset.id;
+        if (state.expanded.has(id)) state.expanded.delete(id);
+        else state.expanded.add(id);
+        saveState();
+        renderAllCards();
+      });
     });
   }
 
@@ -3275,18 +1378,13 @@
   }
 
   function canContinue() {
-    return getInvoiceLineItems().length > 0 || hasAnyNotes() || hasGilbertActivity();
-  }
-
-  function isValidSubmitEmail(email) {
-    const e = String(email || "").trim();
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+    return getInvoiceLineItems().length > 0 || hasAnyNotes();
   }
 
   function canSubmit() {
     const email = (document.getElementById("submitted-email") || {}).value || "";
-    if (!isValidSubmitEmail(email)) return false;
-    return getInvoiceLineItems().length > 0 || hasAnyNotes() || hasGilbertActivity();
+    if (!email.trim()) return false;
+    return getInvoiceLineItems().length > 0 || hasAnyNotes();
   }
 
   function updateWebhookWarning() {
@@ -3301,10 +1399,37 @@
     el.innerHTML = "Live webhook not configured yet — submit still works: your selections download as JSON and are saved in this browser. For automatic email + Sheet logging, add GitHub Secret <strong>PAV_PICKER_WEBHOOK_URL</strong> and redeploy.";
   }
 
+  function selectionCountLabel() {
+    const lines = getInvoiceLineItems();
+    const n = lines.length;
+    if (!n) return "Continue to submit";
+    return `Continue to submit · ${n} item${n === 1 ? "" : "s"}`;
+  }
+
+  function renderConfirmSelectionSummary() {
+    const el = document.getElementById("confirm-selection-summary");
+    if (!el) return;
+    const lines = getInvoiceLineItems();
+    if (!lines.length) {
+      el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+    el.hidden = false;
+    el.innerHTML = `<h3>Your selections</h3>
+      <ol class="confirm-selection-list">${lines.map(row =>
+        `<li><strong>${escapeHtml(row.title)}</strong>${row.fee ? ` · ${escapeHtml(row.fee)}` : ""}</li>`
+      ).join("")}</ol>
+      <p class="confirm-selection-meta">${lines.length} item${lines.length === 1 ? "" : "s"} selected · deposit billed separately</p>`;
+  }
+
   function updateSubmitButtons() {
     CONFIG = getConfig();
     const cont = document.getElementById("continue-to-confirm");
-    if (cont) cont.disabled = !canContinue();
+    if (cont) {
+      cont.disabled = !canContinue();
+      cont.textContent = selectionCountLabel();
+    }
     const submit = document.getElementById("submit-selections");
     if (submit) {
       submit.disabled = !canSubmit();
@@ -3315,16 +1440,9 @@
 
   function showConfirmPage() {
     if (!canContinue()) return;
-    const guideImg = document.getElementById("confirm-gilbert");
-    if (guideImg) {
-      guideImg.src = GILBERT_LOGO;
-      guideImg.alt = "Gilded Goose Ltd.";
-    }
-    renderConfirmPlanReview();
+    renderConfirmSelectionSummary();
     document.getElementById("confirm-page").classList.add("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "false");
-    closeGilbertChat();
-    document.querySelector(".pav-guide-ask-section")?.setAttribute("hidden", "");
     updateInvoiceScheduleAmount();
     updateSubmitButtons();
     document.getElementById("submitted-email")?.focus();
@@ -3333,7 +1451,6 @@
   function hideConfirmPage() {
     document.getElementById("confirm-page").classList.remove("show");
     document.getElementById("confirm-page").setAttribute("aria-hidden", "true");
-    document.querySelector(".pav-guide-ask-section")?.removeAttribute("hidden");
   }
 
   function buildPayload() {
@@ -3350,7 +1467,6 @@
       feeNum: p.fee,
       timeline: p.timeline || "",
       priority: p.priority ?? null,
-      clientPriority: clientPriorityRank(p),
       parentId: p.parentId || null,
       monthlyOnly: true,
       paymentType: getPaymentType(p, false)
@@ -3362,7 +1478,6 @@
       feeNum: itemSelectionCost(p),
       timeline: p.timeline || "",
       priority: p.priority ?? null,
-      clientPriority: clientPriorityRank(p),
       parentId: p.parentId || null,
       paymentType: getPaymentType(p, false)
     }));
@@ -3378,7 +1493,7 @@
       invoicePaymentTotalFormatted: paymentTerms.months && paymentTerms.monthlyAmount != null
         ? fmt(paymentTerms.months * paymentTerms.monthlyAmount)
         : null,
-      goalText: document.getElementById("goal-input").value.trim(),
+      goalText: state.goalText || "",
       filterConsultingBudget: null,
       filterMediaBudget: null,
       retainer: state.retainer,
@@ -3387,31 +1502,14 @@
       retainerPaymentType: state.retainer ? getPaymentType(RETAINER, true) : null,
       maintenanceMonthly: fmt(maintMonthly),
       maintenanceMonthlyNum: maintMonthly,
-      depositAmount: paymentTerms.depositAmount != null && paymentTerms.depositAmount > 0
-        ? paymentTerms.depositAmount
-        : (CONFIG.depositAmount || null),
-      depositPct: paymentTerms.depositPct != null ? paymentTerms.depositPct : null,
-      paymentSurchargeRate: paymentTerms.surchargeRate != null ? paymentTerms.surchargeRate : null,
-      paymentSurchargeAmount: paymentTerms.surchargeAmount != null ? paymentTerms.surchargeAmount : null,
-      paymentFinancedRemaining: paymentTerms.financedRemaining != null ? paymentTerms.financedRemaining : null,
-      paymentTotalDue: paymentTerms.totalDue != null ? paymentTerms.totalDue : null,
-      paymentWithin30Days: paymentTerms.within30Days,
-      paymentWithin60Days: paymentTerms.within60Days,
+      depositAmount: CONFIG.depositAmount || null,
       quickbooksDepositUrl: CONFIG.quickbooksDepositUrl || null,
       projects: [...maintRows, ...projectRows],
       projectsSubtotal: fmt(projectTotal),
       projectsSubtotalNum: projectTotal,
       grandTotalNote: fmt(getSelectionCost()),
-      gilbertChat: state.gilbertChat.slice(),
-      clientPriorityOrder: (state.clientPriorityIds || []).map((id, i) => {
-        const item = findProjectById(id) || PROJECTS.find(p => p.id === id) || (id === "RETAINER" ? RETAINER : null);
-        return { id, rank: i + 1, title: item?.title || id };
-      }),
-      projectNotes: getNotesPayload(),
-      actionItems: buildActionItems(),
-      nextStepsText: formatNextStepsText(),
-      sowDraft: null,
-      esignStatus: "draft_email"
+      generalSuggestions: document.getElementById("general-suggestions").value.trim(),
+      projectNotes: getNotesPayload()
     };
   }
 
@@ -3430,104 +1528,20 @@
   function buildThankYouAffirmation(payload, selected) {
     const count = selected.length + (payload.retainer ? 1 : 0);
     const hasFoundation = selected.some(p => p.enabler);
-    const hasIntake = selected.some(p => getValueIcons(p).some(v => v.id === "intake" || v.id === "crm"));
-    const hasLeads = selected.some(p => getValueIcons(p).some(v => v.id === "leads"));
-    const hasAnalytics = selected.some(p => getValueIcons(p).some(v => v.id === "efficiency"));
+    const hasLeads = selected.some(p => /paid media|search|display|referral|seo/i.test((p.category || "") + (p.campaignType || "")));
     const parts = [];
-
-    parts.push(
-      count === 1
-        ? "This selection is a strong mix because it targets one bottleneck with work you can measure — not a scatter of vanity tactics."
-        : `This ${count}-project mix is strong because the pieces reinforce each other: measurement, demand, and conversion are treated as one system.`
-    );
-
-    if (hasFoundation || hasAnalytics) {
-      parts.push(
-        "Foundation and reporting work first follows the same logic Google Ads and HubSpot inbound playbooks push: fix attribution and CRM truth before you scale spend, so CPL and answered-call rates mean something."
-      );
+    parts.push(`You selected ${count} investment${count === 1 ? "" : "s"} that directly support measurable growth — leads, intake, and marketing you can track.`);
+    if (hasFoundation) {
+      parts.push("Starting with foundation work means every ad dollar and referral can be tracked, answered, and improved — not wasted on broken intake or blind spend.");
     }
-    if (hasLeads && hasIntake) {
-      parts.push(
-        "Pairing lead generation with intake closes the classic leak — paid clicks that never become answered consults. That is the same measurement-over-vanity stance used in accountable search programs: track calls and consults, not impressions alone."
-      );
-    } else if (hasLeads) {
-      parts.push(
-        "Lead-driving work here is framed around calls and consults you can audit in Call details and campaign exports — not awareness metrics that do not move signed matters."
-      );
-    } else if (hasIntake) {
-      parts.push(
-        "Intake and phone coverage protect the lead volume you already buy. Industry answer-rate targets and your own #21 / #19 stack make that measurable."
-      );
+    if (hasLeads) {
+      parts.push("The marketing pieces you chose focus on measurable leads and consults, not vanity metrics.");
     }
     if (payload.goalText) {
       const g = payload.goalText.trim();
-      parts.push(`It also lines up with the problem you named for Gilbert: "${g.length > 120 ? g.slice(0, 120) + "…" : g}".`);
+      parts.push(`This package aligns with your stated goal: "${g.length > 120 ? g.slice(0, 120) + "…" : g}"`);
     }
-    parts.push(
-      "For a law firm, public creative still needs attorney review under advertising rules — this plan keeps execution on ops and measurement while compliance stays with Pav."
-    );
-    return parts.join(" ");
-  }
-
-  function buildSelectionImpactSummary(items) {
-    const list = items || [];
-    if (!list.length) {
-      return "Add projects to see estimated lead and client impact for this plan.";
-    }
-
-    const valueBits = [];
-    list.forEach(item => {
-      const brief = briefValueAdd(item);
-      if (brief) valueBits.push(brief);
-      else {
-        const bullets = valueAddedBullets(item);
-        if (bullets[0]) {
-          valueBits.push(String(bullets[0]).replace(/^Deliverable:\s*/i, "").trim());
-        }
-      }
-    });
-    const uniqueValue = [...new Set(valueBits.filter(Boolean))].slice(0, 3);
-
-    let leadSum = 0;
-    let leadProjects = 0;
-    list.forEach(item => {
-      const leads = estimateProjectLeadsGained(item);
-      if (leads.value != null && leads.value > 0) {
-        leadSum += leads.value;
-        leadProjects += 1;
-      }
-    });
-    const casesEst = leadSum * PAV_HISTORICAL.leadToCaseRate;
-    const revenueEst = Math.round(casesEst * PAV_HISTORICAL.avgCaseFee);
-
-    const parts = [];
-    if (uniqueValue.length) {
-      parts.push(
-        uniqueValue.length === 1
-          ? `Added value focus: ${uniqueValue[0]}.`
-          : `Added value across this plan: ${uniqueValue.slice(0, -1).join("; ")}; and ${uniqueValue[uniqueValue.length - 1]}.`
-      );
-    } else {
-      parts.push("This plan strengthens infrastructure, intake, and marketing so results compound month over month.");
-    }
-
-    if (leadSum > 0) {
-      const leadLo = Math.max(1, Math.round(leadSum * 0.85));
-      const leadHi = Math.max(leadLo, Math.round(leadSum * 1.15));
-      const caseLo = Math.max(0.5, Math.round(casesEst * 10) / 10);
-      const caseHi = Math.max(caseLo, Math.round(casesEst * 1.2 * 10) / 10);
-      parts.push(
-        `Estimated impact: about ${leadLo}–${leadHi} incremental leads/mo` +
-        (leadProjects > 1 ? ` from ${leadProjects} lead-driving projects` : "") +
-        `, or roughly ${caseLo === caseHi ? `~${caseLo}` : `${caseLo}–${caseHi}`} new clients/mo` +
-        ` (~${fmt(revenueEst)}/mo potential fees at ${(PAV_HISTORICAL.leadToCaseRate * 100).toFixed(1)}% lead→case × ${fmt(PAV_HISTORICAL.avgCaseFee)} avg).`
-      );
-    } else {
-      parts.push(
-        "Lead volume is mostly indirect on these selections — impact shows up as better answer rates, cleaner tracking, and higher conversion of the ~124 leads/mo already in the funnel."
-      );
-    }
-
+    parts.push("Gilded Goose will execute with clear deliverables, monthly visibility, and a team that already knows your account.");
     return parts.join(" ");
   }
 
@@ -3538,31 +1552,25 @@
     const rows = items.map(item => {
       const signals = getReturnSignals(item);
       if (!signals.length) return "";
-      return `<div class="thank-you-roi-item"><strong>${escapeHtml(item.title)}</strong><span class="thank-you-roi-signals">${signals.map(s => escapeHtml(s)).join(" · ")}</span></div>`;
+      return `<div class="thank-you-roi-item"><strong>${escapeHtml(item.title)}</strong>${signals.map(s => escapeHtml(s)).join(" · ")}</div>`;
     }).filter(Boolean);
-    if (!rows.length) return "";
-    return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}</div>`;
-  }
-
-  function renderGilbertChat() {
-    const el = document.getElementById("gilbert-chat-messages");
-    if (!el) return;
-    if (!state.gilbertChat.length) {
-      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
+    let summary = "";
+    const allSignals = items.flatMap(getReturnSignals);
+    const hasCalls = allSignals.some(s => /call/i.test(s));
+    const hasFees = allSignals.some(s => /\$|fee|revenue/i.test(s));
+    if (hasCalls && hasFees) {
+      summary = "Combined, these activities target lower cost per call, more qualified consults, and revenue you can tie back to marketing — not guesswork.";
+    } else if (hasCalls) {
+      summary = "Combined, these activities focus on more qualified calls and consults from the marketing you're already running.";
+    } else if (rows.length) {
+      summary = "These projects stack: stronger infrastructure, clearer reporting, and marketing that compounds month over month.";
+    } else {
+      summary = "Your selections prioritize measurable business outcomes — better intake, clearer data, and marketing that supports signed cases.";
     }
-    el.innerHTML = state.gilbertChat.map(msg => {
-      const who = msg.role === "gilbert" ? GUIDE_SHORT : "You";
-      return `<div class="gilbert-chat-msg gilbert-chat-${msg.role}"><span class="gilbert-chat-who">${escapeHtml(who)}</span><p>${escapeHtml(msg.text)}</p></div>`;
-    }).join("");
-    el.scrollTop = el.scrollHeight;
-  }
-
-  function userCursedGilbert(text) {
-    return /\b(fuck|shit|damn|asshole|bitch|bastard|cunt|dick|wtf)\b/i.test(text || "");
-  }
-
-  function userThankedGilbert(text) {
-    return /\b(thanks|thank you|thank\s*u|tysm|thx|appreciate)\b/i.test(text || "");
+    if (!rows.length) {
+      return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3><p class="thank-you-roi-summary">${summary}</p></div>`;
+    }
+    return `<div class="thank-you-roi-box"><h3>Estimated return on these activities</h3>${rows.join("")}<p class="thank-you-roi-summary">${summary}</p></div>`;
   }
 
   function launchConfetti(count) {
@@ -3575,7 +1583,7 @@
       layer.setAttribute("aria-hidden", "true");
       document.body.appendChild(layer);
     }
-    const colors = ["#7c3aed", "#b8860b", "#ffd700", "#4e2a84", "#f8f5ef", "#c4b5fd"];
+    const colors = ["#4e2a84", "#b8860b", "#ffd700", "#6d28a8", "#f8f5ef", "#c9a86c", "#c2410c", "#166534"];
     for (let i = 0; i < n; i++) {
       const piece = document.createElement("span");
       const glitter = Math.random() > 0.45;
@@ -3589,148 +1597,125 @@
     }
   }
 
-  function pickGilbertReply(userText) {
-    const text = (userText || "").trim();
-    const items = getInvoiceLineItems();
-    const count = items.length;
-    if (userCursedGilbert(text)) {
-      return "Well fuck you too, Sparky. Now — what's actually broken in the business so we can fix it?";
-    }
-    if (userThankedGilbert(text)) {
-      return "Anytime Sparklefarts!";
-    }
-    if (!text) {
-      return "Tell me what's not working — leads, intake, ads, website, or CRM. We'll map projects to fix it.";
-    }
-    const words = text.toLowerCase().split(/\W+/).filter(w => w.length > 2);
-    const scored = getAllItems()
-      .filter(item => !item.isRetainer && item.id !== "RETAINER")
-      .map(item => ({ item, score: scoreItemForGoal(item, words) }))
-      .filter(s => s.score > 0)
-      .sort((a, b) => b.score - a.score);
-    if (scored.length) {
-      const picks = scored.slice(0, 3).map(s => s.item.title);
-      const list = picks.length === 1 ? picks[0] : picks.slice(0, -1).join(", ") + " and " + picks[picks.length - 1];
-      const abBlocked = scored.filter(s => hasAbQuestions(s.item) && !abQuestionAnswered(s.item.id));
-      if (abBlocked.length) {
-        const names = abBlocked.slice(0, 2).map(s => s.item.title).join(", ");
-        return `I'd look at ${list} — but ${names} ${abBlocked.length === 1 ? "is" : "are"} Blocked for Andrew. Answer on ${abBlocked.length === 1 ? "that card" : "those cards"} before cart.`;
-      }
-      if (count > 0) {
-        return `Understood. I'd prioritize ${list} — ${count} item${count === 1 ? "" : "s"} in your cart so far. Add more detail or pick from the list below.`;
-      }
-      return `I hear you. I'd start with ${list} — I'm matching those to your cart. What else should we fix?`;
-    }
-    if (count > 0) {
-      return `${count} project${count === 1 ? "" : "s"} in your cart. Tell me more about the problem and I'll refine the mix.`;
-    }
-    return "Got it. Browse the project list below, or tell me more — wasted ad spend, broken forms, slow intake — and I'll suggest matches.";
-  }
-
-  function sendGilbertMessage() {
-    const input = document.getElementById("goal-input");
-    const text = (input?.value || "").trim();
-    if (!text) return;
-    activateBestFitSession();
-    state.goalText = text;
-    if (input) input.value = "";
-    state.gilbertChat.push({ role: "user", text });
-    state.gilbertChat.push({ role: "gilbert", text: pickGilbertReply(text) });
-    if (userThankedGilbert(text)) launchConfetti();
-    if (!userThankedGilbert(text) && !userCursedGilbert(text)) state.doNextVisible = true;
-    renderGilbertChat();
-    saveState();
-    suggestPlan(true);
-    renderCondensedToc();
-    renderDoNextPanel();
-    renderPlanSummary();
-    renderProjectToc();
-  }
-
-  function openGilbertChat() {
-    const backdrop = document.getElementById("gilbert-chat-backdrop");
-    if (backdrop) backdrop.hidden = true;
-    renderGilbertChat();
-    renderDoNextPanel();
-    document.getElementById("goal-input")?.focus();
-  }
-
-  function closeGilbertChat() {
-    const backdrop = document.getElementById("gilbert-chat-backdrop");
-    if (backdrop) backdrop.hidden = true;
-  }
-
   function initGilbertGuide() {
-    const heroSrc = (GILBERT_HERO || "assets/gilbert-thinking.png") +
-      ((GILBERT_HERO || "").includes("?") ? "" : "?v=20260714h");
-    const img = document.getElementById("gilbert-launcher-img");
-    if (img) {
-      img.src = heroSrc;
-      img.alt = `${GUIDE_NAME} — project fit survey`;
+    if (state.surveyDone && state.surveyPath.length) {
+      state.iconFilters = iconsFromSurveyPath();
+      state.goalText = goalFromSurveyPath();
     }
-    if (!state.gilbertChat.length) {
-      state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
-    }
-    bindGilbertSurvey();
     renderGilbertSurvey();
-    renderDoNextPanel();
   }
 
-  function depositFromPayload(payload) {
-    const p = payload || lastSubmittedPayload || {};
-    return p.depositAmount != null ? p.depositAmount : CONFIG.depositAmount;
+  const THEME_STORAGE_KEY = "gilbert-guide-theme";
+  const THEME_DARK = "dark";
+  const THEME_LIGHT = "light";
+
+  function normalizeTheme(value) {
+    if (value === THEME_LIGHT || value === "unicorn") return THEME_LIGHT;
+    if (value === THEME_DARK) return THEME_DARK;
+    return null;
+  }
+
+  function getPreferredTheme() {
+    try {
+      const q = normalizeTheme(new URLSearchParams(location.search).get("theme"));
+      if (q) return q;
+    } catch (e) { /* ignore */ }
+    try {
+      const stored = normalizeTheme(localStorage.getItem(THEME_STORAGE_KEY));
+      if (stored) return stored;
+    } catch (e) { /* ignore */ }
+    return THEME_LIGHT;
+  }
+
+  function applyTheme(theme) {
+    const next = normalizeTheme(theme) || THEME_LIGHT;
+    document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch (e) { /* ignore */ }
+    const btn = document.getElementById("theme-toggle");
+    if (btn) {
+      const isDark = next === THEME_DARK;
+      btn.setAttribute("aria-pressed", isDark ? "true" : "false");
+      btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+      btn.textContent = isDark ? "Light" : "Dark";
+    }
+  }
+
+  function initThemeToggle() {
+    applyTheme(getPreferredTheme());
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const current = normalizeTheme(document.documentElement.getAttribute("data-theme")) || THEME_LIGHT;
+      applyTheme(current === THEME_DARK ? THEME_LIGHT : THEME_DARK);
+    });
   }
 
   function showThankYou(payload) {
     const selected = getSelectedProjects();
-    const depositAmt = depositFromPayload(payload);
+    const depositAmt = CONFIG.depositAmount;
     const depositUrl = CONFIG.quickbooksDepositUrl || payload.quickbooksDepositUrl;
 
-    document.getElementById("thank-you-gilbert").src = GILBERT_SEAL;
+    const thankSub = document.getElementById("thank-you-sub");
+    if (thankSub) {
+      thankSub.textContent =
+        "Your selections build a stronger marketing stack — Gilded Goose will execute with clear deliverables.";
+    }
 
-    const noteEntries = Object.entries(payload.projectNotes || {});
+    const lines = [];
+    if (payload.retainer) lines.push(`<li><strong>${escapeHtml(RETAINER.title)}</strong> — ${fmt(RETAINER.fee)}</li>`);
+    (payload.projects || []).forEach(p => lines.push(`<li><strong>${escapeHtml(p.title)}</strong> — ${p.fee}</li>`));
+    if (!lines.length) lines.push("<li><em>Notes submitted — Gilded Goose will follow up</em></li>");
+
+    const itemCount = lines.length;
+    const totalLine = payload.grandTotalNote || "—";
+    const termsLine = payload.invoicePaymentTermsLabel
+      ? escapeHtml(payload.invoicePaymentTermsLabel)
+      : "Not specified";
+
     let notesHtml = "";
+    if (payload.generalSuggestions) {
+      notesHtml += `<p style="margin-top:0.75rem;font-size:0.88rem;color:var(--secondary)"><strong>Your notes:</strong> ${escapeHtml(payload.generalSuggestions)}</p>`;
+    }
+    const noteEntries = Object.entries(payload.projectNotes || {});
     if (noteEntries.length) {
-      notesHtml += `<div class="thank-you-comments"><h3>Your comments</h3><ul class="thank-you-list">` +
-        noteEntries.map(([id, text]) => `<li><strong>${escapeHtml(id)}:</strong> ${escapeHtml(text)}</li>`).join("") + "</ul></div>";
+      notesHtml += "<ul class=\"thank-you-list\" style=\"margin-top:0.5rem\">" +
+        noteEntries.map(([id, text]) => `<li><strong>${escapeHtml(id)}:</strong> ${escapeHtml(text)}</li>`).join("") + "</ul>";
+    }
+
+    let depositHtml = "";
+    if (depositAmt && depositUrl) {
+      depositHtml = `<div class="thank-you-deposit-box">
+        <p>Secure your spot with the standard kickoff deposit</p>
+        <p class="deposit-amount">${fmt(depositAmt)}</p>
+        <p>Full invoice for selected projects follows separately. Pay now via QuickBooks:</p>
+        <a class="thank-you-qb-link" href="${escapeHtml(depositUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(depositUrl)}</a>
+      </div>`;
+    } else if (depositAmt) {
+      depositHtml = `<div class="thank-you-deposit-box"><p>Standard deposit: <span class="deposit-amount">${fmt(depositAmt)}</span> — payment link coming by email.</p></div>`;
     }
 
     const emailNote = payload.submitterEmail
       ? `<p class="confirm-note">Confirmation sent to <strong>${escapeHtml(payload.submitterEmail)}</strong> and Gilded Goose.</p>`
       : `<p class="confirm-note">Confirmation sent to Gilded Goose.</p>`;
 
-    const signedNote = payload.esignStatus === "emailed"
-      ? `<p class="confirm-note">SOW PDF email draft opened — Gilded Goose will finalize the report.</p>`
-      : payload.esignStatus === "signed"
-      ? `<p class="confirm-note">SOW signature recorded.</p>`
-      : "";
-
-    const actionItemsHtml = `<div class="thank-you-action-items action-items-panel">${buildActionItemsHtml(payload.actionItems)}</div>`;
-
-    const depositSummary = depositAmt
-      ? `<div class="thank-you-deposit-line"><span class="thank-you-deposit-caption">Kickoff deposit due now</span><span class="deposit-amount">${fmt(depositAmt)}</span></div>`
-      : "";
-
     document.getElementById("thank-you-body").innerHTML = `
-      <div class="thank-you-affirm"><strong>Why this is a strong mix</strong>${escapeHtml(buildThankYouAffirmation(payload, selected))}</div>
-      ${actionItemsHtml}
-      ${depositSummary}
+      <div class="thank-you-affirm"><strong>Why this is a strong choice</strong>${escapeHtml(buildThankYouAffirmation(payload, selected))}</div>
+      ${buildThankYouReturnsHtml(selected, payload.retainer)}
+      <div class="thank-you-selection">
+        <h3>Your consulting estimate</h3>
+        <p class="thank-you-total-single">${itemCount} item${itemCount === 1 ? "" : "s"} · <strong>${totalLine}</strong></p>
+        <p class="thank-you-terms-line">Invoice schedule: <strong>${termsLine}</strong></p>
+      </div>
+      ${depositHtml}
       ${notesHtml}
-      ${emailNote}
-      ${signedNote}`;
+      ${emailNote}`;
 
     const payBtn = document.getElementById("btn-pay-deposit");
     if (payBtn && depositUrl && depositAmt) {
       payBtn.href = depositUrl;
-      payBtn.textContent = "Pay " + fmt(depositAmt) + " deposit — QuickBooks";
-      payBtn.removeAttribute("aria-disabled");
-      payBtn.classList.remove("btn-disabled");
-      payBtn.style.display = "block";
-    } else if (payBtn && depositAmt) {
-      payBtn.removeAttribute("href");
-      payBtn.textContent = "Pay " + fmt(depositAmt) + " deposit — link by email";
-      payBtn.setAttribute("aria-disabled", "true");
-      payBtn.classList.add("btn-disabled");
+      payBtn.textContent = "Pay " + fmt(depositAmt) + " deposit — open QuickBooks";
       payBtn.style.display = "block";
     } else if (payBtn) {
       payBtn.style.display = "none";
@@ -3738,214 +1723,31 @@
 
     document.getElementById("thank-you").classList.add("show");
     document.getElementById("thank-you").setAttribute("aria-hidden", "false");
-    hideSowPage();
     hideConfirmPage();
     document.getElementById("main-app").classList.add("hidden");
-    document.querySelector(".pav-guide-ask-section")?.setAttribute("hidden", "");
-    closeGilbertChat();
     window.scrollTo(0, 0);
-  }
-
-  /* ---- SOW draft + email PDF (custom e-sign build later) ---- */
-
-  function buildSowDraft(payload) {
-    const p = payload || lastSubmittedPayload || {};
-    const cfg = getConfig();
-    const lines = [];
-    lines.push("STATEMENT OF WORK — Gilded Goose Limited × Pav Law");
-    lines.push("Governed by: " + (cfg.msaLabel || "Master Services Agreement (MSA)"));
-    lines.push("");
-    lines.push("Client contact: " + (p.submitterEmail || "[email]"));
-    lines.push("Date: " + new Date().toLocaleDateString("en-US"));
-    lines.push("");
-    lines.push("1. SCOPE — Selected projects");
-    (p.projects || []).forEach(proj => {
-      const t = proj.timeline ? ` (${proj.timeline})` : "";
-      lines.push(`  • ${proj.id} — ${proj.title} — ${proj.fee}${t}`);
-    });
-    if (!(p.projects || []).length) lines.push("  • [projects]");
-    lines.push("");
-    lines.push("2. FEES & PAYMENT PLAN (Schedule A)");
-    lines.push("  Consulting subtotal: " + (p.projectsSubtotal || p.grandTotalNote || "$[___]"));
-    if (p.depositAmount) {
-      lines.push(`  Deposit due at signing: ${fmt(p.depositAmount)}${p.depositPct ? ` (${Math.round(p.depositPct * 100)}%)` : ""}`);
-    }
-    lines.push("  Invoice schedule: " + (p.invoicePaymentTermsLabel || "Per payment options selected"));
-    if (p.maintenanceMonthlyNum) lines.push("  Retainer / maintenance: " + p.maintenanceMonthly + "/mo, billed separately");
-    lines.push("  Media spend billed by platforms directly to Client.");
-    lines.push("");
-    lines.push("3. TERMS");
-    lines.push("  This SOW is governed by the MSA between the parties. Attorney advertising");
-    lines.push("  approval and compliance remain with Pav Law. Deposit is non-refundable");
-    lines.push("  after kickoff. Full terms: MSA + Schedule A.");
-    lines.push("");
-    lines.push("Status: Draft for email PDF report. Custom e-sign build later (not a third-party plugin).");
-    return lines.join("\n");
-  }
-
-  function updateEsignStatusText(text) {
-    const el = document.getElementById("sow-esign-status");
-    if (el) el.textContent = text;
-  }
-
-  function showSowPage(payload) {
-    lastSubmittedPayload = payload;
-    const draftEl = document.getElementById("sow-draft");
-    if (draftEl) draftEl.value = buildSowDraft(payload);
-
-    const projList = document.getElementById("sow-project-list");
-    if (projList) {
-      const rows = (payload.projects || []).map(p =>
-        `<li><strong>${escapeHtml(p.title)}</strong> <span class="sow-proj-fee">${escapeHtml(p.fee)}</span></li>`
-      ).join("");
-      projList.innerHTML = rows || `<li><em>No projects selected</em></li>`;
-    }
-
-    const payLine = document.getElementById("sow-payment-line");
-    if (payLine) {
-      const dep = payload.depositAmount ? `${fmt(payload.depositAmount)} deposit at kickoff` : "Deposit per payment options";
-      payLine.textContent = `${dep} · ${payload.invoicePaymentTermsLabel || "invoice schedule per payment options"}. Retainer/maintenance billed separately.`;
-    }
-
-    const esignBtn = document.getElementById("sow-send-esign");
-    if (esignBtn) {
-      esignBtn.textContent = "Email SOW PDF";
-    }
-    updateEsignStatusText(
-      "Draft SOW for email PDF report. Custom e-sign will be built later — not Dropbox Sign, DocuSign, or another plugin."
-    );
-
-    document.getElementById("sow-page").classList.add("show");
-    document.getElementById("sow-page").setAttribute("aria-hidden", "false");
-    hideConfirmPage();
-    document.getElementById("main-app").classList.add("hidden");
-    document.querySelector(".pav-guide-ask-section")?.setAttribute("hidden", "");
-    closeGilbertChat();
-    window.scrollTo(0, 0);
-  }
-
-  function hideSowPage() {
-    const el = document.getElementById("sow-page");
-    if (!el) return;
-    el.classList.remove("show");
-    el.setAttribute("aria-hidden", "true");
-  }
-
-  function emailSowPdf() {
-    const draftEl = document.getElementById("sow-draft");
-    if (lastSubmittedPayload) {
-      lastSubmittedPayload.sowDraft = draftEl ? draftEl.value : null;
-      lastSubmittedPayload.esignStatus = "emailed";
-    }
-    const to = CONFIG.notifyEmail || "support@gildedgooselimited.com";
-    const email = (lastSubmittedPayload && lastSubmittedPayload.submitterEmail) || "";
-    const subject = encodeURIComponent("Pav Law SOW draft PDF — " + (email || "submission"));
-    const body = encodeURIComponent(
-      "Please email the SOW PDF report for this selection.\n\n" +
-      "Submitter: " + (email || "(none)") + "\n\n" +
-      "--- SOW DRAFT ---\n" +
-      ((draftEl && draftEl.value) || "(empty)") +
-      "\n\n---\nNote: Custom e-sign build later — not a third-party plugin."
-    );
-    updateEsignStatusText("Opening email draft with SOW text… Continue to deposit when ready.");
-    const a = document.createElement("a");
-    a.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
-    a.rel = "noopener";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }
-
-  function continueToThankYou() {
-    const payload = lastSubmittedPayload;
-    if (!payload) return;
-    const draftEl = document.getElementById("sow-draft");
-    if (draftEl) payload.sowDraft = draftEl.value;
-    showThankYou(payload);
-  }
-
-  function buildPrioritiesCartHtml() {
-    const items = getInvoiceLineItems();
-    if (!items.length) {
-      return `<p class="empty-state">Selections appear here as you choose projects.</p>`;
-    }
-    const bodyRows = items.map(row => {
-      const isRetainer = row.id === "RETAINER";
-      const item = findProjectById(row.id);
-      const required = item ? isRequiredMaintenance(item, isRetainer) : false;
-      const req = item ? requiredMarkerHtml(item, isRetainer) : "";
-      const chkDisabled = required ? " disabled" : "";
-      const scoreLabel = item ? fitScoreLabel(item, isRetainer) : "—";
-      const scoreTitle = required ? "Required — no fit score" : "Best-fit / impact — higher is better";
-      return `<tr data-id="${escapeHtml(row.id)}" data-retainer="${isRetainer}" data-required="${required}">
-        <td class="col-select">
-          <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(row.id)}" aria-label="Keep ${escapeHtml(row.title)} in cart"${chkDisabled} checked>
-        </td>
-        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
-        <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
-      </tr>`;
-    }).join("");
-    const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;
-    return `<div class="pav-priorities-scroll"><table class="pav-priorities-table pav-priorities-cart-only">
-      <thead>
-        <tr>
-          <th class="col-select" scope="col">Add</th>
-          <th class="col-project" scope="col">Project</th>
-          <th class="col-score" scope="col" title="Best-fit / impact — higher is better. Required items show —.">Fit</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${bodyRows}
-        <tr class="priorities-totals-row">
-          <td class="col-select"></td>
-          <td class="col-project">${label}</td>
-          <td class="col-score"></td>
-        </tr>
-      </tbody>
-    </table></div>`;
-  }
-
-  function buildRevenueCalculatorHtml() {
-    const items = getInvoiceLineItems();
-    if (!items.length) {
-      return `<p class="empty-state">Add projects in Project Guide — fees for your Pav Priorities cart show here.</p>`;
-    }
-    const bodyRows = items.map(row => {
-      const req = row.id === "RETAINER"
-        ? requiredMarkerHtml(RETAINER, true)
-        : (() => { const p = PROJECTS.find(x => x.id === row.id); return p ? requiredMarkerHtml(p, false) : ""; })();
-      return `<tr>
-        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
-        <td class="col-fee">${row.fee}</td>
-      </tr>`;
-    }).join("");
-    const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;
-    return `<div class="pav-priorities-scroll"><table class="pav-priorities-table revenue-calc-table">
-      <thead>
-        <tr>
-          <th class="col-project" scope="col">Project</th>
-          <th class="col-fee" scope="col">Fee</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${bodyRows}
-        <tr class="priorities-totals-row">
-          <td class="col-project">${label}</td>
-          <td class="col-fee">${fmt(getSelectionCost())}</td>
-        </tr>
-      </tbody>
-    </table></div>`;
   }
 
   function buildTotalsHtml() {
-    return buildPrioritiesCartHtml();
+    const items = getInvoiceLineItems();
+    const total = getSelectionCost();
+    if (!items.length) {
+      return `<p class="empty-state">Selections appear here as you choose projects.</p>`;
+    }
+    const rows = items.map(row => {
+      const req = row.id === "RETAINER"
+        ? requiredMarkerHtml(RETAINER, true)
+        : (() => { const p = PROJECTS.find(x => x.id === row.id); return p ? requiredMarkerHtml(p, false) : ""; })();
+      return `<div class="total-row"><span><a href="${projectAnchor(row.id)}" class="invoice-item-link">${req}<span>${escapeHtml(row.title)}</span></a></span><span>${row.fee}</span></div>`;
+    }).join("");
+    const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;
+    return rows + `<div class="total-row grand total-row-single"><span>${label}</span><span>${fmt(total)}</span></div>`;
   }
 
   function hideThankYou() {
     document.getElementById("thank-you").classList.remove("show");
     document.getElementById("thank-you").setAttribute("aria-hidden", "true");
     document.getElementById("main-app").classList.remove("hidden");
-    document.querySelector(".pav-guide-ask-section")?.removeAttribute("hidden");
   }
 
   function renderInvoiceSummary() {
@@ -3953,18 +1755,11 @@
   }
 
   function renderSummary() {
-    renderKpiDashboard();
-    renderDoNextPanel();
     renderPlanSummary();
-    if (state.activeViewTab === "impact") {
-      renderCompletedList();
-      renderRevenueCalculator();
-    }
     renderCondensedToc();
     updateInvoiceScheduleAmount();
     updateSubmitButtons();
     renderProjectToc();
-    renderViewLayout();
   }
 
   function downloadSubmissionJson(payload) {
@@ -4029,7 +1824,6 @@
       try {
         saveSubmissionLocally(payload);
         downloadSubmissionJson(payload);
-        emailActivityLog(payload);
         ok = true;
       } catch (err) {
         showToast("Could not save submission — try again or email support@gildedgooselimited.com", true);
@@ -4043,209 +1837,28 @@
       }
     }
 
-    if (ok) {
-      lastSubmittedPayload = payload;
-      showSowPage(payload);
-    }
+    if (ok) showThankYou(payload);
     btn.textContent = "Submit selections";
     updateSubmitButtons();
   }
 
-  document.getElementById("do-next-panel")?.addEventListener("click", e => {
-    if (e.target.closest("#continue-to-confirm")) {
-      showConfirmPage();
-      return;
-    }
-    if (e.target.closest('input[type="checkbox"].cart-proj-chk')) return;
-    const link = e.target.closest(".priority-desc-link");
-    if (link) {
-      e.preventDefault();
-      openProjectDescription(link.dataset.projectId);
-    }
-  });
-
-  document.getElementById("do-next-panel")?.addEventListener("change", e => {
-    const chk = e.target.closest('input[type="checkbox"].cart-proj-chk');
-    if (!chk) return;
-    e.stopPropagation();
-    const row = chk.closest("tr");
-    if (row && row.dataset.required === "true") {
-      chk.checked = true;
-      return;
-    }
-    const id = chk.dataset.id;
-    const wantAdd = chk.checked;
-    if (!trySetProjectInCart(id, wantAdd)) {
-      chk.checked = !wantAdd;
-      return;
-    }
-    saveState();
-    renderAllCards();
-    renderSummary();
-  });
+  document.getElementById("continue-to-confirm").addEventListener("click", showConfirmPage);
   document.getElementById("confirm-back").addEventListener("click", hideConfirmPage);
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
-  document.getElementById("sow-send-esign")?.addEventListener("click", emailSowPdf);
-  document.getElementById("sow-continue-thankyou")?.addEventListener("click", continueToThankYou);
+  document.getElementById("general-suggestions").addEventListener("input", saveState);
   document.getElementById("submitted-email").addEventListener("input", () => { saveState(); updateSubmitButtons(); });
   document.getElementById("invoice-payment-months").addEventListener("change", () => {
     updateInvoiceScheduleAmount();
     saveState();
   });
-  document.getElementById("gilbert-chat-backdrop")?.setAttribute("hidden", "");
-  document.getElementById("expand-all-projects").addEventListener("change", e => {
-    e.target.setAttribute("aria-checked", e.target.checked ? "true" : "false");
-    setExpandAll(e.target.checked);
-  });
-
-  document.addEventListener("click", e => {
-    const goView = e.target.closest("[data-go-view]");
-    if (goView) {
-      e.preventDefault();
-      setActiveViewTab(goView.dataset.goView || "kpis");
-      renderAllCards();
-      renderSummary();
-      const dest = state.activeViewTab;
-      const projectId = goView.dataset.projectId;
-      if (dest === "picker" && projectId) {
-        requestAnimationFrame(() => openProjectDescription(projectId));
-        return;
-      }
-      if (dest === "impact") {
-        const sub = String(goView.dataset.goView || "").toLowerCase();
-        const anchor = sub === "revenue"
-          ? document.getElementById("impact-revenue")
-          : sub === "completed"
-            ? document.getElementById("impact-completed")
-            : null;
-        if (anchor) requestAnimationFrame(() => anchor.scrollIntoView({ behavior: "smooth", block: "start" }));
-      }
-      return;
-    }
-    const kpiLink = e.target.closest(".kpi-ref-link");
-    if (kpiLink) {
-      e.preventDefault();
-      focusKpi(kpiLink.dataset.kpi);
-      return;
-    }
-    if (e.target.closest(".research-comment-tag") || e.target.closest(".research-comment-popover")) return;
-    closeAllCommentPopovers();
-  });
-
-  document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
-    btn.addEventListener("click", e => {
-      if (e.target.closest(".tab-help, .kpi-help")) return;
-      setActiveViewTab(btn.dataset.view || "kpis");
-      renderAllCards();
-      renderSummary();
-    });
-  });
-
-  function closeHelpPopup() {
-    const popup = document.getElementById("help-popup");
-    const backdrop = document.getElementById("help-popup-backdrop");
-    if (popup) popup.hidden = true;
-    if (backdrop) backdrop.hidden = true;
-  }
-
-  function openHelpPopup({ title, desc, formula, source }) {
-    const popup = document.getElementById("help-popup");
-    const backdrop = document.getElementById("help-popup-backdrop");
-    const titleEl = document.getElementById("help-popup-title");
-    const descEl = document.getElementById("help-popup-desc");
-    const formulaEl = document.getElementById("help-popup-formula");
-    const sourceEl = document.getElementById("help-popup-source");
-    if (!popup || !titleEl || !descEl || !formulaEl) return;
-    titleEl.textContent = title || "Help";
-    descEl.textContent = desc || "";
-    if (formula) {
-      formulaEl.hidden = false;
-      formulaEl.textContent = formula;
-    } else {
-      formulaEl.hidden = true;
-      formulaEl.textContent = "";
-    }
-    if (sourceEl) {
-      if (source) {
-        sourceEl.hidden = false;
-        sourceEl.textContent = source;
-      } else {
-        sourceEl.hidden = true;
-        sourceEl.textContent = "";
-      }
-    }
-    if (backdrop) backdrop.hidden = false;
-    popup.hidden = false;
-  }
-
-  function helpFromTarget(el) {
-    if (!el) return null;
-    const kpiId = el.getAttribute("data-kpi-help");
-    if (kpiId && window.KPI_REPORT && typeof window.KPI_REPORT.getHelp === "function") {
-      return window.KPI_REPORT.getHelp(kpiId);
-    }
-    return {
-      title: el.getAttribute("data-help-title") || el.getAttribute("aria-label") || "Help",
-      desc: el.getAttribute("data-help-desc") || el.getAttribute("title") || "",
-      formula: el.getAttribute("data-help-formula") || "",
-      source: el.getAttribute("data-help-source") || ""
-    };
-  }
-
-  document.addEventListener("click", e => {
-    const help = e.target.closest(".tab-help, .kpi-help");
-    if (help) {
-      e.preventDefault();
-      e.stopPropagation();
-      openHelpPopup(helpFromTarget(help) || {});
-      return;
-    }
-    if (e.target.closest("#help-popup-close") || e.target.id === "help-popup-backdrop") {
-      closeHelpPopup();
-    }
-  }, true);
-
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeHelpPopup();
-  });
+  document.getElementById("expand-all-projects").addEventListener("change", e => setExpandAll(e.target.checked));
 
   document.getElementById("toc-expand-row")?.addEventListener("click", e => {
     const btn = e.target.closest(".toc-expand-btn");
     if (!btn) return;
     state.tocExpanded = btn.dataset.expand === "all";
     renderProjectToc();
-  });
-
-  document.getElementById("toc-priority-edit")?.addEventListener("click", e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setPriorityEdit(!state.priorityEdit);
-  });
-
-  document.getElementById("toc-list")?.addEventListener("click", e => {
-    const btn = e.target.closest("[data-prio-move]");
-    if (!btn) return;
-    e.preventDefault();
-    e.stopPropagation();
-    moveClientPriority(btn.dataset.id, btn.dataset.prioMove === "up" ? -1 : 1);
-  });
-
-  document.getElementById("toc-list")?.addEventListener("change", e => {
-    const chk = e.target.closest('input[type="checkbox"].toc-proj-chk');
-    if (!chk) return;
-    e.stopPropagation();
-    const row = chk.closest("tr.toc-item");
-    if (row && row.dataset.required === "true") return;
-    const id = chk.dataset.id;
-    const wantAdd = chk.checked;
-    if (!trySetProjectInCart(id, wantAdd)) {
-      chk.checked = !wantAdd;
-      return;
-    }
-    saveState();
-    renderAllCards();
-    renderSummary();
   });
 
   document.querySelectorAll(".toc-sort-btn").forEach(btn => {
@@ -4258,31 +1871,15 @@
 
   loadState();
   ensureRequiredMaintenance();
-  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  setActiveViewTab("kpis");
+  initThemeToggle();
   initGilbertGuide();
   renderPackageIntro();
   renderValueIconKey();
-  renderKpiDashboard();
-  renderDoNextPanel();
-  renderCondensedToc();
   renderAllCards();
-  pinKpiTabToTop();
-  requestAnimationFrame(() => {
-    pinKpiTabToTop();
-    requestAnimationFrame(pinKpiTabToTop);
-  });
-  window.addEventListener("kpi-report-rendered", () => {
-    if (state.activeViewTab === "kpis" && !window.__gilbertKpiScrolledOnce) {
-      window.__gilbertKpiScrolledOnce = true;
-      pinKpiTabToTop();
-      /* Feedback wraps can shift layout after paint — re-pin once more */
-      setTimeout(pinKpiTabToTop, 50);
-      setTimeout(pinKpiTabToTop, 200);
-    }
-  }, { once: false });
-  if (state.goalText.trim()) suggestPlan(true);
-  else {
-    renderSummary();
+  suggestPlan(true);
+  renderSummary();
+  if (state.surveyDone) {
+    const toc = document.getElementById("project-toc");
+    if (toc) toc.open = true;
   }
 })();
