@@ -1,0 +1,16 @@
+﻿What you need to demo / evaluate:
+Call + intake tools that integrate cleanly with HubSpot:
+* CallRail (most common baseline)
+* HubSpot Calling / Aircall integration
+* Twilio-based tracking setups
+* RingCentral (if they already use it somewhere)
+* Zoom Phone (lightweight option)
+________________
+
+
+What matters most (not features):
+* can it tag lead source automatically?
+* can it push data into HubSpot?
+* can it track call outcome (qualified / not / missed)?
+* can it attach to campaigns (ads + QR codes + events)?
+* can it support follow-up workflows?

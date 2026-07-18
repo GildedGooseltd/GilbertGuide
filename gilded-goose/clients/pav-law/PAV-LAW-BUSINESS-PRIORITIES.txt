@@ -1,0 +1,51 @@
+﻿Business Priorities
+1. Tech Stack Optimization: Identify all systems currently being utilized by the team (paid, free, subscription) and gather passwords for transition and security. This is foundational for risk mitigation, systems integrations, identifying gaps & overlaps.
+   1. Risk: Medium
+   2. P3
+   3. Status: 
+      1. In review a few minor security risks and access issues to be cleaned. Primarily opportunities to streamline and add systems to make everything less manual 
+2. Intake Conversion & Lead Capture Optimization: Address the primary revenue constraint by improving both how leads are captured and converted. Optimize the website for form capture, pre-qualification, and after-hours intake while refining Local Services Ads to drive high-intent calls. Standardize intake scripts, introduce earlier pricing framing, and reduce dependency on attorney involvement to increase close rates. 
+   1. Blocker: Access and seats
+3. Analytics & Dashboard: Establish operating metrics to start tracking campaign performance, lead volume, conversion rates, and cost per retained client etc. This will help to reduce surprise expenses or ebbs in clients. Enhancing visibility into your full prospect/ client pipeline to cashflow is essential to relieving business stress and improving ROI. This will be a bit slow to start and is highly dependent on the data we have available however leveraging current metrics as a baseline will help to identify current gaps, KPIs and wishlist metrics. It’s also a critical first step before we’ll be able to adjust the marketing channel strategy and spend. 
+   1. Blockers: Seat access
+4. TBD: Marketing Campaign & Channel Strategy:  Defer major rebuilds (e.g., full website overhaul) until baseline data and intake systems are stabilized. Prioritize low-effort, high-impact optimizations to drive near-term growth while evaluating longer-term investments.
+   1. WIP: 2026 Marketing Plan
+5. Email Error Close out
+   1. P4
+   2. Status - WIP: Finalize & setup gDrive tech repo when access/seats resolved 
+
+
+Agenda 4/24
+* Lead Operations
+   * Review the MyCase invoice process for payments and cash. Identify why Trust and tracking are different
+   * Identify outdated fields 
+* Logistics
+   * Seats - Google & MyCase
+   * Agenda: 4/15
+
+
+* Live Email Test - Double check email MX has not updated and send a few internal/external test records
+* Analytics Overview - Andrew BrownCan you share your recent analysis at a high level and data or dashboard access for further analysis?
+* Lead Database Overview - Romina SistarCan you give an overview of your lead management spreadsheets? 
+* Omni Channel Marketing & Attribution - Kate Stannard
+* Marketing Current State - Review active channels (LSA, PPC, events) and any known performance insights. Identify what is driving signed clients vs unqualified leads. Identify key pain points
+
+
+
+
+Action Items: Kate Stannard
+* System Access & Risk Review: Gather list of tools and passwords from Carrie
+* Finalize any additional hosting, firewall or email updates w/ Carrie
+* Send recommendations for short term wins & triage
+   * Send invoice? 
+* Finalize 2026 Strategic Marketing Plan
+Action Items: Romina Sistar
+* Share lead spreadsheets
+* Walk through invoicing/updating process in MyCase w/Kate Stannard
+Action Items: Andrew Brown
+* Record DUI/DV/Traffic talk tracks - Records are available via Google LSA for analysis 
+* Share analytics docs/dashboards
+* Review short term proposal by 4/20
+   * Send Confidentiality Agreement? 
+* Share 5 brand/company images you like across various industries
+*
