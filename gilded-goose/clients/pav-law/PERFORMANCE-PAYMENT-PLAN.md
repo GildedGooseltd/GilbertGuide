@@ -124,6 +124,8 @@ Verified from HubSpot export + Google Ads / LSA exports + MyCase.
 | **T2** | 02 ≥ **[___]** · 22 **< 5 min** · 21 **≤ 25%** | **$[___]** |
 | **T3** | T2 · 05 up MoM · 23 **100%** | **$[___]** |
 
+**Collectible-pace support gate (draft):** Use collectible pace vs the approved monthly or mid-year target as a supporting Romina indicator. Any payout remains a predetermined **flat-dollar tier** and also requires on-time intake records, payment-plan status, and assigned payment follow-up. The modeled 80% collectible figure is dashboard-only until replaced by verified QuickBooks cash. It cannot trigger pay by itself, and the payout is never a percentage of fees, trust, or collections.
+
 #### Casey — phone & LSA
 
 *Pending — granular LSA/phone KPIs removed from locked list. Interim gate: KPI **21** only.*

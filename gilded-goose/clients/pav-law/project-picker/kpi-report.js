@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260718-case-forecast-r1";
+  const RENDER_VER = "20260718-financials-checkpoint-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -59,8 +59,8 @@
       fields: "Ledger Credit by month · full CY 2025 (Jan–Dec) + 2026 YTD through Jul 15"
     },
     "financial": {
-      file: "ledger_account_activity_report.csv (2025-01-03→2026-07-15) · new-cases-by-month.csv as-of-2026-07-01",
-      fields: "Cash credits and MyCase new cases by month · Jan 2025–Jul 2026 · Jul 2026 cases not yet available"
+      file: "ledger_account_activity_report.csv (2025-01-03→2026-07-15) · new-cases-by-month.csv as-of-2026-07-01 · CLIENT-VALUE-BASELINE mean fee · $80k/mo expense assumption",
+      fields: "Cash credits and MyCase new cases by month · expense-pace checkpoint (quoted / collectible vs mid-year + full-year) · Jul 2026 cases not yet available"
     }
   };
 
@@ -118,8 +118,8 @@
     },
     "financial": {
       title: "#09 Financials",
-      desc: "Cash collected and cases created by month across the same Jan 2025–Jul 2026 range.",
-      formula: "Cash = ledger credits by month. Cases = MyCase Client contacts grouped by Created month; red means the monthly case count is not available."
+      desc: "Cash collected and cases created by month, plus the $80k/mo expense-pace checkpoint (quoted / collectible vs mid-year and full-year targets).",
+      formula: "Cash = ledger credits by month. Cases = MyCase Client contacts by Created month. Pace = mean fee × cases × 80% collectible vs $80k/mo expenses."
     }
   };
 
@@ -1446,7 +1446,7 @@
     return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="#09 Financials">
       ${statusCorner(true)}
       ${kpiHelpBtn("financial")}
-      ${kpiSectionStaticHead("Financials", "Cash collected MoM · cash / new case")}
+      ${kpiSectionStaticHead("Financials", "Cash collected MoM · expense-pace checkpoint · cash / new case")}
       <div class="kpi-section-body">
         ${cashCollectedPaceTile(chartRows)}
         <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cases created · <strong>2025 through Jul 2026 YTD</strong>. Missing case data is red.</p>
@@ -1464,6 +1464,11 @@
               chart: casesCreatedChart(chartRows)
             })}
           </div>
+        </div>
+        <div class="kpi-mini-card" style="margin-top:0.85rem">
+          <h3>Expense pace checkpoint · $80k / month</h3>
+          <p class="kpi-section-intro">Quoted and 80% collectible value vs mid-year and full-year expense targets. Not QuickBooks cash. H1 surplus is unreliable until unknown business debt is mapped (B9).</p>
+          ${expensePaceCheckpointTableHtml()}
         </div>
         ${sourceFootnote("financial")}
       </div>
@@ -2537,6 +2542,35 @@
     </article>`;
   }
 
+  function forecastExpenseCoverageDialHtml() {
+    const collectible = 884981;
+    const expenses = 960000;
+    const quoted = 1106226;
+    const coverage = collectible / expenses;
+    const shortfall = expenses - collectible;
+    const gauge = halfMoonGauge(coverage, "forecast-expense-coverage", {
+      valueLabel: `${Math.round(coverage * 100)}% covered`,
+      endLabel: "100%",
+      goalMark: 1,
+      goalLabel: "$960k expenses"
+    });
+    return `<div class="kpi-cash-pace-tile" aria-label="Full-year collectible forecast coverage of the annual expense run-rate">
+      <div class="kpi-cash-pace-copy">
+        <span class="kpi-cash-pace-kicker">2026 forecast</span>
+        <h3>Expense coverage dial</h3>
+        <p>80% collectible forecast compared with the $80k/mo expense run-rate.</p>
+        <p><a class="data-guide-link" href="#predictions" data-go-view="predictions">Open full forecast</a></p>
+      </div>
+      <div class="kpi-cash-pace-gauge">${gauge}</div>
+      <div class="kpi-cash-pace-stats">
+        <div><span>Quoted forecast</span><strong>${fmtMoney(quoted)}</strong></div>
+        <div><span>Collectible forecast</span><strong>${fmtMoney(collectible)}</strong></div>
+        <div><span>Annual expenses</span><strong>${fmtMoney(expenses)}</strong></div>
+        <div><span>Coverage gap</span><strong>−${fmtMoney(shortfall)}</strong></div>
+      </div>
+    </div>`;
+  }
+
   function renderKpis(el) {
     if (!el || el.dataset.rendered === RENDER_VER) return;
     const liveKpis = DATA.kpis.filter(k => !k.archived);
@@ -2554,10 +2588,17 @@
             <div class="kpi-goals-grid">${goalsCards}</div>
           </div>
         </section>`;
+    const forecastPaceBlock = `<section class="kpi-section kpi-section-static" data-feedback-id="section-forecast-pace" data-feedback-label="2026 forecast pace">
+          ${kpiSectionStaticHead("Forecast pace", "Collectible value vs $80k/mo expenses")}
+          <div class="kpi-section-body">
+            ${forecastExpenseCoverageDialHtml()}
+          </div>
+        </section>`;
     const kpiCards = metrics.map(k => kpiTileWithProjects(k.id, kpiStatCardHtml(k))).join("");
 
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
+      ${forecastPaceBlock}
       <section class="kpi-section kpi-section-static" data-feedback-id="section-key-metrics" data-feedback-label="Key metrics">
         ${kpiSectionStaticHead("Key metrics", "")}
         <div class="kpi-section-body">
@@ -2924,6 +2965,147 @@
       <p class="data-warning-note"><strong>Forecast range:</strong> 54–114 Jul–Dec cases. The 84-case midpoint is the planning forecast. Only one complete prior year exists, so replace July’s estimate when the July MyCase export is complete.</p>`;
   }
 
+  function expensePaceGraphHtml() {
+    const periods = [
+      {
+        label: "Full-year forecast",
+        forecast: true,
+        values: [1106226, 884981, 960000]
+      },
+      {
+        label: "Jan–Jun actual",
+        forecast: false,
+        values: [636918, 509534, 480000]
+      }
+    ];
+    const series = [
+      { name: "Quoted value", color: "var(--gg-royal-blue)" },
+      { name: "Est. collectible (80%)", color: "var(--gg-forest)" },
+      { name: "Expenses", color: "var(--gg-royal)" }
+    ];
+    const w = 760;
+    const h = 320;
+    const pad = { l: 64, r: 22, t: 52, b: 64 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const axisMax = 1200000;
+    const groupSlot = plotW / periods.length;
+    const barW = 58;
+    const gap = 12;
+    const groupW = series.length * barW + (series.length - 1) * gap;
+    const ticks = [0, 300000, 600000, 900000, 1200000].map(value => {
+      const y = pad.t + plotH * (1 - value / axisMax);
+      const label = value === 0 ? "$0" : `$${(value / 1000000).toFixed(value % 1000000 === 0 ? 1 : 2)}M`;
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 9}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${label}</text>
+      </g>`;
+    }).join("");
+    const bars = periods.map((period, periodIndex) => {
+      const groupX = pad.l + periodIndex * groupSlot + (groupSlot - groupW) / 2;
+      const periodBars = period.values.map((value, seriesIndex) => {
+        const bh = Math.max(6, plotH * value / axisMax);
+        const x = groupX + seriesIndex * (barW + gap);
+        const y = pad.t + plotH - bh;
+        const label = value >= 1000000
+          ? `$${(value / 1000000).toFixed(2)}M`
+          : `$${Math.round(value / 1000)}k`;
+        return `<g>
+          <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="5" fill="${series[seriesIndex].color}" fill-opacity="${period.forecast ? "0.48" : "1"}"/>
+          <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total"${period.forecast ? ' opacity="0.68"' : ""}>${label}</text>
+        </g>`;
+      }).join("");
+      return `<g>
+        ${periodBars}
+        <text x="${groupX + groupW / 2}" y="${h - 22}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(period.label)}</text>
+      </g>`;
+    }).join("");
+    const legend = `<div class="kpi-chart-legend">${series.map(item =>
+      `<span><i class="kpi-stack-swatch" style="background:${item.color}"></i> ${escapeHtml(item.name)}</span>`
+    ).join("")}<span style="opacity:0.52">Lighter bars = forecast</span></div>`;
+    return chartBlock({
+      head: `<div><strong>Quoted, collectible, and expenses</strong><div class="kpi-chart-subtitle">Full-year forecast first · Jan–Jun actual second</div></div>`,
+      chart: `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Full-year forecast and Jan through June actual quoted value, collectible value, and expenses">
+        <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+        ${ticks}${bars}
+        <text x="16" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 16 ${pad.t + plotH / 2})" class="kpi-chart-axis">Value ($)</text>
+      </svg>`,
+      legend,
+      footnote: "Quoted = mean fee × cases · collectible = 80% · expenses = $80k/month."
+    });
+  }
+
+  /** Shared $80k/mo expense-pace math for Financials + Predictions. */
+  function expensePaceMetrics() {
+    const mean = 5587;
+    const collectionRate = 0.8;
+    const monthlyExpense = 80000;
+    const monthsElapsed = 6;
+    const actualH1 = 114;
+    const fullYearCases = 198;
+    const quotedH1 = actualH1 * mean;
+    const collectibleH1 = Math.round(quotedH1 * collectionRate);
+    const quotedFullYear = fullYearCases * mean;
+    const collectibleFullYear = Math.round(quotedFullYear * collectionRate);
+    const expenseH1 = monthlyExpense * monthsElapsed;
+    const expenseFullYear = monthlyExpense * 12;
+    const linearQuotedPace = Math.round(quotedFullYear * monthsElapsed / 12);
+    const linearCollectiblePace = Math.round(collectibleFullYear * monthsElapsed / 12);
+    const quotedPaceDelta = quotedH1 - linearQuotedPace;
+    const collectiblePaceDelta = collectibleH1 - linearCollectiblePace;
+    const netCollectibleH1 = collectibleH1 - expenseH1;
+    const netCollectibleFullYear = collectibleFullYear - expenseFullYear;
+    const quotedPacePct = Math.round((quotedPaceDelta / linearQuotedPace) * 100);
+    return {
+      monthlyExpense,
+      quotedH1,
+      collectibleH1,
+      quotedFullYear,
+      collectibleFullYear,
+      expenseH1,
+      expenseFullYear,
+      linearQuotedPace,
+      linearCollectiblePace,
+      quotedPaceDelta,
+      collectiblePaceDelta,
+      netCollectibleH1,
+      netCollectibleFullYear,
+      quotedPacePct
+    };
+  }
+
+  function expensePaceCheckpointTableHtml() {
+    const m = expensePaceMetrics();
+    return kpiDetailTable(
+      ["Checkpoint", "Target / expense", "Actual or forecast", "Gap", "Status"],
+      [
+        ["Mid-year quoted pace", fmtMoney(m.linearQuotedPace), fmtMoney(m.quotedH1), `+${fmtMoney(m.quotedPaceDelta)}`, "Ahead"],
+        ["Mid-year collectible pace", fmtMoney(m.linearCollectiblePace), fmtMoney(m.collectibleH1), `+${fmtMoney(m.collectiblePaceDelta)}`, "Ahead"],
+        ["H1 expenses covered (collectible)", fmtMoney(m.expenseH1), fmtMoney(m.collectibleH1), `+${fmtMoney(m.netCollectibleH1)}`, "Issue — unknown debt"],
+        ["Full-year expenses covered (collectible forecast)", fmtMoney(m.expenseFullYear), fmtMoney(m.collectibleFullYear), `−${fmtMoney(Math.abs(m.netCollectibleFullYear))}`, "Short"]
+      ]
+    );
+  }
+
+  /** $80k/mo expense pace vs 2026 quoted / collectible forecast. */
+  function expensePaceRecommendationHtml() {
+    const m = expensePaceMetrics();
+    return `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
+        <div class="kpi-mini-card"><h3>Expense / month</h3><p class="kpi-mini-value">${fmtMoney(m.monthlyExpense)}</p></div>
+        <div class="kpi-mini-card"><h3>Quoted pace vs mid-year</h3><p class="kpi-mini-value">+${fmtMoney(m.quotedPaceDelta)}</p></div>
+        <div class="kpi-mini-card"><h3>Full-year collectible after expenses</h3><p class="kpi-mini-value">−${fmtMoney(Math.abs(m.netCollectibleFullYear))}</p></div>
+      </div>
+      ${expensePaceGraphHtml()}
+      <p class="data-warning-note"><strong>Recommendation:</strong> Case/quoted volume is <strong>ahead of mid-year pace</strong> (+${m.quotedPacePct}%), but the full-year collectible forecast still does <strong>not cover</strong> an $80k/mo expense run-rate. Treat expense coverage as the tighter constraint — raise collectible value (higher-fee practice mix, Sex Crimes Defense, collection rate) or cut recurring spend before assuming the $1.1M quoted forecast means the year is safe.</p>
+      <p class="data-warning-note"><strong>Issue — do not treat H1 surplus as positive:</strong> H1 collectible after expenses shows +${fmtMoney(m.netCollectibleH1)}, but <strong>unknown business debt</strong> (loans, credit balances, and other liabilities outside the $80k/mo operating assumption) is not included. Flag this as a negative / unreliable indicator until B9 maps every liability.</p>
+      <p class="data-inline-note"><strong>Mid-year quoted pace:</strong> Target ${fmtMoney(m.linearQuotedPace)} · actual ${fmtMoney(m.quotedH1)} · ahead ${fmtMoney(m.quotedPaceDelta)} (+${m.quotedPacePct}%).</p>
+      <p class="data-inline-note"><strong>Mid-year collectible pace:</strong> Target ${fmtMoney(m.linearCollectiblePace)} · actual ${fmtMoney(m.collectibleH1)} · ahead ${fmtMoney(m.collectiblePaceDelta)}.</p>
+      <p class="data-formula-line">H1 expenses = ${fmtMoney(m.monthlyExpense)} × 6 = ${fmtMoney(m.expenseH1)} · H1 collectible after expenses = ${fmtMoney(m.netCollectibleH1)} (unreliable — unknown debt)</p>
+      <p class="data-formula-line">Full-year expenses = ${fmtMoney(m.expenseFullYear)} · collectible forecast ${fmtMoney(m.collectibleFullYear)} · shortfall ${fmtMoney(Math.abs(m.netCollectibleFullYear))}</p>
+      ${expensePaceCheckpointTableHtml()}
+      <p class="data-inline-note"><strong>Next actions:</strong> Keep Sex Crimes Defense / high-mean practice focus in A1 · run B9 financial audit to inventory debt + cancel recurring subscriptions · reforecast after July MyCase cases and QuickBooks collections land.</p>`;
+  }
+
   /** Intake-driven cash projection — 2026-signed cohorts only (Ad Reports model). */
   function cashProjectionPanelHtml() {
     const cashByMonth = [
@@ -2986,7 +3168,7 @@
     return `<header class="data-page-head">
       <div>
         <h2 class="data-page-title">Predictions</h2>
-        <p class="data-page-sub">Rest-of-year case forecast · intake-driven cash projection · 2026 signed cohorts</p>
+        <p class="data-page-sub">Rest-of-year case forecast · $80k/mo expense pace · intake-driven cash projection</p>
       </div>
     </header>
     <div class="data-grid">
@@ -2999,6 +3181,12 @@
           <div class="kpi-mini-card"><h3>Jun steady-state</h3><p class="kpi-mini-value">~$152k/mo</p></div>
         </div>`,
         { full: true, id: "prediction-headline" }
+      )}
+      ${dataCardHtml(
+        "Recommendation · expense pace vs 2026 forecast",
+        "Quoted volume is ahead of mid-year pace, but $80k/mo expenses still outrun the full-year collectible forecast.",
+        expensePaceRecommendationHtml(),
+        { full: true, id: "prediction-expense-pace" }
       )}
       ${dataCardHtml(
         "2026 cases · actual + rest-of-year forecast",
@@ -3168,17 +3356,18 @@
       )}
       ${dataCardHtml(
         "Recommended cost-control project · Full Financial Audit",
-        "Convert subscription sprawl and other visible leakage into verified monthly and annual savings.",
+        "Unknown business debt makes the H1 surplus unreliable; subscription waste and spend leakage still need a verified total.",
         `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
           <div class="kpi-mini-card"><h3>Known 30-day waste floor</h3><p class="kpi-mini-value">$1,063</p></div>
           <div class="kpi-mini-card"><h3>Annualized if repeated</h3><p class="kpi-mini-value">$12,756</p></div>
-          <div class="kpi-mini-card"><h3>Subscription waste</h3><p class="kpi-mini-value">Not yet totaled</p></div>
+          <div class="kpi-mini-card"><h3>H1 after expenses</h3><p class="kpi-mini-value">+$29,534*</p></div>
         </div>
-        <p class="data-warning-note"><strong>Why this is recommended:</strong> The account review already found $1,063 in non-client Search-term spend over 30 days. Kate has also identified many unnecessary or overlapping subscriptions, but those charges have not yet been reconciled into a defensible total. The $1,063 is therefore a minimum known waste floor—not the full savings opportunity.</p>
-        <p class="data-inline-note"><strong>Audit scope:</strong> Use <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 · Full Financial, Credit Card & Subscription Waste Audit</a> to reconcile QuickBooks, bank and card statements, subscriptions, software seats, phone lines, ad billing, LSA credits, payroll, contractors, sponsorships, and vendor agreements.</p>
+        <p class="data-warning-note"><strong>Why an audit is needed:</strong> H1 collectible after the $80k/mo expense assumption shows +$29,534, but that figure is a <strong>negative / unreliable indicator</strong> because <strong>unknown business debt</strong> (loans, credit balances, and other liabilities) is not in the model. A small operating surplus can disappear once debt service is mapped. Separately, the account review already found $1,063 in non-client Search-term spend over 30 days, and many unused or overlapping subscriptions still lack a verified cancel total.</p>
+        <p class="data-inline-note"><strong>Audit scope:</strong> Use <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 · Full Financial, Credit Card & Subscription Waste Audit</a> to reconcile QuickBooks, bank and card statements, <strong>debt and liability balances</strong>, subscriptions, software seats, phone lines, ad billing, LSA credits, payroll, contractors, sponsorships, and vendor agreements.</p>
         <p class="data-formula-line">$1,063 known 30-day Search waste × 12 months = $12,756 annualized exposure if unchanged</p>
+        <p class="data-formula-line">H1 collectible $509,534 − $480,000 expenses = +$29,534* · *excludes unknown debt</p>
         <p class="data-inline-note"><strong>Payment:</strong> $1,800 fixed fee plus 20% of verified net savings or recovered cash. Measure subscription/service changes for 12 months, continuing vendor-rate revisions for 6 months, variable operating revisions for 3 months, and one-time recoveries when posted.</p>
-        <p class="data-inline-note"><strong>No double-counting:</strong> The approximately $694 safe Military Display negative-keyword finding is a subset of the $1,063 Search-term waste. Subscription, phone, duplicate-tool, LSA-credit, and vendor savings remain separate and unverified until statements are audited.</p>`,
+        <p class="data-inline-note"><strong>No double-counting:</strong> The approximately $694 safe Military Display negative-keyword finding is a subset of the $1,063 Search-term waste. Subscription, phone, duplicate-tool, LSA-credit, debt-service, and vendor savings remain separate and unverified until statements are audited.</p>`,
         { full: true, id: "recommendation-financial-audit" }
       )}
       ${dataCardHtml(
@@ -3232,8 +3421,8 @@
               '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 · Full Financial, Credit Card & Subscription Waste Audit</a>',
               "Priority 26 · Recommended",
               "$1,800 + 20% verified savings",
-              "Reconcile all operating spend; cancel unused subscriptions and duplicate tools; recover credits and stop recurring leakage.",
-              "Every recurring charge has an owner and action; verified monthly and annual savings are documented without double-counting."
+              "Reconcile operating spend, unknown business debt/liabilities, unused subscriptions, and duplicate tools; recover credits and stop recurring leakage.",
+              "Every recurring charge and liability has an owner and action; verified monthly and annual savings are documented without double-counting; H1 surplus is no longer treated as cash-safe until debt is mapped."
             ]
           ]
         )}
@@ -3249,7 +3438,7 @@
           <li>Run <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B11">B11</a>: same-day LSA statuses, Casey call review, and a fixed coverage calendar.</li>
           <li>After ≥90% answered for seven days, confirm <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="RETAINER">Digital Ads Maintenance Retainer</a> is funded (${fmtMoney(r.mgmt)}/mo).</li>
           <li>Launch the <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="A1">A1 Sex Crimes Defense Search pilot</a>: exact/phrase only, dedicated discreet landing page, no Display or broad match, and a 30-day qualified-call / signed-case review.</li>
-          <li>Run <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 Full Financial Audit</a>: export QuickBooks plus all bank/card statements, inventory recurring subscriptions and phone/software seats, and produce a cancel / renegotiate / dispute list with verified monthly and annual savings.</li>
+          <li>Run <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 Full Financial Audit</a>: export QuickBooks plus all bank/card statements, inventory recurring subscriptions and phone/software seats, <strong>map unknown business debt and liabilities</strong>, and produce a cancel / renegotiate / dispute list with verified monthly and annual savings. Do not treat the +$29,534 H1 collectible-after-expenses figure as a positive indicator until debt is mapped.</li>
           <li>Test diverting ≥ ${fmtMoney(r.minDivert)}/mo from LSA → consulting + Search media; hold for 30 days and track signed-case rate by channel.</li>
           <li>Open Data tab · Cases, Leads & Spend for source charts and June trade-off tables.</li>
         </ol>`,
