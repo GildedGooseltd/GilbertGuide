@@ -6,6 +6,8 @@ alwaysApply: true
 
 # Gilbert Guide content rules
 
+**Global:** [`preserve-user-edits.mdc`](preserve-user-edits.mdc) — read disk, patch only, never clobber. Applies here too.
+
 ## User owns the markdown
 
 - **`content/**/*.md`** — Kate edits by hand (Ctrl+S). Source of truth for project copy.
@@ -20,9 +22,10 @@ Cursor Save writes the **editor buffer**. If an agent or `sync-impact` then **ov
 Forbidden unless Kate asked in the same message:
 
 - Bulk find/replace or scripts across `content/projects/*.md` / `retainer.md`
-- `npm run sync-impact`, `migrate-to-b2-format`, `format-content`, or any `projectToMarkdown` write-back
-- Replacing her **Value icons** list with a full default set
+- `npm run sync-impact`, `migrate` / `migrate-to-b2-format`, `format-content`, `apply-campaign-metrics`, or any `projectToMarkdown` write-back
+- Copying full **Value icons** from `_TEMPLATE.md` onto a project that already has a trimmed list
 - Editing a file she just edited without merging her current wording
+- Treating picker package slot **“P6 B1”** as payment plan P6 Event — different things
 
 When she asks to update INDEX → guide: run **`npm run build`** only (reads INDEX into `projects-data.js`). Do **not** rewrite project files unless she asked to change those files.
 

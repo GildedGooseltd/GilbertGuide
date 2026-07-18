@@ -22,6 +22,7 @@ When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
    - Soft / building → `#e3c58d` (gold-bright / `--gg-series-4`)
    - Also available: royal blue `#1e3a8a` (`--gg-royal-blue`) for intake accents
 3. **Normal chart formatting** — labeled axes/ticks, plot background, baseline, totals above columns (not colliding with y-axis labels), month/category labels under bars, explicit legend with swatches.
+   - **Month ordering:** always place the **current (most recent) month first**, then go backward in time. Label the axis so the newest → oldest direction is clear. Same for period detail tables.
 4. **Positive counts** never red/magenta. Red only for negative MoM / negative metric values.
 5. Keep `BRANDING-LAYOUT.md` chart notes in sync when palette or chart conventions change.
 

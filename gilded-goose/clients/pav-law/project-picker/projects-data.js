@@ -82,7 +82,7 @@ window.PROJECT_DATA = {
       "fee": 0,
       "category": "Infrastructure",
       "campaignType": "Call Infrastructure",
-      "status": "recommended",
+      "status": "wip",
       "publishStatus": "published",
       "parentId": "B13",
       "enabler": true,
@@ -555,7 +555,7 @@ window.PROJECT_DATA = {
     {
       "id": "A2",
       "priority": 10,
-      "fee": 2800,
+      "fee": 2900,
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "status": "recommended",
@@ -594,7 +594,7 @@ window.PROJECT_DATA = {
       "goal": "Drive tracked NTGUILT site sessions and remarketing pool growth from Display/Search with UTM attribution on every destination.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,800",
+      "estCostLabel": "$2900",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2
     },
@@ -606,7 +606,7 @@ window.PROJECT_DATA = {
       "campaignType": "Paid Search",
       "status": "available",
       "publishStatus": "published",
-      "estimatedLeads": "",
+      "estimatedLeads": "Sex Crimes Defense pilot targets recovery toward 2025 volume (8-case YTD gap)",
       "keywords": [
         "search",
         "google",
@@ -618,14 +618,17 @@ window.PROJECT_DATA = {
         "spend",
         "dui",
         "mountain",
-        "fix"
+        "fix",
+        "sex crimes defense",
+        "sex offense"
       ],
       "title": "Digital Ad Enhancements",
-      "tldr": "Builds additional targeted Search campaigns for new audiences and practice angles already planned for Pav Law.",
+      "tldr": "Builds additional targeted Search campaigns for new audiences and practice angles already planned for Pav Law, including a priority Sex Crimes Defense pilot.",
       "valueAdded": [
         "Expands Search beyond the current account structure without inventing a new media channel",
         "Tightens keyword and ad copy so spend maps to stronger ad strength and tracked calls",
-        "Includes call-only troubleshooting and CDL / federal-masking creative angles already in WIP"
+        "Includes call-only troubleshooting and CDL / federal-masking creative angles already in WIP",
+        "Rebuilds Sex Crimes Defense demand around Pav Law’s highest-value measured practice line"
       ],
       "valueIcons": [
         "leads",
@@ -640,7 +643,9 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "Call-only campaign troubleshooting",
-        "Ad creative for CDL-licensed drivers with personal tickets (federal masking can force court appearances)"
+        "Ad creative for CDL-licensed drivers with personal tickets (federal masking can force court appearances)",
+        "Sex Crimes Defense Search pilot: exact/phrase high-intent keywords, discreet RSA copy, dedicated landing page, call tracking, and negative-keyword QA",
+        "Keep Sex Crimes Defense off Display and broad match; review sensitive-policy language before launch"
       ],
       "goal": "Launch and stabilize additional Search + call-only flights so paid clicks produce tracked consult calls for the new target audiences.",
       "abQuestions": [],
@@ -1308,11 +1313,12 @@ window.PROJECT_DATA = {
       "priority": 26,
       "fee": 1800,
       "category": "Finance / Operations",
-      "campaignType": "Spend Audit",
-      "status": "available",
+      "campaignType": "Full Financial Audit",
+      "status": "recommended",
       "publishStatus": "published",
       "estimatedLeads": "N/A — cost savings (not lead-gen)",
       "keywords": [
+        "financial",
         "credit card",
         "subscription",
         "leak",
@@ -1323,24 +1329,43 @@ window.PROJECT_DATA = {
         "cancel",
         "waste",
         "budget",
-        "save money"
+        "quickbooks",
+        "phone",
+        "payroll"
       ],
-      "title": "Expense Audit",
-      "tldr": "Full pass on recurring charges and budgets so unused tools stop draining marketing and ops spend. Review expense reports and find opportunties to cut costs.",
+      "title": "Full Financial, Credit Card & Subscription Waste Audit",
+      "tldr": "Reconcile the firm’s full operating spend across QuickBooks, bank and credit-card statements, ad platforms, software, phone systems, payroll, contractors, sponsorships, and vendor agreements. Turn the subscription waste already observed into a verified monthly and annual savings plan.",
       "valueAdded": [
-        "Audit recurring charges tied to marketing, CRM, phone, and ops",
-        "Cancel or replace unused SaaS",
-        "Replace phone lines",
-        "Design part time & commission salary models"
+        "Produce a transaction-level spend ledger by vendor, owner, department, payment method, and contract term",
+        "Inventory every recurring subscription, software seat, phone line, domain, hosting plan, directory, and ad tool",
+        "Label each charge **keep · renegotiate · consolidate · cancel · dispute · needs owner**",
+        "Cancel or replace unused SaaS and overlapping tools; document confirmation numbers and effective dates",
+        "Reconcile ad-platform spend and credits against bank and credit-card charges",
+        "Reconcile LSA charged leads, disputes, credits, booked leads, and signed cases",
+        "Review payroll, contractor, sponsorship, event, and commission costs against actual use and measurable return",
+        "Build a 30-day savings action list plus monthly and annual run-rate savings forecast",
+        "Add renewal dates and owners so waste does not return"
       ],
       "valueIcons": [
         "efficiency",
         "foundation",
         "retainer"
       ],
+      "deliverables": [
+        "1. QuickBooks-to-bank and credit-card reconciliation for the review period",
+        "2. Subscription and recurring-charge register with monthly cost, annual cost, owner, use, renewal date, and action",
+        "3. Duplicate-tool and unused-seat report",
+        "4. Advertising waste and credit-recovery schedule",
+        "5. Phone-line and communications-cost audit",
+        "6. Payroll, contractor, vendor, sponsorship, and event-cost review",
+        "7. Cancel / renegotiate / dispute execution log",
+        "8. Before-and-after monthly operating-spend baseline",
+        "9. Verified savings total, annualized savings, and 90-day follow-up check"
+      ],
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,800",
+      "estCostLabel": "$1,800 + 20% verified savings",
+      "ongoingFee": 20,
       "paymentPlanLabel": "50%",
       "depositPct": 0.5
     },

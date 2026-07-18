@@ -110,7 +110,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | “Confirm & submit” section      | `index.html` | `.confirm-submit-section`                                  |
 | Email field label / placeholder | `index.html` | `#submitted-email`                                         |
 | Invoice schedule labels         | `index.html` | `#invoice-payment-months`, hints                           |
-| E-sign consent clickwrap        | —            | **Not required** on confirm (no vendor checkbox) |
+| E-sign consent clickwrap        | SOW page     | `#sow-esign-consent` on SOW (not confirm) |
 | Submit gating                   | `app.js`     | `canSubmit()` — email + cart/notes/Gilbert only |
 | Submit / Back buttons           | `index.html` | `#submit-selections`, `#confirm-back`                      |
 | Deposit / QuickBooks notes      | `index.html` | `.submit-note` |
@@ -138,11 +138,18 @@ After markdown edits: `npm run build` (or `npm run watch`).
 
 | What users see | File | Field / location |
 | -------------- | ---- | ---------------- |
-| Flow | confirm → SOW draft → thank-you/deposit | `submitSelections()` → `showSowPage()` → `continueToThankYou()` |
-| MSA wording | `index.html` / `app.js` | `.sow-msa-note`, `buildSowDraft()` |
-| Email SOW PDF | `app.js` | `#sow-send-esign` → `emailSowPdf()` |
-| Continue to deposit | `index.html` | `#sow-continue-thankyou` |
-| Custom e-sign later | stub note only | not Dropbox/DocuSign plugin |
+| Flow | submit → private Andrew link → private Kate countersign link → complete | Apps Script creates two separate single-use bearer tokens |
+| Scope list | titles only | server-side `selectedSowTitles()` / `buildCanonicalSow()` |
+| Agreement | fixed `<pre>` — no user editing | `#sow-document`; server copy and hash are authoritative |
+| Andrew signature | one signer, two capacities | Pav Law authorized signer + Andrew individually |
+| Signing fields | required checkboxes only | review · firm authority · individual capacity · electronic consent |
+| Token security | raw token only in emailed URL | Sheet stores SHA-256 token hash; 14-day expiry; single-use |
+| Sign API | `app.js` | `signSowAndEmail()` → webhook `type: "sow_sign"` |
+| Audit | Apps Script server timestamp + client timestamp + browser-reported public IP | also timezone, user agent, checks, document hashes |
+| Copies | PDF auto-download + `MailApp` attachment | Andrew copy after his signature; both parties after countersign |
+| Drive archive | private Google Doc + PDF | created only after Kate countersigns |
+| Sheet tab | `SowSigning` | staged state, hashes, signature audit, Drive file IDs |
+| Continue to deposit | Andrew only, gated until his signature succeeds | `#sow-continue-thankyou` |
 
 
 

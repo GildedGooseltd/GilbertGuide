@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260718-predictions-tab-r1";
+  const RENDER_VER = "20260718-case-forecast-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -45,6 +45,10 @@
     "#28": {
       file: "Ad Reports/exports/mycase/as-of-2026-07-01/contact_report_task_export.csv",
       fields: "Contact group=Client · Pre-Trial Flat Fee / flat / trial / retainer (mean $5,587 · n=142) · see CLIENT-VALUE-BASELINE.md"
+    },
+    "#29": {
+      file: "Ad Reports/exports/mycase/as-of-2026-07-01/contact_report_task_export.csv",
+      fields: "Client + fee · n≥5 · Case Type else Cases (practice area) · mean fee by practice · CLIENT-VALUE-BASELINE.md"
     },
     "cases-leads-spend": {
       file: "MyCase new-cases-by-month · LSA leads-inbox (15) · Google Ads Call details · HubSpot form submits · Google account_activities Jan–Jul 2026",
@@ -2462,9 +2466,75 @@
     </button>`;
   }
 
+  function feeByPracticeBarChart(rows) {
+    const items = rows || DATA.feeByPractice || [];
+    const max = niceAxisMax(Math.max(...items.map(r => r.mean), 1));
+    const w = 720;
+    const h = 300;
+    const pad = { l: 52, r: 16, t: 32, b: 72 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / Math.max(items.length, 1);
+    const barW = Math.min(56, slot * 0.55);
+    const yOf = v => pad.t + plotH * (1 - v / max);
+    const ticks = axisTicks(max, 5).map(t => {
+      const y = yOf(t);
+      const label = t >= 1000 ? `$${Math.round(t / 1000)}k` : `$${t}`;
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${label}</text>
+      </g>`;
+    }).join("");
+    const bars = items.map((r, i) => {
+      const bh = Math.max(6, plotH * (r.mean / max));
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pad.t + plotH - bh;
+      const short = String(r.name)
+        .replace(" / Sex Offense", "")
+        .replace("Domestic Violence / DV", "DV")
+        .replace("Criminal Defense (other)", "Crim. Def.")
+        .replace("Probation Revocation", "Probation")
+        .replace("DUI / DWAI / Traffic", "DUI/Traffic")
+        .replace("Assault / Menacing", "Assault")
+        .replace("Theft / Property", "Theft")
+        .replace("Sex Assault", "Sex Assault");
+      const valLabel = r.mean >= 1000
+        ? `$${(r.mean / 1000).toFixed(r.mean % 1000 === 0 ? 0 : 1)}k`
+        : `$${r.mean}`;
+      return `<g>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="5" fill="#2d5a3d"/>
+        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total">${valLabel}</text>
+        <text x="${x + barW / 2}" y="${h - 28}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(short)}</text>
+        <text x="${x + barW / 2}" y="${h - 12}" text-anchor="middle" class="kpi-chart-axis">n=${r.n}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Mean client fee by practice area">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}${bars}
+    </svg>`;
+  }
+
   function feeByPracticeSectionHtml() {
-    /* #28 avg fee + practice means stay in DATA for Lost Revenue math — not shown on KPIs tab */
-    return "";
+    const rows = DATA.feeByPractice || [];
+    const table = kpiDetailTable(
+      ["Practice area", "n", "Mean fee"],
+      rows.map(r => [r.name, String(r.n), fmtMoney(r.mean)])
+    );
+    return `<article class="kpi-split-panel" data-feedback-id="section-fee-by-practice" data-feedback-label="#29 Mean fee by practice">
+      ${statusCorner(true)}
+      ${kpiHelpBtn("#29")}
+      ${kpiSectionStaticHead("Mean fee by practice area", "KPI #29 · Client + fee · n ≥ 5")}
+      <div class="kpi-split-panel-body">
+        ${chartBlock({
+          focus: "#29",
+          chart: feeByPracticeBarChart(rows),
+          table,
+          footnote: "Contracted / quoted fees (mostly Pre-Trial Flat Fee) — not cash collected. Fees-collected export still missing."
+        })}
+        ${sourceFootnote("#29")}
+      </div>
+      ${kpiRefMark("#29")}
+    </article>`;
   }
 
   function renderKpis(el) {
@@ -2743,6 +2813,12 @@
       </div>
     </header>
     <div class="data-grid">
+      ${dataCardHtml(
+        "Mean fee by practice",
+        "KPI #29 · Client + fee · n ≥ 5 · MyCase Jul 1 export.",
+        feeByPracticeSectionHtml(),
+        { full: true, id: "data-fee-by-practice" }
+      )}
       ${dataCardHtml("Lead Channel Stack", "Lead source movement and MoM.", leadsByChannelPanelHtml())}
       ${dataCardHtml("Cases MoM", "Closed · New · Red accounts.", casesMomPanelHtml())}
       ${dataCardHtml("Referral Network", "KPI #17 · placeholder until A4 tracking wires.", totalReferralNetworkPanelHtml())}
@@ -2764,31 +2840,115 @@
     dispatchRendered(el, "impact");
   }
 
+  /** Blended 2026 case forecast: prior-year H2 seasonality + current H1 run rate. */
+  function caseForecastPanelHtml() {
+    const forecast = [
+      { month: "Jul", cases: 14 },
+      { month: "Aug", cases: 15 },
+      { month: "Sep", cases: 14 },
+      { month: "Oct", cases: 15 },
+      { month: "Nov", cases: 12 },
+      { month: "Dec", cases: 14 }
+    ];
+    const actualNewest = [
+      { month: "Jun", cases: 34 },
+      { month: "May", cases: 22 },
+      { month: "Apr", cases: 15 },
+      { month: "Mar", cases: 17 },
+      { month: "Feb", cases: 14 },
+      { month: "Jan", cases: 12 }
+    ];
+    const rows = [
+      ...forecast.map(r => ({ ...r, forecast: true })),
+      ...actualNewest.map(r => ({ ...r, forecast: false }))
+    ];
+    const w = 820;
+    const h = 290;
+    const pad = { l: 54, r: 20, t: 50, b: 48 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const axisMax = 40;
+    const slot = plotW / rows.length;
+    const barW = Math.min(42, slot * 0.58);
+    const ticks = [0, 10, 20, 30, 40].map(value => {
+      const y = pad.t + plotH * (1 - value / axisMax);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 9}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${value}</text>
+      </g>`;
+    }).join("");
+    const bars = rows.map((r, i) => {
+      const bh = Math.max(5, (plotH * r.cases) / axisMax);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pad.t + plotH - bh;
+      return `<g>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="var(--gg-royal-blue)" fill-opacity="${r.forecast ? "0.38" : "1"}"/>
+        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total"${r.forecast ? ' opacity="0.62"' : ""}>${r.cases}</text>
+        <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}${r.forecast ? " F" : ""}</text>
+      </g>`;
+    }).join("");
+    const dividerX = pad.l + forecast.length * slot;
+    const forecastCenter = pad.l + (forecast.length * slot) / 2;
+    const actualCenter = dividerX + (actualNewest.length * slot) / 2;
+    const chart = `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="2026 cases: July through December forecast first, then June through January actual newest to oldest">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}
+      <text x="${forecastCenter}" y="24" text-anchor="middle" class="kpi-chart-total">Forecast · current month → year end</text>
+      <text x="${actualCenter}" y="24" text-anchor="middle" class="kpi-chart-total">Completed · newest → oldest</text>
+      <line x1="${dividerX}" y1="32" x2="${dividerX}" y2="${h - pad.b + 8}" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="4 6"/>
+      ${bars}
+      <text x="15" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 15 ${pad.t + plotH / 2})" class="kpi-chart-axis">Cases</text>
+    </svg>`;
+    const tableRows = rows.map(r => [
+      r.month,
+      String(r.cases),
+      r.forecast ? "Forecast · transparent" : "Actual · completed"
+    ]);
+    return `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
+        <div class="kpi-mini-card"><h3>Jan–Jun actual</h3><p class="kpi-mini-value">114</p></div>
+        <div class="kpi-mini-card"><h3>Jul–Dec forecast</h3><p class="kpi-mini-value">84</p></div>
+        <div class="kpi-mini-card"><h3>2026 full-year estimate</h3><p class="kpi-mini-value">198</p></div>
+      </div>
+      ${chartBlock({
+        chart,
+        legend: `<div class="kpi-chart-legend">
+          <span><i class="kpi-stack-swatch" style="background:var(--gg-royal-blue)"></i> Actual cases</span>
+          <span style="opacity:0.52"><i class="kpi-stack-swatch" style="background:var(--gg-royal-blue)"></i> Forecast cases</span>
+        </div>`,
+        table: kpiDetailTable(["Month", "Cases", "Status"], tableRows),
+        footnote: "Source: MyCase cases created · 2025 full year + Jan–Jun 2026. Forecast months lead; completed months follow newest → oldest."
+      })}
+      <p class="data-formula-line">Seasonal H2 = 2025 H2 (57) × 2026/2025 H1 factor (114 ÷ 121) = 54 cases</p>
+      <p class="data-formula-line">Run-rate H2 = 2026 H1 average (19/mo) × 6 = 114 cases</p>
+      <p class="data-formula-line">Blended H2 = (54 seasonal + 114 run-rate) ÷ 2 = 84 cases · full year = 114 actual + 84 forecast = 198</p>
+      <p class="data-warning-note"><strong>Forecast range:</strong> 54–114 Jul–Dec cases. The 84-case midpoint is the planning forecast. Only one complete prior year exists, so replace July’s estimate when the July MyCase export is complete.</p>`;
+  }
+
   /** Intake-driven cash projection — 2026-signed cohorts only (Ad Reports model). */
   function cashProjectionPanelHtml() {
     const cashByMonth = [
-      ["Jan", 21454],
-      ["Feb", 35757],
-      ["Mar", 50953],
-      ["Apr", 56764],
-      ["May", 74151],
-      ["Jun", 105170],
       ["Jul", 61904],
       ["Aug", 42998],
       ["Sep", 27712],
       ["Oct", 17566],
       ["Nov", 10548],
-      ["Dec", 4559]
+      ["Dec", 4559],
+      ["Jun", 105170],
+      ["May", 74151],
+      ["Apr", 56764],
+      ["Mar", 50953],
+      ["Feb", 35757],
+      ["Jan", 21454]
     ];
     const cohorts = [
-      ["Jan", "12", "$67,044", "$53,635"],
-      ["Feb", "14", "$78,218", "$62,574"],
-      ["Mar", "17", "$94,979", "$75,983"],
-      ["Apr", "15", "$83,805", "$67,044"],
-      ["May", "22", "$122,914", "$98,331"],
+      ["Jul* (forecast)", "14*", "$78,218*", "$62,574*"],
       ["Jun", "34", "$189,958", "$151,966"],
-      ["Jan–Jun", "114", "$636,918", "$509,534"],
-      ["Jul* (est. @ 34)", "34*", "$189,958*", "$151,966*"]
+      ["May", "22", "$122,914", "$98,331"],
+      ["Apr", "15", "$83,805", "$67,044"],
+      ["Mar", "17", "$94,979", "$75,983"],
+      ["Feb", "14", "$78,218", "$62,574"],
+      ["Jan", "12", "$67,044", "$53,635"],
+      ["Jan–Jun total", "114", "$636,918", "$509,534"]
     ];
     const runRates = [
       ["Jun run-rate (34/mo)", "$151,966"],
@@ -2826,7 +2986,7 @@
     return `<header class="data-page-head">
       <div>
         <h2 class="data-page-title">Predictions</h2>
-        <p class="data-page-sub">Intake-driven cash projection · 2026-signed cohorts · 80% payment · 6-month collection curve</p>
+        <p class="data-page-sub">Rest-of-year case forecast · intake-driven cash projection · 2026 signed cohorts</p>
       </div>
     </header>
     <div class="data-grid">
@@ -2839,6 +2999,12 @@
           <div class="kpi-mini-card"><h3>Jun steady-state</h3><p class="kpi-mini-value">~$152k/mo</p></div>
         </div>`,
         { full: true, id: "prediction-headline" }
+      )}
+      ${dataCardHtml(
+        "2026 cases · actual + rest-of-year forecast",
+        "Current month first · forecast bars are lighter and transparent.",
+        caseForecastPanelHtml(),
+        { full: true, id: "prediction-case-forecast" }
       )}
       ${dataCardHtml(
         "Projected cash-in by month",
@@ -2951,7 +3117,7 @@
     return `<header class="data-page-head">
       <div>
         <h2 class="data-page-title">Recommendations</h2>
-        <p class="data-page-sub">Paid call mix · June 2026 · LSA vs digital + Digital Ads Maintenance Retainer</p>
+        <p class="data-page-sub">Paid call mix · practice-value shift · financial waste controls</p>
       </div>
     </header>
     <div class="data-grid">
@@ -2960,6 +3126,8 @@
         "Jump to a recommendation section.",
         `<ol class="data-inline-note" style="margin:0;padding-left:1.2rem">
           <li><a class="data-guide-link" href="#recommendation-primary">Primary recommendation</a></li>
+          <li><a class="data-guide-link" href="#recommendation-sex-crimes">Sex Crimes Defense focus</a></li>
+          <li><a class="data-guide-link" href="#recommendation-financial-audit">Full financial audit</a></li>
           <li><a class="data-guide-link" href="#recommendation-costs">Cost comparison</a></li>
           <li><a class="data-guide-link" href="#recommendation-divert">LSA diversion model</a></li>
           <li><a class="data-guide-link" href="#recommendation-projects">Project information</a></li>
@@ -2983,6 +3151,37 @@
         { full: true, id: "recommendation-primary" }
       )}
       ${dataCardHtml(
+        "Priority growth recommendation · Sex Crimes Defense",
+        "Highest mean quoted fee, but 2026 YTD case volume is 62% behind the same 2025 period.",
+        `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
+          <div class="kpi-mini-card"><h3>Mean quoted fee</h3><p class="kpi-mini-value">$9,500</p></div>
+          <div class="kpi-mini-card"><h3>2025 YTD cases</h3><p class="kpi-mini-value">13</p></div>
+          <div class="kpi-mini-card"><h3>2026 YTD cases</h3><p class="kpi-mini-value">5</p></div>
+          <div class="kpi-mini-card"><h3>YTD change</h3><p class="kpi-mini-value">−62%</p></div>
+        </div>
+        <p class="data-warning-note"><strong>Why move focus:</strong> Sex Assault / Sex Offense is the highest measured fee category — about 70% above the $5,587 firm mean — while signed-case volume is trending materially behind. The eight-case YTD gap represents about <strong>$76,000 in quoted fee value</strong>, or <strong>$60,800</strong> under the 80% collection model.</p>
+        <p class="data-inline-note"><strong>Recommended move:</strong> Use <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="A1">A1 · Digital Ad Enhancements</a> to launch a discreet Sex Crimes Defense Search pilot: exact/phrase high-intent terms, dedicated landing page, sensitive-policy review, tracked calls, and signed-case reporting. Do not use Display or broad match for this line.</p>
+        <p class="data-formula-line">8 fewer YTD cases × $9,500 mean quoted fee = $76,000 directional signed-value gap</p>
+        <p class="data-formula-line">$76,000 × 80% modeled collection = $60,800 directional collectible gap</p>
+        <p class="data-inline-note"><strong>Data caution:</strong> $9,500 is a quoted-fee mean, not profit or cash collected, and the fee sample is only n=6. Validate against QuickBooks collections before scaling beyond the pilot.</p>`,
+        { full: true, id: "recommendation-sex-crimes" }
+      )}
+      ${dataCardHtml(
+        "Recommended cost-control project · Full Financial Audit",
+        "Convert subscription sprawl and other visible leakage into verified monthly and annual savings.",
+        `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
+          <div class="kpi-mini-card"><h3>Known 30-day waste floor</h3><p class="kpi-mini-value">$1,063</p></div>
+          <div class="kpi-mini-card"><h3>Annualized if repeated</h3><p class="kpi-mini-value">$12,756</p></div>
+          <div class="kpi-mini-card"><h3>Subscription waste</h3><p class="kpi-mini-value">Not yet totaled</p></div>
+        </div>
+        <p class="data-warning-note"><strong>Why this is recommended:</strong> The account review already found $1,063 in non-client Search-term spend over 30 days. Kate has also identified many unnecessary or overlapping subscriptions, but those charges have not yet been reconciled into a defensible total. The $1,063 is therefore a minimum known waste floor—not the full savings opportunity.</p>
+        <p class="data-inline-note"><strong>Audit scope:</strong> Use <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 · Full Financial, Credit Card & Subscription Waste Audit</a> to reconcile QuickBooks, bank and card statements, subscriptions, software seats, phone lines, ad billing, LSA credits, payroll, contractors, sponsorships, and vendor agreements.</p>
+        <p class="data-formula-line">$1,063 known 30-day Search waste × 12 months = $12,756 annualized exposure if unchanged</p>
+        <p class="data-inline-note"><strong>Payment:</strong> $1,800 fixed fee plus 20% of verified net savings or recovered cash. Measure subscription/service changes for 12 months, continuing vendor-rate revisions for 6 months, variable operating revisions for 3 months, and one-time recoveries when posted.</p>
+        <p class="data-inline-note"><strong>No double-counting:</strong> The approximately $694 safe Military Display negative-keyword finding is a subset of the $1,063 Search-term waste. Subscription, phone, duplicate-tool, LSA-credit, and vendor savings remain separate and unverified until statements are audited.</p>`,
+        { full: true, id: "recommendation-financial-audit" }
+      )}
+      ${dataCardHtml(
         "Cost comparison · LSA vs digital vs digital + consulting",
         "Media only for LSA · digital all-in includes Guide RETAINER.",
         compareTable,
@@ -2997,7 +3196,7 @@
       )}
       ${dataCardHtml(
         "Project information",
-        "Guide projects required to repair intake, clean LSA operations, and manage paid media.",
+        "Guide projects required to repair intake, clean LSA operations, control financial waste, manage paid media, and test the Sex Crimes Defense opportunity.",
         `${kpiDetailTable(
           ["Project", "Priority / status", "Fee", "Role in recommendation", "Success gate"],
           [
@@ -3021,6 +3220,20 @@
               `${fmtMoney(r.mgmt)}/mo`,
               "Monitor LSA/Search spend, lead quality, bids, and monthly reporting.",
               "Fund before shifting media; do not add a second consulting fee."
+            ],
+            [
+              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="A1">A1 · Digital Ad Enhancements</a>',
+              "Priority 11 · Available",
+              "$2,200",
+              "Build the discreet Sex Crimes Defense Search pilot + dedicated landing page and tracking.",
+              "Qualified calls and signed cases recover without broad/Display exposure; validate collected revenue in QuickBooks."
+            ],
+            [
+              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 · Full Financial, Credit Card & Subscription Waste Audit</a>',
+              "Priority 26 · Recommended",
+              "$1,800 + 20% verified savings",
+              "Reconcile all operating spend; cancel unused subscriptions and duplicate tools; recover credits and stop recurring leakage.",
+              "Every recurring charge has an owner and action; verified monthly and annual savings are documented without double-counting."
             ]
           ]
         )}
@@ -3035,6 +3248,8 @@
           <li>Dial the public 888 number end-to-end; confirm HubSpot rings, logs the contact timeline, and assigns a same-day callback task.</li>
           <li>Run <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B11">B11</a>: same-day LSA statuses, Casey call review, and a fixed coverage calendar.</li>
           <li>After ≥90% answered for seven days, confirm <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="RETAINER">Digital Ads Maintenance Retainer</a> is funded (${fmtMoney(r.mgmt)}/mo).</li>
+          <li>Launch the <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="A1">A1 Sex Crimes Defense Search pilot</a>: exact/phrase only, dedicated discreet landing page, no Display or broad match, and a 30-day qualified-call / signed-case review.</li>
+          <li>Run <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 Full Financial Audit</a>: export QuickBooks plus all bank/card statements, inventory recurring subscriptions and phone/software seats, and produce a cancel / renegotiate / dispute list with verified monthly and annual savings.</li>
           <li>Test diverting ≥ ${fmtMoney(r.minDivert)}/mo from LSA → consulting + Search media; hold for 30 days and track signed-case rate by channel.</li>
           <li>Open Data tab · Cases, Leads & Spend for source charts and June trade-off tables.</li>
         </ol>`,

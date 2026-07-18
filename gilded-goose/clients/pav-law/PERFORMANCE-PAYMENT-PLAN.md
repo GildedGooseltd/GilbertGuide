@@ -134,13 +134,19 @@ Verified from HubSpot export + Google Ads / LSA exports + MyCase.
 | **T2** | 21 **≤ 25%** | **$[___]** |
 | **T3** | 21 **≤ 20%** | **$[___]** |
 
-#### Gabriel — outbound
+#### Outbound / commission-only sales (not full-time salary)
 
-| Tier | Gates (all required) | Bonus |
-|------|----------------------|-------|
-| **T1** | 24 ≥ **[___]** · 25 **≥ 15%** | **$[___]** |
-| **T2** | 24 ≥ **[___]** · 20 ≥ **[___]** · 25 **≥ 15%** | **$[___]** |
-| **T3** | T2 · 20 ≥ **[___]** · 26 **100%** | **$[___]** |
+**Pay model:** Optional small draw + **lifecycle flat $** (L1–L5) — see [INCENTIVE-COMP-PLAN.md](../../../ntguilt/operations/INCENTIVE-COMP-PLAN.md). **Not** salaried monthly tiers · **not** % of legal fees or trust deposits.
+
+| Stage | Event | Rate (draft) |
+|-------|-------|--------------|
+| L1 | Qualified lead attributed | **$[___]** |
+| L2 | Consult booked | **$[___]** |
+| L3 | Consult held | **$[___]** |
+| L4 | Matter / engagement signed | **$[___]** |
+| L5 | First qualifying funds posted | **$[___]** flat — not % of deposit |
+
+*Commission-only sellers are **not** in §3.4 firm pool.*
 
 #### Jack — ops
 
@@ -156,7 +162,7 @@ Only if Romina + Casey ≥ T1. Not tied to attorney fees.
 
 | Tier | Gates | Pool |
 |------|-------|------|
-| **T1** | 01 up QoQ · 02 ≥ **[___]**/mo avg | **$[___]** — Romina 40% · Casey 25% · Gabriel 25% · Jack 10% |
+| **T1** | 01 up QoQ · 02 ≥ **[___]**/mo avg | **$[___]** — Romina **[___]%** · Casey **[___]%** · Jack **[___]%** *(commission-only sales role — not in pool)* |
 | **T2** | T1 + 05 ≥ **[___]%** | **$[___]** — same split |
 | **T3** | T2 + 03 ≥ **[___]** avg active cases | **$[___]** — same split |
 

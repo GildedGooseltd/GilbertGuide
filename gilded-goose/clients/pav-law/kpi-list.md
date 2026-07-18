@@ -1,7 +1,7 @@
 # Pav Law — KPI list
 
-**LOCKED:** 2026-07-11 · Kate review  
-**Status:** Active dashboard set — 29 KPIs
+**LOCKED:** 2026-07-11 · Kate review · trimmed 2026-07-15  
+**Status:** Active dashboard set — 21 KPIs (removed 05 · 09 · 20 · 23–27)
 
 **Edit rule:** To remove a KPI, clear the **ID** cell and save. On lock review, blank-ID rows are deleted and IDs renumbered.  
 **Bonuses:** [`PERFORMANCE-PAYMENT-PLAN.md`](PERFORMANCE-PAYMENT-PLAN.md) — KPI #s match this table.
@@ -18,11 +18,11 @@
 | 02 | New cases | Exec summary | [___]/mo | Gauge | MyCase — new matters opened |
 | 03 | Active cases | Exec summary | [___] open | Bar — monthly | MyCase — open matter count |
 | 04 | Closed cases | Exec summary | Trend up | Line — monthly count | MyCase — matters closed |
-| 05 | Consult → retained % | Exec summary | Trend up | Line — % | Romina calendar + MyCase |
+|  | Consult → retained % | Exec summary | Trend up | Line — % | Removed 2026-07-15 |
 | 06 | HubSpot new contacts | Lead data | Monthly floor | Line — weekly | |
 | 07 | LSA leads | Lead data | | Bar — monthly | |
 | 08 | Search calls | Lead data | | Bar — by campaign | |
-| 09 | After-hours forms | Lead data | | Heatmap — hour × day | |
+|  | After-hours forms | Lead data | | Heatmap — hour × day | Removed 2026-07-15 |
 | 10 | Source mix | Lead data | | Donut | HubSpot Original source |
 | 11 | Practice mix — all | Lead data | | Stacked bar | Search + LSA + HubSpot by practice |
 | 12 | Cost/call by channel | Marketing efficiency | < $100 Military baseline | Gauge | Rollup — Military · NTGUILT · other |
@@ -33,16 +33,31 @@
 | 17 | Referral count by platform | Marketing efficiency | Net positive MoM | Table — platform × count × Δ | GBP · Yelp · social · directories |
 | 18 | Website sessions | Marketing efficiency | | Line — weekly | GA4 clean (excl. spam) |
 | 19 | Est. missed revenue | Marketing efficiency | Flag monthly | Table | Missed calls × avg close rate × case value |
-| 20 | Inbound meetings booked | Sales team efficiency | [___]/mo | Single stat | HubSpot meetings — intake |
+|  | Inbound meetings booked | Sales team efficiency | [___]/mo | Single stat | Removed 2026-07-15 |
 | 21 | Answered phones | Sales team efficiency | ≥ 90% (≤10% missed) | Gauge + line | All Search call extensions |
 | 22 | Speed to first task | Sales team efficiency | < 5 min | Histogram | HubSpot workflow — business hours |
-| 23 | After-hours callback | Sales team efficiency | By 10am next day | Heatmap | |
-| 24 | Outbound dials | Sales team efficiency | [___]/wk | Bar — weekly | Gabriel — HubSpot logged |
-| 25 | Outbound connect rate | Sales team efficiency | ≥ 15% | Gauge | |
-| 26 | Follow-up within 3h | Sales team efficiency | 100% | Progress bar | VM / no-answer |
-| 27 | CRM field hygiene | Sales team efficiency | < 5/wk flags | Single stat | Missing `pl_outbound_campaign` |
+|  | After-hours callback | Sales team efficiency | By 10am next day | Heatmap | Removed 2026-07-15 |
+|  | Outbound dials | Sales team efficiency | [___]/wk | Bar — weekly | Removed 2026-07-15 |
+|  | Outbound connect rate | Sales team efficiency | ≥ 15% | Gauge | Removed 2026-07-15 |
+|  | Follow-up within 3h | Sales team efficiency | 100% | Progress bar | Removed 2026-07-15 |
+|  | CRM field hygiene | Sales team efficiency | < 5/wk flags | Single stat | Removed 2026-07-15 |
 | 28 | Revenue per lead | Overall health | Quarterly review | Line — quarterly | MyCase fees ÷ KPI 01 |
 | 29 | Revenue per case type | Overall health | Quarterly review | Table — case type × avg fee | MyCase export by practice area |
+
+---
+
+## Removed (2026-07-15)
+
+| Was | KPI | Reason |
+|-----|-----|--------|
+| 05 | Consult → retained % | Cut from active set |
+| 09 | After-hours forms | Cut from active set |
+| 20 | Inbound meetings booked | Cut from active set |
+| 23 | After-hours callback | Cut from active set |
+| 24 | Outbound dials | Cut from active set |
+| 25 | Outbound connect rate | Cut from active set |
+| 26 | Follow-up within 3h | Cut from active set |
+| 27 | CRM field hygiene | Cut from active set |
 
 ---
 

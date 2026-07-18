@@ -262,6 +262,24 @@ Do these steps once. **Do not** involve Secret 2 / QuickBooks for metrics gather
 
 **Verify gather:** Feedback mode → rate one metric → **Save** → open [the Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) → tab **MetricsFeedback** → newest row. UI toast should say **Saved to MetricsFeedback sheet** (not mail client). No JSON download.
 
+### SOW private links + two-stage signature (same webhook)
+
+No signing-link secret is created or pasted manually. Apps Script generates a random 256-bit bearer token for each signing stage:
+
+1. Submission freezes the server-generated SOW and emails Andrew a private `?sow=...` link.
+2. The Sheet stores only the token’s SHA-256 hash. Andrew’s raw token exists only in his email/URL.
+3. Andrew checks review, firm-authority, individual-capacity, and e-consent fields; then signs once in both capacities.
+4. His token becomes unusable. Apps Script emails Kate a different private, single-use countersign link.
+5. After Kate countersigns, Apps Script emails the final PDF to both parties and saves a private Google Doc + PDF in Drive folder **Gilbert Guide Signed SOWs**.
+
+Tab **SowSigning** stores status, expiry, document hashes, server/client timestamps, browser-reported public IP, timezone, user agent, checkbox record, and Drive file IDs. Links expire after 14 days.
+
+**IP limitation:** Google Apps Script does not expose the request’s network IP. The page asks `api64.ipify.org` for the browser’s public IP and records it as browser-reported evidence. A server-observed IP requires moving the signing POST behind an edge/server endpoint such as Cloudflare Workers.
+
+**Required after pulling Mac updates:** copy the full [`apps-script-webhook.gs`](apps-script-webhook.gs) → paste into Apps Script **Code.gs** → Save → **Deploy → Manage deployments → pencil → Version: New version → Deploy**. The first run requests Drive/Docs authorization. Ping should include `"sowEsign":"private-staged-v2"`.
+
+**Verify:** submit a test using an email you control → open Andrew link → confirm the agreement is not editable → check all fields → sign → confirm PDF download + email → open Kate link from `support@` → countersign → confirm final PDF email and private Drive Doc/PDF.
+
 The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook missing/failed** when `webhookUrl` is empty or the POST fails — do not share for multi-person review until Secret 1 is set and [pages-config.js](https://gildedgooseltd.github.io/GilbertGuide/pages-config.js) shows a real `/exec` URL.
 
 ---
@@ -273,6 +291,7 @@ The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook mi
 | Webhook URL | GitHub secret `PAV_PICKER_WEBHOOK_URL` → re-run deploy workflow |
 | Deposit URL / amount | Secrets `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL` / `PAV_PICKER_DEPOSIT_AMOUNT` |
 | Email / Sheet columns | `apps-script-webhook.gs` on Mac → copy into Apps Script Code.gs (same as A5–A6) → **Deploy** → **Manage deployments** → **Edit** → **New version** |
+| Signed SOW Drive folder | Script Property `SOW_DRIVE_FOLDER_ID`; auto-created on first completed SOW if absent |
 | Project card copy | `content/projects/*.md` on Mac in Cursor — markdown is the source; push only the `.md` files |
 
 ---
@@ -287,6 +306,9 @@ The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook mi
 | “Nowhere to save deposit link” | GitHub Secret 2 only — not Google |
 | Two `/exec` URLs | Archive spare deployment; one URL in Secret 1 |
 | CORS / failed to fetch | A14 must be **Anyone**; URL must end `/exec` |
+| Private SOW link invalid | Link was copied incompletely, expired after 14 days, or already used; generate a new submission/link |
+| IP says unavailable | Browser blocked `api64.ipify.org`; timestamp, token, checks, user agent, and hashes still record |
+| No Drive archive | Archive occurs only after Kate countersigns; authorize Docs/Drive and check Script Property `SOW_DRIVE_FOLDER_ID` |
 | UI says saved / “nothing in sheet” | Live ping is still `{"ok":true,"service":"gilbert-guide"}` **without** `"metricsFeedback":true` → script not on New version. **Switch:** open Mac path from A5 → Cmd+A → Cmd+C → paste Code.gs → Save → **Deploy → Manage deployments → pencil → Version: New version → Deploy**. Recheck ping (or [owner-webhook-setup](owner-webhook-setup.html) status box) **before** Save. Look at tab **MetricsFeedback**, not Form Responses / Submissions. Do **not** change GitHub Secret. |
 | Sheet empty | Confirm Code.gs has `SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM"` → Run **`setup`** → check [destination Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) tabs **Submissions** / **MetricsFeedback** → then **Deploy → New version** |
 | Rows on wrong sheet | Old code used `getActiveSpreadsheet()` — re-paste Mac `apps-script-webhook.gs` (uses `openById`) → New version deploy |

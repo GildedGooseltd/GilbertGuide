@@ -803,16 +803,30 @@ export function isValidProjectId(id) {
 
 function indexHeaderColumnMap(cells) {
   const lower = cells.map(c => c.toLowerCase());
-  if (!lower.includes("id")) return null;
   const pick = key => {
     const i = lower.findIndex(c => c === key || c.replace(/\s+/g, "") === key.replace(/\s+/g, ""));
     return i >= 0 ? i : null;
   };
+  const hasId = lower.includes("id");
+  const hasScore = lower.some(c => c.includes("project score") || c === "score" || c === "priority");
+  const hasFile = lower.includes("file");
+  const hasProject = lower.includes("project");
+  if (!hasId && !hasScore && !hasFile && !hasProject) return null;
   return {
-    priority: pick("priority") ?? pick("p") ?? 0,
-    id: pick("id") ?? 1,
+    priority:
+      pick("project score") ??
+      pick("projectscore") ??
+      pick("score") ??
+      pick("priority") ??
+      pick("p") ??
+      0,
+    id: pick("id"),
     status: pick("status"),
-    visibility: pick("visibility") ?? pick("publish") ?? pick("publishstatus"),
+    visibility:
+      pick("show") ??
+      pick("visibility") ??
+      pick("publish") ??
+      pick("publishstatus"),
     estCost:
       pick("est. cost") ??
       pick("est cost") ??
@@ -824,9 +838,35 @@ function indexHeaderColumnMap(cells) {
       pick("payment") ??
       pick("pay plan") ??
       pick("deposit"),
-    title: pick("project") ?? 2,
-    file: pick("file") ?? 3
+    title: pick("project"),
+    file: pick("file")
   };
+}
+
+/** Extract project ID from INDEX link cell (`[projects/A1.md](…)` or `[Name](projects/A1.md)` → A1). */
+export function idFromIndexFileCell(raw) {
+  const s = String(raw || "");
+  const m =
+    s.match(/\bprojects\/([ABC]\d+M?)\.md\b/i) ||
+    s.match(/\b(retainer)\.md\b/i) ||
+    s.match(/\b([ABC]\d+M?)\.md\b/i);
+  if (!m) return null;
+  if (/^retainer$/i.test(m[1])) return "RETAINER";
+  return m[1].toUpperCase();
+}
+
+/** Parse INDEX Project cell: `[Title](projects/A1.md)` → { title, href, id }. */
+export function parseIndexProjectCell(raw) {
+  const s = String(raw || "").trim();
+  const m = s.match(/^\[([^\]]+)\]\(([^)]+)\)\s*$/);
+  if (m) {
+    return { title: m[1].trim(), href: m[2].trim(), id: idFromIndexFileCell(m[2]) };
+  }
+  const inline = s.match(/\[([^\]]+)\]\(([^)]+)\)/);
+  if (inline) {
+    return { title: inline[1].trim(), href: inline[2].trim(), id: idFromIndexFileCell(inline[2]) };
+  }
+  return { title: s, href: null, id: idFromIndexFileCell(s) };
 }
 
 /** Parse INDEX Payment plan cells: `50%`, `50/50`, `100%`, `$800`, `monthly`, `—`. */
@@ -882,7 +922,11 @@ export function parseIndexEstCost(raw) {
 }
 
 function normalizeIndexVisibility(raw) {
-  if (!raw) return null;
+  if (raw == null || raw === "") return null;
+  const s = String(raw).trim().toLowerCase();
+  /* Easy checkbox cells in INDEX */
+  if (/^\[[xX✓✔]\]/.test(s) || s === "☑" || s === "✅") return "published";
+  if (/^\[\s*\]/.test(s) || s === "☐" || s === "⬜") return "unpublished";
   return normalizePublishStatus(raw);
 }
 
@@ -928,7 +972,7 @@ export function parseIndexMarkdown(text) {
     if (!cells.length) continue;
     if (cells.every(c => /^[\-:]+$/.test(c) || c === "")) continue;
 
-    if (cells.some(c => /^id$/i.test(c))) {
+    if (cells.some(c => /^id$/i.test(c)) || cells.some(c => /project\s*score/i.test(c)) || cells.some(c => /^show$/i.test(c))) {
       colMap = indexHeaderColumnMap(cells);
       continue;
     }
@@ -936,25 +980,38 @@ export function parseIndexMarkdown(text) {
     if (!colMap) {
       colMap = {
         priority: 0,
-        id: 1,
-        status: cells.length >= 5 ? 2 : null,
-        visibility: null,
-        title: cells.length >= 5 ? 3 : 2,
-        file: cells.length >= 5 ? 4 : 3
+        id: null,
+        status: 1,
+        visibility: 2,
+        estCost: 3,
+        paymentPlan: 4,
+        title: 5,
+        file: null
       };
     }
 
-    const id = cells[colMap.id];
+    const projectCell = colMap.title != null ? (cells[colMap.title] ?? "") : "";
+    const fileCell = colMap.file != null ? (cells[colMap.file] ?? "") : "";
+    const parsedProject = parseIndexProjectCell(projectCell);
+
+    let id = colMap.id != null ? cells[colMap.id] : null;
+    if (!id || !isValidProjectId(id)) {
+      id = parsedProject.id || idFromIndexFileCell(fileCell);
+    }
     if (!id || !isValidProjectId(id)) continue;
     if (result.rowsById[id]) continue;
 
+    const href =
+      parsedProject.href ||
+      (fileCell.match(/\(([^)]+\.md)\)/) || [])[1] ||
+      (id === "RETAINER" ? "retainer.md" : `projects/${id}.md`);
     const row = {
-      p: cells[colMap.priority] ?? "",
-      title: cells[colMap.title] ?? "",
-      file: cells[colMap.file] ?? ""
+      p: colMap.priority != null ? (cells[colMap.priority] ?? "") : "",
+      title: parsedProject.title || projectCell,
+      file: href ? `[${href}](${href})` : fileCell
     };
     if (colMap.status != null && cells[colMap.status]) row.status = cells[colMap.status];
-    if (colMap.visibility != null && cells[colMap.visibility]) {
+    if (colMap.visibility != null && cells[colMap.visibility] != null) {
       row.visibility = cells[colMap.visibility];
       row.publishStatus = normalizeIndexVisibility(cells[colMap.visibility]);
     }
@@ -969,7 +1026,7 @@ export function parseIndexMarkdown(text) {
     result.rowsById[id] = row;
   }
 
-  const tableStart = text.search(/\|[^\n]*\bID\b[^\n]*\|/i);
+  const tableStart = text.search(/\|[^\n]*\b(ID|Project score|Show)\b[^\n]*\|/i);
   if (tableStart > 0) result.intro = text.slice(0, tableStart).trim();
 
   const footerStart = text.indexOf("**Retainer");
@@ -1036,27 +1093,30 @@ export function buildIndex(projects, retainer, existingText) {
 
   let md = overrides.intro || `# Project Index
 
-Open a file below to edit. Sorted by priority (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
+Open a file below to edit. Sorted by project score (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
 
-Edit **Project** titles, **Status**, **Visibility**, **Est. cost**, **Payment plan**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
+Edit **Project** titles, **Project score**, **Status**, **Show** (visibility), **Est. cost**, **Payment plan**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
-  md += `\n\n| Priority | ID | Status | Visibility | Est. cost | Payment plan | Project | File |\n| -------- | -- | ------ | ---------- | --------- | ------------ | ------- | ---- |\n`;
+  md += `\n\n| Project score | Status | Show | Est. cost | Payment plan | Project |\n| ------------- | ------ | ---- | --------- | ------------ | ------- |\n`;
 
   const seen = new Set();
   for (const p of all) {
     const id = p.id;
     seen.add(id);
     const file = id === "RETAINER" ? "retainer.md" : `projects/${id}.md`;
-    const fileCell = `[${file}](${file})`;
     const o = overrides.rowsById[id];
     const pri = o?.p ?? (p.priority != null ? String(p.priority) : "—");
-    const title = o?.title || p.title;
+    const title = parseIndexProjectCell(o?.title || p.title).title || p.title;
+    const projectCell = `[${title}](${file})`;
     const status = o?.status || p.status || "available";
-    const vis =
-      o?.visibility ||
-      (normalizePublishStatus(o?.publishStatus || p.publishStatus) === "published"
-        ? "Published"
-        : "Unpublished");
+    const pub =
+      normalizePublishStatus(o?.publishStatus || p.publishStatus) === "published";
+    const show =
+      o?.visibility && /^\[[xX✓✔\s]*\]|^[☑☐]/.test(String(o.visibility).trim())
+        ? (/^\[[xX✓✔]\]|^☑/.test(String(o.visibility).trim()) ? "[x]" : "[ ]")
+        : pub
+          ? "[x]"
+          : "[ ]";
     let est = o?.estCost || "";
     if (!est) {
       if (p.fee && p.ongoingFee) est = `$${Number(p.fee).toLocaleString("en-US")} + $${Number(p.ongoingFee).toLocaleString("en-US")}/mo`;
@@ -1072,16 +1132,23 @@ Edit **Project** titles, **Status**, **Visibility**, **Est. cost**, **Payment pl
       else if (p.depositPct != null) pay = `${Math.round(Number(p.depositPct) * 100)}%`;
       else pay = "50%";
     }
-    md += `| ${pri} | ${id} | ${status} | ${vis} | ${est} | ${pay} | ${title} | ${fileCell} |\n`;
+    md += `| ${pri} | ${status} | ${show} | ${est} | ${pay} | ${projectCell} |\n`;
   }
 
   for (const [id, o] of Object.entries(overrides.rowsById)) {
     if (seen.has(id) || !isValidProjectId(id)) continue;
-    const vis = o.visibility || (o.publishStatus === "unpublished" ? "Unpublished" : "Published");
-    md += `| ${o.p} | ${id} | ${o.status || "available"} | ${vis} | ${o.estCost || "—"} | ${o.paymentPlan || "—"} | ${o.title} | ${o.file} |\n`;
+    const show =
+      o.publishStatus === "unpublished" || /^\[\s*\]/.test(String(o.visibility || ""))
+        ? "[ ]"
+        : "[x]";
+    const file =
+      parseIndexProjectCell(o.title).href ||
+      (id === "RETAINER" ? "retainer.md" : `projects/${id}.md`);
+    const title = parseIndexProjectCell(o.title).title || o.title || id;
+    md += `| ${o.p} | ${o.status || "available"} | ${show} | ${o.estCost || "—"} | ${o.paymentPlan || "—"} | [${title}](${file}) |\n`;
   }
 
-  md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Priority** row (shows as —)."}\n`;
+  md += `\n${overrides.footer || "**Retainer / monthly-only:** omit **Project score** row (shows as —)."}\n`;
 
   if (overrides.notes) {
     md += `\n${overrides.notes}\n`;
