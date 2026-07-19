@@ -186,6 +186,8 @@ Approved 2026-07-18. Keep the tile proportions and information hierarchy shown i
 4. Written semantic status badge
 5. Matching 5px red/yellow/green left rule
 
+Team Goals tiles use exactly three tracking rows. Each row is `3.25rem` high with vertically centered cells so the three tiles align.
+
 Do not redesign the tile layout; future changes are color, typography, border, or spacing refinements only.
 
 ---
