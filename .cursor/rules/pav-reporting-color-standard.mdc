@@ -1,0 +1,32 @@
+---
+description: Pav reporting charts use one fixed accessible color system
+globs: "**/*.{canvas.tsx,tsx,jsx,js,html,css}"
+alwaysApply: true
+---
+
+# Pav reporting color standard
+
+Use the same meaning for every color across Pav Law dashboards, canvases, and reports:
+
+| Meaning | Cursor theme token |
+|---|---|
+| Cases / new matters | `category.blue` |
+| LSA | `category.cyan` |
+| Digital ads / Search | `category.orange` |
+| Website | `category.pink` |
+| Spend / cost | `category.purple` |
+| Cash in / credits / positive status | `category.green` |
+| Debits / gaps / errors / negative status | `category.red` |
+| Neutral or unavailable | `category.gray` or default text |
+
+## Graph rules
+
+1. The same series keeps the same color in every graph, table accent, and KPI.
+2. Reserve red and green for semantic negative/positive states; do not use them as arbitrary categories.
+3. Use theme tokens only — no hardcoded hex colors.
+4. Never communicate by color alone. Include direct labels or a legend; use bars for volume and lines for spend.
+5. Keep related charts on the same background and limit visible series to the minimum needed.
+6. Do not invent a new palette for an individual chart. Add a new meaning to this standard first.
+7. **Time ordering — current month first.** Any chart or table with a month/period axis leads with the **current (most recent) month**, then goes backward in time. Label the axis so the direction is obvious (e.g. newest → oldest). Applies to dashboards, canvases, and reports.
+
+Basis: IBM Carbon and AWS Cloudscape data-visualization guidance — fixed categorical colors, consistent series identity, adequate contrast, and non-color cues for accessibility.
