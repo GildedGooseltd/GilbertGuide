@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-missed-no-dates-r1";
+  const RENDER_VER = "20260719-forecast-link-off-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -2485,7 +2485,6 @@
       <div class="kpi-cash-pace-copy">
         <span class="kpi-cash-pace-kicker">2026 forecast</span>
         <h3>Breakeven Forecast</h3>
-        <p><a class="data-guide-link" href="#predictions" data-go-view="predictions">Open full forecast</a></p>
       </div>
       <div class="kpi-cash-pace-gauge">${gauge}</div>
       <div class="kpi-cash-pace-stats">
