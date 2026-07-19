@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-spend-waste-b9-r1";
+  const RENDER_VER = "20260719-missed-no-dates-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -2259,7 +2259,6 @@
       || {};
     const lsaCalls = Number(lsaJun.leads) || 0;
     const lsaCharged = Number(lsaJun.charged) || 0;
-    const lsaMonth = lsaJun.month || "Jun";
     const delta = model.priorMonthlyLost != null ? model.monthlyLost - model.priorMonthlyLost : null;
     let trendDelta = "";
     if (delta != null) {
@@ -2282,8 +2281,8 @@
       </div>
       ${goalTrackRows([
         ["Missed Search", `${model.missedSearchCalls} · ${p.missedPct}% of ${p.monthlyCalls}`],
-        ["LSA calls", `${lsaCalls} · ${lsaCharged} charged · ${lsaMonth}`],
-        ["YTD lost", `${fmtMoney(model.cumulativeYtd)} · 64 missed May–Jul 10`]
+        ["LSA calls", `${lsaCalls} · ${lsaCharged} charged`],
+        ["YTD lost", `${fmtMoney(model.cumulativeYtd)} · 64 missed`]
       ])}
       <p class="kpi-table-note" style="margin:0.2rem 0 0;text-align:left">Estimated potential revenue not earned from unanswered Search calls.</p>
       ${kpiRefMark("#19")}
