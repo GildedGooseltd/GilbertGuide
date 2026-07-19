@@ -54,9 +54,10 @@ Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for t
 | `--gg-caution`      | `#eab308`             | Watch / pending semantic state                |
 | `--gg-royal-dim`    | `rgba(45,20,84,0.12)` | Selected wash                                 |
 | `--gg-royal-border` | `rgba(45,20,84,0.38)` | Borders                                       |
-| `--gg-negative`     | `#cf2d56`             | **Negative numbers only** (↓ MoM, − deltas)   |
-| `--gg-positive`     | `#1f8a65`             | Positive MoM / target hit only                |
+| `--gg-negative`     | `#cf2d56`             | **Negative numbers only** (− values / gaps)   |
+| `--gg-positive`     | `#1f8a65`             | Cash in / target hit only                     |
 
+Percentage-change labels use black, regular-weight `↑ +N%` / `↓ −N%` text. Do not color or bold them.
 
 
 ### Dark panels + chart series (GGL — **no teal**)

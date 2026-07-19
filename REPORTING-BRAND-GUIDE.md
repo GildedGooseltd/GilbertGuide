@@ -23,12 +23,14 @@ The locked meaning for each color. Same series keeps the same color in every cha
 | Website / HubSpot forms / tertiary series | `#b23a78` | rose / pink |
 | Critical highlight only (CTA / milestone) | `#e3c58d` | `--gg-gold-bright` — do **not** use for scores, ranks, or table chrome |
 | Spend / cost (money key) | `#6a5acd` | spend swatch |
-| Cash in / positive MoM / target hit | `#1f8a65` | `--gg-positive` |
-| Negative delta / gap / below target | `#cf2d56` | `--gg-negative` |
+| Cash in / target hit | `#1f8a65` | `--gg-positive` |
+| Negative value / gap / below target | `#cf2d56` | `--gg-negative` |
 | Caution / watch / pending review | `#eab308` | `--gg-caution` (new reporting semantic) |
 | Neutral / unavailable | `#5c4f45` | `--gg-brown-muted` |
 
 **Semantics:** use red / yellow / green only for negative / caution / positive states — never for arbitrary chart series, table columns, fees, priorities, totals, missing data, or decorative progress bars. Never communicate by color alone; always keep the written status, icon, or legend.
+
+**Percentage-change labels:** use black, regular-weight text in the consistent `↑ +N%` / `↓ −N%` format. Do not color or bold percentage-change labels.
 
 ### Surface contrast
 
