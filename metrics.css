@@ -606,6 +606,8 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
 .kpi-stat-val { display: block; font-size: 1.45rem; font-weight: 800; color: var(--gg-royal-deep); line-height: 1.1; }
+.kpi-val-negative,
+.kpi-negative-value { color: var(--gg-negative) !important; }
 .kpi-stat-label { display: block; font-size: 0.875rem; color: var(--secondary); margin-top: 0.2rem; }
 .kpi-mom-down { color: var(--gg-negative); font-size: 0.875rem; font-weight: 700; }
 .kpi-mom-up { color: var(--gg-positive); font-size: 0.875rem; font-weight: 700; }
