@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-leads-solutions-off-r1";
+  const RENDER_VER = "20260719-cases-solutions-off-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -165,7 +165,6 @@
     "#19": ["B2", "B11"],
     "#07": ["B9", "RETAINER"],
     "#03": ["A2", "B5"], // Add A11 back in August; add A19 back next summer.
-    "#02": ["B13"], // Add A11 back in August.
     "#12": ["B11", "REC:budget", "RETAINER", "C1"] // REC:budget → Recommendations · LSA → digital shift
   };
 
