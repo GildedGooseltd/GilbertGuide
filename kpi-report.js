@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-cost-solutions-off-r1";
+  const RENDER_VER = "20260719-lsa-cost-target-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -27,8 +27,8 @@
       fields: "Search share · LSA share · HubSpot / other %"
     },
     "#12": {
-      file: "Campaign report (17) Jun 11 – Jul 10 with Phone calls",
-      fields: "Cost ÷ Phone calls → $6,277 / 122 = $51 avg"
+      file: "Campaign report (17) Jun 11 – Jul 10 with Phone calls · LSA leads-inbox (15) · account_activities May–Jul 2026",
+      fields: "Digital cost ÷ phone calls → $6,277 / 122 = $51 avg · LSA target basis → $31,375 / 190 calls = $165 avg"
     },
     "#16": {
       file: "Google Maps + Yelp public pages · scraped 2026-07-16 · 102 S Tejon St",
@@ -82,8 +82,8 @@
     },
     "#12": {
       title: "#12 Avg. Cost per Call",
-      desc: "Digital Search only — Campaign report cost divided by phone calls. Not LSA. NTGUILT → DUI ad group runs $4.86 / interaction (Jun 11–Jul 10) — expand via A2; insurance cards via B5.",
-      formula: "Campaign Cost ÷ Phone calls → $6,277 ÷ 122 = $51. Target < $100. Ad-group efficiency: NTGUILT → DUI $1,064 ÷ 219 interactions = $4.86."
+      desc: "Digital Search cost divided by phone calls. The target is calculated to stay below the average LSA cost per call in the available 2026 data.",
+      formula: "Digital: $6,277 ÷ 122 calls = $51. LSA target basis: $31,375 ÷ 190 calls = $165 average (May–Jul* available 2026 data). Target < $165."
     },
     "#19": {
       title: "#19 Missed Opportunity",
@@ -239,7 +239,7 @@
       /* #01 = total lead count (Search + LSA + all HubSpot). Target = May×1.2 for ≥20% MoM. */
       { id: "#01", label: "Total leads", value: "226", target: "≥ 107", mom: "+154%", count: 226, verified: true, hit: true, alert: false, gauge: true },
       { id: "#02", label: "New cases", value: "34", target: "50", mom: "+55%", verified: true, alert: false, gauge: true, hit: false },
-      { id: "#12", label: "Avg. Cost per Call", value: "$51", target: "< $100", mom: null, verified: true, hit: true, targetBar: true, lowerIsBetter: true },
+      { id: "#12", label: "Avg. Cost per Call", value: "$51", target: "< $165", mom: null, verified: true, hit: true, targetBar: true, lowerIsBetter: true },
       /* Team goals: #19 missed-opportunity tracker first in render, then #21, then DUI */
       { id: "#19", label: "Missed Opportunity", value: "$15,498/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true },
       { id: "#21", label: "Answered Calls", value: "72%", target: "≥ 90%", mom: "+5%", verified: true, alert: true, gauge: true, goal: true, archived: true },
@@ -479,6 +479,19 @@
       refundCredits2025Feb: 7000
     }
   };
+
+  function applyLsaAverageCallCostTarget() {
+    const totals = (DATA.lsaEfficiency || []).reduce((sum, row) => ({
+      calls: sum.calls + (Number(row.leads) || 0),
+      spend: sum.spend + (Number(row.lsaSpend) || 0)
+    }), { calls: 0, spend: 0 });
+    if (!totals.calls) return;
+    const target = Math.floor(totals.spend / totals.calls);
+    const kpi = (DATA.kpis || []).find(item => item.id === "#12");
+    if (kpi) kpi.target = `< $${target.toLocaleString("en-US")}`;
+  }
+
+  applyLsaAverageCallCostTarget();
 
   function star(verified) {
     return verified
