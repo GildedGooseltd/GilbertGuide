@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-forecast-link-off-r1";
+  const RENDER_VER = "20260719-negative-values-red-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -2326,7 +2326,7 @@
       ${kpiHelpBtn("#07")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Spend Waste")}
-        <span class="kpi-stat-val">−${fmtMoney(model.totalWaste)}</span>
+        <span class="kpi-stat-val kpi-negative-value">−${fmtMoney(model.totalWaste)}</span>
       </div>
       ${goalTrackRows([
         ["Period", escapeHtml(periodLabel)],
@@ -2490,7 +2490,7 @@
       <div class="kpi-cash-pace-stats">
         <div><span>Collectible forecast</span><strong>${fmtMoney(collectible)}</strong></div>
         <div><span>Annual expenses</span><strong>${fmtMoney(expenses)}</strong></div>
-        <div><span>Coverage gap</span><strong>−${fmtMoney(shortfall)}</strong></div>
+        <div><span>Coverage gap</span><strong class="kpi-negative-value">−${fmtMoney(shortfall)}</strong></div>
       </div>
       ${kpiRefMark("#09")}
     </article>`;
