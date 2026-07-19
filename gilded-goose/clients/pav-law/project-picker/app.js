@@ -680,7 +680,6 @@
         <td class="col-select">
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled} ${selected ? "checked" : ""}>
         </td>
-        <td class="col-rank">${i + 1}</td>
         <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</span></a></td>
         <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
       </tr>`;
@@ -689,7 +688,6 @@
       <thead>
         <tr>
           <th class="col-select" scope="col">Add</th>
-          <th class="col-rank" scope="col">#</th>
           <th class="col-project" scope="col">Project</th>
           <th class="col-score" scope="col" title="Best-fit / impact — higher is better. Required items show —.">Fit</th>
         </tr>
@@ -3104,7 +3102,7 @@
     const picks = selCount ? gilbertRankedPicks(3).map(p => p.title) : [];
     const infoLine = picks.length
       ? `<p class="gilbert-cloud-fits">Top fits: <strong>${picks.map(escapeHtml).join("</strong>, <strong>")}</strong></p>`
-      : `<p class="gilbert-cloud-hint">Tap a topic to explore. Pick as many keywords as fit — open several branches.</p>`;
+      : "";
 
     el.innerHTML = `
       <div class="gilbert-cloud" role="group" aria-label="Explore topics">
