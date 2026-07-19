@@ -366,6 +366,100 @@ function archiveFinalSow(text, requestId) {
   return { docId: docFile.getId(), pdfId: pdfFile.getId(), pdfBlob: pdfBlob };
 }
 
+/** Ordered payment rows from the stored submission payload. */
+function sowPaymentRows(payload) {
+  var rows = [];
+  var subtotalNum = Number(payload.projectsSubtotalNum);
+  var deposit = Number(payload.depositAmount);
+  rows.push(["Consulting subtotal", payload.projectsSubtotal || (isFinite(subtotalNum) ? money(subtotalNum) : "—")]);
+  if (isFinite(deposit) && deposit > 0) {
+    var pct = payload.depositPct != null ? " (" + Math.round(Number(payload.depositPct) * 100) + "%)" : "";
+    rows.push(["Deposit due at signing", money(deposit) + pct]);
+  }
+  var remaining = null;
+  if (payload.paymentFinancedRemaining != null) remaining = Number(payload.paymentFinancedRemaining);
+  else if (isFinite(subtotalNum) && isFinite(deposit)) remaining = subtotalNum - deposit;
+  if (remaining != null && isFinite(remaining) && remaining > 0) {
+    rows.push(["Remaining balance", money(remaining)]);
+  }
+  rows.push(["Invoice schedule", payload.invoicePaymentTermsLabel || payload.invoicePaymentTerms || "Per terms selected"]);
+  if (payload.invoicePaymentMonths && payload.invoicePaymentMonthlyAmountFormatted) {
+    rows.push(["Per invoice", payload.invoicePaymentMonthlyAmountFormatted + " × " + payload.invoicePaymentMonths + " mo"]);
+  }
+  if (payload.paymentSurchargeAmount) {
+    rows.push(["Extended-schedule surcharge", money(payload.paymentSurchargeAmount)]);
+  }
+  if (payload.paymentTotalDue != null) {
+    rows.push(["Total due on project schedule", money(payload.paymentTotalDue)]);
+  }
+  if (payload.maintenanceMonthlyNum) {
+    rows.push(["Retainer / maintenance", payload.maintenanceMonthly + "/mo (billed separately)"]);
+  }
+  return rows;
+}
+
+var SOW_PAYOFF_NOTE =
+  "You can pay the remaining balance in full at any time. Early payoff stops any future extended-schedule surcharge; only the amount outstanding when you pay is due. There is no early-payoff penalty.";
+
+function sowPaymentText(payload) {
+  var lines = ["Payment structure:", ""];
+  sowPaymentRows(payload).forEach(function(r) { lines.push("  " + r[0] + ": " + r[1]); });
+  lines.push("", "Pay off anytime: " + SOW_PAYOFF_NOTE);
+  if (payload.quickbooksDepositUrl) {
+    lines.push("", "Pay deposit (QuickBooks): " + payload.quickbooksDepositUrl);
+  }
+  return lines.join("\n");
+}
+
+function htmlEscape(value) {
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function sowPaymentButtonHtml(payload) {
+  if (!payload.quickbooksDepositUrl) return "";
+  var amt = payload.depositAmount != null ? money(payload.depositAmount) : "";
+  var label = amt ? ("Pay " + amt + " deposit") : "Pay deposit";
+  return '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:20px 0;">' +
+    '<tr><td style="border-radius:6px;background:#2d1454;">' +
+    '<a href="' + htmlEscape(payload.quickbooksDepositUrl) + '" ' +
+    'style="display:inline-block;padding:12px 26px;font-family:Georgia,serif;font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none;border-radius:6px;">' +
+    htmlEscape(label) + ' &rarr;</a></td></tr></table>' +
+    '<p style="margin:0 0 4px;font-size:12px;color:#6b6b6b;font-family:Arial,sans-serif;">Secure QuickBooks payment link · billed by Gilded Goose Limited</p>';
+}
+
+function sowPaymentTableHtml(payload) {
+  var rows = sowPaymentRows(payload).map(function(r, i) {
+    var bg = i % 2 === 0 ? "#faf8f4" : "#ffffff";
+    return '<tr style="background:' + bg + ';">' +
+      '<td style="padding:8px 12px;font-family:Arial,sans-serif;font-size:14px;color:#3b2d1a;border-bottom:1px solid #ece7de;">' + htmlEscape(r[0]) + '</td>' +
+      '<td style="padding:8px 12px;font-family:Arial,sans-serif;font-size:14px;color:#2d1454;font-weight:bold;text-align:right;border-bottom:1px solid #ece7de;">' + htmlEscape(r[1]) + '</td></tr>';
+  }).join("");
+  return '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border:1px solid #ece7de;border-radius:6px;overflow:hidden;margin:12px 0;">' +
+    '<tr><th colspan="2" style="text-align:left;padding:10px 12px;background:#2d1454;color:#ffffff;font-family:Georgia,serif;font-size:14px;">Payment structure</th></tr>' +
+    rows + '</table>';
+}
+
+/** Professional HTML email shell. bodyHtml is the inner content. */
+function sowEmailHtml(heading, introHtml, bodyHtml) {
+  return '<div style="margin:0;padding:0;background:#f4f1ea;">' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#f4f1ea;padding:24px 0;">' +
+    '<tr><td align="center">' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#ffffff;border:1px solid #e6e0d5;border-radius:8px;overflow:hidden;">' +
+    '<tr><td style="background:#2d1454;padding:18px 24px;">' +
+    '<span style="font-family:Georgia,serif;font-size:18px;color:#ffffff;font-weight:bold;">Gilded Goose Limited</span>' +
+    '<span style="font-family:Arial,sans-serif;font-size:12px;color:#cbb8ec;display:block;margin-top:2px;">Pav Law · Statement of Work</span>' +
+    '</td></tr>' +
+    '<tr><td style="padding:24px;">' +
+    '<h1 style="margin:0 0 12px;font-family:Georgia,serif;font-size:20px;color:#2d1454;">' + htmlEscape(heading) + '</h1>' +
+    (introHtml || "") + bodyHtml +
+    '</td></tr>' +
+    '<tr><td style="padding:16px 24px;background:#faf8f4;border-top:1px solid #ece7de;">' +
+    '<p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#6b6b6b;">Questions? Reply to this email · support@gildedgooselimited.com</p>' +
+    '</td></tr>' +
+    '</table></td></tr></table></div>';
+}
+
 function signSowRecord(data) {
   if (!data.token) throw new Error("Missing signing token.");
   var lock = LockService.getScriptLock();
@@ -418,10 +512,31 @@ function signSowRecord(data) {
 
       var clientPdf = makePdfBlob(signedText, requestId + " — Andrew signed");
       var counterUrl = signingUrl(consultantToken);
+      var recordedText = [
+        "Andrew,",
+        "",
+        "Your electronic signature was recorded at " + serverTimestamp + ".",
+        "The signed PDF is attached. Gilded Goose will countersign from a separate private link.",
+        "",
+        sowPaymentText(payload),
+        "",
+        "— Gilded Goose Limited"
+      ].join("\n");
+      var recordedHtml = sowEmailHtml(
+        "Signature recorded — thank you, Andrew",
+        '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:14px;color:#3b2d1a;line-height:1.55;">' +
+          'Your electronic signature was recorded at <strong>' + htmlEscape(serverTimestamp) + '</strong>. ' +
+          'The signed PDF is attached, and Gilded Goose will countersign to finalize it.</p>',
+        sowPaymentTableHtml(payload) +
+        '<p style="margin:12px 0;font-family:Arial,sans-serif;font-size:13px;color:#3b2d1a;line-height:1.55;"><strong>Pay off anytime.</strong> ' +
+          htmlEscape(SOW_PAYOFF_NOTE) + '</p>' +
+        sowPaymentButtonHtml(payload)
+      );
       MailApp.sendEmail({
         to: payload.submitterEmail,
-        subject: "Pav Law SOW — Andrew signature recorded",
-        body: "Andrew’s electronic signature was recorded at " + serverTimestamp + ".\n\nA PDF copy is attached. Gilded Goose has received a separate countersign link.",
+        subject: "Pav Law SOW — signature recorded & payment options",
+        body: recordedText,
+        htmlBody: recordedHtml,
         attachments: [clientPdf],
         name: "Gilded Goose Limited",
         replyTo: NOTIFY_EMAIL
@@ -460,7 +575,7 @@ function signSowRecord(data) {
     record.sheet.getRange(record.rowNumber, 24).setValue(archive.pdfId);
     record.sheet.getRange(record.rowNumber, 25).setValue(signedHash);
 
-    var finalBody = [
+    var finalText = [
       "The Pav Law Statement of Work is fully executed.",
       "",
       "Andrew Brown signed for Pav Law and individually.",
@@ -468,14 +583,31 @@ function signSowRecord(data) {
       "Final server timestamp: " + serverTimestamp,
       "Final SHA-256: " + signedHash,
       "",
+      sowPaymentText(payload),
+      "",
       "The final PDF is attached. Gilded Goose’s private Drive archive contains the Google Doc and PDF.",
       "Request: " + requestId
     ].join("\n");
+    var finalHtml = sowEmailHtml(
+      "Fully executed — thank you",
+      '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:14px;color:#3b2d1a;line-height:1.55;">' +
+        'The Pav Law Statement of Work is fully executed. Andrew Brown signed for Pav Law and individually; ' +
+        'Kate Stannard countersigned for Gilded Goose Limited.</p>' +
+      '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:12px;color:#6b6b6b;line-height:1.5;">' +
+        'Final timestamp ' + htmlEscape(serverTimestamp) + ' · SHA-256 ' + htmlEscape(signedHash) + ' · Request ' + htmlEscape(requestId) + '</p>',
+      sowPaymentTableHtml(payload) +
+      '<p style="margin:12px 0;font-family:Arial,sans-serif;font-size:13px;color:#3b2d1a;line-height:1.55;"><strong>Pay off anytime.</strong> ' +
+        htmlEscape(SOW_PAYOFF_NOTE) + '</p>' +
+      sowPaymentButtonHtml(payload) +
+      '<p style="margin:14px 0 0;font-family:Arial,sans-serif;font-size:13px;color:#3b2d1a;line-height:1.55;">' +
+        'The final PDF is attached. Gilded Goose keeps the Google Doc and PDF in a private Drive archive.</p>'
+    );
     MailApp.sendEmail({
       to: payload.submitterEmail,
       cc: NOTIFY_EMAIL,
       subject: "Fully executed — Pav Law Statement of Work",
-      body: finalBody,
+      body: finalText,
+      htmlBody: finalHtml,
       attachments: [archive.pdfBlob],
       name: "Gilded Goose Limited",
       replyTo: NOTIFY_EMAIL
@@ -617,7 +749,7 @@ function doGet(e) {
       ok: true,
       service: "gilbert-guide",
       metricsFeedback: true,
-      sowEsign: "private-staged-v2",
+      sowEsign: "private-staged-v3",
       spreadsheetId: SPREADSHEET_ID,
       feedbackFormUrl: formUrl
     })).setMimeType(ContentService.MimeType.JSON);

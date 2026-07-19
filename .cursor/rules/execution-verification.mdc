@@ -1,0 +1,41 @@
+---
+description: Prevent skipped requirements through scoped phases, full-surface checks, and mandatory verification
+alwaysApply: true
+---
+
+# Execute every requirement
+
+For multi-part changes, never rely on memory or stop after a plausible partial result.
+
+## 1. Split before editing
+
+- Convert the request into a numbered checklist.
+- For broad work, split it into small phases such as implementation, cross-file consistency, interaction checks, and final audit.
+- Keep each requirement visible until it is verified; do not silently drop, merge, or reinterpret items.
+
+## 2. Check every affected surface
+
+Search beyond the first matching file. For UI/design changes, inspect as applicable:
+
+- HTML/CSS tokens, selectors, hover, focus, active, disabled, and responsive states
+- JavaScript-rendered markup, inline colors, click handlers, delegated selectors, and dynamic rerenders
+- SVG examples, documentation, standalone pages, and shared styles
+- Cache-busting versions and generated-file ownership rules
+
+Do not fix only CSS when JavaScript or SVG contains the same value.
+
+## 3. Implement → audit → fix → verify
+
+After implementation:
+
+1. Re-search from disk for old values, removed labels, stale selectors, and contradictory implementations.
+2. Fix every in-scope finding before ending.
+3. Validate syntax and lints for changed files.
+4. Re-read each changed section from disk.
+5. Verify interactive wiring: rendered attributes match handlers; hover/focus/disabled states exist and use defined tokens.
+
+## 4. Completion standard
+
+- Never say complete, fixed, implemented, or verified based only on edits.
+- Mark each checklist item pass/fail using evidence from the current disk state.
+- If any item fails, continue fixing it. Report a blocker only when it cannot be resolved without a user decision or unavailable access.

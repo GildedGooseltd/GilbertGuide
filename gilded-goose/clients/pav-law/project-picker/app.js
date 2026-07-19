@@ -30,37 +30,63 @@
 
   let lastSubmittedPayload = null;
 
-  /** Quick fit survey → tags in goalText → recommended projects */
-  const GILBERT_SURVEY = [
+  /** Word cloud → click a category to drill into keyword branches → tags feed goalText.
+      Multiple branches open at once; multiple keywords selectable. Session-only (clears on refresh). */
+  const GILBERT_CLOUD = [
     {
-      id: "bottleneck",
-      prompt: GILBERT_GREETING,
-      options: [
-        { id: "leads", label: "Not enough qualified leads / consults", tags: "leads ads LSA search paid consults volume campaigns" },
-        { id: "intake", label: "Phones / intake — missing or slow follow-up", tags: "phones VoIP HubSpot intake CRM routing calls" },
-        { id: "web", label: "Website, content, or SEO", tags: "website content SEO organic pages landing" },
-        { id: "referrals", label: "Referrals / past clients", tags: "referral clients past email nurture" },
-        { id: "data", label: "Tracking, dashboards, or reporting", tags: "tracking KPI dashboard CRM data analytics reporting" }
+      id: "leads", label: "Leads & Ads", size: "lg",
+      keywords: [
+        { id: "more-leads", label: "More leads", tags: "leads consults volume campaigns" },
+        { id: "lsa", label: "LSA calls", tags: "LSA local services ads calls" },
+        { id: "search", label: "Search ads", tags: "search paid ads campaigns" },
+        { id: "display", label: "Display / brand", tags: "display brand awareness campaign" },
+        { id: "signed", label: "Signed consults", tags: "consults conversion cases signed" }
       ]
     },
     {
-      id: "outcome",
-      prompt: "What do you want most in the next 30–60 days?",
-      options: [
-        { id: "consults", label: "More signed consults", tags: "consults leads conversion cases" },
-        { id: "cpl", label: "Lower cost per lead", tags: "CPL efficiency waste pause optimize spend" },
-        { id: "speed", label: "Faster intake response", tags: "intake phones speed VoIP HubSpot routing" },
-        { id: "clarity", label: "Clearer metrics to decide", tags: "KPI dashboard reporting tracking data" },
-        { id: "refer", label: "More referral volume", tags: "referral program past clients email" }
+      id: "intake", label: "Phones & Intake", size: "md",
+      keywords: [
+        { id: "phones", label: "Phone coverage", tags: "phones VoIP calls answer routing" },
+        { id: "followup", label: "Fast follow-up", tags: "intake speed follow-up routing" },
+        { id: "crm", label: "CRM / HubSpot", tags: "HubSpot CRM intake pipeline" }
       ]
     },
     {
-      id: "posture",
-      prompt: "How should we prioritize work?",
-      options: [
-        { id: "protect", label: "Fix foundation / tracking before scaling spend", tags: "enabler tracking phones CRM foundation protect spend" },
-        { id: "grow", label: "Grow volume now — ship campaigns", tags: "ads launch campaign Military NTGUILT display search growth" },
-        { id: "wins", label: "Quick wins this month", tags: "email referral quick audit stack safety" }
+      id: "web", label: "Website & SEO", size: "md",
+      keywords: [
+        { id: "website", label: "Website", tags: "website landing pages" },
+        { id: "seo", label: "SEO", tags: "SEO organic search" },
+        { id: "content", label: "Content", tags: "content blog pages" }
+      ]
+    },
+    {
+      id: "data", label: "Tracking & Data", size: "md",
+      keywords: [
+        { id: "kpi", label: "KPI dashboard", tags: "KPI dashboard reporting" },
+        { id: "tracking", label: "Tracking", tags: "tracking analytics data" },
+        { id: "reporting", label: "Reporting", tags: "reporting data analytics" }
+      ]
+    },
+    {
+      id: "referrals", label: "Referrals", size: "sm",
+      keywords: [
+        { id: "past", label: "Past clients", tags: "past clients referral nurture" },
+        { id: "program", label: "Referral program", tags: "referral program email" }
+      ]
+    },
+    {
+      id: "efficiency", label: "Cut Waste", size: "sm",
+      keywords: [
+        { id: "cpl", label: "Lower CPL", tags: "CPL efficiency cost per lead" },
+        { id: "pause", label: "Pause waste", tags: "waste pause optimize spend" },
+        { id: "audit", label: "Quick audit", tags: "audit quick wins stack safety" }
+      ]
+    },
+    {
+      id: "growth", label: "Launch & Grow", size: "sm",
+      keywords: [
+        { id: "military", label: "Military", tags: "Military campaign launch growth" },
+        { id: "ntguilt", label: "NTGUILT", tags: "NTGUILT campaign launch" }
       ]
     }
   ];
@@ -360,6 +386,8 @@
     surveyStep: 0,
     surveyAnswers: {},
     surveyDone: false,
+    cloudSelected: new Set(),
+    cloudOpen: new Set(),
     iconFilters: [],
     tocSort: { field: "priority", dir: "asc" },
     tocExpanded: false,
@@ -1361,24 +1389,6 @@
     requestAnimationFrame(() => {
       window.KPI_REPORT?.focusKpi?.(id);
     });
-  }
-
-  const GUIDE_WASTE_IMPACTS = {
-    B2: [{ type: "opportunity", label: "Missed opportunity", kpi: "#19" }],
-    B11: [
-      { type: "spend", label: "Spend waste", kpi: "#07" },
-      { type: "opportunity", label: "Missed opportunity", kpi: "#19" }
-    ],
-    RETAINER: [{ type: "spend", label: "Spend waste", kpi: "#07" }]
-  };
-
-  function guideWasteImpactHtml(item) {
-    const id = item.isRetainer ? "RETAINER" : item.id;
-    const impacts = GUIDE_WASTE_IMPACTS[id] || [];
-    if (!impacts.length) return '<span class="guide-impact-none" aria-label="No direct waste category">—</span>';
-    return `<span class="guide-impact-badges">${impacts.map(impact =>
-      `<span class="guide-impact-badge guide-impact-${impact.type}" title="${escapeHtml(impact.kpi)} · ${escapeHtml(impact.label)}">${escapeHtml(impact.label)}</span>`
-    ).join("")}</span>`;
   }
 
   function isItemSelected(item) {
@@ -2748,7 +2758,6 @@
         </td>
         <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span></td>
         <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a>${editControls}</td>
-        <td class="toc-col-impact">${guideWasteImpactHtml(item)}</td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
@@ -2928,19 +2937,14 @@
         if (monthsEl) monthsEl.value = monthsVal;
       }
       updateInvoiceScheduleAmount();
-      if (saved.goalText) {
-        const gi = document.getElementById("goal-input");
-        if (gi) gi.value = saved.goalText;
-        state.goalText = saved.goalText;
-      }
+      /* Ask Gilbert word cloud + derived goal are session-only — clear on every refresh. */
+      state.goalText = "";
+      state.surveyDone = false;
+      state.cloudSelected = new Set();
+      state.cloudOpen = new Set();
       if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.length) {
         state.gilbertChat = saved.gilbertChat;
       }
-      if (saved.surveyAnswers && typeof saved.surveyAnswers === "object") {
-        state.surveyAnswers = saved.surveyAnswers;
-      }
-      if (typeof saved.surveyStep === "number") state.surveyStep = saved.surveyStep;
-      if (saved.surveyDone != null) state.surveyDone = !!saved.surveyDone;
       if (Array.isArray(saved.iconFilters)) {
         state.iconFilters = saved.iconFilters.filter(f => f && f !== "account-data");
       }
@@ -3002,48 +3006,48 @@
     return state.gilbertChat.some(m => m.role === "user" && String(m.text || "").trim());
   }
 
-  function surveyOption(stepId, optionId) {
-    const q = GILBERT_SURVEY.find(s => s.id === stepId);
-    return q?.options?.find(o => o.id === optionId) || null;
+  function cloudCategory(catId) {
+    return GILBERT_CLOUD.find(c => c.id === catId) || null;
   }
 
-  function buildSurveyGoalText() {
-    const labels = [];
-    const tags = [];
-    GILBERT_SURVEY.forEach(q => {
-      const ans = state.surveyAnswers[q.id];
-      const opt = surveyOption(q.id, ans);
-      if (!opt) return;
-      labels.push(opt.label);
-      tags.push(opt.tags);
+  function cloudKeyword(catId, kwId) {
+    const cat = cloudCategory(catId);
+    return cat ? (cat.keywords.find(k => k.id === kwId) || null) : null;
+  }
+
+  function selectedCloudKeywords() {
+    const out = [];
+    state.cloudSelected.forEach(key => {
+      const [catId, kwId] = String(key).split(":");
+      const kw = cloudKeyword(catId, kwId);
+      if (kw) out.push(kw);
     });
-    if (!labels.length) return "";
-    return `Survey fit: ${labels.join(" · ")}. Keywords: ${tags.join(" ")}`;
+    return out;
   }
 
-  function applySurveyAndRecommend() {
-    activateBestFitSession();
-    const goal = buildSurveyGoalText();
+  function buildCloudGoalText() {
+    const picks = selectedCloudKeywords();
+    if (!picks.length) return "";
+    const labels = picks.map(p => p.label);
+    const tags = picks.map(p => p.tags);
+    return `Gilbert cloud: ${labels.join(" · ")}. Keywords: ${tags.join(" ")}`;
+  }
+
+  /** Live-apply the current word-cloud selection to goalText + best-fit ranking. */
+  function applyCloudSelection() {
+    const goal = buildCloudGoalText();
     state.goalText = goal;
     const goalInput = document.getElementById("goal-input");
     if (goalInput) goalInput.value = goal;
-    state.surveyDone = true;
-    state.doNextVisible = true;
-    const summaryBits = GILBERT_SURVEY.map(q => {
-      const opt = surveyOption(q.id, state.surveyAnswers[q.id]);
-      return opt ? opt.label : null;
-    }).filter(Boolean);
-    state.gilbertChat = [
-      { role: "gilbert", text: GILBERT_GREETING },
-      { role: "user", text: summaryBits.join(" → ") },
-      {
-        role: "gilbert",
-        text: pickGilbertReply(goal) ||
-          "Here's a shortlist that fits those answers — check Pav Priorities on the right."
-      }
-    ];
+    if (goal) {
+      activateBestFitSession();
+      state.surveyDone = true;
+      state.doNextVisible = true;
+    } else {
+      resetBestFitSession();
+      state.surveyDone = false;
+    }
     suggestPlan(true);
-    saveState();
     renderGilbertSurvey();
     renderCondensedToc();
     renderDoNextPanel();
@@ -3051,56 +3055,65 @@
     renderProjectToc();
   }
 
+  /** Clear all cloud selections + open branches (also invoked on "Clear"). */
   function resetGilbertSurvey() {
-    resetBestFitSession();
-    state.surveyStep = 0;
-    state.surveyAnswers = {};
-    state.surveyDone = false;
-    state.goalText = "";
-    const goalInput = document.getElementById("goal-input");
-    if (goalInput) goalInput.value = "";
-    state.doNextVisible = false;
-    state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
-    saveState();
-    renderGilbertSurvey();
-    renderDoNextPanel();
-    renderCondensedToc();
+    state.cloudSelected = new Set();
+    state.cloudOpen = new Set();
+    applyCloudSelection();
+  }
+
+  /** Deterministic organic-ish radial placement around the central Gilbert. */
+  function cloudPositions(n) {
+    const pos = [];
+    for (let i = 0; i < n; i++) {
+      const ang = (-90 + (360 / n) * i) * Math.PI / 180;
+      const jitter = ((i * 37) % 11) - 5;
+      const x = 50 + 40 * Math.cos(ang) + jitter * 0.45;
+      const y = 50 + 34 * Math.sin(ang) + jitter * 0.35;
+      pos.push({ x: Math.max(12, Math.min(88, x)), y: Math.max(12, Math.min(88, y)) });
+    }
+    return pos;
   }
 
   function renderGilbertSurvey() {
     const el = document.getElementById("gilbert-survey");
     if (!el) return;
 
-    if (state.surveyDone && state.goalText.trim()) {
-      const picks = gilbertRankedPicks(3).map(p => p.title);
-      const pickLine = picks.length
-        ? ` Top fits: <strong>${picks.map(escapeHtml).join("</strong>, <strong>")}</strong>.`
-        : "";
-      el.innerHTML = `
-        <p class="gilbert-survey-progress">Survey complete</p>
-        <p class="gilbert-survey-summary">Gilbert matched projects from your answers.${pickLine} See the ranked list on the right — or retake the survey.</p>
-        <div class="gilbert-survey-nav">
-          <button type="button" class="btn-survey-ghost" data-survey-action="retake">Retake survey</button>
-        </div>`;
-      return;
-    }
+    const coreSrc = "assets/gilbert-thinking.png?v=20260714h";
+    const pos = cloudPositions(GILBERT_CLOUD.length);
+    const catNodes = GILBERT_CLOUD.map((c, i) => {
+      const open = state.cloudOpen.has(c.id);
+      const count = c.keywords.filter(k => state.cloudSelected.has(`${c.id}:${k.id}`)).length;
+      const sizeCls = c.size ? ` cloud-${c.size}` : "";
+      const badge = count ? `<span class="gilbert-cloud-badge">${count}</span>` : "";
+      return `<button type="button" class="gilbert-cloud-cat${sizeCls}${open ? " is-open" : ""}${count ? " has-sel" : ""}"
+        data-cloud-cat="${escapeHtml(c.id)}" style="left:${pos[i].x}%;top:${pos[i].y}%"
+        aria-expanded="${open ? "true" : "false"}">${escapeHtml(c.label)}${badge}</button>`;
+    }).join("");
 
-    const step = Math.min(Math.max(0, state.surveyStep | 0), GILBERT_SURVEY.length - 1);
-    const q = GILBERT_SURVEY[step];
-    const selected = state.surveyAnswers[q.id] || "";
-    const isLast = step === GILBERT_SURVEY.length - 1;
+    const branches = GILBERT_CLOUD.filter(c => state.cloudOpen.has(c.id)).map(c => {
+      const chips = c.keywords.map(k => {
+        const sel = state.cloudSelected.has(`${c.id}:${k.id}`);
+        return `<button type="button" class="gilbert-cloud-kw${sel ? " is-selected" : ""}"
+          data-cloud-kw="${escapeHtml(c.id)}:${escapeHtml(k.id)}" aria-pressed="${sel ? "true" : "false"}">${escapeHtml(k.label)}</button>`;
+      }).join("");
+      return `<div class="gilbert-branch"><p class="gilbert-branch-label">${escapeHtml(c.label)}</p><div class="gilbert-branch-chips">${chips}</div></div>`;
+    }).join("");
+
+    const selCount = state.cloudSelected.size;
+    const picks = selCount ? gilbertRankedPicks(3).map(p => p.title) : [];
+    const infoLine = picks.length
+      ? `<p class="gilbert-cloud-fits">Top fits: <strong>${picks.map(escapeHtml).join("</strong>, <strong>")}</strong></p>`
+      : `<p class="gilbert-cloud-hint">Tap a topic to explore. Pick as many keywords as fit — open several branches.</p>`;
+
     el.innerHTML = `
-      <p class="gilbert-survey-progress">Question ${step + 1} of ${GILBERT_SURVEY.length}</p>
-      <p class="gilbert-survey-prompt">${escapeHtml(q.prompt)}</p>
-      <ul class="gilbert-survey-options">${q.options.map(o =>
-        `<li><button type="button" data-survey-opt="${escapeHtml(o.id)}" class="${selected === o.id ? "is-selected" : ""}">${escapeHtml(o.label)}</button></li>`
-      ).join("")}</ul>
-      <div class="gilbert-survey-nav">
-        ${step > 0 ? `<button type="button" class="btn-survey-ghost" data-survey-action="back">Back</button>` : ""}
-        <button type="button" class="btn-survey-primary" data-survey-action="next" ${selected ? "" : "disabled"}>
-          ${isLast ? "See best-fit projects" : "Next"}
-        </button>
-      </div>`;
+      <div class="gilbert-cloud" role="group" aria-label="Explore topics">
+        <img class="gilbert-cloud-core" src="${coreSrc}" alt="" aria-hidden="true">
+        ${catNodes}
+      </div>
+      ${branches ? `<div class="gilbert-cloud-branches">${branches}</div>` : ""}
+      ${infoLine}
+      ${selCount ? `<div class="gilbert-cloud-actions"><button type="button" class="btn-survey-ghost" data-cloud-action="clear">Clear (${selCount})</button></div>` : ""}`;
   }
 
   function bindGilbertSurvey() {
@@ -3108,35 +3121,25 @@
     if (!el || el.dataset.bound === "1") return;
     el.dataset.bound = "1";
     el.addEventListener("click", e => {
-      const optBtn = e.target.closest("[data-survey-opt]");
-      if (optBtn) {
-        const q = GILBERT_SURVEY[state.surveyStep];
-        if (!q) return;
-        state.surveyAnswers[q.id] = optBtn.getAttribute("data-survey-opt");
+      const cat = e.target.closest("[data-cloud-cat]");
+      if (cat) {
+        const id = cat.getAttribute("data-cloud-cat");
+        if (state.cloudOpen.has(id)) state.cloudOpen.delete(id);
+        else state.cloudOpen.add(id);
         renderGilbertSurvey();
         return;
       }
-      const action = e.target.closest("[data-survey-action]");
-      if (!action) return;
-      const act = action.getAttribute("data-survey-action");
-      if (act === "retake") {
+      const kw = e.target.closest("[data-cloud-kw]");
+      if (kw) {
+        const key = kw.getAttribute("data-cloud-kw");
+        if (state.cloudSelected.has(key)) state.cloudSelected.delete(key);
+        else state.cloudSelected.add(key);
+        applyCloudSelection();
+        return;
+      }
+      const action = e.target.closest("[data-cloud-action]");
+      if (action && action.getAttribute("data-cloud-action") === "clear") {
         resetGilbertSurvey();
-        return;
-      }
-      if (act === "back") {
-        state.surveyStep = Math.max(0, state.surveyStep - 1);
-        renderGilbertSurvey();
-        return;
-      }
-      if (act === "next") {
-        const q = GILBERT_SURVEY[state.surveyStep];
-        if (!q || !state.surveyAnswers[q.id]) return;
-        if (state.surveyStep >= GILBERT_SURVEY.length - 1) {
-          applySurveyAndRecommend();
-          return;
-        }
-        state.surveyStep += 1;
-        renderGilbertSurvey();
       }
     });
   }
@@ -4012,6 +4015,99 @@
     el.setAttribute("aria-hidden", "true");
   }
 
+  /* ---- Local SOW preview (no live webhook) ---- */
+
+  const LOCAL_SOW_TOKEN = "local-preview";
+
+  function sowMoney(value) {
+    return value != null && Number.isFinite(Number(value)) ? fmt(Number(value)) : null;
+  }
+
+  function buildLocalSowText(payload) {
+    const data = payload || {};
+    const titles = projectTitlesForSow(data);
+    const lines = [
+      "STATEMENT OF WORK",
+      "Marketing and Business Operations Consulting",
+      "",
+      "Governed by: Master Services Agreement (MSA)",
+      "Consultant: Gilded Goose Limited · Kate Stannard",
+      "Co-Client 1: Pav Law · authorized signer Andrew Brown",
+      "Co-Client 2: Andrew Brown · individually",
+      "SOW prepared: " + new Date().toISOString(),
+      "Client contact email: " + (data.submitterEmail || "[email]"),
+      "",
+      "————————————————————————",
+      "1. SUMMARY",
+      "",
+      titles.length ? "Selected projects: " + titles.join("; ") + "." : "Selected projects: [none]."
+    ];
+    if (data.goalText) lines.push("Client goal note: " + data.goalText);
+    lines.push("", "————————————————————————", "2. SCOPE — SELECTED PROJECT TITLES", "");
+    if (titles.length) {
+      titles.forEach((title, index) => lines.push((index + 1) + ". " + title));
+    } else {
+      lines.push("1. [projects]");
+    }
+    lines.push(
+      "",
+      "Change orders. Work outside this scope needs a written change order (email OK) with fee and schedule impact before Consultant proceeds.",
+      "",
+      "————————————————————————",
+      "3. CLIENT RESPONSIBILITIES",
+      "",
+      "• Admin access, tools, and data within 3 business days of signing",
+      "• Attorney advertising approval before any public publish/place",
+      "• Feedback within twenty-four (24) hours for public-facing ad/content review, unless Client states a longer window",
+      "• Pay Schedule A invoices on time",
+      "",
+      "————————————————————————",
+      "4. FEES AND PAYMENT",
+      "",
+      "List / consulting subtotal: " + (data.projectsSubtotal || data.grandTotalNote || "$[___]"),
+      "Deposit due at signing: " + (sowMoney(data.depositAmount) || "$[___]") +
+        (data.depositPct != null ? " (" + Math.round(Number(data.depositPct) * 100) + "%)" : ""),
+      "Remainder / invoice schedule: " + (data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "Per payment terms selected"),
+      data.maintenanceMonthlyNum ? "Retainer / maintenance: " + data.maintenanceMonthly + "/mo, billed separately" : "Retainer / maintenance: none selected",
+      "Media spend: Client direct to platforms",
+      "Pass-through, handling, tax, and late charges: MSA Article 5",
+      "",
+      "————————————————————————",
+      "5. SCHEDULE A — PAYMENT TERMS",
+      "",
+      data.invoicePaymentTermsLabel || data.invoicePaymentTerms || "Per payment terms selected in the Project Guide.",
+      data.paymentSurchargeAmount ? "Schedule surcharge: " + sowMoney(data.paymentSurchargeAmount) : "Schedule surcharge: none",
+      data.paymentTotalDue != null ? "Total due on project schedule: " + sowMoney(data.paymentTotalDue) : "",
+      "",
+      "————————————————————————",
+      "6. SIGNATURES",
+      "",
+      "This SOW is governed by the MSA between the Parties.",
+      "",
+      "Andrew Brown signs once in two capacities:",
+      "• For Pav Law as authorized signer (Co-Client 1)",
+      "• Individually (Co-Client 2)",
+      "",
+      "Gilded Goose Limited countersigns through a separate private signing link.",
+      "",
+      "Status: Awaiting Andrew Brown electronic signature."
+    );
+    return lines.filter(line => line !== null && line !== undefined).join("\n");
+  }
+
+  function showLocalSowPreview(payload) {
+    const record = {
+      role: "client",
+      payload,
+      sowText: buildLocalSowText(payload),
+      expiresAt: "when this browser tab is refreshed (local preview)",
+      local: true
+    };
+    activeSowToken = LOCAL_SOW_TOKEN;
+    showSowPage(record);
+    updateEsignStatusText("Local preview — no live webhook configured. Review and sign here to preview the flow; nothing is emailed, logged, or archived.");
+  }
+
   function signingChecks(role) {
     return {
       reviewed: !!document.getElementById("sow-check-reviewed")?.checked,
@@ -4065,6 +4161,21 @@
     if (validation) {
       updateEsignStatusText(validation);
       showToast(validation, true);
+      return;
+    }
+
+    if (activeSowSigning.local || !CONFIG.webhookUrl) {
+      const previewBtn = document.getElementById("sow-send-esign");
+      if (previewBtn) previewBtn.disabled = true;
+      if (role === "client") {
+        if (lastSubmittedPayload) lastSubmittedPayload.esignStatus = "client_signed";
+        setSowContinueEnabled(true);
+        updateEsignStatusText("Local preview — Andrew's signature simulated. Nothing was emailed or archived. Continue to preview the deposit step.");
+      } else {
+        if (lastSubmittedPayload) lastSubmittedPayload.esignStatus = "signed";
+        updateEsignStatusText("Local preview — countersignature simulated. Nothing was emailed or archived.");
+      }
+      showToast("Local preview signature recorded — not emailed or archived");
       return;
     }
 
@@ -4315,16 +4426,26 @@
 
     if (!CONFIG.webhookUrl) {
       saveSubmissionLocally(payload);
-      downloadSubmissionJson(payload);
-      showToast("Private signing link requires the configured webhook. Submission downloaded as backup.", true);
-    } else {
-      try {
-        const result = await postToWebhook(CONFIG.webhookUrl, payload, true);
-        signingUrl = result.data?.signing?.url || "";
-        if (!signingUrl) throw new Error("Signing link was not returned.");
-      } catch (err) {
-        showToast("Submit failed — try again or email support@gildedgooselimited.com. " + err.message, true);
-      }
+      lastSubmittedPayload = payload;
+      showToast("No live webhook configured — opening a local SOW preview.");
+      showLocalSowPreview(payload);
+      btn.textContent = "Submit selections";
+      updateSubmitButtons();
+      return;
+    }
+
+    try {
+      const result = await postToWebhook(CONFIG.webhookUrl, payload, true);
+      signingUrl = result.data?.signing?.url || "";
+      if (!signingUrl) throw new Error("Signing link was not returned.");
+    } catch (err) {
+      saveSubmissionLocally(payload);
+      lastSubmittedPayload = payload;
+      showToast("Live signing link unavailable (" + err.message + ") — opening a local SOW preview.", true);
+      showLocalSowPreview(payload);
+      btn.textContent = "Submit selections";
+      updateSubmitButtons();
+      return;
     }
 
     if (signingUrl) {
@@ -4390,8 +4511,16 @@
       renderSummary();
       const dest = state.activeViewTab;
       const projectId = goView.dataset.projectId;
+      const scrollTo = goView.dataset.scrollTo;
       if (dest === "picker" && projectId) {
         requestAnimationFrame(() => openProjectDescription(projectId));
+        return;
+      }
+      if (scrollTo) {
+        requestAnimationFrame(() => {
+          const anchor = document.getElementById(scrollTo);
+          if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
         return;
       }
       if (dest === "impact") {
