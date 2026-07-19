@@ -111,13 +111,13 @@ Links on light: `--gg-royal` + underline. Focus: `outline: 2px solid var(--gg-ro
 | Body (metrics page)   | `metrics.css` `body`   | system-ui sans — metrics-only exception                                     |
 | Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, `--gg-royal-deep` + burnt underline |
 | Section / zone labels | `.picker-zone-label`   | Uppercase royal label + royal/burnt rule                                      |
-| KPI section titles    | `.kpi-section-title`   | Bold royal deep; summary = burnt left bar + royal/cream wash                  |
+| KPI section titles    | `.kpi-section-title`   | Bold white; summary = solid royal-deep fill + burnt left bar                  |
 | Card titles           | `.card-title`          | ~`1.28rem`, weight 800, royal                                               |
 | KPI report title      | `.kpi-report-title`    | `1.35rem`, weight 800, royal                                                |
 | Table headers         | `.toc-table thead`     | Uppercase, muted brown                                                      |
 
 
-**Section title pattern:** short label → uppercase or weight-800 royal → optional royal/burnt chevron accent or hairline divider. Gold appears only when the section itself is a critical milestone.
+**Section title pattern:** solid royal-deep header → short uppercase white label → lavender hint → burnt left rule. No gradient or pale wash. Gold appears only when the section itself is a critical milestone.
 
 To switch cockpit body to sans: change only `body { font-family }` in `index.html`; re-check card density.
 

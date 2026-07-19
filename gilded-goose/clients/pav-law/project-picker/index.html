@@ -2405,28 +2405,28 @@
     .kpi-section-summary {
       cursor: pointer; padding: 0.95rem 1.2rem; list-style: none;
       display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-      background: linear-gradient(90deg, rgba(45, 20, 84, 0.16) 0%, rgba(196, 92, 38, 0.12) 48%, rgba(45, 90, 61, 0.08) 100%);
+      background: var(--gg-royal-deep);
       border-bottom: 1px solid transparent;
       border-left: 5px solid var(--gg-head-accent);
       user-select: none;
     }
     .kpi-section[open] .kpi-section-summary {
       border-bottom-color: rgba(196, 92, 38, 0.35);
-      background: linear-gradient(90deg, rgba(45, 20, 84, 0.2) 0%, rgba(196, 92, 38, 0.1) 55%, var(--gg-cream-panel) 100%);
+      background: var(--gg-royal-deep);
     }
     .kpi-section-summary::-webkit-details-marker { display: none; }
     .kpi-section-summary-static { cursor: default; border-bottom-color: rgba(196, 92, 38, 0.35); }
     .kpi-section-heading { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
     .kpi-section-title {
-      font-size: 1.15rem; font-weight: 800; color: var(--gg-royal-deep);
+      font-size: 1.15rem; font-weight: 800; color: #fff;
       text-transform: uppercase; letter-spacing: 0.07em; line-height: 1.25;
     }
     .kpi-section-chevron {
-      flex-shrink: 0; font-size: 0.95rem; color: var(--gg-royal); font-weight: 700;
+      flex-shrink: 0; font-size: 0.95rem; color: #fff; font-weight: 700;
       transition: transform 0.2s ease;
     }
     .kpi-section[open] .kpi-section-chevron { transform: rotate(180deg); }
-    .kpi-section-hint { font-size: var(--font-min-rem); font-weight: 600; color: var(--secondary); text-transform: none; letter-spacing: 0; }
+    .kpi-section-hint { font-size: var(--font-min-rem); font-weight: 600; color: var(--gg-lavender); text-transform: none; letter-spacing: 0; }
     .kpi-section-intro {
       margin: 0 0 1rem; padding: 0.75rem 0.95rem; font-size: 0.9375rem; line-height: 1.55;
       color: var(--gg-brown-muted); background: rgba(45, 20, 84, 0.06);
@@ -2883,8 +2883,8 @@
       border-color: var(--gg-royal-border);
     }
     .kpi-section-goals > .kpi-section-summary {
-      background: linear-gradient(90deg, var(--gg-royal-dim) 0%, var(--gg-cream-panel) 100%);
-      border-left-color: var(--gg-royal);
+      background: var(--gg-royal-deep);
+      border-left-color: var(--gg-burnt);
     }
     .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
     /* Card-face eggs sit in normal flow (last flex child) — never absolute over footnotes. */
