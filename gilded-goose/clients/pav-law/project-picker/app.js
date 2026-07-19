@@ -1363,6 +1363,24 @@
     });
   }
 
+  const GUIDE_WASTE_IMPACTS = {
+    B2: [{ type: "opportunity", label: "Missed opportunity", kpi: "#19" }],
+    B11: [
+      { type: "spend", label: "Spend waste", kpi: "#07" },
+      { type: "opportunity", label: "Missed opportunity", kpi: "#19" }
+    ],
+    RETAINER: [{ type: "spend", label: "Spend waste", kpi: "#07" }]
+  };
+
+  function guideWasteImpactHtml(item) {
+    const id = item.isRetainer ? "RETAINER" : item.id;
+    const impacts = GUIDE_WASTE_IMPACTS[id] || [];
+    if (!impacts.length) return '<span class="guide-impact-none" aria-label="No direct waste category">—</span>';
+    return `<span class="guide-impact-badges">${impacts.map(impact =>
+      `<span class="guide-impact-badge guide-impact-${impact.type}" title="${escapeHtml(impact.kpi)} · ${escapeHtml(impact.label)}">${escapeHtml(impact.label)}</span>`
+    ).join("")}</span>`;
+  }
+
   function isItemSelected(item) {
     if (item.isRetainer || item.id === "RETAINER") return state.retainer;
     return state.projects.has(item.id);
@@ -1470,7 +1488,7 @@
     "#01": { name: "Total leads", tracking: "Clean — Search + LSA + HubSpot forms when all three exports are current." },
     "#02": { name: "New cases", tracking: "Clean — MyCase Client Created-date count." },
     "#06": { name: "Pipeline / CRM completeness", tracking: "Partial — depends on HubSpot field hygiene and deal stage use." },
-    "#07": { name: "Lead volume by campaign", tracking: "Clean for Search when Campaign report + call details align; LSA separate." },
+    "#07": { name: "Spend Waste", tracking: "Modeled excess LSA cash paid versus the same response volume at digital Search cost per response." },
     "#08": { name: "Campaign cost efficiency", tracking: "Clean for digital Search cost ÷ calls; not LSA." },
     "#09": { name: "Intake conversion", tracking: "Partial — needs consistent consult booking and outcome logging." },
     "#10": { name: "Lead channel mix", tracking: "Clean once #01 channel stack is reconciled monthly." },
@@ -1481,7 +1499,7 @@
     "#16": { name: "Reviews by channel", tracking: "Partial until B10 audit wires directory scrapes into DATA.reviews." },
     "#17": { name: "Referral Network", tracking: "Proxy until A4 referral tracking is live in HubSpot/MyCase." },
     "#18": { name: "Website / SEO contribution", tracking: "Partial — form + organic attribution depends on GA4/UTM setup." },
-    "#19": { name: "Lost Revenue", tracking: "Directional — missed Search calls × lead→case × avg fee; not booked cash." },
+    "#19": { name: "Missed Opportunity", tracking: "Directional potential revenue not earned — missed Search calls × lead→case × avg fee; not booked cash." },
     "#20": { name: "CRM follow-up discipline", tracking: "Partial — task completion and owner fields must stay filled." },
     "#21": { name: "Answered Calls", tracking: "Clean — Call details Received vs Missed for Search; LSA status separate." },
     "#23": { name: "Intake coverage / after-hours", tracking: "Partial — needs routing logs and after-hours disposition." },
@@ -2730,6 +2748,7 @@
         </td>
         <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span></td>
         <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a>${editControls}</td>
+        <td class="toc-col-impact">${guideWasteImpactHtml(item)}</td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");

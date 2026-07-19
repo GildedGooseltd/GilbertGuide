@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260718-financials-checkpoint-r1";
+  const RENDER_VER = "20260718-rec-headings-off-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -78,7 +78,7 @@
     "#07": {
       title: "#07 Spend Waste",
       desc: "Modeled excess LSA media cost versus producing the same response volume at digital Search’s observed cost per response.",
-      formula: "LSA spend − (LSA responses × digital cost per response). Jun: $13,206 − (83 × $60.12) = $8,216 waste. Jul*: $7,163 − (57 × $64.19) = $3,504. Total = −$11,720."
+      formula: "LSA spend − (LSA responses × digital cost per response). Jun: $13,206 − (83 × $60.12) = $8,216 waste. Jul*: $7,163 − (57 × $64.19) = $3,504. Total = −$11,720. Modeled responses missed at the digital rate: 191. Period: Jun–Jul 2026; Jul is partial through Jul 16."
     },
     "#12": {
       title: "#12 Avg. Cost per Call",
@@ -86,8 +86,8 @@
       formula: "Campaign Cost ÷ Phone calls → $6,277 ÷ 122 = $51. Target < $100. Ad-group efficiency: NTGUILT → DUI $1,064 ÷ 219 interactions = $4.86."
     },
     "#19": {
-      title: "#19 Lost Revenue",
-      desc: "Estimated monthly revenue lost from unanswered Search calls. Directional for phone priority — not booked revenue.",
+      title: "#19 Missed Opportunity",
+      desc: "Estimated monthly potential revenue not earned from unanswered Search calls. Directional for phone priority — not booked revenue.",
       formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,587) → 38 × 7.3% × $5,587 = $15,498/mo."
     },
     "#21": {
@@ -97,9 +97,9 @@
     },
     "#DUI": {
       title: "# DUIs Signed",
-      desc: "YTD DUI/DWAI signed matters toward the annual goal (practice area). Active paid DUI efficiency: NTGUILT → DUI ad group at $4.86 / interaction (Jun 11–Jul 10) — expand via A2; insurance card mailer is B5.",
+      desc: "YTD DUI/DWAI signed matters toward the annual goal (practice area). Pace % = signed ÷ 50. Ahead/behind compares signed vs a straight-line target for how much of the year has elapsed. Active paid DUI efficiency: NTGUILT → DUI ad group at $4.86 / interaction (Jun 11–Jul 10) — expand via A2; insurance card mailer is B5.",
       formula:
-        "Client contacts Created in goal year with Cases (practice area) DUI/DWAI/Alcohol — (DUI/DWI) tag or DUI-named Criminal Defense — ÷ annual target (50)."
+        "Client contacts Created in goal year with Cases (practice area) DUI/DWAI/Alcohol — (DUI/DWI) tag or DUI-named Criminal Defense — ÷ annual target (50). Schedule = signed − (50 × days elapsed ÷ days in year)."
     },
     "#16": {
       title: "#16 Reviews by channel",
@@ -134,11 +134,26 @@
     return `<span class="kpi-stat-id">${escapeHtml(String(label || "").replace(/^#\S+\s+/, ""))}</span>`;
   }
 
-  /** Lower-right medium-gray KPI number for reference. */
+  /** Display numeric KPI ids without # or a leading zero. */
+  function kpiDisplayNumber(kpiId) {
+    const raw = String(kpiId || "").trim().replace(/^#/, "");
+    return /^\d+$/.test(raw) ? String(Number(raw)) : raw;
+  }
+
+  /** Lower-right golden egg KPI reference. */
   function kpiRefMark(kpiId) {
     const id = String(kpiId || "").trim();
     if (!id || id === "#GOAL3") return "";
-    return `<span class="kpi-ref-num" aria-hidden="true">${escapeHtml(id)}</span>`;
+    return `<span class="kpi-related-project-egg kpi-ref-num" aria-hidden="true">${escapeHtml(kpiDisplayNumber(id))}</span>`;
+  }
+
+  /** Clickable project egg — Guide deep-link (replaces long data-guide-link text). */
+  function projectEggLink(projectId, ariaLabel, displayText) {
+    const id = String(projectId || "").trim();
+    if (!id) return "";
+    const label = ariaLabel || `Open ${id}`;
+    const text = displayText || id;
+    return `<a class="kpi-related-project-egg kpi-ref-num kpi-project-egg-link" href="#picker" data-go-view="picker" data-project-id="${escapeHtml(id)}" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">${escapeHtml(text)}</a>`;
   }
 
   /** Current month first, then count down. */
@@ -168,11 +183,11 @@
     const onMetricsPage = /(?:^|\/)metrics\.html$/.test(window.location.pathname);
     const links = projects.map(project => {
       const href = `${onMetricsPage ? "index.html" : ""}#project-${encodeURIComponent(project.id)}`;
-      return `<li><a href="${href}">${escapeHtml(project.title)}</a></li>`;
+      return `<li><a href="${href}" data-go-view="picker" data-project-id="${escapeHtml(project.id)}">${escapeHtml(project.title)}</a></li>`;
     }).join("");
     return `<section class="kpi-related-projects" aria-label="Related projects for ${escapeHtml(kpiId)}">
       <strong class="kpi-related-projects-title">Related projects</strong>
-      <span class="kpi-related-project-egg" aria-label="KPI ${escapeHtml(kpiId)}">${escapeHtml(kpiId)}</span>
+      <span class="kpi-related-project-egg" aria-label="KPI ${escapeHtml(kpiId)}">${escapeHtml(kpiDisplayNumber(kpiId))}</span>
       <ul>${links}</ul>
     </section>`;
   }
@@ -214,8 +229,8 @@
       { id: "#01", label: "Total leads", value: "226", target: "≥ 107", mom: "+154%", count: 226, verified: true, hit: true, alert: false, gauge: true },
       { id: "#02", label: "New cases", value: "34", target: "50", mom: "+55%", verified: true, alert: false, gauge: true, hit: false },
       { id: "#12", label: "Avg. Cost per Call", value: "$51", target: "< $100", mom: null, verified: true, hit: true, targetBar: true, lowerIsBetter: true },
-      /* Team goals: #19 lost-tracker first in render, then #21, then DUI */
-      { id: "#19", label: "Lost Revenue", value: "$15,498/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true },
+      /* Team goals: #19 missed-opportunity tracker first in render, then #21, then DUI */
+      { id: "#19", label: "Missed Opportunity", value: "$15,498/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true },
       { id: "#21", label: "Answered Calls", value: "72%", target: "≥ 90%", mom: "+5%", verified: true, alert: true, gauge: true, goal: true, archived: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
@@ -1932,11 +1947,41 @@
     );
   }
 
+  /** Compare YTD signed against the straight-line target for elapsed time. */
+  function duiScheduleStatus(g) {
+    const year = Number(g.year) || new Date().getFullYear();
+    const now = new Date();
+    const start = new Date(year, 0, 1);
+    const end = new Date(year + 1, 0, 1);
+    let frac = (now - start) / (end - start);
+    frac = Math.max(0, Math.min(1, frac));
+    const expected = (Number(g.target) || 0) * frac;
+    const delta = (Number(g.current) || 0) - expected;
+    const expectedRounded = Math.round(expected);
+    const gap = Math.round(Math.abs(delta));
+    if (delta >= 0) {
+      return {
+        cls: "kpi-mom-up",
+        arrow: "↑",
+        label: `Ahead ${gap}`,
+        detail: `${Math.round(frac * 100)}% of year elapsed — on straight-line pace you'd have ~${expectedRounded} signed by now.`
+      };
+    }
+    return {
+      cls: "kpi-mom-down",
+      arrow: "↓",
+      label: `Behind ${gap}`,
+      detail: `${Math.round(frac * 100)}% of year elapsed — straight-line pace is ~${expectedRounded} signed by now.`
+    };
+  }
+
   function teamDuiGoalCardHtml() {
     const g = DATA.duiGoal;
     const pct = g.current / g.target;
     const hit = pct >= 1;
     const pace = Math.round((g.current / (g.target || 1)) * 100);
+    const sched = duiScheduleStatus(g);
+    const paceCell = `${pace}% <span class="kpi-mom-change ${sched.cls}" title="${escapeHtml(sched.detail)}">${sched.arrow} ${escapeHtml(sched.label)}</span>`;
     return `<button type="button" class="kpi-goal-card kpi-stat-target-bar" data-kpi-focus="#DUI">
       ${statusCorner(true)}
       ${kpiHelpBtn("#DUI")}
@@ -1946,11 +1991,10 @@
       </div>
       ${goalTrackRows([
         ["YTD", String(g.current) + " / " + String(g.target)],
-        ["Pace", pace + "%"],
+        ["Pace", paceCell],
         ["NTGUILT → DUI", "$4.86 / interaction"]
       ])}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
-      <p class="kpi-table-note kpi-stat-highlight" style="margin:0.35rem 0 0;text-align:left">Strong DUI lane: NTGUILT → DUI · $4.86 / interaction (219 · Jun 11–Jul 10) — not the blended NTGUILT campaign CPL</p>
       <p class="kpi-table-note" style="margin:0.2rem 0 0;text-align:left">Counted from Cases (practice area) · (DUI/DWI) tag or DUI-named Criminal Defense</p>
       ${kpiRefMark("#DUI")}
     </button>`;
@@ -2288,12 +2332,13 @@
       const sign = delta <= 0 ? "−" : "+";
       trendDelta = `<span class="kpi-mom-change ${cls}"><span class="kpi-mom-arrow" aria-hidden="true">${arrow}</span><span class="kpi-mom-pct">${sign}${fmtMoney(abs)}/mo</span></span>`;
     }
-    return `<button type="button" class="kpi-goal-card kpi-stat-card kpi-lost-tracker kpi-stat-attention kpi-stat-target-bar" data-kpi-focus="#19">
+    return `<button type="button" class="kpi-goal-card kpi-stat-card kpi-lost-tracker kpi-opportunity-card kpi-stat-attention kpi-stat-target-bar" data-kpi-focus="#19">
       ${statusCorner(true)}
       ${kpiHelpBtn("#19")}
       <div class="kpi-goal-visual">
-        ${kpiCardTitle("Lost Revenue")}
+        ${kpiCardTitle("Missed Opportunity")}
         ${missedCallsTargetBarChart(p)}
+        <span class="kpi-money-type kpi-money-type-opportunity">Potential revenue · not earned</span>
         <div class="kpi-metric-with-delta">
           <span class="kpi-lost-amount">${fmtMoney(model.monthlyLost)}<small>/mo</small></span>
           ${trendDelta}
@@ -2355,70 +2400,44 @@
     };
   }
 
-  function lsaWasteChart(model) {
-    const rows = model.periods;
-    const max = Math.max(...rows.map(r => r.waste), 1);
-    const w = 268;
-    const h = 118;
-    const pad = { l: 28, r: 12, t: 18, b: 30 };
-    const plotW = w - pad.l - pad.r;
-    const plotH = h - pad.t - pad.b;
-    const slot = plotW / Math.max(rows.length, 1);
-    const bars = rows.map((r, i) => {
-      const bh = Math.max(5, (plotH * r.waste) / max);
-      const x = pad.l + i * slot + (slot - 48) / 2;
-      const y = pad.t + plotH - bh;
-      return `<g>
-        <rect x="${x}" y="${y}" width="48" height="${bh}" rx="3" fill="var(--gg-negative, #b91c1c)" opacity="0.82"/>
-        <text x="${x + 24}" y="${Math.max(13, y - 5)}" text-anchor="middle" class="kpi-chart-val-sm" style="fill:var(--gg-negative, #b91c1c)">−${fmtMoney(Math.round(r.waste))}</text>
-        <text x="${x + 24}" y="${h - 8}" text-anchor="middle" class="kpi-target-bar-cat">${escapeHtml(r.month)}</text>
-      </g>`;
-    }).join("");
-    return `<svg class="kpi-chart-svg kpi-target-bar-chart kpi-target-bar-chart-compact" viewBox="0 0 ${w} ${h}" role="img" aria-label="Modeled LSA waste compared with digital cost per response">
-      <line x1="${pad.l}" y1="${pad.t + plotH}" x2="${w - pad.r}" y2="${pad.t + plotH}" class="kpi-target-baseline"/>
-      ${bars}
-    </svg>`;
-  }
-
   function lsaMismanagementTrackerHtml() {
     const model = lsaReallocationWasteModel(DATA.casesLeadsSpend);
-    const june = model.periods.find(r => r.month === "Jun") || {};
-    const july = model.periods.find(r => r.month === "Jul*") || {};
-    return `<button type="button" class="kpi-goal-card kpi-stat-card kpi-lost-tracker kpi-stat-negative kpi-stat-target-bar" data-kpi-focus="#07">
+    return `<button type="button" class="kpi-goal-card kpi-stat-card kpi-lost-tracker kpi-spend-waste-card" data-kpi-focus="#07">
       ${statusCorner(true)}
       ${kpiHelpBtn("#07")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Spend Waste")}
-        ${lsaWasteChart(model)}
+        <span class="kpi-money-type kpi-money-type-spend">Spent inefficiently · cash out</span>
         <div class="kpi-metric-with-delta">
-          <span class="kpi-lost-amount">−${fmtMoney(model.totalWaste)}<small>Jun–Jul*</small></span>
+          <span class="kpi-lost-amount">−${fmtMoney(model.totalWaste)}</span>
         </div>
-        <div class="kpi-lost-data" aria-label="LSA reallocation waste details">
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">June waste</span>
-            <span class="kpi-lost-datum-val">−${fmtMoney(Math.round(june.waste || 0))}</span>
-            <span class="kpi-lost-muted">${fmtMoney(june.digitalCostPerResponse || 0)}/digital response</span>
-          </div>
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">July* waste</span>
-            <span class="kpi-lost-datum-val">−${fmtMoney(Math.round(july.waste || 0))}</span>
-            <span class="kpi-lost-muted">${fmtMoney(july.digitalCostPerResponse || 0)}/digital response</span>
-          </div>
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">Responses missed</span>
-            <span class="kpi-lost-datum-val">+${model.extraResponses}</span>
-            <span class="kpi-lost-muted">modeled at digital rate</span>
-          </div>
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">Period</span>
-            <span class="kpi-lost-datum-val">Jun–Jul*</span>
-            <span class="kpi-lost-muted">Jul partial through Jul 16</span>
-          </div>
-        </div>
-        <span class="kpi-stat-label">Modeled media waste vs digital’s observed response cost</span>
       </div>
       ${kpiRefMark("#07")}
     </button>`;
+  }
+
+  function wasteTypeTableHtml() {
+    const spend = lsaReallocationWasteModel(DATA.casesLeadsSpend);
+    const opportunity = missedRevenueModel(DATA.phoneIntake);
+    return `<div class="kpi-waste-table-wrap">
+      <table class="kpi-waste-table" aria-label="Spend waste and missed opportunity comparison">
+        <thead>
+          <tr><th>Type</th><th>Amount</th><th>What it means</th></tr>
+        </thead>
+        <tbody>
+          <tr class="kpi-waste-row-spend">
+            <td><span class="kpi-waste-table-label"><i class="kpi-money-key-swatch kpi-money-key-spend" aria-hidden="true"></i>Spend waste</span></td>
+            <td><strong>−${fmtMoney(spend.totalWaste)}</strong><small>Jun–Jul*</small></td>
+            <td>Cash already paid out inefficiently</td>
+          </tr>
+          <tr class="kpi-waste-row-opportunity">
+            <td><span class="kpi-waste-table-label"><i class="kpi-money-key-swatch kpi-money-key-opportunity" aria-hidden="true"></i>Missed opportunity</span></td>
+            <td><strong>${fmtMoney(opportunity.monthlyLost)}</strong><small>per month</small></td>
+            <td>Potential revenue not earned</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>`;
   }
 
   function kpiStatCardHtml(k) {
@@ -2554,7 +2573,9 @@
       goalMark: 1,
       goalLabel: "$960k expenses"
     });
-    return `<div class="kpi-cash-pace-tile" aria-label="Full-year collectible forecast coverage of the annual expense run-rate">
+    return `<article class="kpi-cash-pace-tile kpi-stat-card" aria-label="Full-year collectible forecast coverage of the annual expense run-rate">
+      ${statusCorner(true)}
+      ${kpiHelpBtn("financial")}
       <div class="kpi-cash-pace-copy">
         <span class="kpi-cash-pace-kicker">2026 forecast</span>
         <h3>Expense coverage dial</h3>
@@ -2568,7 +2589,8 @@
         <div><span>Annual expenses</span><strong>${fmtMoney(expenses)}</strong></div>
         <div><span>Coverage gap</span><strong>−${fmtMoney(shortfall)}</strong></div>
       </div>
-    </div>`;
+      ${kpiRefMark("#09")}
+    </article>`;
   }
 
   function renderKpis(el) {
@@ -2583,22 +2605,23 @@
       kpiTileWithProjects("#DUI", teamDuiGoalCardHtml())
     ].join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="Team goals">
-          ${kpiSectionStaticHead("Team goals", "Lost Revenue · Spend waste · DUI YTD")}
+          ${kpiSectionStaticHead("Team goals", "Missed opportunity · Spend waste · DUI YTD")}
           <div class="kpi-section-body">
+            <div class="kpi-money-key" aria-label="Money metric color key">
+              <span><i class="kpi-money-key-swatch kpi-money-key-spend" aria-hidden="true"></i><strong>Spend waste</strong> · cash already paid out</span>
+              <span><i class="kpi-money-key-swatch kpi-money-key-opportunity" aria-hidden="true"></i><strong>Missed opportunity</strong> · potential revenue not earned</span>
+            </div>
+            ${wasteTypeTableHtml()}
             <div class="kpi-goals-grid">${goalsCards}</div>
           </div>
         </section>`;
-    const forecastPaceBlock = `<section class="kpi-section kpi-section-static" data-feedback-id="section-forecast-pace" data-feedback-label="2026 forecast pace">
-          ${kpiSectionStaticHead("Forecast pace", "Collectible value vs $80k/mo expenses")}
-          <div class="kpi-section-body">
-            ${forecastExpenseCoverageDialHtml()}
-          </div>
-        </section>`;
-    const kpiCards = metrics.map(k => kpiTileWithProjects(k.id, kpiStatCardHtml(k))).join("");
+    const kpiCards = [
+      forecastExpenseCoverageDialHtml(),
+      ...metrics.map(k => kpiTileWithProjects(k.id, kpiStatCardHtml(k)))
+    ].join("");
 
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
-      ${forecastPaceBlock}
       <section class="kpi-section kpi-section-static" data-feedback-id="section-key-metrics" data-feedback-label="Key metrics">
         ${kpiSectionStaticHead("Key metrics", "")}
         <div class="kpi-section-body">
@@ -2668,7 +2691,6 @@
         </tr>`).join("")}</tbody>
       </table>
       <p class="kpi-table-note">Placeholder — counts fill when A4 Client Referral Program tracking is live.</p>
-      ${kpiRefMark("#17")}
     </div>`;
   }
 
@@ -2757,8 +2779,7 @@
           </div>
         </div>
       </div>
-      <p class="kpi-table-note"><a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B10">Open B10 Digital Profiles Refresh →</a></p>
-      ${kpiRefMark("#16")}
+      ${projectEggLink("B10", "Open B10 Digital Profiles Refresh")}
     </div>`;
   }
 
@@ -2838,31 +2859,35 @@
 
   function dataCardHtml(title, note, body, opts) {
     const full = opts && opts.full ? " data-grid-full" : "";
+    const extraClass = opts && opts.className ? ` ${escapeHtml(opts.className)}` : "";
     const id = opts && opts.id ? ` id="${escapeHtml(opts.id)}"` : "";
-    return `<section class="data-card${full}"${id}>
-      <h3>${escapeHtml(title)}</h3>
+    const inputNeeded = opts && opts.inputNeeded;
+    const inputClass = inputNeeded ? " data-card-input-needed" : "";
+    const disabled = inputNeeded ? ' aria-disabled="true"' : "";
+    const inputProjectEgg = opts && opts.inputProjectId
+      ? projectEggLink(opts.inputProjectId, opts.inputProjectLabel, opts.inputProjectEgg)
+      : "";
+    const head = title ? `<h3>${escapeHtml(title)}</h3>` : "";
+    return `<section class="data-card${full}${extraClass}${inputClass}"${id}${disabled}>
+      ${head}
       ${note ? `<p class="data-card-note">${escapeHtml(note)}</p>` : ""}
       <div class="data-card-body">${body || ""}</div>
+      ${inputNeeded ? '<div class="data-input-needed-overlay" role="status">Data Input Needed</div>' : ""}
+      ${inputProjectEgg}
     </section>`;
   }
 
   function renderData(el) {
     if (!el || el.dataset.rendered === RENDER_VER) return;
-    el.innerHTML = `<header class="data-page-head">
-      <div>
-        <h2 class="data-page-title">Pav Law Data Dashboard</h2>
-      </div>
-    </header>
-    <div class="data-grid">
-      ${dataCardHtml(
-        "Mean fee by practice",
-        "KPI #29 · Client + fee · n ≥ 5 · MyCase Jul 1 export.",
-        feeByPracticeSectionHtml(),
-        { full: true, id: "data-fee-by-practice" }
-      )}
+    el.innerHTML = `<div class="data-grid">
       ${dataCardHtml("Lead Channel Stack", "Lead source movement and MoM.", leadsByChannelPanelHtml())}
       ${dataCardHtml("Cases MoM", "Closed · New · Red accounts.", casesMomPanelHtml())}
-      ${dataCardHtml("Referral Network", "KPI #17 · placeholder until A4 tracking wires.", totalReferralNetworkPanelHtml())}
+      ${dataCardHtml("Referral Network", "KPI #17 · placeholder until A4 tracking wires.", totalReferralNetworkPanelHtml(), {
+        inputNeeded: true,
+        inputProjectId: "A4",
+        inputProjectLabel: "Open A4 Client Referral Program",
+        inputProjectEgg: "17"
+      })}
     </div>`;
     el.dataset.rendered = RENDER_VER;
     bindKpiInteractions(el);
@@ -3336,7 +3361,7 @@
         <p class="data-formula-line">Minimum shift = ${fmtMoney(r.mgmt)} consulting + ${fmtMoney(r.breakEvenMedia)} digital media = ${fmtMoney(r.minDivert)}/mo</p>
         <p class="data-formula-line">LSA cost = ${fmtMoney(r.jun.lsaSpend)} ÷ ${r.jun.leads} calls = ${fmtMoney(r.lsaCpl)}/call</p>
         <p class="data-formula-line">Digital all-in = (${fmtMoney(r.jun.adsSpend)} media + ${fmtMoney(r.mgmt)} consulting) ÷ ${r.jun.adsLeads} calls = ${fmtMoney(r.digAllIn)}/call</p>`,
-        { full: true, id: "recommendation-primary" }
+        { className: "recommendation-tile", id: "recommendation-primary" }
       )}
       ${dataCardHtml(
         "Priority growth recommendation · Sex Crimes Defense",
@@ -3352,7 +3377,7 @@
         <p class="data-formula-line">8 fewer YTD cases × $9,500 mean quoted fee = $76,000 directional signed-value gap</p>
         <p class="data-formula-line">$76,000 × 80% modeled collection = $60,800 directional collectible gap</p>
         <p class="data-inline-note"><strong>Data caution:</strong> $9,500 is a quoted-fee mean, not profit or cash collected, and the fee sample is only n=6. Validate against QuickBooks collections before scaling beyond the pilot.</p>`,
-        { full: true, id: "recommendation-sex-crimes" }
+        { className: "recommendation-tile", id: "recommendation-sex-crimes" }
       )}
       ${dataCardHtml(
         "Recommended cost-control project · Full Financial Audit",
@@ -3368,10 +3393,10 @@
         <p class="data-formula-line">H1 collectible $509,534 − $480,000 expenses = +$29,534* · *excludes unknown debt</p>
         <p class="data-inline-note"><strong>Payment:</strong> $1,800 fixed fee plus 20% of verified net savings or recovered cash. Measure subscription/service changes for 12 months, continuing vendor-rate revisions for 6 months, variable operating revisions for 3 months, and one-time recoveries when posted.</p>
         <p class="data-inline-note"><strong>No double-counting:</strong> The approximately $694 safe Military Display negative-keyword finding is a subset of the $1,063 Search-term waste. Subscription, phone, duplicate-tool, LSA-credit, debt-service, and vendor savings remain separate and unverified until statements are audited.</p>`,
-        { full: true, id: "recommendation-financial-audit" }
+        { className: "recommendation-tile", id: "recommendation-financial-audit" }
       )}
       ${dataCardHtml(
-        "Cost comparison · LSA vs digital vs digital + consulting",
+        "",
         "Media only for LSA · digital all-in includes Guide RETAINER.",
         compareTable,
         { full: true, id: "recommendation-costs" }
@@ -3384,7 +3409,7 @@
         { full: true, id: "recommendation-divert" }
       )}
       ${dataCardHtml(
-        "Project information",
+        "",
         "Guide projects required to repair intake, clean LSA operations, control financial waste, manage paid media, and test the Sex Crimes Defense opportunity.",
         `${kpiDetailTable(
           ["Project", "Priority / status", "Fee", "Role in recommendation", "Success gate"],
@@ -3430,7 +3455,7 @@
         { full: true, id: "recommendation-projects" }
       )}
       ${dataCardHtml(
-        "Next actions",
+        "",
         "Guide projects tied to this recommendation.",
         `<ol class="data-inline-note" style="margin:0;padding-left:1.2rem">
           <li>Hold additional LSA media while <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B2">B2</a> patches routing, backup coverage, and missed-call tasks.</li>
