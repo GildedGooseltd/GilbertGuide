@@ -1,0 +1,343 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="2425" viewBox="0 0 1200 2425" role="img" aria-labelledby="title desc">
+  <title id="title">Pav Law Reporting Color Palette</title>
+  <desc id="desc">Gilded Goose reporting colors displayed as labeled swatches with names and hexadecimal values.</desc>
+  <rect width="1200" height="2425" fill="#f8f5ef"/>
+  <style>
+    .title { font: 700 42px Georgia, serif; fill: #2d1454; }
+    .subtitle { font: 20px Arial, sans-serif; fill: #5c4f45; }
+    .section { font: 700 24px Georgia, serif; fill: #3d3028; }
+    .family { font: 700 17px Arial, sans-serif; fill: #5c4f45; letter-spacing: 1px; }
+    .name { font: 700 20px Arial, sans-serif; }
+    .hex { font: 600 17px "SFMono-Regular", Consolas, monospace; }
+    .use { font: 15px Arial, sans-serif; }
+    .light { fill: #fffcf7; }
+    .dark { fill: #3d3028; }
+    .muted-light { fill: #f3ede4; }
+    .muted-dark { fill: #5c4f45; }
+    .card { stroke: rgba(61,48,40,.18); stroke-width: 1; }
+    .rule { stroke: #c9a86c; stroke-width: 3; }
+  </style>
+  <defs>
+    <linearGradient id="metal-antique-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6f4f00"/>
+      <stop offset="28%" stop-color="#e3c58d"/>
+      <stop offset="52%" stop-color="#b8860b"/>
+      <stop offset="76%" stop-color="#fff1b5"/>
+      <stop offset="100%" stop-color="#8a6507"/>
+    </linearGradient>
+    <linearGradient id="metal-brass" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6b4a14"/>
+      <stop offset="30%" stop-color="#d2a84a"/>
+      <stop offset="54%" stop-color="#a67c2e"/>
+      <stop offset="78%" stop-color="#f0cf7a"/>
+      <stop offset="100%" stop-color="#79541b"/>
+    </linearGradient>
+    <linearGradient id="metal-copper" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6f351d"/>
+      <stop offset="30%" stop-color="#d8956e"/>
+      <stop offset="54%" stop-color="#b66a3c"/>
+      <stop offset="78%" stop-color="#f0b08d"/>
+      <stop offset="100%" stop-color="#7d4024"/>
+    </linearGradient>
+    <linearGradient id="metal-bronze" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3f2a18"/>
+      <stop offset="30%" stop-color="#b17a45"/>
+      <stop offset="54%" stop-color="#7a512b"/>
+      <stop offset="78%" stop-color="#d19b64"/>
+      <stop offset="100%" stop-color="#4b311c"/>
+    </linearGradient>
+    <linearGradient id="metal-silver" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5e6267"/>
+      <stop offset="28%" stop-color="#e3e5e7"/>
+      <stop offset="52%" stop-color="#a7a9ac"/>
+      <stop offset="76%" stop-color="#f9f9f9"/>
+      <stop offset="100%" stop-color="#6c7075"/>
+    </linearGradient>
+    <linearGradient id="metal-gunmetal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#242b30"/>
+      <stop offset="30%" stop-color="#78828a"/>
+      <stop offset="54%" stop-color="#3f474d"/>
+      <stop offset="78%" stop-color="#9aa3aa"/>
+      <stop offset="100%" stop-color="#283036"/>
+    </linearGradient>
+  </defs>
+
+  <text x="60" y="68" class="title">Pav Law Reporting Palette</text>
+  <text x="60" y="101" class="subtitle">Gilded Goose brand | name + exact hex | no teal/cyan</text>
+  <line x1="60" y1="122" x2="1140" y2="122" class="rule"/>
+
+  <text x="60" y="166" class="section">Core surfaces &amp; text</text>
+
+  <g transform="translate(60 190)">
+    <rect width="340" height="104" rx="10" fill="#f8f5ef" class="card"/>
+    <text x="20" y="39" class="name dark">Cream</text>
+    <text x="20" y="66" class="hex muted-dark">#F8F5EF</text>
+    <text x="20" y="88" class="use muted-dark">Page background</text>
+  </g>
+  <g transform="translate(430 190)">
+    <rect width="340" height="104" rx="10" fill="#ece6dc" class="card"/>
+    <text x="20" y="39" class="name dark">Cream Panel</text>
+    <text x="20" y="66" class="hex muted-dark">#ECE6DC</text>
+    <text x="20" y="88" class="use muted-dark">Nested panels</text>
+  </g>
+  <g transform="translate(800 190)">
+    <rect width="340" height="104" rx="10" fill="#fffcf7" class="card"/>
+    <text x="20" y="39" class="name dark">Paper</text>
+    <text x="20" y="66" class="hex muted-dark">#FFFCF7</text>
+    <text x="20" y="88" class="use muted-dark">Cards and inputs</text>
+  </g>
+  <g transform="translate(60 314)">
+    <rect width="340" height="104" rx="10" fill="#3d3028" class="card"/>
+    <text x="20" y="39" class="name light">Brown</text>
+    <text x="20" y="66" class="hex muted-light">#3D3028</text>
+    <text x="20" y="88" class="use muted-light">Primary body text</text>
+  </g>
+  <g transform="translate(430 314)">
+    <rect width="340" height="104" rx="10" fill="#5c4f45" class="card"/>
+    <text x="20" y="39" class="name light">Brown Muted</text>
+    <text x="20" y="66" class="hex muted-light">#5C4F45</text>
+    <text x="20" y="88" class="use muted-light">Secondary and unavailable</text>
+  </g>
+
+  <text x="60" y="473" class="section">Chart families</text>
+
+  <text x="60" y="509" class="family">ROYAL | CASES / PRIMARY</text>
+  <g transform="translate(60 527)">
+    <rect width="340" height="104" rx="10" fill="#2d1454" class="card"/>
+    <text x="20" y="39" class="name light">Royal Deep</text>
+    <text x="20" y="66" class="hex muted-light">#2D1454</text>
+    <text x="20" y="88" class="use muted-light">Dark shade / section heads</text>
+  </g>
+  <g transform="translate(430 527)">
+    <rect width="340" height="104" rx="10" fill="#3a1a6e" class="card"/>
+    <text x="20" y="39" class="name light">Royal</text>
+    <text x="20" y="66" class="hex muted-light">#3A1A6E</text>
+    <text x="20" y="88" class="use muted-light">Base cases / primary series</text>
+  </g>
+  <g transform="translate(800 527)">
+    <rect width="340" height="104" rx="10" fill="#4c1d95" class="card"/>
+    <text x="20" y="39" class="name light">Royal Mid</text>
+    <text x="20" y="66" class="hex muted-light">#4C1D95</text>
+    <text x="20" y="88" class="use muted-light">Tint / focus accent</text>
+  </g>
+
+  <text x="60" y="671" class="family">BLUE | INTAKE / PACE</text>
+  <g transform="translate(60 689)">
+    <rect width="340" height="104" rx="10" fill="#152a63" class="card"/>
+    <text x="20" y="39" class="name light">Blue Dark</text>
+    <text x="20" y="66" class="hex muted-light">#152A63</text>
+    <text x="20" y="88" class="use muted-light">Dark intake shade</text>
+  </g>
+  <g transform="translate(430 689)">
+    <rect width="340" height="104" rx="10" fill="#1e3a8a" class="card"/>
+    <text x="20" y="39" class="name light">Royal Blue</text>
+    <text x="20" y="66" class="hex muted-light">#1E3A8A</text>
+    <text x="20" y="88" class="use muted-light">Base intake / pace lines</text>
+  </g>
+  <g transform="translate(800 689)">
+    <rect width="340" height="104" rx="10" fill="#3b82c4" class="card"/>
+    <text x="20" y="39" class="name light">Blue Tint</text>
+    <text x="20" y="66" class="hex muted-light">#3B82C4</text>
+    <text x="20" y="88" class="use muted-light">Light intake shade</text>
+  </g>
+
+  <text x="60" y="833" class="family">BURNT | DIGITAL / SEARCH ADS</text>
+  <g transform="translate(60 851)">
+    <rect width="340" height="104" rx="10" fill="#8f3f18" class="card"/>
+    <text x="20" y="39" class="name light">Burnt Dark</text>
+    <text x="20" y="66" class="hex muted-light">#8F3F18</text>
+    <text x="20" y="88" class="use muted-light">Dark Digital / Search shade</text>
+  </g>
+  <g transform="translate(430 851)">
+    <rect width="340" height="104" rx="10" fill="#c45c26" class="card"/>
+    <text x="20" y="39" class="name light">Burnt Orange</text>
+    <text x="20" y="66" class="hex muted-light">#C45C26</text>
+    <text x="20" y="88" class="use muted-light">Base Digital / Search cost line</text>
+  </g>
+  <g transform="translate(800 851)">
+    <rect width="340" height="104" rx="10" fill="#e0844f" class="card"/>
+    <text x="20" y="39" class="name dark">Burnt Tint</text>
+    <text x="20" y="66" class="hex muted-dark">#E0844F</text>
+    <text x="20" y="88" class="use muted-dark">Light Digital / Search shade</text>
+  </g>
+
+  <text x="60" y="995" class="family">FOREST | LEGACY BRAND FAMILY (NOT STATUS)</text>
+  <g transform="translate(60 1013)">
+    <rect width="340" height="104" rx="10" fill="#1e3f2a" class="card"/>
+    <text x="20" y="39" class="name light">Forest Dark</text>
+    <text x="20" y="66" class="hex muted-light">#1E3F2A</text>
+    <text x="20" y="88" class="use muted-light">Legacy decorative shade</text>
+  </g>
+  <g transform="translate(430 1013)">
+    <rect width="340" height="104" rx="10" fill="#2d5a3d" class="card"/>
+    <text x="20" y="39" class="name light">Forest</text>
+    <text x="20" y="66" class="hex muted-light">#2D5A3D</text>
+    <text x="20" y="88" class="use muted-light">Legacy decorative family</text>
+  </g>
+  <g transform="translate(800 1013)">
+    <rect width="340" height="104" rx="10" fill="#4f8a63" class="card"/>
+    <text x="20" y="39" class="name light">Forest Tint</text>
+    <text x="20" y="66" class="hex muted-light">#4F8A63</text>
+    <text x="20" y="88" class="use muted-light">Legacy decorative tint</text>
+  </g>
+
+  <text x="60" y="1157" class="family">GOLD | CRITICAL HIGHLIGHTS ONLY</text>
+  <g transform="translate(60 1175)">
+    <rect width="340" height="104" rx="10" fill="#b8860b" class="card"/>
+    <text x="20" y="39" class="name dark">Gold Dark</text>
+    <text x="20" y="66" class="hex dark">#B8860B</text>
+    <text x="20" y="88" class="use dark">Critical milestone / premium CTA</text>
+  </g>
+  <g transform="translate(430 1175)">
+    <rect width="340" height="104" rx="10" fill="#c9a86c" class="card"/>
+    <text x="20" y="39" class="name dark">Gold</text>
+    <text x="20" y="66" class="hex dark">#C9A86C</text>
+    <text x="20" y="88" class="use dark">Rare critical highlight only</text>
+  </g>
+  <g transform="translate(800 1175)">
+    <rect width="340" height="104" rx="10" fill="#e3c58d" class="card"/>
+    <text x="20" y="39" class="name dark">Gold Bright</text>
+    <text x="20" y="66" class="hex dark">#E3C58D</text>
+    <text x="20" y="88" class="use dark">Critical wash / milestone only</text>
+  </g>
+
+  <text x="60" y="1319" class="family">PLUM | SPEND / COST</text>
+  <g transform="translate(60 1337)">
+    <rect width="340" height="104" rx="10" fill="#4b3ca8" class="card"/>
+    <text x="20" y="39" class="name light">Plum Dark</text>
+    <text x="20" y="66" class="hex muted-light">#4B3CA8</text>
+    <text x="20" y="88" class="use muted-light">Dark spend shade</text>
+  </g>
+  <g transform="translate(430 1337)">
+    <rect width="340" height="104" rx="10" fill="#6a5acd" class="card"/>
+    <text x="20" y="39" class="name light">Plum</text>
+    <text x="20" y="66" class="hex muted-light">#6A5ACD</text>
+    <text x="20" y="88" class="use muted-light">Base spend / cost</text>
+  </g>
+  <g transform="translate(800 1337)">
+    <rect width="340" height="104" rx="10" fill="#9b8fe0" class="card"/>
+    <text x="20" y="39" class="name dark">Plum Tint</text>
+    <text x="20" y="66" class="hex dark">#9B8FE0</text>
+    <text x="20" y="88" class="use dark">Light spend shade</text>
+  </g>
+
+  <text x="60" y="1481" class="family">ROSE | WEBSITE / HUBSPOT / REFERRAL</text>
+  <g transform="translate(60 1499)">
+    <rect width="340" height="104" rx="10" fill="#7f234f" class="card"/>
+    <text x="20" y="39" class="name light">Rose Dark</text>
+    <text x="20" y="66" class="hex muted-light">#7F234F</text>
+    <text x="20" y="88" class="use muted-light">Dark practice-area shade</text>
+  </g>
+  <g transform="translate(430 1499)">
+    <rect width="340" height="104" rx="10" fill="#b23a78" class="card"/>
+    <text x="20" y="39" class="name light">Rose</text>
+    <text x="20" y="66" class="hex muted-light">#B23A78</text>
+    <text x="20" y="88" class="use muted-light">Website / HubSpot / referral</text>
+  </g>
+  <g transform="translate(800 1499)">
+    <rect width="340" height="104" rx="10" fill="#d86aa3" class="card"/>
+    <text x="20" y="39" class="name dark">Rose Tint</text>
+    <text x="20" y="66" class="hex dark">#D86AA3</text>
+    <text x="20" y="88" class="use dark">Light practice-area shade</text>
+  </g>
+
+  <text x="60" y="1643" class="family">SLATE | NEUTRAL CATEGORY / COMPARISON</text>
+  <g transform="translate(60 1661)">
+    <rect width="340" height="104" rx="10" fill="#334155" class="card"/>
+    <text x="20" y="39" class="name light">Slate Dark</text>
+    <text x="20" y="66" class="hex muted-light">#334155</text>
+    <text x="20" y="88" class="use muted-light">Dark neutral category</text>
+  </g>
+  <g transform="translate(430 1661)">
+    <rect width="340" height="104" rx="10" fill="#64748b" class="card"/>
+    <text x="20" y="39" class="name light">Slate</text>
+    <text x="20" y="66" class="hex muted-light">#64748B</text>
+    <text x="20" y="88" class="use muted-light">Neutral comparison series</text>
+  </g>
+  <g transform="translate(800 1661)">
+    <rect width="340" height="104" rx="10" fill="#94a3b8" class="card"/>
+    <text x="20" y="39" class="name dark">Slate Tint</text>
+    <text x="20" y="66" class="hex dark">#94A3B8</text>
+    <text x="20" y="88" class="use dark">Unavailable / soft comparison</text>
+  </g>
+
+  <text x="60" y="1825" class="section">Semantic states</text>
+  <g transform="translate(60 1849)">
+    <rect width="340" height="104" rx="10" fill="#cf2d56" class="card"/>
+    <text x="20" y="39" class="name light">Red | Negative</text>
+    <text x="20" y="66" class="hex muted-light">#CF2D56</text>
+    <text x="20" y="88" class="use muted-light">Gap / error / below target</text>
+  </g>
+  <g transform="translate(430 1849)">
+    <rect width="340" height="104" rx="10" fill="#eab308" class="card"/>
+    <text x="20" y="39" class="name dark">Yellow | Caution</text>
+    <text x="20" y="66" class="hex dark">#EAB308</text>
+    <text x="20" y="88" class="use dark">Watch / pending / needs review</text>
+  </g>
+  <g transform="translate(800 1849)">
+    <rect width="340" height="104" rx="10" fill="#1f8a65" class="card"/>
+    <text x="20" y="39" class="name light">Green | Positive</text>
+    <text x="20" y="66" class="hex muted-light">#1F8A65</text>
+    <text x="20" y="88" class="use muted-light">On track / verified / target hit</text>
+  </g>
+
+  <text x="60" y="2007" class="section">Metallic accents</text>
+  <text x="60" y="2035" class="small">Decorative borders, badges, dividers, and milestone highlights only — not semantic data series.</text>
+
+  <g transform="translate(60 2055)">
+    <rect width="340" height="104" rx="10" fill="url(#metal-antique-gold)" class="card"/>
+    <text x="20" y="39" class="name dark">Antique Gold</text>
+    <text x="20" y="66" class="hex dark">#B8860B</text>
+    <text x="20" y="88" class="use dark">Milestones / premium accent</text>
+  </g>
+  <g transform="translate(430 2055)">
+    <rect width="340" height="104" rx="10" fill="url(#metal-brass)" class="card"/>
+    <text x="20" y="39" class="name dark">Aged Brass</text>
+    <text x="20" y="66" class="hex dark">#A67C2E</text>
+    <text x="20" y="88" class="use dark">Borders / hardware detail</text>
+  </g>
+  <g transform="translate(800 2055)">
+    <rect width="340" height="104" rx="10" fill="#e8d9b5" class="card"/>
+    <text x="20" y="39" class="name dark">Champagne</text>
+    <text x="20" y="66" class="hex dark">#E8D9B5</text>
+    <text x="20" y="88" class="use dark">Soft metallic wash</text>
+  </g>
+
+  <g transform="translate(60 2179)">
+    <rect width="340" height="104" rx="10" fill="url(#metal-copper)" class="card"/>
+    <text x="20" y="39" class="name light">Copper</text>
+    <text x="20" y="66" class="hex muted-light">#B66A3C</text>
+    <text x="20" y="88" class="use muted-light">Warm callout detail</text>
+  </g>
+  <g transform="translate(430 2179)">
+    <rect width="340" height="104" rx="10" fill="url(#metal-bronze)" class="card"/>
+    <text x="20" y="39" class="name light">Bronze</text>
+    <text x="20" y="66" class="hex muted-light">#7A512B</text>
+    <text x="20" y="88" class="use muted-light">Dark warm divider</text>
+  </g>
+  <g transform="translate(800 2179)">
+    <rect width="340" height="104" rx="10" fill="#8b6f47" class="card"/>
+    <text x="20" y="39" class="name light">Antique Brass Dark</text>
+    <text x="20" y="66" class="hex muted-light">#8B6F47</text>
+    <text x="20" y="88" class="use muted-light">Muted metallic text/icon</text>
+  </g>
+
+  <g transform="translate(60 2303)">
+    <rect width="340" height="104" rx="10" fill="url(#metal-silver)" class="card"/>
+    <text x="20" y="39" class="name dark">Silver</text>
+    <text x="20" y="66" class="hex dark">#A7A9AC</text>
+    <text x="20" y="88" class="use dark">Neutral metallic accent</text>
+  </g>
+  <g transform="translate(430 2303)">
+    <rect width="340" height="104" rx="10" fill="#73777b" class="card"/>
+    <text x="20" y="39" class="name light">Pewter</text>
+    <text x="20" y="66" class="hex muted-light">#73777B</text>
+    <text x="20" y="88" class="use muted-light">Muted neutral hardware</text>
+  </g>
+  <g transform="translate(800 2303)">
+    <rect width="340" height="104" rx="10" fill="url(#metal-gunmetal)" class="card"/>
+    <text x="20" y="39" class="name light">Gunmetal</text>
+    <text x="20" y="66" class="hex muted-light">#3F474D</text>
+    <text x="20" y="88" class="use muted-light">Dark icon / premium border</text>
+  </g>
+</svg>

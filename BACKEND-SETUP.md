@@ -276,7 +276,9 @@ Tab **SowSigning** stores status, expiry, document hashes, server/client timesta
 
 **IP limitation:** Google Apps Script does not expose the request’s network IP. The page asks `api64.ipify.org` for the browser’s public IP and records it as browser-reported evidence. A server-observed IP requires moving the signing POST behind an edge/server endpoint such as Cloudflare Workers.
 
-**Required after pulling Mac updates:** copy the full [`apps-script-webhook.gs`](apps-script-webhook.gs) → paste into Apps Script **Code.gs** → Save → **Deploy → Manage deployments → pencil → Version: New version → Deploy**. The first run requests Drive/Docs authorization. Ping should include `"sowEsign":"private-staged-v2"`.
+**Required after pulling Mac updates:** copy the full [`apps-script-webhook.gs`](apps-script-webhook.gs) → paste into Apps Script **Code.gs** → Save → **Deploy → Manage deployments → pencil → Version: New version → Deploy**. The first run requests Drive/Docs authorization. Ping should include `"sowEsign":"private-staged-v3"`.
+
+**Email format:** signature / private link first — see [`SOW-EMAIL-FORMAT.md`](SOW-EMAIL-FORMAT.md).
 
 **Verify:** submit a test using an email you control → open Andrew link → confirm the agreement is not editable → check all fields → sign → confirm PDF download + email → open Kate link from `support@` → countersign → confirm final PDF email and private Drive Doc/PDF.
 

@@ -51,7 +51,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | What users see                                     | File                                              | Field / location                                                            |
 | -------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------- |
 | Ask Gilbert + Pav Priorities (merged)              | `index.html` + `app.js`                           | `#do-next-panel.pav-priorities-merged` — survey left, priorities right      |
-| Ask Gilbert quick survey                           | `app.js`                                          | `GILBERT_SURVEY` / `renderGilbertSurvey()` — not free chat                  |
+| Ask Gilbert word cloud (drill-down)                | `app.js`                                          | `GILBERT_CLOUD` / `renderGilbertSurvey()` — tap topics → keyword branches, multi-select, clears on refresh |
 | “Best to do next” (scored shortlist)               | `app.js`                                          | `renderDoNextPanel()` — ranked from survey `goalText`                       |
 | “Pav's Priority Project Picklist” panel title    | `app.js`                                          | `renderDoNextPanel()` → `h3` inside `#do-next-panel`                        |
 | Pav Priorities cart (project names only)           | `app.js`                                          | `buildPrioritiesCartHtml()` — **no fees** in top panel                      |
@@ -150,6 +150,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Drive archive | private Google Doc + PDF | created only after Kate countersigns |
 | Sheet tab | `SowSigning` | staged state, hashes, signature audit, Drive file IDs |
 | Continue to deposit | Andrew only, gated until his signature succeeds | `#sow-continue-thankyou` |
+| Email format (signature / link first) | [SOW-EMAIL-FORMAT.md](SOW-EMAIL-FORMAT.md) | invite · recorded · countersign · fully executed |
 
 
 

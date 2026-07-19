@@ -29,14 +29,14 @@
 
 Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for the metrics page.
 
-### Gilded Goose (cream / gold / brown · royal · burnt orange · forest)
+### Gilded Goose (royal-led UI · gold reserved for critical highlights)
 
 
 | Token               | Default               | Use                                           |
 | ------------------- | --------------------- | --------------------------------------------- |
-| `--gg-gold`         | `#c9a86c`             | Accents, borders                              |
-| `--gg-gold-bright`  | `#e3c58d`             | Soft chart highlight (`--gg-series-4`)        |
-| `--gg-gold-dark`    | `#b8860b`             | Metal accents                                 |
+| `--gg-gold`         | `#c9a86c`             | Rare critical CTA / milestone only            |
+| `--gg-gold-bright`  | `#e3c58d`             | Rare critical highlight only                  |
+| `--gg-gold-dark`    | `#b8860b`             | Critical metallic accent only                 |
 | `--gg-cream`        | `#f8f5ef`             | Page background (`--bg`)                      |
 | `--gg-cream-panel`  | `#f3ede4`             | Nested panels                                 |
 | `--gg-paper`        | `#fffcf7`             | Cards, inputs (`--surface`)                   |
@@ -47,11 +47,15 @@ Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for t
 | `--gg-royal-blue`   | `#1e3a8a`             | Intake / blue accents                         |
 | `--gg-royal-mid`    | `#4c1d95`             | Focus rings                                   |
 | `--gg-burnt`        | `#c45c26`             | Secondary chart / head accent                 |
-| `--gg-forest`       | `#2d5a3d`             | Secondary chart / positive MoM                |
+| `--gg-forest`       | `#2d5a3d`             | Legacy forest family; not a positive alias    |
+| `--gg-rose`         | `#b23a78`             | Website / HubSpot / referral series           |
+| `--gg-plum`         | `#6a5acd`             | Spend / cost series                           |
+| `--gg-slate`        | `#64748b`             | Neutral / unavailable category                |
+| `--gg-caution`      | `#eab308`             | Watch / pending semantic state                |
 | `--gg-royal-dim`    | `rgba(45,20,84,0.12)` | Selected wash                                 |
 | `--gg-royal-border` | `rgba(45,20,84,0.38)` | Borders                                       |
 | `--gg-negative`     | `#cf2d56`             | **Negative numbers only** (↓ MoM, − deltas)   |
-| `--gg-positive`     | `#2d5a3d`             | Positive MoM / target hit (= forest)          |
+| `--gg-positive`     | `#1f8a65`             | Positive MoM / target hit only                |
 
 
 
@@ -60,17 +64,19 @@ Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for t
 
 | Token                              | Default                                      | Use                                      |
 | ---------------------------------- | -------------------------------------------- | ---------------------------------------- |
-| `--gg-series-1` … `4`              | royal · burnt · forest · gold-bright         | KPI chart series                         |
+| `--gg-series-1` … `4`              | royal · burnt · rose · slate                  | KPI chart series                         |
 | `--gg-head-accent`                 | burnt orange                                 | Title underline, zone bars               |
 | `--pav-ink` / `--pav-ink-panel`    | near-black                                   | Gilbert chat / thank-you dark shells     |
 | `--pav-text`                       | `#e8e8ec`                                    | Text on **dark** panels only             |
-| `--pav-border`                     | gold rgba                                    | Dark panel borders                       |
+| `--pav-border`                     | royal rgba                                   | Dark panel borders                       |
 | `--pav-gradient-panel` / `-accent` | royal / burnt → ink                          | Dark shells only                         |
 | `--pav-teal`                       | → `--gg-series-2` (burnt)                    | **Deprecated** — do not introduce teal   |
 | Cockpit title                      | `--gg-royal-deep` + burnt rule               | `.cockpit-title`                         |
 
 
 Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` sources.
+
+**Gold lock:** live gold is limited to the primary Review Plan/continue CTA, completion/thank-you milestones, the premium Why Gilded Goose frame, and the critical Solutions callout. Use royal purple or semantic red/yellow/green everywhere else.
 
 ### Layout scale
 
@@ -103,15 +109,15 @@ Links on light: `--gg-royal` + underline. Focus: `outline: 2px solid var(--gg-ro
 | --------------------- | ---------------------- | --------------------------------------------------------------------------- |
 | Body (cockpit)        | `body` in `index.html` | Georgia / Times, serif · `1.14rem` · line-height `1.65` — “legal memo” feel |
 | Body (metrics page)   | `metrics.css` `body`   | system-ui sans — metrics-only exception                                     |
-| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, `--gg-royal-deep` + gold underline |
-| Section / zone labels | `.picker-zone-label`   | Uppercase chip + gold left bar; zone head = gold accent + gradient wash     |
-| KPI section titles    | `.kpi-section-title`   | Bold royal deep; summary = gold left bar + cream→gold gradient               |
+| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, `--gg-royal-deep` + burnt underline |
+| Section / zone labels | `.picker-zone-label`   | Uppercase royal label + royal/burnt rule                                      |
+| KPI section titles    | `.kpi-section-title`   | Bold royal deep; summary = burnt left bar + royal/cream wash                  |
 | Card titles           | `.card-title`          | ~`1.28rem`, weight 800, royal                                               |
 | KPI report title      | `.kpi-report-title`    | `1.35rem`, weight 800, royal                                                |
 | Table headers         | `.toc-table thead`     | Uppercase, muted brown                                                      |
 
 
-**Section title pattern:** short label → uppercase or weight-800 royal → optional gold/chevron accent (KPI) or hairline divider (picker zones). One purpose per section.
+**Section title pattern:** short label → uppercase or weight-800 royal → optional royal/burnt chevron accent or hairline divider. Gold appears only when the section itself is a critical milestone.
 
 To switch cockpit body to sans: change only `body { font-family }` in `index.html`; re-check card density.
 
@@ -142,11 +148,11 @@ Overlays: Gilbert chat · confirm · thank-you
 | Pattern           | Classes                                | Behavior                                        |
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
-| KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; gold accent bar + distinctive head |
-| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | `--gg-box-border` / paper; gold when attention  |
+| KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
+| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | `--gg-box-border` / paper; yellow only for written caution |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
 | Project cards     | `.card`, `.card.selected`              | Box border/shadow; selected = royal wash        |
-| Zone labels       | `.picker-zone` + `.picker-zone-label`  | Gold accent heads; scan breaks between areas    |
+| Zone labels       | `.picker-zone` + `.picker-zone-label`  | Royal/burnt accent heads; scan breaks between areas |
 | Charts            | `chartBlock()` in JS                   | Plot + legend + **always-visible** detail table |
 
 
@@ -165,15 +171,19 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 | Role                                           | Hex       | Token / note     |
 | ---------------------------------------------- | --------- | ---------------- |
-| Primary / Search / Military / Closed           | `#3a1a6e` | `--gg-series-1` / `--gg-royal` |
-| Secondary / LSA / Core DV / New                | `#c45c26` | `--gg-series-2` / `--gg-burnt` |
-| Tertiary / HubSpot / NTGUILT / Red accounts    | `#2d5a3d` | `--gg-series-3` / `--gg-forest` |
-| Soft highlight / building                      | `#e3c58d` | `--gg-series-4` / `--gg-gold-bright` |
+| Primary / cases / Military                     | `#3a1a6e` | `--gg-series-1` / `--gg-royal` |
+| Digital / Search / Core DV                     | `#c45c26` | `--gg-series-2` / `--gg-burnt` |
+| Website / HubSpot / NTGUILT                    | `#b23a78` | `--gg-series-3` / `--gg-rose` |
+| Neutral / unavailable                          | `#64748b` | `--gg-series-4` / `--gg-slate` |
+| LSA / intake                                   | `#1e3a8a` | `--gg-royal-blue` |
+| Spend / cost                                   | `#6a5acd` | `--gg-plum` |
 
 
-**Cases MoM stack:** Closed `#3a1a6e` · New `#c45c26` · Red accounts `#2d5a3d` (never alert-red fill for counts).
+**Cases MoM stack:** Closed `#64748b` · New `#1e3a8a` · Red accounts `#b23a78` (red accounts are rose as a named category, not alert red).
 
-**Forbidden:** teal/cyan (`#00d4c4`, `#2dd4bf`, etc.) anywhere in the cockpit. `--gg-negative` only for negative deltas. Half-moon gauges: progress toward `--gg-positive` (forest); gold fill at 100%+.
+**Forbidden:** teal/cyan (`#00d4c4`, `#2dd4bf`, etc.) anywhere in the cockpit. `--gg-negative` only for negative deltas. Half-moon gauges finish in `--gg-positive`; target achievement is green, not gold.
+
+**Half-moon gauge format:** numeric value only at the inside base of the arc; no descriptive or target text inside/beneath the gauge. Keep both endpoint scale labels black (`#111`) in every state. Goal ticks are unlabeled; nearby title/stat copy carries the context.
 
 Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pav-law-kpi-charts.mdc)`
 
@@ -188,13 +198,13 @@ Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pa
 
 | Icon id        | Label        | Badge bg / fg / border            |
 | -------------- | ------------ | --------------------------------- |
-| `foundation`   | Foundation   | `#f87171` / `#7f1d1d` / `#dc2626` |
+| `foundation`   | Foundation   | `#d4ddd0` / `#3d3028` / `#5c4f45` (sage/brown) |
 | `retainer`     | Retainer     | `#818cf8` / `#312e81` / `#4f46e5` |
 | `leads`        | Leads        | `#fb923c` / `#7c2d12` / `#ea580c` |
 | `crm`          | CRM          | `#a78bfa` / `#4c1d95` / `#7c3aed` |
-| `seo`          | SEO          | `#16a34a` / `#14532d` / `#15803d` (green) |
+| `seo`          | SEO          | `#60a5fa` / `#1e3a8a` / `#2563eb` (blue) |
 | `referrals`    | Referrals    | `#f472b6` / `#831843` / `#db2777` |
-| `efficiency`   | Analytics    | `#e3c58d` / `#5c4010` / `#b8860b` (gold) |
+| `efficiency`   | Analytics    | `#94a3b8` / `#1e293b` / `#64748b` (slate) |
 | `intake`       | Intake       | `#c4b5fd` / `#2d1454` / `#4c1d95` (royal) |
 | `creative`     | Creative     | `#e879f9` / `#701a75` / `#c026d3` |
 | `general`      | Growth       | `#94a3b8` / `#0f172a` / `#64748b` |
@@ -219,9 +229,9 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 ### Do
 
 - Edit `:root` tokens first; let components inherit.
-- Keep cream + gold + brown + **deep royal** as the light-UI voice (Gilded Goose × Pav).
+- Keep cream + brown + **deep royal** as the light-UI voice; reserve gold for rare critical highlights.
 - Keep Georgia body on the cockpit for memo/brief tone.
-- Keep chart series distinguishable (royal / gold / mid-royal).
+- Keep chart series distinguishable (royal / blue / burnt / rose / plum / slate).
 - Shared box chrome: `--gg-box-border`, `--gg-box-shadow`, `--gg-head-accent` on section heads.
 - Use red only for negatives and unverified **✕** badges. Verified tiles use a **green outline** (no star).
 - One job per section; collapsible KPI topics stay focused.
@@ -231,7 +241,8 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 ### Don’t
 
 - Generic AI look: purple-on-white marketing gradients, Inter/Roboto stacks as “brand,” glow blobs, pill spam, card walls with heavy shadows.
-- Gradient text on `.cockpit-title` — solid `--gg-royal-deep` + gold underline only.
+- Gradient text on `.cockpit-title`; use solid `--gg-royal-deep` with the standard burnt rule.
+- Gold on ranks, scores, table chrome, ordinary badges, category series, target-hit gauges, or selected rows.
 - Teal/cyan chart or UI accents (`#00d4c4`, `#2dd4bf`, peacock teal).
 - Light-on-light or `--pav-text` on cream panels.
 - Swap chart series to two near-identical purples.
@@ -266,7 +277,7 @@ Replace files or update paths in `content/settings.md`, then `npm run build` if 
 
 - [ ] Picker zones have `.picker-zone` + visible `.picker-zone-label`
 - [ ] Sticky continue/submit bar readable on long lists
-- [ ] Table zebra; selected row gold wash
+- [ ] Table zebra; selected row royal wash
 - [ ] Cards spaced with `var(--space-lg)`
 - [ ] Summary / value bullets: left royal border (`.card-tldr`)
 - [ ] KPI sections collapsible — one topic per `<details>`
@@ -305,6 +316,7 @@ No `npm run build` for pure CSS/HTML/JS layout. Run build only if `content/**/*.
 | Doc / rule                                | Role                                   |
 | ----------------------------------------- | -------------------------------------- |
 | **This file**                             | Branding + formatting (single hub)     |
+| [REPORTING-BRAND-GUIDE.md](REPORTING-BRAND-GUIDE.md) | Reporting color coding + shade ramp + table catalog |
 | [CONTENT-INDEX.md](CONTENT-INDEX.md)      | Every string by page                   |
 | [CONTENT-EDIT.md](CONTENT-EDIT.md)        | Project markdown workflow              |
 | [content/INDEX.md](content/INDEX.md)      | Project list (Kate-owned)              |
