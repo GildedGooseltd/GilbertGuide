@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-standard-goal-tiles-r1";
+  const RENDER_VER = "20260719-equal-goal-rows-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -2260,9 +2260,6 @@
     const lsaCalls = Number(lsaJun.leads) || 0;
     const lsaCharged = Number(lsaJun.charged) || 0;
     const lsaMonth = lsaJun.month || "Jun";
-    const lsaSeries = newestFirst(lsaRows)
-      .map(r => `${r.month} ${Number(r.leads) || 0}`)
-      .join(" · ");
     const delta = model.priorMonthlyLost != null ? model.monthlyLost - model.priorMonthlyLost : null;
     let trendDelta = "";
     if (delta != null) {
@@ -2286,7 +2283,6 @@
       ${goalTrackRows([
         ["Missed Search", `${model.missedSearchCalls} · ${p.missedPct}% of ${p.monthlyCalls}`],
         ["LSA calls", `${lsaCalls} · ${lsaCharged} charged · ${lsaMonth}`],
-        ["LSA trend", escapeHtml(lsaSeries)],
         ["YTD lost", `${fmtMoney(model.cumulativeYtd)} · 64 missed May–Jul 10`]
       ])}
       <p class="kpi-table-note" style="margin:0.2rem 0 0;text-align:left">Estimated potential revenue not earned from unanswered Search calls.</p>
@@ -2325,6 +2321,7 @@
   function lsaMismanagementTrackerHtml() {
     const model = lsaReallocationWasteModel(DATA.casesLeadsSpend);
     const periodLabel = model.periods.map(r => r.month).join(" · ");
+    const benchmark = model.periods[0] || {};
     return `<button type="button" class="kpi-goal-card" data-kpi-focus="#07">
       ${statusCorner(true)}
       ${kpiHelpBtn("#07")}
@@ -2334,7 +2331,8 @@
       </div>
       ${goalTrackRows([
         ["Period", escapeHtml(periodLabel)],
-        ["Potential responses", String(model.extraResponses)]
+        ["Potential responses", String(model.extraResponses)],
+        ["Digital benchmark", `${fmtMoney(benchmark.digitalCostPerResponse || 0)}/response`]
       ])}
       <p class="kpi-table-note" style="margin:0.2rem 0 0;text-align:left">Modeled LSA cash spent above the observed digital Search cost per response.</p>
       ${kpiRefMark("#07")}
