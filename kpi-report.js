@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-goal-callouts-off-r1";
+  const RENDER_VER = "20260719-standard-goal-tiles-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -2272,42 +2272,24 @@
       const sign = delta <= 0 ? "−" : "+";
       trendDelta = `<span class="kpi-mom-change ${cls}"><span class="kpi-mom-arrow" aria-hidden="true">${arrow}</span><span class="kpi-mom-pct">${sign}${fmtMoney(abs)}/mo</span></span>`;
     }
-    return `<button type="button" class="kpi-goal-card kpi-stat-card kpi-lost-tracker kpi-opportunity-card kpi-stat-attention kpi-stat-target-bar" data-kpi-focus="#19">
+    return `<button type="button" class="kpi-goal-card kpi-stat-attention kpi-stat-target-bar" data-kpi-focus="#19">
       ${statusCorner(true)}
       ${kpiHelpBtn("#19")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Missed Opportunity")}
         ${missedCallsTargetBarChart(p)}
-        <span class="kpi-money-type kpi-money-type-opportunity">Potential revenue · not earned</span>
         <div class="kpi-metric-with-delta">
-          <span class="kpi-lost-amount">${fmtMoney(model.monthlyLost)}<small>/mo</small></span>
+          <span class="kpi-stat-val kpi-val-negative">${fmtMoney(model.monthlyLost)}/mo</span>
           ${trendDelta}
         </div>
-        <div class="kpi-lost-data" aria-label="Lost revenue details">
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">Missed Search</span>
-            <span class="kpi-lost-datum-val">${model.missedSearchCalls}</span>
-            <span class="kpi-lost-muted">${p.missedPct}% of ${p.monthlyCalls}</span>
-          </div>
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">LSA calls</span>
-            <span class="kpi-lost-datum-val">${lsaCalls}</span>
-            <span class="kpi-lost-muted">${lsaCharged} charged · ${lsaMonth}</span>
-            <span class="kpi-lost-muted">${escapeHtml(lsaSeries)}</span>
-          </div>
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">Avg case</span>
-            <span class="kpi-lost-datum-val">${fmtMoney(model.avgCaseFee)}</span>
-            <span class="kpi-lost-muted">#28</span>
-          </div>
-          <div class="kpi-lost-datum">
-            <span class="kpi-lost-datum-label">YTD lost</span>
-            <span class="kpi-lost-datum-val">${fmtMoney(model.cumulativeYtd)}</span>
-            <span class="kpi-lost-muted">64 missed May–Jul 10</span>
-          </div>
-        </div>
-        <span class="kpi-stat-label">Est. money lost from unanswered Search calls</span>
       </div>
+      ${goalTrackRows([
+        ["Missed Search", `${model.missedSearchCalls} · ${p.missedPct}% of ${p.monthlyCalls}`],
+        ["LSA calls", `${lsaCalls} · ${lsaCharged} charged · ${lsaMonth}`],
+        ["LSA trend", escapeHtml(lsaSeries)],
+        ["YTD lost", `${fmtMoney(model.cumulativeYtd)} · 64 missed May–Jul 10`]
+      ])}
+      <p class="kpi-table-note" style="margin:0.2rem 0 0;text-align:left">Estimated potential revenue not earned from unanswered Search calls.</p>
       ${kpiRefMark("#19")}
     </button>`;
   }
@@ -2342,16 +2324,19 @@
 
   function lsaMismanagementTrackerHtml() {
     const model = lsaReallocationWasteModel(DATA.casesLeadsSpend);
-    return `<button type="button" class="kpi-goal-card kpi-stat-card kpi-lost-tracker kpi-spend-waste-card" data-kpi-focus="#07">
+    const periodLabel = model.periods.map(r => r.month).join(" · ");
+    return `<button type="button" class="kpi-goal-card" data-kpi-focus="#07">
       ${statusCorner(true)}
       ${kpiHelpBtn("#07")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Spend Waste")}
-        <span class="kpi-money-type kpi-money-type-spend">Spent inefficiently · cash out</span>
-        <div class="kpi-metric-with-delta">
-          <span class="kpi-lost-amount">−${fmtMoney(model.totalWaste)}</span>
-        </div>
+        <span class="kpi-stat-val">−${fmtMoney(model.totalWaste)}</span>
       </div>
+      ${goalTrackRows([
+        ["Period", escapeHtml(periodLabel)],
+        ["Potential responses", String(model.extraResponses)]
+      ])}
+      <p class="kpi-table-note" style="margin:0.2rem 0 0;text-align:left">Modeled LSA cash spent above the observed digital Search cost per response.</p>
       ${kpiRefMark("#07")}
     </button>`;
   }
@@ -2521,11 +2506,13 @@
     const goals = liveKpis.filter(k => k.goal);
     const metrics = liveKpis.filter(k => !k.goal && !k.lostTracker && k.id !== "#28");
     const goalsCards = [
+      kpiTileWithProjects("#19", missedRevenueTrackerHtml()),
+      kpiTileWithProjects("#07", lsaMismanagementTrackerHtml()),
       ...goals.map(k => kpiTileWithProjects(k.id, kpiGoalCardHtml(k))),
       kpiTileWithProjects("#03", teamDuiGoalCardHtml())
     ].join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="Team goals">
-          ${kpiSectionStaticHead("Team goals", "DUI YTD")}
+          ${kpiSectionStaticHead("Team goals", "Missed opportunity · Spend waste · DUI YTD")}
           <div class="kpi-section-body">
             <div class="kpi-goals-grid">${goalsCards}</div>
           </div>
