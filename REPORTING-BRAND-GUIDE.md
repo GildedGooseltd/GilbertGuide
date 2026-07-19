@@ -158,7 +158,7 @@ One map only — filter tiles + Project Outlines ICONS share `.value-icon.icon-{
 - Keep the existing **KPIs / Project Guide / Impact** tabs and current tile grid.
 - Active tab = royal fill; inactive tabs remain paper with dark text.
 - KPI tile hierarchy: ID/label → large value → target/context → status.
-- Section heads: royal-deep headline, stronger cream-panel background, 4px royal left rule (gold only for a critical callout).
+- Section heads: solid royal-deep background, white title, lavender hint, and burnt left rule. Do not use gradients or pale washes for KPI section headers.
 - Rank / project-score columns and sort controls: royal purple (`--gg-royal`), not gold or forest green.
 - Callouts use a semantic left rule, light wash, aged-brass outer line, thin royal inner line, and restrained corner ornament; no full-layout recolor.
 - Default shadow: `0 1px 4px rgba(45,20,84,.08)`. No heavy floating-card shadows.
