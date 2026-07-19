@@ -624,7 +624,8 @@ body.feedback-mode-on .feedback-target:hover {
   align-items: center;
   gap: 0.15rem;
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 400;
+  color: var(--gg-contrast-dark) !important;
   line-height: 1.1;
   white-space: nowrap;
 }

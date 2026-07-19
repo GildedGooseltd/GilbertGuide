@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-negative-values-red-r1";
+  const RENDER_VER = "20260719-change-labels-black-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -1733,7 +1733,7 @@
     return "";
   }
 
-  /** Small change badge: green ↑ / red ↓ + percent — no “MoM” label. */
+  /** Small change label: black regular-weight arrow + percent — no “MoM” label. */
   function momChangeHtml(mom) {
     if (mom == null || mom === "") return "";
     const raw = String(mom).trim();
