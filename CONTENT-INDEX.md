@@ -11,6 +11,7 @@ Layout/colors → [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) · Project writing ru
 | Task                                                 | Open first                                                                          |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | Change a project title, fee, description, blockers   | `content/projects/{ID}.md` + row in `content/INDEX.md`                              |
+| Change Recommendations tab copy                      | `content/recommendations.md` → `npm run build`                                      |
 | Change Gilbert’s name, greeting, default package     | `content/settings.md`                                                               |
 | Change retainer card                                 | `content/retainer.md`                                                               |
 | Change tab labels, confirm intro, thank-you headline | `index.html` (search the visible phrase)                                            |
@@ -215,6 +216,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Path                                                 | Purpose                                                                     |
 | ---------------------------------------------------- | --------------------------------------------------------------------------- |
 | [content/INDEX.md](content/INDEX.md)                 | Master table: priority, status, **display titles** — build never overwrites |
+| [content/recommendations.md](content/recommendations.md) | Recommendations tab — edit then `npm run build` |
 | [content/settings.md](content/settings.md)           | Gilbert names, image paths, default package                                 |
 | [content/retainer.md](content/retainer.md)           | Retainer project card                                                       |
 | [content/projects/A1.md … A13.md](content/projects/) | Campaign / project cards                                                    |
@@ -279,9 +281,10 @@ After markdown edits: `npm run build` (or `npm run watch`).
 
 1. **Wording on a project card** → edit `content/projects/X.md` → `npm run build`
 2. **Reorder or rename in table** → edit `content/INDEX.md` → `npm run build`
-3. **Button or page title** → `index.html` (grep the phrase)
-4. **New default package sentence** → `content/settings.md` → build
-5. **KPI number** → `kpi-report.js` `DATA` (+ export path in `DATA.source`)
+3. **Recommendations tab copy** → edit `content/recommendations.md` → `npm run build`
+4. **Button or page title** → `index.html` (grep the phrase)
+5. **New default package sentence** → `content/settings.md` → build
+6. **KPI number** → `kpi-report.js` `DATA` (+ export path in `DATA.source`)
 6. **Email paragraph** → `apps-script-webhook.gs` → redeploy Apps Script **New version**
 
 ---

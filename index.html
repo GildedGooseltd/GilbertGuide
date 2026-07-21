@@ -1446,10 +1446,56 @@
       background: rgba(148, 163, 184, 0.28);
     }
     .cockpit-tabs .view-tab.view-tab-wip .tab-count { opacity: 0.7; }
-    #cockpit-panel-recommendations,
     #cockpit-panel-predictions {
       filter: grayscale(1) opacity(0.45);
       pointer-events: none;
+    }
+    /* Recommendations — blurred / unreadable until ready to publish */
+    .recommendations-panel-wip {
+      position: relative;
+      min-height: 18rem;
+    }
+    .recommendations-panel-body {
+      filter: blur(12px);
+      opacity: 0.55;
+      pointer-events: none;
+      user-select: none;
+    }
+    .recommendations-under-construction {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 3rem 2rem 2rem;
+      background: rgba(248, 245, 239, 0.55);
+      backdrop-filter: blur(2px);
+      border-radius: var(--radius);
+      pointer-events: none;
+    }
+    .recommendations-under-construction-card {
+      max-width: 28rem;
+      text-align: center;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      border: 1.5px solid rgba(45, 20, 84, 0.35);
+      background: rgba(255, 254, 249, 0.96);
+      box-shadow: 0 8px 28px rgba(45, 20, 84, 0.14);
+    }
+    .recommendations-under-construction-card strong {
+      display: block;
+      color: var(--gg-royal-deep);
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+    }
+    .recommendations-under-construction-card p {
+      margin: 0;
+      color: var(--gg-brown-muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      font-weight: 600;
     }
     .impact-panel {
       display: flex;
@@ -1632,29 +1678,273 @@
       flex-direction: column;
       gap: 0.35rem;
     }
-    .recommendations-panel .recommendation-tile {
-      height: 100%;
-      border-left: 4px solid var(--gg-royal-mid);
-      padding: 1.1rem;
-      box-shadow: var(--gg-box-shadow);
+    /* Recommendations — REPORTING-BRAND-GUIDE format */
+    .recommendations-panel .data-report-root .kpi-section.rec-section {
+      background: var(--gg-paper);
+      border: 1.5px solid rgba(45, 20, 84, 0.38);
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(45, 20, 84, 0.08);
+      margin: 0 0 1rem;
+      overflow: hidden;
+      padding: 0;
     }
-    .recommendations-panel .recommendation-tile > h3 {
-      font-size: 1.22rem;
+    .recommendations-panel .data-report-root .kpi-section.rec-section > .kpi-section-summary,
+    .recommendations-panel .data-report-root .kpi-section.rec-section > .kpi-section-summary-static {
+      display: flex !important;
+      cursor: default;
+      padding: 0.95rem 1.2rem;
+      background: var(--gg-royal-deep);
+      border-bottom: 1px solid rgba(196, 92, 38, 0.35);
+      border-left: 5px solid var(--gg-head-accent);
     }
-    .recommendations-panel .recommendation-tile .kpi-mini-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 0.55rem !important;
-    }
-    .recommendations-panel .recommendation-tile .kpi-mini-card {
-      padding: 0.7rem;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: var(--surface2);
-    }
-    .recommendations-panel .recommendation-tile .data-card-body {
+    .recommendations-panel .rec-section-body {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      gap: 0.75rem;
+      padding: 1rem 1.1rem 1.15rem !important;
+      background: var(--gg-paper);
+    }
+    .recommendations-panel .rec-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .recommendations-panel .rec-stat-grid {
+      display: grid;
+      gap: 0.65rem;
+    }
+    .recommendations-panel .rec-stat-grid[data-cols="3"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .recommendations-panel .rec-stat-grid[data-cols="4"] {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    @media (max-width: 900px) {
+      .recommendations-panel .rec-stat-grid[data-cols="3"],
+      .recommendations-panel .rec-stat-grid[data-cols="4"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 520px) {
+      .recommendations-panel .rec-stat-grid[data-cols="3"],
+      .recommendations-panel .rec-stat-grid[data-cols="4"] {
+        grid-template-columns: 1fr;
+      }
+    }
+    .recommendations-panel .data-report-root .rec-stat-tile {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+      padding: 0.7rem 0.75rem;
+      border: 1px solid rgba(61, 48, 40, 0.22);
+      border-radius: 8px;
+      background: var(--gg-paper);
+      box-shadow: 0 1px 4px rgba(45, 20, 84, 0.08);
+    }
+    .recommendations-panel .rec-stat-label {
+      color: var(--gg-brown-muted);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .recommendations-panel .rec-stat-value {
+      color: var(--gg-royal-deep);
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.15;
+      font-variant-numeric: tabular-nums;
+    }
+    .recommendations-panel .rec-stat-context {
+      color: var(--gg-brown-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .recommendations-panel .rec-callout {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas:
+        "status status"
+        "label body";
+      gap: 0.25rem 0.75rem;
+      padding: 0.7rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid #a67c2e;
+      box-shadow: inset 0 0 0 1px var(--gg-royal-border);
+    }
+    .recommendations-panel .rec-callout-status {
+      grid-area: status;
+      justify-self: start;
+      padding: 0.15rem 0.45rem;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .recommendations-panel .rec-callout-label {
+      grid-area: label;
+      padding-top: 0.1rem;
+      color: var(--gg-brown-muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .recommendations-panel .rec-callout-body {
+      grid-area: body;
+      min-width: 0;
+      color: var(--gg-brown);
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .recommendations-panel .rec-callout-body p { margin: 0; }
+    .recommendations-panel .rec-callout-watch {
+      border-left: 4px solid #eab308;
+      background: #fff8d6;
+      color: var(--gg-brown);
+    }
+    .recommendations-panel .rec-callout-watch .rec-callout-status {
+      background: rgba(234, 179, 8, 0.22);
+      color: #7a5a00;
+    }
+    .recommendations-panel .rec-callout-negative {
+      border-left: 4px solid #cf2d56;
+      background: #f8d5de;
+    }
+    .recommendations-panel .rec-callout-negative .rec-callout-status {
+      background: rgba(207, 45, 86, 0.16);
+      color: #8f1238;
+    }
+    .recommendations-panel .rec-page-alert {
+      margin: 0 0 1rem;
+      max-width: 48rem;
+    }
+    .recommendations-panel .rec-solutions {
+      margin-top: 0;
+    }
+    .recommendations-panel .rec-solutions-body {
+      flex: 1 0 100%;
+      color: var(--gg-brown);
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .recommendations-panel .rec-solutions-body p { margin: 0; }
+    .recommendations-panel .rec-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin: 0 0 1rem;
+      position: sticky;
+      top: 0.35rem;
+      z-index: 4;
+      padding: 0.5rem 0.55rem;
+      border: 1px solid rgba(61, 48, 40, 0.22);
+      border-radius: 10px;
+      background: var(--gg-paper);
+      box-shadow: 0 1px 4px rgba(45, 20, 84, 0.08);
+    }
+    .recommendations-panel .rec-jump-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.28rem 0.55rem;
+      border-radius: 8px;
+      border: 1px solid var(--gg-royal-border);
+      background: var(--gg-paper);
+      color: var(--gg-royal);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .recommendations-panel .rec-jump-link:hover {
+      border-color: var(--gg-royal);
+      background: #f3eefa;
+    }
+    .recommendations-panel .rec-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.35rem;
+      height: 1.35rem;
+      padding: 0 0.35rem;
+      border-radius: 999px;
+      background: var(--gg-royal);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .recommendations-panel .rec-proof {
+      border: 1px solid rgba(61, 48, 40, 0.22);
+      border-radius: 8px;
+      background: var(--gg-cream-panel);
+      padding: 0.15rem 0.7rem 0.55rem;
+    }
+    .recommendations-panel .rec-proof > summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 0.55rem 0.15rem;
+      color: var(--gg-royal);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+    .recommendations-panel .rec-proof > summary::-webkit-details-marker { display: none; }
+    .recommendations-panel .rec-proof > summary::before {
+      content: "+ ";
+      font-weight: 900;
+    }
+    .recommendations-panel .rec-proof[open] > summary::before { content: "− "; }
+    .recommendations-panel .rec-proof-body {
+      padding: 0 0.15rem 0.35rem;
+    }
+    .recommendations-panel .rec-proof-body .data-formula-line,
+    .recommendations-panel .rec-proof-body .data-inline-note {
+      margin-top: 0.45rem;
+    }
+    .recommendations-panel .data-report-root .rec-chart {
+      margin: 0;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid rgba(61, 48, 40, 0.22);
+      border-radius: 8px;
+      background: var(--gg-paper);
+      box-shadow: none;
+    }
+    .recommendations-panel .rec-chart .kpi-chart-head {
+      margin-bottom: 0.45rem;
+      color: var(--gg-royal-deep);
+      font-size: 0.92rem;
+    }
+    .recommendations-panel .rec-chart .kpi-chart-subtitle {
+      color: var(--gg-brown-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .recommendations-panel .data-report-root .rec-chart .kpi-chart-plot-bg {
+      fill: #ece6dc;
+    }
+    .recommendations-panel .rec-actions {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--gg-brown);
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .recommendations-panel .rec-actions li {
+      margin: 0 0 0.55rem;
+    }
+    .recommendations-panel .rec-actions li:last-child { margin-bottom: 0; }
+    .recommendations-panel .rec-actions em {
+      font-style: normal;
+      color: var(--gg-brown-muted);
+      font-weight: 700;
     }
     .data-report-root .data-card-input-needed {
       position: relative;
@@ -4459,7 +4749,7 @@
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
         <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs <span class="tab-help" data-help-title="KPIs" data-help-desc="Key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export. Tap a card for context, or the ? on a KPI for description and formula." aria-label="How to use KPIs">?</span></button>
         <button type="button" class="view-tab" data-view="data" role="tab" aria-selected="false">Data <span class="tab-help" data-help-title="Data" data-help-desc="Saved operating charts and tables kept while the visual system is tested. Each card ties to a KPI or finance metric — use the ? on a KPI card for that metric’s description and formula." aria-label="How to use Data">?</span></button>
-        <button type="button" class="view-tab view-tab-wip" data-view="recommendations" role="tab" aria-selected="false" aria-description="Under construction">Recommendations <span class="tab-help" data-help-title="Recommendations" data-help-desc="Paid-channel actions, intake fixes, practice-value opportunities, and the Sex Crimes Defense Search recommendation." aria-label="How to use Recommendations">?</span></button>
+        <button type="button" class="view-tab view-tab-wip" data-view="recommendations" role="tab" aria-selected="false" aria-description="Under construction">Recommendations <span class="tab-help" data-help-title="Recommendations" data-help-desc="Ranked actions (blurred until ready). Fix intake first, then Sex Crimes Defense Search, financial audit, and LSA divert." aria-label="How to use Recommendations">?</span></button>
         <button type="button" class="view-tab" data-view="picker" role="tab" aria-selected="false">Guide <span class="tab-help" data-help-title="Guide" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use Guide">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="impact" role="tab" aria-selected="false" aria-description="Under construction">Results <span class="tab-help" data-help-title="Results" data-help-desc="Completed project report-out, leads-by-campaign, and cart revenue calculator. Still under construction in places." aria-label="How to use Results">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="predictions" role="tab" aria-selected="false" aria-description="Under construction">Predictions <span class="tab-help" data-help-title="Predictions" data-help-desc="Rest-of-year case forecast, $80k/mo expense pace recommendation, and intake-driven collectible-cash projection. Forecast bars are lighter than completed months; current month appears first." aria-label="How to use Predictions">?</span></button>
@@ -4475,7 +4765,17 @@
     </section>
 
     <section class="cockpit-panel recommendations-panel" id="cockpit-panel-recommendations" aria-label="Recommendations" hidden>
-      <div class="data-report-root" id="kpi-report-recommendations"></div>
+      <div class="recommendations-panel-wip">
+        <div class="recommendations-under-construction" role="status" aria-live="polite">
+          <div class="recommendations-under-construction-card">
+            <strong>Under Construction</strong>
+            <p>Recommendations are drafted locally and blurred until ready to publish.</p>
+          </div>
+        </div>
+        <div class="recommendations-panel-body" aria-hidden="true">
+          <div class="data-report-root" id="kpi-report-recommendations"></div>
+        </div>
+      </div>
     </section>
 
     <section class="cockpit-panel picker-panel outlines-panel" id="cockpit-panel-picker" aria-label="Project guide" hidden>
@@ -4607,8 +4907,9 @@
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260718-financial-audit-savings-share-r1"></script>
+  <script src="recommendations-data.js?v=20260719-recs-content-md-r1"></script>
   <script src="dui-goal-data.js?v=20260717-practice-dui-r2"></script>
-  <script src="kpi-report.js?v=20260719-lsa-cost-target-r1"></script>
+  <script src="kpi-report.js?v=20260719-recs-content-md-r1"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20260719-cloud-hint-rank-predict-r1"></script>
 </body>
