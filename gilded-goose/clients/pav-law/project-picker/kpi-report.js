@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-lsa-cost-target-r1";
+  const RENDER_VER = "20260719-recs-content-md-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -3256,199 +3256,209 @@
     };
   }
 
+  function recCallout(kind, label, statusLabel, html) {
+    return `<aside class="rec-callout rec-callout-${escapeHtml(kind)}" aria-label="${escapeHtml(statusLabel)}">
+      <span class="rec-callout-status">${escapeHtml(statusLabel)}</span>
+      <span class="rec-callout-label">${escapeHtml(label)}</span>
+      <div class="rec-callout-body">${html}</div>
+    </aside>`;
+  }
+
+  function recSolutionsHtml(html) {
+    return `<section class="kpi-related-projects rec-solutions" aria-label="Solutions">
+      <strong class="kpi-related-projects-title">Solutions</strong>
+      <div class="rec-solutions-body">${html}</div>
+    </section>`;
+  }
+
+  function recProofHtml(summary, bodyHtml) {
+    return `<details class="rec-proof"><summary>${escapeHtml(summary)}</summary><div class="rec-proof-body">${bodyHtml}</div></details>`;
+  }
+
+  function recStatTile(label, value, context) {
+    return `<div class="rec-stat-tile">
+      <span class="rec-stat-label">${escapeHtml(label)}</span>
+      <span class="rec-stat-value">${value}</span>
+      ${context ? `<span class="rec-stat-context">${escapeHtml(context)}</span>` : ""}
+    </div>`;
+  }
+
+  function recSectionHtml(id, title, hint, bodyHtml) {
+    return `<section class="kpi-section kpi-section-static rec-section" id="${escapeHtml(id)}">
+      ${kpiSectionStaticHead(title, hint)}
+      <div class="kpi-section-body rec-section-body">${bodyHtml}</div>
+    </section>`;
+  }
+
+  function recStatusKind(statusLabel) {
+    const s = String(statusLabel || "").toLowerCase();
+    if (s.includes("action") || s.includes("required") || s.includes("negative")) return "negative";
+    if (s.includes("on track") || s.includes("verified") || s.includes("positive")) return "positive";
+    return "watch";
+  }
+
+  function recFillTokens(text, tokens) {
+    return String(text || "").replace(/\{\{(\w+)\}\}/g, (_, key) => (
+      Object.prototype.hasOwnProperty.call(tokens, key) ? String(tokens[key]) : `{{${key}}}`
+    ));
+  }
+
+  function recInlineMd(text, tokens) {
+    let s = escapeHtml(recFillTokens(text, tokens));
+    s = s.replace(/\[([^\]]+)\]\(project:([A-Za-z0-9_-]+)\)/g, (_, label, id) =>
+      `<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="${escapeHtml(id)}">${label}</a>`
+    );
+    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    s = s.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+    return s;
+  }
+
+  function recSexCrimesChartHtml() {
+    return `<div class="kpi-chart-card rec-chart">
+      <div class="kpi-chart-head"><strong>Case recovery path</strong><div class="kpi-chart-subtitle">YTD · current pace · recovery target</div></div>
+      <div class="kpi-chart-plot">${barWithTargetChart(
+        [
+          { label: "YTD", value: 5 },
+          { label: "Pace", value: 10 },
+          { label: "Recovery", value: 13 }
+        ],
+        {
+          target: 13,
+          lowerIsBetter: false,
+          compact: false,
+          width: 640,
+          height: 220,
+          format: "count",
+          ariaLabel: "Sex Crimes Defense cases: 5 year to date, 10 at current full-year pace, and 13 under the recovery plan"
+        }
+      )}</div>
+    </div>`;
+  }
+
   function recommendationsPageHtml() {
     const r = junPaidChannelRecs();
     if (!r) {
       return `<header class="data-page-head"><div><h2 class="data-page-title">Recommendations</h2></div></header>
         <p class="data-inline-note">Need a complete June LSA + digital month to build recommendations.</p>`;
     }
-    const divertTable = kpiDetailTable(
-      ["Divert from LSA", "→ Consulting", "→ Digital ads", "Consulting %", "Media %", "All-in $/call", "Decision"],
-      r.divertRows.map(row => [
-        fmtMoney(row.total),
-        fmtMoney(row.toMgmt),
-        fmtMoney(row.toMedia),
-        `${row.mgmtPct}%`,
-        `${row.mediaPct}%`,
-        row.allIn != null ? fmtMoney(row.allIn) : "—",
-        escapeHtml(row.decision)
-      ])
-    );
+    const content = window.RECOMMENDATIONS_CONTENT;
+    if (!content || !Array.isArray(content.recs) || !content.recs.length) {
+      return `<header class="data-page-head"><div><h2 class="data-page-title">Recommendations</h2></div></header>
+        <p class="data-inline-note">Missing recommendations content. Edit <code>content/recommendations.md</code> and run <code>npm run build</code>.</p>`;
+    }
+    const tokens = {
+      lsaCpl: fmtMoney(r.lsaCpl),
+      digCpl: fmtMoney(r.digCpl),
+      digAllIn: fmtMoney(r.digAllIn),
+      minDivert: fmtMoney(r.minDivert),
+      mgmt: fmtMoney(r.mgmt),
+      breakEvenMedia: fmtMoney(r.breakEvenMedia),
+      closeMultiple: r.closeMultiple.toFixed(2),
+      junLsaSpend: fmtMoney(r.jun.lsaSpend),
+      junLeads: String(r.jun.leads),
+      junAdsSpend: fmtMoney(r.jun.adsSpend),
+      junAdsLeads: String(r.jun.adsLeads)
+    };
+    const divertRows = r.divertRows.map(row => [
+      fmtMoney(row.total),
+      fmtMoney(row.toMgmt),
+      fmtMoney(row.toMedia),
+      `${row.mgmtPct}%`,
+      `${row.mediaPct}%`,
+      row.allIn != null ? fmtMoney(row.allIn) : "—",
+      escapeHtml(row.decision)
+    ]);
+    const page = content.page || {};
+    const jump = (content.jump || []).map(item => {
+      const rankHtml = item.rank
+        ? `<span class="rec-rank">${escapeHtml(item.rank)}</span> `
+        : "";
+      return `<a class="rec-jump-link" href="#${escapeHtml(item.anchor)}">${rankHtml}${escapeHtml(item.label)}</a>`;
+    }).join("");
+    const sections = content.recs.map(rec => {
+      const bodyType = rec.bodyType || "";
+      if (bodyType === "projects-table") {
+        const rows = (rec.projects || []).map(row => [
+          recInlineMd(row.project, tokens),
+          escapeHtml(recFillTokens(row.priority, tokens)),
+          escapeHtml(recFillTokens(row.fee, tokens)),
+          escapeHtml(recFillTokens(row.role, tokens)),
+          escapeHtml(recFillTokens(row.gate, tokens))
+        ]);
+        return recSectionHtml(
+          rec.id,
+          recFillTokens(rec.title, tokens),
+          recFillTokens(rec.hint, tokens),
+          kpiDetailTable(["Project", "Priority / status", "Fee", "Role", "Success gate"], rows)
+        );
+      }
+      if (bodyType === "actions-list") {
+        const items = (rec.actions || []).map(item =>
+          `<li>${recInlineMd(item, tokens)}</li>`
+        ).join("");
+        return recSectionHtml(
+          rec.id,
+          recFillTokens(rec.title, tokens),
+          recFillTokens(rec.hint, tokens),
+          `<ol class="rec-actions kpi-action-list">${items}</ol>`
+        );
+      }
+      const stats = rec.stats || [];
+      const statsHtml = stats.length
+        ? `<div class="rec-stat-grid" data-cols="${Math.min(4, Math.max(2, stats.length))}">${stats.map(s =>
+            recStatTile(
+              recFillTokens(s.label, tokens),
+              escapeHtml(recFillTokens(s.value, tokens)),
+              recFillTokens(s.context, tokens)
+            )
+          ).join("")}</div>`
+        : "";
+      const chartHtml = rec.chart === "cases-recovery" ? recSexCrimesChartHtml() : "";
+      const whyKind = recStatusKind(rec.whyStatus);
+      const whyHtml = rec.why
+        ? recCallout(whyKind, "Why", rec.whyStatus || "Watch", `<p>${recInlineMd(rec.why, tokens)}</p>`)
+        : "";
+      const solutionsHtml = rec.solutions
+        ? recSolutionsHtml(`<p>${recInlineMd(rec.solutions, tokens)}</p>`)
+        : "";
+      let proofBody = "";
+      if (rec.proofType === "divert-table") {
+        proofBody = kpiDetailTable(
+          ["Divert from LSA", "→ Consulting", "→ Digital ads", "Consulting %", "Media %", "All-in $/call", "Decision"],
+          divertRows
+        );
+      } else if ((rec.proof || []).length) {
+        proofBody = rec.proof.map(line => {
+          const filled = recInlineMd(line, tokens);
+          const cls = /savings windows|do not double-count/i.test(line)
+            ? "data-inline-note"
+            : "data-formula-line";
+          return `<p class="${cls}">${filled}</p>`;
+        }).join("");
+      }
+      const proofHtml = proofBody
+        ? recProofHtml(rec.proofTitle || "Proof", proofBody)
+        : "";
+      return recSectionHtml(
+        rec.id,
+        recFillTokens(rec.title, tokens),
+        recFillTokens(rec.hint, tokens),
+        `${statsHtml}${chartHtml}${whyHtml}${solutionsHtml}${proofHtml}`
+      );
+    }).join("");
     return `<header class="data-page-head">
       <div>
-        <h2 class="data-page-title">Recommendations</h2>
-        <p class="data-page-sub">These recommendations are designed to hit the KPIs and cover all expenses through year-end. Immediate cost-cutting action is required: expenses are far too high and funds are not being managed effectively. If sufficient cuts cannot be made elsewhere, staffing reductions may be necessary.</p>
+        <h2 class="data-page-title">${escapeHtml(page.title || "Recommendations")}</h2>
+        <p class="data-page-sub">${escapeHtml(page.subtitle || "")}</p>
       </div>
     </header>
-    <div class="data-grid">
-      ${dataCardHtml(
-        "Contents",
-        "Jump to a recommendation section.",
-        `<ol class="data-inline-note" style="margin:0;padding-left:1.2rem">
-          <li><a class="data-guide-link" href="#recommendation-primary">LSA call intake + digital Search shift</a></li>
-          <li><a class="data-guide-link" href="#recommendation-sex-crimes">Sex Crimes Defense focus</a></li>
-          <li><a class="data-guide-link" href="#recommendation-financial-audit">B9 · Full Financial Audit</a></li>
-          <li><a class="data-guide-link" href="#recommendation-divert">LSA diversion model</a></li>
-          <li><a class="data-guide-link" href="#recommendation-projects">Project information</a></li>
-          <li><a class="data-guide-link" href="#recommendation-actions">Next actions</a></li>
-        </ol>`,
-        { full: true, id: "recommendation-contents" }
-      )}
-      ${dataCardHtml(
-        "LSA call intake + digital Search shift",
-        "Patch the LSA call-intake failure before continuing LSA spend; then shift qualified media toward digital Search.",
-        `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
-          <div class="kpi-mini-card"><h3>LSA $/call</h3><p class="kpi-mini-value">${fmtMoney(r.lsaCpl)}</p></div>
-          <div class="kpi-mini-card"><h3>Digital media $/call</h3><p class="kpi-mini-value">${fmtMoney(r.digCpl)}</p></div>
-          <div class="kpi-mini-card"><h3>Digital all-in $/call</h3><p class="kpi-mini-value">${fmtMoney(r.digAllIn)}</p></div>
-        </div>
-        <p class="data-inline-note"><strong>First:</strong> Fix unanswered calls through <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B2">B2 · HubSpot Phone / VoIP Setup</a>. Resume spending after Search + LSA lines reach <strong>≥90% answered for seven days</strong>.</p>
-        <p class="data-inline-note"><strong>Then:</strong> Keep the <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="RETAINER">Digital Ads Maintenance Retainer</a> active and move at least ${fmtMoney(r.minDivert)}/mo from LSA to consulting plus digital media.</p>
-        <p class="data-formula-line">Minimum shift = ${fmtMoney(r.mgmt)} consulting + ${fmtMoney(r.breakEvenMedia)} digital media = ${fmtMoney(r.minDivert)}/mo</p>
-        <p class="data-formula-line">LSA cost = ${fmtMoney(r.jun.lsaSpend)} ÷ ${r.jun.leads} calls = ${fmtMoney(r.lsaCpl)}/call</p>
-        <p class="data-formula-line">Digital all-in = (${fmtMoney(r.jun.adsSpend)} media + ${fmtMoney(r.mgmt)} consulting) ÷ ${r.jun.adsLeads} calls = ${fmtMoney(r.digAllIn)}/call</p>`,
-        { className: "recommendation-tile", id: "recommendation-primary" }
-      )}
-      ${dataCardHtml(
-        "Sex Crimes Defense focus",
-        "Highest mean quoted fee, but 2026 YTD case volume is 62% behind the same 2025 period.",
-        `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
-          <div class="kpi-mini-card"><h3>Mean quoted fee</h3><p class="kpi-mini-value">$9,500</p></div>
-          <div class="kpi-mini-card"><h3>2025 YTD cases</h3><p class="kpi-mini-value">13</p></div>
-          <div class="kpi-mini-card"><h3>2026 YTD cases</h3><p class="kpi-mini-value">5</p></div>
-          <div class="kpi-mini-card"><h3>YTD change</h3><p class="kpi-mini-value">−62%</p></div>
-        </div>
-        <div class="kpi-chart-card" style="margin-bottom:0.85rem">
-          <h3>2026 case growth forecast</h3>
-          <div class="kpi-chart-plot">${barWithTargetChart(
-            [
-              { label: "YTD", value: 5 },
-              { label: "Pace", value: 10 },
-              { label: "Recovery", value: 13 }
-            ],
-            {
-              target: 13,
-              lowerIsBetter: false,
-              compact: false,
-              width: 640,
-              height: 220,
-              format: "count",
-              ariaLabel: "Sex Crimes Defense cases: 5 year to date, 10 at current full-year pace, and 13 under the recovery plan"
-            }
-          )}</div>
-          <p class="data-formula-line">YTD = 5 cases through June · current pace = 10 full-year cases · recovery plan = 5 YTD + 8 additional H2 cases = 13</p>
-        </div>
-        <div class="kpi-chart-card" style="margin-bottom:0.85rem">
-          <h3>Modeled collectible-value forecast</h3>
-          <div class="kpi-chart-plot">${barWithTargetChart(
-            [
-              { label: "YTD", value: 38000 },
-              { label: "Pace", value: 76000 },
-              { label: "Recovery", value: 98800 }
-            ],
-            {
-              target: 98800,
-              lowerIsBetter: false,
-              compact: false,
-              width: 640,
-              height: 220,
-              ariaLabel: "Modeled Sex Crimes Defense collectible value: 38 thousand dollars year to date, 76 thousand dollars at current pace, and 98.8 thousand dollars under the recovery plan"
-            }
-          )}</div>
-          <p class="data-formula-line">Cases × $9,500 mean quoted fee × 80% modeled collection · directional forecast, not booked cash</p>
-        </div>
-        <p class="data-warning-note"><strong>Why move focus:</strong> Sex Assault / Sex Offense is the highest measured fee category — about 70% above the $5,587 firm mean — while signed-case volume is trending materially behind. The eight-case YTD gap represents about <strong>$76,000 in quoted fee value</strong>, or <strong>$60,800</strong> under the 80% collection model.</p>
-        <p class="data-inline-note"><strong>Recommended move:</strong> Use <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="A1">A1 · Digital Ad Enhancements</a> to launch a discreet Sex Crimes Defense Search pilot: exact/phrase high-intent terms, dedicated landing page, sensitive-policy review, tracked calls, and signed-case reporting. Do not use Display or broad match for this line.</p>
-        <p class="data-formula-line">8 fewer YTD cases × $9,500 mean quoted fee = $76,000 directional signed-value gap</p>
-        <p class="data-formula-line">$76,000 × 80% modeled collection = $60,800 directional collectible gap</p>
-        <p class="data-inline-note"><strong>Data caution:</strong> $9,500 is a quoted-fee mean, not profit or cash collected, and the fee sample is only n=6. Validate against QuickBooks collections before scaling beyond the pilot.</p>`,
-        { className: "recommendation-tile", id: "recommendation-sex-crimes" }
-      )}
-      ${dataCardHtml(
-        "B9 · Full Financial, Credit Card & Subscription Waste Audit",
-        "Recommended cost-control project: map debt, reduce recurring expenses, recover credits, and document verified savings.",
-        `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
-          <div class="kpi-mini-card"><h3>Known 30-day waste floor</h3><p class="kpi-mini-value">$1,063</p></div>
-          <div class="kpi-mini-card"><h3>Annualized if repeated</h3><p class="kpi-mini-value">$12,756</p></div>
-          <div class="kpi-mini-card"><h3>H1 after expenses</h3><p class="kpi-mini-value">+$29,534*</p></div>
-        </div>
-        <p class="data-warning-note"><strong>Why an audit is needed:</strong> H1 collectible after the $80k/mo expense assumption shows +$29,534, but that figure is a <strong>negative / unreliable indicator</strong> because <strong>unknown business debt</strong> (loans, credit balances, and other liabilities) is not in the model. A small operating surplus can disappear once debt service is mapped. Separately, the account review already found $1,063 in non-client Search-term spend over 30 days, and many unused or overlapping subscriptions still lack a verified cancel total.</p>
-        <p class="data-inline-note"><strong>Recommended project:</strong> Open <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 · Full Financial, Credit Card & Subscription Waste Audit</a>. Reconcile QuickBooks, bank and card statements, <strong>debt and liability balances</strong>, subscriptions, software seats, phone lines, ad billing, LSA credits, payroll, contractors, sponsorships, and vendor agreements.</p>
-        <p class="data-formula-line">$1,063 known 30-day Search waste × 12 months = $12,756 annualized exposure if unchanged</p>
-        <p class="data-formula-line">H1 collectible $509,534 − $480,000 expenses = +$29,534* · *excludes unknown debt</p>
-        <p class="data-inline-note"><strong>Payment:</strong> $1,800 fixed fee plus 20% of verified net savings or recovered cash. Measure subscription/service changes for 12 months, continuing vendor-rate revisions for 6 months, variable operating revisions for 3 months, and one-time recoveries when posted.</p>
-        <p class="data-inline-note"><strong>No double-counting:</strong> The approximately $694 safe Military Display negative-keyword finding is a subset of the $1,063 Search-term waste. Subscription, phone, duplicate-tool, LSA-credit, debt-service, and vendor savings remain separate and unverified until statements are audited.</p>`,
-        { className: "recommendation-tile", id: "recommendation-financial-audit" }
-      )}
-      ${dataCardHtml(
-        "Divert from LSA · consulting vs digital ads split",
-        "Pay consulting first; put the remaining diverted dollars into digital media.",
-        `${divertTable}
-        <p class="data-warning-note"><strong>Warning — clarify before implementation:</strong> This math compares calls, not signed cases. Confirm each channel’s call-to-signed-case rate before moving the budget. LSA is only worth its higher cost if it signs cases at least <strong>${r.closeMultiple.toFixed(2)}× better</strong> than digital. Example: if digital signs 10%, LSA must sign at least ${(10 * r.closeMultiple).toFixed(1)}%.</p>`,
-        { full: true, id: "recommendation-divert" }
-      )}
-      ${dataCardHtml(
-        "",
-        "Guide projects required to repair intake, clean LSA operations, control financial waste, manage paid media, and test the Sex Crimes Defense opportunity.",
-        `${kpiDetailTable(
-          ["Project", "Priority / status", "Fee", "Role in recommendation", "Success gate"],
-          [
-            [
-              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B2">B2 · HubSpot Phone / VoIP Setup</a>',
-              "Priority 1 · Recommended",
-              "$0 · included in B13",
-              "Route and log inbound Search + LSA calls; create same-day missed-call tasks.",
-              "≥90% answered for seven days; live 888 → HubSpot test passes."
-            ],
-            [
-              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B11">B11 · LSA Call Process Update</a>',
-              "Priority 2 · Recommended",
-              "$1,500",
-              "Same-day booked/spam/follow-up statuses, call review, and Casey coverage.",
-              "Statuses current; disputes caught before billing; coverage calendar active."
-            ],
-            [
-              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="RETAINER">RETAINER · Digital Ads Maintenance</a>',
-              "Required",
-              `${fmtMoney(r.mgmt)}/mo`,
-              "Monitor LSA/Search spend, lead quality, bids, and monthly reporting.",
-              "Fund before shifting media; do not add a second consulting fee."
-            ],
-            [
-              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="A1">A1 · Digital Ad Enhancements</a>',
-              "Priority 11 · Available",
-              "$2,200",
-              "Build the discreet Sex Crimes Defense Search pilot + dedicated landing page and tracking.",
-              "Qualified calls and signed cases recover without broad/Display exposure; validate collected revenue in QuickBooks."
-            ],
-            [
-              '<a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 · Full Financial, Credit Card & Subscription Waste Audit</a>',
-              "Priority 26 · Recommended",
-              "$1,800 + 20% verified savings",
-              "Reconcile operating spend, unknown business debt/liabilities, unused subscriptions, and duplicate tools; recover credits and stop recurring leakage.",
-              "Every recurring charge and liability has an owner and action; verified monthly and annual savings are documented without double-counting; H1 surplus is no longer treated as cash-safe until debt is mapped."
-            ]
-          ]
-        )}
-        <p class="data-inline-note"><strong>Order:</strong> Complete B2 call routing first → operate B11 status and coverage controls → continue media under RETAINER only after the seven-day answer-rate gate.</p>`,
-        { full: true, id: "recommendation-projects" }
-      )}
-      ${dataCardHtml(
-        "",
-        "Guide projects tied to this recommendation.",
-        `<ol class="data-inline-note" style="margin:0;padding-left:1.2rem">
-          <li>Hold additional LSA media while <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B2">B2</a> patches routing, backup coverage, and missed-call tasks.</li>
-          <li>Dial the public 888 number end-to-end; confirm HubSpot rings, logs the contact timeline, and assigns a same-day callback task.</li>
-          <li>Run <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B11">B11</a>: same-day LSA statuses, Casey call review, and a fixed coverage calendar.</li>
-          <li>After ≥90% answered for seven days, confirm <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="RETAINER">Digital Ads Maintenance Retainer</a> is funded (${fmtMoney(r.mgmt)}/mo).</li>
-          <li>Launch the <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="A1">A1 Sex Crimes Defense Search pilot</a>: exact/phrase only, dedicated discreet landing page, no Display or broad match, and a 30-day qualified-call / signed-case review.</li>
-          <li>Run <a class="data-guide-link" href="#picker" data-go-view="picker" data-project-id="B9">B9 Full Financial Audit</a>: export QuickBooks plus all bank/card statements, inventory recurring subscriptions and phone/software seats, <strong>map unknown business debt and liabilities</strong>, and produce a cancel / renegotiate / dispute list with verified monthly and annual savings. Do not treat the +$29,534 H1 collectible-after-expenses figure as a positive indicator until debt is mapped.</li>
-          <li>Test diverting ≥ ${fmtMoney(r.minDivert)}/mo from LSA → consulting + Search media; hold for 30 days and track signed-case rate by channel.</li>
-          <li>Open Data tab · Cases, Leads & Spend for source charts and June trade-off tables.</li>
-        </ol>`,
-        { full: true, id: "recommendation-actions" }
-      )}
-    </div>`;
+    <aside class="rec-callout rec-callout-${recStatusKind(page.alertStatus)} rec-page-alert" aria-label="${escapeHtml(page.alertStatus || "Action required")}">
+      <span class="rec-callout-status">${escapeHtml(page.alertStatus || "Action required")}</span>
+      <span class="rec-callout-label">${escapeHtml(page.alertLabel || "Alert")}</span>
+      <div class="rec-callout-body"><p>${recInlineMd(page.alert || "", tokens)}</p></div>
+    </aside>
+    <nav class="rec-jump" aria-label="Jump to recommendation">${jump}</nav>
+    <div class="rec-stack">${sections}</div>`;
   }
 
   function renderRecommendations(el) {

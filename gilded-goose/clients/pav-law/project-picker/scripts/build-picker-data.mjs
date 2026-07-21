@@ -11,10 +11,12 @@ import {
   parseSettingsMarkdown,
   applyIndexOverrides
 } from "./markdown-project.mjs";
+import { parseRecommendationsMarkdown } from "./parse-recommendations.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CONTENT = path.join(ROOT, "content");
 const OUT = path.join(ROOT, "projects-data.js");
+const REC_OUT = path.join(ROOT, "recommendations-data.js");
 
 function loadProjects() {
   const dir = path.join(CONTENT, "projects");
@@ -71,13 +73,26 @@ window.PROJECT_DATA = `;
 
   fs.writeFileSync(OUT, header + JSON.stringify(data, null, 2) + ";\n", "utf8");
   console.log(`Built ${OUT} (${projects.length} projects)`);
+
+  const recPath = path.join(CONTENT, "recommendations.md");
+  if (fs.existsSync(recPath)) {
+    const recommendations = parseRecommendationsMarkdown(fs.readFileSync(recPath, "utf8"));
+    const recHeader = `/**
+ * AUTO-GENERATED — do not edit. Source: content/recommendations.md
+ * Rebuild: npm run build
+ */
+window.RECOMMENDATIONS_CONTENT = `;
+    fs.writeFileSync(REC_OUT, recHeader + JSON.stringify(recommendations, null, 2) + ";\n", "utf8");
+    console.log(`Built ${REC_OUT} (${recommendations.recs.length} recommendations)`);
+  }
 }
 
 function contentMarkdownPaths() {
   const paths = [
     path.join(CONTENT, "INDEX.md"),
     path.join(CONTENT, "settings.md"),
-    path.join(CONTENT, "retainer.md")
+    path.join(CONTENT, "retainer.md"),
+    path.join(CONTENT, "recommendations.md")
   ];
   const projectsDir = path.join(CONTENT, "projects");
   if (fs.existsSync(projectsDir)) {
