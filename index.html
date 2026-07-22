@@ -16,6 +16,8 @@
       --gg-cream: #f8f5ef;
       --gg-cream-panel: #f3ede4;
       --gg-paper: #fffcf7;
+      /* Chart plot field — light yellow for series contrast (not gold CTA) */
+      --gg-chart-plot: #fff4c4;
       --gg-brown: #3d3028;
       --gg-brown-muted: #5c4f45;
       --gg-sage: #d4ddd0;
@@ -722,6 +724,14 @@
       border: 1px solid var(--gg-royal-border);
     }
     .card-meta-row { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; margin-bottom: var(--space-sm); }
+    .card-fee-market {
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.75rem;
+      margin: 0.15rem 0 0.55rem; font-size: 0.82rem; line-height: 1.35;
+    }
+    .card-fee-quote { font-weight: 800; color: var(--gg-royal-deep); font-variant-numeric: tabular-nums; }
+    .card-fee-mkt { font-weight: 600; color: var(--gg-brown-muted); font-variant-numeric: tabular-nums; }
+    .fee-market { display: inline; font-size: 0.78em; font-weight: 600; color: var(--gg-brown-muted); }
+    .fee-market-delta { font-weight: 700; color: var(--gg-royal); }
     .verified-data-badge {
       display: inline-flex; align-items: center; gap: 0.3rem;
       font-size: var(--font-min-rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
@@ -1927,7 +1937,7 @@
       font-weight: 600;
     }
     .recommendations-panel .data-report-root .rec-chart .kpi-chart-plot-bg {
-      fill: #ece6dc;
+      fill: var(--gg-chart-plot);
     }
     .recommendations-panel .rec-actions {
       margin: 0;
@@ -2734,9 +2744,15 @@
     .kpi-chart-svg-stacked,
     .kpi-chart-svg-plot { width: 100%; max-width: 40rem; height: auto; display: block; }
     .kpi-chart-plot { display: flex; flex-direction: column; gap: 0.75rem; }
-    .kpi-chart-plot-bg { fill: rgba(255, 252, 247, 0.85); }
-    .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.12); stroke-width: 1; }
-    .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.35); stroke-width: 1.5; }
+    .kpi-chart-plot-bg { fill: var(--gg-chart-plot); }
+    .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.14); stroke-width: 1; }
+    .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.4); stroke-width: 1.5; }
+    /* Stacked bars: one dark outline — never white/paper hairlines between segments */
+    .kpi-chart-svg-stacked rect {
+      stroke: var(--gg-royal-deep);
+      stroke-width: 1.25;
+      vector-effect: non-scaling-stroke;
+    }
     .kpi-chart-total { fill: var(--gg-royal-deep); font-size: 13px; font-weight: 800; }
     .kpi-chart-detail {
       margin-top: 0.85rem; padding-top: 0.75rem;
@@ -2751,23 +2767,21 @@
       font-size: 12px;
       font-weight: 900;
       pointer-events: none;
-      paint-order: stroke;
+      paint-order: stroke fill;
       stroke-linejoin: round;
+      stroke: var(--gg-royal-deep);
     }
     .kpi-chart-segment-count {
-      fill: var(--gg-paper);
-      stroke: rgba(34, 25, 20, 0.82);
-      stroke-width: 2.5px;
+      fill: #fffef9;
+      stroke-width: 2px;
     }
     .kpi-chart-segment-count-dark {
       fill: var(--gg-contrast-dark);
-      stroke: var(--gg-paper);
-      stroke-width: 2.5px;
+      stroke-width: 2px;
     }
     .kpi-chart-segment-count-outside {
       fill: var(--gg-royal-deep);
-      stroke: var(--gg-paper);
-      stroke-width: 3.5px;
+      stroke-width: 0;
     }
     .kpi-chart-table th:not(:first-child),
     .kpi-chart-table td:not(:first-child) {
@@ -2798,10 +2812,14 @@
     .kpi-stack-legend li { display: flex; align-items: center; gap: 0.45rem; }
     .kpi-stack-legend .kpi-mom-change { margin-left: 0.15rem; font-size: 0.8rem; }
     .kpi-seg-count {
-      fill: #ffffff;
+      fill: #fffef9;
+      stroke: var(--gg-royal-deep);
+      stroke-width: 2px;
+      paint-order: stroke fill;
       font-size: 12px;
       font-weight: 800;
       pointer-events: none;
+      stroke-linejoin: round;
     }
     .kpi-stack-swatch {
       width: 0.75rem; height: 0.75rem; border-radius: 3px; flex-shrink: 0;
@@ -3495,6 +3513,15 @@
       min-width: 70rem;
       max-width: none;
     }
+    /* Cases chart: scale to card width so 2025 + 2026 YTD both stay in view */
+    .kpi-cash-long-chart.kpi-cases-created-chart {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .kpi-finance-grid-cash .kpi-mini-card:has(.kpi-cases-created-chart) .kpi-chart-plot {
+      overflow-x: visible;
+    }
     .kpi-cash-long-chart .kpi-chart-total,
     .kpi-cash-long-chart .kpi-chart-axis {
       font-family: Arial, "Helvetica Neue", sans-serif;
@@ -3622,7 +3649,13 @@
     }
     .kpi-finance-grid-cash {
       grid-template-columns: minmax(0, 1fr);
-      max-width: 48rem;
+      max-width: none;
+      width: 100%;
+    }
+    .kpi-finance-grid-cash > .kpi-mini-card,
+    .kpi-finance-grid-cash .kpi-chart-card {
+      width: 100%;
+      max-width: none;
     }
     .kpi-cash-pace-tile {
       display: grid;
@@ -4909,8 +4942,8 @@
   <script src="projects-data.js?v=20260718-financial-audit-savings-share-r1"></script>
   <script src="recommendations-data.js?v=20260719-recs-content-md-r1"></script>
   <script src="dui-goal-data.js?v=20260717-practice-dui-r2"></script>
-  <script src="kpi-report.js?v=20260719-recs-content-md-r1"></script>
+  <script src="kpi-report.js?v=20260721-cases-full-width-both-years-r1"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260719-cloud-hint-rank-predict-r1"></script>
+  <script src="app.js?v=20260721-fee-estimate-r1"></script>
 </body>
 </html>

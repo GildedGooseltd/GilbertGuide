@@ -206,7 +206,7 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Donut:** maximum 4–5 segments; legend always present; exact share in the detail table.
 - **Practice-area bars:** one fixed color per practice area; never recolor by rank.
 - **Every chart card:** title + period/source caption + plot + always-visible detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the caption/table.
-- **Plot area:** warm cream-panel background `#ece6dc` with a thin aged-brass border; keep the surrounding chart card paper `#fffcf7`.
+- **Plot area:** light yellow `--gg-chart-plot` (`#fff4c4`) behind every graph for series contrast; stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
 - **Chart border:** thin royal inner line plus aged-brass accent details; ornament must not compete with labels or data.
 - **Axis labels:** include metric and unit; never rely on color alone.
 - **Channel lock:** LSA = blue; Digital/Search = burnt orange; Website/HubSpot = rose; Spend = plum.

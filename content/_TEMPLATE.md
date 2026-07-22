@@ -65,10 +65,14 @@ Open items for Kate / Andrew.
 
 - Work in progress — one deliverable per bullet
 
+## Tasks
+
+- Scoped work items — each bullet raises the **market fee estimate** on build (with Value Added, Information needed, AB-Qs)
+
 ## Completed
 
 - Already finished work — one deliverable per bullet
 
 ## Fee note (optional)
 
-Market context vs Colorado Springs / Front Range norms — see [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md).
+Market estimate recalculates on `npm run build` from local Front Range + national law-marketing bands × scope (see [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)). Locked **Fee** / INDEX **Est. cost** do not change until you copy the market figure in.

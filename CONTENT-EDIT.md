@@ -4,7 +4,8 @@
 
 | Command | Overwrites project `.md`? |
 |---------|---------------------------|
-| `npm run build` / `watch` | **No** — writes `projects-data.js` only |
+| `npm run build` / `watch` | **No** — writes `projects-data.js` (+ market fee estimates) only |
+| `npm run estimate-fees` | **No** — prints Quote vs Market table |
 | `npm run sync-impact` | **Yes** — full rewrite of projects + retainer |
 | `npm run migrate` / `format-content` / `apply-campaign-metrics` | **Yes** — full rewrite |
 
@@ -72,6 +73,11 @@ Edit [`content/recommendations.md`](content/recommendations.md):
 - Project links: `[B2 · HubSpot Phone / VoIP](project:B2)`
 
 Then `npm run build` → hard-refresh Guide.
+
+### Market fee estimates
+
+Adding **Value Added**, **Tasks**, **WIP**, **Information needed**, or **AB-Qs** raises the **Market** estimate on the next build (local Front Range + national blend). Locked **Fee** / INDEX **Est. cost** stay put until you copy Market in. Report: `npm run estimate-fees`. Bands: [`FEE-BENCHMARK-CO-SPRINGS.md`](FEE-BENCHMARK-CO-SPRINGS.md) · `scripts/fee-estimate-bands.mjs`.
+
 - **Priority:** whole numbers only; omit row for retainer / monthly-only.
 - **Angle brackets** `<…>`**:** treat as prompts — replace with real copy, data, and links (do not leave placeholders live).
 

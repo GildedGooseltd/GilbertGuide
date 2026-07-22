@@ -5,41 +5,38 @@
 window.RECOMMENDATIONS_CONTENT = {
   "page": {
     "title": "Recommendations",
-    "subtitle": "Ranked actions to hit KPIs and cover year-end expenses.",
-    "alertStatus": "Action required",
-    "alertLabel": "Expense pressure",
-    "alert": "Operating spend is too high relative to collectible forecast. Cut recurring waste first (B9). Staffing cuts only if those savings are not enough."
+    "subtitle": "Ranked actions to hit KPIs and cover year-end expenses."
   },
   "jump": [
     {
-      "rank": "1",
+      "rank": "3",
       "label": "Intake",
       "anchor": "recommendation-primary"
     },
     {
-      "rank": "2",
+      "rank": "",
       "label": "Sex Crimes",
       "anchor": "recommendation-sex-crimes"
     },
     {
-      "rank": "3",
+      "rank": "1",
       "label": "Financial audit",
       "anchor": "recommendation-financial-audit"
     },
     {
-      "rank": "4",
+      "rank": "2",
       "label": "LSA divert",
       "anchor": "recommendation-divert"
     },
     {
       "rank": "",
-      "label": "Projects",
-      "anchor": "recommendation-projects"
+      "label": "",
+      "anchor": ""
     },
     {
       "rank": "",
-      "label": "Actions",
-      "anchor": "recommendation-actions"
+      "label": "",
+      "anchor": ""
     }
   ],
   "recs": [
