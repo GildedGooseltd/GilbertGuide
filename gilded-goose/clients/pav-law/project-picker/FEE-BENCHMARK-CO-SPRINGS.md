@@ -90,10 +90,29 @@
 4. Package HubSpot children (**A3, B7, B2**, plus B1 story) under **B13** — do not re-sell as orphan agency fees.
 5. **A7** monthly production stays inside **RETAINER** — do not quote a separate social ongoing.
 
+### Live market estimate (auto)
+
+On every `npm run build`, each project gets a **market estimate** from:
+
+- **Local** CO Springs / Front Range band mid (55%)
+- **National** law-marketing band mid (45%)
+- **Scope multiplier** from Value Added, Tasks/WIP, Completed, Information needed, AB-Qs, KPIs, description depth
+- **Complexity** bumps (compliance, HubSpot+VoIP, sensitive practice, multi-channel)
+
+That figure shows on Guide cards as **Market $…** next to the locked quote. It does **not** overwrite Fee or INDEX.
+
+```bash
+cd gilded-goose/clients/pav-law/project-picker
+npm run build          # refresh Market on cards
+npm run estimate-fees  # table: Quote vs Market vs Δ
+```
+
+When you accept a new quote: copy Market → project **Fee** and INDEX **Est. cost** (nearest $100).
+
 ## Sources
 
 - Existing GGL notes: Cos Springs Web Impressions–style local packages; Subsilio Denver 2026 guide bands
 - Cos Springs PPC agency public ranges (~$1k–$5k/mo management)
 - National PPC management norms (fixed + % of spend) for law-firm budget context
 - HubSpot partner/onboarding fee norms for CRM foundation vs monthly nurture
-
+- Band table in `scripts/fee-estimate-bands.mjs` (edit lanes there when market moves)

@@ -2,52 +2,96 @@
 
 Click a **Project** name to open its `.md`. Sorted by project score (number). Template: `[_TEMPLATE.md](_TEMPLATE.md)` (matches `B2.md`).
 
-Edit **Project** titles (keep the link), **Project score**, **Status**, **Show**, **Est. cost**, **Payment plan**, and add **## Notes** at the bottom — build applies INDEX over project files.
+Two tables (same projects, linked by the Project column):
 
-**Est. cost** = Guide quote after fee-benchmark Action review (Cos Springs / Front Range). Full table: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md).
+1. **Stack** — Project score · Status · Show · Project  
+2. **Pricing** — Est. cost · Payment plan · Project  
 
-**Payment plan** = deposit / due-now for the confirm page. Rules: [PAYMENT-SCHEDULE.md](../PAYMENT-SCHEDULE.md).
+Edit either table — build merges by project link ID. Full fee table: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md). Payment rules: [PAYMENT-SCHEDULE.md](../PAYMENT-SCHEDULE.md).
 
+### Stack — score, status, show
 
-| Project score | Status                 | Show | Est. cost | Payment plan | Project                                                                             |
-| ------------- | ---------------------- | ---- | --------- | ------------ | ----------------------------------------------------------------------------------- |
-| —             | Required               | [x]  | $2,900/mo | monthly      | [Digital Ads Maintenance Retainer](retainer.md)                                     |
-| Archive       | ongoing                | [ ]  | $500/mo   | monthly      | [Data Management — Retainer](projects/A8M.md)                                       |
-| —             | Required               | [x]  | $1,600    | 50%          | [Operations Dashboard V1](projects/A8.md)                                           |
-| 1             | WIP                    | [x]  | incl. B13 | —            | [HubSpot Phone/ VoIP Setup](projects/B2.md)                                         |
-| 2             | Recommended            | [x]  | $1,500    | 50%          | [LSA Call Process Update](projects/B11.md)                                          |
-| 3             | Recommended            | [x]  | $1,800    | 40%          | [HS: Digital Profiles Refresh & Tracking Updates](projects/B10.md)                  |
-| 4             | wip                    | [x]  | $5,500    | 50%          | [HubSpot Marketing Setup](projects/B13.md)                                          |
-| 5             | wip                    | [x]  | $1,700    | 20%          | [HS: Client Referral Program](projects/A4.md)                                       |
-| 6             | wip                    | [x]  | $1,500    | 20%          | [HS: Sealing & Probation Client Reengagement](projects/A17.md)                      |
-| 7             | available              | [x]  | $2,200    | 30%          | [Insurance Envelope Mailer](projects/B5.md)                                         |
-| 8             | Recommended            | [x]  | $1,500    | 20%          | [Performance Plan Payouts](projects/A14.md)                                         |
-| 9             | available              | [x]  | $1,200    | 20%          | [Pav Law Swag & Apparel](projects/B14.md)                                           |
-| 10            | Recommended            | [x]  | $2900     | 20%          | [NTGUILT Display & Search Campaign Launch](projects/A2.md)                          |
-| 11            | available              | [x]  | $2,200    | 20%          | [Digital Ad Enhancements](projects/A1.md)                                           |
-| 12            | available              | [ ]  | $2,500    | 50%          | [Website Content Overhaul](projects/B4.md)                                          |
-| 13            | available              | [ ]  | $1,800    | 50%          | [HubSpot Pipeline Sprint](projects/B1.md)                                           |
-| 14            | available              | [x]  | $4,200    | 40%          | [Website Speed and Navigation](projects/B3.md)                                      |
-| 15            | Recommended            | [x]  | $4,500    | 30%          | [NTGUILT & Firm Social Campaigns](projects/A7.md)                                   |
-| 16            | available              | [x]  | incl. B13 | —            | [HubSpot Marketing Contacts Upload](projects/B7.md)                                 |
-| 17            | available              | [x]  | $2,400    | 30%          | [Adult Site(s) Ad Campaign](projects/A13.md)                                        |
-| 18            | Recommended            | [x]  | $1,200    | 20%          | [Gabriel Outbound Sales Calling](projects/A6.md)                                    |
-| 19            | Planning               | [x]  | $2,200    | 20%          | [Summer Seasonal Digital Ad Campaign](projects/A19.md)                              |
-| 20            | available              | [ ]  | $2,500    | 50%          | [Blog Revamp](projects/B6.md)                                                       |
-| 21            | available              | [ ]  | $2,000    | 20%          | [Casey Rebrand Digital & Professional Presence](projects/B12.md)                    |
-| 22            | available              | [x]  | $2,200    | 20%          | [Holiday Digital Ad(s) Campaign Expansion](projects/A11.md)                         |
-| 23            | Planning               | [ ]  | $1,800    | 50%          | [HubSpot Landing Page or Website Module](projects/A5.md)                            |
-| 24            | Planning               | [ ]  | $2,000    | 50%          | [Case Win Log and Testimonials](projects/A9.md)                                     |
-| 25            | available              | [ ]  | $2,200    | 50%          | [Enable Pavi Chat QA for After-Hours Support](projects/A12.md)                      |
-| 26            | Recommended            | [x]  | $1,800 + 20% verified savings | 50% | [Full Financial, Credit Card & Subscription Waste Audit](projects/B9.md) |
-| 50            | completed              | [x]  | incl. B13 | —            | [Summer Safety Email Campaign (child of B13)](projects/A3.md)                       |
-| 51            | completed              | [x]  | $1,500    |              | [Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone](projects/A10.md) |
-| 52            | Archived               | [ ]  | $2,500    | —            | [Summer Event Activation & Lead Capture](projects/A15.md)                           |
-| 53            | archived · next summer | [ ]  | $1,000    | —            | [Garage Partnership](projects/A16.md)                                               |
-| 54            | completed              | [x]  | $2,000    |              | [Systems Access Audit & Cleanse](projects/C1.md)                                    |
-| 55            | completed              | [x]  | $1,500    |              | [Email Outage Triage & DNS Runbook](projects/C2.md)                                 |
-| 56            | archived · merged A7   | [x]  | merged A7 | —            | [Reddit NTGUILT Ads Test (merged into A7)](projects/A18.md)                         |
-| 57            | archived · merged A7   | [x]  | merged A7 | —            | [HubSpot Social Media Marketing (merged into A7)](projects/B8.md)                   |
+| Project score | Status                 | Show | Project                                                                             |
+| ------------- | ---------------------- | ---- | ----------------------------------------------------------------------------------- |
+| —             | Required               | [x]  | [Digital Ads Maintenance Retainer](retainer.md)                                     |
+| Archive       | ongoing                | [ ]  | [Data Management — Retainer](projects/A8M.md)                                       |
+| —             | Required               | [x]  | [Operations Dashboard V1](projects/A8.md)                                           |
+| 1             | WIP                    | [x]  | [HubSpot Phone/ VoIP Setup](projects/B2.md)                                         |
+| 2             | Recommended            | [x]  | [LSA Call Process Update](projects/B11.md)                                          |
+| 3             | Recommended            | [x]  | [HS: Digital Profiles Refresh & Tracking Updates](projects/B10.md)                  |
+| 4             | wip                    | [x]  | [HubSpot Marketing Setup](projects/B13.md)                                          |
+| 5             | wip                    | [x]  | [HS: Client Referral Program](projects/A4.md)                                       |
+| 6             | wip                    | [x]  | [HS: Sealing & Probation Client Reengagement](projects/A17.md)                      |
+| 7             | available              | [x]  | [Insurance Envelope Mailer](projects/B5.md)                                         |
+| 8             | Recommended            | [x]  | [Performance Plan Payouts](projects/A14.md)                                         |
+| 9             | available              | [x]  | [Pav Law Swag & Apparel](projects/B14.md)                                           |
+| 10            | Recommended            | [x]  | [NTGUILT Display & Search Campaign Launch](projects/A2.md)                          |
+| 11            | available              | [x]  | [Digital Ad Enhancements](projects/A1.md)                                           |
+| 12            | available              | [ ]  | [Website Content Overhaul](projects/B4.md)                                          |
+| 13            | available              | [ ]  | [HubSpot Pipeline Sprint](projects/B1.md)                                           |
+| 14            | available              | [x]  | [Website Speed and Navigation](projects/B3.md)                                      |
+| 15            | Recommended            | [x]  | [NTGUILT & Firm Social Campaigns](projects/A7.md)                                   |
+| 16            | available              | [x]  | [HubSpot Marketing Contacts Upload](projects/B7.md)                                 |
+| 17            | available              | [x]  | [Adult Site(s) Ad Campaign](projects/A13.md)                                        |
+| 18            | Recommended            | [x]  | [Gabriel Outbound Sales Calling](projects/A6.md)                                    |
+| 19            | Planning               | [x]  | [Summer Seasonal Digital Ad Campaign](projects/A19.md)                              |
+| 20            | available              | [ ]  | [Blog Revamp](projects/B6.md)                                                       |
+| 21            | available              | [ ]  | [Casey Rebrand Digital & Professional Presence](projects/B12.md)                    |
+| 22            | available              | [x]  | [Holiday Digital Ad(s) Campaign Expansion](projects/A11.md)                         |
+| 23            | Planning               | [ ]  | [HubSpot Landing Page or Website Module](projects/A5.md)                            |
+| 24            | Planning               | [ ]  | [Case Win Log and Testimonials](projects/A9.md)                                     |
+| 25            | available              | [ ]  | [Enable Pavi Chat QA for After-Hours Support](projects/A12.md)                      |
+| 26            | Recommended            | [x]  | [Full Financial Waste Audit](projects/B9.md)                                        |
+| 50            | completed              | [x]  | [Summer Safety Email Campaign (child of B13)](projects/A3.md)                       |
+| 51            | completed              | [x]  | [Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone](projects/A10.md) |
+| 52            | Archived               | [ ]  | [Summer Event Activation & Lead Capture](projects/A15.md)                           |
+| 53            | archived · next summer | [ ]  | [Garage Partnership](projects/A16.md)                                               |
+| 54            | completed              | [x]  | [Systems Access Audit & Cleanse](projects/C1.md)                                    |
+| 55            | completed              | [x]  | [Email Outage Triage & DNS Runbook](projects/C2.md)                                 |
+| 56            | archived · merged A7   | [x]  | [Reddit NTGUILT Ads Test (merged into A7)](projects/A18.md)                         |
+| 57            | archived · merged A7   | [x]  | [HubSpot Social Media Marketing (merged into A7)](projects/B8.md)                   |
+
+### Pricing — est. cost & payment plan
+
+| Est. cost                     | Payment plan | Project                                                                             |
+| ----------------------------- | ------------ | ----------------------------------------------------------------------------------- |
+| $2,900/mo                     | monthly      | [Digital Ads Maintenance Retainer](retainer.md)                                     |
+| $500/mo                       | monthly      | [Data Management — Retainer](projects/A8M.md)                                       |
+| $1,600                        | 50%          | [Operations Dashboard V1](projects/A8.md)                                           |
+| incl. B13                     | —            | [HubSpot Phone/ VoIP Setup](projects/B2.md)                                         |
+| $1,500                        | 50%          | [LSA Call Process Update](projects/B11.md)                                          |
+| $1,800                        | 40%          | [HS: Digital Profiles Refresh & Tracking Updates](projects/B10.md)                  |
+| $5,500                        | 50%          | [HubSpot Marketing Setup](projects/B13.md)                                          |
+| $1,700                        | 20%          | [HS: Client Referral Program](projects/A4.md)                                       |
+| $1,500                        | 20%          | [HS: Sealing & Probation Client Reengagement](projects/A17.md)                      |
+| $2,200                        | 30%          | [Insurance Envelope Mailer](projects/B5.md)                                         |
+| $1,500                        | 20%          | [Performance Plan Payouts](projects/A14.md)                                         |
+| $1,200                        | 20%          | [Pav Law Swag & Apparel](projects/B14.md)                                           |
+| $2900                         | 20%          | [NTGUILT Display & Search Campaign Launch](projects/A2.md)                          |
+| $2,200                        | 20%          | [Digital Ad Enhancements](projects/A1.md)                                           |
+| $2,500                        | 50%          | [Website Content Overhaul](projects/B4.md)                                          |
+| $1,800                        | 50%          | [HubSpot Pipeline Sprint](projects/B1.md)                                           |
+| $4,200                        | 40%          | [Website Speed and Navigation](projects/B3.md)                                      |
+| $4,500                        | 30%          | [NTGUILT & Firm Social Campaigns](projects/A7.md)                                   |
+| incl. B13                     | —            | [HubSpot Marketing Contacts Upload](projects/B7.md)                                 |
+| $2,400                        | 30%          | [Adult Site(s) Ad Campaign](projects/A13.md)                                        |
+| $1,200                        | 20%          | [Gabriel Outbound Sales Calling](projects/A6.md)                                    |
+| $2,200                        | 20%          | [Summer Seasonal Digital Ad Campaign](projects/A19.md)                              |
+| $2,500                        | 50%          | [Blog Revamp](projects/B6.md)                                                       |
+| $2,000                        | 20%          | [Casey Rebrand Digital & Professional Presence](projects/B12.md)                    |
+| $2,200                        | 20%          | [Holiday Digital Ad(s) Campaign Expansion](projects/A11.md)                         |
+| $1,800                        | 50%          | [HubSpot Landing Page or Website Module](projects/A5.md)                            |
+| $2,000                        | 50%          | [Case Win Log and Testimonials](projects/A9.md)                                     |
+| $2,200                        | 50%          | [Enable Pavi Chat QA for After-Hours Support](projects/A12.md)                      |
+| $1,800 + 20% verified savings | 50%          | [Full Financial Waste Audit](projects/B9.md)                                        |
+| incl. B13                     | —            | [Summer Safety Email Campaign (child of B13)](projects/A3.md)                       |
+| $1,500                        |              | [Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone](projects/A10.md) |
+| $2,500                        | —            | [Summer Event Activation & Lead Capture](projects/A15.md)                           |
+| $1,000                        | —            | [Garage Partnership](projects/A16.md)                                               |
+| $2,000                        |              | [Systems Access Audit & Cleanse](projects/C1.md)                                    |
+| $1,500                        |              | [Email Outage Triage & DNS Runbook](projects/C2.md)                                 |
+| merged A7                     | —            | [Reddit NTGUILT Ads Test (merged into A7)](projects/A18.md)                         |
+| merged A7                     | —            | [HubSpot Social Media Marketing (merged into A7)](projects/B8.md)                   |
 
 
 **Retainer / monthly-only:** omit **Project score** row (shows as —).

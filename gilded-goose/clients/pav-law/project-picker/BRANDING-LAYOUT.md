@@ -39,6 +39,7 @@ Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for t
 | `--gg-gold-dark`    | `#b8860b`             | Critical metallic accent only                 |
 | `--gg-cream`        | `#f8f5ef`             | Page background (`--bg`)                      |
 | `--gg-cream-panel`  | `#f3ede4`             | Nested panels                                 |
+| `--gg-chart-plot`   | `#fff4c4`             | Chart plot field (light yellow for series contrast) |
 | `--gg-paper`        | `#fffcf7`             | Cards, inputs (`--surface`)                   |
 | `--gg-brown`        | `#3d3028`             | Body text (`--text`)                          |
 | `--gg-brown-muted`  | `#5c4f45`             | Secondary (`--secondary`)                     |
@@ -166,6 +167,8 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 ## 6. KPI chart colors
 
 **Structure:** every graph card uses `chartBlock()` — plot + legend (2+ series) + detail table always below (not behind “Show table” alone).
+
+**Plot field:** `--gg-chart-plot` (`#fff4c4`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 
 **Locked triad** (unique, high-contrast — no two similar purples adjacent):
 

@@ -73,7 +73,30 @@ window.PROJECT_DATA = {
     "abQuestions": [],
     "kpiRefs": [],
     "estCostLabel": "$2,900/mo",
-    "paymentPlanLabel": "monthly"
+    "paymentPlanLabel": "monthly",
+    "feeEstimate": 4400,
+    "feeEstimateOngoing": null,
+    "feeEstimateLane": "retainer_ads",
+    "feeEstimateUnit": "mo",
+    "feeEstimateLocalMid": 3000,
+    "feeEstimateNationalMid": 3800,
+    "feeEstimateScope": {
+      "raw": 8.73,
+      "parts": {
+        "valueAdd": 4,
+        "tasks": 1,
+        "completed": 8,
+        "info": 0,
+        "ab": 0,
+        "kpis": 0,
+        "descUnits": 0.28
+      }
+    },
+    "feeEstimateComplexity": 1.1,
+    "feeEstimateBlend": "55% local / 45% national",
+    "feeEstimatePackaged": false,
+    "feeEstimateDelta": 1500,
+    "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.20 (8.73 units) · complexity ×1.1"
   },
   "projects": [
     {
@@ -133,7 +156,30 @@ window.PROJECT_DATA = {
         "#21"
       ],
       "estCostLabel": "incl. B13",
-      "paymentPlanLabel": "—"
+      "paymentPlanLabel": "—",
+      "feeEstimate": 4400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "intake_voip",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3300,
+      "feeEstimateScope": {
+        "raw": 16.19,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 7,
+          "completed": 4,
+          "info": 0,
+          "ab": 0,
+          "kpis": 2,
+          "descUnits": 1.14
+        }
+      },
+      "feeEstimateComplexity": 1.188,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": true,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "intake voip lane · local mid $2,500 · national mid $3,250 · scope ×1.30 (16.19 units) · complexity ×1.188"
     },
     {
       "id": "B11",
@@ -183,7 +229,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 2700,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "lsa_process",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1600,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 9.74,
+        "parts": {
+          "valueAdd": 2,
+          "tasks": 5,
+          "completed": 2,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.69
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1200,
+      "feeEstimateNote": "lsa process lane · local mid $1,600 · national mid $2,500 · scope ×1.21 (9.74 units) · complexity ×1.1"
     },
     {
       "id": "B10",
@@ -260,7 +329,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "40%",
-      "depositPct": 0.4
+      "depositPct": 0.4,
+      "feeEstimate": 3000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 17.58,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 7,
+          "completed": 3,
+          "info": 5,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.88
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.31 (17.58 units) · complexity ×1.08"
     },
     {
       "id": "B13",
@@ -310,7 +402,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$5,500",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 9700,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "hubspot_foundation",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 5500,
+      "feeEstimateNationalMid": 10000,
+      "feeEstimateScope": {
+        "raw": 7.55,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 2,
+          "completed": 3,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.85
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 4200,
+      "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×1.17 (7.55 units) · complexity ×1.1"
     },
     {
       "id": "A4",
@@ -328,14 +443,18 @@ window.PROJECT_DATA = {
         "friends",
         "colleagues",
         "warm",
-        "email"
+        "email",
+        "reviews",
+        "review response",
+        "reputation"
       ],
       "title": "HS: Client Referral Program",
-      "description": "Referral marketing outperforms cold paid channels because trust is already established. Track 1 owns past-client referral asks; Track 2 (sealing and probation reengagement) is A17 under this parent.",
-      "tldr": "Highest-trust lead channel for direct-hire traffic and stronger review presence.",
+      "description": "Referral marketing outperforms cold paid channels because trust is already established. Track 1 owns past-client referral asks and **responding to reviews** on public listings so new prospects see an active, professional firm. Track 2 (sealing and probation reengagement) is A17 under this parent.",
+      "tldr": "Highest-trust lead channel for direct-hire traffic, plus responding to reviews so reputation keeps compounding.",
       "valueAdded": [
         "Highest-trust leads, often also the best high-dollar matters",
         "Setup plus $500/mo upkeep so asks stay active",
+        "Responding to reviews (Google, Yelp, and other live listings) on a steady cadence",
         "Track 1 (referral asks); Track 2 sealing/probation lives on A17"
       ],
       "valueIcons": [
@@ -344,12 +463,35 @@ window.PROJECT_DATA = {
         "crm",
         "intake"
       ],
-      "goal": "Generate about 10 referral leads per month via past-client asks with active monthly upkeep.",
+      "goal": "Generate about 10 referral leads per month via past-client asks with active monthly upkeep, and keep review responses current on the firm’s live listings.",
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$1,700",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 2800,
+      "feeEstimateOngoing": 700,
+      "feeEstimateLane": "referral_program",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2100,
+      "feeEstimateNationalMid": 3200,
+      "feeEstimateScope": {
+        "raw": 5.01,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.01
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1100,
+      "feeEstimateNote": "referral program lane · local mid $2,100 · national mid $3,150 · scope ×1.11 (5.01 units) · complexity ×1"
     },
     {
       "id": "A17",
@@ -403,7 +545,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 3100,
+      "feeEstimateOngoing": 900,
+      "feeEstimateLane": "referral_program",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2100,
+      "feeEstimateNationalMid": 3200,
+      "feeEstimateScope": {
+        "raw": 10.34,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 4,
+          "completed": 1,
+          "info": 1,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.39
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1600,
+      "feeEstimateNote": "referral program lane · local mid $2,100 · national mid $3,150 · scope ×1.22 (10.34 units) · complexity ×1"
     },
     {
       "id": "B5",
@@ -451,7 +616,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "30%",
-      "depositPct": 0.3
+      "depositPct": 0.3,
+      "feeEstimate": 3200,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "mailer",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2200,
+      "feeEstimateNationalMid": 3000,
+      "feeEstimateScope": {
+        "raw": 6.74,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 1,
+          "completed": 4,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.89
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1000,
+      "feeEstimateNote": "mailer lane · local mid $2,150 · national mid $3,000 · scope ×1.15 (6.74 units) · complexity ×1.08"
     },
     {
       "id": "A14",
@@ -504,7 +692,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 3000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "performance_comp",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1600,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 16.69,
+        "parts": {
+          "valueAdd": 5,
+          "tasks": 8,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.69
+        }
+      },
+      "feeEstimateComplexity": 1.145,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1500,
+      "feeEstimateNote": "performance comp lane · local mid $1,600 · national mid $2,500 · scope ×1.30 (16.69 units) · complexity ×1.145"
     },
     {
       "id": "B14",
@@ -553,7 +764,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$1,200",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 1700,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "swag_consult",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1300,
+      "feeEstimateNationalMid": 1800,
+      "feeEstimateScope": {
+        "raw": 6.3,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 0,
+          "info": 3,
+          "ab": 1,
+          "kpis": 0,
+          "descUnits": 1
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 500,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.14 (6.3 units) · complexity ×1"
     },
     {
       "id": "A2",
@@ -599,7 +833,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2900",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 4600,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "display_search_launch",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 3100,
+      "feeEstimateNationalMid": 4800,
+      "feeEstimateScope": {
+        "raw": 5.43,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 4,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.83
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1700,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.12 (5.43 units) · complexity ×1.08"
     },
     {
       "id": "A1",
@@ -655,7 +912,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 4600,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "ads_campaign",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3800,
+      "feeEstimateScope": {
+        "raw": 10.74,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 4,
+          "completed": 3,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.54
+        }
+      },
+      "feeEstimateComplexity": 1.21,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2400,
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.23 (10.74 units) · complexity ×1.21"
     },
     {
       "id": "B4",
@@ -703,7 +983,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 3900,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "website_content",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2700,
+      "feeEstimateNationalMid": 4300,
+      "feeEstimateScope": {
+        "raw": 7.03,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 2,
+          "completed": 2,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.73
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1400,
+      "feeEstimateNote": "website content lane · local mid $2,650 · national mid $4,250 · scope ×1.16 (7.03 units) · complexity ×1"
     },
     {
       "id": "B1",
@@ -751,7 +1054,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 3300,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "hubspot_sprint",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 3500,
+      "feeEstimateScope": {
+        "raw": 7.54,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 2,
+          "completed": 3,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.84
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1500,
+      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.17 (7.54 units) · complexity ×1.1"
     },
     {
       "id": "B3",
@@ -798,7 +1124,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$4,200",
       "paymentPlanLabel": "40%",
-      "depositPct": 0.4
+      "depositPct": 0.4,
+      "feeEstimate": 8200,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "website_ux",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 5500,
+      "feeEstimateNationalMid": 9500,
+      "feeEstimateScope": {
+        "raw": 5.8,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 1,
+          "completed": 2,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.75
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 4000,
+      "feeEstimateNote": "website ux lane · local mid $5,500 · national mid $9,500 · scope ×1.13 (5.8 units) · complexity ×1"
     },
     {
       "id": "A7",
@@ -858,7 +1207,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$4,500",
       "paymentPlanLabel": "30%",
-      "depositPct": 0.3
+      "depositPct": 0.3,
+      "feeEstimate": 5900,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "social_setup",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 4300,
+      "feeEstimateNationalMid": 5300,
+      "feeEstimateScope": {
+        "raw": 12.53,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 4,
+          "completed": 5,
+          "info": 1,
+          "ab": 1,
+          "kpis": 0,
+          "descUnits": 1.33
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1400,
+      "feeEstimateNote": "social setup lane · local mid $4,250 · national mid $5,250 · scope ×1.26 (12.53 units) · complexity ×1"
     },
     {
       "id": "B7",
@@ -910,7 +1282,30 @@ window.PROJECT_DATA = {
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "incl. B13",
-      "paymentPlanLabel": "—"
+      "paymentPlanLabel": "—",
+      "feeEstimate": 3300,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "hubspot_sprint",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 3500,
+      "feeEstimateScope": {
+        "raw": 6.98,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 2,
+          "completed": 2,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.68
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": true,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.16 (6.98 units) · complexity ×1.1"
     },
     {
       "id": "A13",
@@ -951,7 +1346,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,400",
       "paymentPlanLabel": "30%",
-      "depositPct": 0.3
+      "depositPct": 0.3,
+      "feeEstimate": 5000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "display_search_launch",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 3100,
+      "feeEstimateNationalMid": 4800,
+      "feeEstimateScope": {
+        "raw": 3.79,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.79
+        }
+      },
+      "feeEstimateComplexity": 1.21,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2600,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.07 (3.79 units) · complexity ×1.21"
     },
     {
       "id": "A6",
@@ -989,7 +1407,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$1,200",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 1900,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "outbound_enable",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1400,
+      "feeEstimateNationalMid": 2000,
+      "feeEstimateScope": {
+        "raw": 3.84,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.84
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 700,
+      "feeEstimateNote": "outbound enable lane · local mid $1,350 · national mid $2,000 · scope ×1.07 (3.84 units) · complexity ×1.1"
     },
     {
       "id": "A19",
@@ -1046,7 +1487,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 2800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 9.5,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 1,
+          "completed": 0,
+          "info": 4,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 2.05
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 600,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.21 (9.5 units) · complexity ×1.08"
     },
     {
       "id": "B6",
@@ -1090,7 +1554,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 3400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "blog_seo",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 4000,
+      "feeEstimateScope": {
+        "raw": 4.18,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 1,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.78
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 900,
+      "feeEstimateNote": "blog seo lane · local mid $2,500 · national mid $4,000 · scope ×1.08 (4.18 units) · complexity ×1"
     },
     {
       "id": "B12",
@@ -1137,7 +1624,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,000",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 3200,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "creative_brand",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2100,
+      "feeEstimateNationalMid": 3300,
+      "feeEstimateScope": {
+        "raw": 5.28,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 1,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.02
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1200,
+      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.12 (5.28 units) · complexity ×1.08"
     },
     {
       "id": "A11",
@@ -1187,7 +1697,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
-      "depositPct": 0.2
+      "depositPct": 0.2,
+      "feeEstimate": 4800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "display_search_launch",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 3100,
+      "feeEstimateNationalMid": 4800,
+      "feeEstimateScope": {
+        "raw": 6.83,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 2.83
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2600,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.16 (6.83 units) · complexity ×1.08"
     },
     {
       "id": "A5",
@@ -1230,7 +1763,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 3100,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "hubspot_sprint",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 3500,
+      "feeEstimateScope": {
+        "raw": 4.55,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 2,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.75
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1300,
+      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.09 (4.55 units) · complexity ×1.1"
     },
     {
       "id": "A9",
@@ -1267,7 +1823,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,000",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 3000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "creative_brand",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2100,
+      "feeEstimateNationalMid": 3300,
+      "feeEstimateScope": {
+        "raw": 3.73,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.73
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1000,
+      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.06 (3.73 units) · complexity ×1.08"
     },
     {
       "id": "A12",
@@ -1309,7 +1888,30 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 3100,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "chat_qa",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2300,
+      "feeEstimateNationalMid": 3300,
+      "feeEstimateScope": {
+        "raw": 3.86,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.86
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 900,
+      "feeEstimateNote": "chat qa lane · local mid $2,250 · national mid $3,250 · scope ×1.07 (3.86 units) · complexity ×1.08"
     },
     {
       "id": "B9",
@@ -1370,7 +1972,30 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,800 + 20% verified savings",
       "ongoingFee": 20,
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 4700,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "audit_finance",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 4300,
+      "feeEstimateScope": {
+        "raw": 20.71,
+        "parts": {
+          "valueAdd": 9,
+          "tasks": 9,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.46
+        }
+      },
+      "feeEstimateComplexity": 1.06,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2900,
+      "feeEstimateNote": "audit finance lane · local mid $2,500 · national mid $4,250 · scope ×1.34 (20.71 units) · complexity ×1.06"
     },
     {
       "id": "A3",
@@ -1411,7 +2036,30 @@ window.PROJECT_DATA = {
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "incl. B13",
-      "paymentPlanLabel": "—"
+      "paymentPlanLabel": "—",
+      "feeEstimate": 2800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "hubspot_sprint",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 3500,
+      "feeEstimateScope": {
+        "raw": 4.15,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.15
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": true,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.08 (4.15 units) · complexity ×1"
     },
     {
       "id": "A10",
@@ -1453,7 +2101,30 @@ window.PROJECT_DATA = {
       ],
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,500"
+      "estCostLabel": "$1,500",
+      "feeEstimate": 2800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "audit_stack",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2900,
+      "feeEstimateScope": {
+        "raw": 5.04,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 2,
+          "info": 1,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.69
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1300,
+      "feeEstimateNote": "audit stack lane · local mid $1,850 · national mid $2,900 · scope ×1.11 (5.04 units) · complexity ×1.1"
     },
     {
       "id": "A15",
@@ -1510,7 +2181,30 @@ window.PROJECT_DATA = {
       ],
       "kpiRefs": [],
       "estCostLabel": "$2,500",
-      "paymentPlanLabel": "—"
+      "paymentPlanLabel": "—",
+      "feeEstimate": 4100,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "sprint_general",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2900,
+      "feeEstimateNationalMid": 3900,
+      "feeEstimateScope": {
+        "raw": 11.24,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 4,
+          "completed": 2,
+          "info": 2,
+          "ab": 1,
+          "kpis": 0,
+          "descUnits": 0.69
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1600,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.24 (11.24 units) · complexity ×1"
     },
     {
       "id": "A16",
@@ -1565,7 +2259,30 @@ window.PROJECT_DATA = {
       ],
       "kpiRefs": [],
       "estCostLabel": "$1,000",
-      "paymentPlanLabel": "—"
+      "paymentPlanLabel": "—",
+      "feeEstimate": 4000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "sprint_general",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2900,
+      "feeEstimateNationalMid": 3900,
+      "feeEstimateScope": {
+        "raw": 9.86,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 3,
+          "completed": 1,
+          "info": 2,
+          "ab": 1,
+          "kpis": 0,
+          "descUnits": 0.96
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 3000,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.22 (9.86 units) · complexity ×1"
     },
     {
       "id": "C1",
@@ -1608,7 +2325,30 @@ window.PROJECT_DATA = {
       "goal": "Admin access documented and cleansed for Google Ads/LSA, GBP, Analytics, Bluehost, WordPress, and MyCase with risks flagged.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$2,000"
+      "estCostLabel": "$2,000",
+      "feeEstimate": 2400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 4.71,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 2,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.91
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 400,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.10 (4.71 units) · complexity ×1"
     },
     {
       "id": "C2",
@@ -1648,7 +2388,30 @@ window.PROJECT_DATA = {
       "goal": "Inbound mail restored and a reusable runbook exists for MX/DNS / Workspace routing failures.",
       "abQuestions": [],
       "kpiRefs": [],
-      "estCostLabel": "$1,500"
+      "estCostLabel": "$1,500",
+      "feeEstimate": 2000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "email_campaign",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1600,
+      "feeEstimateNationalMid": 2100,
+      "feeEstimateScope": {
+        "raw": 4.55,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 2,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.75
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 500,
+      "feeEstimateNote": "email campaign lane · local mid $1,550 · national mid $2,100 · scope ×1.09 (4.55 units) · complexity ×1"
     },
     {
       "id": "A18",
@@ -1698,7 +2461,30 @@ window.PROJECT_DATA = {
       ],
       "kpiRefs": [],
       "estCostLabel": "merged A7",
-      "paymentPlanLabel": "—"
+      "paymentPlanLabel": "—",
+      "feeEstimate": 4000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "sprint_general",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2900,
+      "feeEstimateNationalMid": 3900,
+      "feeEstimateScope": {
+        "raw": 9.19,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 3,
+          "completed": 1,
+          "info": 1,
+          "ab": 1,
+          "kpis": 0,
+          "descUnits": 0.84
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": true,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.20 (9.19 units) · complexity ×1"
     },
     {
       "id": "B8",
@@ -1747,7 +2533,30 @@ window.PROJECT_DATA = {
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "merged A7",
-      "paymentPlanLabel": "—"
+      "paymentPlanLabel": "—",
+      "feeEstimate": 4100,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "sprint_general",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2900,
+      "feeEstimateNationalMid": 3900,
+      "feeEstimateScope": {
+        "raw": 5.79,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 1,
+          "completed": 2,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.74
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": true,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.13 (5.79 units) · complexity ×1.1"
     },
     {
       "id": "A8",
@@ -1799,7 +2608,30 @@ window.PROJECT_DATA = {
       ],
       "estCostLabel": "$1,600",
       "paymentPlanLabel": "50%",
-      "depositPct": 0.5
+      "depositPct": 0.5,
+      "feeEstimate": 4000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "sprint_general",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2900,
+      "feeEstimateNationalMid": 3900,
+      "feeEstimateScope": {
+        "raw": 8.65,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 1,
+          "completed": 6,
+          "info": 2,
+          "ab": 0,
+          "kpis": 1,
+          "descUnits": 0.55
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2400,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.19 (8.65 units) · complexity ×1"
     },
     {
       "id": "A8M",
@@ -1841,7 +2673,30 @@ window.PROJECT_DATA = {
       "abQuestions": [],
       "kpiRefs": [],
       "estCostLabel": "$500/mo",
-      "paymentPlanLabel": "monthly"
+      "paymentPlanLabel": "monthly",
+      "feeEstimate": 3000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "digital_bundle_mo",
+      "feeEstimateUnit": "mo",
+      "feeEstimateLocalMid": 2300,
+      "feeEstimateNationalMid": 3500,
+      "feeEstimateScope": {
+        "raw": 3.71,
+        "parts": {
+          "valueAdd": 2,
+          "tasks": 0,
+          "completed": 0,
+          "info": 2,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.61
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2500,
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.06 (3.71 units) · complexity ×1"
     }
   ]
 };

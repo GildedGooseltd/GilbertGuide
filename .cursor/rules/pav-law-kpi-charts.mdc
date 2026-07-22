@@ -1,10 +1,12 @@
 ---
 description: Pav Law KPI charts — unique series colors, legend, detail table under every graph
-globs: gilded-goose/clients/pav-law/project-picker/**/{kpi-report.js,metrics.css,metrics.html,index.html,BRANDING-LAYOUT.md}
+globs: gilded-goose/clients/pav-law/project-picker/**/{kpi-report.js,metrics.css,metrics.html,index.html,BRANDING-LAYOUT.md,REPORTING-BRAND-GUIDE.md}
 alwaysApply: false
 ---
 
 # Pav Law KPI charts
+
+Align to [`BRANDING-LAYOUT.md`](../gilded-goose/clients/pav-law/project-picker/BRANDING-LAYOUT.md) and [`REPORTING-BRAND-GUIDE.md`](../gilded-goose/clients/pav-law/project-picker/REPORTING-BRAND-GUIDE.md) first — see [`pav-law-branding.mdc`](pav-law-branding.mdc).
 
 When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
 
@@ -23,8 +25,9 @@ When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
    - LSA / intake → `#1e3a8a` (royal blue / `--gg-royal-blue`)
    - Spend / cost → `#6a5acd` (plum / `--gg-plum`)
    - **Gold is never an ordinary chart category.** Reserve it for a rare critical CTA or milestone outside the plot.
-3. **Normal chart formatting** — labeled axes/ticks, plot background, baseline, totals above columns (not colliding with y-axis labels), month/category labels under bars, explicit legend with swatches.
+3. **Normal chart formatting** — labeled axes/ticks, plot background (`--gg-chart-plot` light yellow), baseline, totals above columns (not colliding with y-axis labels), month/category labels under bars, explicit legend with swatches.
    - **Month ordering:** always place the **current (most recent) month first**, then go backward in time. Label the axis so the newest → oldest direction is clear. Same for period detail tables.
+   - **Stacked bar outlines:** one royal-deep stroke only — never white/paper hairlines between segments.
 4. **Positive counts** never red/magenta. Red only for negative MoM / negative metric values. Green only means positive/verified/target reached; target-hit gauges finish green, not gold.
 5. Keep `BRANDING-LAYOUT.md` chart notes in sync when palette or chart conventions change.
 

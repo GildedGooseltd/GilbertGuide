@@ -12,6 +12,7 @@ import {
   applyIndexOverrides
 } from "./markdown-project.mjs";
 import { parseRecommendationsMarkdown } from "./parse-recommendations.mjs";
+import { applyFeeEstimate } from "./estimate-project-fee.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CONTENT = path.join(ROOT, "content");
@@ -51,6 +52,10 @@ function build() {
     const existingIndex = fs.readFileSync(indexPath, "utf8");
     ({ retainer, projects } = applyIndexOverrides(projects, retainer, existingIndex));
   }
+
+  /* Market estimates from local + national bands × project scope (tasks / value / info). Does not change Fee. */
+  applyFeeEstimate(retainer);
+  projects.forEach(applyFeeEstimate);
 
   const data = {
     guideName: settings.guideName,

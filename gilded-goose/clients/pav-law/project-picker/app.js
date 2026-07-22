@@ -2812,7 +2812,46 @@
   function feeLabelFor(item) {
     if (item.ongoingFee) return `${fmt(item.fee)} + ${fmt(item.ongoingFee)}`;
     if (item.perCampaignFee) return `${fmt(item.fee)} per campaign`;
+    if (item.monthlyOnly || item.id === "RETAINER" || item.id === "A8M") return `${fmt(item.fee)}/mo`;
     return fmt(item.fee);
+  }
+
+  function marketFeeLabel(item) {
+    if (item.feeEstimate == null || !Number.isFinite(Number(item.feeEstimate))) return "";
+    const unit = item.feeEstimateUnit === "mo" ? "/mo" : "";
+    let s = `${fmt(item.feeEstimate)}${unit}`;
+    if (item.feeEstimateOngoing) s += ` + ${fmt(item.feeEstimateOngoing)}/mo`;
+    return s;
+  }
+
+  /** Quote fee + market estimate (local/national blend) for priorities / revenue tables. */
+  function feeCellHtml(itemOrRow) {
+    const item = itemOrRow && itemOrRow.id ? itemOrRow : null;
+    const quote = item ? feeLabelFor(item) : String(itemOrRow?.fee || itemOrRow || "—");
+    if (!item) return escapeHtml(quote);
+    const market = marketFeeLabel(item);
+    if (!market) return escapeHtml(quote);
+    const title = escapeHtml(item.feeEstimateNote || "Market estimate from local + national bands × project scope");
+    const delta = item.feeEstimateDelta;
+    const deltaBit =
+      delta == null || item.feeEstimatePackaged
+        ? item.feeEstimatePackaged
+          ? ` <span class="fee-market-delta">packaged</span>`
+          : ""
+        : ` <span class="fee-market-delta">${delta >= 0 ? "+" : "−"}${fmt(Math.abs(delta))}</span>`;
+    return `${escapeHtml(quote)}<span class="fee-market" title="${title}"> · mkt ${escapeHtml(market)}${deltaBit}</span>`;
+  }
+
+  function feeMarketLineHtml(item) {
+    const market = marketFeeLabel(item);
+    if (!market) return "";
+    const quote = feeLabelFor(item);
+    const title = escapeHtml(item.feeEstimateNote || "");
+    const delta = item.feeEstimateDelta;
+    let deltaTxt = "";
+    if (item.feeEstimatePackaged) deltaTxt = " · packaged under parent";
+    else if (delta != null) deltaTxt = ` · ${delta >= 0 ? "+" : "−"}${fmt(Math.abs(delta))} vs quote`;
+    return `<div class="card-fee-market" title="${title}"><span class="card-fee-quote">${escapeHtml(quote)}</span><span class="card-fee-mkt">Market ${escapeHtml(market)}${escapeHtml(deltaTxt)}</span></div>`;
   }
 
   function itemSelectionCost(item) {
@@ -3249,6 +3288,7 @@
                 <div class="card-title"><span>${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
                 ${iconsHtml ? `<div class="card-title-icons">${iconsHtml}</div>` : ""}
               </div>
+              ${feeMarketLineHtml(item)}
               ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
               ${abQuestionsBannerHtml(item)}
               ${descriptionHtml(item)}
@@ -4310,9 +4350,10 @@
       const req = row.id === "RETAINER"
         ? requiredMarkerHtml(RETAINER, true)
         : (() => { const p = PROJECTS.find(x => x.id === row.id); return p ? requiredMarkerHtml(p, false) : ""; })();
+      const item = row.id === "RETAINER" ? RETAINER : PROJECTS.find(x => x.id === row.id);
       return `<tr>
         <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${row.parentId ? "↳ " : ""}${escapeHtml(row.title)}</span></a></td>
-        <td class="col-fee">${row.fee}</td>
+        <td class="col-fee">${item ? feeCellHtml(item) : escapeHtml(row.fee)}</td>
       </tr>`;
     }).join("");
     const label = items.length === 1 ? "1 item selected" : `${items.length} items selected`;

@@ -1,0 +1,29 @@
+---
+description: Gilbert Guide UI must always follow Pav Law branding docs
+alwaysApply: true
+---
+
+# Pav Law / Gilbert Guide — always align to branding
+
+Before changing **any** Gilbert Guide surface (KPIs, Data, Recommendations, Predictions, Results, Guide/picker, charts, tables, callouts, tabs):
+
+1. **Read first**
+   - [`BRANDING-LAYOUT.md`](gilded-goose/clients/pav-law/project-picker/BRANDING-LAYOUT.md) — tokens, typography, chrome, section heads
+   - [`REPORTING-BRAND-GUIDE.md`](gilded-goose/clients/pav-law/project-picker/REPORTING-BRAND-GUIDE.md) — color meanings, semantic states, callouts, tables, chart rules
+
+2. **Source of truth** is live Guide tokens in `index.html` `:root` plus those two docs. Do not invent a parallel palette, card system, or recommendation layout.
+
+3. **Hard locks**
+   - **No teal/cyan** on Guide surfaces
+   - **Gold** only for critical CTA / Solutions ornate callout / rare milestone — never ranks, scores, ordinary badges, or chart categories
+   - Ranks / project scores = royal purple (`--gg-royal` / `--gg-royal-mid`)
+   - Red / yellow / green = semantic only (negative / watch / positive) and always paired with a written status label
+   - Section heads = solid royal-deep + white uppercase title + lavender hint + burnt left rule
+   - Recommendation **Do** / Solutions blocks use the ornate aged-brass + royal inner line + diamond pattern (`.kpi-related-projects`)
+   - Charts use `chartBlock()` shape; newest month first; one color = one meaning
+
+4. **When branding and a one-off design conflict**, branding wins. Update the brand docs in the same change if a new meaning is truly required.
+
+5. **Cursor canvases** (`.canvas.tsx`) follow [`pav-reporting-color-standard.mdc`](pav-reporting-color-standard.mdc) theme tokens. Guide HTML/JS/CSS follows the two branding docs above — do not mix the two systems.
+
+Related: [`pav-law-kpi-charts.mdc`](pav-law-kpi-charts.mdc) · [`pav-law-value-icons.mdc`](pav-law-value-icons.mdc)

@@ -1282,43 +1282,6 @@
     );
   }
 
-  function cashCollectedPaceTile(rows) {
-    const current = rows.find(r => /\*/.test(r.month || ""));
-    if (!current) return "";
-    const goal = 80000;
-    const daysElapsed = 15;
-    const daysInMonth = 31;
-    const projected = Math.round((current.credit / daysElapsed) * daysInMonth);
-    const historicRows = rows.filter(r => !/\*/.test(r.month || ""));
-    const historicAvg = historicRows.length
-      ? Math.round(historicRows.reduce((s, r) => s + r.credit, 0) / historicRows.length)
-      : null;
-    const scaleMax = Math.max(goal, projected, 1);
-    const pacePct = Math.round((projected / goal) * 100);
-    const status = projected >= goal ? "On track" : "Behind pace";
-    const gauge = halfMoonGauge(projected / scaleMax, "cash-current-pace", {
-      celebrate: projected >= goal,
-      valueLabel: `$${Math.round(projected / 1000)}k`,
-      endLabel: `$${Math.round(scaleMax / 1000)}k`,
-      goalMark: goal / scaleMax
-    });
-    return `<div class="kpi-cash-pace-tile" aria-label="July cash pace toward the monthly goal">
-      <div class="kpi-cash-pace-copy">
-        <span class="kpi-cash-pace-kicker">Current month</span>
-        <h3>July cash goal pace</h3>
-        <p>${escapeHtml(current.month)} collected through Jul 15, projected through Jul 31.</p>
-      </div>
-      <div class="kpi-cash-pace-gauge">${gauge}</div>
-      <div class="kpi-cash-pace-stats">
-        <div><span>Collected</span><strong>${fmtCashTier(current.credit)}</strong></div>
-        <div><span>Projected</span><strong>${fmtCashTier(projected)}</strong></div>
-        <div><span>Monthly goal</span><strong>${fmtMoney(goal)}</strong></div>
-        <div><span>Status</span><strong>${pacePct}% · ${status}</strong></div>
-        ${historicAvg ? `<div><span>Prior-month avg</span><strong>${fmtCashTier(historicAvg)}</strong></div>` : ""}
-      </div>
-    </div>`;
-  }
-
   function lsaEfficiencyTable(rows) {
     const newest = newestFirst(rows);
     const tot = newest.reduce((a, r) => ({
@@ -1440,7 +1403,6 @@
       ${kpiHelpBtn("financial")}
       ${kpiSectionStaticHead("Financials", "Cash collected MoM · expense-pace checkpoint · cash / new case")}
       <div class="kpi-section-body">
-        ${cashCollectedPaceTile(chartRows)}
         <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cases created · <strong>2025 through Jul 2026 YTD</strong>. Missing case data is slate gray.</p>
         <div class="kpi-finance-grid kpi-finance-grid-cash">
           <div class="kpi-mini-card">
@@ -1451,6 +1413,7 @@
             })}
           </div>
           <div class="kpi-mini-card">
+            <h3>Cases Created <span class="kpi-finance-card-subtitle">2025 - 2026</span></h3>
             ${chartBlock({
               chart: casesCreatedChart(chartRows)
             })}

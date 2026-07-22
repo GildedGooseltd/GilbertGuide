@@ -428,6 +428,12 @@ export function parseProjectMarkdown(text, fallbackId) {
   if (completedBody) project.completedItems = parseListSection(completedBody);
   const wipBody = findSectionBody(sections, "wip") || findSectionBody(sections, "in progress");
   if (wipBody) project.inProgressItems = parseListSection(wipBody);
+  const tasksBody = findSectionBody(sections, "tasks") || findSectionBody(sections, "task list");
+  if (tasksBody) {
+    project.taskItems = parseListSection(tasksBody);
+    /* Tasks also count as in-progress scope when WIP is empty */
+    if (!project.inProgressItems?.length) project.inProgressItems = [...project.taskItems];
+  }
   if (sections.results)
     project.resultsItems = parseListSection(sections.results);
   if (sections.goal) project.goal = applyProperCase(sections.goal.trim());
@@ -592,6 +598,7 @@ export function sanitizeProjectRecord(p) {
     "valueAdded",
     "completedItems",
     "inProgressItems",
+    "taskItems",
     "deliverables"
   ]) {
     if (Array.isArray(p[key])) p[key] = p[key].map(sanitizeProjectText).filter(Boolean);
@@ -802,7 +809,7 @@ export function isValidProjectId(id) {
 }
 
 function indexHeaderColumnMap(cells) {
-  const lower = cells.map(c => c.toLowerCase());
+  const lower = cells.map(c => String(c || "").toLowerCase().trim());
   const pick = key => {
     const i = lower.findIndex(c => c === key || c.replace(/\s+/g, "") === key.replace(/\s+/g, ""));
     return i >= 0 ? i : null;
@@ -811,15 +818,17 @@ function indexHeaderColumnMap(cells) {
   const hasScore = lower.some(c => c.includes("project score") || c === "score" || c === "priority");
   const hasFile = lower.includes("file");
   const hasProject = lower.includes("project");
-  if (!hasId && !hasScore && !hasFile && !hasProject) return null;
+  const hasEst = lower.some(c => /est\.?\s*cost|estimated cost|^cost$|^fee$/.test(c));
+  const hasPay = lower.some(c => /payment plan|^payment$|pay plan|^deposit$/.test(c));
+  if (!hasId && !hasScore && !hasFile && !hasProject && !hasEst && !hasPay) return null;
   return {
+    /* null when this table has no score column — never default to 0 (would steal Est. cost). */
     priority:
       pick("project score") ??
       pick("projectscore") ??
       pick("score") ??
       pick("priority") ??
-      pick("p") ??
-      0,
+      pick("p"),
     id: pick("id"),
     status: pick("status"),
     visibility:
@@ -972,23 +981,19 @@ export function parseIndexMarkdown(text) {
     if (!cells.length) continue;
     if (cells.every(c => /^[\-:]+$/.test(c) || c === "")) continue;
 
-    if (cells.some(c => /^id$/i.test(c)) || cells.some(c => /project\s*score/i.test(c)) || cells.some(c => /^show$/i.test(c))) {
-      colMap = indexHeaderColumnMap(cells);
+    const isHeader =
+      cells.some(c => /^id$/i.test(c)) ||
+      cells.some(c => /project\s*score/i.test(c)) ||
+      cells.some(c => /^show$/i.test(c)) ||
+      cells.some(c => /est\.?\s*cost/i.test(c)) ||
+      cells.some(c => /payment\s*plan/i.test(c));
+    if (isHeader) {
+      const nextMap = indexHeaderColumnMap(cells);
+      if (nextMap) colMap = nextMap;
       continue;
     }
 
-    if (!colMap) {
-      colMap = {
-        priority: 0,
-        id: null,
-        status: 1,
-        visibility: 2,
-        estCost: 3,
-        paymentPlan: 4,
-        title: 5,
-        file: null
-      };
-    }
+    if (!colMap) continue;
 
     const projectCell = colMap.title != null ? (cells[colMap.title] ?? "") : "";
     const fileCell = colMap.file != null ? (cells[colMap.file] ?? "") : "";
@@ -999,17 +1004,16 @@ export function parseIndexMarkdown(text) {
       id = parsedProject.id || idFromIndexFileCell(fileCell);
     }
     if (!id || !isValidProjectId(id)) continue;
-    if (result.rowsById[id]) continue;
 
     const href =
       parsedProject.href ||
       (fileCell.match(/\(([^)]+\.md)\)/) || [])[1] ||
       (id === "RETAINER" ? "retainer.md" : `projects/${id}.md`);
-    const row = {
-      p: colMap.priority != null ? (cells[colMap.priority] ?? "") : "",
-      title: parsedProject.title || projectCell,
-      file: href ? `[${href}](${href})` : fileCell
-    };
+    const prev = result.rowsById[id] || {};
+    const row = { ...prev };
+    if (parsedProject.title || projectCell) row.title = parsedProject.title || projectCell || prev.title;
+    if (href) row.file = `[${href}](${href})`;
+    if (colMap.priority != null) row.p = cells[colMap.priority] ?? prev.p ?? "";
     if (colMap.status != null && cells[colMap.status]) row.status = cells[colMap.status];
     if (colMap.visibility != null && cells[colMap.visibility] != null) {
       row.visibility = cells[colMap.visibility];
@@ -1026,7 +1030,9 @@ export function parseIndexMarkdown(text) {
     result.rowsById[id] = row;
   }
 
-  const tableStart = text.search(/\|[^\n]*\b(ID|Project score|Show)\b[^\n]*\|/i);
+  const tableStart = text.search(
+    /\|[^\n]*\b(ID|Project score|Show|Est\.?\s*cost|Payment plan)\b[^\n]*\|/i
+  );
   if (tableStart > 0) result.intro = text.slice(0, tableStart).trim();
 
   const footerStart = text.indexOf("**Retainer");
