@@ -9,7 +9,7 @@
   --gg-gold-dark: #b8860b;
   --gg-cream: #f8f5ef;
   --gg-cream-panel: #f3ede4;
-  --gg-chart-plot: #fff4c4;
+  --gg-chart-plot: #fff5ca;
   --gg-paper: #fffcf7;
   --gg-brown: #3d3028;
   --gg-brown-muted: #5c4f45;
@@ -232,8 +232,20 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-section > summary + *,
 .kpi-section > .kpi-section-summary + * { padding-top: 0.85rem; }
 .kpi-chart-svg-stacked,
-.kpi-chart-svg-plot { width: 100%; max-width: 40rem; height: auto; display: block; }
-.kpi-chart-plot { display: flex; flex-direction: column; gap: 0.75rem; }
+.kpi-chart-svg-plot {
+  width: 100%;
+  max-width: 40rem;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.kpi-chart-plot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: visible;
+  padding: 0.2rem 0.1rem 0.35rem;
+}
 .kpi-chart-plot-bg { fill: var(--gg-chart-plot); }
 .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.14); stroke-width: 1; }
 .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.4); stroke-width: 1.5; }
@@ -858,7 +870,8 @@ body.feedback-mode-on .feedback-target:hover {
   min-width: 0;
   max-width: 100%;
 }
-.kpi-finance-grid-cash .kpi-mini-card:has(.kpi-cases-created-chart) .kpi-chart-plot {
+.kpi-finance-grid-cash .kpi-mini-card:has(.kpi-cases-created-chart) .kpi-chart-plot,
+.data-report-root .data-card:has(.kpi-cases-created-chart) .kpi-chart-plot {
   overflow-x: visible;
 }
 .kpi-cash-long-chart .kpi-chart-total,

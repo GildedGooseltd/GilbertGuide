@@ -1,6 +1,6 @@
 # NEWID — Project Title
 
-|                   |                                                            |
+| Field | Value |
 | ----------------- | ---------------------------------------------------------- |
 | **ID**            | NEWID                                                      |
 | **Priority**      | 99                                                         |
@@ -17,10 +17,8 @@ Optional rows (delete if unused): **Parent**, **Enabler**, **Monthly only**, **P
 ---
 
 ## Summary
-One sentence — the primary value add (shown at top of card).
 
-## Value Added
-
+- One sentence — the primary value add (shown at top of card).
 - First benefit (bullet on card)
 - Second benefit
 - Third benefit
@@ -47,14 +45,6 @@ Questions for Andrew Brown — picker blocks cart until answered in **Comment**.
 
 - AB - Q: Your question for Andrew here?
 
-## Description
-
-Full scope, current status, and strategy context. Card shows Summary + bullets; expand for full description.
-
-## Goal
-
-One measurable outcome for this campaign (consult volume, cost/call, conversion rate, etc.).
-
 ## Information needed
 
 Open items for Kate / Andrew.
@@ -67,7 +57,7 @@ Open items for Kate / Andrew.
 
 ## Tasks
 
-- Scoped work items — each bullet raises the **market fee estimate** on build (with Value Added, Information needed, AB-Qs)
+- Scoped work items — each bullet raises the **market fee estimate** on build (with Summary bullets, Information needed, AB-Qs)
 
 ## Completed
 
@@ -76,3 +66,13 @@ Open items for Kate / Andrew.
 ## Fee note (optional)
 
 Market estimate recalculates on `npm run build` from local Front Range + national law-marketing bands × scope (see [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)). Locked **Fee** / INDEX **Est. cost** do not change until you copy the market figure in.
+
+---
+
+**—— Unpublished below ——** *(not shown on Guide cards)*
+
+## Project plan
+
+Extra detail for Kate / ops only — brainstorms, vendor notes, quotes, timelines, and anything that should not publish to the Guide.
+
+- _Add:_

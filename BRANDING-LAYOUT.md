@@ -39,7 +39,7 @@ Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for t
 | `--gg-gold-dark`    | `#b8860b`             | Critical metallic accent only                 |
 | `--gg-cream`        | `#f8f5ef`             | Page background (`--bg`)                      |
 | `--gg-cream-panel`  | `#f3ede4`             | Nested panels                                 |
-| `--gg-chart-plot`   | `#fff4c4`             | Chart plot field (light yellow for series contrast) |
+| `--gg-chart-plot`   | `#fff5ca`             | Chart plot field (light yellow for series contrast) |
 | `--gg-paper`        | `#fffcf7`             | Cards, inputs (`--surface`)                   |
 | `--gg-brown`        | `#3d3028`             | Body text (`--text`)                          |
 | `--gg-brown-muted`  | `#5c4f45`             | Secondary (`--secondary`)                     |
@@ -168,7 +168,7 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 **Structure:** every graph card uses `chartBlock()` — plot + legend (2+ series) + detail table always below (not behind “Show table” alone).
 
-**Plot field:** `--gg-chart-plot` (`#fff4c4`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
+**Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 
 **Locked triad** (unique, high-contrast — no two similar purples adjacent):
 
@@ -206,9 +206,11 @@ Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pa
 | `retainer`     | Retainer     | `#818cf8` / `#312e81` / `#4f46e5` |
 | `leads`        | Leads        | `#fb923c` / `#7c2d12` / `#ea580c` |
 | `crm`          | CRM          | `#a78bfa` / `#4c1d95` / `#7c3aed` |
+| `hubspot`      | HubSpot      | `#ff7a59` / `#7c2d12` / `#e85d3d` (coral — HubSpot brand lane) |
 | `seo`          | SEO          | `#60a5fa` / `#1e3a8a` / `#2563eb` (blue) |
 | `referrals`    | Referrals    | `#f472b6` / `#831843` / `#db2777` |
 | `efficiency`   | Analytics    | `#94a3b8` / `#1e293b` / `#64748b` (slate) |
+| `finance`      | Finance      | `#6b9b76` / `#1e3a2f` / `#3d6b4f` (forest) |
 | `intake`       | Intake       | `#c4b5fd` / `#2d1454` / `#4c1d95` (royal) |
 | `creative`     | Creative     | `#e879f9` / `#701a75` / `#c026d3` |
 | `general`      | Growth       | `#94a3b8` / `#0f172a` / `#64748b` |
@@ -216,7 +218,7 @@ Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pa
 
 Chip soft tints: `--vi-*-chip` / `--vi-*-chip-border` (do not replace badge fills).
 
-Palette comment in `:root`: `value-icon-palette v=20260715-ggl`.
+Palette comment in `:root`: `value-icon-palette v=20260724-finance`.
 
 **Forbidden:** filter-only purple overrides · duplicate hex under `.toc-value` · second palette in `app.js` / `projects-data.js` / markdown.
 

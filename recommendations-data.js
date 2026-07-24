@@ -5,38 +5,38 @@
 window.RECOMMENDATIONS_CONTENT = {
   "page": {
     "title": "Recommendations",
-    "subtitle": "Ranked actions to hit KPIs and cover year-end expenses."
+    "subtitle": "Ranked by INDEX project score — ship lower numbers first."
   },
   "jump": [
     {
-      "rank": "3",
-      "label": "Intake",
+      "rank": "1",
+      "label": "#1–2 Intake",
       "anchor": "recommendation-primary"
     },
     {
-      "rank": "",
-      "label": "Sex Crimes",
+      "rank": "2",
+      "label": "#11 Sex Crimes",
       "anchor": "recommendation-sex-crimes"
     },
     {
-      "rank": "1",
-      "label": "Financial audit",
+      "rank": "3",
+      "label": "#26 Financial audit",
       "anchor": "recommendation-financial-audit"
     },
     {
-      "rank": "2",
+      "rank": "4",
       "label": "LSA divert",
       "anchor": "recommendation-divert"
     },
     {
       "rank": "",
-      "label": "",
-      "anchor": ""
+      "label": "Projects",
+      "anchor": "recommendation-projects"
     },
     {
       "rank": "",
-      "label": "",
-      "anchor": ""
+      "label": "Actions",
+      "anchor": "recommendation-actions"
     }
   ],
   "recs": [
@@ -66,11 +66,10 @@ window.RECOMMENDATIONS_CONTENT = {
       ],
       "projects": [],
       "actions": [],
-      "title": "1 · Do first · LSA call intake + digital Search shift",
+      "title": "1 · Project #1–2 · LSA call intake + digital Search shift",
       "hint": "Fix unanswered calls before more LSA spend; then shift qualified media to digital Search.",
-      "whyStatus": "Watch",
       "why": "LSA costs {{lsaCpl}}/call vs digital all-in {{digAllIn}}/call. Missed calls waste both channels until answer rate is fixed.",
-      "solutions": "Ship [B2 · HubSpot Phone / VoIP](project:B2) and [B11 · LSA Call Process](project:B11). Gate: **≥90% answered for 7 days**. Keep the [Digital Ads Maintenance Retainer](project:RETAINER) funded, then divert ≥ {{minDivert}}/mo from LSA.",
+      "solutions": "Ship [B2 · HubSpot Phone / VoIP](project:B2) (#1) and [B11 · LSA Call Process](project:B11) (#2). Gate: **≥90% answered for 7 days**. Keep the [Digital Ads Maintenance Retainer](project:RETAINER) funded, then divert ≥ {{minDivert}}/mo from LSA.",
       "proofTitle": "Proof / math"
     },
     {
@@ -104,13 +103,11 @@ window.RECOMMENDATIONS_CONTENT = {
       ],
       "projects": [],
       "actions": [],
-      "title": "2 · Next · Sex Crimes Defense focus",
+      "title": "2 · Project #11 · Sex Crimes Defense focus",
       "hint": "Highest mean quoted fee; 2026 YTD case volume is 62% behind 2025.",
       "whyStatus": "Watch",
       "why": "Highest fee category (~70% above the $5,587 firm mean) with an 8-case YTD gap ≈ **$76k quoted** / **$60.8k** at 80% collectible. Sample n=6 — directional until QuickBooks validates.",
-      "solutions": "Launch a discreet Search pilot in [A1 · Digital Ad Enhancements](project:A1): exact/phrase only, dedicated landing page, tracked calls. No Display or broad match. Gate: 30-day qualified-call + signed-case review.",
-      "proofTitle": "Proof / math",
-      "chart": "cases-recovery"
+      "solutions": "Launch a discreet Search pilot in [A1 · Digital Ad Enhancements](project:A1) (#11): exact/phrase only, dedicated landing page, tracked calls. No Display or broad match. Gate: 30-day qualified-call + signed-case review."
     },
     {
       "id": "recommendation-financial-audit",
@@ -138,11 +135,11 @@ window.RECOMMENDATIONS_CONTENT = {
       ],
       "projects": [],
       "actions": [],
-      "title": "3 · Cost control · Full financial audit (B9)",
+      "title": "3 · Project #26 · Full financial audit (B9)",
       "hint": "Map debt, cut recurring waste, recover credits — do not treat H1 surplus as cash-safe.",
       "whyStatus": "Action required",
       "why": "+$29,534 H1 collectible-after-expenses excludes **unknown business debt** — treat it as unreliable. Verified Search waste floor is $1,063 / 30 days; unused subscriptions still lack a cancel total.",
-      "solutions": "Open [B9 · Full Financial Audit](project:B9). Reconcile QuickBooks, statements, liabilities, subscriptions, phone/software seats, ads, and LSA credits. Fee: $1,800 + 20% verified savings.",
+      "solutions": "Open [B9 · Full Financial Audit](project:B9) (#26). Reconcile QuickBooks, statements, liabilities, subscriptions, phone/software seats, ads, LSA credits, and toll-pass payment + plates. Fee: $1,800 + 20% verified savings.",
       "proofTitle": "Proof / payment terms"
     },
     {
@@ -167,7 +164,7 @@ window.RECOMMENDATIONS_CONTENT = {
       "proof": [],
       "projects": [],
       "actions": [],
-      "title": "4 · After answer-rate gate · Divert from LSA",
+      "title": "4 · After #1–2 answer-rate gate · Divert from LSA",
       "hint": "Pay consulting first; remaining diverted dollars go to digital media.",
       "whyStatus": "Watch",
       "why": "After ≥90% answered for 7 days, LSA’s higher $/call only pays if it signs ≥ **{{closeMultiple}}×** better than digital. Calls ≠ signed cases — confirm close rates before moving budget.",
@@ -182,14 +179,14 @@ window.RECOMMENDATIONS_CONTENT = {
       "projects": [
         {
           "project": "[B2 · HubSpot Phone / VoIP Setup](project:B2)",
-          "priority": "Priority 1 · Recommended",
+          "priority": "#1 · WIP",
           "fee": "$0 · incl. B13",
           "role": "Route + log Search/LSA; same-day missed-call tasks",
           "gate": "≥90% answered · 7 days; 888 → HubSpot test passes"
         },
         {
           "project": "[B11 · LSA Call Process Update](project:B11)",
-          "priority": "Priority 2 · Recommended",
+          "priority": "#2 · Recommended",
           "fee": "$1,500",
           "role": "Statuses, call review, Casey coverage",
           "gate": "Statuses current; disputes caught; coverage calendar live"
@@ -203,14 +200,14 @@ window.RECOMMENDATIONS_CONTENT = {
         },
         {
           "project": "[A1 · Digital Ad Enhancements](project:A1)",
-          "priority": "Priority 11 · Available",
+          "priority": "#11 · Available",
           "fee": "$2,200",
           "role": "Sex Crimes Defense Search pilot + landing page",
           "gate": "Qualified calls + signed cases; QuickBooks validates cash"
         },
         {
           "project": "[B9 · Full Financial Audit](project:B9)",
-          "priority": "Recommended",
+          "priority": "#26 · Recommended",
           "fee": "$1,800 + 20% savings",
           "role": "Debt map, subscriptions, waste, credits",
           "gate": "Every recurring charge/liability has owner + action; savings documented"
@@ -218,7 +215,7 @@ window.RECOMMENDATIONS_CONTENT = {
       ],
       "actions": [],
       "title": "Projects required",
-      "hint": "Scope, fee, role, and success gate for each recommendation.",
+      "hint": "Ordered by INDEX Project score (lower first).",
       "bodyType": "projects-table"
     },
     {
@@ -227,14 +224,14 @@ window.RECOMMENDATIONS_CONTENT = {
       "proof": [],
       "projects": [],
       "actions": [
-        "**B2** — Hold extra LSA spend; patch routing + missed-call tasks. *Gate:* 888 rings HubSpot end-to-end.",
-        "**B11** — Same-day LSA statuses + Casey coverage calendar. *Gate:* statuses current before billing.",
+        "**B2 (#1)** — Hold extra LSA spend; patch routing + missed-call tasks. *Gate:* 888 rings HubSpot end-to-end.",
+        "**B11 (#2)** — Same-day LSA statuses + Casey coverage calendar. *Gate:* statuses current before billing.",
         "**Answer rate** — Reach ≥90% answered for 7 days, then fund the **RETAINER** ({{mgmt}}/mo).",
-        "**A1** — Sex Crimes Defense Search pilot (exact/phrase only). *Gate:* 30-day call + signed-case review.",
-        "**B9 + divert** — Map debt/subscriptions; divert ≥ {{minDivert}}/mo from LSA for 30 days. *Gate:* signed-case rate by channel + verified savings list."
+        "**A1 (#11)** — Sex Crimes Defense Search pilot (exact/phrase only). *Gate:* 30-day call + signed-case review.",
+        "**B9 (#26) + divert** — Map debt/subscriptions; divert ≥ {{minDivert}}/mo from LSA for 30 days. *Gate:* signed-case rate by channel + verified savings list."
       ],
       "title": "Next actions",
-      "hint": "Execution checklist — one gate per step.",
+      "hint": "Same order as INDEX Project score.",
       "bodyType": "actions-list"
     }
   ]

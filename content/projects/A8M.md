@@ -1,6 +1,6 @@
 # A8M — Data Management — Retainer
 
-|                   |                                                            |
+| Field | Value |
 | ----------------- | ---------------------------------------------------------- |
 | **ID**            | A8M                                                        |
 | **Fee**           | 500|
@@ -17,10 +17,7 @@
 
 ## Summary
 
-Monthly dashboard upkeep so KPIs stay accurate and useful for operations.
-
-## Value Added
-
+- Monthly dashboard upkeep so KPIs stay accurate and useful for operations.
 - Monthly lead-source report
 - Google Ads and LSA manual review with API pull reconciled to CSV archive (KPI spec export checklist)
 
@@ -31,15 +28,17 @@ Monthly dashboard upkeep so KPIs stay accurate and useful for operations.
 - efficiency
 - crm
 
-## Description
-
-Reporting stays useful only when someone reviews it monthly — validating tags, reconciling ad platforms to CRM, and noting channel shifts. Child of A8.
-
-## Goal
-
-Publish a reconciled monthly lead-source and Ads/LSA report tied to the A8 KPI cockpit.
-
 ## Information needed
 
 - Confirm estimated leads gained
 - Link KPI dashboard rows for this retainer card
+
+---
+
+**—— Unpublished below ——** *(not shown on Guide cards)*
+
+## Project plan
+
+Extra detail for Kate / ops only — brainstorms, vendor notes, quotes, timelines, and anything that should not publish to the Guide.
+
+- _Add:_

@@ -39,13 +39,13 @@
 | A8M      | Data Management — Retainer              | $500/mo                  | **$500/mo**          | —        | Dashboard maintenance add-on after A8                                                  |
 | A8       | Operations Dashboard V1                 | $1,600                   | **$1,600**           | —        | not approved (kept current; market band still ~$2,200)                                 |
 | B11      | LSA Call Process Update                 | $0                       | **$1,500**           | +$1,500  | Approved                                                                               |
-| B10      | HS: Digital Profiles Refresh & Tracking | $1,400                   | **$1,800**           | +$400    | Approved                                                                               |
+| B10      | Digital Presence Refresh                | $1,400                   | **$1,800**           | +$400    | Approved                                                                               |
 | B13      | HubSpot Marketing Setup                 | $4,500                   | **$5,500**           | +$1,000  | Approved                                                                               |
-| A4       | HS: Client Referral Program             | $1,700 (+$500/mo intent) | **$1,700 + $500/mo** | —        | not approved (kept current)                                                            |
-| A17      | HS: Sealing & Probation Reengagement    | $1,500                   | **$1,500**           | —        | not approved (kept current)                                                            |
+| A4       | Client Referral Program             | $1,700 (+$500/mo intent) | **$1,700 + $500/mo** | —        | not approved (kept current)                                                            |
+| A17      | Sealing & Probation Reengagement    | $1,500                   | **$1,500**           | —        | not approved (kept current)                                                            |
 | B5       | Insurance Envelope Mailer               | $1,900                   | **$2,200**           | +$300    | Approved                                                                               |
 | A14      | Performance Plan Payouts                | $1,200                   | **$1,500**           | +$300    | Approved                                                                               |
-| B14      | Pav Law Swag & Apparel                  | $0                       | **$1,200**           | +$1,200  | Approved                                                                               |
+| B14      | Design Printables, Swag & Apparel                  | $0                       | **$1,200**           | +$1,200  | Approved                                                                               |
 | A2       | NTGUILT Display & Search Launch         | $2,800                   | **$2,800**           | —        | Approved                                                                               |
 | A1       | Digital Ad Expansion                    | $1,900                   | **$2,200**           | +$300    | Approved                                                                               |
 | B4       | Website Content Overhaul                | $2,000                   | **$2,500**           | +$500    | Approved                                                                               |
@@ -66,7 +66,7 @@
 | A3       | Summer Safety Email (child of B13)      | $1,200                   | **incl. B13**        | n/a      | Approved                                                                               |
 | A10      | Marketing Stack Priorities Audit        | $1,500                   | **$1,500**           | —        | not approved · completed (kept current)                                                |
 | A15      | Summer Event Activation (archived)      | $2,500                   | **$2,500**           | —        | Keep for next-year reopen                                                              |
-| A16      | Garage Partnership (archived)           | $800                     | **$1,000**           | +$200    | Approved                                                                               |
+| A16      | Twisted Wrench                          | $800                     | **$1,500**           | +$700    | not approved (fee raised w/ scope)                                                     |
 | C1       | Systems Access Audit & Cleanse          | $2,000                   | **$2,000**           | —        | Completed                                                                              |
 | C2       | Email Outage Triage & DNS Runbook       | $1,500                   | **$1,500**           | —        | Completed                                                                              |
 | A18      | Reddit NTGUILT (merged A7)              | $600                     | **merged A7**        | n/a      | History only                                                                           |

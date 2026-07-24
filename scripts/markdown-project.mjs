@@ -133,8 +133,8 @@ function parseMetaTable(text) {
 }
 
 const VALID_VALUE_ICON_IDS = new Set([
-  "foundation", "retainer", "leads", "crm", "seo", "referrals",
-  "efficiency", "intake", "creative", "general"
+  "foundation", "retainer", "leads", "crm", "hubspot", "seo", "referrals",
+  "efficiency", "finance", "intake", "creative", "general"
 ]);
 
 function normalizeValueIconId(raw) {
@@ -353,6 +353,36 @@ function parseSections(text) {
   return sections;
 }
 
+/** Divider + Project plan — Kate/ops only; never published to Guide cards. */
+export const UNPUBLISHED_DIVIDER =
+  "---\n\n**—— Unpublished below ——** *(not shown on Guide cards)*\n\n";
+
+const UNPUBLISHED_DIVIDER_RE =
+  /\n---\s*\n+\*\*—— Unpublished below ——\*\*[^\n]*\n+/i;
+
+/**
+ * Split body into Guide-published sections vs unpublished Project plan tail.
+ * Anything at/after the divider (or bare ## Project plan) is not parsed into card fields.
+ */
+export function splitPublishedUnpublished(rest) {
+  const text = String(rest || "");
+  const div = text.match(UNPUBLISHED_DIVIDER_RE);
+  if (div) {
+    return {
+      published: text.slice(0, div.index).trimEnd(),
+      unpublishedMarkdown: text.slice(div.index).trim()
+    };
+  }
+  const plan = text.match(/\n## Project plan\b/i);
+  if (plan) {
+    return {
+      published: text.slice(0, plan.index).trimEnd(),
+      unpublishedMarkdown: (UNPUBLISHED_DIVIDER + text.slice(plan.index).trim()).trim()
+    };
+  }
+  return { published: text, unpublishedMarkdown: "" };
+}
+
 export function parseProjectMarkdown(text, fallbackId) {
   const metaBlock = text.match(/\n---\n/s);
   const head = metaBlock ? text.slice(0, metaBlock.index) : text;
@@ -370,19 +400,35 @@ export function parseProjectMarkdown(text, fallbackId) {
   if (!meta.id && fallbackId) meta.id = fallbackId.replace(/\.md$/, "");
   if (!meta.title && titleFromH1) meta.title = applyProperCase(titleFromH1);
 
-  const sections = parseSections(rest);
+  const { published, unpublishedMarkdown } = splitPublishedUnpublished(rest);
+  const sections = parseSections(published);
   const project = { ...meta };
+  if (unpublishedMarkdown) project.unpublishedMarkdown = unpublishedMarkdown;
 
   if (sections.description) project.description = applyProperCase(sections.description.trim());
   const summaryBody = sections.summary || sections.tldr;
-  if (summaryBody) project.tldr = applyProperCase(summaryBody.trim());
-
   const valueAdded = [];
+  if (summaryBody) {
+    const summaryBullets = parseListSection(summaryBody);
+    if (summaryBullets.length) {
+      valueAdded.push(...summaryBullets);
+      project.tldr = summaryBullets[0];
+    } else {
+      project.tldr = applyProperCase(summaryBody.trim());
+    }
+  }
   if (sections["value added"]) valueAdded.push(...parseListSection(sections["value added"]));
   if (sections["value bullets"]) valueAdded.push(...parseListSection(sections["value bullets"]));
   if (sections["value add"] && !sections["value added"] && !sections["value bullets"])
     valueAdded.push(sections["value add"].trim());
-  project.valueAdded = valueAdded.filter(Boolean);
+  /* Dedupe summary↔value-added overlap */
+  const seenVa = new Set();
+  project.valueAdded = valueAdded.filter(Boolean).filter(item => {
+    const key = String(item).trim().toLowerCase().replace(/\s+/g, " ");
+    if (!key || seenVa.has(key)) return false;
+    seenVa.add(key);
+    return true;
+  });
 
   const deliverables = [...(project.deliverables || [])];
   const cleanValue = [];
@@ -461,7 +507,7 @@ export function parseProjectMarkdown(text, fallbackId) {
     if (bm?.label) project.backedMetric = bm;
   }
 
-  project.abQuestions = parseAbQuestions(text, sections);
+  project.abQuestions = parseAbQuestions(published, sections);
 
   if (sections["kpi links"]) {
     const ids = parseValueIconsSection(sections["kpi links"]).map(id => {
@@ -623,6 +669,7 @@ export function sanitizeProjectRecord(p) {
   delete p.blockers;
   delete p.insightsImprovements;
   delete p.impactEstimates;
+  /* Keep unpublishedMarkdown for projectToMarkdown round-trip; strip in build-picker-data. */
   return p;
 }
 
@@ -738,8 +785,11 @@ export function projectToMarkdown(p) {
   md += metaTableRows(p).join("\n");
   md += `\n\n---\n\n`;
 
-  if (p.tldr) md += `## Summary\n\n${applyProperCase(p.tldr.trim())}\n\n`;
-  md += listSection("Value Added", p.valueAdded || []);
+  if (p.valueAdded?.length) {
+    md += `## Summary\n\n${p.valueAdded.map(b => `- ${String(b).trim()}`).join("\n")}\n\n`;
+  } else if (p.tldr) {
+    md += `## Summary\n\n- ${applyProperCase(p.tldr.trim())}\n\n`;
+  }
   if (p.valueIcons?.length) {
     md += `## Value icons\n\n${p.valueIcons.map(id => `- ${id}`).join("\n")}\n\n`;
   }
@@ -749,12 +799,14 @@ export function projectToMarkdown(p) {
   if (p.abQuestions?.length) {
     md += `## AB - Q\n\n${p.abQuestions.map(q => `- AB - Q: ${q}`).join("\n")}\n\n`;
   }
-  const fullDesc = mergeDescriptionAndEducation(p);
-  if (fullDesc) md += `## Description\n\n${applyProperCase(fullDesc.trim())}\n\n`;
-  if (p.goal) md += `## Goal\n\n${applyProperCase(String(p.goal).trim())}\n\n`;
   md += formatInformationNeededSection(p);
   md += listSection("WIP", p.inProgressItems);
   md += listSection("Completed", p.completedItems);
+
+  if (p.unpublishedMarkdown) {
+    const tail = String(p.unpublishedMarkdown).trim();
+    if (tail) md += (md.endsWith("\n\n") ? "" : "\n") + tail + "\n";
+  }
 
   return md.trim() + "\n";
 }
@@ -818,9 +870,10 @@ function indexHeaderColumnMap(cells) {
   const hasScore = lower.some(c => c.includes("project score") || c === "score" || c === "priority");
   const hasFile = lower.includes("file");
   const hasProject = lower.includes("project");
+  const hasShort = lower.some(c => c === "short title" || c === "shorttitle" || c === "short");
   const hasEst = lower.some(c => /est\.?\s*cost|estimated cost|^cost$|^fee$/.test(c));
   const hasPay = lower.some(c => /payment plan|^payment$|pay plan|^deposit$/.test(c));
-  if (!hasId && !hasScore && !hasFile && !hasProject && !hasEst && !hasPay) return null;
+  if (!hasId && !hasScore && !hasFile && !hasProject && !hasEst && !hasPay && !hasShort) return null;
   return {
     /* null when this table has no score column — never default to 0 (would steal Est. cost). */
     priority:
@@ -847,6 +900,10 @@ function indexHeaderColumnMap(cells) {
       pick("payment") ??
       pick("pay plan") ??
       pick("deposit"),
+    shortTitle:
+      pick("short title") ??
+      pick("shorttitle") ??
+      pick("short"),
     title: pick("project"),
     file: pick("file")
   };
@@ -985,6 +1042,7 @@ export function parseIndexMarkdown(text) {
       cells.some(c => /^id$/i.test(c)) ||
       cells.some(c => /project\s*score/i.test(c)) ||
       cells.some(c => /^show$/i.test(c)) ||
+      cells.some(c => /short\s*title/i.test(c)) ||
       cells.some(c => /est\.?\s*cost/i.test(c)) ||
       cells.some(c => /payment\s*plan/i.test(c));
     if (isHeader) {
@@ -1013,7 +1071,13 @@ export function parseIndexMarkdown(text) {
     const row = { ...prev };
     if (parsedProject.title || projectCell) row.title = parsedProject.title || projectCell || prev.title;
     if (href) row.file = `[${href}](${href})`;
-    if (colMap.priority != null) row.p = cells[colMap.priority] ?? prev.p ?? "";
+    if (colMap.priority != null) {
+      row.p = cells[colMap.priority] ?? prev.p ?? "";
+      row.hasPriority = true;
+    }
+    if (colMap.shortTitle != null && cells[colMap.shortTitle]) {
+      row.shortTitle = String(cells[colMap.shortTitle]).trim();
+    }
     if (colMap.status != null && cells[colMap.status]) row.status = cells[colMap.status];
     if (colMap.visibility != null && cells[colMap.visibility] != null) {
       row.visibility = cells[colMap.visibility];
@@ -1049,11 +1113,14 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     if (!o) return item;
     const next = { ...item };
     if (o.title) next.title = o.title;
-    const rawP = String(o.p || "").trim();
-    const pm = rawP.match(/^P?(\d+)$/i);
-    if (pm) next.priority = parseInt(pm[1], 10);
-    else if (!rawP || rawP === "—" || rawP === "-" || /^archive$/i.test(rawP)) {
-      delete next.priority;
+    if (o.shortTitle) next.shortTitle = o.shortTitle;
+    if (o.hasPriority) {
+      const rawP = String(o.p || "").trim();
+      const pm = rawP.match(/^P?(\d+)$/i);
+      if (pm) next.priority = parseInt(pm[1], 10);
+      else if (!rawP || rawP === "—" || rawP === "-" || /^archive$/i.test(rawP)) {
+        delete next.priority;
+      }
     }
     const status = normalizeIndexStatus(o.status);
     if (status) next.status = status;

@@ -1,7 +1,7 @@
 # Digital Ads Maintenance Retainer
 
 
-|                            |                                                                                            |
+| Field | Value |
 | -------------------------- | ------------------------------------------------------------------------------------------ |
 | **ID**                     | RETAINER                                                                                   |
 | **Fee**                    | 2900                                                                                       |
@@ -9,20 +9,15 @@
 | **Campaign type**          | Paid Media Mgmt                                                                            |
 | **Status**                 | Required                                                                                   |
 | **Publish status**         | published                                                                                  |
-| **Estimated leads gained** | ~36 calls/mo ~80 LSA phone leads/mo                                                       |
+| **Estimated leads gained** | ~36 calls/mo · ~80 LSA phone leads/mo                                                       |
 | **Keywords**               | ongoing, monthly, steady, maintain, retainer, report, crm, hubspot, referral, routine, lsa |
 
 
 ---
 
-
-
 ## Summary
 
-Ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.
-
-## Value Added
-
+- Ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.
 - Monthly reporting catches waste before it runs another month
 - Keeps Google Ads, LSA, and Microsoft Ads under one scope
 - LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing
@@ -52,8 +47,6 @@ June 2026 check (media-only digital ~$60/call · LSA ~$159/call): all-in digital
 
 - Blocked: LSA performance metrics — charge/status hygiene still uneven
 
-
-
 ## Completed
 
 - Systems access audit
@@ -65,3 +58,12 @@ June 2026 check (media-only digital ~$60/call · LSA ~$159/call): all-in digital
 - LSA call process Phase 1 — SOP + `LSA-DOCUMENTING-TRAINING.md` (see B11)
 - Paused Mountain DUI + Demand Gen bleed (confirmed $0 in Jul Search period)
 
+---
+
+**—— Unpublished below ——** *(not shown on Guide cards)*
+
+## Project plan
+
+Extra detail for Kate / ops only — brainstorms, vendor notes, quotes, timelines, and anything that should not publish to the Guide.
+
+- _Add:_

@@ -57,6 +57,13 @@ function build() {
   applyFeeEstimate(retainer);
   projects.forEach(applyFeeEstimate);
 
+  /* Project plan / unpublishedMarkdown stays in .md only — never ship to Guide JSON. */
+  const stripUnpublished = p => {
+    if (!p) return p;
+    const { unpublishedMarkdown: _drop, ...rest } = p;
+    return rest;
+  };
+
   const data = {
     guideName: settings.guideName,
     guideShortName: settings.guideShortName,
@@ -66,8 +73,8 @@ function build() {
     guideLogo: settings.guideLogo,
     paviIcon: settings.guideIcon,
     recommendedPackage: settings.recommendedPackage,
-    retainer,
-    projects
+    retainer: stripUnpublished(retainer),
+    projects: projects.map(stripUnpublished)
   };
 
   const header = `/**
