@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260719-recs-content-md-r1";
+  const RENDER_VER = "20260721-dual-axis-label-fix-r1";
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
@@ -52,16 +52,20 @@
     },
     "cases-leads-spend": {
       file: "MyCase new-cases-by-month · LSA leads-inbox (15) · Google Ads Call details · HubSpot form submits · Google account_activities Jan–Jul 2026",
-      fields: "New cases · LSA calls · Digital ad calls · Website forms · media spend · June LSA vs digital cost trade-off (media only; HubSpot $1k from Jun)"
+      fields: "New cases · Incoming total (LSA + digital ad calls + website forms) · media spend · June LSA vs digital cost trade-off (media only; HubSpot $1k from Jun)"
     },
     "cash-collected": {
       file: "~/Downloads/ledger_account_activity_report.csv",
       fields: "Ledger Credit by month · full CY 2025 (Jan–Dec) + 2026 YTD through Jul 15"
     },
     "financial": {
-      file: "ledger_account_activity_report.csv (2025-01-03→2026-07-15) · new-cases-by-month.csv as-of-2026-07-01 · CLIENT-VALUE-BASELINE mean fee · $80k/mo expense assumption",
-      fields: "Cash credits and MyCase new cases by month · expense-pace checkpoint (quoted / collectible vs mid-year + full-year) · Jul 2026 cases not yet available"
-    }
+      file: "ledger_account_activity_report.csv (2025-01-03→2026-07-15) · cash / new case from MyCase",
+      fields: "Cash credits by month · cash / new case"
+    },
+    "cases-created": {
+      file: "new-cases-by-month.csv as-of-2026-07-01 · MyCase Client contacts by Created month",
+      fields: "Cases created by month · 2025 full year + 2026 YTD through Jun · Jul* pending"
+    },
   };
 
   const KPI_HELP = {
@@ -112,15 +116,20 @@
       formula: null
     },
     "cases-leads-spend": {
-      title: "#05 Cases, Leads & Spend",
-      desc: "Monthly cases and response volume on the left axis, with marketing spend on the right axis.",
-      formula: "Bars show cases and channel responses. The line shows media spend; supporting charts compare June cost per response."
+      title: "#05 Key Channel Activity",
+      desc: "Monthly cases and total incoming responses on the left axis, with marketing spend on the right axis.",
+      formula: "Bars show new cases and incoming total (LSA calls + digital ad calls + website forms). The line shows media spend; supporting charts keep channel cost detail."
     },
     "financial": {
       title: "#09 Financials",
-      desc: "Cash collected and cases created by month, plus the $80k/mo expense-pace checkpoint (quoted / collectible vs mid-year and full-year targets).",
-      formula: "Cash = ledger credits by month. Cases = MyCase Client contacts by Created month. Pace = mean fee × cases × 80% collectible vs $80k/mo expenses."
-    }
+      desc: "Cash collected by month with cash / new case detail.",
+      formula: "Cash = ledger credits by month. Expense pace + case/cash forecasts → content/forecasting-planning.md (Predictions tab has a draft)."
+    },
+    "cases-created": {
+      title: "Cases Created",
+      desc: "MyCase Client contacts by Created month — full 2025 and 2026 YTD.",
+      formula: "Count of Client contacts with Created date in month. Slate bars = missing month (Jul 2026 not yet available)."
+    },
   };
 
   function kpiHelpBtn(kpiId) {
@@ -386,7 +395,7 @@
       { month: "Jun", closed: 11, mom: "+38%" },
       { month: "Jun", rate: "51%", retained: 14 }
     ],
-    /* Dual-axis: left = counts · right = $ spend. Trust omitted — needs fees-collected. */
+    /* Dual-axis: left = cases + incoming (LSA+digital+forms) · right = $ spend. Trust omitted — needs fees-collected. */
     casesLeadsSpend: [
       { month: "Jan", cases: 12, leads: null, spend: 0, lsaSpend: 0, adsSpend: 0, adsLeads: null, websiteLeads: null },
       { month: "Feb", cases: 14, leads: null, spend: 3197, lsaSpend: 3197, adsSpend: 0, adsLeads: null, websiteLeads: null },
@@ -644,57 +653,56 @@
 
   function stackedLeadsByMonthChart(months) {
     const totals = months.map(m => m.segments.reduce((s, x) => s + (Number(x.count) || 0), 0));
-    const max = Math.max(...totals, 1);
-    const w = 520;
-    const h = 280;
-    const pad = { l: 48, r: 24, t: 44, b: 44 };
+    const rawMax = Math.max(...totals, 1);
+    /* Round count axis to a clean step (50/100) — avoid odd ticks like 57 / 113 / 170. */
+    const step = rawMax <= 100 ? 25 : rawMax <= 250 ? 50 : 100;
+    const axisMax = Math.ceil((rawMax * 1.06) / step) * step;
+    const tickVals = [];
+    for (let t = 0; t <= axisMax; t += step) tickVals.push(t);
+    const w = 640;
+    const h = 300;
+    const pad = { l: 54, r: 22, t: 24, b: 52 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
     const slot = plotW / months.length;
-    const barW = Math.min(96, slot * 0.5);
-    const ticks = [0, 0.25, 0.5, 0.75, 1].map(p => {
-      const y = pad.t + plotH * (1 - p);
-      const val = Math.round(max * p);
+    const barW = Math.min(96, slot * 0.52);
+    const ticks = tickVals.map(t => {
+      const y = pad.t + plotH * (1 - t / axisMax);
       return `<g>
         <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
-        <text x="${pad.l - 10}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}</text>
+        <text x="${pad.l - 10}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${t}</text>
       </g>`;
     }).join("");
     const bars = months.map((m, i) => {
-      const total = totals[i];
       const x = pad.l + i * slot + (slot - barW) / 2;
       let y = pad.t + plotH;
       const segs = m.segments.map(seg => {
         const count = Number(seg.count) || 0;
-        const hh = total ? (plotH * count) / max : 0;
+        const hh = (plotH * count) / axisMax;
         y -= hh;
         if (!count) return "";
-        const compact = hh < 18;
-        const labelX = compact ? x + barW + 7 : x + barW / 2;
-        const labelY = compact ? y + Math.max(8, hh / 2 + 4) : y + hh / 2 + 4;
-        const labelClass = compact
-          ? "kpi-chart-segment-count-outside"
-          : seg.name === "LSA inbox"
-            ? "kpi-chart-segment-count-dark"
-            : "kpi-chart-segment-count";
+        /* Only label when the segment is tall enough — tiny slices live in the table. */
+        const showLabel = hh >= 22;
+        const label = showLabel
+          ? `<text x="${x + barW / 2}" y="${y + hh / 2 + 4}" text-anchor="middle" class="kpi-chart-segment-count">${count}</text>`
+          : "";
         return `<g>
           <rect x="${x}" y="${y}" width="${barW}" height="${Math.max(hh, 0)}" fill="${seg.color}">
             <title>${escapeHtml(seg.name)}: ${count}</title>
           </rect>
-          <text x="${labelX}" y="${labelY}" text-anchor="${compact ? "start" : "middle"}" class="${labelClass}">${count}</text>
+          ${label}
         </g>`;
       }).join("");
-      const stackTop = pad.t + plotH - (plotH * total) / max;
       return `<g>
         ${segs}
-        <text x="${x + barW / 2}" y="${Math.max(14, stackTop - 11)}" text-anchor="middle" class="kpi-chart-total">${total}</text>
-        <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${m.month}</text>
+        <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(m.month)}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-stacked kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Stacked leads by month">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-stacked kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Stacked leads by month — Search, LSA, HubSpot">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}${bars}
       <line x1="${pad.l}" y1="${pad.t + plotH}" x2="${w - pad.r}" y2="${pad.t + plotH}" class="kpi-chart-baseline"/>
+      <text x="14" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 14 ${pad.t + plotH / 2})" class="kpi-chart-axis">Leads</text>
     </svg>`;
   }
 
@@ -715,11 +723,11 @@
     const max = Math.max(...totals, 1);
     const w = 560;
     const h = 280;
-    const pad = { l: 48, r: 24, t: 44, b: 44 };
+    const pad = { l: 48, r: 36, t: 48, b: 46 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
     const slot = plotW / months.length;
-    const barW = Math.min(88, slot * 0.48);
+    const barW = Math.min(84, slot * 0.46);
     const ticks = [0, 0.25, 0.5, 0.75, 1].map(p => {
       const y = pad.t + plotH * (1 - p);
       const val = Math.round(max * p);
@@ -870,20 +878,29 @@
     return Array.from({ length: n }, (_, i) => Math.round((max * i) / (n - 1)));
   }
 
-  /** Dual-axis: cases + LSA leads (left count) · marketing spend (right $). */
+  /** LSA calls + digital ad calls + website forms. Null when none of the three are known. */
+  function incomingTotal(r) {
+    const parts = [r.leads, r.adsLeads, r.websiteLeads];
+    if (parts.every(v => v == null)) return null;
+    return parts.reduce((s, v) => s + (Number(v) || 0), 0);
+  }
+
+  /** Dual-axis: cases + incoming total (left count) · marketing spend (right $). */
   function dualAxisCasesSpendChart(rows) {
     rows = newestFirst(rows);
-    const w = 720;
-    const h = 300;
-    const pad = { l: 56, r: 64, t: 36, b: 44 };
+    const w = 980;
+    const h = 360;
+    const pad = { l: 58, r: 78, t: 28, b: 48 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
-    const leftMax = niceAxisMax(Math.max(...rows.map(r => Math.max(r.cases || 0, r.leads || 0)), 1));
+    const leftMax = niceAxisMax(Math.max(...rows.map(r => Math.max(r.cases || 0, incomingTotal(r) || 0)), 1));
     const rightMax = niceAxisMax(Math.max(...rows.map(r => r.spend || 0), 1));
     const leftY = v => pad.t + plotH * (1 - v / leftMax);
     const rightY = v => pad.t + plotH * (1 - v / rightMax);
     const slot = plotW / rows.length;
-    const colors = { cases: "#4f8a63", leads: "#1e3a8a", spend: "#6a5acd" };
+    const colors = { cases: "#4f8a63", incoming: "#1e3a8a", spend: "#6a5acd" };
+    const barW = Math.min(34, slot * 0.28);
+    const gap = 8;
     const leftTicks = axisTicks(leftMax, 5).map(t => {
       const y = leftY(t);
       return `<g>
@@ -898,17 +915,25 @@
     }).join("");
     const bars = rows.map((r, i) => {
       const cx = pad.l + slot * i + slot / 2;
+      const incoming = incomingTotal(r);
+      const casesX = cx - barW - gap / 2;
+      const incomingX = cx + gap / 2;
+      const barLabel = (x, value, topY) => {
+        const bh = pad.t + plotH - topY;
+        const inside = bh >= 30;
+        return `<text x="${x + barW / 2}" y="${inside ? topY + 16 : topY - 6}" text-anchor="middle" class="${inside ? "kpi-chart-segment-count" : "kpi-chart-total"}">${value}</text>`;
+      };
       const casesBar = (r.cases != null && r.cases > 0)
-        ? `<rect x="${cx - 36}" y="${leftY(r.cases)}" width="28" height="${pad.t + plotH - leftY(r.cases)}" rx="3" fill="${colors.cases}"/>
-           <text x="${cx - 22}" y="${leftY(r.cases) - 6}" text-anchor="middle" class="kpi-chart-total">${r.cases}</text>`
+        ? `<rect x="${casesX}" y="${leftY(r.cases)}" width="${barW}" height="${pad.t + plotH - leftY(r.cases)}" rx="3" fill="${colors.cases}"/>
+           ${barLabel(casesX, r.cases, leftY(r.cases))}`
         : "";
-      const leadsBar = (r.leads != null && r.leads > 0)
-        ? `<rect x="${cx + 8}" y="${leftY(r.leads)}" width="28" height="${pad.t + plotH - leftY(r.leads)}" rx="3" fill="${colors.leads}"/>
-           <text x="${cx + 22}" y="${leftY(r.leads) - 6}" text-anchor="middle" class="kpi-chart-total">${r.leads}</text>`
+      const incomingBar = (incoming != null && incoming > 0)
+        ? `<rect x="${incomingX}" y="${leftY(incoming)}" width="${barW}" height="${pad.t + plotH - leftY(incoming)}" rx="3" fill="${colors.incoming}"/>
+           ${barLabel(incomingX, incoming, leftY(incoming))}`
         : "";
       return `<g>
         ${casesBar}
-        ${leadsBar}
+        ${incomingBar}
         <text x="${cx}" y="${h - 14}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
@@ -916,20 +941,24 @@
       const cx = pad.l + slot * i + slot / 2;
       return `${cx},${rightY(r.spend)}`;
     }).join(" ");
+    /* Spend $ labels sit to the RIGHT of the line markers so they never sit on bar counts. */
     const spendDots = rows.map((r, i) => {
       const cx = pad.l + slot * i + slot / 2;
       const cy = rightY(r.spend);
+      const spendLabel = r.spend >= 1000
+        ? `$${Math.round(r.spend / 1000)}k`
+        : `$${r.spend || 0}`;
       return `<g>
         <circle cx="${cx}" cy="${cy}" r="5" fill="${colors.spend}"/>
-        <text x="${cx}" y="${cy - 10}" text-anchor="middle" class="kpi-chart-total">${r.spend >= 1000 ? "$" + Math.round(r.spend / 1000) + "k" : "$" + (r.spend || 0)}</text>
+        <text x="${cx + 11}" y="${cy + 4}" text-anchor="start" class="kpi-chart-total" style="fill:${colors.spend}">${spendLabel}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cases and leads vs marketing spend dual-axis chart">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-chart-svg-wide" viewBox="0 0 ${w} ${h}" role="img" aria-label="New cases and incoming responses vs marketing spend dual-axis chart">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${leftTicks}${rightTicks}${bars}
       <polyline points="${spendPts}" fill="none" stroke="${colors.spend}" stroke-width="3"/>
       ${spendDots}
-      <text x="14" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 14 ${pad.t + plotH / 2})" class="kpi-chart-axis">Cases / leads</text>
+      <text x="14" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 14 ${pad.t + plotH / 2})" class="kpi-chart-axis">Cases / incoming</text>
       <text x="${w - 12}" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(90 ${w - 12} ${pad.t + plotH / 2})" class="kpi-chart-axis" style="fill:${colors.spend}">Spend ($)</text>
     </svg>`;
   }
@@ -937,9 +966,7 @@
   function casesLeadsSpendLegend() {
     const items = [
       { name: "New cases", color: "#4f8a63" },
-      { name: "LSA calls", color: "#1e3a8a" },
-      { name: "Digital ad calls", color: "#c45c26" },
-      { name: "Website forms", color: "#b23a78" },
+      { name: "Incoming (LSA + digital + forms)", color: "#1e3a8a" },
       { name: "Marketing spend", color: "#6a5acd" }
     ];
     return channelLegend(items);
@@ -948,14 +975,16 @@
   function casesLeadsSpendTable(rows) {
     const newest = newestFirst(rows);
     return kpiDetailAccordion(
-      "Cases · calls · spend table",
+      "Cases · incoming · spend table",
       `${newest.length} periods`,
-      ["Period", "Cases", "LSA calls", "Digital ad calls", "Website forms", "LSA media", "Search media"],
+      ["Period", "Cases", "Incoming", "LSA calls", "Digital ad calls", "Website forms", "LSA media", "Search media"],
       newest.map(r => {
         const dash = "—";
+        const incoming = incomingTotal(r);
         return [
           escapeHtml(r.month) + " 2026",
           r.cases ? String(r.cases) : dash,
+          incoming != null ? String(incoming) : dash,
           r.leads != null ? String(r.leads) : dash,
           r.adsLeads != null ? String(r.adsLeads) : dash,
           r.websiteLeads != null ? String(r.websiteLeads) : dash,
@@ -1104,14 +1133,14 @@
   function casesLeadsSpendSectionHtml() {
     const rows = DATA.casesLeadsSpend || [];
     if (!rows.length) return "";
-    return `<article class="kpi-split-panel data-chart-table-panel" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Cases, Leads & Spend">
+    return `<article class="kpi-split-panel data-chart-table-panel" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Key Channel Activity">
       ${statusCorner(true)}
       ${kpiHelpBtn("cases-leads-spend")}
-      <div class="kpi-split-panel-body data-chart-table-grid">
+      <div class="kpi-split-panel-body data-chart-table-stack">
         ${chartBlock({
           chart: dualAxisCasesSpendChart(rows),
           legend: casesLeadsSpendLegend(),
-          footnote: "Left axis: counts · Right axis: $ spend."
+          footnote: "Left axis: new cases + incoming (LSA + digital + forms) · Right axis: $ spend."
         })}
         <div class="data-chart-table-side">
           ${chartBlock({
@@ -1391,19 +1420,23 @@
     `;
   }
 
-  function financialSectionHtml() {
-    const cashRows = DATA.cashCollected || [];
-    const chartRows = [
-      ...cashRows.map(row => ({ ...row, year: 2025 })),
+  function cashAndCasesChartRows() {
+    return [
+      ...(DATA.cashCollected || []).map(row => ({ ...row, year: 2025 })),
       ...(DATA.cashCollected2026Ytd || []).map(row => ({ ...row, year: 2026 }))
     ];
+  }
+
+  function financialSectionHtml() {
+    const cashRows = DATA.cashCollected || [];
+    const chartRows = cashAndCasesChartRows();
     if (!cashRows.length) return "";
     return `<section class="kpi-section kpi-section-static kpi-verified" data-feedback-id="section-financial" data-feedback-label="#09 Financials">
       ${statusCorner(true)}
       ${kpiHelpBtn("financial")}
-      ${kpiSectionStaticHead("Financials", "Cash collected MoM · expense-pace checkpoint · cash / new case")}
+      ${kpiSectionStaticHead("Financials", "Cash collected MoM · cash / new case")}
       <div class="kpi-section-body">
-        <p class="kpi-section-intro">NEW-A cash MoM · NEW-B cases created · <strong>2025 through Jul 2026 YTD</strong>. Missing case data is slate gray.</p>
+        <p class="kpi-section-intro">Cash MoM · <strong>2025 through Jul 2026 YTD</strong>. Expense pace checkpoint moved to forecasting &amp; planning notes (Predictions tab still has a draft).</p>
         <div class="kpi-finance-grid kpi-finance-grid-cash">
           <div class="kpi-mini-card">
             <h3>Cash Collected <span class="kpi-finance-card-subtitle">2025 - 2026</span></h3>
@@ -1412,17 +1445,6 @@
               table: cashCollectedTable(cashRows)
             })}
           </div>
-          <div class="kpi-mini-card">
-            <h3>Cases Created <span class="kpi-finance-card-subtitle">2025 - 2026</span></h3>
-            ${chartBlock({
-              chart: casesCreatedChart(chartRows)
-            })}
-          </div>
-        </div>
-        <div class="kpi-mini-card" style="margin-top:0.85rem">
-          <h3>Expense pace checkpoint · $80k / month</h3>
-          <p class="kpi-section-intro">Quoted and 80% collectible value vs mid-year and full-year expense targets. Not QuickBooks cash. H1 surplus is unreliable until unknown business debt is mapped (B9).</p>
-          ${expensePaceCheckpointTableHtml()}
         </div>
         ${sourceFootnote("financial")}
       </div>
@@ -2499,16 +2521,11 @@
           <div class="kpi-stat-grid">${kpiCards}</div>
         </div>
       </section>
-      <section class="kpi-section kpi-section-static" data-feedback-id="section-reviews-presence" data-feedback-label="#16 Reviews by channel">
-        ${kpiSectionStaticHead("Reviews by channel", "Presence mix · Listed / Unlisted / Outdated")}
-        <div class="kpi-section-body">
-          ${reviewsByChannelPanelHtml()}
-        </div>
-      </section>
-      <section class="kpi-section kpi-section-static" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Cases, Leads & Spend">
-        ${kpiSectionStaticHead("Cases, Leads & Spend", "")}
+      <section class="kpi-section kpi-section-static" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Key Channel Activity">
+        ${kpiSectionStaticHead("Key Channel Activity", "")}
         <div class="kpi-section-body">
           ${casesLeadsSpendSectionHtml()}
+          ${reviewsByChannelPanelHtml()}
         </div>
       </section>
       ${financialSectionHtml()}`;
@@ -2635,9 +2652,10 @@
           <td>${dash(r.count)}</td>
           <td><span class="${presenceToneClass(r.status)}">${escapeHtml(presenceLabel(r.status))}</span></td>
         </tr>`).join("");
-    return `<div class="kpi-mini-card kpi-reviews-presence" data-kpi-focus="#16">
+    return `<div class="kpi-mini-card kpi-reviews-presence" data-kpi-focus="#16" data-feedback-id="section-reviews-presence" data-feedback-label="#16 Reviews by channel">
       ${statusCorner(anyVerified)}
       ${kpiHelpBtn("#16")}
+      <h3>Presence mix <span class="kpi-finance-card-subtitle">Listed / Unlisted / Outdated</span></h3>
       <div class="kpi-reviews-main">
         ${chartBlock({ chart: donutChart(segs) })}
         <details class="kpi-table-acc kpi-reviews-table-wrap">
@@ -2663,7 +2681,8 @@
           focus: "#01",
           chart: stackedLeadsByMonthChart(leadsByMonthFromChannels(DATA.channels, { useChannelMonths: true })),
           legend: channelLegend(DATA.channels),
-          table: channelsDetailTable(DATA.channels)
+          table: channelsDetailTable(DATA.channels),
+          footnote: "Segment counts labeled in-bar when large enough · full totals in the table."
         })}
         ${sourceFootnote("#01")}
       </div>
@@ -2705,6 +2724,23 @@
         })}
       </div>
       ${kpiRefMark("#04")}
+    </article>`;
+  }
+
+  function casesCreatedPanelHtml() {
+    const chartRows = cashAndCasesChartRows();
+    if (!chartRows.length) return "";
+    return `<article class="kpi-split-panel" data-feedback-id="section-cases-created" data-feedback-label="Cases Created 2025–2026">
+      ${statusCorner(true)}
+      ${kpiHelpBtn("cases-created")}
+      ${kpiSectionStaticHead("Cases Created", "2025 - 2026 · MyCase created month")}
+      <div class="kpi-split-panel-body">
+        ${chartBlock({
+          chart: casesCreatedChart(chartRows),
+          footnote: "MyCase Client contacts by Created month. Slate = missing (Jul 2026 not yet available)."
+        })}
+        ${sourceFootnote("cases-created")}
+      </div>
     </article>`;
   }
 
@@ -2753,6 +2789,7 @@
     el.innerHTML = `<div class="data-grid">
       ${dataCardHtml("Lead Channel Stack", "Lead source movement and MoM.", leadsByChannelPanelHtml())}
       ${dataCardHtml("Cases MoM", "Closed · New · Red accounts.", casesMomPanelHtml())}
+      ${dataCardHtml("Cases Created", "MyCase created month · 2025 full year + 2026 YTD.", casesCreatedPanelHtml(), { full: true })}
       ${dataCardHtml("Referral Network", "KPI #17 · placeholder until A4 tracking wires.", totalReferralNetworkPanelHtml(), {
         inputNeeded: true,
         inputProjectId: "A4",
@@ -3352,7 +3389,7 @@
           rec.id,
           recFillTokens(rec.title, tokens),
           recFillTokens(rec.hint, tokens),
-          kpiDetailTable(["Project", "Priority / status", "Fee", "Role", "Success gate"], rows)
+          kpiDetailTable(["Project", "Score / status", "Fee", "Role", "Success gate"], rows)
         );
       }
       if (bodyType === "actions-list") {
@@ -3409,17 +3446,21 @@
         `${statsHtml}${chartHtml}${whyHtml}${solutionsHtml}${proofHtml}`
       );
     }).join("");
+    const alertText = String(page.alert || "").trim();
+    const alertHtml = alertText
+      ? `<aside class="rec-callout rec-callout-${recStatusKind(page.alertStatus)} rec-page-alert" aria-label="${escapeHtml(page.alertStatus || "Action required")}">
+      <span class="rec-callout-status">${escapeHtml(page.alertStatus || "Action required")}</span>
+      <span class="rec-callout-label">${escapeHtml(page.alertLabel || "Alert")}</span>
+      <div class="rec-callout-body"><p>${recInlineMd(alertText, tokens)}</p></div>
+    </aside>`
+      : "";
     return `<header class="data-page-head">
       <div>
         <h2 class="data-page-title">${escapeHtml(page.title || "Recommendations")}</h2>
         <p class="data-page-sub">${escapeHtml(page.subtitle || "")}</p>
       </div>
     </header>
-    <aside class="rec-callout rec-callout-${recStatusKind(page.alertStatus)} rec-page-alert" aria-label="${escapeHtml(page.alertStatus || "Action required")}">
-      <span class="rec-callout-status">${escapeHtml(page.alertStatus || "Action required")}</span>
-      <span class="rec-callout-label">${escapeHtml(page.alertLabel || "Alert")}</span>
-      <div class="rec-callout-body"><p>${recInlineMd(page.alert || "", tokens)}</p></div>
-    </aside>
+    ${alertHtml}
     <nav class="rec-jump" aria-label="Jump to recommendation">${jump}</nav>
     <div class="rec-stack">${sections}</div>`;
   }

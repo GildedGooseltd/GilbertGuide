@@ -145,7 +145,7 @@ Countersign the Pav Law SOW here (private, single-use):
 
 Do not forward this link.
 
-Andrew Brown already signed for Pav Law and individually.
+Andrew Brown already signed for Pav Law and individually (joint and several).
 Request: [REQUEST_ID]
 Andrew-signed PDF attached.
 
@@ -178,7 +178,7 @@ Andrew-signed PDF attached.
 ```
 The Pav Law Statement of Work is fully executed.
 
-Andrew Brown signed for Pav Law and individually.
+Andrew Brown signed for Pav Law and individually (joint and several).
 Kate Stannard countersigned for Gilded Goose Limited.
 Final server timestamp: [SERVER_TIMESTAMP]
 Final SHA-256: [HASH]

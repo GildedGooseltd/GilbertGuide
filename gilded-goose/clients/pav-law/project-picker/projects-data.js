@@ -29,7 +29,7 @@ window.PROJECT_DATA = {
     "campaignType": "Paid Media Mgmt",
     "status": "required",
     "publishStatus": "published",
-    "estimatedLeads": "~36 calls/mo \u001f~80 LSA phone leads/mo",
+    "estimatedLeads": "~36 calls/mo · ~80 LSA phone leads/mo",
     "keywords": [
       "ongoing",
       "monthly",
@@ -46,6 +46,7 @@ window.PROJECT_DATA = {
     "title": "Digital Ads Maintenance Retainer",
     "tldr": "Ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
     "valueAdded": [
+      "Ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
       "Monthly reporting catches waste before it runs another month",
       "Keeps Google Ads, LSA, and Microsoft Ads under one scope",
       "LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing",
@@ -72,18 +73,19 @@ window.PROJECT_DATA = {
     ],
     "abQuestions": [],
     "kpiRefs": [],
+    "shortTitle": "Digital Ads Retainer",
     "estCostLabel": "$2,900/mo",
     "paymentPlanLabel": "monthly",
-    "feeEstimate": 4400,
+    "feeEstimate": 4500,
     "feeEstimateOngoing": null,
     "feeEstimateLane": "retainer_ads",
     "feeEstimateUnit": "mo",
     "feeEstimateLocalMid": 3000,
     "feeEstimateNationalMid": 3800,
     "feeEstimateScope": {
-      "raw": 8.73,
+      "raw": 9.73,
       "parts": {
-        "valueAdd": 4,
+        "valueAdd": 5,
         "tasks": 1,
         "completed": 8,
         "info": 0,
@@ -95,8 +97,8 @@ window.PROJECT_DATA = {
     "feeEstimateComplexity": 1.1,
     "feeEstimateBlend": "55% local / 45% national",
     "feeEstimatePackaged": false,
-    "feeEstimateDelta": 1500,
-    "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.20 (8.73 units) · complexity ×1.1"
+    "feeEstimateDelta": 1600,
+    "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.21 (9.73 units) · complexity ×1.1"
   },
   "projects": [
     {
@@ -120,9 +122,9 @@ window.PROJECT_DATA = {
         "intake"
       ],
       "title": "HubSpot Phone/ VoIP Setup",
-      "description": "Finish phone routing into HubSpot, start using HubSpot calling for intake logging, and staff coverage so paid clicks become answered consults — not missed revenue.",
       "tldr": "Stand up HubSpot calling now (interim number if port pending) so Search + LSA calls are answered, logged, and tasked — before scaling paid budgets. Jul 2026 Ads review: **64 missed Search calls** in Call details (~**$26.1k** est. missed revenue YTD; ~**$125k** FY if miss rate holds).",
       "valueAdded": [
+        "Stand up HubSpot calling now (interim number if port pending) so Search + LSA calls are answered, logged, and tasked — before scaling paid budgets. Jul 2026 Ads review: **64 missed Search calls** in Call details (~**$26.1k** est. missed revenue YTD; ~**$125k** FY if miss rate holds).",
         "Call extensions stay on **(719) 888-7888** only — HubSpot numbers never public",
         "HubSpot Calling logs timeline · missed-call → task (Romina / Casey)",
         "Direct HubSpot routing: **Romina first → Casey backup → voicemail**, with same-day callback tasks",
@@ -131,6 +133,7 @@ window.PROJECT_DATA = {
       "valueIcons": [
         "intake",
         "foundation",
+        "hubspot",
         "crm",
         "efficiency"
       ],
@@ -149,12 +152,9 @@ window.PROJECT_DATA = {
         "[ ] VoIP live verification with Google call reporting",
         "Casey shadow: LSA call review + status updates (`LSA-DOCUMENTING-TRAINING.md`)"
       ],
-      "goal": "Answered phones **≥90%** (#21) on Search + LSA lines; cut est. missed revenue (#19) from current ~$10k+/mo June run-rate.",
       "abQuestions": [],
-      "kpiRefs": [
-        "#19",
-        "#21"
-      ],
+      "kpiRefs": [],
+      "shortTitle": "HubSpot VoIP",
       "estCostLabel": "incl. B13",
       "paymentPlanLabel": "—",
       "feeEstimate": 4400,
@@ -164,22 +164,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 16.19,
+        "raw": 15.94,
         "parts": {
-          "valueAdd": 4,
+          "valueAdd": 5,
           "tasks": 7,
           "completed": 4,
           "info": 0,
           "ab": 0,
-          "kpis": 2,
-          "descUnits": 1.14
+          "kpis": 0,
+          "descUnits": 0.59
         }
       },
       "feeEstimateComplexity": 1.188,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": true,
       "feeEstimateDelta": null,
-      "feeEstimateNote": "intake voip lane · local mid $2,500 · national mid $3,250 · scope ×1.30 (16.19 units) · complexity ×1.188"
+      "feeEstimateNote": "intake voip lane · local mid $2,500 · national mid $3,250 · scope ×1.30 (15.94 units) · complexity ×1.188"
     },
     {
       "id": "B11",
@@ -189,23 +189,26 @@ window.PROJECT_DATA = {
       "campaignType": "LSA Operations & Training",
       "status": "recommended",
       "publishStatus": "published",
-      "estimatedLeads": "~36 calls/month",
+      "estimatedLeads": "Recover ~24 answered calls/mo (Jun 38 missed · #21 ≥90%)",
       "keywords": [
         "lsa",
         "local services",
         "intake",
-        "casey",
-        "romina",
         "call review",
         "lead status",
         "phone coverage",
-        "hubspot"
+        "hubspot",
+        "increase money",
+        "sales"
       ],
       "title": "LSA Call Process Update",
-      "tldr": "Phase 1 locked LSA lead hygiene and training docs; Phase 2 trains Casey on call review and fixed phone blocks so Romina gets pipeline time.",
+      "tldr": "Protects LSA spend — increasing pickup rate decreases costs",
       "valueAdded": [
-        "Accurate LSA lead status (booked, spam, follow-up) for billing and reporting",
-        "Casey on phone blocks frees Romina for HubSpot, follow-ups, and admin — lifts answer and close rates"
+        "Protects LSA spend — increasing pickup rate decreases costs",
+        "Grows Casey’s client communication and sales skills",
+        "Directly connects legal expertise with clients",
+        "Gives Romina uninterrupted callback and admin time during coverage window(s) to improve productivity",
+        "Moves answered-call rate toward ≥90% (#21) — June left **38** Search calls unanswered (~**24**/mo recoverable)"
       ],
       "valueIcons": [
         "intake",
@@ -214,45 +217,46 @@ window.PROJECT_DATA = {
         "crm"
       ],
       "completedItems": [
-        "Retainer WIP scoped into this project for tracking",
         "Lead Source field added in MyCase"
       ],
       "inProgressItems": [
-        "Casey trained via call review before live intake",
+        "Casey trained via call review and data updates to improve reporting/refunds",
         "Casey ↔ Romina coverage calendar (2–3 hrs/day ramp or one full day/week)",
         "HubSpot alignment for every LSA lead",
         "LSA lead-status SOP — update lead info, notes, booked/spam/dispute in Google LSA",
-        "`LSA-DOCUMENTING-TRAINING.md` written and shared with team"
+        "`LSA-DOCUMENTING-TRAINING.md`"
       ],
-      "goal": "LSA statuses updated same business day; Casey covers a defined phone block or day(s); disputed/spam leads caught before month-end billing; higher answer and close rates with legal expertise on pickup.",
       "abQuestions": [],
-      "kpiRefs": [],
+      "kpiRefs": [
+        "#21"
+      ],
+      "shortTitle": "LSA Call Process",
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 2700,
+      "feeEstimate": 2800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "lsa_process",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1600,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 9.74,
+        "raw": 12.11,
         "parts": {
-          "valueAdd": 2,
+          "valueAdd": 5,
           "tasks": 5,
-          "completed": 2,
+          "completed": 1,
           "info": 0,
           "ab": 0,
-          "kpis": 0,
-          "descUnits": 0.69
+          "kpis": 1,
+          "descUnits": 0.11
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1200,
-      "feeEstimateNote": "lsa process lane · local mid $1,600 · national mid $2,500 · scope ×1.21 (9.74 units) · complexity ×1.1"
+      "feeEstimateDelta": 1300,
+      "feeEstimateNote": "lsa process lane · local mid $1,600 · national mid $2,500 · scope ×1.25 (12.11 units) · complexity ×1.1"
     },
     {
       "id": "B10",
@@ -288,71 +292,62 @@ window.PROJECT_DATA = {
         "ga4",
         "traffic"
       ],
-      "title": "HS: Digital Profiles Refresh & Tracking Updates",
-      "description": "Many third-party sites still show stale Pav Law info. Updating intake CTAs and NAP, then testing paid directory upgrades only where UTMs prove traffic, protects brand and spend. Complements B12 (Casey rebrand) and prior GBP cleanup under A7.\n\n**Platform ad credits (Jul 2026):**\n\n- **Yelp** — **$300** advertising credit, good through **end of July 2026**. Use while refreshing the Yelp listing so spend and profile updates land together.\n- **Reddit** — previously offered a promo/ad credit (account had ~$500 credit in the May mix under A7). May have **expired in June** — recheck Ads account before assuming it is gone; if live, coordinate spend with A7 Reddit flight.",
-      "tldr": "Refresh outdated Pav Law directory and social profiles — especially Yelp, where organic review volume is rising — and tag every site link for attribution.",
+      "title": "Digital Presence Refresh",
+      "tldr": "Refreshed bios, practice areas, photos, and CTAs for firm and both attorneys (Yelp, Justia, etc.)",
       "valueAdded": [
-        "Refreshed bios, practice areas, photos, and CTAs for firm and both attorneys (ABA-aligned)",
+        "Refreshed bios, practice areas, photos, and CTAs for firm and both attorneys (Yelp, Justia, etc.)",
         "Unique UTM-tagged website links per profile so GA4/HubSpot can rank which platforms earn traffic",
-        "Merge Andrew Brown and Pav Law profiles where they still compete"
+        "Merge Andrew Brown and Pav Law profiles",
+        "Review FindLaw / Justia contracts, services, and contract terms"
       ],
       "valueIcons": [
-        "foundation",
+        "hubspot",
         "leads",
         "referrals",
         "intake",
-        "efficiency"
+        "finance"
       ],
       "completedItems": [
         "Inventory of every live profile",
-        "Google Business Profile",
-        "Lite general cleanse with account transfer(s)"
+        "Lite general cleanse with account transfer(s)",
+        "Google Business Profile update, social links lite refresh and license verification"
       ],
       "inProgressItems": [
         "**Yelp $300 ad credit** — claim/use before **end of July 2026** (pair with listing refresh)",
         "**Reddit promo credit** — recheck Ads account (may have expired June); if still live, run under A7",
         "LinkedIn company showcase still shows low followers and 2024-era launch copy",
         "Andrew + Casey personal LinkedIn and directory profiles",
-        "Extend UTM naming to all profile links",
-        "GBP social links lite refresh and license verification",
-        "Fill **Information needed** tables above → sync #16 when ratings/counts verified"
-      ],
-      "goal": "Refresh live profiles with UTM-tagged links and attribute about 10 leads/month from directory and social profile traffic.",
-      "informationNeeded": [
-        "Manual inputs for **#16 Reviews by channel** and digital profile refresh. Fill cells as you audit; leave blank until verified. Feed completed rows into Gilbert KPIs (`DATA.reviews`) when ready.",
-        "### #16 — Reviews by channel (firm)",
-        "### Digital profiles — NAP · bio · photo · CTA/UTM",
-        "One row per live listing. **Whose:** Firm · Andrew · Casey.",
-        "### Merge / cleanup log"
+        "Extend UTM naming to all profile links"
       ],
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Digital Profiles",
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "40%",
       "depositPct": 0.4,
-      "feeEstimate": 3000,
+      "feeEstimate": 2700,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 17.58,
+        "raw": 11.64,
         "parts": {
-          "valueAdd": 3,
-          "tasks": 7,
+          "valueAdd": 4,
+          "tasks": 5,
           "completed": 3,
-          "info": 5,
+          "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.88
+          "descUnits": 0.19
         }
       },
-      "feeEstimateComplexity": 1.08,
+      "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.31 (17.58 units) · complexity ×1.08"
+      "feeEstimateDelta": 900,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.24 (11.64 units) · complexity ×1"
     },
     {
       "id": "B13",
@@ -374,15 +369,16 @@ window.PROJECT_DATA = {
         "onboarding"
       ],
       "title": "HubSpot Marketing Setup",
-      "description": "Parent card for HubSpot marketing setup as one program. Child cards keep sprint detail; this card owns sequence, packaging, and remaining blockers to full automation. B2 phone/VoIP and B7 contacts are quoted incl. B13.",
       "tldr": "One HubSpot foundation so email, referrals, forms, and booking share the same contacts, stages, and reporting.",
       "valueAdded": [
+        "One HubSpot foundation so email, referrals, forms, and booking share the same contacts, stages, and reporting.",
         "Packages holiday email (A3), contact upload (B7), pipeline (B1), and LPs (A5) under one CRM build",
         "Stops duplicate fees looking like separate “email agencies”",
         "Makes A8 dashboard HubSpot rows possible once contacts export cleanly"
       ],
       "valueIcons": [
         "foundation",
+        "hubspot",
         "crm",
         "leads",
         "intake",
@@ -397,35 +393,35 @@ window.PROJECT_DATA = {
         "B7 America / MyCase marketing contact pass",
         "B1 speed-to-lead workflows live and measured"
       ],
-      "goal": "Complete HubSpot foundation so A3, B7, B1, and A5 share contacts, stages, and reporting without orphan channel fees.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "HubSpot Marketing",
       "estCostLabel": "$5,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 9700,
+      "feeEstimate": 9800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "hubspot_foundation",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 5500,
       "feeEstimateNationalMid": 10000,
       "feeEstimateScope": {
-        "raw": 7.55,
+        "raw": 7.9,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 2,
           "completed": 3,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.85
+          "descUnits": 0.2
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 4200,
-      "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×1.17 (7.55 units) · complexity ×1.1"
+      "feeEstimateDelta": 4300,
+      "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×1.18 (7.9 units) · complexity ×1.1"
     },
     {
       "id": "A4",
@@ -433,9 +429,9 @@ window.PROJECT_DATA = {
       "fee": 1700,
       "category": "Referral",
       "campaignType": "Referral Program",
-      "status": "wip",
+      "status": "started",
       "publishStatus": "published",
-      "estimatedLeads": "10/ mo",
+      "estimatedLeads": "10/mo",
       "keywords": [
         "referral",
         "referrals",
@@ -448,24 +444,24 @@ window.PROJECT_DATA = {
         "review response",
         "reputation"
       ],
-      "title": "HS: Client Referral Program",
-      "description": "Referral marketing outperforms cold paid channels because trust is already established. Track 1 owns past-client referral asks and **responding to reviews** on public listings so new prospects see an active, professional firm. Track 2 (sealing and probation reengagement) is A17 under this parent.",
+      "title": "Client Referral Program",
       "tldr": "Highest-trust lead channel for direct-hire traffic, plus responding to reviews so reputation keeps compounding.",
       "valueAdded": [
+        "Highest-trust lead channel for direct-hire traffic, plus responding to reviews so reputation keeps compounding.",
         "Highest-trust leads, often also the best high-dollar matters",
-        "Setup plus $500/mo upkeep so asks stay active",
         "Responding to reviews (Google, Yelp, and other live listings) on a steady cadence",
         "Track 1 (referral asks); Track 2 sealing/probation lives on A17"
       ],
       "valueIcons": [
         "referrals",
         "leads",
+        "hubspot",
         "crm",
         "intake"
       ],
-      "goal": "Generate about 10 referral leads per month via past-client asks with active monthly upkeep, and keep review responses current on the firm’s live listings.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Client Referral",
       "estCostLabel": "$1,700",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -476,7 +472,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2100,
       "feeEstimateNationalMid": 3200,
       "feeEstimateScope": {
-        "raw": 5.01,
+        "raw": 4.18,
         "parts": {
           "valueAdd": 4,
           "tasks": 0,
@@ -484,14 +480,14 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.01
+          "descUnits": 0.18
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1100,
-      "feeEstimateNote": "referral program lane · local mid $2,100 · national mid $3,150 · scope ×1.11 (5.01 units) · complexity ×1"
+      "feeEstimateNote": "referral program lane · local mid $2,100 · national mid $3,150 · scope ×1.08 (4.18 units) · complexity ×1"
     },
     {
       "id": "A17",
@@ -499,7 +495,7 @@ window.PROJECT_DATA = {
       "fee": 1500,
       "category": "Referral / Outbound",
       "campaignType": "Past-Client Reengagement",
-      "status": "wip",
+      "status": "started",
       "publishStatus": "published",
       "parentId": "A4",
       "enabler": false,
@@ -514,10 +510,10 @@ window.PROJECT_DATA = {
         "mycase",
         "nurture track"
       ],
-      "title": "HS: Sealing & Probation Client Reengagement",
-      "description": "Track 2: call for Colorado simplified sealing after deferred judgment dismissal, and motions for early termination / lift supervised probation. MyCase: Outcome, Status = Prospecting - Returning Client, Client Disposition, Nurture Track. Wave targets: 100 connects @ 40%, 200 emails, 20 resigns; daily ops 20 updates/day and 20 calls/day. Parent A4 owns referral Track 1; A6 can dial once lists are ready; B7 unlocks email at scale.",
+      "title": "Sealing & Probation Client Reengagement",
       "tldr": "Past clients who finished deferred judgment or probation get a clear next offer — sealing or early termination — while cleaning MyCase data.",
       "valueAdded": [
+        "Past clients who finished deferred judgment or probation get a clear next offer — sealing or early termination — while cleaning MyCase data.",
         "Second track beside A4 referral asks (same MyCase hygiene)",
         "Uses cases Pav already owns — faster than new-firm shopping",
         "Scripts and pricing drafted in June Client Reengagement PDF (~$900–$1,500 by offer)"
@@ -525,6 +521,7 @@ window.PROJECT_DATA = {
       "valueIcons": [
         "referrals",
         "leads",
+        "hubspot",
         "crm",
         "intake"
       ],
@@ -537,12 +534,12 @@ window.PROJECT_DATA = {
         "Load scripts into A6 / HubSpot call outcomes",
         "Automated follow-up email for tagged tracks"
       ],
-      "goal": "Book 20 resigns (or signed sealing/probation matters) per wave at PDF connect/email targets with Nurture Track logged on every touched contact.",
       "informationNeeded": [
         "Confirm MyCase field names match PDF (Outcome · Status · Disposition · Nurture Track)"
       ],
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Sealing Reengagement",
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -553,22 +550,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2100,
       "feeEstimateNationalMid": 3200,
       "feeEstimateScope": {
-        "raw": 10.34,
+        "raw": 10.24,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 4,
           "completed": 1,
           "info": 1,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.39
+          "descUnits": 0.29
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1600,
-      "feeEstimateNote": "referral program lane · local mid $2,100 · national mid $3,150 · scope ×1.22 (10.34 units) · complexity ×1"
+      "feeEstimateNote": "referral program lane · local mid $2,100 · national mid $3,150 · scope ×1.22 (10.24 units) · complexity ×1"
     },
     {
       "id": "B5",
@@ -589,9 +586,9 @@ window.PROJECT_DATA = {
         "postcard"
       ],
       "title": "Insurance Envelope Mailer",
-      "description": "Physical mail using insurance sleeves puts Pav Law in front of previous clients and raises referral and repeat potential. Summer peak driving season makes a glovebox reminder a long-tail channel.",
       "tldr": "Insurance-sleeve mailer keeps Pav’s number in the glovebox — an under-$5 touchpoint for thank-yous, past clients, and cold database re-engagement (~$8.80 cost per lead contacted).",
       "valueAdded": [
+        "Insurance-sleeve mailer keeps Pav’s number in the glovebox — an under-$5 touchpoint for thank-yous, past clients, and cold database re-engagement (~$8.80 cost per lead contacted).",
         "Phone number in the car at the moment of accident or ticket",
         "Doubles as onboarding thank-you for new clients",
         "Cold mailing under current CPL for old database re-touch"
@@ -611,9 +608,9 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Design insert for emergency numbers with tracked QR (campaign tracking limited)"
       ],
-      "goal": "Reach 250 households with validated addresses and tracked QR where feasible for past-client and cold-database re-engagement.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Insurance Mailer",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "30%",
       "depositPct": 0.3,
@@ -624,22 +621,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2200,
       "feeEstimateNationalMid": 3000,
       "feeEstimateScope": {
-        "raw": 6.74,
+        "raw": 7.16,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 1,
           "completed": 4,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.89
+          "descUnits": 0.31
         }
       },
       "feeEstimateComplexity": 1.08,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1000,
-      "feeEstimateNote": "mailer lane · local mid $2,150 · national mid $3,000 · scope ×1.15 (6.74 units) · complexity ×1.08"
+      "feeEstimateNote": "mailer lane · local mid $2,150 · national mid $3,000 · scope ×1.16 (7.16 units) · complexity ×1.08"
     },
     {
       "id": "A14",
@@ -663,9 +660,9 @@ window.PROJECT_DATA = {
         "incentive"
       ],
       "title": "Performance Plan Payouts",
-      "description": "Defines Tier 1 (flat task) vs Tier 2 (outcome) payouts, plus contractor deliverables and referral-partner rules under ABA / Colorado ethics. **Commission-only sales track:** L1–L5 lifecycle flats (lead → booked → held → signed → first funds) calibrated to a target monthly FTE cash figure — **not** % of legal fees or trust deposits. Intake/phone staff stay on separate base + bonus track. For Romina, the dashboard's **collectible pace vs target** can be a supporting performance indicator, but not a percentage-of-collections pay formula.",
       "tldr": "Clear performance-based bonus model with goals the team can work toward — including a **commission-only sales track** that can equal full-time pay without a salary.",
       "valueAdded": [
+        "Clear performance-based bonus model with goals the team can work toward — including a **commission-only sales track** that can equal full-time pay without a salary.",
         "Ties pay to measurable outcomes — booked consults, signed matters, outbound pipeline",
         "Uses **collectible pace vs target** as a Romina performance indicator, paired with intake and payment-follow-up actions she directly controls",
         "Commission-only sales: rising flat $ through client lifecycle (not % of fees/trust)",
@@ -673,6 +670,7 @@ window.PROJECT_DATA = {
         "Separate tracks for employee, contractor, and referral-partner payout styles"
       ],
       "valueIcons": [
+        "finance",
         "foundation",
         "leads",
         "efficiency"
@@ -687,9 +685,9 @@ window.PROJECT_DATA = {
         "[ ] Draft tier matrix for remaining employees vs contractors",
         "[ ] List cash-generating tasks already tracked (calls, bookings, referrals)"
       ],
-      "goal": "Ship an Andrew-approved matrix: (1) goals + KPIs in INCENTIVE-COMP-PLAN.md, (2) L1–L5 flat ladder + FTE worksheet, (3) Romina's collectible-pace support tier, and (4) other-role task list.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Perf Plan Payouts",
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -700,33 +698,33 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1600,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 16.69,
+        "raw": 16.31,
         "parts": {
-          "valueAdd": 5,
+          "valueAdd": 6,
           "tasks": 8,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.69
+          "descUnits": 0.31
         }
       },
       "feeEstimateComplexity": 1.145,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1500,
-      "feeEstimateNote": "performance comp lane · local mid $1,600 · national mid $2,500 · scope ×1.30 (16.69 units) · complexity ×1.145"
+      "feeEstimateNote": "performance comp lane · local mid $1,600 · national mid $2,500 · scope ×1.30 (16.31 units) · complexity ×1.145"
     },
     {
       "id": "B14",
       "priority": 9,
       "fee": 1200,
       "category": "Brand / Merch",
-      "campaignType": "Internal Store + Conversation Starters",
-      "status": "available",
+      "campaignType": "Printables + Internal Store + Conversation Starters",
+      "status": "started",
       "publishStatus": "published",
-      "estimatedLeads": "Soft brand lift — referrals and walk-ups via wearable conversation starters",
       "keywords": [
+        "printables",
         "swag",
         "merch",
         "apparel",
@@ -734,17 +732,29 @@ window.PROJECT_DATA = {
         "shirts",
         "mugs",
         "socks",
+        "flyers",
+        "cards",
+        "banners",
+        "prop plate",
+        "stickers",
         "conversation starters",
         "team store",
-        "gilded goose portal"
+        "ntguilt",
+        "gilded goose portal",
+        "holiday gifts",
+        "anniversary gifts",
+        "employee occasions"
       ],
-      "title": "Pav Law Swag & Apparel",
-      "description": "Kate designs apparel and conversation-starter SKUs; Printify fulfills after designs lock. Staff order approved items from a Gilded Goose portal without routing each order through Kate. Complements B12 (Casey presence) — merch and self-serve ordering, not attorney coaching.",
-      "tldr": "Design Pav Law apparel and conversation-starter merch, then give the team a Gilded Goose portal to order direct from Printify.",
+      "title": "Design Printables, Swag & Apparel",
+      "tldr": "NTGUILT printables, apparel, and conversation-starter merch designed in the June cycle (floated / unbilled) — plus Printify portal so the team can reorder without Kate per order. Also covers holiday and anniversary gifts for employee occasions.",
       "valueAdded": [
+        "NTGUILT printables, apparel, and conversation-starter merch designed in the June cycle (floated / unbilled) — plus Printify portal so the team can reorder without Kate per order. Also covers holiday and anniversary gifts for employee occasions.",
         "Conversation starters that carry Pav Law / NTGUILT brand into everyday settings",
+        "June print + booth design suite already built (unbilled credit — see June unbilled inventory)",
+        "Print-ready assets aligned with apparel/swag",
         "Internal store — consistent look without Kate as middleman per order",
-        "Separates one-time design from repeat Printify fulfillment"
+        "Separates one-time design from repeat Printify fulfillment",
+        "Holiday and anniversary gift sets for employee occasions (firm-branded, reorderable)"
       ],
       "valueIcons": [
         "creative",
@@ -752,42 +762,42 @@ window.PROJECT_DATA = {
         "efficiency",
         "foundation"
       ],
-      "goal": "Team reorders approved swag from the portal without Kate in the fulfillment loop; at least one conversation-starter SKU in hand for events/office.",
       "informationNeeded": [
-        "Preferred brand marks (Pav Law / NTGUILT / both)",
+        "Confirm whether any of this design is already on Inv 1023 (need PDF)",
+        "Which NTGUILT designs go live on Printify first",
         "Who may order (partners only vs full staff)",
-        "Budget per person or firm-paid vs employee-paid"
+        "Budget per person or firm-paid vs employee-paid",
+        "Which employee occasions to cover (holidays, work anniversaries, others) and max gift spend per occasion"
       ],
-      "abQuestions": [
-        "Which mark first — Pav Law firm logo, NTGUILT, or both catalogs? Any hard no’s on merch types (socks, drinkware)?"
-      ],
+      "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Printables & Swag",
       "estCostLabel": "$1,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 1700,
+      "feeEstimate": 1800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "swag_consult",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 6.3,
+        "raw": 10.2,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 7,
           "tasks": 0,
           "completed": 0,
-          "info": 3,
-          "ab": 1,
+          "info": 5,
+          "ab": 0,
           "kpis": 0,
-          "descUnits": 1
+          "descUnits": 0.45
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 500,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.14 (6.3 units) · complexity ×1"
+      "feeEstimateDelta": 600,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.22 (10.2 units) · complexity ×1"
     },
     {
       "id": "A2",
@@ -809,9 +819,9 @@ window.PROJECT_DATA = {
         "racing"
       ],
       "title": "NTGUILT Display & Search Campaign Launch",
-      "description": "Display sits at the top of the funnel — awareness first, then retargeting and Search. Parent card for NTGUILT launch creative and campaign direction; related Reddit/social work lives under A7 (merged A18 / B8).",
       "tldr": "Launches NTGUILT Display and Search so upper-funnel creative feeds intake, retargeting, and later Search capture.",
       "valueAdded": [
+        "Launches NTGUILT Display and Search so upper-funnel creative feeds intake, retargeting, and later Search capture.",
         "Adds an NTGUILT lead-intake channel and expands audience beyond firm Search alone",
         "UTM pass-through on NTGUILT.com for attribution",
         "Summer creative pairs with A7 social when budget allows"
@@ -823,40 +833,40 @@ window.PROJECT_DATA = {
         "crm"
       ],
       "completedItems": [
-        "NTGUILT campaign concept and brand direction",
-        "Visual prompt and booth creative development",
-        "Event logistics coordination",
-        "Creative design for posters, business cards, flyers, insurance card holders, and apparel"
+        "NTGUILT campaign concept and brand direction (ads / Display · Search)",
+        "Visual prompt and booth creative development for paid media",
+        "Event logistics coordination (ops handoff → A15 archive)",
+        "**Print / swag / apparel design** — credited under **B14** (flyers, QR cards, banners, prop plate, stickers, apparel art, posters, business cards, insurance card holders)"
       ],
-      "goal": "Drive tracked NTGUILT site sessions and remarketing pool growth from Display/Search with UTM attribution on every destination.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "NTGUILT Ads Launch",
       "estCostLabel": "$2900",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 4600,
+      "feeEstimate": 4700,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "display_search_launch",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 3100,
       "feeEstimateNationalMid": 4800,
       "feeEstimateScope": {
-        "raw": 5.43,
+        "raw": 5.79,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 4,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.83
+          "descUnits": 0.19
         }
       },
       "feeEstimateComplexity": 1.08,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1700,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.12 (5.43 units) · complexity ×1.08"
+      "feeEstimateDelta": 1800,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.13 (5.79 units) · complexity ×1.08"
     },
     {
       "id": "A1",
@@ -885,6 +895,7 @@ window.PROJECT_DATA = {
       "title": "Digital Ad Enhancements",
       "tldr": "Builds additional targeted Search campaigns for new audiences and practice angles already planned for Pav Law, including a priority Sex Crimes Defense pilot.",
       "valueAdded": [
+        "Builds additional targeted Search campaigns for new audiences and practice angles already planned for Pav Law, including a priority Sex Crimes Defense pilot.",
         "Expands Search beyond the current account structure without inventing a new media channel",
         "Tightens keyword and ad copy so spend maps to stronger ad strength and tracked calls",
         "Includes call-only troubleshooting and CDL / federal-masking creative angles already in WIP",
@@ -907,9 +918,9 @@ window.PROJECT_DATA = {
         "Sex Crimes Defense Search pilot: exact/phrase high-intent keywords, discreet RSA copy, dedicated landing page, call tracking, and negative-keyword QA",
         "Keep Sex Crimes Defense off Display and broad match; review sensitive-policy language before launch"
       ],
-      "goal": "Launch and stabilize additional Search + call-only flights so paid clicks produce tracked consult calls for the new target audiences.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Ad Enhancements",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -920,22 +931,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 3800,
       "feeEstimateScope": {
-        "raw": 10.74,
+        "raw": 11.49,
         "parts": {
-          "valueAdd": 4,
+          "valueAdd": 5,
           "tasks": 4,
           "completed": 3,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.54
+          "descUnits": 0.29
         }
       },
       "feeEstimateComplexity": 1.21,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2400,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.23 (10.74 units) · complexity ×1.21"
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.24 (11.49 units) · complexity ×1.21"
     },
     {
       "id": "B4",
@@ -957,9 +968,9 @@ window.PROJECT_DATA = {
         "local"
       ],
       "title": "Website Content Overhaul",
-      "description": "Organic search averaged position 45–58 in early 2025 — most searchers never see Pav without paid ads. Local schema, consistent NAP, and attorney attribution build the foundation for free local visibility.",
       "tldr": "Organic consults compound — less reliance on paid ads over time.",
       "valueAdded": [
+        "Organic consults compound — less reliance on paid ads over time.",
         "Local schema and NAP fixes from the May Semrush audit",
         "Baseline avg position 45–58 in early 2025 Search Console data",
         "Attorney attribution and local listings that earn free visibility"
@@ -978,9 +989,9 @@ window.PROJECT_DATA = {
         "Attorney profile verification support on GBP",
         "Schema markup rollout"
       ],
-      "goal": "Move priority keywords from avg position 45–58 to top-20 for 5 core terms within 90 days.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Website Content",
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -991,22 +1002,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2700,
       "feeEstimateNationalMid": 4300,
       "feeEstimateScope": {
-        "raw": 7.03,
+        "raw": 7.44,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 2,
           "completed": 2,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.73
+          "descUnits": 0.14
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1400,
-      "feeEstimateNote": "website content lane · local mid $2,650 · national mid $4,250 · scope ×1.16 (7.03 units) · complexity ×1"
+      "feeEstimateNote": "website content lane · local mid $2,650 · national mid $4,250 · scope ×1.17 (7.44 units) · complexity ×1"
     },
     {
       "id": "B1",
@@ -1027,14 +1038,15 @@ window.PROJECT_DATA = {
         "crm"
       ],
       "title": "HubSpot Pipeline Sprint",
-      "description": "A web lead only becomes revenue if intake moves fast. This sprint connects form submit → task → bookable consult so speed-to-lead is consistent, not ad hoc. Child of B13.",
       "tldr": "Faster follow-up on web inquiries so qualified leads book consults instead of going cold.",
       "valueAdded": [
+        "Faster follow-up on web inquiries so qualified leads book consults instead of going cold.",
         "Proves form → HubSpot task → Romina booking without handoffs",
         "Recovers leads that would have gone cold",
         "Foundation before scaling paid spend further"
       ],
       "valueIcons": [
+        "hubspot",
         "crm",
         "intake",
         "leads",
@@ -1049,35 +1061,35 @@ window.PROJECT_DATA = {
         "Dashboard and reporting planning",
         "Confirm CRM tool path for live workflows"
       ],
-      "goal": "Prove form → task → Romina booking in under 15 minutes median for 90% of inbound web leads within 2 weeks of sprint.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Pipeline Sprint",
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3300,
+      "feeEstimate": 3400,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "hubspot_sprint",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 7.54,
+        "raw": 7.88,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 2,
           "completed": 3,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.84
+          "descUnits": 0.18
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1500,
-      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.17 (7.54 units) · complexity ×1.1"
+      "feeEstimateDelta": 1600,
+      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.18 (7.88 units) · complexity ×1.1"
     },
     {
       "id": "B3",
@@ -1099,9 +1111,9 @@ window.PROJECT_DATA = {
         "links"
       ],
       "title": "Website Speed and Navigation",
-      "description": "Ads and search already send traffic to pav.law, but confusing navigation, dead links, and slow pages cause exits before contact. Prior optimization roughly halved load times; remaining friction still blocks form submissions.",
       "tldr": "Converts more of the traffic you already pay for.",
       "valueAdded": [
+        "Converts more of the traffic you already pay for.",
         "Phased nav, speed, and form-path fixes — not a one-day patch",
         "Prior work cut load times ~200%; this finishes conversion blockers",
         "Targets bounce and form drop-off on paid landing URLs"
@@ -1119,35 +1131,35 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Navigation simplification in progress"
       ],
-      "goal": "Cut mobile LCP below 3s on top 5 entry pages and reduce bounce rate 10% on paid landing URLs.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Site Speed & Nav",
       "estCostLabel": "$4,200",
       "paymentPlanLabel": "40%",
       "depositPct": 0.4,
-      "feeEstimate": 8200,
+      "feeEstimate": 8300,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "website_ux",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 5500,
       "feeEstimateNationalMid": 9500,
       "feeEstimateScope": {
-        "raw": 5.8,
+        "raw": 6.16,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 1,
           "completed": 2,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.75
+          "descUnits": 0.11
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 4000,
-      "feeEstimateNote": "website ux lane · local mid $5,500 · national mid $9,500 · scope ×1.13 (5.8 units) · complexity ×1"
+      "feeEstimateDelta": 4100,
+      "feeEstimateNote": "website ux lane · local mid $5,500 · national mid $9,500 · scope ×1.14 (6.16 units) · complexity ×1"
     },
     {
       "id": "A7",
@@ -1155,7 +1167,7 @@ window.PROJECT_DATA = {
       "fee": 4500,
       "category": "Creative / Social",
       "campaignType": "Social + paid social",
-      "status": "recommended",
+      "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "Upper-funnel traffic → site and remarketing pool",
       "keywords": [
@@ -1171,9 +1183,9 @@ window.PROJECT_DATA = {
         "utm"
       ],
       "title": "NTGUILT & Firm Social Campaigns",
-      "description": "Merged scope (was A7 + A18 + B8): NTGUILT paid social/repurpose creative, HubSpot-connected organic (Facebook, Instagram, LinkedIn), and Reddit Ads test under one owner so calendars and UTMs do not diverge. Reddit is a 30-day recognition/retarget test around car/racing/COS audiences (May 16 budget mix), not a second parallel program.",
       "tldr": "One social package: paid NTGUILT creative, HubSpot organic publish, and Reddit test — one calendar and one UTM scheme.",
       "valueAdded": [
+        "One social package: paid NTGUILT creative, HubSpot organic publish, and Reddit test — one calendar and one UTM scheme.",
         "Puts paid-for NTGUILT event creative to work in paid channels",
         "Organic social between paid touches; Romina, Casey, and Andrew approve in HubSpot before go-live",
         "Contained Reddit flight ($500 media + $500 promo credit) without a separate project card"
@@ -1197,7 +1209,6 @@ window.PROJECT_DATA = {
         "Creative from A2 prompt library for Reddit + Display",
         "Landing destination (NTGUILT.com vs pav.law contact)"
       ],
-      "goal": "Drive 500+ NTGUILT social engagements per wave and 10+ site sessions with UTM social=NTGUILT per month; post 8–12 firm-safe items/month; complete one 30-day Reddit flight with UTMs and ≥10 site sessions per $100 combined spend+credit without policy rejection.",
       "informationNeeded": [
         "Answer AB – Q: Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
@@ -1205,6 +1216,7 @@ window.PROJECT_DATA = {
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
       "kpiRefs": [],
+      "shortTitle": "Social Campaigns",
       "estCostLabel": "$4,500",
       "paymentPlanLabel": "30%",
       "depositPct": 0.3,
@@ -1215,22 +1227,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 4300,
       "feeEstimateNationalMid": 5300,
       "feeEstimateScope": {
-        "raw": 12.53,
+        "raw": 12.44,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 4,
           "completed": 5,
           "info": 1,
           "ab": 1,
           "kpis": 0,
-          "descUnits": 1.33
+          "descUnits": 0.24
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1400,
-      "feeEstimateNote": "social setup lane · local mid $4,250 · national mid $5,250 · scope ×1.26 (12.53 units) · complexity ×1"
+      "feeEstimateNote": "social setup lane · local mid $4,250 · national mid $5,250 · scope ×1.25 (12.44 units) · complexity ×1"
     },
     {
       "id": "B7",
@@ -1257,14 +1269,15 @@ window.PROJECT_DATA = {
         "referral"
       ],
       "title": "HubSpot Marketing Contacts Upload",
-      "description": "Warm campaigns cannot run until contacts live in HubSpot as clean, segmented marketing contacts. MyCase exports, America lists, and spreadsheets need field mapping, deduplication, and lifecycle tags first. Child of B13.",
       "tldr": "Unlocks holiday email, referral sends, and mailers.",
       "valueAdded": [
+        "Unlocks holiday email, referral sends, and mailers.",
         "Deduped segments: past clients, referral, friends-and-family",
         "Import guide for future CSV uploads",
         "Enabler for A3, A4, A17, and mailers once contacts are marketable"
       ],
       "valueIcons": [
+        "hubspot",
         "crm",
         "referrals",
         "leads",
@@ -1278,9 +1291,9 @@ window.PROJECT_DATA = {
         "America referral list import (partial — needs full marketing contact pass)",
         "MyCase field cleanup noted but not finished"
       ],
-      "goal": "Upload and segment 100% of marketable past-client contacts with bounce rate under 2% on first send.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Marketing Contacts",
       "estCostLabel": "incl. B13",
       "paymentPlanLabel": "—",
       "feeEstimate": 3300,
@@ -1290,22 +1303,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 6.98,
+        "raw": 7.39,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 2,
           "completed": 2,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.68
+          "descUnits": 0.09
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": true,
       "feeEstimateDelta": null,
-      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.16 (6.98 units) · complexity ×1.1"
+      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.17 (7.39 units) · complexity ×1.1"
     },
     {
       "id": "A13",
@@ -1329,9 +1342,9 @@ window.PROJECT_DATA = {
         "retargeting"
       ],
       "title": "Adult Site(s) Ad Campaign",
-      "description": "Upper-funnel Display on adult-content placements can reach DUI and traffic audiences before they search for a lawyer — separate from Military Search and call-only Search. Scopes compliant creative, placement lists, frequency caps, and conversion tracking.",
       "tldr": "Adds a testable awareness lane beyond Google Search and LSA.",
       "valueAdded": [
+        "Adds a testable awareness lane beyond Google Search and LSA.",
         "Isolates adult-site spend in its own campaign with clear UTMs",
         "Policy-safe creative and landing paths reviewed before launch",
         "Does not pollute core Search performance"
@@ -1341,9 +1354,9 @@ window.PROJECT_DATA = {
         "creative",
         "efficiency"
       ],
-      "goal": "Test adult-site Display with frequency caps and ≥10 tracked site visits per $100 spend without brand safety flags.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Adult Site Ads",
       "estCostLabel": "$2,400",
       "paymentPlanLabel": "30%",
       "depositPct": 0.3,
@@ -1354,22 +1367,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 3100,
       "feeEstimateNationalMid": 4800,
       "feeEstimateScope": {
-        "raw": 3.79,
+        "raw": 4.13,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.79
+          "descUnits": 0.13
         }
       },
       "feeEstimateComplexity": 1.21,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2600,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.07 (3.79 units) · complexity ×1.21"
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.08 (4.13 units) · complexity ×1.21"
     },
     {
       "id": "A6",
@@ -1377,7 +1390,7 @@ window.PROJECT_DATA = {
       "fee": 1200,
       "category": "Outbound",
       "campaignType": "Outbound Calls",
-      "status": "recommended",
+      "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "30–40 calls/month (paid search dependency)",
       "keywords": [
@@ -1389,9 +1402,9 @@ window.PROJECT_DATA = {
         "script"
       ],
       "title": "Gabriel Outbound Sales Calling",
-      "description": "Not every consult comes from Google Ads. Outbound to a targeted list — clear script, CRM logging — lets Gabriel add conversations without raising media spend. Can execute A17 sealing/probation dials once lists and fields are ready.",
       "tldr": "Adds phone conversations from warm lists without increasing ad spend.",
       "valueAdded": [
+        "Adds phone conversations from warm lists without increasing ad spend.",
         "Ready-to-dial list and Andrew-approved script",
         "Every outcome logged in HubSpot for reporting",
         "Complements Search when connect rates justify dial volume"
@@ -1402,9 +1415,9 @@ window.PROJECT_DATA = {
         "crm",
         "efficiency"
       ],
-      "goal": "Book 4–8 outbound consults per month from warm lists at connect rate ≥25% and stronger answer rate on returned calls.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Gabriel Outbound",
       "estCostLabel": "$1,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1415,22 +1428,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1400,
       "feeEstimateNationalMid": 2000,
       "feeEstimateScope": {
-        "raw": 3.84,
+        "raw": 4.13,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.84
+          "descUnits": 0.13
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 700,
-      "feeEstimateNote": "outbound enable lane · local mid $1,350 · national mid $2,000 · scope ×1.07 (3.84 units) · complexity ×1.1"
+      "feeEstimateNote": "outbound enable lane · local mid $1,350 · national mid $2,000 · scope ×1.08 (4.13 units) · complexity ×1.1"
     },
     {
       "id": "A19",
@@ -1460,9 +1473,9 @@ window.PROJECT_DATA = {
         "move-in"
       ],
       "title": "Summer Seasonal Digital Ad Campaign",
-      "description": "Seasonal paid-media card for the summer → college transition window. Scope includes:\n\n1. **Digital ads** — one focused Google + Microsoft Search/Display flight for summer/college DUI–traffic themes (topic locked with Andrew before build).\n2. **Bend & Snap social** — short-form social creative and placement plan (Snapchat and/or Meta) around college move-in and the first weeks of the semester — awareness and consult CTAs, firm-safe tone, attorney-approved copy.\n3. **Tracking** — UTMs into HubSpot/NTGUILT destinations; separate naming so seasonal spend does not mix with always-on Military Search or A11 holiday flights.\n\nDoes not replace A11 (holiday/Oktoberfest) or archived A15 event activation — this is the summer/college digital + social lane.",
       "tldr": "Summer seasonal digital ads with a Bend & Snap social flight timed to college move-in and early-semester traffic — Search/Display plus short-form social creative for campus geos.",
       "valueAdded": [
+        "Summer seasonal digital ads with a Bend & Snap social flight timed to college move-in and early-semester traffic — Search/Display plus short-form social creative for campus geos.",
         "One summer seasonal build: Google/Microsoft structure, UTMs, and conversion tracking",
         "Bend & Snap social series (Snapchat / Meta short-form) aimed at college-age awareness around move-in and early semester",
         "Campus and corridor geos (UCCS, Colorado College, and nearby nightlife/traffic corridors) instead of year-round always-on",
@@ -1476,7 +1489,6 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Card scoped — awaiting college calendar lock and creative brief"
       ],
-      "goal": "Launch one summer/college seasonal flight (paid digital + Bend & Snap social) with tracked calls/leads from campus and corridor geos and clean UTM attribution for the flight window.",
       "informationNeeded": [
         "Confirm target campuses / geos and go-live week (move-in vs first two weeks of classes)",
         "Bend & Snap creative direction: comedy/reference guardrails Andrew will approve",
@@ -1485,6 +1497,7 @@ window.PROJECT_DATA = {
       ],
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Summer Seasonal Ads",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1495,22 +1508,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 9.5,
+        "raw": 8.79,
         "parts": {
-          "valueAdd": 4,
+          "valueAdd": 5,
           "tasks": 1,
           "completed": 0,
           "info": 4,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.05
+          "descUnits": 0.34
         }
       },
       "feeEstimateComplexity": 1.08,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 600,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.21 (9.5 units) · complexity ×1.08"
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.20 (8.79 units) · complexity ×1.08"
     },
     {
       "id": "B6",
@@ -1533,9 +1546,9 @@ window.PROJECT_DATA = {
         "internal links"
       ],
       "title": "Blog Revamp",
-      "description": "People search specific questions before they call — DUI stop next steps, military traffic rules, and similar long-tail queries. Existing posts can rank when titles, meta, and internal links point to practice pages. Content SEO layer on top of technical site work.",
       "tldr": "Long-tail questions become organic consult paths.",
       "valueAdded": [
+        "Long-tail questions become organic consult paths.",
         "Internal links from posts to DUI, military, and traffic pages",
         "Results compound over 8–12 weeks",
         "Titles and meta rewritten for search intent, not generic firm copy"
@@ -1549,35 +1562,35 @@ window.PROJECT_DATA = {
       "completedItems": [
         "Website issue review with content and deep-link notes"
       ],
-      "goal": "Publish 2 posts/month and earn +15% organic entrances to blog URLs within 12 weeks.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Blog Revamp",
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3400,
+      "feeEstimate": 3500,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "blog_seo",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 4000,
       "feeEstimateScope": {
-        "raw": 4.18,
+        "raw": 4.48,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 1,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.78
+          "descUnits": 0.08
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 900,
-      "feeEstimateNote": "blog seo lane · local mid $2,500 · national mid $4,000 · scope ×1.08 (4.18 units) · complexity ×1"
+      "feeEstimateDelta": 1000,
+      "feeEstimateNote": "blog seo lane · local mid $2,500 · national mid $4,000 · scope ×1.09 (4.48 units) · complexity ×1"
     },
     {
       "id": "B12",
@@ -1603,9 +1616,9 @@ window.PROJECT_DATA = {
         "b10"
       ],
       "title": "Casey Rebrand Digital & Professional Presence",
-      "description": "Casey-only rebrand and coaching: wardrobe guidance, headshot/day standards, intake/public talk track (no legal advice on phone), and digital presence (LinkedIn, Avvo, Justia, firm team page, GBP attorney attribution where applicable). Complements B10 inventory — this is the coaching and rebrand layer.",
       "tldr": "Elevate Casey as a visible Pav Law attorney — appearance, communication, and digital profiles aligned with firm brand and ABA advertising rules.",
       "valueAdded": [
+        "Elevate Casey as a visible Pav Law attorney — appearance, communication, and digital profiles aligned with firm brand and ABA advertising rules.",
         "Casey positioned as attorney (not admin-only) on firm and personal profiles — complements B10",
         "Consistent wardrobe, grooming, and on-camera / in-person presentation",
         "Casey-only digital presence pass (bios, headshots, CTAs) with Rule 7.2-safe titles"
@@ -1619,9 +1632,9 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Awaiting kickoff — depends on B10 inventory for Casey listings"
       ],
-      "goal": "Publish Casey as attorney across agreed profiles with consistent bio, headshots, and presentation standards aligned to ABA Rule 7.2.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Casey Rebrand",
       "estCostLabel": "$2,000",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1632,22 +1645,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2100,
       "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 5.28,
+        "raw": 5.53,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 1,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.02
+          "descUnits": 0.28
         }
       },
       "feeEstimateComplexity": 1.08,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1200,
-      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.12 (5.28 units) · complexity ×1.08"
+      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.12 (5.53 units) · complexity ×1.08"
     },
     {
       "id": "A11",
@@ -1678,9 +1691,9 @@ window.PROJECT_DATA = {
         "bilingual"
       ],
       "title": "Holiday Digital Ad(s) Campaign Expansion",
-      "description": "Build and launch one focused Google + Microsoft campaign for a single practice or seasonal topic — holiday/Oktoberfest windows first, then military/veterans, DUI/traffic corridors, LSA geos, NTGUILT/events, sealing, DV (budget-controlled), or bilingual where intake supports it. Topic is chosen for the season; not all areas at once.\n\n**Projected campaign start (ads live):** 2026-08-11 — one month before the earliest major verified Colorado Oktoberfest weekend (Steamboat OktoberWest Sep 11–12), so creative/planning is due by ~2026-07-11 and this card is next for the holiday runway.\n\n**Colorado Oktoberfest / fall festival dates (2026):**\n\n- Steamboat OktoberWest — Sep 11–12, 2026 (verified: Steamboat Springs Chamber)\n- Denver Oktoberfest (56th annual) — Sep 18–20 and Sep 25–27, 2026, Larimer / Ballpark District (verified: thedenveroktoberfest.com)\n- Breckenridge Oktoberfest (30th annual) — Sep 25–27, 2026 (verified: gobreck.com)\n- Colorado Springs Oktoberfest — reported Sep 25–27, 2026 (confirm closer to event)\n- Arapahoe Basin Oktoberfest — reported Sep 19–20, 2026 (confirm closer to event)\n- Greeley Oktobrewfest — reported Sep 25–26, 2026 (confirm closer to event)",
       "tldr": "Next holiday/seasonal push: Colorado Oktoberfest season, then later holiday windows. One focus area per flight at the card fee. Creative + planning must start at least one month before ads go live.",
       "valueAdded": [
+        "Next holiday/seasonal push: Colorado Oktoberfest season, then later holiday windows. One focus area per flight at the card fee. Creative + planning must start at least one month before ads go live.",
         "One focus per build: structure, creative, UTMs, and conversion tracking",
         "2026 holiday season opens with Colorado Oktoberfest / fall festival DUI and corridor targeting",
         "Creative and planning locked ≥1 month before projected go-live (2026-08-11)",
@@ -1692,35 +1705,35 @@ window.PROJECT_DATA = {
         "intake",
         "efficiency"
       ],
-      "goal": "Launch one seasonal Search/Microsoft flight with ≥20 calls at ≤$75 cost/call for the chosen focus area — first flight: Colorado Oktoberfest / early fall holiday window.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Holiday Ads",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 4800,
+      "feeEstimate": 4600,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "display_search_launch",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 3100,
       "feeEstimateNationalMid": 4800,
       "feeEstimateScope": {
-        "raw": 6.83,
+        "raw": 5.4,
         "parts": {
-          "valueAdd": 4,
+          "valueAdd": 5,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.83
+          "descUnits": 0.4
         }
       },
       "feeEstimateComplexity": 1.08,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2600,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.16 (6.83 units) · complexity ×1.08"
+      "feeEstimateDelta": 2400,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.12 (5.4 units) · complexity ×1.08"
     },
     {
       "id": "A5",
@@ -1741,15 +1754,16 @@ window.PROJECT_DATA = {
         "web"
       ],
       "title": "HubSpot Landing Page or Website Module",
-      "description": "Paid traffic to the homepage spreads attention across every practice area and typically lowers conversion. A single-offer page (referral signup, resources QR, or intake variant) keeps one message and one HubSpot path per campaign.",
       "tldr": "Single-offer pages convert better than sending campaign traffic to the general homepage.",
       "valueAdded": [
+        "Single-offer pages convert better than sending campaign traffic to the general homepage.",
         "One offer, one form path into HubSpot per campaign",
         "Mobile and desktop QA before ads or QR codes go live",
         "Child of B13 HubSpot foundation packaging"
       ],
       "valueIcons": [
         "leads",
+        "hubspot",
         "crm",
         "intake",
         "efficiency"
@@ -1758,35 +1772,35 @@ window.PROJECT_DATA = {
         "Referral landing page setup documentation",
         "HubSpot form and workflow foundation"
       ],
-      "goal": "Lift landing-page conversion 15–25% on primary paid-traffic entry pages within 30 days of launch.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Landing Page Module",
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3100,
+      "feeEstimate": 3200,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "hubspot_sprint",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 4.55,
+        "raw": 4.95,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 2,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.75
+          "descUnits": 0.15
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1300,
-      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.09 (4.55 units) · complexity ×1.1"
+      "feeEstimateDelta": 1400,
+      "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.11 (4.95 units) · complexity ×1.1"
     },
     {
       "id": "A9",
@@ -1805,9 +1819,9 @@ window.PROJECT_DATA = {
         "trust"
       ],
       "title": "Case Win Log and Testimonials",
-      "description": "Generic ad copy underperforms because it does not prove results. This project builds an approved win log and rotating snippets — outcome type and jurisdiction, never client names — within ABA advertising rules.",
       "tldr": "Real outcomes become reusable ad copy the team approves once.",
       "valueAdded": [
+        "Real outcomes become reusable ad copy the team approves once.",
         "Privacy-safe snippets — outcome type and jurisdiction only",
         "Typically lifts click-through 10–25% over generic lines",
         "Rotating proof points for Search and social under ABA advertising rules"
@@ -1818,9 +1832,9 @@ window.PROJECT_DATA = {
         "foundation",
         "referrals"
       ],
-      "goal": "Publish 6+ case-win proof points and lift on-site trust signals to improve consult conversion 5–10%.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Case Wins & Testimonials",
       "estCostLabel": "$2,000",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1831,22 +1845,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2100,
       "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 3.73,
+        "raw": 4.13,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.73
+          "descUnits": 0.13
         }
       },
       "feeEstimateComplexity": 1.08,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1000,
-      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.06 (3.73 units) · complexity ×1.08"
+      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.08 (4.13 units) · complexity ×1.08"
     },
     {
       "id": "A12",
@@ -1870,9 +1884,9 @@ window.PROJECT_DATA = {
         "weekends"
       ],
       "title": "Enable Pavi Chat QA for After-Hours Support",
-      "description": "Calls and forms drop after hours, but DUI, traffic, and military searches do not. Smart Pavi chat can answer common questions, capture contacts, and route urgent intake when Romina and the desk are offline — qualify and capture, not give legal advice.",
       "tldr": "After-hours and weekend visitors get answers instead of a dead end.",
       "valueAdded": [
+        "After-hours and weekend visitors get answers instead of a dead end.",
         "Firm-safe, ABA-aligned Q&A reviewed before go-live",
         "HubSpot or site logging so morning intake sees overnight conversations",
         "Captures contact details when the desk is offline"
@@ -1883,9 +1897,9 @@ window.PROJECT_DATA = {
         "crm",
         "efficiency"
       ],
-      "goal": "Capture after-hours form fills and chat leads with under 5 minutes first response during pilot hours.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Pavi Chat QA",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1896,22 +1910,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2300,
       "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 3.86,
+        "raw": 4.14,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.86
+          "descUnits": 0.14
         }
       },
       "feeEstimateComplexity": 1.08,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 900,
-      "feeEstimateNote": "chat qa lane · local mid $2,250 · national mid $3,250 · scope ×1.07 (3.86 units) · complexity ×1.08"
+      "feeEstimateNote": "chat qa lane · local mid $2,250 · national mid $3,250 · scope ×1.08 (4.14 units) · complexity ×1.08"
     },
     {
       "id": "B9",
@@ -1936,11 +1950,15 @@ window.PROJECT_DATA = {
         "budget",
         "quickbooks",
         "phone",
-        "payroll"
+        "payroll",
+        "toll",
+        "toll pass",
+        "plates"
       ],
-      "title": "Full Financial, Credit Card & Subscription Waste Audit",
-      "tldr": "Reconcile the firm’s full operating spend across QuickBooks, bank and credit-card statements, ad platforms, software, phone systems, payroll, contractors, sponsorships, and vendor agreements. Turn the subscription waste already observed into a verified monthly and annual savings plan.",
+      "title": "Full Financial Waste Audit",
+      "tldr": "Reconcile the firm’s full operating spend across QuickBooks, bank and credit-card statements, ad platforms, software, phone systems, payroll, contractors, sponsorships, vendor agreements, and toll-pass / vehicle-plate billing. Turn the subscription waste already observed into a verified monthly and annual savings plan.",
       "valueAdded": [
+        "Reconcile the firm’s full operating spend across QuickBooks, bank and credit-card statements, ad platforms, software, phone systems, payroll, contractors, sponsorships, vendor agreements, and toll-pass / vehicle-plate billing. Turn the subscription waste already observed into a verified monthly and annual savings plan.",
         "Produce a transaction-level spend ledger by vendor, owner, department, payment method, and contract term",
         "Inventory every recurring subscription, software seat, phone line, domain, hosting plan, directory, and ad tool",
         "Label each charge **keep · renegotiate · consolidate · cancel · dispute · needs owner**",
@@ -1948,10 +1966,12 @@ window.PROJECT_DATA = {
         "Reconcile ad-platform spend and credits against bank and credit-card charges",
         "Reconcile LSA charged leads, disputes, credits, booked leads, and signed cases",
         "Review payroll, contractor, sponsorship, event, and commission costs against actual use and measurable return",
+        "Update toll-pass payment method and registered plates so billing matches current vehicles and a working card",
         "Build a 30-day savings action list plus monthly and annual run-rate savings forecast",
         "Add renewal dates and owners so waste does not return"
       ],
       "valueIcons": [
+        "finance",
         "efficiency",
         "foundation",
         "retainer"
@@ -1963,39 +1983,41 @@ window.PROJECT_DATA = {
         "4. Advertising waste and credit-recovery schedule",
         "5. Phone-line and communications-cost audit",
         "6. Payroll, contractor, vendor, sponsorship, and event-cost review",
-        "7. Cancel / renegotiate / dispute execution log",
-        "8. Before-and-after monthly operating-spend baseline",
-        "9. Verified savings total, annualized savings, and 90-day follow-up check"
+        "7. Toll-pass payment and plate update (payment method on file, active plate roster, remove stale plates)",
+        "8. Cancel / renegotiate / dispute execution log",
+        "9. Before-and-after monthly operating-spend baseline",
+        "10. Verified savings total, annualized savings, and 90-day follow-up check"
       ],
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Financial Waste Audit",
       "estCostLabel": "$1,800 + 20% verified savings",
       "ongoingFee": 20,
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 4700,
+      "feeEstimate": 4800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "audit_finance",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 4300,
       "feeEstimateScope": {
-        "raw": 20.71,
+        "raw": 24.01,
         "parts": {
-          "valueAdd": 9,
-          "tasks": 9,
+          "valueAdd": 11,
+          "tasks": 10,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.46
+          "descUnits": 0.51
         }
       },
       "feeEstimateComplexity": 1.06,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2900,
-      "feeEstimateNote": "audit finance lane · local mid $2,500 · national mid $4,250 · scope ×1.34 (20.71 units) · complexity ×1.06"
+      "feeEstimateDelta": 3000,
+      "feeEstimateNote": "audit finance lane · local mid $2,500 · national mid $4,250 · scope ×1.37 (24.01 units) · complexity ×1.06"
     },
     {
       "id": "A3",
@@ -2019,22 +2041,23 @@ window.PROJECT_DATA = {
         "past client"
       ],
       "title": "Summer Safety Email Campaign (child of B13)",
-      "description": "DUI and traffic volume spike around July 4 — when past clients and their networks are most likely to need counsel again. Seasonal nurture uses a useful safety message, then a clear next step if pulled over, ticketed, or charged.\n\nSubject lines that break formal legal ad patterns (e.g. summer safety prompts) improve open rates without changing the booking CTA.",
       "tldr": "Reaches past clients when DUI and ticket volume spikes around July 4.",
       "valueAdded": [
+        "Reaches past clients when DUI and ticket volume spikes around July 4.",
         "Pre-holiday safety send plus post-holiday “what to do if charged” guide",
         "Direct path to book with Romina in every message",
         "Packaged under B13 HubSpot setup — not a standalone email fee"
       ],
       "valueIcons": [
         "leads",
+        "hubspot",
         "crm",
         "referrals",
         "retainer"
       ],
-      "goal": "Drive 2–4 re-engaged consults from the past-client list around the July 4 window at under $50 cost per booked consult.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Summer Safety Email",
       "estCostLabel": "incl. B13",
       "paymentPlanLabel": "—",
       "feeEstimate": 2800,
@@ -2046,13 +2069,13 @@ window.PROJECT_DATA = {
       "feeEstimateScope": {
         "raw": 4.15,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.15
+          "descUnits": 0.15
         }
       },
       "feeEstimateComplexity": 1,
@@ -2079,9 +2102,9 @@ window.PROJECT_DATA = {
         "plan"
       ],
       "title": "Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone",
-      "description": "Pav Law runs Google Ads, LSA, HubSpot, referral, outbound, website, and SEO at once. Without a ranked plan, consulting spend scatters. This audit ranked channels by ROI, effort, and dependencies.",
       "tldr": "One agreed 30-day action list across all channels.",
       "valueAdded": [
+        "One agreed 30-day action list across all channels.",
         "Defer/cut list so consulting spend does not scatter",
         "Ranked by ROI, effort, and dependencies",
         "Framework for revenue-channel planning already delivered"
@@ -2095,36 +2118,36 @@ window.PROJECT_DATA = {
         "Marketing strategy shift recommendation",
         "Revenue-channel planning framework"
       ],
-      "goal": "Deliver one ranked 30-day action list with defer/cut lines so spend does not scatter across 8+ channels.",
       "informationNeeded": [
         "Confirm estimated leads gained"
       ],
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Marketing Stack Audit",
       "estCostLabel": "$1,500",
-      "feeEstimate": 2800,
+      "feeEstimate": 2600,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "audit_stack",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2900,
       "feeEstimateScope": {
-        "raw": 5.04,
+        "raw": 5.45,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 2,
           "info": 1,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.69
+          "descUnits": 0.1
         }
       },
-      "feeEstimateComplexity": 1.1,
+      "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1300,
-      "feeEstimateNote": "audit stack lane · local mid $1,850 · national mid $2,900 · scope ×1.11 (5.04 units) · complexity ×1.1"
+      "feeEstimateDelta": 1100,
+      "feeEstimateNote": "audit stack lane · local mid $1,850 · national mid $2,900 · scope ×1.12 (5.45 units) · complexity ×1"
     },
     {
       "id": "A15",
@@ -2148,12 +2171,11 @@ window.PROJECT_DATA = {
         "summer"
       ],
       "title": "Summer Event Activation & Lead Capture",
-      "description": "May plans reserved roughly $3,000–$6,000 of the $20,000 monthly mix for event activation (materials, QR, follow-up). This card owns activation ops; A2 owns NTGUILT creative/campaign; A16 owns partner co-host asks.",
       "tldr": "Turns paid PPIR/ASCEND access into lead capture — not just brand presence.",
       "valueAdded": [
+        "Turns paid PPIR/ASCEND access into lead capture — not just brand presence.",
         "Inventory, booth, QR, and follow-up inside the existing ~$20k monthly mix",
-        "Protects ~$20k PPIR sponsorship from awareness-only waste",
-        "Pairs with A16 partner staff when Andrew is away"
+        "Protects ~$20k PPIR sponsorship from awareness-only waste"
       ],
       "valueIcons": [
         "leads",
@@ -2171,7 +2193,6 @@ window.PROJECT_DATA = {
         "QR + HubSpot capture path",
         "Follow-up toolkit for Romina/Casey"
       ],
-      "goal": "Each activated event produces HubSpot leads within 48 hours with source = event/UTM.",
       "informationNeeded": [
         "Confirm remaining 2026 event calendar and weekends needing full activation",
         "Cap event activation at $3k or $6k for next event?"
@@ -2180,6 +2201,7 @@ window.PROJECT_DATA = {
         "Cap event activation at $3k or $6k for next event?"
       ],
       "kpiRefs": [],
+      "shortTitle": "Summer Event Activation",
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "—",
       "feeEstimate": 4100,
@@ -2189,7 +2211,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 11.24,
+        "raw": 10.7,
         "parts": {
           "valueAdd": 3,
           "tasks": 4,
@@ -2197,92 +2219,81 @@ window.PROJECT_DATA = {
           "info": 2,
           "ab": 1,
           "kpis": 0,
-          "descUnits": 0.69
+          "descUnits": 0.15
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1600,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.24 (11.24 units) · complexity ×1"
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.23 (10.7 units) · complexity ×1"
     },
     {
       "id": "A16",
       "priority": 53,
       "fee": 1000,
       "category": "Partnerships",
-      "campaignType": "Garage Partnership",
-      "status": "archived",
+      "campaignType": "Twisted Wrench Partnership",
+      "status": "planning",
       "publishStatus": "unpublished",
-      "parentId": "A15",
-      "estimatedLeads": "Shared booth leads + shop appointments from giveaways",
+      "estimatedLeads": "Shop-visit leads from monthly giveaway + counter traffic",
       "keywords": [
+        "twisted wrench",
         "garage",
         "partnership",
-        "bailey",
-        "ascend",
-        "partner",
-        "co-host",
         "giveaway",
-        "interlock",
+        "gas card",
+        "oil change",
+        "corvette",
+        "sunshade",
+        "stickers",
         "ntguilt",
-        "seasonal"
+        "pav law"
       ],
-      "title": "Garage Partnership",
-      "description": "May 16 ask: Bailey’s Garage co-host ASCEND at PPIR June 26–27, 2026. Pav covers primary sponsorship (~$20k season). Partner ask: staff (Mo and/or Bailey), driving-safety display, 3+ shop-visit giveaways valued $600–$1,000, route legal questions to Pav. Consulting fee covers packaging and lead-split rules — not prize cost.",
-      "tldr": "Garage partnership for event co-hosts — archived for summer 2027 (was Bailey’s / ASCEND 2026 ask).",
+      "title": "Twisted Wrench",
+      "tldr": "1. **Monthly giveaway** — $75 gas card + shop prize (oil change, synthetic service, or $75–$100 shop credit); entry and prize pickup at the shop",
       "valueAdded": [
-        "Reusable partner template when summer events return",
-        "Giveaways require shop visit — partner ROI is clear",
-        "Shared leads within 48 hours of event close"
+        "1. **Monthly giveaway** — $75 gas card + shop prize (oil change, synthetic service, or $75–$100 shop credit); entry and prize pickup at the shop",
+        "2. **Corvette trade** — shop labor credit on engine work in exchange for marketing / legal package value (parts still clear on paper)",
+        "3. **Discounted legal for the shop** — cheaper or capped services for the business (contracts, collections hygiene) and/or staff consult benefit — written scope, no pay-for-referral",
+        "4. **Parked Corvette as advertising** — visible at the shop (or rotating lots) when the car is sharp and insured; small partner signage",
+        "5. **Co-branded sunshades** — on the Corvette when parked; optional giveaway add-on (B14 / print)",
+        "6. **Counter presence** — stickers, small display, candy bowl with partner card; QR to giveaway entry",
+        "7. **Lead share** — HubSpot tags; shared contacts within 48 hours of entry or visit"
       ],
       "valueIcons": [
         "referrals",
         "leads",
         "crm"
       ],
-      "completedItems": [
-        "Bare-minimum ASCEND co-host proposal written and mailed to Andrew"
-      ],
-      "inProgressItems": [
-        "Close partner commitment",
-        "Lead-share workflow into HubSpot within 48 hours",
-        "Giveaway entry form fields"
-      ],
-      "goal": "Signed partner contribution before ASCEND (or next equivalent) with written giveaway + lead-share rules.",
-      "informationNeeded": [
-        "Did Bailey’s accept, decline, or counter the $600–$1,000 ask?",
-        "Confirm ASCEND staffing names (Mo / Bailey)"
-      ],
-      "abQuestions": [
-        "Did Bailey’s accept, decline, or counter the $600–$1,000 ask?"
-      ],
+      "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Twisted Wrench",
       "estCostLabel": "$1,000",
       "paymentPlanLabel": "—",
-      "feeEstimate": 4000,
+      "feeEstimate": 3900,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "sprint_general",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 9.86,
+        "raw": 7.31,
         "parts": {
-          "valueAdd": 3,
-          "tasks": 3,
-          "completed": 1,
-          "info": 2,
-          "ab": 1,
+          "valueAdd": 7,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
           "kpis": 0,
-          "descUnits": 0.96
+          "descUnits": 0.31
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 3000,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.22 (9.86 units) · complexity ×1"
+      "feeEstimateDelta": 2900,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.17 (7.31 units) · complexity ×1"
     },
     {
       "id": "C1",
@@ -2306,12 +2317,14 @@ window.PROJECT_DATA = {
         "mycase"
       ],
       "title": "Systems Access Audit & Cleanse",
-      "description": "Apr 19–21, 2026 kickoff: Full Systems Access Audit & Cleanse as priority #1 for a $2,000 triage week (with email outage docs and LSA lite). Andrew approved start. Keep on Guide as archive and proof of foundation fee.",
-      "tldr": "Clean admin access across every marketing and intake tool so campaigns and reporting are not blocked by logins.",
+      "tldr": "Secured and documented admin access across Ads, LSA, GBP, Analytics, hosting, CMS, and MyCase so campaigns and reporting are not blocked by logins or orphaned accounts.",
       "valueAdded": [
-        "Documented access across Ads, LSA, GBP, GA4, Bluehost, WordPress, MyCase",
-        "Reduced security / orphaned-user risk after prior marketing personnel",
-        "Prerequisite for retainer and LSA work"
+        "Secured and documented admin access across Ads, LSA, GBP, Analytics, hosting, CMS, and MyCase so campaigns and reporting are not blocked by logins or orphaned accounts.",
+        "Admin access secured and documented across Google Ads (LSA), Google Business Profile, Google Analytics, hosting, CMS, and MyCase",
+        "Permissions reviewed and updated; outdated access removed after prior marketing personnel",
+        "Security risks flagged to keep continuity during team transition",
+        "Prerequisite for retainer, LSA, and HubSpot work",
+        "Invoiced and paid under GGL Invoice 1018 (Apr 23, 2026) — $2,000 package Paid in Full"
       ],
       "valueIcons": [
         "foundation",
@@ -2319,36 +2332,38 @@ window.PROJECT_DATA = {
         "crm"
       ],
       "completedItems": [
-        "Systems access audit across marketing stack",
-        "Security / permission review as scoped in Apr ops outline"
+        "Secured and documented admin access across Google Ads (LSA), Google Business Profile, Google Analytics, hosting, CMS, and MyCase",
+        "Reviewed and updated permissions; removed outdated access",
+        "Identified security risks for continuity during team transition",
+        "Closed on Invoice 1018 — $2,000 package Paid in Full (with Email Outage Triage on same invoice)"
       ],
-      "goal": "Admin access documented and cleansed for Google Ads/LSA, GBP, Analytics, Bluehost, WordPress, and MyCase with risks flagged.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Systems Access Audit",
       "estCostLabel": "$2,000",
-      "feeEstimate": 2400,
+      "feeEstimate": 2500,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 4.71,
+        "raw": 7.93,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 6,
           "tasks": 0,
-          "completed": 2,
+          "completed": 4,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.91
+          "descUnits": 0.33
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 400,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.10 (4.71 units) · complexity ×1"
+      "feeEstimateDelta": 500,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.93 units) · complexity ×1"
     },
     {
       "id": "C2",
@@ -2369,12 +2384,14 @@ window.PROJECT_DATA = {
         "runbook"
       ],
       "title": "Email Outage Triage & DNS Runbook",
-      "description": "Apr 14 urgent ask for triage status, prior incidents, tool map, and DNS/MX changes. Apr 19 ops outline item #2: Document Email Outage Triage. Tracker marks recovery documentation completed.",
-      "tldr": "Diagnosed and documented the pav.law inbound email outage so the next DNS/MX failure is faster to fix.",
+      "tldr": "Documented the pav.law email/DNS outage — root cause, actions taken, current status — plus a resolution protocol and maintenance log so the next failure is faster to fix.",
       "valueAdded": [
-        "Inbound mail failure triaged (outbound worked; inbound broken firm-wide)",
-        "Root-cause / resolution docs for Carrie coordination",
-        "Maintenance log pattern for future incidents"
+        "Documented the pav.law email/DNS outage — root cause, actions taken, current status — plus a resolution protocol and maintenance log so the next failure is faster to fix.",
+        "Email/DNS outage documented (root cause, actions taken, current status)",
+        "Standardized resolution protocol for future incidents",
+        "Simple maintenance log for ongoing system monitoring and faster issue resolution",
+        "Inbound-mail risk reduced after firm-wide inbound failure (outbound had still worked)",
+        "Billed and paid as Incident Error Documentation inside GGL Invoice 1018 package — Paid in Full"
       ],
       "valueIcons": [
         "foundation",
@@ -2382,36 +2399,38 @@ window.PROJECT_DATA = {
         "intake"
       ],
       "completedItems": [
-        "Outage triage coordination",
-        "Email recovery documentation / runbook"
+        "Documented recent email/DNS outage: root cause, actions taken, and current status",
+        "Created a standardized resolution protocol for future incidents",
+        "Established a simple maintenance log for ongoing monitoring and faster issue resolution",
+        "Closed on Invoice 1018 — included in $2,000 package Paid in Full (with Systems Access Audit)"
       ],
-      "goal": "Inbound mail restored and a reusable runbook exists for MX/DNS / Workspace routing failures.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Email Outage Runbook",
       "estCostLabel": "$1,500",
-      "feeEstimate": 2000,
+      "feeEstimate": 2100,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "email_campaign",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1600,
       "feeEstimateNationalMid": 2100,
       "feeEstimateScope": {
-        "raw": 4.55,
+        "raw": 7.95,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 6,
           "tasks": 0,
-          "completed": 2,
+          "completed": 4,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.75
+          "descUnits": 0.35
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 500,
-      "feeEstimateNote": "email campaign lane · local mid $1,550 · national mid $2,100 · scope ×1.09 (4.55 units) · complexity ×1"
+      "feeEstimateDelta": 600,
+      "feeEstimateNote": "email campaign lane · local mid $1,550 · national mid $2,100 · scope ×1.18 (7.95 units) · complexity ×1"
     },
     {
       "id": "A18",
@@ -2432,9 +2451,9 @@ window.PROJECT_DATA = {
         "car"
       ],
       "title": "Reddit NTGUILT Ads Test (merged into A7)",
-      "description": "May 16 budget mix reserved Reddit Ads $500 + $500 promo credit for NTGUILT recognition and retargeting around car/racing/COS audiences. Active delivery lives on A7; parent A2 owns broader NTGUILT launch.",
       "tldr": "Low-risk Reddit test ($500 + $500 promo credit) — merged into A7; keep this file for history only.",
       "valueAdded": [
+        "Low-risk Reddit test ($500 + $500 promo credit) — merged into A7; keep this file for history only.",
         "Uses platform credit to stretch budget",
         "Supports event frequency without heavy Search CPC",
         "UTM-ready for A8 if landing is NTGuilt.com / tagged pav.law"
@@ -2452,7 +2471,6 @@ window.PROJECT_DATA = {
         "Creative from A2 prompt library",
         "Landing destination (NTGuilt.com vs pav.law contact)"
       ],
-      "goal": "Complete one 30-day Reddit flight with UTMs and ≥10 site sessions per $100 combined spend+credit without policy rejection.",
       "informationNeeded": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
@@ -2460,6 +2478,7 @@ window.PROJECT_DATA = {
         "Run Reddit before or after next PPIR/ASCEND weekend?"
       ],
       "kpiRefs": [],
+      "shortTitle": "Reddit NTGUILT Ads",
       "estCostLabel": "merged A7",
       "paymentPlanLabel": "—",
       "feeEstimate": 4000,
@@ -2469,22 +2488,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 9.19,
+        "raw": 9.58,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 3,
           "completed": 1,
           "info": 1,
           "ab": 1,
           "kpis": 0,
-          "descUnits": 0.84
+          "descUnits": 0.23
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": true,
       "feeEstimateDelta": null,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.20 (9.19 units) · complexity ×1"
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.21 (9.58 units) · complexity ×1"
     },
     {
       "id": "B8",
@@ -2510,15 +2529,16 @@ window.PROJECT_DATA = {
         "publish"
       ],
       "title": "HubSpot Social Media Marketing (merged into A7)",
-      "description": "HubSpot-connected Facebook, Instagram, and LinkedIn for firm-safe posts (safety tips, NTGUILT creative, consult CTAs) with approval before go-live. Active delivery is under A7 (merged A7 + A18 + B8).",
       "tldr": "Organic social between paid touches — merged into A7; keep this file for history only.",
       "valueAdded": [
+        "Organic social between paid touches — merged into A7; keep this file for history only.",
         "Organic social between paid touches — no extra ad spend per post",
         "Romina, Casey, and Andrew trained inside HubSpot",
         "Approval workflow before anything goes live"
       ],
       "valueIcons": [
         "creative",
+        "hubspot",
         "crm",
         "retainer"
       ],
@@ -2529,34 +2549,34 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Romina event social support defined — not yet HubSpot-connected (track on A7)"
       ],
-      "goal": "Post 8–12 firm-safe items/month across connected channels with approval workflow and UTM on every link.",
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "HubSpot Social",
       "estCostLabel": "merged A7",
       "paymentPlanLabel": "—",
-      "feeEstimate": 4100,
+      "feeEstimate": 4200,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "sprint_general",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 5.79,
+        "raw": 6.24,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 4,
           "tasks": 1,
           "completed": 2,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.74
+          "descUnits": 0.19
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": true,
       "feeEstimateDelta": null,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.13 (5.79 units) · complexity ×1.1"
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.14 (6.24 units) · complexity ×1.1"
     },
     {
       "id": "A8",
@@ -2571,41 +2591,40 @@ window.PROJECT_DATA = {
         "utm",
         "ga4",
         "google ads api",
-        "attribution"
+        "attribution",
+        "hubspot"
       ],
       "title": "Operations Dashboard V1",
-      "description": "Make campaign and case-retained impact visible in one place so decisions run off live KPIs instead of scattered exports.",
-      "tldr": "One live dashboard for calls, forms, and spend by channel.",
+      "tldr": "Unified view of KPIs, data trends, projects, and results",
       "valueAdded": [
-        "Unified view of ops metrics, projects, and campaign results",
+        "Unified view of KPIs, data trends, projects, and results",
         "Clearer team goal progress",
-        "Missed-revenue flag (#19) on Search data"
+        "Break-even / cash-flow tracking"
       ],
       "valueIcons": [
         "foundation",
-        "crm",
+        "hubspot",
+        "finance",
         "efficiency"
       ],
       "completedItems": [
-        "Systems access audit",
+        "2025–2026 MyCase, Google Ads, and LSA data downloaded (limited)",
         "UTM logic drafted",
-        "KPI master table (KPI-01–35)",
-        "Google Ads API setup doc",
-        "Wireframe v1 in Gilbert Reporting tab",
-        "#02 New cases YoY chart (2025 vs 2026 by month) on KPIs / Pipeline"
+        "KPI master table",
+        "Wireframe v1 / foundational data"
       ],
       "inProgressItems": [
-        "Google Ads API pull + LSA `local_services_lead` backfill (`GOOGLE-ADS-API-SETUP.md`)"
+        "Google Ads API pull + LSA `local_services_lead` backfill (`GOOGLE-ADS-API-SETUP.md`)",
+        "MyCase data quality is not great; additional fields are needed before transferring to HubSpot",
+        "Data gaps from the other Google account"
       ],
-      "goal": "Live KPI cockpit: unified lead count, cost/call by channel, and missed-revenue (#19) on Search data.",
       "informationNeeded": [
         "Google Ads API credentials (monthly pull + LSA backfill)",
         "HubSpot → Integrations → Google Ads connected"
       ],
       "abQuestions": [],
-      "kpiRefs": [
-        "#19"
-      ],
+      "kpiRefs": [],
+      "shortTitle": "Ops Dashboard",
       "estCostLabel": "$1,600",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -2616,22 +2635,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 8.65,
+        "raw": 9.56,
         "parts": {
           "valueAdd": 3,
-          "tasks": 1,
-          "completed": 6,
+          "tasks": 3,
+          "completed": 4,
           "info": 2,
           "ab": 0,
-          "kpis": 1,
-          "descUnits": 0.55
+          "kpis": 0,
+          "descUnits": 0.11
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2400,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.19 (8.65 units) · complexity ×1"
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.21 (9.56 units) · complexity ×1"
     },
     {
       "id": "A8M",
@@ -2653,9 +2672,9 @@ window.PROJECT_DATA = {
         "attribution"
       ],
       "title": "Data Management — Retainer",
-      "description": "Reporting stays useful only when someone reviews it monthly — validating tags, reconciling ad platforms to CRM, and noting channel shifts. Child of A8.",
       "tldr": "Monthly dashboard upkeep so KPIs stay accurate and useful for operations.",
       "valueAdded": [
+        "Monthly dashboard upkeep so KPIs stay accurate and useful for operations.",
         "Monthly lead-source report",
         "Google Ads and LSA manual review with API pull reconciled to CSV archive (KPI spec export checklist)"
       ],
@@ -2665,38 +2684,38 @@ window.PROJECT_DATA = {
         "efficiency",
         "crm"
       ],
-      "goal": "Publish a reconciled monthly lead-source and Ads/LSA report tied to the A8 KPI cockpit.",
       "informationNeeded": [
         "Confirm estimated leads gained",
         "Link KPI dashboard rows for this retainer card"
       ],
       "abQuestions": [],
       "kpiRefs": [],
+      "shortTitle": "Data Mgmt Retainer",
       "estCostLabel": "$500/mo",
       "paymentPlanLabel": "monthly",
-      "feeEstimate": 3000,
+      "feeEstimate": 3100,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "digital_bundle_mo",
       "feeEstimateUnit": "mo",
       "feeEstimateLocalMid": 2300,
       "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 3.71,
+        "raw": 4.24,
         "parts": {
-          "valueAdd": 2,
+          "valueAdd": 3,
           "tasks": 0,
           "completed": 0,
           "info": 2,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.61
+          "descUnits": 0.14
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2500,
-      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.06 (3.71 units) · complexity ×1"
+      "feeEstimateDelta": 2600,
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.08 (4.24 units) · complexity ×1"
     }
   ]
 };

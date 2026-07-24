@@ -27,6 +27,7 @@ Agents: run rewrite scripts **only** when Kate asks in that message. See `.curso
 | settings.md                  | Default package                                                                                          |
 | retainer.md                  | Retainer card                                                                                            |
 | [recommendations.md](recommendations.md) | **Recommendations tab** copy — ranks, why/do/proof, projects table, actions |
+| [forecasting-planning.md](forecasting-planning.md) | Expense pace · case/cash forecast working notes (not auto-built into Guide) |
 | projects/{ID}.md             | One project per file                                                                                     |
 
 
@@ -38,27 +39,30 @@ Agents: run rewrite scripts **only** when Kate asks in that message. See `.curso
 
 ```
 Meta table: Estimated leads gained (optional row)
-## Summary                  ← one-sentence value (top of card)
-## Value Added           ← bullets on card (plain weight; markdown links OK)
+## Summary                  ← bullets on card (plain weight; markdown links OK)
 ## Value icons           ← picker filter icons (foundation · leads · crm · …)
+## KPI links             ← dashboard metrics (01, 21, …)
 ## AB - Q                  ← Question for Andrew Brown; cart blocked until Comment answered
-## Description           ← full scope (expand to read)
-## Goal                   ← measurable outcome
 ## Information needed     ← gaps, AB-Q, _Add:_ placeholders
 ## WIP                   ← work in progress
 ## Completed             ← shipped
+## Fee note (optional)
+
+---
+**—— Unpublished below ——**   ← hard line; content below is NOT built into Guide cards
+## Project plan          ← Kate/ops notes only
 ```
 
 See `[_TEMPLATE.md](content/_TEMPLATE.md)`. Fee market context: `[FEE-BENCHMARK-CO-SPRINGS.md](FEE-BENCHMARK-CO-SPRINGS.md)`.
 
-- **Marketing education** goes inside **Description** — not a separate section.
-- **Summary** optional in markdown (`## Summary`; legacy `## TLDR` still parses); if omitted, first Value Added bullet is used.
+- **Summary** bullets feed the card (`## Summary`; legacy `## TLDR` still parses).
 - **AB – Q** (`AB - Q:`) — question for Andrew Brown; Gilbert flags it; **Comment required before cart**.
-- **Value icons** — `## Value icons` list in each project file (`foundation` · `leads` · `crm` · `seo` · `referrals` · `efficiency` · `intake` · `creative`); overrides auto-detect when set
+- **Value icons** — `## Value icons` list in each project file (`foundation` · `leads` · `crm` · `seo` · `referrals` · `efficiency` · `intake` · `creative` · `hubspot` · `finance`); overrides auto-detect when set
 - **KPI links** — `## KPI links` lists dashboard metrics (`01`, `21`, …). External reference URLs are stripped on build; only **KPI #NN** links in the picker (opens KPIs tab).
 - **Estimated leads gained** = incremental leads expected from that campaign, not existing lead volume.
-- Card shows **Summary → bullets → leads gained**; **Current Status** expands Description.
-- **Goal** renders on expanded cards. Do **not** add Results, Blockers (next round), Insights & improvements, Impact estimates, or Gilbert on metrics — removed from the guide.
+- **Project plan** (below the unpublished divider) is for extra detail that must not publish — build ignores it.
+- Card shows **Summary → bullets → leads gained**.
+- Do **not** add Results, Blockers (next round), Insights & improvements, Impact estimates, or Gilbert on metrics — removed from the guide.
 - **`npm run build`** updates `projects-data.js` and `recommendations-data.js` only — it does **not** rewrite project markdown or `recommendations.md`.
 
 ### Recommendations tab

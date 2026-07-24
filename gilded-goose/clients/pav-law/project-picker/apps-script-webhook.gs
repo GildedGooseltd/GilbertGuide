@@ -165,8 +165,11 @@ function buildCanonicalSow(data) {
     "",
     "Governed by: Master Services Agreement (MSA)",
     "Consultant: Gilded Goose Limited · Kate Stannard",
-    "Co-Client 1: Pav Law · authorized signer Andrew Brown",
-    "Co-Client 2: Andrew Brown · individually",
+    "Co-Client 1: Pav Law · authorized signer Andrew Brown (Owner / Attorney)",
+    "Co-Client 2: Andrew Brown · individually (jointly and severally liable with Pav Law)",
+    "Notice address: 102 S Tejon St, Colorado Springs, CO 80903",
+    "Governing law / venue: Colorado · El Paso County",
+    "If Pav Law dissolves or cannot pay, Andrew Brown remains personally liable",
     "SOW prepared: " + new Date().toISOString(),
     "Client contact email: " + (data.submitterEmail || "[email]"),
     "",
@@ -223,8 +226,8 @@ function buildCanonicalSow(data) {
     "This SOW is governed by the MSA between the Parties.",
     "",
     "Andrew Brown signs once in two capacities:",
-    "• For Pav Law as authorized signer (Co-Client 1)",
-    "• Individually (Co-Client 2)",
+    "• For Pav Law as owner / authorized signer (Co-Client 1)",
+    "• Individually (Co-Client 2) — jointly and severally liable with Pav Law, including if Pav Law goes under",
     "",
     "Gilded Goose Limited countersigns through a separate private signing link.",
     "",
@@ -251,7 +254,7 @@ function appendSignatureAudit(sowText, signature) {
     "Document hash before this signature (SHA-256): " + signature.documentHash,
     "",
     signature.role === "client"
-      ? "Andrew Brown electronically signed for Pav Law and individually as Co-Client 2."
+      ? "Andrew Brown electronically signed for Pav Law and individually as Co-Client 2 (joint and several liability with Pav Law)."
       : "Kate Stannard electronically countersigned for Gilded Goose Limited.",
     "",
     "Status: " + (signature.role === "client" ? "Awaiting Gilded Goose countersignature." : "Fully executed.")
@@ -483,7 +486,7 @@ function signSowRecord(data) {
       role: record.role,
       signer: record.role === "client" ? CLIENT_SIGNER : CONSULTANT_SIGNER,
       capacity: record.role === "client"
-        ? "Pav Law authorized signer and Individual Co-Client 2"
+        ? "Pav Law owner / authorized signer and Individual Co-Client 2 (joint and several)"
         : "Gilded Goose Limited, Principal",
       serverTimestamp: serverTimestamp,
       clientTimestamp: data.clientSignedAt || "",
@@ -578,7 +581,7 @@ function signSowRecord(data) {
     var finalText = [
       "The Pav Law Statement of Work is fully executed.",
       "",
-      "Andrew Brown signed for Pav Law and individually.",
+      "Andrew Brown signed for Pav Law and individually (joint and several).",
       "Kate Stannard countersigned for Gilded Goose Limited.",
       "Final server timestamp: " + serverTimestamp,
       "Final SHA-256: " + signedHash,
@@ -591,7 +594,7 @@ function signSowRecord(data) {
     var finalHtml = sowEmailHtml(
       "Fully executed — thank you",
       '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:14px;color:#3b2d1a;line-height:1.55;">' +
-        'The Pav Law Statement of Work is fully executed. Andrew Brown signed for Pav Law and individually; ' +
+        'The Pav Law Statement of Work is fully executed. Andrew Brown signed for Pav Law and individually (joint and several liability); ' +
         'Kate Stannard countersigned for Gilded Goose Limited.</p>' +
       '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:12px;color:#6b6b6b;line-height:1.5;">' +
         'Final timestamp ' + htmlEscape(serverTimestamp) + ' · SHA-256 ' + htmlEscape(signedHash) + ' · Request ' + htmlEscape(requestId) + '</p>',

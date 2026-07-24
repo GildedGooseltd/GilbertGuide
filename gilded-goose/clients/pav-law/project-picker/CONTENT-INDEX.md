@@ -12,6 +12,7 @@ Layout/colors → [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) · Project writing ru
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | Change a project title, fee, description, blockers   | `content/projects/{ID}.md` + row in `content/INDEX.md`                              |
 | Change Recommendations tab copy                      | `content/recommendations.md` → `npm run build`                                      |
+| Edit expense pace / forecast planning notes          | `content/forecasting-planning.md` (manual — not auto-built)                         |
 | Change Gilbert’s name, greeting, default package     | `content/settings.md`                                                               |
 | Change retainer card                                 | `content/retainer.md`                                                               |
 | Change tab labels, confirm intro, thank-you headline | `index.html` (search the visible phrase)                                            |
@@ -142,7 +143,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Flow | submit → private Andrew link → private Kate countersign link → complete | Apps Script creates two separate single-use bearer tokens |
 | Scope list | titles only | server-side `selectedSowTitles()` / `buildCanonicalSow()` |
 | Agreement | fixed `<pre>` — no user editing | `#sow-document`; server copy and hash are authoritative |
-| Andrew signature | one signer, two capacities | Pav Law authorized signer + Andrew individually |
+| Andrew signature | one signer, two capacities | Pav Law owner + Andrew individually · joint/several liability |
 | Signing fields | required checkboxes only | review · firm authority · individual capacity · electronic consent |
 | Token security | raw token only in emailed URL | Sheet stores SHA-256 token hash; 14-day expiry; single-use |
 | Sign API | `app.js` | `signSowAndEmail()` → webhook `type: "sow_sign"` |
@@ -217,6 +218,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | ---------------------------------------------------- | --------------------------------------------------------------------------- |
 | [content/INDEX.md](content/INDEX.md)                 | Master table: priority, status, **display titles** — build never overwrites |
 | [content/recommendations.md](content/recommendations.md) | Recommendations tab — edit then `npm run build` |
+| [content/forecasting-planning.md](content/forecasting-planning.md) | Expense pace · forecast planning notes (manual) |
 | [content/settings.md](content/settings.md)           | Gilbert names, image paths, default package                                 |
 | [content/retainer.md](content/retainer.md)           | Retainer project card                                                       |
 | [content/projects/A1.md … A13.md](content/projects/) | Campaign / project cards                                                    |

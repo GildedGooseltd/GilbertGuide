@@ -1,6 +1,6 @@
 # Picker settings
 
-| | |
+| Field | Value |
 |---|---|
 | **Guide name** | Lord Gilbert Granville |
 | **Guide short name** | Gilbert |

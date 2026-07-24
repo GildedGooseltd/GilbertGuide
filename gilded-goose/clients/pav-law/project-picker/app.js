@@ -236,9 +236,11 @@
     retainer: REQUIRED_ICON_SVG,
     leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.5"/><path d="M2 20v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5V20"/><circle cx="17.5" cy="8.5" r="2.5"/><path d="M21 20v-1a3.5 3.5 0 0 0-2.5-3.35"/><circle cx="5" cy="10.5" r="2"/><path d="M1 20v-0.5a2.5 2.5 0 0 1 2-2.45"/></svg>`,
     crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/><path d="M13 13h5"/><path d="M13 17h5"/></svg>`,
+    hubspot: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.75"/><path d="M12 3.25v2.1M12 18.65v2.1M3.25 12h2.1M18.65 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M5.4 18.6l1.5-1.5M17.1 6.9l1.5-1.5"/><path d="M12 6.6a1.15 1.15 0 0 0 0-2.3 1.15 1.15 0 0 0 0 2.3zM12 19.7a1.15 1.15 0 0 0 0-2.3 1.15 1.15 0 0 0 0 2.3zM4.3 12a1.15 1.15 0 1 0 2.3 0 1.15 1.15 0 0 0-2.3 0zM17.4 12a1.15 1.15 0 1 0 2.3 0 1.15 1.15 0 0 0-2.3 0z"/></svg>`,
     seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
     referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7-4 4 4 4"/><path d="M3 11h13"/><path d="m17 17 4-4-4-4"/><path d="M21 13H8"/></svg>`,
     efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
+    finance: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M15 9.5c-.6-.9-1.5-1.4-3-1.4-1.8 0-3 1-3 2.3 0 1.2.9 1.9 2.7 2.3l.8.2c1.8.4 2.7 1.1 2.7 2.4 0 1.4-1.3 2.4-3.2 2.4-1.5 0-2.6-.5-3.2-1.3"/></svg>`,
     intake: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
     creative: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.5 0-8 3.6-8 8.2 0 2.8 1.3 4.8 3 6 .6.4 1.2.6 1.8.6.9 0 1.6-.5 1.9-1.3.5-1 1.6-1.6 2.6-1.3 1.1.4 1.8 1.5 1.8 2.7 0 .3 0 .6-.1.9-.4 1.4 1 2.9 2.8 2.9 3.2 0 5.8-2.6 5.8-5.8C22 8.2 17.5 3 12 3z"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="12.5" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="13.5" r="1" fill="currentColor" stroke="none"/></svg>`,
     general: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 6.8H21l-5.5 4 2.1 6.7L12 17.8 6.4 20.5l2.1-6.7L3 9.8h6.6L12 3z"/></svg>`
@@ -321,10 +323,9 @@
     return rank;
   }
 
-  /** TOC_COLS_3_ONLY — Priority cell is digits only (no badges, no Edit, no Show). */
+  /** TOC priority cell — short title (not score digits). */
   function priorityTocHtml(item, displayPriority) {
-    const p = displayPriority != null ? displayPriority : "";
-    return String(p);
+    return escapeHtml(displayTitle(item));
   }
 
   /* Colors live in index.html :root --vi-* + .value-icon.icon-{id}. Filter + table share those classes — never hardcode badge colors here. */
@@ -332,10 +333,12 @@
     { id: "foundation", svgId: "foundation", cls: "icon-foundation", label: "Foundation", match: item => !!item.enabler },
     { id: "retainer", svgId: "retainer", cls: "icon-retainer", label: "Retainer", match: item => item.isRetainer || item.id === "RETAINER" || item.category === "Retainer" },
     { id: "leads", svgId: "leads", cls: "icon-leads", label: "Leads", match: item => /paid media|outbound|display|search|seasonal|social proof|google ads|microsoft|lsa|ppc/i.test(iconMatchText(item)) },
-    { id: "crm", svgId: "crm", cls: "icon-crm", label: "CRM", match: item => /crm|hubspot|pipeline|contact import|landing page/i.test(iconMatchText(item)) },
+    { id: "crm", svgId: "crm", cls: "icon-crm", label: "CRM", match: item => /crm|pipeline|contact import|landing page/i.test(iconMatchText(item)) && !/\bhubspot\b/i.test(iconMatchText(item)) },
+    { id: "hubspot", svgId: "hubspot", cls: "icon-hubspot", label: "HubSpot", match: item => /\bhubspot\b|^hs:/i.test(iconMatchText(item)) || /^hs:/i.test(String(item.title || "")) },
     { id: "seo", svgId: "seo", cls: "icon-seo", label: "SEO", match: item => /seo|blog|local search|website ux|website content|website speed|website module/i.test(iconMatchText(item)) },
     { id: "referrals", svgId: "referrals", cls: "icon-referrals", label: "Referrals", match: item => /referral|testimonial|social proof|direct mail|mailer|case win|past client/i.test(iconMatchText(item)) },
-    { id: "efficiency", svgId: "efficiency", cls: "icon-efficiency", label: "Analytics", match: item => /analytics|dashboard|strategy|audit|finance|operations|kpi|reporting/i.test(iconMatchText(item)) },
+    { id: "efficiency", svgId: "efficiency", cls: "icon-efficiency", label: "Analytics", match: item => /analytics|dashboard|strategy|operations|kpi|reporting/i.test(iconMatchText(item)) },
+    { id: "finance", svgId: "finance", cls: "icon-finance", label: "Finance", match: item => /\bfinance\b|financial|waste audit|payout|cashflow|breakeven|subscription waste|credit card|quickbooks/i.test(iconMatchText(item)) },
     { id: "intake", svgId: "intake", cls: "icon-intake", label: "Intake", match: item => /intake|chat|after-hours|infrastructure|call infrastructure|voip|phone/i.test(iconMatchText(item)) },
     { id: "creative", svgId: "creative", cls: "icon-creative", label: "Creative", match: item => /creative|email|social media|display|repurpose/i.test(iconMatchText(item)) }
   ];
@@ -346,21 +349,25 @@
     retainer: ["#08", "#12", "#14", "#15"],
     leads: ["#01", "#07", "#08", "#12", "#15"],
     crm: ["#06", "#20", "#27"],
+    hubspot: ["#06", "#20", "#21", "#27"],
     seo: ["#11", "#18"],
     referrals: ["#16", "#17"],
     efficiency: ["#01", "#10", "#19", "#28"],
+    finance: ["#10", "#19", "#28"],
     intake: ["#09", "#21", "#23"],
     creative: ["#08", "#14"]
   };
 
   function iconMatchText(item) {
     const desc = item.description ? String(item.description).replace(/<[^>]+>/g, " ") : "";
+    const kw = Array.isArray(item.keywords) ? item.keywords.join(" ") : String(item.keywords || "");
     return [
       item.category,
       item.campaignType,
       item.title,
       desc,
-      item.valueAdd || ""
+      item.valueAdd || "",
+      kw
     ].filter(Boolean).join(" ");
   }
 
@@ -389,6 +396,7 @@
     cloudSelected: new Set(),
     cloudOpen: new Set(),
     iconFilters: [],
+    statusFilters: [],
     tocSort: { field: "priority", dir: "asc" },
     tocExpanded: false,
     showAllProjects: false,
@@ -434,8 +442,25 @@
     if (s.includes("launched")) return "launched";
     if (s.includes("planning")) return "planning";
     if (s.includes("ongoing")) return "ongoing";
-    if (s.includes("wip")) return "wip";
+    if (s.includes("wip") || s.includes("started")) return "wip";
     return "available";
+  }
+
+  const STATUS_FILTER_DEFS = [
+    { id: "required", label: "Required" },
+    { id: "recommended", label: "Recommended" },
+    { id: "wip", label: "WIP / Started" },
+    { id: "available", label: "Available" },
+    { id: "planning", label: "Planning" },
+    { id: "launched", label: "Launched" },
+    { id: "ongoing", label: "Ongoing" },
+    { id: "onhold", label: "On Hold" },
+    { id: "blocked", label: "Blocked" },
+    { id: "research", label: "Research / draft" }
+  ];
+
+  function statusFilterLabel(id) {
+    return STATUS_FILTER_DEFS.find(d => d.id === id)?.label || id;
   }
 
   /** Named 0–100 best-fit weights (positives sum to 100 at full credit). Bonuses stack on top. */
@@ -791,7 +816,9 @@
     }
     const names = items.map(p => `<strong>${escapeHtml(p.id)} ${escapeHtml(p.title)}</strong>`).join("; ");
     const closer =
-      items.some(p => p.id === "A3") && items.some(p => p.id === "A10")
+      items.some(p => p.id === "C1") && items.some(p => p.id === "C2")
+        ? "Systems foundation is closed and paid (Invoice 1018): admin access cleansed across Ads/LSA/GBP/Analytics/hosting/CMS/MyCase, and the email/DNS outage has a documented root cause, resolution protocol, and maintenance log. Next lift depends on WIP enablers — HubSpot Phone/VoIP, LSA call process Phase 2, and HubSpot Marketing Setup."
+        : items.some(p => p.id === "A3") && items.some(p => p.id === "A10")
         ? "Holiday email path is live and the stack priorities are set. Continued lift depends on WIP enablers — phones (B2), LSA/intake coverage, and the KPI cockpit (A8)."
         : "Confirm outcomes in HubSpot before locking revenue figures.";
     return `<div class="completed-report-out-head">
@@ -1273,11 +1300,13 @@
     const text = iconMatchText(item).toLowerCase();
 
     if (item.enabler) ids.push("foundation");
-    if (/crm|hubspot|pipeline/.test(cat)) ids.push("crm");
+    if (/\bhubspot\b/.test(text) || /\bhubspot\b/.test(cat)) ids.push("hubspot");
+    if (/crm|pipeline/.test(cat)) ids.push("crm");
     if (/paid media|outbound|ppc|search|lsa|display|google ads|microsoft|seasonal/.test(cat)) ids.push("leads");
     if (/seo|website|blog|local search|local presence/.test(cat)) ids.push("seo");
     if (/referral|direct mail|testimonial|social proof|past client/.test(cat)) ids.push("referrals");
-    if (/analytics|strategy|finance|operations|kpi/.test(cat)) ids.push("efficiency");
+    if (/analytics|strategy|operations|kpi/.test(cat)) ids.push("efficiency");
+    if (/finance|financial|audit|payout|billing|waste/.test(cat) || /\bfinance\b|financial|cashflow|breakeven|payout|waste audit/.test(text)) ids.push("finance");
     if (/intake|infrastructure|phone|call|voip|\bai\b/.test(cat)) ids.push("intake");
     if (/creative|email|social media|brand/.test(cat)) ids.push("creative");
     if (/booking|speed.to.lead|form fill|web lead|call tracking|voip/.test(text) && !ids.includes("intake")) ids.push("intake");
@@ -1332,12 +1361,24 @@
     return state.iconFilters.some(f => iconIds.includes(f));
   }
 
+  function itemMatchesStatusFilters(item) {
+    if (!state.statusFilters.length) return true;
+    const st = normalizeStatus(item);
+    if (state.statusFilters.includes(st)) return true;
+    if (state.statusFilters.includes("research") && (st === "research" || st === "draft")) return true;
+    return false;
+  }
+
+  function itemMatchesOutlineFilters(item) {
+    return itemMatchesIconFilters(item) && itemMatchesStatusFilters(item);
+  }
+
   function toggleIconFilter(id) {
     const idx = state.iconFilters.indexOf(id);
     if (idx >= 0) state.iconFilters.splice(idx, 1);
     else state.iconFilters.push(id);
     saveState();
-    renderValueIconKey();
+    renderOutlineFilters();
     renderAllCards();
     renderProjectToc();
     renderSummary();
@@ -1346,18 +1387,86 @@
   function clearIconFilters() {
     state.iconFilters = [];
     saveState();
-    renderValueIconKey();
+    renderOutlineFilters();
     renderAllCards();
     renderProjectToc();
     renderSummary();
   }
 
+  function toggleStatusFilter(id) {
+    const idx = state.statusFilters.indexOf(id);
+    if (idx >= 0) state.statusFilters.splice(idx, 1);
+    else state.statusFilters.push(id);
+    saveState();
+    renderOutlineFilters();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  }
+
+  function clearStatusFilters() {
+    state.statusFilters = [];
+    saveState();
+    renderOutlineFilters();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  }
+
+  function clearOutlineFilters() {
+    state.iconFilters = [];
+    state.statusFilters = [];
+    saveState();
+    renderOutlineFilters();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  }
+
+  function statusesPresentInPool() {
+    const pool = allItemsByPriority().filter(item => {
+      if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return true;
+      return !isCompletedStatus(item);
+    });
+    const present = new Set(pool.map(normalizeStatus));
+    if (present.has("draft")) present.add("research");
+    return STATUS_FILTER_DEFS.filter(d => present.has(d.id) || (d.id === "research" && (present.has("research") || present.has("draft"))));
+  }
+
+  function renderOutlineFilters() {
+    renderValueIconKey();
+    renderStatusFilterKey();
+  }
+
+  function renderStatusFilterKey() {
+    const el = document.getElementById("status-filter-key");
+    if (!el) return;
+    const defs = statusesPresentInPool();
+    const activeCount = state.statusFilters.length;
+    const clearBtn = activeCount
+      ? `<button type="button" class="icon-filter-clear" id="status-filter-clear">Clear status (${activeCount})</button>`
+      : "";
+    el.innerHTML =
+      `<span class="value-icon-key-title">Filter by status <span class="tab-help" data-help-title="Filter by status" data-help-desc="Show only projects with these INDEX statuses. WIP includes Started. Multi-select is OR. Clears with Clear status." aria-label="How to use status filters">?</span></span>${clearBtn}` +
+      defs.map(d => {
+        const active = state.statusFilters.includes(d.id) ? " filter-active" : "";
+        return `<button type="button" class="key-item key-filter-btn status-filter-btn${active}" data-status-filter="${d.id}" title="Show ${escapeHtml(d.label)} projects"><span class="key-item-meta"><span class="key-item-label">${escapeHtml(d.label)}</span></span></button>`;
+      }).join("");
+    el.querySelectorAll("[data-status-filter]").forEach(btn => {
+      btn.addEventListener("click", () => toggleStatusFilter(btn.dataset.statusFilter));
+    });
+    el.querySelector("#status-filter-clear")?.addEventListener("click", clearStatusFilters);
+  }
+
   function renderValueIconKey() {
     const el = document.getElementById("value-icon-key");
     if (!el) return;
-    const hint = state.iconFilters.length
-      ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear filters (${state.iconFilters.length})</button>`
-      : "";
+    const totalActive = state.iconFilters.length + state.statusFilters.length;
+    const hint = totalActive
+      ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear all filters (${totalActive})</button>`
+      : state.iconFilters.length
+        ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear filters (${state.iconFilters.length})</button>`
+        : "";
     el.innerHTML = `<span class="value-icon-key-title">Filter by value <span class="tab-help" data-help-title="Filter by value" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use value filters">?</span></span>${hint}` +
       VALUE_ICON_DEFS.map(d => {
         const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
@@ -1368,7 +1477,7 @@
         toggleIconFilter(btn.dataset.iconFilter);
       });
     });
-    el.querySelector("#icon-filter-clear")?.addEventListener("click", clearIconFilters);
+    el.querySelector("#icon-filter-clear")?.addEventListener("click", clearOutlineFilters);
   }
 
   function normalizeKpiId(kpiId) {
@@ -1549,6 +1658,25 @@
     if (item.tldr) return String(item.tldr).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
     if (item.goal) return String(item.goal).replace(/\s+/g, " ").trim().slice(0, 160);
     return item.title || item.id;
+  }
+
+  /** INDEX Short title when set; else full project name. Never fall back to file IDs. */
+  function displayTitle(item) {
+    const short = String(item?.shortTitle || "").trim();
+    if (short) return short;
+    return item?.title || item?.id || "";
+  }
+
+  function itemHasHubspotIcon(item) {
+    return getValueIcons(item).some(i => i.id === "hubspot");
+  }
+
+  /** Replaces former "HS:" title prefix with the HubSpot value badge. */
+  function hubspotTitleMarkHtml(item) {
+    if (!itemHasHubspotIcon(item)) return "";
+    const def = VALUE_ICON_DEFS.find(d => d.id === "hubspot");
+    if (!def) return "";
+    return `<span class="toc-hubspot-mark">${valueIconMarkup(def)}</span>`;
   }
 
   function kpiIdsForProject(item) {
@@ -2529,7 +2657,7 @@
     return allItemsByPriority().filter(item => {
       if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return true;
       return !isCompletedStatus(item);
-    }).filter(item => itemMatchesIconFilters(item));
+    }).filter(item => itemMatchesOutlineFilters(item));
   }
 
   function ensureClientPriorityIds(baseItems) {
@@ -2653,7 +2781,7 @@
     const dir = state.tocSort.field === "priority" ? state.tocSort.dir : "asc";
     arrow.textContent = dir === "asc" ? "▲" : "▼";
     btn.setAttribute("aria-sort", dir === "asc" ? "ascending" : "descending");
-    btn.title = dir === "asc" ? "Project score ascending — click for descending" : "Project score descending — click for ascending";
+    btn.title = dir === "asc" ? "Short title order ascending — click for descending" : "Short title order descending — click for ascending";
   }
 
   function toggleTocSort(field) {
@@ -2754,8 +2882,8 @@
         <td class="toc-col-select">
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
         </td>
-        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span></td>
-        <td class="toc-col-project toc-title"><a href="#project-${item.id}">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a>${editControls}</td>
+        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span>${editControls}</td>
+        <td class="toc-col-project toc-title"><a href="#project-${item.id}" title="${escapeHtml(item.title)}">${hubspotTitleMarkHtml(item)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
@@ -2777,10 +2905,18 @@
         : (selCount ? `${countLabel} · ${selCount} selected` : countLabel);
     }
     if (statusEl) {
-      const total = allItemsByPriority().length;
+      const total = allItemsByPriority().filter(item => {
+        if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return true;
+        return !isCompletedStatus(item);
+      }).length;
       const shown = items.length;
-      statusEl.textContent = state.iconFilters.length && shown !== total
-        ? `Showing ${shown} of ${total} projects (icon filter)`
+      const parts = [];
+      if (state.statusFilters.length) {
+        parts.push(`status: ${state.statusFilters.map(statusFilterLabel).join(", ")}`);
+      }
+      if (state.iconFilters.length) parts.push("value icons");
+      statusEl.textContent = parts.length && shown !== total
+        ? `Showing ${shown} of ${total} projects (${parts.join(" · ")})`
         : (state.priorityEdit ? "Editing client priority order — saved with your submission." : "");
     }
     if (expandEl) {
@@ -2873,7 +3009,7 @@
     const classes = [];
     const id = isRetainer ? "RETAINER" : item.id;
     const selected = isRetainer ? state.retainer : state.projects.has(id);
-    if (!itemMatchesIconFilters(item) && !selected) classes.push("filtered-out");
+    if (!itemMatchesOutlineFilters(item) && !selected) classes.push("filtered-out");
     if (state.recommended.has(id)) classes.push("recommended");
     return classes.join(" ");
   }
@@ -2936,12 +3072,13 @@
     state.goalText = "";
     state.gilbertChat = [{ role: "gilbert", text: GILBERT_GREETING }];
     state.iconFilters = [];
+    state.statusFilters = [];
     state.projects = new Set();
     state.recommended = new Set();
     state.doNextVisible = false;
     applyIndexDefaultSelections();
     renderGilbertChat();
-    renderValueIconKey();
+    renderOutlineFilters();
     suggestPlan(true);
   }
 
@@ -2985,6 +3122,9 @@
       if (Array.isArray(saved.iconFilters)) {
         state.iconFilters = saved.iconFilters.filter(f => f && f !== "account-data");
       }
+      if (Array.isArray(saved.statusFilters)) {
+        state.statusFilters = saved.statusFilters.filter(f => STATUS_FILTER_DEFS.some(d => d.id === f));
+      }
       if (saved.doNextVisible != null) {
         state.doNextVisible = !!saved.doNextVisible;
       } else if (state.surveyDone || (Array.isArray(saved.gilbertChat) && saved.gilbertChat.some(m => m.role === "user"))) {
@@ -3021,6 +3161,7 @@
       surveyAnswers: state.surveyAnswers,
       surveyDone: state.surveyDone,
       iconFilters: state.iconFilters,
+      statusFilters: state.statusFilters,
       doNextVisible: state.doNextVisible,
       clientPriorityIds: state.clientPriorityIds
     }));
@@ -3270,7 +3411,7 @@
           ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
               <div class="card-top-row">
-                <div class="card-title"><span>${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
+                <div class="card-title"><span class="card-title-hubspot">${hubspotTitleMarkHtml(item)}${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
               </div>
             </div>
         </div>
@@ -3285,7 +3426,7 @@
               ${cardFeaturedImageHtml(item)}
               ${cardReferenceLinkHtml(item)}
               <div class="card-top-row">
-                <div class="card-title"><span>${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
+                <div class="card-title"><span class="card-title-hubspot">${hubspotTitleMarkHtml(item)}${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
                 ${iconsHtml ? `<div class="card-title-icons">${iconsHtml}</div>` : ""}
               </div>
               ${feeMarketLineHtml(item)}
@@ -4007,7 +4148,7 @@
     const signRole = document.getElementById("sow-sign-role");
     if (signRole) {
       signRole.textContent = isClient
-        ? "Andrew signs once: for Pav Law as authorized signer and individually as Co-Client 2."
+        ? "Andrew Brown signs once for Pav Law (as owner) and individually — both Co-Clients are jointly liable for fees."
         : "Kate Stannard countersigns for Gilded Goose Limited.";
     }
 
@@ -4070,8 +4211,11 @@
       "",
       "Governed by: Master Services Agreement (MSA)",
       "Consultant: Gilded Goose Limited · Kate Stannard",
-      "Co-Client 1: Pav Law · authorized signer Andrew Brown",
-      "Co-Client 2: Andrew Brown · individually",
+      "Co-Client 1: Pav Law · authorized signer Andrew Brown (Owner / Attorney)",
+      "Co-Client 2: Andrew Brown · individually (jointly and severally liable with Pav Law)",
+      "Notice address: 102 S Tejon St, Colorado Springs, CO 80903",
+      "Governing law / venue: Colorado · El Paso County",
+      "If Pav Law dissolves or cannot pay, Andrew Brown remains personally liable",
       "SOW prepared: " + new Date().toISOString(),
       "Client contact email: " + (data.submitterEmail || "[email]"),
       "",
@@ -4123,8 +4267,8 @@
       "This SOW is governed by the MSA between the Parties.",
       "",
       "Andrew Brown signs once in two capacities:",
-      "• For Pav Law as authorized signer (Co-Client 1)",
-      "• Individually (Co-Client 2)",
+      "• For Pav Law as owner / authorized signer (Co-Client 1)",
+      "• Individually (Co-Client 2) — jointly and severally liable with Pav Law, including if Pav Law goes under",
       "",
       "Gilded Goose Limited countersigns through a separate private signing link.",
       "",
@@ -4158,7 +4302,7 @@
   function validateSigningChecks(checks, role) {
     if (!checks.reviewed) return "Check that you reviewed the complete fixed SOW.";
     if (role === "client" && !checks.firmAuthority) return "Andrew must confirm authority to sign for Pav Law.";
-    if (role === "client" && !checks.individualCapacity) return "Andrew must confirm his individual Co-Client signature.";
+    if (role === "client" && !checks.individualCapacity) return "Andrew must confirm personal joint liability with Pav Law.";
     if (!checks.electronicConsent) return "Check the electronic-signature consent statement.";
     return "";
   }
@@ -4702,7 +4846,7 @@
   setActiveViewTab("kpis");
   initGilbertGuide();
   renderPackageIntro();
-  renderValueIconKey();
+  renderOutlineFilters();
   renderKpiDashboard();
   renderDoNextPanel();
   renderCondensedToc();
