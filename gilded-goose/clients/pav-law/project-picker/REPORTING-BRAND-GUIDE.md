@@ -153,7 +153,7 @@ One map only — filter tiles + Project Outlines ICONS share `.value-icon.icon-{
 | Attention/pending | 4px left `#eab308` | `#fff8d6` | Must say **Watch** or **Pending** |
 | Verified/success | 4px left or outline `#1f8a65` | `#e2f3ec` | Data-backed only |
 | Negative/action | 4px left `#cf2d56` | `#f8d5de` | Must name the gap/error |
-| Ornate callout | Aged-brass outer line + thin royal inner line + small gold corner brackets/diamond | Semantic wash or paper | Reserve for a critical recommendation or milestone only |
+| Ornate callout | Aged-brass **double** outer line + thin royal inner line · **no diamond / corner ornaments** | Semantic wash or paper | Solutions (`.kpi-related-projects`) and rare critical recommendation only |
 
 ### Formatting rules
 
@@ -162,7 +162,7 @@ One map only — filter tiles + Project Outlines ICONS share `.value-icon.icon-{
 - KPI tile hierarchy: ID/label → large value → target/context → status.
 - Section heads: solid royal-deep background, white title, lavender hint, and burnt left rule. Do not use gradients or pale washes for KPI section headers.
 - Rank / project-score columns and sort controls: royal purple (`--gg-royal`), not gold or forest green.
-- Callouts use a semantic left rule, light wash, aged-brass outer line, thin royal inner line, and restrained corner ornament; no full-layout recolor.
+- Callouts use a semantic left rule, light wash, aged-brass double outer line, and thin royal inner line; no diamond corner ornaments; no full-layout recolor.
 - Default shadow: `0 1px 4px rgba(45,20,84,.08)`. No heavy floating-card shadows.
 - Headline text: royal-deep or brown, weight 700–800. Body and captions remain visibly smaller.
 - Corners: 8px for tiles/callouts; 10–12px for section panels.
@@ -190,6 +190,8 @@ Approved 2026-07-18. Keep the tile proportions and information hierarchy shown i
 
 Team Goals tiles use exactly three tracking rows. Each row is `3.25rem` high with vertically centered cells so the three tiles align.
 
+**Equal-height tiles in a row (all pages):** In `.kpi-goals-grid` and `.kpi-stat-grid`, every tile in the same row shares one card-band height. Wrappers use CSS subgrid (`grid-row: span 2`) so the KPI card band aligns across the row and Solutions sit in a second shared band below — never let Solutions make one card taller than its neighbors. Apply the same rule on Guide (`index.html`) and Metrics (`metrics.css`). Direct grid children that are not wrapped must use `.kpi-tile-with-projects` so they participate in the card band.
+
 Do not redesign the tile layout; future changes are color, typography, border, or spacing refinements only.
 
 ---
@@ -205,10 +207,12 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Combo chart:** bars for volumes, line for money; separate left/right units.
 - **Donut:** maximum 4–5 segments; legend always present; exact share in the detail table.
 - **Practice-area bars:** one fixed color per practice area; never recolor by rank.
-- **Every chart card:** title + period/source caption + plot + always-visible detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the caption/table.
+- **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title, subtitle })` — section/panel titles are not a substitute. Then period/source caption (subtitle) + plot + detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the caption/table.
 - **Plot area:** light yellow `--gg-chart-plot` (`#fff5ca`) behind every graph for series contrast; stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
 - **Chart border:** thin royal inner line plus aged-brass accent details; ornament must not compete with labels or data.
 - **Axis labels:** include metric and unit; never rely on color alone.
+- **Y-scale headroom:** the top of the numeric scale must always be **at least one integer above** the highest plotted data point. Bars and lines must not touch or clip the top tick. Use `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js` — never set `axisMax` equal to the data max.
+- **Y-axis title clearance:** leave clear space between the rotated axis title and the numeric tick labels. Use left plot pad ≥ **84** when the title is a multi-word phrase (e.g. “Cost per response ($)”). Title sits near the outer edge (~18px); tick labels sit just left of the plot (~pad.l − 10). Do not let the title overlap `$` ticks.
 - **Channel lock:** LSA = blue; Digital/Search = burnt orange; Website/HubSpot = rose; Spend = plum.
 - **Unavailable data:** slate/gray with a written “No data” label — never red.
 - **Target lines:** every plotted number below its applicable target or minimum line is red (`--gg-negative`); values on or above the line keep their assigned nonnegative color. Keep the number visible so color is not the only signal.
@@ -227,7 +231,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 | Section | Headers |
 |---|---|
 | Cases MoM | Month · Closed · New cases · Red accounts · Total · MoM notes |
-| Key Channel Activity | Period · Cases · Incoming · LSA calls · Digital ad calls · Website forms · LSA media · Search media |
+| Key Channel Activity | Period · Cases · Leads · Calls · Marketing spend · Cash · Conversion · Leads per case |
 | Cases forecast | Month · Cases · Status |
 | Mean fee by practice area (#29) | Practice area · n · Mean fee |
 | Avg deposit | Measure · Amount |

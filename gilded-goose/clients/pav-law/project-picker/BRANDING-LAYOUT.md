@@ -151,11 +151,12 @@ Overlays: Gilbert chat · confirm · thank-you
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
 | KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
-| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | `--gg-box-border` / paper; yellow only for written caution |
+| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | `--gg-box-border` / paper; yellow only for written caution; **same-row equal height** via `.kpi-tile-with-projects` subgrid |
+| Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
 | Project cards     | `.card`, `.card.selected`              | Box border/shadow; selected = royal wash        |
 | Zone labels       | `.picker-zone` + `.picker-zone-label`  | Royal/burnt accent heads; scan breaks between areas |
-| Charts            | `chartBlock()` in JS                   | Plot + legend + **always-visible** detail table |
+| Charts            | `chartBlock()` in JS                   | **Required** `.kpi-chart-head` title (+ subtitle) · plot · legend (2+ series) · detail table |
 
 
 Confirm flow: payment options → submit → fixed SOW emailed by private link → Andrew checkbox signature → Kate private countersign link → final PDF email + Drive archive. Andrew can continue to the QuickBooks deposit after his signature. Action items appear on thank-you / email — not on the picker browse zones.
@@ -166,7 +167,7 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 ## 6. KPI chart colors
 
-**Structure:** every graph card uses `chartBlock()` — plot + legend (2+ series) + detail table always below (not behind “Show table” alone).
+**Structure:** every graph card uses `chartBlock({ title, subtitle, chart, … })` — **required** header title in `.kpi-chart-head`, then plot + legend (2+ series) + detail table always below (not behind “Show table” alone). Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7).
 
 **Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 
@@ -206,7 +207,7 @@ Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pa
 | `retainer`     | Retainer     | `#818cf8` / `#312e81` / `#4f46e5` |
 | `leads`        | Leads        | `#fb923c` / `#7c2d12` / `#ea580c` |
 | `crm`          | CRM          | `#a78bfa` / `#4c1d95` / `#7c3aed` |
-| `hubspot`      | HubSpot      | `#ff7a59` / `#7c2d12` / `#e85d3d` (coral — HubSpot brand lane) |
+| `hubspot`      | HubSpot      | `#ff7a59` bg · white sprocket (official company mark) · `#e85d3d` border |
 | `seo`          | SEO          | `#60a5fa` / `#1e3a8a` / `#2563eb` (blue) |
 | `referrals`    | Referrals    | `#f472b6` / `#831843` / `#db2777` |
 | `efficiency`   | Analytics    | `#94a3b8` / `#1e293b` / `#64748b` (slate) |

@@ -122,7 +122,7 @@
   }
 
   function hasAbQuestions(item) {
-    return !!(item && item.abQuestions && item.abQuestions.length);
+    return false;
   }
 
   function abQuestionAnswered(id) {
@@ -236,7 +236,8 @@
     retainer: REQUIRED_ICON_SVG,
     leads: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.5"/><path d="M2 20v-1.5a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5V20"/><circle cx="17.5" cy="8.5" r="2.5"/><path d="M21 20v-1a3.5 3.5 0 0 0-2.5-3.35"/><circle cx="5" cy="10.5" r="2"/><path d="M1 20v-0.5a2.5 2.5 0 0 1 2-2.45"/></svg>`,
     crm: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/><path d="M13 13h5"/><path d="M13 17h5"/></svg>`,
-    hubspot: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.75"/><path d="M12 3.25v2.1M12 18.65v2.1M3.25 12h2.1M18.65 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M5.4 18.6l1.5-1.5M17.1 6.9l1.5-1.5"/><path d="M12 6.6a1.15 1.15 0 0 0 0-2.3 1.15 1.15 0 0 0 0 2.3zM12 19.7a1.15 1.15 0 0 0 0-2.3 1.15 1.15 0 0 0 0 2.3zM4.3 12a1.15 1.15 0 1 0 2.3 0 1.15 1.15 0 0 0-2.3 0zM17.4 12a1.15 1.15 0 1 0 2.3 0 1.15 1.15 0 0 0-2.3 0z"/></svg>`,
+    /* Official HubSpot company sprocket (brand mark) — filled; white on --vi-hubspot-bg */
+    hubspot: `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.164 7.93V5.084a2.198 2.198 0 001.267-1.978v-.067A2.2 2.2 0 0017.238.845h-.067a2.2 2.2 0 00-2.193 2.193v.067a2.196 2.196 0 001.252 1.973l.001 2.861a6.01 6.01 0 00-2.812 1.388l-7.57-5.88a2.483 2.483 0 00.095-.676 2.5 2.5 0 00-5 0 2.5 2.5 0 002.5 2.5c.4-.001.794-.097 1.146-.279l7.405 5.745a5.97 5.97 0 00-.888 3.15c0 1.12.313 2.17.85 3.07l-2.303 2.304a1.864 1.864 0 00-.592-.108 1.904 1.904 0 101.904 1.904c0-.21-.037-.41-.094-.6l2.226-2.226a5.994 5.994 0 004.026 1.554 6.01 6.01 0 006.011-6.01 6.007 6.007 0 00-4.163-5.713zM17.17 16.018a3.026 3.026 0 01-3.028-3.028 3.026 3.026 0 013.028-3.028 3.026 3.026 0 013.028 3.028 3.026 3.026 0 01-3.028 3.028z"/></svg>`,
     seo: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5.5 5.5"/></svg>`,
     referrals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7-4 4 4 4"/><path d="M3 11h13"/><path d="m17 17 4-4-4-4"/><path d="M21 13H8"/></svg>`,
     efficiency: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19V9M16 19v-6M22 19V3"/></svg>`,
@@ -742,7 +743,7 @@
     const hasCart = cartItems.length > 0;
     const head = `<div class="do-next-head">
       <div class="do-next-head-copy">
-        <h3>Best Fit Projects for Pav</h3>
+        <h3>Best Fit Projects for Pav Law</h3>
       </div>
     </div>`;
 
@@ -785,7 +786,7 @@
   function completedCardHtml(item) {
     return `<article class="completed-card" id="completed-${item.id}">
       <h3>${escapeHtml(item.title)}</h3>
-      <p class="completed-card-meta">${escapeHtml(item.id)} · ${escapeHtml(normalizeStatus(item))}${item.timeline ? ` · ${escapeHtml(item.timeline)}` : ""}</p>
+      <p class="completed-card-meta">${escapeHtml(normalizeStatus(item))}${item.timeline ? ` · ${escapeHtml(item.timeline)}` : ""}</p>
       ${resultsBlockHtml(item)}
     </article>`;
   }
@@ -798,7 +799,7 @@
       [item.category, item.campaignType].filter(Boolean).join(" / ")
     ].filter(Boolean);
     return `<div class="completed-report-out-project">
-      <h4>${escapeHtml(item.id)} — ${escapeHtml(item.title)}</h4>
+      <h4>${escapeHtml(item.title)}</h4>
       <p class="completed-report-out-project-meta">${escapeHtml(metaParts.join(" · "))}</p>
       <ul>
         ${shipped.length ? `<li><strong>Completed:</strong> ${escapeHtml(shipped.join("; "))}</li>` : ""}
@@ -814,12 +815,12 @@
         </div>
         <p class="completed-report-out-lede">No projects marked <strong>completed</strong> in INDEX yet. When a project ships, set Status to completed — this report-out will populate from Completed.</p>`;
     }
-    const names = items.map(p => `<strong>${escapeHtml(p.id)} ${escapeHtml(p.title)}</strong>`).join("; ");
+    const names = items.map(p => `<strong>${escapeHtml(p.title)}</strong>`).join("; ");
     const closer =
       items.some(p => p.id === "C1") && items.some(p => p.id === "C2")
         ? "Systems foundation is closed and paid (Invoice 1018): admin access cleansed across Ads/LSA/GBP/Analytics/hosting/CMS/MyCase, and the email/DNS outage has a documented root cause, resolution protocol, and maintenance log. Next lift depends on WIP enablers — HubSpot Phone/VoIP, LSA call process Phase 2, and HubSpot Marketing Setup."
         : items.some(p => p.id === "A3") && items.some(p => p.id === "A10")
-        ? "Holiday email path is live and the stack priorities are set. Continued lift depends on WIP enablers — phones (B2), LSA/intake coverage, and the KPI cockpit (A8)."
+        ? "Holiday email path is live and the stack priorities are set. Continued lift depends on WIP enablers — phones, LSA/intake coverage, and the KPI cockpit."
         : "Confirm outcomes in HubSpot before locking revenue figures.";
     return `<div class="completed-report-out-head">
         <span class="completed-report-out-badge">Draft</span>
@@ -852,7 +853,6 @@
     return `<div class="research-row${sel ? " selected" : ""}${abQ && !answered ? " ab-q-pending" : ""}" data-id="${id}">
       <input type="checkbox" class="proj-chk research-chk" data-id="${id}" ${sel ? "checked" : ""}${abQ && !answered ? ' title="Answer Blocked note in Comment first"' : ""}>
       <div>
-        <span class="research-row-id">${escapeHtml(id)}</span>
         <div class="research-row-title">${escapeHtml(item.title)}</div>
         ${abQ ? abQuestionsBannerHtml(item) : ""}
       </div>
@@ -1592,18 +1592,22 @@
   }
 
   const PAV_HISTORICAL = {
-    answerRate: 0.69,
+    answerRate: 0.72,
     consultToRetained: 0.51,
     leadToCaseRate: 9 / 124,
     /* MyCase Client mean fee — CLIENT-VALUE-BASELINE.md · as of 2026-07-01 */
     avgCaseFee: 5587,
-    monthlyLeadsBaseline: 124
+    /** May–Jun 2026 avg Search calls — Guide channelMonths */
+    monthlySearchCallsBaseline: 89,
+    /** May–Jun 2026 avg total leads Search+LSA+forms */
+    monthlyLeadsBaseline: 169
   };
 
   /** KPI labels + tracking quality for impact list (ICON_KPI_MAP + live report names). */
   const KPI_IMPACT_META = {
     "#01": { name: "Total leads", tracking: "Clean — Search + LSA + HubSpot forms when all three exports are current." },
     "#02": { name: "New cases", tracking: "Clean — MyCase Client Created-date count." },
+    "#05": { name: "Key Channel Activity", tracking: "Partial — cases / leads / spend channel stack." },
     "#06": { name: "Pipeline / CRM completeness", tracking: "Partial — depends on HubSpot field hygiene and deal stage use." },
     "#07": { name: "Spend Waste", tracking: "Modeled excess LSA cash paid versus the same response volume at digital Search cost per response." },
     "#08": { name: "Campaign cost efficiency", tracking: "Clean for digital Search cost ÷ calls; not LSA." },
@@ -1613,12 +1617,13 @@
     "#12": { name: "Avg. Cost per Call", tracking: "Clean for Search Campaign report ÷ phone calls." },
     "#14": { name: "Creative / channel response", tracking: "Partial — creative tests need UTM or asset labels to attribute cleanly." },
     "#15": { name: "Cost per lead", tracking: "Clean when spend and lead definition match the same window." },
-    "#16": { name: "Reviews by channel", tracking: "Partial until B10 audit wires directory scrapes into DATA.reviews." },
-    "#17": { name: "Referral Network", tracking: "Proxy until A4 referral tracking is live in HubSpot/MyCase." },
+    "#16": { name: "Reviews by channel", tracking: "Partial until Digital Profiles Refresh wires directory scrapes into DATA.reviews." },
+    "#17": { name: "Referral Network", tracking: "Proxy until referral tracking is live in HubSpot/MyCase." },
     "#18": { name: "Website / SEO contribution", tracking: "Partial — form + organic attribution depends on GA4/UTM setup." },
     "#19": { name: "Missed Opportunity", tracking: "Directional potential revenue not earned — missed Search calls × lead→case × avg fee; not booked cash." },
     "#20": { name: "CRM follow-up discipline", tracking: "Partial — task completion and owner fields must stay filled." },
     "#21": { name: "Answered Calls", tracking: "Clean — Call details Received vs Missed for Search; LSA status separate." },
+    "#22": { name: "Speed to lead", tracking: "Partial — needs HubSpot workflow timestamps." },
     "#23": { name: "Intake coverage / after-hours", tracking: "Partial — needs routing logs and after-hours disposition." },
     "#27": { name: "Ops backlog / open tasks", tracking: "Partial — HubSpot task queues when owners and due dates are used." },
     "#28": { name: "Avg case fee", tracking: "Clean — MyCase Client mean fee baseline." }
@@ -1879,7 +1884,7 @@
     if (item.isRetainer || nonCampaignIds.has(item.id))
       return { value: null, label: "No direct leads", isCalls: false };
     if (item.id === "B2") {
-      const baselineCalls = 35;
+      const baselineCalls = PAV_HISTORICAL.monthlySearchCallsBaseline;
       const recovered = baselineCalls * (0.90 - PAV_HISTORICAL.answerRate);
       return { value: recovered, label: `~${Math.round(recovered)} gained/mo`, isCalls: false };
     }
@@ -2425,12 +2430,15 @@
     ];
     const noteEntries = Object.entries(payload.projectNotes || {});
     if (noteEntries.length) {
-      noteEntries.forEach(([id, text]) => lines.push(`  ${id}: ${text}`));
+      noteEntries.forEach(([id, text]) => {
+        const title = findProjectById(id)?.title || id;
+        lines.push(`  ${title}: ${text}`);
+      });
     } else {
       lines.push("  (none)");
     }
     lines.push("", "Projects selected:");
-    (payload.projects || []).forEach(p => lines.push(`  • ${p.id} — ${p.title} — ${p.fee}`));
+    (payload.projects || []).forEach(p => lines.push(`  • ${p.title} — ${p.fee}`));
     if (payload.retainer) lines.unshift("Retainer: YES — " + (payload.retainerFee || ""));
     lines.push("", "Action items (from selections):");
     lines.push(formatActionItemsText(payload.actionItems));
@@ -2515,7 +2523,7 @@
     s = s.replace(/<a\s+[^>]*href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi, (_m, _url, label) => String(label).trim());
     s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label) => String(label).trim());
     s = escapeHtml(s)
-      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+      .replace(/\*\*([^*]+)\*\*/g, "$1");
     return s;
   }
 
@@ -2883,7 +2891,7 @@
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
         </td>
         <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span>${editControls}</td>
-        <td class="toc-col-project toc-title"><a href="#project-${item.id}" title="${escapeHtml(item.title)}">${hubspotTitleMarkHtml(item)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></td>
+        <td class="toc-col-project toc-title"><div class="toc-title-row"><a href="#project-${item.id}" title="${escapeHtml(item.title)}">${hubspotTitleMarkHtml(item)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a><span class="toc-value">${valueIconsHtml(item)}</span></div></td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
@@ -2960,34 +2968,25 @@
     return s;
   }
 
-  /** Quote fee + market estimate (local/national blend) for priorities / revenue tables. */
-  function feeCellHtml(itemOrRow) {
-    const item = itemOrRow && itemOrRow.id ? itemOrRow : null;
-    const quote = item ? feeLabelFor(item) : String(itemOrRow?.fee || itemOrRow || "—");
-    if (!item) return escapeHtml(quote);
-    const market = marketFeeLabel(item);
-    if (!market) return escapeHtml(quote);
-    const title = escapeHtml(item.feeEstimateNote || "Market estimate from local + national bands × project scope");
-    const delta = item.feeEstimateDelta;
-    const deltaBit =
-      delta == null || item.feeEstimatePackaged
-        ? item.feeEstimatePackaged
-          ? ` <span class="fee-market-delta">packaged</span>`
-          : ""
-        : ` <span class="fee-market-delta">${delta >= 0 ? "+" : "−"}${fmt(Math.abs(delta))}</span>`;
-    return `${escapeHtml(quote)}<span class="fee-market" title="${title}"> · mkt ${escapeHtml(market)}${deltaBit}</span>`;
+  /** Quote fee only — market fee estimate / calculation is not shown on Guide. */
+  function feeCellHtml(itemOrProp) {
+    const item = itemOrProp && itemOrProp.id ? itemOrProp : null;
+    const quote = item ? feeLabelFor(item) : String(itemOrProp?.fee || itemOrProp || "—");
+    return escapeHtml(quote);
   }
 
-  function feeMarketLineHtml(item) {
-    const market = marketFeeLabel(item);
-    if (!market) return "";
-    const quote = feeLabelFor(item);
-    const title = escapeHtml(item.feeEstimateNote || "");
-    const delta = item.feeEstimateDelta;
-    let deltaTxt = "";
-    if (item.feeEstimatePackaged) deltaTxt = " · packaged under parent";
-    else if (delta != null) deltaTxt = ` · ${delta >= 0 ? "+" : "−"}${fmt(Math.abs(delta))} vs quote`;
-    return `<div class="card-fee-market" title="${title}"><span class="card-fee-quote">${escapeHtml(quote)}</span><span class="card-fee-mkt">Market ${escapeHtml(market)}${escapeHtml(deltaTxt)}</span></div>`;
+  function feeQuoteLineHtml(item) {
+    return `<div class="card-fee-quote">${escapeHtml(feeLabelFor(item))}</div>`;
+  }
+
+  function kpiLinksChipsHtml(item) {
+    const refs = (item.kpiRefs || []).map(normalizeKpiRef).filter(Boolean);
+    if (!refs.length) return "";
+    const chips = refs.map(id => {
+      const name = (KPI_IMPACT_META[id] && KPI_IMPACT_META[id].name) || id;
+      return `<button type="button" class="card-kpi-chip" data-kpi-jump="${escapeHtml(id)}" title="Open ${escapeHtml(name)}">${escapeHtml(name)}</button>`;
+    });
+    return `<div class="card-kpi-links" aria-label="Linked KPIs">${chips.join("")}</div>`;
   }
 
   function itemSelectionCost(item) {
@@ -3254,6 +3253,8 @@
   }
 
   function renderGilbertSurvey() {
+    const dock = document.getElementById("gilbert-priority-dock");
+    if (dock && dock.hasAttribute("hidden")) return;
     const el = document.getElementById("gilbert-survey");
     if (!el) return;
 
@@ -3429,9 +3430,9 @@
                 <div class="card-title"><span class="card-title-hubspot">${hubspotTitleMarkHtml(item)}${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
                 ${iconsHtml ? `<div class="card-title-icons">${iconsHtml}</div>` : ""}
               </div>
-              ${feeMarketLineHtml(item)}
+              ${feeQuoteLineHtml(item)}
+              ${kpiLinksChipsHtml(item)}
               ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
-              ${abQuestionsBannerHtml(item)}
               ${descriptionHtml(item)}
             <button type="button" class="expand-btn" aria-expanded="${exp ? "true" : "false"}">${expandBtnLabel(item, exp)}</button>
           </div>
@@ -4009,7 +4010,10 @@
     let notesHtml = "";
     if (noteEntries.length) {
       notesHtml += `<div class="thank-you-comments"><h3>Your comments</h3><ul class="thank-you-list">` +
-        noteEntries.map(([id, text]) => `<li><strong>${escapeHtml(id)}:</strong> ${escapeHtml(text)}</li>`).join("") + "</ul></div>";
+        noteEntries.map(([id, text]) => {
+          const title = findProjectById(id)?.title || id;
+          return `<li><strong>${escapeHtml(title)}:</strong> ${escapeHtml(text)}</li>`;
+        }).join("") + "</ul></div>";
     }
 
     const emailNote = payload.submitterEmail
@@ -4788,6 +4792,23 @@
   }
 
   document.addEventListener("click", e => {
+    const kpiChip = e.target.closest("[data-kpi-jump]");
+    if (kpiChip) {
+      e.preventDefault();
+      e.stopPropagation();
+      setActiveViewTab("kpis");
+      renderAllCards();
+      const id = kpiChip.getAttribute("data-kpi-jump");
+      const target =
+        document.querySelector(`[data-feedback-id="${CSS.escape(id)}"]`) ||
+        document.querySelector(`[data-feedback-label*="${CSS.escape(id)}"]`) ||
+        document.getElementById("view-kpis") ||
+        document.querySelector('[data-view="kpis"]');
+      if (target && typeof target.scrollIntoView === "function") {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      return;
+    }
     const help = e.target.closest(".tab-help, .kpi-help");
     if (help) {
       e.preventDefault();
