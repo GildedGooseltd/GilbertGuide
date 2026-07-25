@@ -247,6 +247,20 @@ body.feedback-mode-on .feedback-target:hover {
   padding: 0.2rem 0.1rem 0.35rem;
 }
 .kpi-chart-plot-bg { fill: var(--gg-chart-plot); }
+.guide-data-as-of {
+  position: fixed;
+  right: 0.85rem;
+  bottom: 0.55rem;
+  z-index: 60;
+  margin: 0;
+  padding: 0;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #b0a89e;
+  pointer-events: none;
+  user-select: none;
+}
 .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.14); stroke-width: 1; }
 .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.4); stroke-width: 1.5; }
 .kpi-chart-svg-stacked rect {
@@ -319,17 +333,38 @@ body.feedback-mode-on .feedback-target:hover {
   box-shadow: inset 0 0 0 1px rgba(61, 48, 40, 0.12);
 }
 
-.kpi-stat-grid {
+.kpi-stat-grid,
+.kpi-goals-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.85rem;
+  column-gap: 0.85rem;
+  row-gap: 0.45rem;
   align-items: stretch;
 }
-.kpi-stat-grid > * {
+.kpi-stat-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.kpi-stat-card .kpi-metric-icon {
+  display: inline-flex;
+  width: 1.85rem;
+  height: 1.85rem;
+  margin: 0.1rem auto 0.35rem;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+.kpi-stat-card .kpi-metric-icon svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.kpi-stat-card.kpi-stat-gauge .kpi-metric-icon {
+  margin-left: auto;
+  margin-right: auto;
+}
+.kpi-stat-grid > *,
+.kpi-goals-grid > * {
   grid-column: auto;
   min-width: 0;
   width: 100%;
-  height: 100%;
   box-sizing: border-box;
 }
 .kpi-tile-with-projects {
@@ -339,9 +374,68 @@ body.feedback-mode-on .feedback-target:hover {
   height: 100%;
 }
 .kpi-tile-with-projects > .kpi-stat-card,
-.kpi-tile-with-projects > .kpi-goal-card {
+.kpi-tile-with-projects > .kpi-goal-card,
+.kpi-tile-with-projects > .kpi-cash-pace-tile {
   flex: 1 1 auto;
   width: 100%;
+  min-height: 0;
+}
+@supports (grid-template-rows: subgrid) {
+  .kpi-stat-grid > .kpi-tile-with-projects,
+  .kpi-goals-grid > .kpi-tile-with-projects {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+    height: auto;
+  }
+  .kpi-tile-with-projects > .kpi-stat-card,
+  .kpi-tile-with-projects > .kpi-goal-card,
+  .kpi-tile-with-projects > .kpi-cash-pace-tile {
+    grid-row: 1;
+    align-self: stretch;
+    height: 100%;
+    flex: none;
+  }
+  .kpi-tile-with-projects > .kpi-related-projects {
+    grid-row: 2;
+    margin-top: 0;
+    align-self: stretch;
+  }
+}
+.kpi-tile-wip {
+  filter: grayscale(1) opacity(0.45);
+  pointer-events: none;
+  user-select: none;
+}
+.kpi-chart-wip-shell {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.kpi-chart-wip-banner {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(100, 116, 139, 0.16);
+  color: var(--gg-slate, #64748b);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.kpi-chart-wip-note {
+  margin: 0;
+  color: var(--gg-brown-muted, #5c4f45);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.kpi-chart-wip {
+  filter: grayscale(1) opacity(0.45);
+  pointer-events: none;
+  user-select: none;
 }
 .kpi-related-projects {
   display: flex;
@@ -362,21 +456,7 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-related-projects::before,
 .kpi-related-projects::after {
-  content: "◆";
-  position: absolute;
-  padding: 0 0.18rem;
-  background: var(--gg-cream-panel);
-  color: var(--gg-gold-dark);
-  font-size: 0.55rem;
-  line-height: 1;
-}
-.kpi-related-projects::before {
-  top: -0.42rem;
-  left: 0.55rem;
-}
-.kpi-related-projects::after {
-  right: 0.55rem;
-  bottom: -0.42rem;
+  content: none;
 }
 .kpi-related-projects-title {
   flex: 0 0 auto;
@@ -442,7 +522,10 @@ body.feedback-mode-on .feedback-target:hover {
   background: rgba(255, 255, 255, 0.9);
   text-decoration: underline;
 }
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .kpi-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; }
+}
+@media (max-width: 640px) {
   .kpi-stat-grid { grid-template-columns: 1fr; max-width: 22rem; }
 }
 .kpi-stat-card {
@@ -545,18 +628,7 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-target-bar-val { font-size: 12px; font-weight: 800; }
 .kpi-target-bar-cat { fill: var(--secondary); font-size: 11px; font-weight: 600; }
 .kpi-goals-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.85rem;
   max-width: none;
-  align-items: stretch;
-}
-.kpi-goals-grid > * {
-  grid-column: auto;
-  min-width: 0;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
 }
 @media (max-width: 900px) {
   .kpi-goals-grid { grid-template-columns: 1fr; max-width: 22rem; }
@@ -1015,7 +1087,8 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   background: linear-gradient(135deg, var(--gg-paper), var(--gg-royal-dim));
   box-shadow: 0 3px 10px rgba(61, 48, 40, 0.12);
 }
-.kpi-cash-pace-kicker {
+.kpi-cash-pace-kicker,
+.kpi-stat-kicker {
   display: block;
   margin-bottom: 0.2rem;
   color: var(--gg-burnt);
@@ -1023,6 +1096,10 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+.kpi-stat-card.kpi-stat-gauge .kpi-stat-kicker {
+  text-align: center;
+  width: 100%;
 }
 .kpi-cash-pace-copy h3 {
   margin: 0;
@@ -1141,8 +1218,26 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   margin: 0;
   padding: 0;
 }
+.data-chart-table-side.data-chart-presence-cost-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem 1rem;
+  align-items: start;
+  width: 100%;
+}
+.data-chart-presence-cost-row > .kpi-presence-mix-col,
+.data-chart-presence-cost-row > .kpi-chart-card,
+.data-chart-presence-cost-row > .kpi-chart-wip-shell {
+  min-width: 0;
+}
+.data-chart-presence-cost-row > .kpi-source-footnote,
+.data-chart-presence-cost-row > .kpi-chart-detail-acc,
+.data-chart-presence-cost-row > .data-inline-note {
+  grid-column: 1 / -1;
+}
 @media (max-width: 980px) {
   .data-chart-table-grid { grid-template-columns: 1fr; }
+  .data-chart-table-side.data-chart-presence-cost-row { grid-template-columns: 1fr; }
 }
 .kpi-missed-panel { display: grid; gap: 0.75rem; }
 .kpi-missed-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55rem; }

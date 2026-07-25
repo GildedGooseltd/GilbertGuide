@@ -1312,11 +1312,11 @@
     }
     .cockpit-tabs .view-tab {
       border: 2px solid var(--border-strong); background: var(--gg-paper); color: var(--gg-brown);
-      border-radius: var(--radius); padding: 0.55rem 1.15rem 0.45rem 0.4rem; font-size: 0.78rem; font-weight: 800;
+      border-radius: var(--radius); padding: 0.8rem 1.25rem 0.7rem 0.55rem; font-size: 1.15rem; font-weight: 800;
       cursor: pointer; font-family: inherit; text-align: center;
       transition: border-color 0.15s, background 0.15s, color 0.15s;
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.2rem;
-      min-height: 2.55rem; min-width: 0;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
+      min-height: 3.35rem; min-width: 0;
       position: relative;
       line-height: 1.15;
       white-space: nowrap;
@@ -1696,7 +1696,7 @@
       gap: 1rem 1.1rem;
       align-items: stretch;
     }
-    .data-report-root .data-grid-full { grid-column: auto; }
+    .data-report-root .data-grid-full { grid-column: 1 / -1; }
     @media (max-width: 1280px) {
       .data-report-root .data-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
@@ -1913,10 +1913,6 @@
       margin: 0.55rem 0 0.45rem;
       padding: 0.85rem 1rem 1rem;
       overflow: visible;
-    }
-    .recommendations-panel .rec-solutions.kpi-related-projects::before,
-    .recommendations-panel .rec-solutions.kpi-related-projects::after {
-      background: var(--gg-paper);
     }
     .recommendations-panel .rec-solutions-body {
       flex: 1 0 100%;
@@ -2263,6 +2259,16 @@
       gap: 0.85rem 1rem;
       align-items: start;
     }
+    .data-report-root .data-chart-presence-cost-row > .kpi-presence-mix-col,
+    .data-report-root .data-chart-presence-cost-row > .kpi-chart-card,
+    .data-report-root .data-chart-presence-cost-row > .kpi-chart-wip-shell {
+      min-width: 0;
+    }
+    .data-report-root .data-chart-presence-cost-row > .kpi-presence-mix-col {
+      margin: 0;
+      padding: 0.35rem 0.15rem 0.5rem;
+      box-sizing: border-box;
+    }
     .data-report-root .data-chart-table-side > .kpi-chart-detail-acc,
     .data-report-root .data-chart-table-side > .kpi-source-footnote,
     .data-report-root .data-chart-table-side > .data-inline-note {
@@ -2326,6 +2332,15 @@
       border-radius: var(--radius);
       background: var(--gg-royal-dim);
       padding: 0.85rem 1rem 1rem;
+    }
+    /* Ask Gilbert parked — Best Fit full width until dock is un-hidden (see parked/ASK-GILBERT-WIP.md) */
+    .pav-guide-ask-section:has(#gilbert-priority-dock[hidden]) {
+      grid-template-columns: 1fr;
+    }
+    .gilbert-inline-panel[hidden],
+    .gilbert-priority-dock[hidden],
+    #gilbert-priority-dock[hidden] {
+      display: none !important;
     }
     @media (max-width: 900px) {
       .pav-guide-ask-section { grid-template-columns: 1fr; }
@@ -2915,6 +2930,20 @@
       padding: 0.2rem 0.1rem 0.35rem;
     }
     .kpi-chart-plot-bg { fill: var(--gg-chart-plot); }
+    .guide-data-as-of {
+      position: fixed;
+      right: 0.85rem;
+      bottom: 0.55rem;
+      z-index: 60;
+      margin: 0;
+      padding: 0;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #b0a89e;
+      pointer-events: none;
+      user-select: none;
+    }
     .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.14); stroke-width: 1; }
     .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.4); stroke-width: 1.5; }
     /* Stacked bars: one dark outline — never white/paper hairlines between segments */
@@ -2997,17 +3026,40 @@
     }
     .kpi-action-list { margin: 0; padding-left: 1.15rem; font-size: 0.9rem; line-height: 1.55; }
     .kpi-action-list li { margin-bottom: 0.4rem; }
-    .kpi-stat-grid {
+    /* Equal-height tiles in a row (global): card band + Solutions band via subgrid. */
+    .kpi-stat-grid,
+    .kpi-goals-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
+      column-gap: 0.85rem;
+      row-gap: 0.45rem;
       align-items: stretch;
     }
-    .kpi-stat-grid > * {
+    /* Key Metrics — four equal gauge tiles in one row */
+    .kpi-stat-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .kpi-stat-card .kpi-metric-icon {
+      display: inline-flex;
+      width: 1.85rem;
+      height: 1.85rem;
+      margin: 0.1rem auto 0.35rem;
+      flex-shrink: 0;
+      border-radius: 8px;
+    }
+    .kpi-stat-card .kpi-metric-icon svg {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+    .kpi-stat-card.kpi-stat-gauge .kpi-metric-icon {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .kpi-stat-grid > *,
+    .kpi-goals-grid > * {
       grid-column: auto;
       min-width: 0;
       width: 100%;
-      height: 100%;
       box-sizing: border-box;
     }
     .kpi-tile-with-projects {
@@ -3017,9 +3069,70 @@
       height: 100%;
     }
     .kpi-tile-with-projects > .kpi-stat-card,
-    .kpi-tile-with-projects > .kpi-goal-card {
+    .kpi-tile-with-projects > .kpi-goal-card,
+    .kpi-tile-with-projects > .kpi-cash-pace-tile {
       flex: 1 1 auto;
       width: 100%;
+      min-height: 0;
+    }
+    @supports (grid-template-rows: subgrid) {
+      .kpi-stat-grid > .kpi-tile-with-projects,
+      .kpi-goals-grid > .kpi-tile-with-projects {
+        display: grid;
+        grid-template-rows: subgrid;
+        grid-row: span 2;
+        height: auto;
+      }
+      .kpi-tile-with-projects > .kpi-stat-card,
+      .kpi-tile-with-projects > .kpi-goal-card,
+      .kpi-tile-with-projects > .kpi-cash-pace-tile {
+        grid-row: 1;
+        align-self: stretch;
+        height: 100%;
+        flex: none;
+      }
+      .kpi-tile-with-projects > .kpi-related-projects {
+        grid-row: 2;
+        margin-top: 0;
+        align-self: stretch;
+      }
+    }
+    /* WIP / deferred KPI tile — grayed like Recommendations/Predictions tabs */
+    .kpi-tile-wip {
+      filter: grayscale(1) opacity(0.45);
+      pointer-events: none;
+      user-select: none;
+    }
+    /* Chart on hold — note stays readable; plot/card grayed */
+    .kpi-chart-wip-shell {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .kpi-chart-wip-banner {
+      align-self: flex-start;
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(100, 116, 139, 0.16);
+      color: var(--gg-slate, #64748b);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .kpi-chart-wip-note {
+      margin: 0;
+      color: var(--gg-brown-muted, #5c4f45);
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .kpi-chart-wip {
+      filter: grayscale(1) opacity(0.45);
+      pointer-events: none;
+      user-select: none;
     }
     .kpi-related-projects {
       display: flex;
@@ -3039,21 +3152,7 @@
     }
     .kpi-related-projects::before,
     .kpi-related-projects::after {
-      content: "◆";
-      position: absolute;
-      padding: 0 0.18rem;
-      background: var(--gg-cream-panel);
-      color: var(--gg-gold-dark);
-      font-size: 0.55rem;
-      line-height: 1;
-    }
-    .kpi-related-projects::before {
-      top: -0.42rem;
-      left: 0.55rem;
-    }
-    .kpi-related-projects::after {
-      right: 0.55rem;
-      bottom: -0.42rem;
+      content: none;
     }
     .kpi-related-projects-title {
       flex: 0 0 auto;
@@ -3119,7 +3218,10 @@
       background: rgba(255, 255, 255, 0.95);
       text-decoration: underline;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
+      .kpi-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; }
+    }
+    @media (max-width: 640px) {
       .kpi-stat-grid { grid-template-columns: 1fr; max-width: 22rem; }
     }
     .kpi-stat-card {
@@ -3230,18 +3332,7 @@
     .kpi-target-bar-val { font-size: 12px; font-weight: 800; }
     .kpi-target-bar-cat { fill: var(--secondary); font-size: 11px; font-weight: 600; }
     .kpi-goals-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
       max-width: none;
-      align-items: stretch;
-    }
-    .kpi-goals-grid > * {
-      grid-column: auto;
-      min-width: 0;
-      width: 100%;
-      height: 100%;
-      box-sizing: border-box;
     }
     @media (max-width: 900px) {
       .kpi-goals-grid { grid-template-columns: 1fr; max-width: 22rem; }
@@ -3777,18 +3868,59 @@
       box-sizing: border-box;
       margin-top: 1rem;
     }
-    .kpi-reviews-main {
+    /* Presence + June cost — two columns on KPIs (not only under .data-report-root) */
+    .data-chart-table-side.data-chart-presence-cost-row {
       display: grid;
-      grid-template-columns: minmax(13rem, 0.75fr) minmax(24rem, 1.25fr);
-      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem 1rem;
       align-items: start;
+      width: 100%;
+    }
+    .data-chart-presence-cost-row > .kpi-presence-mix-col,
+    .data-chart-presence-cost-row > .kpi-chart-card,
+    .data-chart-presence-cost-row > .kpi-chart-wip-shell {
+      min-width: 0;
+    }
+    .data-chart-presence-cost-row > .kpi-source-footnote,
+    .data-chart-presence-cost-row > .kpi-chart-detail-acc,
+    .data-chart-presence-cost-row > .data-inline-note {
+      grid-column: 1 / -1;
+    }
+    @media (max-width: 980px) {
+      .data-chart-table-side.data-chart-presence-cost-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    /* Presence mix column: graph stacked above expandable channel table — never side-by-side. */
+    .data-chart-presence-cost-row > .kpi-presence-mix-col {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .data-chart-presence-cost-row > .kpi-presence-mix-col > .kpi-chart-card {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 0;
+    }
+    .data-chart-presence-cost-row > .kpi-presence-mix-col .kpi-table-acc,
+    .data-chart-presence-cost-row > .kpi-presence-mix-col .kpi-project-egg-link {
+      width: 100%;
+      margin-top: 0.45rem;
+    }
+    .kpi-reviews-main {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      align-items: stretch;
     }
     .kpi-reviews-main > .kpi-chart-card {
       margin: 0;
     }
     .kpi-reviews-table-wrap {
       min-width: 0;
-      margin-top: 0;
+      width: 100%;
+      margin-top: 0.45rem;
       border: 1px solid var(--border);
       border-radius: 8px;
       background: var(--gg-cream-panel);
@@ -3842,7 +3974,8 @@
       background: linear-gradient(135deg, var(--gg-paper), var(--gg-royal-dim));
       box-shadow: 0 3px 10px rgba(61, 48, 40, 0.12);
     }
-    .kpi-cash-pace-kicker {
+    .kpi-cash-pace-kicker,
+    .kpi-stat-kicker {
       display: block;
       margin-bottom: 0.2rem;
       color: var(--gg-burnt);
@@ -3850,6 +3983,10 @@
       font-weight: 900;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+    }
+    .kpi-stat-card.kpi-stat-gauge .kpi-stat-kicker {
+      text-align: center;
+      width: 100%;
     }
     .kpi-cash-pace-copy h3 {
       margin: 0;
@@ -4722,13 +4859,13 @@
       -webkit-overflow-scrolling: touch;
     }
     .toc-table {
-      width: max-content; min-width: 100%;
-      border-collapse: collapse; table-layout: auto; /* expand Project column — no title wrap */
+      width: 100%; min-width: 100%;
+      border-collapse: collapse; table-layout: auto;
       font-size: 0.88rem;
     }
     .toc-table col.toc-col-select { width: 3.25rem; }
     .toc-table col.toc-col-priority { width: auto; }
-    .toc-table col.toc-col-project { width: auto; }
+    .toc-table col.toc-col-project { width: 100%; }
     .toc-table th, .toc-table td {
       padding: 0.55rem 0.5rem; vertical-align: middle;
       border-bottom: 1px solid var(--border);
@@ -4811,7 +4948,7 @@
     }
     .toc-prio-btn:hover { background: var(--gg-royal-dim); }
     .toc-item.toc-prio-editing td { background: rgba(45, 20, 84, 0.04); }
-    .toc-col-project { width: auto; white-space: nowrap; }
+    .toc-col-project { width: 100%; white-space: nowrap; }
     .toc-sort-btn {
       background: none; border: none; padding: 0.15rem 0;
       font: inherit; color: inherit; cursor: pointer; text-align: left;
@@ -4823,7 +4960,40 @@
       font-weight: 700; color: var(--gg-royal);
       display: inline; text-align: left; line-height: 1.3; white-space: nowrap;
     }
-    .toc-title { line-height: 1.4; white-space: nowrap; }
+    .toc-title { line-height: 1.4; white-space: nowrap; width: 100%; }
+    .toc-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      width: 100%;
+      min-width: 0;
+    }
+    .toc-title-row > a {
+      flex: 0 1 auto;
+      min-width: 0;
+      color: var(--gg-royal);
+      text-decoration: underline;
+      text-decoration-color: var(--gg-royal-border);
+      text-underline-offset: 2px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+    .toc-title-row > a:hover,
+    .toc-title-row > a:focus-visible {
+      color: var(--gg-royal-deep);
+      text-decoration-color: var(--gg-royal);
+    }
+    .toc-title-row .toc-value {
+      flex: 0 0 auto;
+      margin-left: auto;
+      display: inline-flex;
+      justify-content: flex-end;
+    }
     .toc-title a { color: var(--gg-royal); text-decoration: underline; text-decoration-color: var(--gg-royal-border); text-underline-offset: 2px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem; flex-wrap: nowrap; white-space: nowrap; }
     .toc-title a:hover, .toc-title a:focus-visible { color: var(--gg-royal-deep); text-decoration-color: var(--gg-royal); }
     .toc-hubspot-mark { display: inline-flex; flex-shrink: 0; line-height: 0; }
@@ -5024,7 +5194,8 @@
     <section class="cockpit-panel picker-panel outlines-panel" id="cockpit-panel-picker" aria-label="Project guide" hidden>
       <div class="picker-zone picker-zone-priorities">
         <div class="pav-guide-ask-section" aria-label="Ask Gilbert and Pav Priorities" data-feedback-id="guide-ask-gilbert" data-feedback-label="Ask Gilbert + Pav Priorities">
-          <aside class="gilbert-inline-panel" id="gilbert-priority-dock" aria-label="Ask Gilbert">
+          <!-- Ask Gilbert parked — edit parked/ASK-GILBERT-WIP.md then remove hidden to restore -->
+          <aside class="gilbert-inline-panel" id="gilbert-priority-dock" aria-label="Ask Gilbert" hidden aria-hidden="true">
             <div class="gilbert-inline-head">
               <img id="gilbert-launcher-img" class="gilbert-launcher-fig" src="assets/gilbert-thinking.png?v=20260714h" alt="">
               <div class="gilbert-inline-titles">
@@ -5038,7 +5209,7 @@
             <input type="hidden" id="goal-input" value="" autocomplete="off">
             <div class="gilbert-chat-messages" id="gilbert-chat-messages" hidden aria-hidden="true"></div>
           </aside>
-          <div class="do-next-panel pav-priorities-merged" id="do-next-panel" aria-label="Best Fit Projects for Pav"></div>
+          <div class="do-next-panel pav-priorities-merged" id="do-next-panel" aria-label="Best Fit Projects for Pav Law"></div>
         </div>
       </div>
 
@@ -5046,7 +5217,7 @@
         <div class="picker-zone-head">
           <div class="picker-zone-heading-copy">
             <h2 class="picker-zone-title">Project Outlines</h2>
-            <p class="picker-zone-blurb">Check projects to add them to your plan. Expand a card to read the outline and answer any Andrew questions. Use Ask Gilbert (left of Pav Priorities) for help choosing. When your cart looks right, tap <strong>Review Plan</strong>.</p>
+            <p class="picker-zone-blurb">Check projects to add them to your plan. Expand a card to read the outline and answer any Andrew questions. When your cart looks right, tap <strong>Review Plan</strong>.</p>
           </div>
           <span class="project-outlines-hint" id="toc-summary-hint"></span>
         </div>
@@ -5152,9 +5323,9 @@
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260718-financial-audit-savings-share-r1"></script>
   <script src="recommendations-data.js?v=20260719-recs-content-md-r1"></script>
-  <script src="dui-goal-data.js?v=20260717-practice-dui-r2"></script>
-  <script src="kpi-report.js?v=20260724-help-no-eggs-r1"></script>
+  <script src="dui-goal-data.js?v=20260724-auto-stack-r1"></script>
+  <script src="kpi-report.js?v=20260725-cases-created-full-r1"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260724-kpi-table-no-numbers"></script>
+  <script src="app.js?v=20260725-toc-icons-right-r1"></script>
 </body>
 </html>

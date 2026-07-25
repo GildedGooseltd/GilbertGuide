@@ -52,8 +52,8 @@ After markdown edits: `npm run build` (or `npm run watch`).
 
 | What users see                                     | File                                              | Field / location                                                            |
 | -------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------- |
-| Ask Gilbert + Pav Priorities (merged)              | `index.html` + `app.js`                           | `#do-next-panel.pav-priorities-merged` — survey left, priorities right      |
-| Ask Gilbert word cloud (drill-down)                | `app.js`                                          | `GILBERT_CLOUD` / `renderGilbertSurvey()` — tap topics → keyword branches, multi-select, clears on refresh |
+| Ask Gilbert + Pav Priorities (merged)              | `index.html` + `app.js`                           | `#do-next-panel.pav-priorities-merged` — Ask Gilbert dock **hidden** (parked); priorities full width · restore: [`parked/ASK-GILBERT-WIP.md`](parked/ASK-GILBERT-WIP.md) |
+| Ask Gilbert word cloud (drill-down)                | `app.js` + `parked/ASK-GILBERT-WIP.md`            | `GILBERT_CLOUD` / `renderGilbertSurvey()` — parked UI; logic kept for later restore |
 | “Best to do next” (scored shortlist)               | `app.js`                                          | `renderDoNextPanel()` — ranked from survey `goalText`                       |
 | “Pav's Priority Project Picklist” panel title    | `app.js`                                          | `renderDoNextPanel()` → `h3` inside `#do-next-panel`                        |
 | Pav Priorities cart (project names only)           | `app.js`                                          | `buildPrioritiesCartHtml()` — **no fees** in top panel                      |
