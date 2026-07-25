@@ -734,14 +734,36 @@
       border: 1px solid var(--gg-royal-border);
     }
     .card-meta-row { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; margin-bottom: var(--space-sm); }
-    .card-fee-market {
-      display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.75rem;
-      margin: 0.15rem 0 0.55rem; font-size: 0.82rem; line-height: 1.35;
+    .card-fee-quote {
+      margin: 0.15rem 0 0.35rem;
+      font-weight: 800;
+      color: var(--gg-royal-deep);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.95rem;
     }
-    .card-fee-quote { font-weight: 800; color: var(--gg-royal-deep); font-variant-numeric: tabular-nums; }
-    .card-fee-mkt { font-weight: 600; color: var(--gg-brown-muted); font-variant-numeric: tabular-nums; }
-    .fee-market { display: inline; font-size: 0.78em; font-weight: 600; color: var(--gg-brown-muted); }
-    .fee-market-delta { font-weight: 700; color: var(--gg-royal); }
+    .card-kpi-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0 0 0.55rem;
+    }
+    .card-kpi-chip {
+      appearance: none;
+      border: 1px solid var(--gg-royal-border);
+      background: var(--gg-royal-dim);
+      color: var(--gg-royal-deep);
+      font: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.2;
+      padding: 0.28rem 0.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .card-kpi-chip:hover { border-color: var(--gg-royal); color: var(--gg-royal); }
+    .fee-market { display: none; }
+    .fee-market-delta { display: none; }
+    .card-fee-market .card-fee-mkt { display: none; }
     .verified-data-badge {
       display: inline-flex; align-items: center; gap: 0.3rem;
       font-size: var(--font-min-rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
@@ -1260,7 +1282,7 @@
     .value-icon.icon-retainer { background: var(--vi-retainer-bg); color: var(--vi-retainer-fg); border-color: var(--vi-retainer-border); }
     .value-icon.icon-leads { background: var(--vi-leads-bg); color: var(--vi-leads-fg); border-color: var(--vi-leads-border); }
     .value-icon.icon-crm { background: var(--vi-crm-bg); color: var(--vi-crm-fg); border-color: var(--vi-crm-border); }
-    .value-icon.icon-hubspot { background: var(--vi-hubspot-bg); color: var(--vi-hubspot-fg); border-color: var(--vi-hubspot-border); }
+    .value-icon.icon-hubspot { background: var(--vi-hubspot-bg); color: #fff; border-color: var(--vi-hubspot-border); }
     .value-icon.icon-seo { background: var(--vi-seo-bg); color: var(--vi-seo-fg); border-color: var(--vi-seo-border); }
     .value-icon.icon-referrals { background: var(--vi-referrals-bg); color: var(--vi-referrals-fg); border-color: var(--vi-referrals-border); }
     .value-icon.icon-efficiency { background: var(--vi-efficiency-bg); color: var(--vi-efficiency-fg); border-color: var(--vi-efficiency-border); }
@@ -1670,15 +1692,17 @@
     .data-guide-link:hover { color: var(--gg-royal-deep, #2d1454); }
     .data-report-root .data-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.15rem 1.25rem;
-      align-items: start;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem 1.1rem;
+      align-items: stretch;
     }
-    .data-report-root .data-grid-full { grid-column: 1 / -1; }
-    @media (max-width: 980px) {
+    .data-report-root .data-grid-full { grid-column: auto; }
+    @media (max-width: 1280px) {
+      .data-report-root .data-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
       .data-report-root .data-page-head,
       .data-report-root .data-grid { grid-template-columns: 1fr; }
-      .data-report-root .data-grid-full { grid-column: auto; }
     }
     .recommendations-panel .data-grid {
       grid-template-columns: 1fr;
@@ -2153,6 +2177,34 @@
       width: 100%;
       max-width: 100%;
       height: auto;
+    }
+    /* Data tab — brand chart formatting: regular MoM labels, no bold totals */
+    .data-report-root .kpi-mom-change,
+    .data-report-root .kpi-mom-up,
+    .data-report-root .kpi-mom-down,
+    .data-report-root .kpi-mom-flat {
+      color: var(--gg-contrast-dark) !important;
+      font-weight: 400 !important;
+    }
+    .data-report-root .kpi-table-total {
+      font-weight: 600;
+      color: var(--gg-royal-deep);
+    }
+    .data-report-root .kpi-chart-detail,
+    .data-report-root .kpi-chart-table {
+      display: block;
+      margin-top: 0.65rem;
+    }
+    .data-report-root strong {
+      font-weight: inherit;
+    }
+    .data-report-root .data-inline-note,
+    .data-report-root .data-warning-note,
+    .data-report-root .kpi-table-note {
+      font-weight: 400;
+    }
+    .data-report-root .data-warning-note {
+      font-weight: 400;
     }
     .data-report-root .kpi-donut-svg {
       width: 7rem;
@@ -3392,9 +3444,9 @@
     .kpi-val-negative { color: var(--gg-negative) !important; font-size: 1.25rem !important; }
     .kpi-negative-value { color: var(--gg-negative) !important; }
     .kpi-stat-label { display: block; font-size: 0.875rem; color: var(--secondary); margin-top: 0.2rem; }
-    .kpi-mom-down { color: var(--gg-negative); font-size: 0.875rem; font-weight: 700; }
-    .kpi-mom-up { color: var(--gg-positive); font-size: 0.875rem; font-weight: 700; }
-    .kpi-mom-flat { color: var(--secondary); font-size: 0.875rem; font-weight: 700; }
+    .kpi-mom-down { color: var(--gg-contrast-dark); font-size: 0.875rem; font-weight: 400; }
+    .kpi-mom-up { color: var(--gg-contrast-dark); font-size: 0.875rem; font-weight: 400; }
+    .kpi-mom-flat { color: var(--gg-contrast-dark); font-size: 0.875rem; font-weight: 400; }
     .kpi-metric-with-delta {
       display: flex;
       align-items: center;
@@ -5101,8 +5153,8 @@
   <script src="projects-data.js?v=20260718-financial-audit-savings-share-r1"></script>
   <script src="recommendations-data.js?v=20260719-recs-content-md-r1"></script>
   <script src="dui-goal-data.js?v=20260717-practice-dui-r2"></script>
-  <script src="kpi-report.js?v=20260721-dual-axis-label-fix-r1"></script>
+  <script src="kpi-report.js?v=20260724-help-no-eggs-r1"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260724-short-title-col-r1"></script>
+  <script src="app.js?v=20260724-kpi-table-no-numbers"></script>
 </body>
 </html>
