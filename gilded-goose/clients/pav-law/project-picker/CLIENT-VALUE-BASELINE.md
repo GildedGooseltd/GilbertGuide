@@ -1,7 +1,8 @@
 # Client value baseline (aggregates only)
 
-**As of:** 2026-07-01 (MyCase export) · **Locked into Guide:** 2026-07-15  
-**Source file (local only):** `Ad Reports/exports/mycase/as-of-2026-07-01/contact_report_task_export.csv`  
+**As of:** 2026-07-25  
+**Source file (local):** `Ad Reports/exports/mycase/as-of-2026-07-25/Contact_07-25-2026.csv` · **last updated 2026-07-25**  
+**Derived:** `Ad Reports/exports/mycase/as-of-2026-07-25/fee-means-by-practice.csv`  
 **No PII in this doc** — counts and means only.
 
 ## Locked Guide baseline (KPI #28)
@@ -10,6 +11,8 @@
 |--------|-------|------------|
 | **Mean client fee** | **$5,587** | Contact group = Client · fee present · n = 142 |
 | Fee selection order | Pre-Trial Flat Fee → pre-File flat → trial_fee → retainer → down payments → AR last | First nonzero wins |
+
+Recompute on Jul-25 file: **unchanged** vs Jul-1 ($5,587 · n=142 · same fee set).
 
 ### Sensitivity (do not use as primary unless Kate re-locks)
 
@@ -22,7 +25,7 @@
 
 ## Practice area means (Client + fee · n ≥ 5)
 
-Classification from MyCase `Case Type` when filled, else `Cases (practice area)` text. Fuzzy — not a formal matter taxonomy.
+Classification from MyCase `Case Type` when filled, else `Cases (practice area)` text. Fuzzy — not a formal matter taxonomy. **Unchanged** on Jul-25 recompute.
 
 | Practice area | n | Mean |
 |---------------|---|------|
@@ -36,15 +39,15 @@ Classification from MyCase `Case Type` when filled, else `Cases (practice area)`
 
 ## Trust / balance fields (Client · nonzero)
 
-| Field | n | Mean |
-|-------|---|------|
-| Trust balance | 223 | $4,429 |
-| Accounts receivable | 56 | $4,583 |
-| Credit balance | 0 | — |
+| Field | n | Mean | Notes |
+|-------|---|------|-------|
+| Trust balance | 245 | $4,283 | Total ≈ $1,049,222 · refreshed 2026-07-25 |
+| Accounts receivable | 56 | $4,574 | Client-group only |
+| Credit balance | 0 | — | |
 
 Trust balance ≠ contracted fee. AR incomplete per DATA-PULL-LIST — not used as revenue.
 
-## Data quality checks (2026-07-15)
+## Data quality checks (2026-07-25)
 
 | Check | Result |
 |-------|--------|
@@ -52,9 +55,9 @@ Trust balance ≠ contracted fee. AR incomplete per DATA-PULL-LIST — not used 
 | Client + fee duplicate emails | 0 |
 | Fees &gt; $50k | 0 |
 | Fees &lt; $500 | 0 |
-| Client contacts total | 455 |
-| Client + fee coverage | 142 / 455 (31%) |
-| Case Type filled (all contacts) | ~328 / 5,081 (sparse) |
+| Client contacts total | 480 |
+| Client + fee coverage | 142 / 480 (30%) |
+| Case Type filled (all contacts) | 343 / 5,138 (sparse) |
 | Fees-collected billing export | **Not available from MyCase — use QuickBooks** |
 
 ## Downstream Guide updates

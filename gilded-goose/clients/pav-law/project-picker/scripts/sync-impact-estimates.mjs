@@ -72,8 +72,8 @@ function gilbertChangeNote(field, prev, next, est, projectId) {
   } else {
     return null;
   }
-  if (field === "leadsConnected" && projectId === "B2") {
-    why += " B2 go-live should push connected toward ~32/mo at 90% answer (#21).";
+  if (field === "leadsConnected" && projectId === "HsVoip") {
+    why += " HsVoip go-live should push connected toward ~32/mo at 90% answer (#21).";
   }
   return why.trim();
 }

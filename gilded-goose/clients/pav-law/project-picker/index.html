@@ -1494,9 +1494,23 @@
       background: rgba(148, 163, 184, 0.28);
     }
     .cockpit-tabs .view-tab.view-tab-wip .tab-count { opacity: 0.7; }
-    #cockpit-panel-predictions {
-      filter: grayscale(1) opacity(0.45);
-      pointer-events: none;
+    .cockpit-tabs .view-tab .tab-uc {
+      display: inline-block;
+      margin-left: 0.28rem;
+      padding: 0.12rem 0.38rem;
+      border-radius: 4px;
+      background: rgba(100, 116, 139, 0.2);
+      color: var(--gg-slate, #64748b);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+    .recommendations-panel .recs-predictions-block {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
     }
     /* Recommendations — blurred / unreadable until ready to publish */
     .recommendations-panel-wip {
@@ -1697,12 +1711,16 @@
       align-items: stretch;
     }
     .data-report-root .data-grid-full { grid-column: 1 / -1; }
+    .data-report-root .data-card.data-card-span-2 {
+      grid-column: span 2;
+    }
     @media (max-width: 1280px) {
       .data-report-root .data-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
       .data-report-root .data-page-head,
       .data-report-root .data-grid { grid-template-columns: 1fr; }
+      .data-report-root .data-card.data-card-span-2 { grid-column: auto; }
     }
     .recommendations-panel .data-grid {
       grid-template-columns: 1fr;
@@ -2286,6 +2304,39 @@
     }
     .data-report-root .data-chart-table-grid .kpi-chart-plot {
       gap: 0.45rem;
+    }
+    .data-report-root .data-chart-table-grid .data-chart-side-table {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+      min-width: 0;
+    }
+    /* Lead Channel (and similar): restore KPI chart chrome inside Data cards */
+    .data-report-root .data-card-kpi-chart {
+      padding: 0.85rem 1rem 1rem;
+    }
+    .data-report-root .data-card-kpi-chart .data-card-body {
+      margin-top: 0;
+    }
+    .data-report-root .data-card-kpi-chart .kpi-chart-card {
+      background: var(--gg-paper, #fffcf7);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--gg-box-shadow);
+      padding: 0.65rem 0.75rem 0.75rem;
+      margin: 0;
+    }
+    .data-report-root .data-card-kpi-chart .kpi-chart-svg-stacked,
+    .data-report-root .data-card-kpi-chart .kpi-chart-svg-plot {
+      max-width: none;
+      width: 100%;
+    }
+    .data-report-root .data-card-kpi-chart .kpi-chart-head {
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .data-report-root .data-card-kpi-chart .data-chart-side-table {
+      padding: 0.35rem 0.15rem 0;
     }
     .data-report-root .data-chart-table-side .kpi-chart-detail {
       margin-top: 0;
@@ -2946,8 +2997,9 @@
     }
     .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.14); stroke-width: 1; }
     .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.4); stroke-width: 1.5; }
-    /* Stacked bars: one dark outline — never white/paper hairlines between segments */
-    .kpi-chart-svg-stacked rect {
+    /* Stacked bars: one dark outline — never white/paper hairlines between segments.
+       Exclude plot background so the yellow field does not get a heavy box stroke. */
+    .kpi-chart-svg-stacked rect:not(.kpi-chart-plot-bg) {
       stroke: var(--gg-royal-deep);
       stroke-width: 1.25;
       vector-effect: non-scaling-stroke;
@@ -3141,13 +3193,11 @@
       gap: 0.7rem;
       position: relative;
       margin-top: 0.45rem;
-      padding: 0.72rem 0.8rem;
-      border: 4px double #a67c2e;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #f3eefa 0%, rgba(45, 20, 84, 0.08) 100%);
-      box-shadow:
-        inset 0 0 0 1px var(--gg-royal-border),
-        0 3px 10px rgba(45, 20, 84, 0.12);
+      padding: 0.72rem 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
       text-align: left;
     }
     .kpi-related-projects::before,
@@ -3322,6 +3372,27 @@
       display: block; width: 100%; max-width: 15rem; height: auto; margin: 0.35rem auto 0.15rem;
       overflow: visible;
     }
+    .kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual {
+      align-items: center;
+      text-align: center;
+      gap: 0.15rem;
+      flex: 1 1 auto;
+      min-height: 0;
+      justify-content: flex-start;
+    }
+    .kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual .kpi-stat-id {
+      margin-bottom: 0;
+      font-size: 1.25rem;
+    }
+    .kpi-goal-card.kpi-stat-target-bar .kpi-target-bar-chart-compact,
+    .kpi-goal-card.kpi-stat-target-bar .kpi-target-bar-chart-goal {
+      display: block;
+      width: 100%;
+      max-width: none;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+    }
     .kpi-target-baseline { stroke: rgba(26, 26, 26, 0.85); stroke-width: 1.5; }
     .kpi-target-line { stroke: #1a1a1a; stroke-width: 3.5; stroke-linecap: butt; }
     .kpi-target-label { fill: var(--secondary); font-size: 11px; font-style: italic; font-weight: 600; }
@@ -3393,7 +3464,6 @@
       font-size: 0.72rem;
       line-height: 1.3;
     }
-    .kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual { align-items: center; text-align: center; }
     .kpi-goal-visual {
       display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
       position: relative;
@@ -3443,6 +3513,23 @@
     .kpi-goals-grid .kpi-goal-track tr { height: 3.25rem; }
     .kpi-goals-grid .kpi-goal-track th,
     .kpi-goals-grid .kpi-goal-track td { vertical-align: middle; }
+    .kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar .kpi-goal-track tr.kpi-goal-month-row,
+    .kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar .kpi-goal-track tr:not(:first-child) {
+      height: 1.65rem;
+    }
+    .kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar .kpi-goal-track tr:not(:first-child) th,
+    .kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar .kpi-goal-track tr:not(:first-child) td {
+      padding-top: 0.12rem;
+      padding-bottom: 0.12rem;
+      font-size: 0.72rem;
+    }
+    .kpi-goal-month-need { font-variant-numeric: tabular-nums; }
+    .kpi-goal-month-ytd {
+      color: var(--gg-brown-muted, #5c4f45);
+      font-weight: 500;
+      margin-left: 0.25rem;
+      font-size: 0.68rem;
+    }
     .kpi-goal-placeholder {
       border-style: dashed; opacity: 0.92; cursor: default;
       background: linear-gradient(165deg, #faf8f3 0%, var(--gg-cream-panel) 55%);
@@ -3725,6 +3812,12 @@
       stroke: var(--gg-royal-deep);
       stroke-width: 2.75;
       stroke-linecap: round;
+    }
+    .kpi-half-moon-gauge .kpi-gauge-goal-label {
+      fill: var(--gg-royal-deep);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: inherit;
     }
     .kpi-half-moon-gauge .kpi-gauge-center {
       fill: var(--gg-royal-deep); font-size: 20px; font-weight: 800;
@@ -4105,6 +4198,16 @@
       margin: 0;
       padding: 0;
     }
+    .data-chart-table-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch;
+    }
+    .data-chart-table-grid .data-chart-side-table {
+      min-width: 0;
+      align-self: stretch;
+    }
     @media (max-width: 980px) {
       .data-chart-table-grid { grid-template-columns: 1fr; }
     }
@@ -4380,6 +4483,31 @@
     .projects-section > .layout { max-width: 1400px; margin: 0 auto; }
     .card.selected-first { border-top: none; }
     .card.filtered-out { display: none; }
+    .kpi-goal-card[data-kpi-focus],
+    .kpi-stat-card[data-kpi-focus] {
+      cursor: pointer;
+    }
+    .kpi-project-filter-banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.55rem 0.85rem;
+      width: 100%;
+      margin: 0 0 0.65rem;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--gg-royal-border);
+      border-radius: 8px;
+      background: var(--gg-royal-dim);
+      color: var(--gg-royal-deep);
+      font-size: 0.88rem;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+    .kpi-project-filter-banner .kpi-filter-name {
+      color: var(--gg-royal);
+      font-weight: 800;
+    }
     .card.over-budget:not(.selected) { opacity: 0.35; pointer-events: none; }
     .card.recommended { box-shadow: none; } /* Gilbert survey flag — INDEX Recommended uses .card-status-recommended */
     .budget-bar-wrap { margin-top: 0.5rem; }
@@ -5160,12 +5288,11 @@
 
     <div class="cockpit-tabs-wrap">
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
-        <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs <span class="tab-help" data-help-title="KPIs" data-help-desc="Key metrics, charts (channels, BHI, Cases MoM, source mix), and goals from the latest Ad Reports export. Tap a card for context, or the ? on a KPI for description and formula." aria-label="How to use KPIs">?</span></button>
-        <button type="button" class="view-tab" data-view="data" role="tab" aria-selected="false">Data <span class="tab-help" data-help-title="Data" data-help-desc="Saved operating charts and tables kept while the visual system is tested. Each card ties to a KPI or finance metric — use the ? on a KPI card for that metric’s description and formula." aria-label="How to use Data">?</span></button>
-        <button type="button" class="view-tab view-tab-wip" data-view="recommendations" role="tab" aria-selected="false" aria-description="Under construction">Recommendations <span class="tab-help" data-help-title="Recommendations" data-help-desc="Ranked actions (blurred until ready). Fix intake first, then Sex Crimes Defense Search, financial audit, and LSA divert." aria-label="How to use Recommendations">?</span></button>
         <button type="button" class="view-tab" data-view="picker" role="tab" aria-selected="false">Guide <span class="tab-help" data-help-title="Guide" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use Guide">?</span></button>
-        <button type="button" class="view-tab view-tab-wip" data-view="impact" role="tab" aria-selected="false" aria-description="Under construction">Results <span class="tab-help" data-help-title="Results" data-help-desc="Completed project report-out, leads-by-campaign, and cart revenue calculator. Still under construction in places." aria-label="How to use Results">?</span></button>
-        <button type="button" class="view-tab view-tab-wip" data-view="predictions" role="tab" aria-selected="false" aria-description="Under construction">Predictions <span class="tab-help" data-help-title="Predictions" data-help-desc="Rest-of-year case forecast, $80k/mo expense pace recommendation, and intake-driven collectible-cash projection. Forecast bars are lighter than completed months; current month appears first." aria-label="How to use Predictions">?</span></button>
+        <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs <span class="tab-help" data-help-title="KPIs" data-help-desc="Tiles revised 2026-07-25. Primary month June 2026. Sources: LSA leads-inbox (16) as of Jul 24 (Jun/Jul* charged rates); May LSA held from fuller prior pull; LSA Home Services spend from Jul 17 activities (Jul 24 file incomplete); Call details Jul 11; Campaign report (17); MyCase cases/fees Jul 1; ledger credits through Jul 15. Tap ? on a KPI for description, formula, and export fields." aria-label="How to use KPIs">?</span></button>
+        <button type="button" class="view-tab" data-view="data" role="tab" aria-selected="false">Data <span class="tab-help" data-help-title="Data" data-help-desc="Operating charts from the same exports as KPIs: Lead Channel + Cases Created (MyCase Jul 1), LSA charge rate (inbox Jul 24 · spend Jul 17), cash collected (ledger Jul 15), source mix, Cases MoM. Jul* = partial month. Each card’s ? shows description, formula, and file/fields." aria-label="How to use Data">?</span></button>
+        <button type="button" class="view-tab view-tab-wip" data-view="impact" role="tab" aria-selected="false" aria-description="Under construction">Results <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Results" data-help-desc="Project-tied campaign results, completed report-out, and cart revenue calculator. Under construction until exports and INDEX statuses are wired end-to-end." aria-label="How to use Results">?</span></button>
+        <button type="button" class="view-tab view-tab-wip" data-view="recommendations" role="tab" aria-selected="false" aria-description="Under construction">Recommendations &amp; Predictions <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Recommendations & Predictions" data-help-desc="Ranked actions plus rest-of-year case forecast, expense pace, and collectible-cash projection. Blurred until ready to publish." aria-label="How to use Recommendations and Predictions">?</span></button>
       </div>
     </div>
 
@@ -5175,20 +5302,6 @@
 
     <section class="cockpit-panel data-panel" id="cockpit-panel-data" aria-label="Saved data charts" hidden>
       <div class="data-report-root" id="kpi-report-data"></div>
-    </section>
-
-    <section class="cockpit-panel recommendations-panel" id="cockpit-panel-recommendations" aria-label="Recommendations" hidden>
-      <div class="recommendations-panel-wip">
-        <div class="recommendations-under-construction" role="status" aria-live="polite">
-          <div class="recommendations-under-construction-card">
-            <strong>Under Construction</strong>
-            <p>Recommendations are drafted locally and blurred until ready to publish.</p>
-          </div>
-        </div>
-        <div class="recommendations-panel-body" aria-hidden="true">
-          <div class="data-report-root" id="kpi-report-recommendations"></div>
-        </div>
-      </div>
     </section>
 
     <section class="cockpit-panel picker-panel outlines-panel" id="cockpit-panel-picker" aria-label="Project guide" hidden>
@@ -5267,17 +5380,17 @@
     </section>
 
     <section class="cockpit-panel impact-panel" id="cockpit-panel-impact" aria-label="Results" hidden>
-      <div class="impact-panel-live data-panel">
-        <div class="data-report-root" id="kpi-report-impact"></div>
-      </div>
       <div class="impact-panel-wip">
         <div class="impact-under-construction" role="status" aria-live="polite">
           <div class="impact-under-construction-card">
             <strong>Under Construction</strong>
-            <p>Completed report-out and revenue calculator will land here next.</p>
+            <p>Campaign results tied to Guide projects, completed report-out, and cart revenue — wiring exports before this goes live.</p>
           </div>
         </div>
         <div class="impact-panel-body" aria-hidden="true">
+          <div class="impact-panel-live data-panel">
+            <div class="data-report-root" id="kpi-report-impact"></div>
+          </div>
           <div class="impact-section impact-section-completed" id="impact-completed" data-feedback-id="impact-completed" data-feedback-label="Completed projects report-out">
             <p class="completed-panel-head">Completed</p>
             <p class="completed-panel-intro">Draft report-out for projects marked completed in INDEX — present to Andrew/Pav or edit Completed in project markdown. Detail cards below update from live project data.</p>
@@ -5292,15 +5405,26 @@
           </div>
           <div class="impact-section impact-section-revenue" id="impact-revenue" data-feedback-id="impact-revenue" data-feedback-label="Revenue calculator">
             <p class="revenue-panel-head">Revenue calculator</p>
-            <p class="revenue-panel-intro">Fees for projects currently in your Pav Priorities cart. Add or remove projects in <strong>Project Guide</strong> to update these numbers.</p>
+            <p class="revenue-panel-intro">Fees for projects currently in your Pav Priorities cart. Add or remove projects in <strong>Guide</strong> to update these numbers.</p>
             <div id="revenue-calculator" class="revenue-calculator"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="cockpit-panel predictions-panel data-panel" id="cockpit-panel-predictions" aria-label="Predictions" hidden>
-      <div class="data-report-root" id="kpi-report-predictions"></div>
+    <section class="cockpit-panel recommendations-panel" id="cockpit-panel-recommendations" aria-label="Recommendations and Predictions" hidden>
+      <div class="recommendations-panel-wip">
+        <div class="recommendations-under-construction" role="status" aria-live="polite">
+          <div class="recommendations-under-construction-card">
+            <strong>Under Construction</strong>
+            <p>Recommendations and Predictions share this tab — blurred until ranked actions and forecasts are ready to publish.</p>
+          </div>
+        </div>
+        <div class="recommendations-panel-body" aria-hidden="true">
+          <div class="data-report-root" id="kpi-report-recommendations"></div>
+          <div class="data-report-root recs-predictions-block" id="kpi-report-predictions"></div>
+        </div>
+      </div>
     </section>
   </div>
 
@@ -5321,11 +5445,11 @@
 
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20260718-financial-audit-savings-share-r1"></script>
-  <script src="recommendations-data.js?v=20260719-recs-content-md-r1"></script>
+  <script src="projects-data.js?v=20260727-hubspot-casey-r1"></script>
+  <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260724-auto-stack-r1"></script>
-  <script src="kpi-report.js?v=20260725-cases-created-full-r1"></script>
+  <script src="kpi-report.js?v=20260727-kpi-funnel-r1"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260725-toc-icons-right-r1"></script>
+  <script src="app.js?v=20260727-kpi-guide-filter-r1"></script>
 </body>
 </html>

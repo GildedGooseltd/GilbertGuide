@@ -25,11 +25,12 @@
 | LSA inbox | Jun 2026 charged | ✅ | File 39 vs PERFORMANCE-REVIEW 39 |
 | LSA inbox | Jul 2026 lead count | ✅ | File 26 vs PERFORMANCE-REVIEW 26 |
 | LSA inbox | Jul 2026 charged | ✅ | File 6 vs PERFORMANCE-REVIEW 6 |
-| KPI #01 | LSA channel (41 in UI) | ⚠️ | UI uses 41/mo — Jun file has 83 total LSA rows. Lock definition (charged vs all phone) before wiring ★ |
+| KPI #01 | LSA channel | ✅ | May–Jun avg ~78 LSA leads/mo · Guide May corrected to inbox file 72 · Jun 83 |
 | KPI #01 | Channel sum | ✅ | Search 54 + LSA 41 + HubSpot 29 = 124 vs total 124 |
 | KPI #01 | HubSpot slice | ⬜ | 29 forms — no HubSpot export on file to verify |
-| KPI #28 | Avg case fee | ✅ | Guide baseline $5587 mean (MyCase Client n=142) — cash-collected export still missing |
-| KPI #02 | New cases (9) | ⬜ | Needs MyCase or HubSpot deals export — not in Ad Reports |
+| KPI #28 | Avg case fee | ✅ | $5,587 mean · Client n=142 · Contact_07-25-2026.csv · last updated 2026-07-25 (unchanged vs Jul-1) — cash-collected export still missing |
+| KPI #02 | New cases | ✅ | Jun=36 · Jul*=23 · Jan–Jun=116 · mycase/as-of-2026-07-25/ · last updated 2026-07-25 |
+| KPI #29 | Fee by practice | ✅ | 7 practice means n≥5 · fee-means-by-practice.csv · last updated 2026-07-25 |
 | KPI #21 | Answer rate (69%) | ⬜ | Needs HubSpot call logs / VoIP — not in Ad Reports |
 | KPI #22 | Speed to lead | ⬜ | Needs HubSpot workflow timestamps |
 

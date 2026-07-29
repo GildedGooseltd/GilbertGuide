@@ -13,14 +13,14 @@
 
 ## Default package label
 
-Recommended package (P1 B2 · P6 B1 · P10 B4 · P11 A4 · P3 A2 + Retainer)
+Recommended package (P1 HsVoip · P6 HsPipe · P10 WebContent · P11 Referral · P3 NtguiltAd + Retainer)
 
 ## Default package projects
 
-- B2
-- B1
-- B4
-- A4
-- A2
+- HsVoip
+- HsPipe
+- WebContent
+- Referral
+- NtguiltAd
 
 Include retainer: yes

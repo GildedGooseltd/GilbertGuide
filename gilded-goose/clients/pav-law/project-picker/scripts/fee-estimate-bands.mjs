@@ -75,7 +75,7 @@ export function detectFeeLane(p) {
   const monthly =
     p.monthlyOnly ||
     id === "RETAINER" ||
-    id === "A8M" ||
+    id === "DataMgmt" ||
     /retainer|maintenance|\/mo|per month|monthly/i.test(blob);
 
   if (id === "RETAINER" || (/digital ads|ads maintenance|ppc|lsa/i.test(blob) && monthly && /retain|maint/i.test(blob)))
@@ -85,25 +85,25 @@ export function detectFeeLane(p) {
   if (monthly && /hubspot|crm|nurture/i.test(blob)) return "crm_nurture_mo";
   if (monthly) return "digital_bundle_mo";
 
-  /* Exact IDs first — never use /B1/ style regex (matches B10, B11, B13…). */
-  if (id === "B13") return "hubspot_foundation";
-  if (id === "B2") return "intake_voip";
-  if (id === "B11") return "lsa_process";
-  if (id === "B10") return "profiles_local";
-  if (id === "A4" || id === "A17") return "referral_program";
-  if (id === "B9") return "audit_finance";
-  if (id === "A10") return "audit_stack";
-  if (id === "A14") return "performance_comp";
-  if (id === "B3") return "website_ux";
-  if (id === "B4") return "website_content";
-  if (id === "B6") return "blog_seo";
-  if (id === "A2") return "display_search_launch";
-  if (id === "A7") return "social_setup";
-  if (id === "B5") return "mailer";
-  if (id === "B14") return "swag_consult";
-  if (id === "A6") return "outbound_enable";
-  if (id === "A12") return "chat_qa";
-  if (id === "B1" || id === "B7" || id === "A5" || id === "A3") return "hubspot_sprint";
+  /* Exact IDs first — never use /HsPipe/ style regex (matches DigProf, LsaCall, HsSetup…). */
+  if (id === "HsSetup") return "hubspot_foundation";
+  if (id === "HsVoip") return "intake_voip";
+  if (id === "LsaCall") return "lsa_process";
+  if (id === "DigProf") return "profiles_local";
+  if (id === "Referral" || id === "SealReeng") return "referral_program";
+  if (id === "WasteAud") return "audit_finance";
+  if (id === "StackAudit") return "audit_stack";
+  if (id === "PerfPay") return "performance_comp";
+  if (id === "WebSpeed") return "website_ux";
+  if (id === "WebContent") return "website_content";
+  if (id === "BlogRevamp") return "blog_seo";
+  if (id === "NtguiltAd") return "display_search_launch";
+  if (id === "SocialAds") return "social_setup";
+  if (id === "InsMailer") return "mailer";
+  if (id === "SwagPrint") return "swag_consult";
+  if (id === "GabrielOut") return "outbound_enable";
+  if (id === "PaviChat") return "chat_qa";
+  if (id === "HsPipe" || id === "HsContacts" || id === "HsLanding" || id === "SummerEmail") return "hubspot_sprint";
 
   if (/hubspot marketing setup|hs setup|foundation/i.test(blob)) return "hubspot_foundation";
   if (/pipeline|contacts upload|landing page|module/i.test(blob)) return "hubspot_sprint";

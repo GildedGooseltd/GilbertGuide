@@ -2,7 +2,7 @@
 
 **Canonical hub** for how the tool *looks*. Change colors, type, and layout tokens here first — then edit the files this doc points to.
 
-**Copy / project text** lives elsewhere: [CONTENT-INDEX.md](CONTENT-INDEX.md) · [CONTENT-EDIT.md](CONTENT-EDIT.md)
+**Copy / project text** lives elsewhere: [CONTENT-INDEX.md](CONTENT-INDEX.md) · [CONTENT-EDIT.md](CONTENT-EDIT.md) · [CONTENT-WRITING-GUIDE.md](CONTENT-WRITING-GUIDE.md) for Yelp, SEO, and external client-facing copy
 
 ---
 
@@ -326,6 +326,7 @@ No `npm run build` for pure CSS/HTML/JS layout. Run build only if `content/**/*.
 | [REPORTING-BRAND-GUIDE.md](REPORTING-BRAND-GUIDE.md) | Reporting color coding + shade ramp + table catalog |
 | [CONTENT-INDEX.md](CONTENT-INDEX.md)      | Every string by page                   |
 | [CONTENT-EDIT.md](CONTENT-EDIT.md)        | Project markdown workflow              |
+| [CONTENT-WRITING-GUIDE.md](CONTENT-WRITING-GUIDE.md) | Yelp Ads · keywords · SEO/AI external copy |
 | [content/INDEX.md](content/INDEX.md)      | Project list (Kate-owned)              |
 | [README.md](README.md)                    | Entry + deploy pointers                |
 | `.cursor/rules/pav-law-kpi-charts.mdc`    | Chart structure + locked series colors |

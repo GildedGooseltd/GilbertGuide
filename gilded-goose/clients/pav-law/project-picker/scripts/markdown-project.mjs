@@ -1,5 +1,5 @@
 /**
- * Parse / serialize Gilbert project picker markdown (B2 template format).
+ * Parse / serialize Gilbert project picker markdown (HsVoip template format).
  */
 import fs from "fs";
 import path from "path";
@@ -93,12 +93,13 @@ function normalizePublishStatus(raw) {
 
 function parseMetaTable(text) {
   const meta = {};
-  const rows = text.match(/^\|\s*\*\*(.+?)\*\*\s*\|\s*(.+?)\s*\|$/gm) || [];
+  const rows = text.match(/^\|\s*(?:\*\*)?(.+?)(?:\*\*)?\s*\|\s*(.+?)\s*\|$/gm) || [];
   for (const row of rows) {
-    const m = row.match(/^\|\s*\*\*(.+?)\*\*\s*\|\s*(.+?)\s*\|$/);
+    const m = row.match(/^\|\s*(?:\*\*)?(.+?)(?:\*\*)?\s*\|\s*(.+?)\s*\|$/);
     if (!m) continue;
-    const key = m[1].trim().toLowerCase();
+    const key = m[1].trim().toLowerCase().replace(/\*\*/g, "");
     let val = m[2].trim();
+    if (/^-{3,}$/.test(key) || key === "field" || key === "value") continue;
     const field = META_KEYS[key];
     if (!field) continue;
     if (field === "priority") {
@@ -137,6 +138,47 @@ const VALID_VALUE_ICON_IDS = new Set([
   "efficiency", "finance", "intake", "creative", "general"
 ]);
 
+/** Full icon catalog for Show tables (id → display name). */
+export const VALUE_ICON_CATALOG = [
+  { id: "foundation", name: "Foundation" },
+  { id: "retainer", name: "Retainer" },
+  { id: "leads", name: "Leads" },
+  { id: "crm", name: "CRM" },
+  { id: "hubspot", name: "HubSpot" },
+  { id: "seo", name: "SEO" },
+  { id: "referrals", name: "Referrals" },
+  { id: "efficiency", name: "Analytics" },
+  { id: "finance", name: "Finance" },
+  { id: "intake", name: "Intake" },
+  { id: "creative", name: "Creative" }
+];
+
+/** Full KPI catalog for Show tables (id without # → name). */
+export const KPI_CATALOG = [
+  { id: "01", name: "Total leads" },
+  { id: "02", name: "New cases" },
+  { id: "05", name: "Key Channel Activity" },
+  { id: "06", name: "Pipeline / CRM completeness" },
+  { id: "07", name: "Spend Waste" },
+  { id: "08", name: "Campaign cost efficiency" },
+  { id: "09", name: "Intake conversion" },
+  { id: "10", name: "Lead channel mix" },
+  { id: "11", name: "Organic / local search presence" },
+  { id: "12", name: "Avg. Cost per Call" },
+  { id: "14", name: "Creative / channel response" },
+  { id: "15", name: "Cost per lead" },
+  { id: "16", name: "Reviews by channel" },
+  { id: "17", name: "Referral Network" },
+  { id: "18", name: "Website / SEO contribution" },
+  { id: "19", name: "Missed Opportunity" },
+  { id: "20", name: "CRM follow-up discipline" },
+  { id: "21", name: "Answered Calls" },
+  { id: "22", name: "Speed to lead" },
+  { id: "23", name: "Intake coverage / after-hours" },
+  { id: "27", name: "Ops backlog / open tasks" },
+  { id: "28", name: "Avg case fee" }
+];
+
 function normalizeValueIconId(raw) {
   return String(raw || "").trim().toLowerCase().replace(/\s+/g, "-");
 }
@@ -146,6 +188,165 @@ function parseListSection(body) {
     .split("\n")
     .map(l => l.replace(/^-\s+/, "").trim())
     .filter(l => l && l !== "-" && !l.startsWith("|"));
+}
+
+function splitMarkdownTableCells(line) {
+  const t = String(line || "").trim();
+  if (!t.startsWith("|")) return null;
+  return t
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map(c => c.trim());
+}
+
+function isMarkdownTableSeparator(cells) {
+  return cells && cells.length && cells.every(c => /^:?-{3,}:?$/.test(c.replace(/\s/g, "")));
+}
+
+/** True / false / null (unknown — treat as shown for legacy rows without Show). */
+function parseShowCell(raw) {
+  const s = String(raw || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\*\*/g, "");
+  if (!s || s === "—" || s === "-") return null;
+  if (/\[\s*x\s*\]|\[\s*✓\s*\]|✅|☑|^yes$|^true$|^1$|^x$|^on$|^show$/.test(s)) return true;
+  if (/^\[\s*\]$|☐|⬜|^no$|^false$|^0$|^off$|^hide$/.test(s)) return false;
+  if (/^\[\s*\]/.test(s) && !/x/.test(s)) return false;
+  return null;
+}
+
+/**
+ * Parse a Show | Id | Name markdown table.
+ * Returns selected ids (only Show = [x]). Legacy bullet lists → all ids.
+ */
+function parseShowIdTable(body, { normalizeId, validIds }) {
+  const lines = String(body || "").split("\n");
+  const tableRows = [];
+  let header = null;
+  for (const line of lines) {
+    const cells = splitMarkdownTableCells(line);
+    if (!cells) continue;
+    if (isMarkdownTableSeparator(cells)) continue;
+    if (!header) {
+      header = cells.map(c => c.toLowerCase().replace(/\*\*/g, "").trim());
+      continue;
+    }
+    tableRows.push(cells);
+  }
+
+  if (header && tableRows.length) {
+    const showIdx = header.findIndex(h => /^(show|visible|on|v)$/.test(h));
+    const idIdx = header.findIndex(h =>
+      /^(icon|id|kpi|code|ref|key)$/.test(h) || h === "#"
+    );
+    const selected = [];
+    for (const cells of tableRows) {
+      const idRaw =
+        (idIdx >= 0 ? cells[idIdx] : null) ||
+        cells[showIdx >= 0 ? 1 : 0] ||
+        "";
+      const id = normalizeId(idRaw);
+      if (!id) continue;
+      if (validIds && !validIds.has(id)) continue;
+      const shown = showIdx >= 0 ? parseShowCell(cells[showIdx]) : true;
+      if (shown === false) continue;
+      selected.push(id);
+    }
+    return [...new Set(selected)];
+  }
+
+  /* Legacy bullets */
+  return parseListSection(body)
+    .map(normalizeId)
+    .filter(id => id && (!validIds || validIds.has(id)));
+}
+
+export function formatValueIconsShowTable(selectedIds) {
+  const selected = new Set((selectedIds || []).map(normalizeValueIconId));
+  const rows = VALUE_ICON_CATALOG.map(
+    ({ id, name }) =>
+      `| ${selected.has(id) ? "[x]" : "[ ]"} | ${name} |`
+  );
+  return `## Value icons\n\n| Show | Name |\n| ---- | ---- |\n${rows.join("\n")}\n\n`;
+}
+
+export function formatKpiLinksShowTable(selectedRefs) {
+  const selected = new Set(
+    (selectedRefs || []).map(r => {
+      const n = String(r).replace(/\D/g, "");
+      return n.length >= 2 ? n.slice(-2) : "";
+    }).filter(Boolean)
+  );
+  const rows = KPI_CATALOG.map(
+    ({ id, name }) =>
+      `| ${selected.has(id) ? "[x]" : "[ ]"} | ${name} |`
+  );
+  return `## KPI links\n\n| Show | Name |\n| ---- | ---- |\n${rows.join("\n")}\n\n`;
+}
+
+function parseKpiLinksSection(body) {
+  const byId = new Map(KPI_CATALOG.map(k => [k.id, k]));
+  const byName = new Map(
+    KPI_CATALOG.map(k => [k.name.toLowerCase().replace(/\s+/g, " ").trim(), k.id])
+  );
+  const lines = String(body || "").split("\n");
+  let header = null;
+  const selected = [];
+
+  for (const line of lines) {
+    const cells = splitMarkdownTableCells(line);
+    if (!cells) {
+      /* Legacy bullets: 21 / #21 / Answered Calls */
+      const t = line.replace(/^-\s+/, "").trim();
+      if (!t || t.startsWith("|")) continue;
+      const n = t.replace(/\D/g, "");
+      if (n.length >= 2 && byId.has(n.slice(-2))) {
+        selected.push(n.slice(-2));
+        continue;
+      }
+      const nameKey = t.toLowerCase().replace(/\s+/g, " ").trim();
+      if (byName.has(nameKey)) selected.push(byName.get(nameKey));
+      continue;
+    }
+    if (isMarkdownTableSeparator(cells)) continue;
+    if (!header) {
+      header = cells.map(c => c.toLowerCase().replace(/\*\*/g, "").trim());
+      continue;
+    }
+    const showIdx = header.findIndex(h => /^(show|visible|on|v)$/.test(h));
+    const idIdx = header.findIndex(h => /^(kpi|id|code|ref|key|#)$/.test(h));
+    const nameIdx = header.findIndex(h => /^(name|label|title|metric)$/.test(h));
+    const shown = showIdx >= 0 ? parseShowCell(cells[showIdx]) : true;
+    if (shown === false) continue;
+
+    let id = "";
+    if (idIdx >= 0) {
+      const n = String(cells[idIdx] || "").replace(/\D/g, "");
+      if (n.length >= 2) id = n.slice(-2).padStart(2, "0");
+    }
+    if (!id && nameIdx >= 0) {
+      const nameKey = String(cells[nameIdx] || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+      id = byName.get(nameKey) || "";
+    }
+    /* Show | Name only — name is the non-show cell */
+    if (!id && showIdx >= 0 && cells.length >= 2) {
+      const nameCell = cells.find((_, i) => i !== showIdx) || "";
+      const nameKey = String(nameCell).toLowerCase().replace(/\s+/g, " ").trim();
+      id = byName.get(nameKey) || "";
+      if (!id) {
+        const n = String(nameCell).replace(/\D/g, "");
+        if (n.length >= 2 && byId.has(n.slice(-2))) id = n.slice(-2);
+      }
+    }
+    if (id && byId.has(id)) selected.push(id);
+  }
+
+  return [...new Set(selected.map(id => `#${id}`))];
 }
 
 function parseImpactMetricBullet(text) {
@@ -230,9 +431,65 @@ function formatGilbertMetricNotesSection(p) {
 }
 
 function parseValueIconsSection(body) {
-  return parseListSection(body)
-    .map(normalizeValueIconId)
-    .filter(id => VALID_VALUE_ICON_IDS.has(id));
+  const byId = new Map(VALUE_ICON_CATALOG.map(k => [k.id, k]));
+  const byName = new Map(
+    VALUE_ICON_CATALOG.map(k => [k.name.toLowerCase().replace(/\s+/g, " ").trim(), k.id])
+  );
+  /* efficiency displays as Analytics */
+  byName.set("efficiency", "efficiency");
+  byName.set("analytics", "efficiency");
+
+  const lines = String(body || "").split("\n");
+  let header = null;
+  const selected = [];
+
+  for (const line of lines) {
+    const cells = splitMarkdownTableCells(line);
+    if (!cells) {
+      const t = line.replace(/^-\s+/, "").trim();
+      if (!t || t.startsWith("|")) continue;
+      const id = normalizeValueIconId(t);
+      if (byId.has(id)) {
+        selected.push(id);
+        continue;
+      }
+      const nameKey = t.toLowerCase().replace(/\s+/g, " ").trim();
+      if (byName.has(nameKey)) selected.push(byName.get(nameKey));
+      continue;
+    }
+    if (isMarkdownTableSeparator(cells)) continue;
+    if (!header) {
+      header = cells.map(c => c.toLowerCase().replace(/\*\*/g, "").trim());
+      continue;
+    }
+    const showIdx = header.findIndex(h => /^(show|visible|on|v)$/.test(h));
+    const idIdx = header.findIndex(h => /^(icon|id|code|ref|key)$/.test(h));
+    const nameIdx = header.findIndex(h => /^(name|label|title)$/.test(h));
+    const shown = showIdx >= 0 ? parseShowCell(cells[showIdx]) : true;
+    if (shown === false) continue;
+
+    let id = "";
+    if (idIdx >= 0) {
+      id = normalizeValueIconId(cells[idIdx] || "");
+      if (!byId.has(id)) id = "";
+    }
+    if (!id && nameIdx >= 0) {
+      const nameKey = String(cells[nameIdx] || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+      id = byName.get(nameKey) || "";
+    }
+    if (!id && showIdx >= 0 && cells.length >= 2) {
+      const nameCell = cells.find((_, i) => i !== showIdx) || "";
+      const nameKey = String(nameCell).toLowerCase().replace(/\s+/g, " ").trim();
+      id = byName.get(nameKey) || normalizeValueIconId(nameCell);
+      if (!byId.has(id)) id = "";
+    }
+    if (id && byId.has(id)) selected.push(id);
+  }
+
+  return [...new Set(selected)];
 }
 
 function parseLearnings(body) {
@@ -292,7 +549,6 @@ function isInfoPlaceholder(item) {
 function inferInformationNeeded(p) {
   const bucket = projectStatusBucket(p.status);
   const items = [];
-  for (const q of p.abQuestions || []) items.push(`Answer AB – Q: ${q}`);
   if (!p.goal?.trim()) items.push("Define measurable Goal");
   if (p.estimatedLeads === "Estimate pending") items.push("Confirm estimated leads gained");
   if (!(p.kpiRefs || []).length && /dashboard|kpi|metric/i.test(`${p.category} ${p.title}`))
@@ -355,10 +611,10 @@ function parseSections(text) {
 
 /** Divider + Project plan — Kate/ops only; never published to Guide cards. */
 export const UNPUBLISHED_DIVIDER =
-  "---\n\n**—— Unpublished below ——** *(not shown on Guide cards)*\n\n";
+  "---\n\n—— Unpublished below ——\n\n";
 
 const UNPUBLISHED_DIVIDER_RE =
-  /\n---\s*\n+\*\*—— Unpublished below ——\*\*[^\n]*\n+/i;
+  /\n---\s*\n+(?:\*\*)?—— Unpublished below ——(?:\*\*)?[^\n]*\n+/i;
 
 /**
  * Split body into Guide-published sections vs unpublished Project plan tail.
@@ -507,14 +763,10 @@ export function parseProjectMarkdown(text, fallbackId) {
     if (bm?.label) project.backedMetric = bm;
   }
 
-  project.abQuestions = parseAbQuestions(published, sections);
+  project.abQuestions = [];
 
   if (sections["kpi links"]) {
-    const ids = parseValueIconsSection(sections["kpi links"]).map(id => {
-      const n = String(id).replace(/\D/g, "");
-      return n.length === 2 ? `#${n}` : id.startsWith("#") ? id : `#${id}`;
-    });
-    project.kpiRefs = [...new Set([...(project.kpiRefs || []), ...ids])];
+    project.kpiRefs = parseKpiLinksSection(sections["kpi links"]);
   }
 
   return sanitizeProjectRecord(project);
@@ -530,13 +782,12 @@ function isRetainerPhase(p) {
 }
 
 function padMetaRow(label, value) {
-  const l = `**${label}**`;
+  const l = String(label);
   return `| ${l.padEnd(17)} | ${String(value).padEnd(58)} |`;
 }
 
 function metaTableRows(p) {
   const rows = [
-    ["ID", p.id],
     ...(isRetainerPhase(p) || p.priority == null ? [] : [["Priority", p.priority]]),
     ["Fee", p.fee],
     ["Category", p.category],
@@ -790,15 +1041,8 @@ export function projectToMarkdown(p) {
   } else if (p.tldr) {
     md += `## Summary\n\n- ${applyProperCase(p.tldr.trim())}\n\n`;
   }
-  if (p.valueIcons?.length) {
-    md += `## Value icons\n\n${p.valueIcons.map(id => `- ${id}`).join("\n")}\n\n`;
-  }
-  if (p.kpiRefs?.length) {
-    md += `## KPI links\n\n${p.kpiRefs.map(id => `- ${id.replace(/^#/, "")}`).join("\n")}\n\n`;
-  }
-  if (p.abQuestions?.length) {
-    md += `## AB - Q\n\n${p.abQuestions.map(q => `- AB - Q: ${q}`).join("\n")}\n\n`;
-  }
+  md += formatValueIconsShowTable(p.valueIcons || []);
+  md += formatKpiLinksShowTable(p.kpiRefs || []);
   md += formatInformationNeededSection(p);
   md += listSection("WIP", p.inProgressItems);
   md += listSection("Completed", p.completedItems);
@@ -857,7 +1101,7 @@ Include retainer: ${pkg.retainer !== false ? "yes" : "no"}
 
 /** Valid picker project IDs — rejects scratch rows like "WIP Live" in the ID column. */
 export function isValidProjectId(id) {
-  return /^(RETAINER|[ABC]\d+M?)$/i.test(String(id || "").trim());
+  return /^(RETAINER|[A-Za-z][A-Za-z0-9]{1,23})$/i.test(String(id || "").trim());
 }
 
 function indexHeaderColumnMap(cells) {
@@ -909,19 +1153,19 @@ function indexHeaderColumnMap(cells) {
   };
 }
 
-/** Extract project ID from INDEX link cell (`[projects/A1.md](…)` or `[Name](projects/A1.md)` → A1). */
+/** Extract project ID from INDEX link cell (`[projects/AdEnhance.md](…)` or `[Name](projects/AdEnhance.md)` → AdEnhance). */
 export function idFromIndexFileCell(raw) {
   const s = String(raw || "");
   const m =
-    s.match(/\bprojects\/([ABC]\d+M?)\.md\b/i) ||
+    s.match(/\bprojects\/([A-Za-z][A-Za-z0-9_-]{0,31})\.md\b/) ||
     s.match(/\b(retainer)\.md\b/i) ||
-    s.match(/\b([ABC]\d+M?)\.md\b/i);
+    s.match(/\b([A-Za-z][A-Za-z0-9_-]{0,31})\.md\b/);
   if (!m) return null;
   if (/^retainer$/i.test(m[1])) return "RETAINER";
-  return m[1].toUpperCase();
+  return m[1];
 }
 
-/** Parse INDEX Project cell: `[Title](projects/A1.md)` → { title, href, id }. */
+/** Parse INDEX Project cell: `[Title](projects/AdEnhance.md)` → { title, href, id }. */
 export function parseIndexProjectCell(raw) {
   const s = String(raw || "").trim();
   const m = s.match(/^\[([^\]]+)\]\(([^)]+)\)\s*$/);
@@ -966,7 +1210,7 @@ export function parseIndexPaymentPlan(raw) {
   return { label: s, depositPct: null, depositAmount: null, monthly: false };
 }
 
-/** Parse INDEX Est. cost cells like `$2,900/mo`, `$2,000 + $500/mo`, `$1,500`, `incl. B13`. */
+/** Parse INDEX Est. cost cells like `$2,900/mo`, `$2,000 + $500/mo`, `$1,500`, `incl. HsSetup`. */
 export function parseIndexEstCost(raw) {
   const s = String(raw || "").trim();
   if (!s || s === "—" || s === "-" || /^incl/i.test(s) || /^merged/i.test(s) || /^n\/?a$/i.test(s)) {
@@ -1166,7 +1410,7 @@ export function buildIndex(projects, retainer, existingText) {
 
   let md = overrides.intro || `# Project Index
 
-Open a file below to edit. Sorted by project score (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`B2.md\`).
+Open a file below to edit. Sorted by project score (number). Template: [\`_TEMPLATE.md\`](_TEMPLATE.md) (matches \`HsVoip.md\`).
 
 Edit **Project** titles, **Project score**, **Status**, **Show** (visibility), **Est. cost**, **Payment plan**, and add **## Notes** at the bottom — build keeps your changes and adds new projects.`;
 
@@ -1193,13 +1437,13 @@ Edit **Project** titles, **Project score**, **Status**, **Show** (visibility), *
     let est = o?.estCost || "";
     if (!est) {
       if (p.fee && p.ongoingFee) est = `$${Number(p.fee).toLocaleString("en-US")} + $${Number(p.ongoingFee).toLocaleString("en-US")}/mo`;
-      else if (p.monthlyOnly || id === "RETAINER" || id === "A8M") est = `$${Number(p.fee || 0).toLocaleString("en-US")}/mo`;
+      else if (p.monthlyOnly || id === "RETAINER" || id === "DataMgmt") est = `$${Number(p.fee || 0).toLocaleString("en-US")}/mo`;
       else if (p.fee) est = `$${Number(p.fee).toLocaleString("en-US")}`;
       else est = "—";
     }
     let pay = o?.paymentPlan || "";
     if (!pay) {
-      if (p.monthlyOnly || id === "RETAINER" || id === "A8M") pay = "monthly";
+      if (p.monthlyOnly || id === "RETAINER" || id === "DataMgmt") pay = "monthly";
       else if (/^incl/i.test(est) || /^merged/i.test(est)) pay = "—";
       else if (p.depositAmount != null) pay = `$${Number(p.depositAmount).toLocaleString("en-US")}`;
       else if (p.depositPct != null) pay = `${Math.round(Number(p.depositPct) * 100)}%`;
@@ -1232,7 +1476,7 @@ Edit **Project** titles, **Project score**, **Status**, **Show** (visibility), *
   return md.trim() + "\n";
 }
 
-/** Migrate all project markdown to B2 format in place. Preserves wording; normalizes layout. */
+/** Migrate all project markdown to HsVoip format in place. Preserves wording; normalizes layout. */
 export function migrateAllToB2Format(root) {
   const content = path.join(root, "content");
   const projectsDir = path.join(content, "projects");
@@ -1273,5 +1517,5 @@ export function migrateAllToB2Format(root) {
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 if (process.argv[1]?.includes("migrate-to-b2-format")) {
   migrateAllToB2Format(ROOT);
-  console.log("Migrated all projects to B2 markdown format");
+  console.log("Migrated all projects to HsVoip markdown format");
 }

@@ -398,6 +398,7 @@
     cloudOpen: new Set(),
     iconFilters: [],
     statusFilters: [],
+    kpiFilter: "",
     tocSort: { field: "priority", dir: "asc" },
     tocExpanded: false,
     showAllProjects: false,
@@ -412,14 +413,21 @@
     if (t === "revenue" || t === "completed" || t === "results") return "impact";
     if (t === "dashboards") return "kpis";
     if (t === "recs" || t === "recommendation") return "recommendations";
-    if (t === "prediction" || t === "forecast" || t === "cash-projection") return "predictions";
+    if (
+      t === "prediction" ||
+      t === "predictions" ||
+      t === "forecast" ||
+      t === "cash-projection" ||
+      t === "recs-predictions"
+    ) {
+      return "recommendations";
+    }
     if (
       t === "kpis" ||
       t === "data" ||
       t === "recommendations" ||
       t === "picker" ||
-      t === "impact" ||
-      t === "predictions"
+      t === "impact"
     ) {
       return t;
     }
@@ -817,9 +825,9 @@
     }
     const names = items.map(p => `<strong>${escapeHtml(p.title)}</strong>`).join("; ");
     const closer =
-      items.some(p => p.id === "C1") && items.some(p => p.id === "C2")
+      items.some(p => p.id === "AccessAud") && items.some(p => p.id === "EmailDns")
         ? "Systems foundation is closed and paid (Invoice 1018): admin access cleansed across Ads/LSA/GBP/Analytics/hosting/CMS/MyCase, and the email/DNS outage has a documented root cause, resolution protocol, and maintenance log. Next lift depends on WIP enablers — HubSpot Phone/VoIP, LSA call process Phase 2, and HubSpot Marketing Setup."
-        : items.some(p => p.id === "A3") && items.some(p => p.id === "A10")
+        : items.some(p => p.id === "SummerEmail") && items.some(p => p.id === "StackAudit")
         ? "Holiday email path is live and the stack priorities are set. Continued lift depends on WIP enablers — phones, LSA/intake coverage, and the KPI cockpit."
         : "Confirm outcomes in HubSpot before locking revenue figures.";
     return `<div class="completed-report-out-head">
@@ -890,7 +898,7 @@
     const doneCount = completedProjects().length;
     document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
       const view = btn.dataset.view;
-      if (view === "kpis" || view === "data" || view === "recommendations" || view === "predictions") {
+      if (view === "kpis" || view === "data" || view === "recommendations") {
         const badge = btn.querySelector(".tab-count");
         if (badge) badge.remove();
         return;
@@ -913,19 +921,16 @@
     const isRecs = state.activeViewTab === "recommendations";
     const isPicker = state.activeViewTab === "picker";
     const isImpact = state.activeViewTab === "impact";
-    const isPredictions = state.activeViewTab === "predictions";
     const kpisPanel = document.getElementById("cockpit-panel-kpis");
     const dataPanel = document.getElementById("cockpit-panel-data");
     const recsPanel = document.getElementById("cockpit-panel-recommendations");
     const pickerPanel = document.getElementById("cockpit-panel-picker");
     const impactPanel = document.getElementById("cockpit-panel-impact");
-    const predictionsPanel = document.getElementById("cockpit-panel-predictions");
     if (kpisPanel) kpisPanel.hidden = !isKpis;
     if (dataPanel) dataPanel.hidden = !isData;
     if (recsPanel) recsPanel.hidden = !isRecs;
     if (pickerPanel) pickerPanel.hidden = !isPicker;
     if (impactPanel) impactPanel.hidden = !isImpact;
-    if (predictionsPanel) predictionsPanel.hidden = !isPredictions;
     syncViewTabs();
     renderResearchSection();
     renderKpiDashboard();
@@ -936,6 +941,8 @@
     if (isRecs && window.KPI_REPORT) {
       const recsEl = document.getElementById("kpi-report-recommendations");
       if (recsEl) KPI_REPORT.renderRecommendations(recsEl);
+      const predEl = document.getElementById("kpi-report-predictions");
+      if (predEl) KPI_REPORT.renderPredictions(predEl);
     }
     if (isImpact) {
       if (window.KPI_REPORT) {
@@ -945,10 +952,6 @@
       renderCompletedList();
       renderRevenueCalculator();
     }
-    if (isPredictions && window.KPI_REPORT) {
-      const predEl = document.getElementById("kpi-report-predictions");
-      if (predEl) KPI_REPORT.renderPredictions(predEl);
-    }
   }
 
   const OMNI_CHANNEL_WHY =
@@ -956,7 +959,7 @@
 
   const PROJECT_LIST_LIMIT = 10;
 
-  const PERFORMANCE_PAY_IDS = new Set(["RETAINER", "A1", "A2", "A3", "A4", "A6", "A7", "A11"]);
+  const PERFORMANCE_PAY_IDS = new Set(["RETAINER", "AdEnhance", "NtguiltAd", "SummerEmail", "Referral", "GabrielOut", "SocialAds", "HolidayAds"]);
 
   /** Payment calculator defaults — full rules in PAYMENT-SCHEDULE.md (doc may lag; code wins) */
   const PAYMENT_DEPOSIT_PCT = 0.5;
@@ -1369,8 +1372,75 @@
     return false;
   }
 
+  function resolveKpiFilterKey(raw) {
+    const key = String(raw || "").trim();
+    if (!key) return "";
+    if (key === "yelp") return "yelp";
+    if (key === "financial") return "financial";
+    return normalizeKpiRef(key) || key;
+  }
+
+  function kpiFilterLabel(kpiId) {
+    const key = resolveKpiFilterKey(kpiId);
+    if (!key) return "";
+    if (key === "yelp") return "Yelp Goal";
+    if (key === "financial") return "Breakeven Forecast";
+    if (KPI_IMPACT_META[key] && KPI_IMPACT_META[key].name) return KPI_IMPACT_META[key].name;
+    if (window.KPI_REPORT && typeof window.KPI_REPORT.kpiLabel === "function") {
+      return window.KPI_REPORT.kpiLabel(key);
+    }
+    return key;
+  }
+
+  function relatedProjectIdsForKpi(kpiId) {
+    const key = resolveKpiFilterKey(kpiId);
+    if (!key) return [];
+    if (window.KPI_REPORT && typeof window.KPI_REPORT.relatedProjectsForKpi === "function") {
+      return window.KPI_REPORT.relatedProjectsForKpi(key);
+    }
+    return [];
+  }
+
+  function itemMatchesKpiFilter(item) {
+    const key = resolveKpiFilterKey(state.kpiFilter);
+    if (!key) return true;
+    const id = item.isRetainer || item.id === "RETAINER" ? "RETAINER" : item.id;
+    const related = relatedProjectIdsForKpi(key);
+    if (related.includes(id)) return true;
+    const numeric = normalizeKpiRef(key);
+    if (!numeric) return related.length ? false : true;
+    return kpiIdsForProject(item).includes(numeric);
+  }
+
   function itemMatchesOutlineFilters(item) {
-    return itemMatchesIconFilters(item) && itemMatchesStatusFilters(item);
+    return itemMatchesIconFilters(item) && itemMatchesStatusFilters(item) && itemMatchesKpiFilter(item);
+  }
+
+  function clearKpiFilter() {
+    state.kpiFilter = "";
+    saveState();
+    renderOutlineFilters();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+  }
+
+  function openGuideFilteredToKpi(kpiId) {
+    const key = resolveKpiFilterKey(kpiId);
+    if (!key) return;
+    state.kpiFilter = key;
+    state.showAllProjects = true;
+    setActiveViewTab("picker");
+    saveState();
+    renderOutlineFilters();
+    renderAllCards();
+    renderProjectToc();
+    renderSummary();
+    requestAnimationFrame(() => {
+      const banner = document.getElementById("kpi-project-filter-banner");
+      const list = document.getElementById("project-list");
+      (banner || list)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 
   function toggleIconFilter(id) {
@@ -1416,6 +1486,7 @@
   function clearOutlineFilters() {
     state.iconFilters = [];
     state.statusFilters = [];
+    state.kpiFilter = "";
     saveState();
     renderOutlineFilters();
     renderAllCards();
@@ -1461,13 +1532,18 @@
   function renderValueIconKey() {
     const el = document.getElementById("value-icon-key");
     if (!el) return;
-    const totalActive = state.iconFilters.length + state.statusFilters.length;
+    const totalActive = state.iconFilters.length + state.statusFilters.length + (state.kpiFilter ? 1 : 0);
     const hint = totalActive
       ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear all filters (${totalActive})</button>`
-      : state.iconFilters.length
-        ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear filters (${state.iconFilters.length})</button>`
-        : "";
-    el.innerHTML = `<span class="value-icon-key-title">Filter by value <span class="tab-help" data-help-title="Filter by value" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use value filters">?</span></span>${hint}` +
+      : "";
+    const kpiKey = resolveKpiFilterKey(state.kpiFilter);
+    const kpiBanner = kpiKey
+      ? `<div class="kpi-project-filter-banner" id="kpi-project-filter-banner" role="status">
+          <span>Showing projects that impact <span class="kpi-filter-name">${escapeHtml(kpiFilterLabel(kpiKey))}</span>${/^#\d{2}$/.test(kpiKey) ? ` · ${escapeHtml(kpiKey)}` : ""}</span>
+          <button type="button" class="icon-filter-clear" id="kpi-filter-clear">Clear KPI filter</button>
+        </div>`
+      : "";
+    el.innerHTML = `${kpiBanner}<span class="value-icon-key-title">Filter by value <span class="tab-help" data-help-title="Filter by value" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use value filters">?</span></span>${hint}` +
       VALUE_ICON_DEFS.map(d => {
         const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
         return `<button type="button" class="key-item key-filter-btn key-filter-${d.id}${active}" data-icon-filter="${d.id}" title="Show projects that add ${escapeHtml(d.label)} value">${valueIconMarkup(d)}<span class="key-item-meta"><span class="key-item-label">${escapeHtml(d.label)}</span></span></button>`;
@@ -1478,6 +1554,7 @@
       });
     });
     el.querySelector("#icon-filter-clear")?.addEventListener("click", clearOutlineFilters);
+    el.querySelector("#kpi-filter-clear")?.addEventListener("click", clearKpiFilter);
   }
 
   function normalizeKpiId(kpiId) {
@@ -1595,7 +1672,7 @@
     answerRate: 0.72,
     consultToRetained: 0.51,
     leadToCaseRate: 9 / 124,
-    /* MyCase Client mean fee — CLIENT-VALUE-BASELINE.md · as of 2026-07-01 */
+    /* MyCase Client mean fee — CLIENT-VALUE-BASELINE.md · as of 2026-07-25 */
     avgCaseFee: 5587,
     /** May–Jun 2026 avg Search calls — Guide channelMonths */
     monthlySearchCallsBaseline: 89,
@@ -1607,6 +1684,7 @@
   const KPI_IMPACT_META = {
     "#01": { name: "Total leads", tracking: "Clean — Search + LSA + HubSpot forms when all three exports are current." },
     "#02": { name: "New cases", tracking: "Clean — MyCase Client Created-date count." },
+    "#03": { name: "Auto Cases", tracking: "Partial — MyCase auto signed stack vs annual goal of 50." },
     "#05": { name: "Key Channel Activity", tracking: "Partial — cases / leads / spend channel stack." },
     "#06": { name: "Pipeline / CRM completeness", tracking: "Partial — depends on HubSpot field hygiene and deal stage use." },
     "#07": { name: "Spend Waste", tracking: "Modeled excess LSA cash paid versus the same response volume at digital Search cost per response." },
@@ -1614,7 +1692,7 @@
     "#09": { name: "Intake conversion", tracking: "Partial — needs consistent consult booking and outcome logging." },
     "#10": { name: "Lead channel mix", tracking: "Clean once #01 channel stack is reconciled monthly." },
     "#11": { name: "Organic / local search presence", tracking: "Partial — rankings and GBP metrics need scheduled pulls." },
-    "#12": { name: "Avg. Cost per Call", tracking: "Clean for Search Campaign report ÷ phone calls." },
+    "#12": { name: "Avg. Cost per Direct Contact", tracking: "Search media + HubSpot forms fee (+ Yelp ad spend when wired) ÷ Search calls + form submits + Yelp leads. Target ceiling = LSA avg call cost." },
     "#14": { name: "Creative / channel response", tracking: "Partial — creative tests need UTM or asset labels to attribute cleanly." },
     "#15": { name: "Cost per lead", tracking: "Clean when spend and lead definition match the same window." },
     "#16": { name: "Reviews by channel", tracking: "Partial until Digital Profiles Refresh wires directory scrapes into DATA.reviews." },
@@ -1624,6 +1702,10 @@
     "#20": { name: "CRM follow-up discipline", tracking: "Partial — task completion and owner fields must stay filled." },
     "#21": { name: "Answered Calls", tracking: "Clean — Call details Received vs Missed for Search; LSA status separate." },
     "#22": { name: "Speed to lead", tracking: "Partial — needs HubSpot workflow timestamps." },
+    "#28": { name: "Avg case fee", tracking: "Clean — MyCase Client contracted mean; not cash collected." },
+    "#30": { name: "Est. value per lead", tracking: "Firm-wide only — complete-month cases ÷ full leads × #28 fee × 80% collection until fees-collected. Not by channel." },
+    "#31": { name: "Cost per signed case", tracking: "By channel when Lead Source on hire — spend ÷ signed cases." },
+    "#32": { name: "Channel ROI", tracking: "Hold until measured signed ÷ leads per channel." },
     "#23": { name: "Intake coverage / after-hours", tracking: "Partial — needs routing logs and after-hours disposition." },
     "#27": { name: "Ops backlog / open tasks", tracking: "Partial — HubSpot task queues when owners and due dates are used." },
     "#28": { name: "Avg case fee", tracking: "Clean — MyCase Client mean fee baseline." }
@@ -1880,10 +1962,10 @@
 
   function estimateProjectLeadsGained(item) {
     if (!item) return { value: null, label: "—", isCalls: false };
-    const nonCampaignIds = new Set(["RETAINER", "A6", "A8", "A8M", "A10", "B1", "B3", "B9", "B10"]);
+    const nonCampaignIds = new Set(["RETAINER", "GabrielOut", "OpsDash", "DataMgmt", "StackAudit", "HsPipe", "WebSpeed", "WasteAud", "DigProf"]);
     if (item.isRetainer || nonCampaignIds.has(item.id))
       return { value: null, label: "No direct leads", isCalls: false };
-    if (item.id === "B2") {
+    if (item.id === "HsVoip") {
       const baselineCalls = PAV_HISTORICAL.monthlySearchCallsBaseline;
       const recovered = baselineCalls * (0.90 - PAV_HISTORICAL.answerRate);
       return { value: recovered, label: `~${Math.round(recovered)} gained/mo`, isCalls: false };
@@ -2923,8 +3005,9 @@
         parts.push(`status: ${state.statusFilters.map(statusFilterLabel).join(", ")}`);
       }
       if (state.iconFilters.length) parts.push("value icons");
+      if (state.kpiFilter) parts.push(`KPI ${kpiFilterLabel(state.kpiFilter)}`);
       statusEl.textContent = parts.length && shown !== total
-        ? `Showing ${shown} of ${total} projects (${parts.join(" · ")})`
+        ? `Showing ${shown} of ${total} projects · ${parts.join(" · ")}`
         : (state.priorityEdit ? "Editing client priority order — saved with your submission." : "");
     }
     if (expandEl) {
@@ -2956,7 +3039,7 @@
   function feeLabelFor(item) {
     if (item.ongoingFee) return `${fmt(item.fee)} + ${fmt(item.ongoingFee)}`;
     if (item.perCampaignFee) return `${fmt(item.fee)} per campaign`;
-    if (item.monthlyOnly || item.id === "RETAINER" || item.id === "A8M") return `${fmt(item.fee)}/mo`;
+    if (item.monthlyOnly || item.id === "RETAINER" || item.id === "DataMgmt") return `${fmt(item.fee)}/mo`;
     return fmt(item.fee);
   }
 
@@ -3124,6 +3207,9 @@
       if (Array.isArray(saved.statusFilters)) {
         state.statusFilters = saved.statusFilters.filter(f => STATUS_FILTER_DEFS.some(d => d.id === f));
       }
+      if (saved.kpiFilter) {
+        state.kpiFilter = resolveKpiFilterKey(saved.kpiFilter);
+      }
       if (saved.doNextVisible != null) {
         state.doNextVisible = !!saved.doNextVisible;
       } else if (state.surveyDone || (Array.isArray(saved.gilbertChat) && saved.gilbertChat.some(m => m.role === "user"))) {
@@ -3161,6 +3247,7 @@
       surveyDone: state.surveyDone,
       iconFilters: state.iconFilters,
       statusFilters: state.statusFilters,
+      kpiFilter: state.kpiFilter,
       doNextVisible: state.doNextVisible,
       clientPriorityIds: state.clientPriorityIds
     }));
@@ -4719,6 +4806,15 @@
             : null;
         if (anchor) requestAnimationFrame(() => anchor.scrollIntoView({ behavior: "smooth", block: "start" }));
       }
+      return;
+    }
+    const kpiTile = e.target.closest(".kpi-goal-card[data-kpi-focus], .kpi-stat-card[data-kpi-focus]");
+    if (kpiTile) {
+      if (e.target.closest(".kpi-help, .tab-help, a, button:not(.kpi-goal-card):not(.kpi-stat-card)")) return;
+      const focus = kpiTile.getAttribute("data-kpi-focus");
+      if (!focus || focus === "#GOAL3") return;
+      e.preventDefault();
+      openGuideFilteredToKpi(focus);
       return;
     }
     const kpiLink = e.target.closest(".kpi-ref-link");

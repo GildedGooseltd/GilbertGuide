@@ -5,7 +5,7 @@
  *
  * Usage:
  *   npm run estimate-fees
- *   npm run estimate-fees -- --id=A4
+ *   npm run estimate-fees -- --id=Referral
  */
 import fs from "fs";
 import path from "path";
@@ -51,7 +51,7 @@ function rowLabel(p) {
   const unit = p.feeEstimateUnit === "mo" ? "/mo" : "";
   const ong = p.feeEstimateOngoing ? ` + ${fmt(p.feeEstimateOngoing)}/mo` : "";
   const quote =
-    p.feeEstimateUnit === "mo" || p.monthlyOnly || p.id === "RETAINER" || p.id === "A8M"
+    p.feeEstimateUnit === "mo" || p.monthlyOnly || p.id === "RETAINER" || p.id === "DataMgmt"
       ? `${fmt(p.fee)}/mo`
       : p.ongoingFee
         ? `${fmt(p.fee)} + ${fmt(p.ongoingFee)}/mo`

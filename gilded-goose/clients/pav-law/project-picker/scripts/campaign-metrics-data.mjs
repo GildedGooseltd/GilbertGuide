@@ -4,8 +4,9 @@
  */
 export const CAMPAIGN_METRICS = {
   RETAINER: {
-    goal: "Hold Military Search at ~36 calls/month (~$58–67/call) while NTGUILT Search scales without CPL drift above $10/click.",
+    goal: "Hold Military Search near ~70 calls/month May–Jun avg (~$58–67/call) while NTGUILT Search scales without CPL drift above $10/click.",
     results: [
+      "May–Jun 2026 avg maintained volume: ~89 Search calls/mo · ~78 LSA leads/mo",
       "May 2026: $2,421 Military spend · 36 calls · ~$67/call",
       "Jun 11–Jul 10: $3,983 Military spend · 330 clicks · primary call engine",
       "NTGUILT Search launched — $1,924 spend · 282 clicks · ~$6.82/click",
@@ -15,7 +16,7 @@ export const CAMPAIGN_METRICS = {
       "Phone calls by campaign (restore Phone calls column in exports)",
       "Cost/call and cost/lead weekly — Military vs NTGUILT",
       "Search-term waste % (target <15% vs current ~38%)",
-      "Answer rate (#21) — baseline 69% · target 90%",
+      "Answer rate (#21) — baseline 72% · target 90%",
       "Lead→case rate (#02) — baseline 7.3% (9/124 Jun)",
       "Platform CPL vs all-in CPL (retainer + bonus + media)"
     ],
@@ -31,7 +32,7 @@ export const CAMPAIGN_METRICS = {
       "Shared negatives for JAG/PD/sheriff terms could recover ~$1,063/mo waste"
     ]
   },
-  A1: {
+  AdEnhance: {
     goal: "Lift Military RSA strength to Excellent/Good on top ad groups and cut ~38% search-term waste to <20% within 30 days.",
     results: [
       "Military DV RSA pair driving $1,733 + $1,247 spend blocks (Jun 11–Jul 10)",
@@ -55,7 +56,7 @@ export const CAMPAIGN_METRICS = {
       "Pause Military Sexual Assault RSA until creative refresh"
     ]
   },
-  A2: {
+  NtguiltAd: {
     goal: "Launch NTGUILT upper-funnel display with UTMs so remarketing pool grows 20%+ before scaling Search budget.",
     results: [
       "NTGUILT Search already live — 282 clicks · ~$6.82/click (Jul period)",
@@ -75,11 +76,11 @@ export const CAMPAIGN_METRICS = {
     ],
     insights: [
       "Search lane proving clicks; display layer still missing for true funnel top",
-      "Pair summer creative with A7 social when budget allows — same UTM scheme as B10",
-      "Do not scale display until B10 profile UTMs and A8 dashboard can attribute assists"
+      "Pair summer creative with SocialAds social when budget allows — same UTM scheme as DigProf",
+      "Do not scale display until DigProf profile UTMs and OpsDash dashboard can attribute assists"
     ]
   },
-  A3: {
+  SummerEmail: {
     goal: "Drive 2–4 re-engaged consults from past-client list around July 4 window at <$50 cost per booked consult.",
     results: [
       "Campaign completed for July 4 window",
@@ -100,10 +101,10 @@ export const CAMPAIGN_METRICS = {
     insights: [
       "Pattern-interrupt subject lines worked for engagement — reuse for Thanksgiving/New Year windows",
       "Next round: split test subject line vs send time; log list size and consult count in ## Results",
-      "Pair with B5 mailer for households that do not open email"
+      "Pair with InsMailer mailer for households that do not open email"
     ]
   },
-  A4: {
+  Referral: {
     goal: "Generate 3–5 referral-sourced consults/month at lower CPL than paid Search (~$67/call baseline).",
     results: [
       "HubSpot referral foundation scoped",
@@ -119,15 +120,15 @@ export const CAMPAIGN_METRICS = {
     blockers: [
       "No structured ask workflow live — manual outreach only",
       "Booking friction if Romina link not in every referral touch",
-      "Past-client list upload pending (see B7)"
+      "Past-client list upload pending (see HsContacts)"
     ],
     insights: [
       "Referral CPL should beat $67 Military cost/call when program is running",
-      "Tie to B7 contact upload and B5 physical reminder for dual-channel asks",
-      "Log every referral source in HubSpot — feeds A8 KPI #10 channel table"
+      "Tie to HsContacts contact upload and InsMailer physical reminder for dual-channel asks",
+      "Log every referral source in HubSpot — feeds OpsDash KPI #10 channel table"
     ]
   },
-  A5: {
+  HsLanding: {
     goal: "Lift landing-page conversion rate 15–25% on primary paid-traffic entry pages within 30 days of launch.",
     results: [
       "Module/LP scope aligned to paid traffic already landing"
@@ -139,17 +140,17 @@ export const CAMPAIGN_METRICS = {
       "HubSpot consults from LP UTM"
     ],
     blockers: [
-      "B3 speed cleanup incomplete — LCP may suppress conversions",
+      "WebSpeed speed cleanup incomplete — LCP may suppress conversions",
       "Form fields and Romina booking path not unified on all LPs",
       "No baseline conversion rate logged pre-launch"
     ],
     insights: [
-      "Mobile is majority device mix — LP must load <3s (B3 dependency)",
-      "Use same UTM naming as A8 dashboard before go-live",
+      "Mobile is majority device mix — LP must load <3s (WebSpeed dependency)",
+      "Use same UTM naming as OpsDash dashboard before go-live",
       "One primary CTA per page — book consult, not menu of links"
     ]
   },
-  A6: {
+  GabrielOut: {
     goal: "Book 4–8 outbound consults/month from warm lists at connect rate ≥25% and answer-rate uplift on returned calls.",
     results: [
       "Gabriel outbound scope defined for paid-search-dependent call volume"
@@ -161,20 +162,20 @@ export const CAMPAIGN_METRICS = {
       "Revenue per dial"
     ],
     blockers: [
-      "B2 phone routing not live — outbound callbacks may hit wrong line",
+      "HsVoip phone routing not live — outbound callbacks may hit wrong line",
       "List source and DNC scrub not documented",
       "No CRM task template for outbound outcomes"
     ],
     insights: [
-      "Outbound works after intake path is verified (B2 + B1)",
+      "Outbound works after intake path is verified (HsVoip + HsPipe)",
       "Target lists that already engaged with ads — warmer than cold database",
-      "Log dispositions in HubSpot for A8 outbound channel row"
+      "Log dispositions in HubSpot for OpsDash outbound channel row"
     ]
   },
-  A7: {
+  SocialAds: {
     goal: "Drive 500+ NTGUILT social engagements per wave and 10+ site sessions with UTM social=ntguilt per month.",
     results: [
-      "NTGUILT social creative direction aligned with A2 display"
+      "NTGUILT social creative direction aligned with NtguiltAd display"
     ],
     recommendedMetrics: [
       "Reach, engagements, and CTR by platform",
@@ -183,17 +184,17 @@ export const CAMPAIGN_METRICS = {
       "Cost per engaged session"
     ],
     blockers: [
-      "B8 HubSpot social connection may duplicate effort — merge w/ A7 per INDEX note",
+      "HsSocial HubSpot social connection may duplicate effort — merge w/ SocialAds per INDEX note",
       "Approval workflow for firm-safe creative not defined",
       "No baseline engagement metrics from prior posts"
     ],
     insights: [
       "Social is free touchpoint between paid flights — consistency beats volume",
-      "Use NTGUILT summer creative from A2 WIP for cohesive brand",
-      "Every bio link must use B10 UTM scheme for GA4 KPI #18"
+      "Use NTGUILT summer creative from NtguiltAd WIP for cohesive brand",
+      "Every bio link must use DigProf UTM scheme for GA4 KPI #18"
     ]
   },
-  A8: {
+  OpsDash: {
     goal: "Ship live KPI cockpit with 124/mo unified lead count, cost/call by channel, and missed-revenue flag (#19) wired to Search data.",
     results: [
       "KPI master table drafted (KPI-01–35)",
@@ -219,10 +220,10 @@ export const CAMPAIGN_METRICS = {
       "Peacock gauge and missed-revenue card depend on #21 + #29 fee blend"
     ]
   },
-  A8M: {
+  DataMgmt: {
     goal: "Maintain monthly KPI refresh and Andrew review cadence with <5 day lag from month close.",
     results: [
-      "Retainer-tier reporting scope defined alongside A8 build"
+      "Retainer-tier reporting scope defined alongside OpsDash build"
     ],
     recommendedMetrics: [
       "Report delivery date vs month end",
@@ -231,15 +232,15 @@ export const CAMPAIGN_METRICS = {
       "Andrew sign-off on monthly narrative"
     ],
     blockers: [
-      "Depends on A8 live data pipeline",
+      "Depends on OpsDash live data pipeline",
       "No SLA documented for manual export fallback"
     ],
     insights: [
-      "Retainer dashboard row should mirror A8 metrics without duplicate build",
+      "Retainer dashboard row should mirror OpsDash metrics without duplicate build",
       "Automate Google pull before asking intake for manual LSA exports"
     ]
   },
-  A9: {
+  CaseWins: {
     goal: "Publish 6+ case-win proof points and lift on-site trust signals to improve consult conversion 5–10%.",
     results: [
       "Case win log scope defined"
@@ -248,7 +249,7 @@ export const CAMPAIGN_METRICS = {
       "Testimonials published count",
       "Time on page for case-win URLs",
       "Consult conversion rate before/after proof block",
-      "GBP review velocity (pairs with B10)"
+      "GBP review velocity (pairs with DigProf)"
     ],
     blockers: [
       "Attorney approval queue for client stories not scheduled",
@@ -256,10 +257,10 @@ export const CAMPAIGN_METRICS = {
     ],
     insights: [
       "Social proof reduces CPL indirectly — track consult rate not just clicks",
-      "Sync wins to B10 directory profiles and B8 social calendar"
+      "Sync wins to DigProf directory profiles and HsSocial social calendar"
     ]
   },
-  A10: {
+  StackAudit: {
     goal: "Deliver one ranked 30-day action list with defer/cut lines so consulting spend does not scatter across 8+ channels.",
     results: [
       "Marketing strategy shift recommendation delivered",
@@ -272,15 +273,15 @@ export const CAMPAIGN_METRICS = {
       "90-day consult volume vs audit baseline"
     ],
     blockers: [
-      "Execution spread — B2/B3/A8 still WIP while new campaigns queue",
+      "Execution spread — HsVoip/WebSpeed/OpsDash still WIP while new campaigns queue",
       "No quarterly re-audit scheduled"
     ],
     insights: [
-      "Audit value decays without KPI dashboard — A8 is force multiplier",
+      "Audit value decays without KPI dashboard — OpsDash is force multiplier",
       "Next round: 60-day checkpoint with actual cost/call and referral CPL"
     ]
   },
-  A11: {
+  HolidayAds: {
     goal: "Launch one seasonal Search/Microsoft flight with ≥20 calls at ≤$75 cost/call for chosen focus area.",
     results: [
       "Focus-area shortlist documented (military, DUI, holiday windows, LSA geo)"
@@ -298,11 +299,11 @@ export const CAMPAIGN_METRICS = {
     ],
     insights: [
       "Single-topic campaigns outperform catch-all — pick one lane per quarter",
-      "July 4 / NYE pair with A3 email for dual touch",
+      "July 4 / NYE pair with SummerEmail email for dual touch",
       "Use Military $67/call as go/no-go threshold"
     ]
   },
-  A12: {
+  PaviChat: {
     goal: "Capture after-hours form fills and chat leads with <5 min first response during pilot hours.",
     results: [
       "Pavi chat QA scope defined for after-hours intake"
@@ -315,15 +316,15 @@ export const CAMPAIGN_METRICS = {
     ],
     blockers: [
       "HubSpot chat routing to Romina not verified after hours",
-      "B2 phone menus must align with chat handoff",
+      "HsVoip phone menus must align with chat handoff",
       "No baseline after-hours lead volume"
     ],
     insights: [
       "After-hours leads are high intent — speed-to-lead metric is critical",
-      "Log chat source in HubSpot for A8 channel table"
+      "Log chat source in HubSpot for OpsDash channel table"
     ]
   },
-  A13: {
+  AdultAds: {
     goal: "Test adult-site Display placements with frequency caps and ≥10 tracked site visits per $100 spend without brand safety flags.",
     results: [
       "Placement strategy and compliance guardrails scoped"
@@ -345,7 +346,7 @@ export const CAMPAIGN_METRICS = {
       "If CPL >2× NTGUILT Search, pause and refine placements"
     ]
   },
-  B1: {
+  HsPipe: {
     goal: "Prove form → task → Romina booking in <15 minutes median for 90% of inbound web leads within 2 weeks of sprint.",
     results: [
       "Pipeline stages documented",
@@ -360,17 +361,17 @@ export const CAMPAIGN_METRICS = {
     blockers: [
       "Referral import path not fully connected",
       "Romina booking link not on all form thank-you pages",
-      "B2 live phones needed for click-to-call leads"
+      "HsVoip live phones needed for click-to-call leads"
     ],
     insights: [
       "HubSpot 5-minute rule: firms responding in minutes qualify more leads",
       "Sprint should end with one recorded end-to-end test per lead type"
     ]
   },
-  B2: {
+  HsVoip: {
     goal: "Reach 90% answered phones (#21) on Military/LSA lines and recover ~7 missed calls/month (~$2,400/mo revenue at 7.3% lead→case).",
     results: [
-      "Baseline ~36 Military calls/mo · answer rate 69%",
+      "Baseline ~70 Military calls/mo May–Jun avg · answer rate 72%",
       "Target 90% answer rate — ~7 recoverable calls/mo at current volume"
     ],
     recommendedMetrics: [
@@ -390,7 +391,7 @@ export const CAMPAIGN_METRICS = {
       "Cross-device call tracking still understates volume — note in reporting"
     ]
   },
-  B3: {
+  WebSpeed: {
     goal: "Cut mobile LCP below 3s on top 5 entry pages and reduce bounce rate 10% on paid landing URLs.",
     results: [
       "Prior work cut load times ~200%",
@@ -408,12 +409,12 @@ export const CAMPAIGN_METRICS = {
       "No before/after metrics logged in Results yet"
     ],
     insights: [
-      "Speed fix unlocks A5 LP and paid conversion gains",
+      "Speed fix unlocks HsLanding LP and paid conversion gains",
       "Log baseline LCP in ## Results before next deploy",
-      "Pairs with B4 SEO — fix speed before content scale"
+      "Pairs with WebContent SEO — fix speed before content scale"
     ]
   },
-  B4: {
+  WebContent: {
     goal: "Move priority keywords from avg position 45–58 to top-20 for 5 core terms within 90 days.",
     results: [
       "SEO overhaul scope: schema, NAP, attorney attribution",
@@ -426,17 +427,17 @@ export const CAMPAIGN_METRICS = {
       "Indexed pages count"
     ],
     blockers: [
-      "B3 speed debt hurts crawl and UX signals",
-      "NAP inconsistencies across B10 profiles",
+      "WebSpeed speed debt hurts crawl and UX signals",
+      "NAP inconsistencies across DigProf profiles",
       "Content production bandwidth"
     ],
     insights: [
       "Local business schema + attorney attribution are foundation — see Google local SEO docs",
       "Organic discovery reduces reliance on $6k+/mo paid",
-      "Sync NAP with B10 before link-building push"
+      "Sync NAP with DigProf before link-building push"
     ]
   },
-  B5: {
+  InsMailer: {
     goal: "Generate 1–2 retained matters per ~200-household wave at ≤$3/piece all-in cost.",
     results: [
       "Insurance sleeve mailer concept approved",
@@ -456,10 +457,10 @@ export const CAMPAIGN_METRICS = {
     insights: [
       "ROI tracking is hard — use dedicated UTMs and ask intake “how did you hear about us”",
       "Physical reminder stays in glovebox — long-tail matches 1–2 retained/wave goal",
-      "Pair with A3 email for same household where email exists"
+      "Pair with SummerEmail email for same household where email exists"
     ]
   },
-  B6: {
+  BlogRevamp: {
     goal: "Publish 2 posts/month and earn +15% organic entrances to blog URLs within 12 weeks.",
     results: [
       "Blog revamp scope defined"
@@ -475,11 +476,11 @@ export const CAMPAIGN_METRICS = {
       "No baseline organic blog traffic logged"
     ],
     insights: [
-      "Blog supports B4 SEO clusters — each post needs one consult CTA",
-      "Repurpose NTGUILT/safety themes from A3 for timely content"
+      "Blog supports WebContent SEO clusters — each post needs one consult CTA",
+      "Repurpose NTGUILT/safety themes from SummerEmail for timely content"
     ]
   },
-  B7: {
+  HsContacts: {
     goal: "Upload and segment 100% of marketable past-client contacts with bounce rate <2% on first send.",
     results: [
       "Upload scope and field mapping drafted"
@@ -496,15 +497,15 @@ export const CAMPAIGN_METRICS = {
       "Duplicate records across lists"
     ],
     insights: [
-      "Unlocks A3, A4, and B5 — list size is force multiplier",
+      "Unlocks SummerEmail, Referral, and InsMailer — list size is force multiplier",
       "Log upload count in ## Results after first import"
     ]
   },
-  B8: {
+  HsSocial: {
     goal: "Post 8–12 firm-safe items/month across connected channels with approval workflow and UTM on every link.",
     results: [
       "HubSpot social scope defined",
-      "INDEX note: merge with A7 to avoid duplicate calendars"
+      "INDEX note: merge with SocialAds to avoid duplicate calendars"
     ],
     recommendedMetrics: [
       "Posts published per platform",
@@ -513,16 +514,16 @@ export const CAMPAIGN_METRICS = {
       "Consults from social source field"
     ],
     blockers: [
-      "Overlap with A7 NTGUILT social — needs single owner",
+      "Overlap with SocialAds NTGUILT social — needs single owner",
       "Andrew approval turnaround not SLA'd",
-      "Profiles outdated until B10 completes"
+      "Profiles outdated until DigProf completes"
     ],
     insights: [
-      "Consolidate A7+B8 into one content calendar",
-      "Every link uses B10 UTM pattern for GA4 KPI #18"
+      "Consolidate SocialAds+HsSocial into one content calendar",
+      "Every link uses DigProf UTM pattern for GA4 KPI #18"
     ]
   },
-  B9: {
+  WasteAud: {
     goal: "Recover $200+/mo in duplicate or unused subscriptions within 30 days of audit delivery.",
     results: [
       "Spend audit scope defined — QuickBooks + card statements"
@@ -538,11 +539,11 @@ export const CAMPAIGN_METRICS = {
       "No baseline subscription inventory"
     ],
     insights: [
-      "Not lead-gen — efficiency dollars can fund B2 or A8",
+      "Not lead-gen — efficiency dollars can fund HsVoip or OpsDash",
       "Cross-check HubSpot tier vs actual seat usage"
     ]
   },
-  B10: {
+  DigProf: {
     goal: "Refresh 100% of priority profiles (Pav Law, Andrew, Casey) with matching NAP and UTM-tagged links; track discovery traffic in GA4.",
     results: [
       "UTM naming scheme partially drafted for contact URLs",
@@ -560,9 +561,9 @@ export const CAMPAIGN_METRICS = {
       "Merge Andrew Brown + Pav Law listings incomplete"
     ],
     insights: [
-      "Profile layer complements B4 SEO — inconsistent phone hurts call tracking",
+      "Profile layer complements WebContent SEO — inconsistent phone hurts call tracking",
       "Extend UTM sheet to every bio link before claiming victory",
-      "Feeds A8 channel table when UTMs are consistent"
+      "Feeds OpsDash channel table when UTMs are consistent"
     ]
   }
 };

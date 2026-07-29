@@ -8,145 +8,145 @@
       "clientsRetained": 1.8,
       "period": "mo"
     },
-    "A1": {
+    "AdEnhance": {
       "leadsImpacted": 36,
       "leadsConnected": 25,
       "clientsRetained": 1.8,
       "period": "mo"
     },
-    "A10": {
+    "StackAudit": {
       "leadsImpacted": 0,
       "leadsConnected": 0,
       "clientsRetained": 0,
       "period": "mo"
     },
-    "A11": {
+    "HolidayAds": {
       "leadsImpacted": 25,
       "leadsConnected": 17,
       "clientsRetained": 0.2,
       "period": "mo"
     },
-    "A12": {
+    "PaviChat": {
       "leadsImpacted": 15,
       "leadsConnected": 10,
       "clientsRetained": 0.1,
       "period": "mo"
     },
-    "A13": {
+    "AdultAds": {
       "leadsImpacted": 120,
       "leadsConnected": 8,
       "clientsRetained": 0.05,
       "period": "mo"
     },
-    "A2": {
+    "NtguiltAd": {
       "leadsImpacted": 282,
       "leadsConnected": 45,
       "clientsRetained": 0.3,
       "period": "mo"
     },
-    "A3": {
+    "SummerEmail": {
       "leadsImpacted": 850,
       "leadsConnected": 120,
       "clientsRetained": 2,
       "period": "wave"
     },
-    "A4": {
+    "Referral": {
       "leadsImpacted": 200,
       "leadsConnected": 35,
       "clientsRetained": 0.5,
       "period": "mo"
     },
-    "A5": {
+    "HsLanding": {
       "leadsImpacted": 80,
       "leadsConnected": 12,
       "clientsRetained": 0.1,
       "period": "mo"
     },
-    "A6": {
+    "GabrielOut": {
       "leadsImpacted": 60,
       "leadsConnected": 18,
       "clientsRetained": 0.2,
       "period": "mo"
     },
-    "A7": {
+    "SocialAds": {
       "leadsImpacted": 500,
       "leadsConnected": 75,
       "clientsRetained": 0.1,
       "period": "mo"
     },
-    "A8": {
+    "OpsDash": {
       "leadsImpacted": 124,
       "leadsConnected": 86,
       "clientsRetained": 9,
       "period": "mo"
     },
-    "A8M": {
+    "DataMgmt": {
       "leadsImpacted": 124,
       "leadsConnected": 86,
       "clientsRetained": 9,
       "period": "mo"
     },
-    "A9": {
+    "CaseWins": {
       "leadsImpacted": 40,
       "leadsConnected": 8,
       "clientsRetained": 0.05,
       "period": "mo"
     },
-    "B1": {
+    "HsPipe": {
       "leadsImpacted": 124,
       "leadsConnected": 86,
       "clientsRetained": 2,
       "period": "mo"
     },
-    "B2": {
+    "HsVoip": {
       "leadsImpacted": 36,
       "leadsConnected": 25,
       "clientsRetained": 1.8,
       "period": "mo"
     },
-    "B3": {
+    "WebSpeed": {
       "leadsImpacted": 90,
       "leadsConnected": 14,
       "clientsRetained": 0.15,
       "period": "mo"
     },
-    "B4": {
+    "WebContent": {
       "leadsImpacted": 45,
       "leadsConnected": 7,
       "clientsRetained": 0.08,
       "period": "mo"
     },
-    "B5": {
+    "InsMailer": {
       "leadsImpacted": 200,
       "leadsConnected": 40,
       "clientsRetained": 1.5,
       "period": "wave"
     },
-    "B6": {
+    "BlogRevamp": {
       "leadsImpacted": 30,
       "leadsConnected": 5,
       "clientsRetained": 0.05,
       "period": "mo"
     },
-    "B7": {
+    "HsContacts": {
       "leadsImpacted": 400,
       "leadsConnected": 60,
       "clientsRetained": 0.4,
       "period": "mo"
     },
-    "B8": {
+    "HsSocial": {
       "leadsImpacted": 300,
       "leadsConnected": 45,
       "clientsRetained": 0.08,
       "period": "mo"
     },
-    "B9": {
+    "WasteAud": {
       "leadsImpacted": 0,
       "leadsConnected": 0,
       "clientsRetained": 0,
       "period": "mo"
     },
-    "B10": {
+    "DigProf": {
       "leadsImpacted": 120,
       "leadsConnected": 18,
       "clientsRetained": 0.15,

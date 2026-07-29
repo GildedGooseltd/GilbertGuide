@@ -3,15 +3,21 @@
  * Run: npm run sync-impact (or npm run build)
  */
 export const DATA_PULL = {
-  asOf: "2026-07-11",
-  source: "Ad Reports/exports/2026-07-11 · PERFORMANCE-REVIEW-2026-07-11.md"
+  asOf: "2026-07-24",
+  source: "Guide channelMonths May–Jun 2026 · LSA May corrected to inbox file 72 · PERFORMANCE-REVIEW-2026-07-11"
 };
 
 const R = {
-  answerRate: 0.69,
+  answerRate: 0.72,
   leadToCase: 9 / 124,
-  militaryCalls: 36,
-  totalLeads: 124
+  /** May–Jun avg Search calls · Guide channelMonths */
+  searchCallsAvg: 89,
+  /** May–Jun avg LSA inbox leads · May 72 validated + Jun 83 */
+  lsaLeadsAvg: 78,
+  militaryCallsMay: 36,
+  /** May 36 + Jun ~103 Military Search calls ÷ 2 */
+  militaryCallsAvg: 70,
+  totalLeadsAvg: 169
 };
 
 function monthly(impacted, connected, retained, note) {
@@ -51,31 +57,31 @@ function none(note) {
 
 /** @type {Record<string, object>} */
 export const IMPACT_ESTIMATES = {
-  RETAINER: monthly(116, 90, 6.6, "Military 36 calls May verified + ~80 LSA phone/mo · Jul Search $6,277 / 640 interactions · NTGUILT 282 clicks (calls thin)"),
-  A1: monthly(R.militaryCalls, 25, 1.8, "Negatives + RSA fixes recover wasted click spend"),
-  A2: monthly(282, 45, 0.3, "NTGUILT Search clicks Jul; calls still thin — 9 all-time through Jun"),
-  A3: wave(850, 120, 2, "Past-client list ~850 · holiday open rate ~14% est."),
-  A4: monthly(200, 35, 0.5, "Referral network outreach pool"),
-  A5: monthly(80, 12, 0.1, "Paid LP traffic already landing"),
-  A6: monthly(60, 18, 0.2, "Warm outbound dials/mo target"),
-  A7: monthly(500, 75, 0.1, "Social reach engagements/mo target"),
-  A8: monthly(R.totalLeads, 86, 9, "Unified Jun dummy 124 leads · 9 cases at 7.3%"),
-  A8M: monthly(R.totalLeads, 86, 9, "Same KPI set — retainer reporting refresh"),
-  A9: monthly(40, 8, 0.05, "Proof-content readers → consult uplift"),
-  A10: none("Strategy audit — measures execution compliance not leads"),
-  A11: monthly(25, 17, 0.2, "Seasonal flight call target"),
-  A12: monthly(15, 10, 0.1, "After-hours chat/form captures"),
-  A13: monthly(120, 8, 0.05, "Display placement traffic est."),
-  B1: monthly(R.totalLeads, 86, 2, "Speed-to-lead uplift on 124 inbound/mo"),
-  B2: monthly(R.militaryCalls, 25, 1.8, "Current 69% answer; target 32 connected at 90%"),
-  B3: monthly(90, 14, 0.15, "Speed fix on top paid entry pages"),
-  B4: monthly(45, 7, 0.08, "Organic discovery sessions/mo target"),
-  B5: wave(200, 40, 1.5, "Insurance sleeve households per wave"),
-  B6: monthly(30, 5, 0.05, "Blog organic entrances"),
-  B7: monthly(400, 60, 0.4, "Marketable past-client upload target"),
-  B8: monthly(300, 45, 0.08, "Social post reach/mo"),
-  B9: none("Cost savings — not lead attribution"),
-  B10: monthly(120, 18, 0.15, "Profile discovery + GBP calls after NAP refresh")
+  RETAINER: monthly(167, 120, 8.8, "May–Jun avg · ~89 Search calls + ~78 LSA leads · answer 72%"),
+  AdEnhance: monthly(R.militaryCallsAvg, 50, 3.6, "Negatives + RSA fixes on Military ~70 calls/mo avg"),
+  NtguiltAd: monthly(282, 45, 0.3, "NTGUILT Search clicks Jul; calls still thin — 9 all-time through Jun"),
+  SummerEmail: wave(850, 120, 2, "Past-client list ~850 · holiday open rate ~14% est."),
+  Referral: monthly(200, 35, 0.5, "Referral network outreach pool"),
+  HsLanding: monthly(80, 12, 0.1, "Paid LP traffic already landing"),
+  GabrielOut: monthly(60, 18, 0.2, "Warm outbound dials/mo target"),
+  SocialAds: monthly(500, 75, 0.1, "Social reach engagements/mo target"),
+  OpsDash: monthly(R.totalLeadsAvg, 122, 8.9, "May–Jun avg total leads ~169 · lead→case 7.3%"),
+  DataMgmt: monthly(R.totalLeadsAvg, 122, 8.9, "Same KPI set — retainer reporting refresh"),
+  CaseWins: monthly(40, 8, 0.05, "Proof-content readers → consult uplift"),
+  StackAudit: none("Strategy audit — measures execution compliance not leads"),
+  HolidayAds: monthly(25, 17, 0.2, "Seasonal flight call target"),
+  PaviChat: monthly(15, 10, 0.1, "After-hours chat/form captures"),
+  AdultAds: monthly(120, 8, 0.05, "Display placement traffic est."),
+  HsPipe: monthly(R.totalLeadsAvg, 122, 2, "Speed-to-lead uplift on ~169 inbound/mo avg"),
+  HsVoip: monthly(R.searchCallsAvg, 64, 4.6, "May–Jun Search avg 89 · 72%→90% answer recovers ~16 connected"),
+  WebSpeed: monthly(90, 14, 0.15, "Speed fix on top paid entry pages"),
+  WebContent: monthly(45, 7, 0.08, "Organic discovery sessions/mo target"),
+  InsMailer: wave(200, 40, 1.5, "Insurance sleeve households per wave"),
+  BlogRevamp: monthly(30, 5, 0.05, "Blog organic entrances"),
+  HsContacts: monthly(400, 60, 0.4, "Marketable past-client upload target"),
+  HsSocial: monthly(300, 45, 0.08, "Social post reach/mo"),
+  WasteAud: none("Cost savings — not lead attribution"),
+  DigProf: monthly(120, 18, 0.15, "Profile discovery + GBP calls after NAP refresh")
 };
 
 export const FIELD_LABELS = {

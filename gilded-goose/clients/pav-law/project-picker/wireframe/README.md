@@ -11,7 +11,7 @@
 
 - [`../../kpi-list.md`](../../kpi-list.md) — 29 locked KPIs
 - [`../../DASHBOARD-WIREFRAME.md`](../../DASHBOARD-WIREFRAME.md) — section rules
-- [`../../KPI-DASHBOARD-SPEC.md`](../../KPI-DASHBOARD-SPEC.md) — Gilbert A8 build spec
+- [`../../KPI-DASHBOARD-SPEC.md`](../../KPI-DASHBOARD-SPEC.md) — Gilbert OpsDash build spec
 
 ## Update workflow (until better layout tooling)
 
