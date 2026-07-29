@@ -5,26 +5,34 @@
 window.RECOMMENDATIONS_CONTENT = {
   "page": {
     "title": "Recommendations",
-    "subtitle": "Ranked by INDEX project score — ship lower numbers first."
+    "subtitle": "HubSpot intake first · then active pilots · INDEX order.",
+    "alertStatus": "Action required",
+    "alertLabel": "HubSpot forms",
+    "alert": "Assign website forms to Casey with same-day callback. Transfer one phone next · write setup docs · start team on phone + app."
   },
   "jump": [
     {
       "rank": "1",
-      "label": "#1–2 Intake",
+      "label": "HubSpot phone",
       "anchor": "recommendation-primary"
     },
     {
       "rank": "2",
+      "label": "Yelp pilot",
+      "anchor": "recommendation-yelp"
+    },
+    {
+      "rank": "3",
       "label": "#11 Sex Crimes",
       "anchor": "recommendation-sex-crimes"
     },
     {
-      "rank": "3",
-      "label": "#26 Financial audit",
+      "rank": "4",
+      "label": "Known savings",
       "anchor": "recommendation-financial-audit"
     },
     {
-      "rank": "4",
+      "rank": "5",
       "label": "LSA divert",
       "anchor": "recommendation-divert"
     },
@@ -46,39 +54,85 @@ window.RECOMMENDATIONS_CONTENT = {
         {
           "label": "LSA $/call",
           "value": "{{lsaCpl}}",
-          "context": "June LSA"
+          "context": "June"
         },
         {
-          "label": "Digital media $/call",
+          "label": "Digital media",
           "value": "{{digCpl}}",
-          "context": "Search media only"
+          "context": "Search only"
         },
         {
-          "label": "Digital all-in $/call",
+          "label": "Digital all-in",
           "value": "{{digAllIn}}",
           "context": "Media + consulting"
+        },
+        {
+          "label": "Form owner",
+          "value": "Casey",
+          "context": "Same-day callback"
         }
       ],
       "proof": [
-        "Minimum shift = {{mgmt}} consulting + {{breakEvenMedia}} digital media = {{minDivert}}/mo",
-        "LSA = {{junLsaSpend}} ÷ {{junLeads}} calls = {{lsaCpl}}/call",
-        "Digital all-in = ({{junAdsSpend}} + {{mgmt}}) ÷ {{junAdsLeads}} = {{digAllIn}}/call"
+        "Start: transfer one line → write PHONE-SETUP steps for that line → test ring in HubSpot app",
+        "Deck stack: HubSpot Academy free lessons + Knowledge Base Calling · Gamma or Canva Magic for slides · Loom for 2–3 min app demos · Claude/ChatGPT to draft outline from HsVoip checklist",
+        "Premade: academy.hubspot.com · Lead Management / Contacts CRM · knowledge.hubspot.com/calling",
+        "Then: forms → Casey · auto-call practice · ≥90% answered before more LSA spend"
       ],
       "projects": [],
       "actions": [],
-      "title": "1 · Project #1–2 · LSA call intake + digital Search shift",
-      "hint": "Fix unanswered calls before more LSA spend; then shift qualified media to digital Search.",
-      "why": "LSA costs {{lsaCpl}}/call vs digital all-in {{digAllIn}}/call. Missed calls waste both channels until answer rate is fixed.",
-      "solutions": "Ship [B2 · HubSpot Phone / VoIP](project:B2) (#1) and [B11 · LSA Call Process](project:B11) (#2). Gate: **≥90% answered for 7 days**. Keep the [Digital Ads Maintenance Retainer](project:RETAINER) funded, then divert ≥ {{minDivert}}/mo from LSA.",
-      "proofTitle": "Proof / math"
+      "title": "1 · #1–2 · HubSpot phone + form callbacks",
+      "hint": "Transfer one line · document it · get Casey on forms + auto calls.",
+      "whyStatus": "Action required",
+      "why": "Missed Search calls and slow form follow-up waste media. Forms need same-day callbacks. Casey should own form callbacks and start answering more auto calls. LSA {{lsaCpl}}/call vs digital {{digAllIn}} all-in.",
+      "solutions": "[HubSpot Phone / VoIP](project:HsVoip): transfer **one** phone first · write setup docs · build a short HubSpot onboarding deck. Assign HubSpot form submits to **Casey** with same-day callback tasks. Pair with [LSA Call Process](project:LsaCall). Gate: **≥90% answered · 7 days**.",
+      "chart": "lsa-vs-digital",
+      "proofTitle": "Training deck · tools"
+    },
+    {
+      "id": "recommendation-yelp",
+      "stats": [
+        {
+          "label": "Baseline",
+          "value": "6",
+          "context": "Leads / last 30 days"
+        },
+        {
+          "label": "Promo",
+          "value": "$5/day",
+          "context": "Live now"
+        },
+        {
+          "label": "Aug goal",
+          "value": "20",
+          "context": "Channel referrals"
+        },
+        {
+          "label": "Reviews",
+          "value": "5.0 · 6",
+          "context": "Yelp listing"
+        }
+      ],
+      "proof": [
+        "Kickoff: 293 impressions → 29 visits → 6 leads",
+        "Mix: 3 messages · 2 calls · 1 website",
+        "August CTA A/B weekly on DigProf"
+      ],
+      "projects": [],
+      "actions": [],
+      "title": "Active · Yelp pilot — leads + referrals",
+      "hint": "$5/day promo live · August target 20 channel referrals.",
+      "whyStatus": "On track",
+      "why": "Baseline 6 leads / 30 days. Testing paid + profile work for leads and referrals.",
+      "solutions": "[Digital Presence Refresh](project:DigProf). Keep $5/day. Stories + profile polish. Past-client review email. Gate: **20 Aug referrals**. Yelp → HubSpot number stays gated until Casey is call-ready on HsVoip.",
+      "chart": "yelp-august"
     },
     {
       "id": "recommendation-sex-crimes",
       "stats": [
         {
-          "label": "Mean quoted fee",
+          "label": "Mean fee",
           "value": "$9,500",
-          "context": "n=6 sample"
+          "context": "n=6"
         },
         {
           "label": "2025 YTD",
@@ -91,85 +145,82 @@ window.RECOMMENDATIONS_CONTENT = {
           "context": "Cases"
         },
         {
-          "label": "YTD change",
+          "label": "Gap",
           "value": "−62%",
-          "context": "Below prior year"
+          "context": "vs prior year"
         }
       ],
       "proof": [
-        "8 fewer YTD cases × $9,500 = $76,000 quoted gap",
-        "$76,000 × 80% = $60,800 collectible gap",
-        "Recovery = 5 YTD + 8 H2 cases = 13 full-year cases"
+        "8 cases × $9,500 = $76k quoted · $60.8k at 80% collectible",
+        "Recovery: 5 YTD + 8 H2 = 13 cases"
       ],
       "projects": [],
       "actions": [],
-      "title": "2 · Project #11 · Sex Crimes Defense focus",
-      "hint": "Highest mean quoted fee; 2026 YTD case volume is 62% behind 2025.",
+      "title": "2 · #11 · Sex Crimes Defense",
+      "hint": "Highest fee · YTD cases −62% vs 2025.",
       "whyStatus": "Watch",
-      "why": "Highest fee category (~70% above the $5,587 firm mean) with an 8-case YTD gap ≈ **$76k quoted** / **$60.8k** at 80% collectible. Sample n=6 — directional until QuickBooks validates.",
-      "solutions": "Launch a discreet Search pilot in [A1 · Digital Ad Enhancements](project:A1) (#11): exact/phrase only, dedicated landing page, tracked calls. No Display or broad match. Gate: 30-day qualified-call + signed-case review."
+      "why": "~$9,500 mean fee · 5 YTD vs 13 last year · ~$76k quoted gap. n=6 — directional.",
+      "solutions": "[Digital Ad Enhancements](project:AdEnhance): exact/phrase Search only · landing page · tracked calls. Gate: 30-day qualified calls + signed cases.",
+      "chart": "cases-recovery"
     },
     {
       "id": "recommendation-financial-audit",
       "stats": [
         {
-          "label": "Known 30-day waste",
+          "label": "30-day waste",
           "value": "$1,063",
           "context": "Search floor"
         },
         {
-          "label": "Annualized floor",
+          "label": "Annualized",
           "value": "$12,756",
           "context": "If unchanged"
         },
         {
-          "label": "H1 after expenses",
+          "label": "H1 surplus",
           "value": "+$29,534*",
-          "context": "Excludes unknown debt"
+          "context": "*excludes debt"
         }
       ],
       "proof": [
-        "$1,063 × 12 = $12,756 annualized Search waste if unchanged",
-        "H1 collectible $509,534 − $480,000 expenses = +$29,534* · *excludes unknown debt",
-        "Savings windows: subscriptions 12 mo · vendor-rate changes 6 mo · variable ops 3 mo · one-time recoveries when posted. Do not double-count the ~$694 Military Display subset inside the $1,063 floor."
+        "$1,063 × 12 = $12,756 annualized",
+        "H1 $509,534 collectible − $480k expenses = +$29,534*"
       ],
       "projects": [],
       "actions": [],
-      "title": "3 · Project #26 · Full financial audit (B9)",
-      "hint": "Map debt, cut recurring waste, recover credits — do not treat H1 surplus as cash-safe.",
+      "title": "3 · #26 · Use known savings now",
+      "hint": "No owner signoff on a full audit yet. Still cut known waste now.",
       "whyStatus": "Action required",
-      "why": "+$29,534 H1 collectible-after-expenses excludes **unknown business debt** — treat it as unreliable. Verified Search waste floor is $1,063 / 30 days; unused subscriptions still lack a cancel total.",
-      "solutions": "Open [B9 · Full Financial Audit](project:B9) (#26). Reconcile QuickBooks, statements, liabilities, subscriptions, phone/software seats, ads, LSA credits, and toll-pass payment + plates. Fee: $1,800 + 20% verified savings.",
-      "proofTitle": "Proof / payment terms"
+      "why": "+$29,534 H1 after expenses excludes unknown debt. Verified Search waste floor $1,063 / 30 days.",
+      "solutions": "Use waste already found: Search waste, subscriptions, ads, LSA credits. Keep [Full Financial Waste Audit](project:WasteAud) parked until owner approves."
     },
     {
       "id": "recommendation-divert",
       "stats": [
         {
-          "label": "Minimum divert",
+          "label": "Min divert",
           "value": "{{minDivert}}/mo",
-          "context": "Consulting + media"
+          "context": "Total"
         },
         {
-          "label": "To consulting",
+          "label": "Consulting",
           "value": "{{mgmt}}",
-          "context": "Retainer first"
+          "context": "Retainer"
         },
         {
-          "label": "To digital media",
+          "label": "Media",
           "value": "{{breakEvenMedia}}",
-          "context": "Search after gate"
+          "context": "Search"
         }
       ],
       "proof": [],
       "projects": [],
       "actions": [],
-      "title": "4 · After #1–2 answer-rate gate · Divert from LSA",
-      "hint": "Pay consulting first; remaining diverted dollars go to digital media.",
+      "title": "4 · After answer gate · Divert LSA",
+      "hint": "Consulting first · then Search media.",
       "whyStatus": "Watch",
-      "why": "After ≥90% answered for 7 days, LSA’s higher $/call only pays if it signs ≥ **{{closeMultiple}}×** better than digital. Calls ≠ signed cases — confirm close rates before moving budget.",
-      "solutions": "Divert ≥ {{minDivert}}/mo from LSA → consulting + Search. Hold 30 days; track signed-case rate by channel.",
-      "proofTitle": "Full divert split table",
+      "why": "LSA only wins if close rate ≥ **{{closeMultiple}}×** digital. Confirm signed cases before moving budget.",
+      "solutions": "Divert ≥ {{minDivert}}/mo → consulting + Search · hold 30 days · track signed rate by channel.",
       "proofType": "divert-table"
     },
     {
@@ -178,44 +229,51 @@ window.RECOMMENDATIONS_CONTENT = {
       "proof": [],
       "projects": [
         {
-          "project": "[B2 · HubSpot Phone / VoIP Setup](project:B2)",
+          "project": "[HubSpot Phone / VoIP Setup](project:HsVoip)",
           "priority": "#1 · WIP",
-          "fee": "$0 · incl. B13",
-          "role": "Route + log Search/LSA; same-day missed-call tasks",
-          "gate": "≥90% answered · 7 days; 888 → HubSpot test passes"
+          "fee": "$0",
+          "role": "Transfer 1 phone · docs · forms→Casey · onboarding deck",
+          "gate": "One line live · same-day form callbacks · staff on app"
         },
         {
-          "project": "[B11 · LSA Call Process Update](project:B11)",
+          "project": "[Digital Presence Refresh](project:DigProf)",
+          "priority": "Active · WIP",
+          "fee": "$1,800",
+          "role": "Yelp promo · profile · reviews · CTA test",
+          "gate": "Aug: 20 Yelp referrals"
+        },
+        {
+          "project": "[LSA Call Process Update](project:LsaCall)",
           "priority": "#2 · Recommended",
           "fee": "$1,500",
-          "role": "Statuses, call review, Casey coverage",
-          "gate": "Statuses current; disputes caught; coverage calendar live"
+          "role": "Statuses · Casey auto-call practice",
+          "gate": "Statuses current · Casey answering more autos"
         },
         {
-          "project": "[RETAINER · Digital Ads Maintenance](project:RETAINER)",
+          "project": "[Digital Ads Maintenance](project:RETAINER)",
           "priority": "Required",
           "fee": "{{mgmt}}/mo",
-          "role": "Steward LSA/Search after the answer-rate gate",
-          "gate": "Funded before media shift; no second consulting fee"
+          "role": "Steward ads after gate",
+          "gate": "Funded before media shift"
         },
         {
-          "project": "[A1 · Digital Ad Enhancements](project:A1)",
+          "project": "[Digital Ad Enhancements](project:AdEnhance)",
           "priority": "#11 · Available",
           "fee": "$2,200",
-          "role": "Sex Crimes Defense Search pilot + landing page",
-          "gate": "Qualified calls + signed cases; QuickBooks validates cash"
+          "role": "Sex Crimes Search pilot",
+          "gate": "30-day call + signed-case review"
         },
         {
-          "project": "[B9 · Full Financial Audit](project:B9)",
-          "priority": "#26 · Recommended",
-          "fee": "$1,800 + 20% savings",
-          "role": "Debt map, subscriptions, waste, credits",
-          "gate": "Every recurring charge/liability has owner + action; savings documented"
+          "project": "[Full Financial Waste Audit](project:WasteAud)",
+          "priority": "#26 · Parked",
+          "fee": "$500 + 20%",
+          "role": "Later if owner approves",
+          "gate": "Not active now"
         }
       ],
       "actions": [],
-      "title": "Projects required",
-      "hint": "Ordered by INDEX Project score (lower first).",
+      "title": "Projects",
+      "hint": "INDEX score order.",
       "bodyType": "projects-table"
     },
     {
@@ -224,14 +282,16 @@ window.RECOMMENDATIONS_CONTENT = {
       "proof": [],
       "projects": [],
       "actions": [
-        "**B2 (#1)** — Hold extra LSA spend; patch routing + missed-call tasks. *Gate:* 888 rings HubSpot end-to-end.",
-        "**B11 (#2)** — Same-day LSA statuses + Casey coverage calendar. *Gate:* statuses current before billing.",
-        "**Answer rate** — Reach ≥90% answered for 7 days, then fund the **RETAINER** ({{mgmt}}/mo).",
-        "**A1 (#11)** — Sex Crimes Defense Search pilot (exact/phrase only). *Gate:* 30-day call + signed-case review.",
-        "**B9 (#26) + divert** — Map debt/subscriptions; divert ≥ {{minDivert}}/mo from LSA for 30 days. *Gate:* signed-case rate by channel + verified savings list."
+        "**HubSpot (HsVoip)** — Transfer **one** phone into HubSpot. Write setup docs for that line. Assign form submits to **Casey** with same-day callback.",
+        "**Training deck** — Short HubSpot onboarding: app login · answer/callback · log call · form task. Use Academy + Loom demos; Gamma/Canva for slides.",
+        "**Casey practice** — Form callbacks first · then more auto/Search calls on the HubSpot phone + app.",
+        "**Yelp (DigProf)** — $5/day on · stories + polish · track toward **20 Aug referrals**.",
+        "**LSA process (#2)** — Same-day statuses + Casey calendar.",
+        "**Answer rate** — ≥90% for 7 days → fund Digital Ads Maintenance ({{mgmt}}/mo).",
+        "**Known savings** — Cut waste already identified. Full audit stays parked."
       ],
       "title": "Next actions",
-      "hint": "Same order as INDEX Project score.",
+      "hint": "Do in order.",
       "bodyType": "actions-list"
     }
   ]

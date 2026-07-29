@@ -11,9 +11,13 @@
 
 Agents: run rewrite scripts **only** when Kate asks in that message. See `.cursor/rules/preserve-user-edits.mdc` + `gilbert-guide-content.mdc`.
 
-**Also see:** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) (colors, spacing, zones) · [CONTENT-INDEX.md](CONTENT-INDEX.md) (every text string by page)
+**Also see:** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) — colors, spacing, zones · [CONTENT-INDEX.md](CONTENT-INDEX.md) — every text string by page · [CONTENT-WRITING-GUIDE.md](CONTENT-WRITING-GUIDE.md) — Yelp, SEO, external copy
 
-**Template:** copy `[_TEMPLATE.md](_TEMPLATE.md)` — same layout as `[projects/B2.md](projects/B2.md)`.
+**Template:** copy `[_TEMPLATE.md](_TEMPLATE.md)` — same layout as `[projects/HsVoip.md](projects/HsVoip.md)`.
+
+### Project IDs
+
+ID = filename without `.md`. Use a short name from the project title — letters + digits, 2–24 chars. Examples: `Yelpv1`, `DigProf`, `HsVoip`, `SocialAds`. Do not use letter+number codes like `A20` / `B10`. Retainer file stays `retainer.md` → id `RETAINER`. New projects: pick the short name, create `content/projects/{Id}.md`, link it in INDEX as `(projects/{Id}.md)`.
 
 ---
 
@@ -23,7 +27,7 @@ Agents: run rewrite scripts **only** when Kate asks in that message. See `.curso
 | File                         | Purpose                                                                                                  |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------- |
 | [INDEX.md](INDEX.md)         | **You edit only** — titles, **Status**, **Visibility**, **Est. cost**, priority, **## Notes** (build reads; never writes) |
-| [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches B2)                                                                             |
+| [_TEMPLATE.md](_TEMPLATE.md) | Standard layout (matches HsVoip)                                                                             |
 | settings.md                  | Default package                                                                                          |
 | retainer.md                  | Retainer card                                                                                            |
 | [recommendations.md](recommendations.md) | **Recommendations tab** copy — ranks, why/do/proof, projects table, actions |
@@ -35,34 +39,35 @@ Agents: run rewrite scripts **only** when Kate asks in that message. See `.curso
 
 
 
-## B2 Section Layout
+## HsVoip Section Layout
 
 ```
-Meta table: Estimated leads gained (optional row)
-## Summary                  ← bullets on card (plain weight; markdown links OK)
-## Value icons           ← picker filter icons (foundation · leads · crm · …)
-## KPI links             ← dashboard metrics (01, 21, …)
-## AB - Q                  ← Question for Andrew Brown; cart blocked until Comment answered
-## Information needed     ← gaps, AB-Q, _Add:_ placeholders
-## WIP                   ← work in progress
-## Completed             ← shipped
-## Fee note (optional)
+Meta table · Estimated leads gained row when needed
+## Summary
+## Value icons
+## KPI links
+## Information needed
+## WIP
+## Completed
 
 ---
-**—— Unpublished below ——**   ← hard line; content below is NOT built into Guide cards
-## Project plan          ← Kate/ops notes only
+—— Unpublished below ——
+## Project plan
+## Where to use…
+## Notes
+## Fee note
 ```
 
 See `[_TEMPLATE.md](content/_TEMPLATE.md)`. Fee market context: `[FEE-BENCHMARK-CO-SPRINGS.md](FEE-BENCHMARK-CO-SPRINGS.md)`.
 
 - **Summary** bullets feed the card (`## Summary`; legacy `## TLDR` still parses).
-- **AB – Q** (`AB - Q:`) — question for Andrew Brown; Gilbert flags it; **Comment required before cart**.
-- **Value icons** — `## Value icons` list in each project file (`foundation` · `leads` · `crm` · `seo` · `referrals` · `efficiency` · `intake` · `creative` · `hubspot` · `finance`); overrides auto-detect when set
-- **KPI links** — `## KPI links` lists dashboard metrics (`01`, `21`, …). External reference URLs are stripped on build; only **KPI #NN** links in the picker (opens KPIs tab).
+- **No bold in project markdown** — do not use `**…**` in Summary, tables, WIP, Project plan, or `_TEMPLATE.md`. Meta field labels are plain (`| Priority |`).
+- **No project ID in meta or Guide copy** — ID comes from the filename (`HsVoip.md` → HsVoip). Do not put `| ID |` in the meta table. Client-facing text uses titles only.
+- **Value icons** — Show | Name table only. Toggle with `[x]` / `[ ]`; build matches names to icon ids.
+- **KPI links** — Show | Name table only. Toggle with `[x]` / `[ ]`; build matches names to dashboard KPIs.
 - **Estimated leads gained** = incremental leads expected from that campaign, not existing lead volume.
-- **Project plan** (below the unpublished divider) is for extra detail that must not publish — build ignores it.
-- Card shows **Summary → bullets → leads gained**.
-- Do **not** add Results, Blockers (next round), Insights & improvements, Impact estimates, or Gilbert on metrics — removed from the guide.
+- **Project plan**, **Where to use**, **Notes**, and **Fee note** live below the unpublished divider — build ignores them.
+- **AB - Q** removed from project docs and Guide (no cart block).
 - **`npm run build`** updates `projects-data.js` and `recommendations-data.js` only — it does **not** rewrite project markdown or `recommendations.md`.
 
 ### Recommendations tab
@@ -74,7 +79,7 @@ Edit [`content/recommendations.md`](content/recommendations.md):
 - **`## Rec · {id}`** — one block per card (Title, Hint, Why, Solutions, Proof)
 - **Stats / Proof / Projects table / Actions** — subsections under each Rec
 - Tokens: `{{lsaCpl}}`, `{{digCpl}}`, `{{digAllIn}}`, `{{minDivert}}`, `{{mgmt}}`, `{{breakEvenMedia}}`, `{{closeMultiple}}`, …
-- Project links: `[B2 · HubSpot Phone / VoIP](project:B2)`
+- Project links: `[HubSpot Phone / VoIP](project:HsVoip)` — title visible; id only in the link target.
 
 Then `npm run build` → hard-refresh Guide.
 

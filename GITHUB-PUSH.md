@@ -13,7 +13,7 @@
 ## How it works (one picture)
 
 ```
-Cursor (edit B1.md, etc.)
+Cursor (edit HsPipe.md, etc.)
     ↓  git add + git commit + git push
 GitHub repo (stores the files)
     ↓  workflow "Deploy Gilbert Guide" runs automatically
@@ -110,7 +110,7 @@ No token paste in Terminal.
 **SSH alternative:** see BACKEND-SETUP troubleshooting or ask agent for `ssh-keygen` steps.
 
 
-**Verify:** Browser → your repo on GitHub → you should see folder `gilded-goose/clients/pav-law/project-picker/` with `content/projects/B1.md` etc.
+**Verify:** Browser → your repo on GitHub → you should see folder `gilded-goose/clients/pav-law/project-picker/` with `content/projects/HsPipe.md` etc.
 
 ### Step 4 — Add secrets (GitHub only — two saves, not one)
 
@@ -128,7 +128,7 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 | Field | Paste this |
 |-------|------------|
 | **Name** | `PAV_PICKER_WEBHOOK_URL` |
-| **Secret** | Apps Script `/exec` URL only (BACKEND-SETUP Part A16) |
+| **Secret** | Apps Script `/exec` URL only (BACKEND-SETUP Part TwistWrnch) |
 
 → **Add secret**
 
@@ -137,7 +137,7 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 | Field | Paste this |
 |-------|------------|
 | **Name** | `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL` |
-| **Secret** | QuickBooks pay URL only (Part B6) — **not** an Apps Script URL |
+| **Secret** | QuickBooks pay URL only (Part BlogRevamp) — **not** an Apps Script URL |
 
 → **Add secret**
 
@@ -162,7 +162,7 @@ Full cheat sheet: [WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)
 
 ## Every time after — publish markdown edits
 
-You edited `content/projects/B1.md` (or any file under `project-picker/`).
+You edited `content/projects/HsPipe.md` (or any file under `project-picker/`).
 
 | Step | Where | Do this |
 |------|--------|---------|

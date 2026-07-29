@@ -3,7 +3,7 @@
 **Removed from:** KPIs tab · Reputation section (2026-07-15)  
 **Data tab (2026-07-16):** shows placeholder donut + table (`DATA.referrals` — null counts) — not Coming soon  
 **UI:** `totalReferralNetworkPanelHtml()` in `kpi-report.js`  
-**Live data object:** `DATA.referrals` — fill when A4 tracking wires
+**Live data object:** `DATA.referrals` — fill when Referral tracking wires
 
 GBP is a lead source — **not** listed here (referral channels only).
 
@@ -28,5 +28,5 @@ Counts and MoM deltas were null placeholders when parked — fill when referral 
 
 ## Related
 
-- Project: **A4** Client Referral Program · B10 KPI link `#17` still valid for planning
+- Project: **Referral** Client Referral Program · DigProf KPI link `#17` still valid for planning
 - Placeholder UI is on Data tab; do not mark verified until tracking is wired

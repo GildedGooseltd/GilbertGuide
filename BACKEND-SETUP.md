@@ -25,43 +25,43 @@ Quick reference: **[WHERE-TO-GET-LINKS.md](WHERE-TO-GET-LINKS.md)**
 https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit  
 ID: `1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM` — constant `SPREADSHEET_ID` in `apps-script-webhook.gs` (`openById`).
 
-### A1–A2 — Open the destination spreadsheet
+### AdEnhance–NtguiltAd — Open the destination spreadsheet
 
 | Step | Where | Do this |
 |------|--------|---------|
-| **A1** | Browser | Open [the Pav Law feedback Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit?gid=0#gid=0) (must be signed in with an account that can edit it) |
-| **A2** | That Sheet | Confirm you can edit — do **not** create a new blank sheet for production writes |
+| **AdEnhance** | Browser | Open [the Pav Law feedback Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit?gid=0#gid=0) (must be signed in with an account that can edit it) |
+| **NtguiltAd** | That Sheet | Confirm you can edit — do **not** create a new blank sheet for production writes |
 
-### A3–A7 — Paste webhook code into Apps Script
+### SummerEmail–SocialAds — Paste webhook code into Apps Script
 
 | Step | Copy from | Paste into | Do this |
 |------|-----------|------------|---------|
-| **A3** | The spreadsheet from A1 | — | Menu bar **Extensions** → **Apps Script** → a **new browser tab** opens (`script.google.com`) |
-| **A4** | — | **Apps Script tab** → left file **Code.gs** → large code panel on the right | Click inside the code panel → **Cmd+A** → **Delete** (panel must be empty) |
-| **A5** | **Mac — Cursor** → open file:<br>`/Users/gildedgoose/Documents/1 Cursor Helper/gilded-goose/clients/pav-law/project-picker/apps-script-webhook.gs` | — | **Cmd+A** → **Cmd+C** (entire file copied to clipboard) |
-| **A6** | **Clipboard** (from A5) | **Apps Script tab** → **Code.gs** empty panel | Click in panel → **Cmd+V** |
-| **A7** | — | **Apps Script tab** → top-left project name ("Untitled project") | Click name → type `Pav Law Picker Webhook` → Enter → click **Save** (disk icon) |
+| **SummerEmail** | The spreadsheet from AdEnhance | — | Menu bar **Extensions** → **Apps Script** → a **new browser tab** opens (`script.google.com`) |
+| **Referral** | — | **Apps Script tab** → left file **Code.gs** → large code panel on the right | Click inside the code panel → **Cmd+A** → **Delete** (panel must be empty) |
+| **HsLanding** | **Mac — Cursor** → open file:<br>`/Users/gildedgoose/Documents/1 Cursor Helper/gilded-goose/clients/pav-law/project-picker/apps-script-webhook.gs` | — | **Cmd+A** → **Cmd+C** (entire file copied to clipboard) |
+| **GabrielOut** | **Clipboard** (from HsLanding) | **Apps Script tab** → **Code.gs** empty panel | Click in panel → **Cmd+V** |
+| **SocialAds** | — | **Apps Script tab** → top-left project name ("Untitled project") | Click name → type `Pav Law Picker Webhook` → Enter → click **Save** (disk icon) |
 
 You should see `const SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM";` near the top of Code.gs.
 
-### A8–A10 — Create Submissions + MetricsFeedback tabs
+### OpsDash–StackAudit — Create Submissions + MetricsFeedback tabs
 
 | Step | Where | Do this |
 |------|--------|---------|
-| **A8** | **Apps Script tab** → toolbar function dropdown (says `setup` or `doGet`) | Select **`setup`** |
-| **A9** | Same toolbar | Click **Run** (▶) |
-| **A10** | Permission prompt → then [destination Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) | Authorize: **Review permissions** → your Google account → **Advanced** → **Go to Pav Law Picker Webhook (unsafe)** → **Allow** → confirm tabs **Submissions** and **MetricsFeedback** with header rows |
+| **OpsDash** | **Apps Script tab** → toolbar function dropdown (says `setup` or `doGet`) | Select **`setup`** |
+| **CaseWins** | Same toolbar | Click **Run** (▶) |
+| **StackAudit** | Permission prompt → then [destination Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) | Authorize: **Review permissions** → your Google account → **Advanced** → **Go to Pav Law Picker Webhook (unsafe)** → **Allow** → confirm tabs **Submissions** and **MetricsFeedback** with header rows |
 
-### A11–A16 — Deploy web app URL
+### HolidayAds–TwistWrnch — Deploy web app URL
 
 | Step | Where | Do this |
 |------|--------|---------|
-| **A11** | **Apps Script tab** | **Deploy** → **New deployment** |
-| **A12** | Deployment dialog | Gear ⚙ → **Select type** → **Web app** → **Select** |
-| **A13** | Same dialog | **Execute as:** Me |
-| **A14** | Same dialog | **Who has access:** **Anyone** |
-| **A15** | Same dialog | **Deploy** → authorize if asked → **Deploy** again |
-| **A16** | Deployment success dialog → field **Web app URL** | Copy URL (ends in `/exec`) → Notes app as `WEBHOOK_URL` |
+| **HolidayAds** | **Apps Script tab** | **Deploy** → **New deployment** |
+| **PaviChat** | Deployment dialog | Gear ⚙ → **Select type** → **Web app** → **Select** |
+| **AdultAds** | Same dialog | **Execute as:** Me |
+| **PerfPay** | Same dialog | **Who has access:** **Anyone** |
+| **EventAct** | Same dialog | **Deploy** → authorize if asked → **Deploy** again |
+| **TwistWrnch** | Deployment success dialog → field **Web app URL** | Copy URL (ends in `/exec`) → Notes app as `WEBHOOK_URL` |
 
 **Verify A:** Browser address bar → paste `WEBHOOK_URL` + `?ping=1` → Enter.
 
@@ -77,12 +77,12 @@ If you only see `{"ok":true,"service":"gilbert-guide"}` → Code.gs was saved bu
 
 | Step | Where | Do this |
 |------|--------|---------|
-| **B1** | [QuickBooks Online](https://qbo.intuit.com) | Left nav **Sales & get paid** → **Payment links** *(or search: Payment links)* |
-| **B2** | Payment links page | **New payment link** |
-| **B3** | Link type | **Multi-use payment link** → **Next** |
-| **B4** | Amount field | `2500` |
-| **B5** | Description | `Pav Law project picker deposit` |
-| **B6** | After **Create link** → payment URL shown | Copy URL → Notes as `QB_DEPOSIT_URL` |
+| **HsPipe** | [QuickBooks Online](https://qbo.intuit.com) | Left nav **Sales & get paid** → **Payment links** *(or search: Payment links)* |
+| **HsVoip** | Payment links page | **New payment link** |
+| **WebSpeed** | Link type | **Multi-use payment link** → **Next** |
+| **WebContent** | Amount field | `2500` |
+| **InsMailer** | Description | `Pav Law project picker deposit` |
+| **BlogRevamp** | After **Create link** → payment URL shown | Copy URL → Notes as `QB_DEPOSIT_URL` |
 
 **Verify B:** Browser → paste `QB_DEPOSIT_URL` → checkout shows **$2,500**.
 
@@ -96,12 +96,12 @@ If you only see `{"ok":true,"service":"gilbert-guide"}` → Code.gs was saved bu
 
 Summary below assumes files are already on GitHub.
 
-### C1–C2 — Push monorepo *(first time — see GITHUB-PUSH.md)*
+### AccessAud–EmailDns — Push monorepo *(first time — see GITHUB-PUSH.md)*
 
 | Step | Copy from / Where | Paste into / Do this |
 |------|-------------------|----------------------|
-| **C1** | Browser → [github.com/new](https://github.com/new) | Create repo (e.g. `1-cursor-helper`) — no README |
-| **C2** | **Mac Terminal** | Run each line:<br>`cd "/Users/gildedgoose/Documents/1 Cursor Helper"`<br>`git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git` *(skip if remote exists)*<br>`git push -u origin HEAD:main` |
+| **AccessAud** | Browser → [github.com/new](https://github.com/new) | Create repo (e.g. `1-cursor-helper`) — no README |
+| **EmailDns** | **Mac Terminal** | Run each line:<br>`cd "/Users/gildedgoose/Documents/1 Cursor Helper"`<br>`git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git` *(skip if remote exists)*<br>`git push -u origin HEAD:main` |
 
 ### C3–C5 — Repository secrets (two secrets, added one at a time)
 
@@ -122,7 +122,7 @@ Summary below assumes files are already on GitHub.
 
    `PAV_PICKER_WEBHOOK_URL`
 
-3. **Secret** field — paste **only** your Apps Script URL from Part A16. Example shape:
+3. **Secret** field — paste **only** your Apps Script URL from Part TwistWrnch. Example shape:
 
    `https://script.google.com/macros/s/AKfycb…/exec`
 
@@ -139,7 +139,7 @@ Summary below assumes files are already on GitHub.
 
    `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL`
 
-3. **Secret** field — paste **only** your QuickBooks payment link from Part B6. Example shape:
+3. **Secret** field — paste **only** your QuickBooks payment link from Part BlogRevamp. Example shape:
 
    `https://connect.intuit.com/pay/GildedGooseLimited/scs-v1-…`
 
@@ -292,7 +292,7 @@ The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook mi
 |--------|----------------|
 | Webhook URL | GitHub secret `PAV_PICKER_WEBHOOK_URL` → re-run deploy workflow |
 | Deposit URL / amount | Secrets `PAV_PICKER_QUICKBOOKS_DEPOSIT_URL` / `PAV_PICKER_DEPOSIT_AMOUNT` |
-| Email / Sheet columns | `apps-script-webhook.gs` on Mac → copy into Apps Script Code.gs (same as A5–A6) → **Deploy** → **Manage deployments** → **Edit** → **New version** |
+| Email / Sheet columns | `apps-script-webhook.gs` on Mac → copy into Apps Script Code.gs (same as HsLanding–GabrielOut) → **Deploy** → **Manage deployments** → **Edit** → **New version** |
 | Signed SOW Drive folder | Script Property `SOW_DRIVE_FOLDER_ID`; auto-created on first completed SOW if absent |
 | Project card copy | `content/projects/*.md` on Mac in Cursor — markdown is the source; push only the `.md` files |
 
@@ -307,11 +307,11 @@ The status bar shows **Remote gather OFF** / **Not saved to sheet — webhook mi
 | Apps Script URL in Secret 2 | Remove Secret 2 → re-add with QuickBooks `connect.intuit.com` link only |
 | “Nowhere to save deposit link” | GitHub Secret 2 only — not Google |
 | Two `/exec` URLs | Archive spare deployment; one URL in Secret 1 |
-| CORS / failed to fetch | A14 must be **Anyone**; URL must end `/exec` |
+| CORS / failed to fetch | PerfPay must be **Anyone**; URL must end `/exec` |
 | Private SOW link invalid | Link was copied incompletely, expired after 14 days, or already used; generate a new submission/link |
 | IP says unavailable | Browser blocked `api64.ipify.org`; timestamp, token, checks, user agent, and hashes still record |
 | No Drive archive | Archive occurs only after Kate countersigns; authorize Docs/Drive and check Script Property `SOW_DRIVE_FOLDER_ID` |
-| UI says saved / “nothing in sheet” | Live ping is still `{"ok":true,"service":"gilbert-guide"}` **without** `"metricsFeedback":true` → script not on New version. **Switch:** open Mac path from A5 → Cmd+A → Cmd+C → paste Code.gs → Save → **Deploy → Manage deployments → pencil → Version: New version → Deploy**. Recheck ping (or [owner-webhook-setup](owner-webhook-setup.html) status box) **before** Save. Look at tab **MetricsFeedback**, not Form Responses / Submissions. Do **not** change GitHub Secret. |
+| UI says saved / “nothing in sheet” | Live ping is still `{"ok":true,"service":"gilbert-guide"}` **without** `"metricsFeedback":true` → script not on New version. **Switch:** open Mac path from HsLanding → Cmd+A → Cmd+C → paste Code.gs → Save → **Deploy → Manage deployments → pencil → Version: New version → Deploy**. Recheck ping (or [owner-webhook-setup](owner-webhook-setup.html) status box) **before** Save. Look at tab **MetricsFeedback**, not Form Responses / Submissions. Do **not** change GitHub Secret. |
 | Sheet empty | Confirm Code.gs has `SPREADSHEET_ID = "1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM"` → Run **`setup`** → check [destination Sheet](https://docs.google.com/spreadsheets/d/1rPRZlFu-iq5ddStMJFByPs8dDzRk4NZ7tJZze-T_JlM/edit) tabs **Submissions** / **MetricsFeedback** → then **Deploy → New version** |
 | Rows on wrong sheet | Old code used `getActiveSpreadsheet()` — re-paste Mac `apps-script-webhook.gs` (uses `openById`) → New version deploy |
-| Code.gs wrong after edit | Always copy full file from Mac path in A5 — do not paste fragments |
+| Code.gs wrong after edit | Always copy full file from Mac path in HsLanding — do not paste fragments |

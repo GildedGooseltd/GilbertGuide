@@ -1,7 +1,7 @@
 # Pav Law Cockpit — content index
 
 **Every place user-visible text comes from.**  
-Layout/colors → [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) · Project writing rules → [CONTENT-EDIT.md](CONTENT-EDIT.md)
+Layout/colors → [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) · Project writing rules → [CONTENT-EDIT.md](CONTENT-EDIT.md) · External / Yelp copy → [CONTENT-WRITING-GUIDE.md](CONTENT-WRITING-GUIDE.md)
 
 ---
 
@@ -11,6 +11,7 @@ Layout/colors → [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) · Project writing ru
 | Task                                                 | Open first                                                                          |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | Change a project title, fee, description, blockers   | `content/projects/{ID}.md` + row in `content/INDEX.md`                              |
+| Write or revise Yelp ad text, keyword boosts, SEO pillars | [CONTENT-WRITING-GUIDE.md](CONTENT-WRITING-GUIDE.md)                             |
 | Change Recommendations tab copy                      | `content/recommendations.md` → `npm run build`                                      |
 | Edit expense pace / forecast planning notes          | `content/forecasting-planning.md` (manual — not auto-built)                         |
 | Change Gilbert’s name, greeting, default package     | `content/settings.md`                                                               |
@@ -41,9 +42,11 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Main headline           | `index.html` | `.cockpit-title span` — “Operations Dashboard”; Gold       |
 | Subtitle + how-to intro | `index.html` | `.cockpit-subtitle`, `.cockpit-intro`, `.cockpit-howto`                  |
 | Default tab on load     | `app.js`     | `activeViewTab: "kpis"` — KPIs panel visible first                       |
-| Tab: KPIs               | `index.html` | `button[data-view="kpis"]` — includes former Dashboards charts at bottom |
-| Tab: Project Guide      | `index.html` | `button[data-view="picker"]`                                             |
-| Tab: Impact             | `index.html` | `button[data-view="impact"]` — grayed + Under Construction overlay |
+| Tab: Guide (leftmost)   | `index.html` | `button[data-view="picker"]` — Project Guide first in tab order          |
+| Tab: KPIs               | `index.html` | `button[data-view="kpis"]` — default active; charts at bottom of panel   |
+| Tab: Data               | `index.html` | `button[data-view="data"]`                                               |
+| Tab: Results            | `index.html` | `button[data-view="impact"]` — **Under construction** + project-tied cards |
+| Tab: Recommendations & Predictions | `index.html` | `button[data-view="recommendations"]` — merged tab, **Under construction** |
 
 
 
@@ -221,9 +224,9 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | [content/forecasting-planning.md](content/forecasting-planning.md) | Expense pace · forecast planning notes (manual) |
 | [content/settings.md](content/settings.md)           | Gilbert names, image paths, default package                                 |
 | [content/retainer.md](content/retainer.md)           | Retainer project card                                                       |
-| [content/projects/A1.md … A13.md](content/projects/) | Campaign / project cards                                                    |
-| [content/projects/B1.md … B10.md](content/projects/) | Infrastructure / marketing cards                                            |
-| [content/projects/A8M.md](content/projects/A8M.md)   | Monthly dashboard maintenance                                               |
+| [content/projects/AdEnhance.md … AdultAds.md](content/projects/) | Campaign / project cards                                                    |
+| [content/projects/HsPipe.md … DigProf.md](content/projects/) | Infrastructure / marketing cards                                            |
+| [content/projects/DataMgmt.md](content/projects/DataMgmt.md)   | Monthly dashboard maintenance                                               |
 | [content/_TEMPLATE.md](content/_TEMPLATE.md)         | Copy for new projects                                                       |
 
 

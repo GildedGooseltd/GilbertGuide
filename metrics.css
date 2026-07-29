@@ -263,7 +263,7 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.14); stroke-width: 1; }
 .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.4); stroke-width: 1.5; }
-.kpi-chart-svg-stacked rect {
+.kpi-chart-svg-stacked rect:not(.kpi-chart-plot-bg) {
   stroke: var(--gg-royal-deep);
   stroke-width: 1.25;
   vector-effect: non-scaling-stroke;
@@ -444,14 +444,11 @@ body.feedback-mode-on .feedback-target:hover {
   gap: 0.7rem;
   position: relative;
   margin-top: 0.45rem;
-  padding: 0.72rem 0.8rem;
-  border: 4px double var(--gg-gold-dark);
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255, 248, 218, 0.98), rgba(218, 165, 32, 0.16));
-  box-shadow:
-    inset 0 0 0 1px var(--gg-gold-bright),
-    inset 0 0 12px rgba(184, 134, 11, 0.12),
-    0 3px 10px rgba(138, 99, 16, 0.2);
+  padding: 0.72rem 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   text-align: left;
 }
 .kpi-related-projects::before,
@@ -618,6 +615,27 @@ body.feedback-mode-on .feedback-target:hover {
   display: block; width: 100%; max-width: 15rem; height: auto; margin: 0.35rem auto 0.15rem;
   overflow: visible;
 }
+.kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual {
+  align-items: center;
+  text-align: center;
+  gap: 0.15rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  justify-content: flex-start;
+}
+.kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual .kpi-stat-id {
+  margin-bottom: 0;
+  font-size: 1.25rem;
+}
+.kpi-goal-card.kpi-stat-target-bar .kpi-target-bar-chart-compact,
+.kpi-goal-card.kpi-stat-target-bar .kpi-target-bar-chart-goal {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+}
 .kpi-target-baseline { stroke: rgba(26, 26, 26, 0.85); stroke-width: 1.5; }
 .kpi-target-line { stroke: #1a1a1a; stroke-width: 3.5; stroke-linecap: butt; }
 .kpi-target-label { fill: var(--secondary); font-size: 11px; font-style: italic; font-weight: 600; }
@@ -648,7 +666,6 @@ body.feedback-mode-on .feedback-target:hover {
   text-align: center;
 }
 .kpi-goal-card.kpi-stat-gauge .kpi-goal-visual { align-items: center; text-align: center; }
-.kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual { align-items: center; text-align: center; }
 .kpi-goal-card .kpi-goal-visual .kpi-stat-id {
   font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem;
 }
@@ -676,6 +693,22 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-goals-grid .kpi-goal-track tr { height: 3.25rem; }
 .kpi-goals-grid .kpi-goal-track th,
 .kpi-goals-grid .kpi-goal-track td { vertical-align: middle; }
+.kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar .kpi-goal-track tr:not(:first-child) {
+  height: 1.65rem;
+}
+.kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar .kpi-goal-track tr:not(:first-child) th,
+.kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar .kpi-goal-track tr:not(:first-child) td {
+  padding-top: 0.12rem;
+  padding-bottom: 0.12rem;
+  font-size: 0.72rem;
+}
+.kpi-goal-month-need { font-variant-numeric: tabular-nums; }
+.kpi-goal-month-ytd {
+  color: var(--gg-brown-muted, #5c4f45);
+  font-weight: 500;
+  margin-left: 0.25rem;
+  font-size: 0.68rem;
+}
 .kpi-goal-placeholder {
   border-style: dashed; opacity: 0.92; cursor: default;
   background: linear-gradient(165deg, #faf8f3 0%, var(--gg-cream-panel) 55%);
@@ -898,6 +931,12 @@ body.feedback-mode-on .feedback-target:hover {
   stroke: var(--gg-royal-deep);
   stroke-width: 2.75;
   stroke-linecap: round;
+}
+.kpi-half-moon-gauge .kpi-gauge-goal-label {
+  fill: var(--gg-royal-deep);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: inherit;
 }
 .kpi-half-moon-gauge .kpi-gauge-center {
   fill: var(--gg-royal-deep); font-size: 22px; font-weight: 800;
