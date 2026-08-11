@@ -121,7 +121,7 @@
     <rect y="50" width="525" height="8" fill="#ece6dc"/>
     <rect width="5" height="58" fill="#3a1a6e"/>
     <text x="22" y="28" class="h3">Cases, leads &amp; spend</text>
-    <text x="22" y="47" class="tiny">Bars = volume | line = spend | newest first</text>
+    <text x="22" y="47" class="tiny">Bars = volume | line = spend | oldest to newest</text>
 
     <rect x="44" y="88" width="455" height="188" rx="8" class="plot-bg"/>
     <line x1="54" y1="102" x2="54" y2="256" class="axis"/>
@@ -130,22 +130,22 @@
     <line x1="54" y1="180" x2="489" y2="180" class="grid"/>
     <line x1="54" y1="142" x2="489" y2="142" class="grid"/>
 
-    <rect x="94" y="153" width="28" height="103" fill="#3a1a6e"/>
-    <rect x="122" y="190" width="28" height="66" fill="#1e3a8a"/>
-    <rect x="150" y="224" width="28" height="32" fill="#b23a78"/>
+    <rect x="94" y="188" width="28" height="68" fill="#3a1a6e"/>
+    <rect x="122" y="215" width="28" height="41" fill="#1e3a8a"/>
+    <rect x="150" y="236" width="28" height="20" fill="#b23a78"/>
     <rect x="229" y="170" width="28" height="86" fill="#3a1a6e"/>
     <rect x="257" y="204" width="28" height="52" fill="#1e3a8a"/>
     <rect x="285" y="230" width="28" height="26" fill="#b23a78"/>
-    <rect x="364" y="188" width="28" height="68" fill="#3a1a6e"/>
-    <rect x="392" y="215" width="28" height="41" fill="#1e3a8a"/>
-    <rect x="420" y="236" width="28" height="20" fill="#b23a78"/>
-    <polyline points="136,125 271,147 406,166" fill="none" stroke="#6a5acd" stroke-width="4"/>
-    <circle cx="136" cy="125" r="5" fill="#6a5acd"/>
+    <rect x="364" y="153" width="28" height="103" fill="#3a1a6e"/>
+    <rect x="392" y="190" width="28" height="66" fill="#1e3a8a"/>
+    <rect x="420" y="224" width="28" height="32" fill="#b23a78"/>
+    <polyline points="136,166 271,147 406,125" fill="none" stroke="#6a5acd" stroke-width="4"/>
+    <circle cx="136" cy="166" r="5" fill="#6a5acd"/>
     <circle cx="271" cy="147" r="5" fill="#6a5acd"/>
-    <circle cx="406" cy="166" r="5" fill="#6a5acd"/>
-    <text x="136" y="278" text-anchor="middle" class="tiny">Jul</text>
+    <circle cx="406" cy="125" r="5" fill="#6a5acd"/>
+    <text x="136" y="278" text-anchor="middle" class="tiny">May</text>
     <text x="271" y="278" text-anchor="middle" class="tiny">Jun</text>
-    <text x="406" y="278" text-anchor="middle" class="tiny">May</text>
+    <text x="406" y="278" text-anchor="middle" class="tiny">Jul</text>
 
     <circle cx="66" cy="305" r="6" fill="#3a1a6e"/><text x="78" y="310" class="tiny">Cases</text>
     <circle cx="145" cy="305" r="6" fill="#1e3a8a"/><text x="157" y="310" class="tiny">LSA</text>
@@ -158,7 +158,7 @@
     <text x="268" y="350" class="tiny" font-weight="700">LSA</text>
     <text x="348" y="350" class="tiny" font-weight="700">Website</text>
     <text x="453" y="350" class="tiny" font-weight="700">Spend</text>
-    <text x="22" y="374" class="tiny">Jul 2026</text>
+    <text x="22" y="374" class="tiny">May 2026</text>
     <text x="198" y="374" class="tiny">18</text>
     <text x="278" y="374" class="tiny">12</text>
     <text x="368" y="374" class="tiny">5</text>

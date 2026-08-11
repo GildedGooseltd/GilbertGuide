@@ -23,9 +23,7 @@
 - Unique UTM-tagged website links per profile so GA4/HubSpot can rank which platforms earn traffic
 - Merge Andrew Brown and Pav Law profiles
 - Review FindLaw / Justia contracts, services, and contract terms
-- Yelp Ads CTA A/B in August 2026 — four button lines (≤30 chars), one week each; track leads + calls
-- Yelp promo live at $5/day — profile updated for promotion; add stories + listing enhancements through August
-- August channel goal: 20 referrals on Yelp
+- Delete Facebook and Instagram pages and remake a business account for ads
 - Yelp review ask — referral email sent to past clients for more Yelp reviews while promo runs
 - Double-check HubSpot setup and start getting the team to use the phone and app daily
 - After Casey is trained on answering calls, route Yelp leads more easily to a HubSpot number (gate on HsVoip)
@@ -85,14 +83,9 @@
 
 ## WIP
 
-- Reddit promo credit — recheck Ads account (may have expired June); if still live, run under SocialAds
-- LinkedIn company showcase still shows low followers and 2024-era launch copy
-- Andrew + Casey personal LinkedIn and directory profiles
-- Extend UTM naming to all profile links
-- Follow Yelp review volume after referral email (baseline 6 reviews @ 5.0 as of mid-Jul scrape; Yelp ads 6 leads / 30 days as of 2026-07-26)
-- Yelp ads performance, remaining promo spend, upgrade tests, HubSpot UTMs, and phone swap — owned on Yelpv1
-- **Gate:** once Casey is trained on answering calls (HsVoip / LsaCall), send Yelp call leads to a HubSpot number for easier CRM logging — do not switch Yelp phone path until that training is done · execute on Yelpv1 when ready
-
+- Yelp promo live at $5/day
+- Yelp Review Request Email Campaign Creation & Launch
+- Yelp ads performance, remaining promo spend, upgrade tests, HubSpot UTMs, and phone swap
 
 
 ## Completed

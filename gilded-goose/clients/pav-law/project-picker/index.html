@@ -93,6 +93,9 @@
       --highlight-dim: var(--gg-royal-dim);
       --gradient-brand: linear-gradient(135deg, var(--gg-royal-deep) 0%, var(--gg-royal) 48%, var(--gg-royal-mid) 100%);
       --gradient-gold: linear-gradient(135deg, var(--gg-gold-dark) 0%, var(--gg-gold-bright) 100%);
+      /* Active cockpit tab — even gold→umber, no highlight sheen */
+      --gradient-tab-active: linear-gradient(135deg, var(--gg-gold) 0%, #c9893a 45%, var(--gg-burnt) 100%);
+      --gradient-tab-hover: linear-gradient(135deg, rgba(227, 197, 141, 0.35) 0%, rgba(196, 92, 38, 0.22) 100%);
       --radius: 12px;
       --font-min: 14px;
       --font-min-rem: 0.875rem;
@@ -216,9 +219,9 @@
     }
     .card-check-col .required-icon { margin: 0; width: 1.15rem; height: 1.15rem; }
     .card-check-col .required-icon svg { width: 0.62rem; height: 0.62rem; }
-    .card-wip-under-chk {
+    .card-wip-badge {
       font-size: var(--font-min-rem); padding: 0.12rem 0.32rem; line-height: 1.1;
-      white-space: nowrap; letter-spacing: 0.02em;
+      white-space: nowrap; letter-spacing: 0.02em; margin-right: 0.15rem;
     }
     .card input[type="checkbox"] { width: 22px; height: 22px; margin-top: 0; accent-color: var(--gg-royal-mid); cursor: pointer; flex-shrink: 0; }
     .card-body { flex: 1; min-width: 0; }
@@ -741,26 +744,6 @@
       font-variant-numeric: tabular-nums;
       font-size: 0.95rem;
     }
-    .card-kpi-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin: 0 0 0.55rem;
-    }
-    .card-kpi-chip {
-      appearance: none;
-      border: 1px solid var(--gg-royal-border);
-      background: var(--gg-royal-dim);
-      color: var(--gg-royal-deep);
-      font: inherit;
-      font-size: 0.72rem;
-      font-weight: 700;
-      line-height: 1.2;
-      padding: 0.28rem 0.5rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .card-kpi-chip:hover { border-color: var(--gg-royal); color: var(--gg-royal); }
     .fee-market { display: none; }
     .fee-market-delta { display: none; }
     .card-fee-market .card-fee-mkt { display: none; }
@@ -837,6 +820,7 @@
       background: transparent; border: none; border-radius: 0;
     }
     .card-summary-bullets { margin-bottom: 0.65rem; }
+    .card-summary-bullets li { font-size: 1.11rem; }
     .card-page-break {
       display: block; width: 100%; height: 0; margin: 1.1rem 0 1rem;
       border: 0; border-top: 2px solid rgba(45, 20, 84, 0.18);
@@ -1312,7 +1296,7 @@
     }
     .cockpit-tabs .view-tab {
       border: 2px solid var(--border-strong); background: var(--gg-paper); color: var(--gg-brown);
-      border-radius: var(--radius); padding: 0.8rem 1.25rem 0.7rem 0.55rem; font-size: 1.15rem; font-weight: 800;
+      border-radius: var(--radius); padding: 0.8rem 1.25rem 0.7rem 0.55rem; font-size: 1.28rem; font-weight: 800;
       cursor: pointer; font-family: inherit; text-align: center;
       transition: border-color 0.15s, background 0.15s, color 0.15s;
       display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
@@ -1353,9 +1337,6 @@
       right: 0.4rem;
       color: #8a7a6a;
     }
-    .cockpit-tabs .view-tab.active .tab-help {
-      color: #8a7a6a;
-    }
     .gilbert-dock-hint .tab-help {
       margin-left: 0.25rem;
       vertical-align: middle;
@@ -1366,6 +1347,54 @@
       top: 0.35rem;
       right: 0.45rem;
       z-index: 3;
+    }
+    .kpi-aug-updated .kpi-help,
+    .kpi-outdated .kpi-help {
+      right: 5.65rem;
+    }
+    .kpi-aug-updated-mark,
+    .kpi-outdated-mark {
+      position: absolute;
+      top: 0.28rem;
+      right: 0.4rem;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      pointer-events: none;
+    }
+    .kpi-outdated {
+      opacity: 0.45;
+      filter: grayscale(0.55);
+    }
+    .kpi-outdated-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gg-brown-muted);
+    }
+    .kpi-aug-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.05rem;
+      height: 1.05rem;
+      border-radius: 999px;
+      background: var(--gg-positive);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 900;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .kpi-aug-check::after { content: "✓"; }
+    .kpi-aug-updated-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gg-positive);
     }
     .help-popup-backdrop {
       position: fixed;
@@ -1465,16 +1494,38 @@
       color: var(--gg-royal);
       font-weight: 800;
     }
-    .cockpit-tabs .view-tab:hover { border-color: var(--gg-royal-border); color: var(--gg-royal); }
+    .cockpit-tabs .view-tab:hover {
+      border-color: var(--gg-burnt);
+      color: var(--gg-burnt-dark);
+      background: var(--gradient-tab-hover);
+    }
     .cockpit-tabs .view-tab.active {
-      background: var(--gg-royal-deep); color: #fff; border-color: var(--gg-royal-deep);
+      background: var(--gradient-tab-active);
+      color: #1a0c04;
+      border-color: var(--gg-burnt-dark);
+      box-shadow: 0 1px 4px rgba(154, 63, 20, 0.18);
+      font-size: 1.38rem;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+    }
+    .cockpit-tabs .view-tab.active:hover {
+      color: #1a0c04;
+      border-color: var(--gg-burnt-dark);
+      background: var(--gradient-tab-active);
     }
     .cockpit-tabs .view-tab .tab-count {
       display: inline-block; margin-left: 0.35rem; padding: 0.05rem 0.4rem; border-radius: 999px;
       font-size: var(--font-min-rem); background: rgba(255,255,255,0.2);
     }
+    .cockpit-tabs .view-tab.active .tab-count {
+      background: rgba(26, 12, 4, 0.16);
+      color: #1a0c04;
+    }
     .cockpit-tabs .view-tab:not(.active) .tab-count {
       background: var(--gg-royal-dim); color: var(--gg-royal-deep);
+    }
+    .cockpit-tabs .view-tab.active .tab-help {
+      color: rgba(26, 12, 4, 0.78);
     }
     .cockpit-tabs .view-tab.view-tab-wip {
       opacity: 0.55;
@@ -2298,9 +2349,11 @@
       gap: 0.65rem 1rem;
       align-items: start;
     }
-    .data-report-root .data-chart-table-grid > .kpi-chart-card {
+    .data-report-root .data-chart-table-grid > .kpi-chart-card,
+    .data-report-root .data-chart-table-grid > .kpi-chart-wip-shell {
       margin: 0;
       padding: 0;
+      min-width: 0;
     }
     .data-report-root .data-chart-table-grid .kpi-chart-plot {
       gap: 0.45rem;
@@ -2311,19 +2364,31 @@
       border-top: 0;
       min-width: 0;
     }
-    /* Lead Channel (and similar): restore KPI chart chrome inside Data cards */
-    .data-report-root .data-card-kpi-chart {
-      padding: 0.85rem 1rem 1rem;
+    /* Lead Channel (and similar): match KPI split-panel chrome — no nested black card */
+    .data-report-root .data-card.data-card-kpi-chart {
+      border: 1px solid var(--gg-royal-border);
+      border-left: 1px solid var(--gg-royal-border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 0;
+      overflow: hidden;
     }
     .data-report-root .data-card-kpi-chart .data-card-body {
       margin-top: 0;
+      padding: 0;
+    }
+    .data-report-root .data-card-kpi-chart .kpi-split-panel {
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
     }
     .data-report-root .data-card-kpi-chart .kpi-chart-card {
-      background: var(--gg-paper, #fffcf7);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      box-shadow: var(--gg-box-shadow);
-      padding: 0.65rem 0.75rem 0.75rem;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0.85rem 1rem 1rem;
       margin: 0;
     }
     .data-report-root .data-card-kpi-chart .kpi-chart-svg-stacked,
@@ -2334,6 +2399,11 @@
     .data-report-root .data-card-kpi-chart .kpi-chart-head {
       display: block;
       margin-bottom: 0.35rem;
+    }
+    .data-report-root .data-card-kpi-chart .kpi-chart-detail {
+      margin-top: 0.85rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
     }
     .data-report-root .data-card-kpi-chart .data-chart-side-table {
       padding: 0.35rem 0.15rem 0;
@@ -2997,12 +3067,9 @@
     }
     .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.14); stroke-width: 1; }
     .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.4); stroke-width: 1.5; }
-    /* Stacked bars: one dark outline — never white/paper hairlines between segments.
-       Exclude plot background so the yellow field does not get a heavy box stroke. */
+    /* Stacked bars: soft segment edges — match KPI chart chrome, no black outlines. */
     .kpi-chart-svg-stacked rect:not(.kpi-chart-plot-bg) {
-      stroke: var(--gg-royal-deep);
-      stroke-width: 1.25;
-      vector-effect: non-scaling-stroke;
+      stroke: none;
     }
     .kpi-chart-total { fill: var(--gg-royal-deep); font-size: 13px; font-weight: 800; }
     .kpi-chart-detail {
@@ -3083,12 +3150,16 @@
     .kpi-goals-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      column-gap: 0.85rem;
-      row-gap: 0.45rem;
+      column-gap: 1.35rem;
+      row-gap: 0.85rem;
       align-items: stretch;
     }
     /* Key Metrics — four equal gauge tiles in one row */
     .kpi-stat-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    /* Team goals — four tiles: Missed · DUI · Yelp Reviews & Leads · Yelp Leads */
+    .kpi-goals-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     .kpi-stat-card .kpi-metric-icon {
@@ -3212,6 +3283,33 @@
       font-weight: 900;
       letter-spacing: 0.06em;
       text-transform: uppercase;
+    }
+    .kpi-goals-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .kpi-goals-related-band {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-top: 0.15rem;
+    }
+    .kpi-goals-related-head {
+      display: block;
+      width: 100%;
+    }
+    .kpi-goals-related-grid > .kpi-related-projects-spacer {
+      min-height: 0;
+    }
+    .kpi-goals-related-grid .kpi-related-projects {
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .kpi-goals-funnel {
+      grid-template-columns: minmax(0, 1fr);
+      width: 100%;
+      margin-top: 0.75rem;
     }
     .kpi-related-projects ul {
       display: grid;
@@ -3405,14 +3503,17 @@
     .kpi-goals-grid {
       max-width: none;
     }
+    @media (max-width: 1200px) {
+      .kpi-goals-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 900px) {
       .kpi-goals-grid { grid-template-columns: 1fr; max-width: 22rem; }
     }
     .kpi-goal-card {
-      display: flex; flex-direction: column; align-items: stretch; gap: 0.65rem;
+      display: flex; flex-direction: column; align-items: stretch; gap: 0.8rem;
       text-align: left; font: inherit; cursor: pointer;
       /* Top/side gutters reserved for absolute status + ? chrome — do not shrink. */
-      padding: 1.55rem 1.7rem 0.85rem 1.7rem; border-radius: 12px;
+      padding: 1.85rem 2rem 1.15rem 2rem; border-radius: 12px;
       border: 2px solid var(--gg-royal-border); background: linear-gradient(165deg, var(--gg-royal-dim) 0%, var(--gg-paper) 55%);
       color: var(--gg-brown); box-shadow: var(--gg-box-shadow);
       position: relative; min-width: 0;
@@ -3782,7 +3883,9 @@
       border: none; padding: 0; background: transparent; box-shadow: none;
     }
     /* Panel already has one corner mark — never stack a second on the chart plot. */
-    .kpi-split-panel .kpi-chart-card > .kpi-status-corner {
+    .kpi-split-panel .kpi-chart-card > .kpi-status-corner,
+    .kpi-split-panel .kpi-chart-card > .kpi-outdated-mark,
+    .kpi-split-panel .kpi-chart-card > .kpi-aug-updated-mark {
       display: none;
     }
     .kpi-split-panel .kpi-dash-card-flush {
@@ -4194,9 +4297,11 @@
       gap: 0.65rem 1rem;
       align-items: start;
     }
-    .data-chart-table-grid > .kpi-chart-card {
+    .data-chart-table-grid > .kpi-chart-card,
+    .data-chart-table-grid > .kpi-chart-wip-shell {
       margin: 0;
       padding: 0;
+      min-width: 0;
     }
     .data-chart-table-stack {
       display: flex;
@@ -4992,7 +5097,6 @@
       font-size: 0.88rem;
     }
     .toc-table col.toc-col-select { width: 3.25rem; }
-    .toc-table col.toc-col-priority { width: auto; }
     .toc-table col.toc-col-project { width: 100%; }
     .toc-table th, .toc-table td {
       padding: 0.55rem 0.5rem; vertical-align: middle;
@@ -5033,10 +5137,6 @@
     .card.details-hidden .expand-btn {
       opacity: 0.55;
     }
-    .toc-col-priority {
-      width: auto; text-align: left; vertical-align: middle; white-space: nowrap;
-    }
-    .toc-table thead .toc-col-priority { text-align: left; }
     .picker-zone-outlines .picker-zone-head {
       display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;
     }
@@ -5077,17 +5177,6 @@
     .toc-prio-btn:hover { background: var(--gg-royal-dim); }
     .toc-item.toc-prio-editing td { background: rgba(45, 20, 84, 0.04); }
     .toc-col-project { width: 100%; white-space: nowrap; }
-    .toc-sort-btn {
-      background: none; border: none; padding: 0.15rem 0;
-      font: inherit; color: inherit; cursor: pointer; text-align: left;
-      text-transform: uppercase; letter-spacing: 0.04em; width: 100%;
-    }
-    .toc-sort-btn:hover, .toc-sort-btn.active { color: var(--gg-royal); }
-    .toc-sort-btn .sort-arrow { font-size: var(--font-min-rem); margin-left: 0.15rem; }
-    .toc-priority {
-      font-weight: 700; color: var(--gg-royal);
-      display: inline; text-align: left; line-height: 1.3; white-space: nowrap;
-    }
     .toc-title { line-height: 1.4; white-space: nowrap; width: 100%; }
     .toc-title-row {
       display: flex;
@@ -5281,15 +5370,12 @@
   <div id="main-app">
     <header class="cockpit-header">
       <h1 class="cockpit-title"><span>Operations Dashboard</span></h1>
-      <div class="cockpit-intro">
-        <p class="cockpit-synopsis">Consolidated operating metrics for assessing firm health and measuring how project investments translate into operational results.</p>
-      </div>
     </header>
 
     <div class="cockpit-tabs-wrap">
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
+        <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs <span class="tab-help" data-help-title="KPIs" data-help-desc="August 2026 MTD through Aug 11. Leads Generated = 24 LSA only. New cases blank until Contact export. Cost per direct contact removed. Still missing: Call details, monthly Search campaign with Phone calls, HubSpot, ledger, LSA account_activities. Tap ? on a KPI for description, formula, and export fields." aria-label="How to use KPIs">?</span></button>
         <button type="button" class="view-tab" data-view="picker" role="tab" aria-selected="false">Guide <span class="tab-help" data-help-title="Guide" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use Guide">?</span></button>
-        <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs <span class="tab-help" data-help-title="KPIs" data-help-desc="Tiles revised 2026-07-25. Primary month June 2026. Sources: LSA leads-inbox (16) as of Jul 24 (Jun/Jul* charged rates); May LSA held from fuller prior pull; LSA Home Services spend from Jul 17 activities (Jul 24 file incomplete); Call details Jul 11; Campaign report (17); MyCase cases/fees Jul 1; ledger credits through Jul 15. Tap ? on a KPI for description, formula, and export fields." aria-label="How to use KPIs">?</span></button>
         <button type="button" class="view-tab" data-view="data" role="tab" aria-selected="false">Data <span class="tab-help" data-help-title="Data" data-help-desc="Operating charts from the same exports as KPIs: Lead Channel + Cases Created (MyCase Jul 1), LSA charge rate (inbox Jul 24 · spend Jul 17), cash collected (ledger Jul 15), source mix, Cases MoM. Jul* = partial month. Each card’s ? shows description, formula, and file/fields." aria-label="How to use Data">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="impact" role="tab" aria-selected="false" aria-description="Under construction">Results <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Results" data-help-desc="Project-tied campaign results, completed report-out, and cart revenue calculator. Under construction until exports and INDEX statuses are wired end-to-end." aria-label="How to use Results">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="recommendations" role="tab" aria-selected="false" aria-description="Under construction">Recommendations &amp; Predictions <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Recommendations & Predictions" data-help-desc="Ranked actions plus rest-of-year case forecast, expense pace, and collectible-cash projection. Blurred until ready to publish." aria-label="How to use Recommendations and Predictions">?</span></button>
@@ -5341,18 +5427,14 @@
             <p class="priority-table-intro" id="package-intro"></p>
             <p class="table-filter-status" id="table-filter-status"></p>
             <div class="toc-scroll">
-              <table class="toc-table" data-toc-cols="3">
+              <table class="toc-table" data-toc-cols="2">
                 <colgroup>
                   <col class="toc-col-select" />
-                  <col class="toc-col-priority" />
                   <col class="toc-col-project" />
                 </colgroup>
                 <thead>
                   <tr>
                     <th class="toc-col-select" scope="col">Add</th>
-                    <th class="toc-col-priority" scope="col">
-                      <button type="button" class="toc-sort-btn active" data-sort="priority" id="toc-sort-priority">Short title <span class="sort-arrow" id="sort-arrow-priority">▲</span></button>
-                    </th>
                     <th class="toc-col-project" scope="col">Project</th>
                   </tr>
                 </thead>
@@ -5445,11 +5527,11 @@
 
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20260727-hubspot-casey-r1"></script>
+  <script src="projects-data.js?v=20260730-wasteaud-fee-label"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260724-auto-stack-r1"></script>
-  <script src="kpi-report.js?v=20260727-kpi-funnel-r1"></script>
+  <script src="kpi-report.js?v=20260811-aug-gray"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260727-kpi-guide-filter-r1"></script>
+  <script src="app.js?v=20260730-wasteaud-fee-label"></script>
 </body>
 </html>

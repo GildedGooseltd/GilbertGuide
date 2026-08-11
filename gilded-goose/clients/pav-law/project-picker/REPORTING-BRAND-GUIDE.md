@@ -202,7 +202,7 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 
 ### Layout rules
 
-- **Bar chart:** direct value labels; baseline visible; newest period first.
+- **Bar chart:** direct value labels; baseline visible; periods run oldest → newest, left to right.
 - **Line chart:** use for spend/cash trends; cash = green, spend = plum; label both lines.
 - **Combo chart:** bars for volumes, line for money; separate left/right units.
 - **Donut:** maximum 4–5 segments; legend always present; exact share in the detail table.
@@ -210,12 +210,15 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title, subtitle })` — section/panel titles are not a substitute. Then period/source caption (subtitle) + plot + detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the caption/table.
 - **Plot area:** light yellow `--gg-chart-plot` (`#fff5ca`) behind every graph for series contrast; stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
 - **Chart border:** thin royal inner line plus aged-brass accent details; ornament must not compete with labels or data.
+- **Time axis direction:** every month or period axis reads **oldest → newest, left to right**, so the most recent period is the rightmost bar or point. Caption the direction as `oldest → newest`. In `kpi-report.js` use `chronological()` or `lastPeriods()` for display order — `newestFirst()` is reserved for MoM math and current-period lookups, never for rendering.
+- **Forecast periods:** extend to the right of the last actual period, separated by a dashed divider, drawn at reduced opacity, with the actual and forecast spans captioned above the plot.
 - **Axis labels:** include metric and unit; never rely on color alone.
 - **Y-scale headroom:** the top of the numeric scale must always be **at least one integer above** the highest plotted data point. Bars and lines must not touch or clip the top tick. Use `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js` — never set `axisMax` equal to the data max.
 - **Y-axis title clearance:** leave clear space between the rotated axis title and the numeric tick labels. Use left plot pad ≥ **84** when the title is a multi-word phrase (e.g. “Cost per response ($)”). Title sits near the outer edge (~18px); tick labels sit just left of the plot (~pad.l − 10). Do not let the title overlap `$` ticks.
 - **Channel lock:** LSA = blue; Digital/Search = burnt orange; Website/HubSpot = rose; Spend = plum.
 - **Unavailable data:** slate/gray with a written “No data” label — never red.
 - **Target lines:** every plotted number below its applicable target or minimum line is red (`--gg-negative`); values on or above the line keep their assigned nonnegative color. Keep the number visible so color is not the only signal.
+- **Goal-tile chart box:** every target-bar chart inside a `.kpi-goal-card` uses the same drawing box so tiles in one row read at the same scale — viewBox `320 × 210`, pad `l 36 · r 10 · t 18 · b 28`, bar width up to `88`. Auto Cases is the reference; Missed Opportunity and any new goal tile match it. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` rather than letting the compact defaults shrink one tile.
 - **Half-moon gauges:** show only the numeric value at the inside base of the arc. Do not place descriptive text or target captions inside or beneath the gauge; put that context in the adjacent title/stat block.
 - **Gauge scales:** both endpoint labels use the same black text (`#111`) regardless of progress or target state. A success state may recolor the arc and center value, never the scale.
 - **Gauge goal marks:** use an unlabeled tick. Explain the goal in the adjacent stats rather than on the gauge.
@@ -224,7 +227,7 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 
 ## 8. Reporting table catalog
 
-Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with its column headers. All tables: zebra rows, right‑aligned numeric columns, current month first where a period axis exists.
+Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with its column headers. All tables: zebra rows, right‑aligned numeric columns, and periods ordered oldest → newest where a period axis exists — top row or leftmost month column is the earliest period, most recent is last.
 
 ### Pipeline & cases
 
@@ -284,7 +287,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 - **Zebra:** `.kpi-chart-table tbody tr:nth-child(even)` soft royal wash `rgba(45,20,84,0.035)`.
 - **Headers:** `.kpi-table th` royal (`--gg-royal`), left‑aligned; numeric columns right‑aligned.
 - **Verification:** red **✕** = unverified; green outline = export‑backed (no star).
-- **Time order:** current (newest) month first, then backward — label the axis direction.
+- **Time order:** oldest period first, reading forward to the most recent — label the axis direction as `oldest → newest`. Totals rows stay pinned at the bottom.
 - **Categorical cells:** royal, blue, burnt orange, rose, plum, or slate only. Gold is reserved for critical highlights, never an ordinary category.
 - **Fees and totals:** plum or royal; do not use green unless the value explicitly means cash received or a positive result.
 - **Missing/unavailable:** slate/gray; red is reserved for an actual error, gap, loss, or below-target state.

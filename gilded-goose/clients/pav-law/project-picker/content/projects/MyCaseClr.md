@@ -67,22 +67,13 @@
 
 ## WIP
 
-- Add Spanish-speaking checkbox on MyCase Client/Contact · train Romina / Casey / America to check on intake
-- **Create MyCase fields:** Booked / closed by · Case ranking (A/B/C) — see Field build below · T068
-- Lock Lead Source values to LSA · Search · Form · Referral · Direct · set at consult booked · confirm at hired
-- Mirror the same source on HubSpot deal when the matter is booked or hired
-- HubSpot contacts export: Original source · create date · lifecycle · meetings · closed-won / hired date → drop in `Ad Reports/exports/hubspot/_drop-exports-here/`
-- Audit Romina Lead Source updates · one month of LSA Booked vs hired counts · T067
-- Backfill known Spanish-preferring clients from notes after checkbox is live
+- Add Spanish-speaking checkbox on MyCase Client/Contact
+- Create MyCase fields: Booked / closed by · Case ranking (A/B/C) — see Field build below · T068
 - Cleanse Lead Source · phone · name · email · practice/case type · Created dates · open vs closed · duplicates
 - Confirm marketing consent / do-not-contact field for safe HubSpot import
-- Export hygiene → map to HubSpot `pl_lead_source` · Spanish flag · Booked / closed by · Case ranking · import batch tag
-- Run rows in [INTAKE-DATA-CLEANSE-SPANISH-CALLS.md](../../../INTAKE-DATA-CLEANSE-SPANISH-CALLS.md) §1 · CSV filter `system` = MyCase
-- After fields live: closed-matters export with Closed by + Case ranking → unlocks KPI #04 staff + mix reporting (OpsDash)
-
 ## Completed
 
-- Lead Source field added in MyCase
+- Lead Source field added in MyCase, plus other client detail fields
 
 ---
 
@@ -136,29 +127,29 @@ Locked values for every new matter:
 ### Field build — Booked / closed by (who closed)
 
 1. MyCase → Settings → Custom fields
-2. Add dropdown: **Booked / closed by**
+2. Add dropdown: Booked / closed by
 3. Options: Casey · Romina · Andrew · America · Other
-4. Place on intake / matter view used when consult is booked, client is hired, **and** when the matter is closed
+4. Place on intake / matter view used when consult is booked, client is hired, and when the matter is closed
 5. SOP:
    - Set when consult is booked
    - Update when lead is closed as hired if a different person closed it
-   - Confirm / update again when the **case file closes** (who closed the matter)
+   - Confirm / update again when the case file closes (who closed the matter)
 6. HubSpot map: same value → contact property `pl_booked_closed_by`
 7. Create HubSpot property if missing: Settings → Data Management → Properties → Contact · internal name `pl_booked_closed_by` · label Booked / closed by · dropdown with the same options
-8. **Reporting unlock:** staff attribution on hired + closed counts (KPI #04 support · OpsDash)
+8. Reporting unlock: staff attribution on hired + closed counts (KPI #04 support · OpsDash)
 
 ### Field build — Case ranking
 
 1. MyCase → Settings → Custom fields
-2. Add dropdown: **Case ranking**
+2. Add dropdown: Case ranking
 3. Options (locked):
-   - **A** — High priority / complex / higher-fee track
-   - **B** — Standard
-   - **C** — Lower / volume
+   - A — High priority / complex / higher-fee track
+   - B — Standard
+   - C — Lower / volume
 4. Place on matter view at hire · review at case close
 5. SOP: set when hired · confirm when closed · do not leave blank on new 2026 matters
 6. HubSpot map (optional): contact/deal property `pl_case_ranking` · same A · B · C values
-7. **Reporting unlock:** mix of A/B/C closed and open matters · fee-by-rank vs #29 practice means · OpsDash dashboard
+7. Reporting unlock: mix of A/B/C closed and open matters · fee-by-rank vs #29 practice means · OpsDash dashboard
 
 ### HubSpot contacts export — attribution pull
 
@@ -203,4 +194,4 @@ Required columns:
 - 2026-07-25: Added channel source SOP for KPI #30–#32 · HubSpot contacts attribution export into `_drop-exports-here/`.
 - 2026-07-25: Task T067 — audit Romina Lead Source updates · one month LSA Booked vs hired counts.
 - 2026-07-25: Attribution methods locked — LSA phone join · Form HubSpot manual · Referral MyCase review.
-- 2026-07-25: Spec’d **Case ranking** (A/B/C) · expanded Booked / closed by SOP to matter close · T068 create fields + OpsDash reporting export.
+- 2026-07-25: Spec’d Case ranking (A/B/C) · expanded Booked / closed by SOP to matter close · T068 create fields + OpsDash reporting export.

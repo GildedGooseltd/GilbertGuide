@@ -1223,6 +1223,10 @@ export function parseIndexEstCost(raw) {
     return { label: s, fee: nums[0], ongoingFee: null, monthlyOnly: true };
   }
   if (/\+/.test(s) && nums.length >= 2) {
+    /* "$500 + 20% verified savings" — second number is a share, not a monthly dollar fee. */
+    if (/%/.test(s) && !/\/\s*mo/i.test(s)) {
+      return { label: s, fee: nums[0], ongoingFee: null };
+    }
     return { label: s, fee: nums[0], ongoingFee: nums[1] };
   }
   if (/\/\s*mo/i.test(s) && nums.length >= 1) {

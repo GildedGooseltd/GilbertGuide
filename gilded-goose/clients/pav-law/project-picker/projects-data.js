@@ -44,12 +44,12 @@ window.PROJECT_DATA = {
     ],
     "id": "retainer",
     "title": "Digital Ads Maintenance Retainer",
-    "tldr": "Ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
+    "tldr": "Ongoing oversight of Google Ads and Local Services Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
     "valueAdded": [
-      "Ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
+      "Ongoing oversight of Google Ads and Local Services Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
       "Monthly reporting catches waste before it runs another month",
-      "Keeps Google Ads, LSA, and Microsoft Ads under one scope",
-      "LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing"
+      "Keeps Google Ads and LSA under one scope",
+      "LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing and improved lead scoring"
     ],
     "valueIcons": [
       "foundation",
@@ -62,9 +62,7 @@ window.PROJECT_DATA = {
       "UTM tracking on contact form URLs, media, and ads",
       "Lead flow optimization",
       "LSA audit and county targeting cleanup",
-      "LSA Phase 1 — speed-to-lead intake recommendations, limited implementation",
-      "GBP content, hours, and service-area cleanup",
-      "Paused Mountain DUI + Demand Gen bleed (confirmed $0 in Jul Search period)"
+      "GBP content, hours, and service-area cleanup"
     ],
     "inProgressItems": [
       "Blocked: LSA performance metrics — rating/charge/status hygiene poor"
@@ -77,29 +75,29 @@ window.PROJECT_DATA = {
       "#09",
       "#15"
     ],
-    "feeEstimate": 4500,
+    "feeEstimate": 4400,
     "feeEstimateOngoing": null,
     "feeEstimateLane": "retainer_ads",
     "feeEstimateUnit": "mo",
     "feeEstimateLocalMid": 3000,
     "feeEstimateNationalMid": 3800,
     "feeEstimateScope": {
-      "raw": 10.08,
+      "raw": 9.25,
       "parts": {
         "valueAdd": 4,
         "tasks": 1,
-        "completed": 7,
+        "completed": 5,
         "info": 0,
         "ab": 0,
         "kpis": 5,
-        "descUnits": 0.28
+        "descUnits": 0.25
       }
     },
     "feeEstimateComplexity": 1.1,
     "feeEstimateBlend": "55% local / 45% national",
     "feeEstimatePackaged": false,
-    "feeEstimateDelta": 1600,
-    "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.22 (10.08 units) · complexity ×1.1"
+    "feeEstimateDelta": 1500,
+    "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.20 (9.25 units) · complexity ×1.1"
   },
   "projects": [
     {
@@ -342,9 +340,7 @@ window.PROJECT_DATA = {
         "Unique UTM-tagged website links per profile so GA4/HubSpot can rank which platforms earn traffic",
         "Merge Andrew Brown and Pav Law profiles",
         "Review FindLaw / Justia contracts, services, and contract terms",
-        "Yelp Ads CTA A/B in August 2026 — four button lines (≤30 chars), one week each; track leads + calls",
-        "Yelp promo live at $5/day — profile updated for promotion; add stories + listing enhancements through August",
-        "August channel goal: 20 referrals on Yelp",
+        "Delete Facebook and Instagram pages and remake a business account for ads",
         "Yelp review ask — referral email sent to past clients for more Yelp reviews while promo runs",
         "Double-check HubSpot setup and start getting the team to use the phone and app daily",
         "After Casey is trained on answering calls, route Yelp leads more easily to a HubSpot number (gate on HsVoip)"
@@ -358,19 +354,16 @@ window.PROJECT_DATA = {
         "intake"
       ],
       "completedItems": [
-        "Yelp $300 ad credit — claim/use with listing refresh + August CTA test",
+        "Yelp $300 ad credit claimed with listing refresh — remaining promo spend + upgrade tests tracked on Yelpv1",
         "Audit/Inventory of every live profile",
         "Lite general cleanse with account transfer(s)",
         "Google Business Profile update, social links lite refresh and license verification",
         "2026-07-26: Yelp referral email sent — ask for more Yelp reviews ahead of promotions / August CTA test"
       ],
       "inProgressItems": [
-        "Reddit promo credit — recheck Ads account (may have expired June); if still live, run under SocialAds",
-        "LinkedIn company showcase still shows low followers and 2024-era launch copy",
-        "Andrew + Casey personal LinkedIn and directory profiles",
-        "Extend UTM naming to all profile links",
-        "Follow Yelp review volume after referral email (baseline 6 reviews @ 5.0 as of mid-Jul scrape; Yelp ads 6 leads / 30 days as of 2026-07-26)",
-        "**Gate:** once Casey is trained on answering calls (HsVoip / LsaCall), send Yelp call leads to a HubSpot number for easier CRM logging — do not switch Yelp phone path until that training is done"
+        "Yelp promo live at $5/day",
+        "Yelp Review Request Email Campaign Creation & Launch",
+        "Yelp ads performance, remaining promo spend, upgrade tests, HubSpot UTMs, and phone swap"
       ],
       "abQuestions": [],
       "kpiRefs": [
@@ -382,17 +375,17 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "40%",
       "depositPct": 0.4,
-      "feeEstimate": 3200,
+      "feeEstimate": 3000,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 20.74,
+        "raw": 14.99,
         "parts": {
-          "valueAdd": 10,
-          "tasks": 6,
+          "valueAdd": 8,
+          "tasks": 3,
           "completed": 5,
           "info": 0,
           "ab": 0,
@@ -403,8 +396,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1400,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.34 (20.74 units) · complexity ×1.1"
+      "feeEstimateDelta": 1200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.29 (14.99 units) · complexity ×1.1"
     },
     {
       "priority": 4,
@@ -529,21 +522,13 @@ window.PROJECT_DATA = {
         "intake"
       ],
       "completedItems": [
-        "Lead Source field added in MyCase"
+        "Lead Source field added in MyCase, plus other client detail fields"
       ],
       "inProgressItems": [
-        "Add Spanish-speaking checkbox on MyCase Client/Contact · train Romina / Casey / America to check on intake",
-        "**Create MyCase fields:** Booked / closed by · Case ranking (A/B/C) — see Field build below · T068",
-        "Lock Lead Source values to LSA · Search · Form · Referral · Direct · set at consult booked · confirm at hired",
-        "Mirror the same source on HubSpot deal when the matter is booked or hired",
-        "HubSpot contacts export: Original source · create date · lifecycle · meetings · closed-won / hired date → drop in `Ad Reports/exports/hubspot/_drop-exports-here/`",
-        "Audit Romina Lead Source updates · one month of LSA Booked vs hired counts · T067",
-        "Backfill known Spanish-preferring clients from notes after checkbox is live",
+        "Add Spanish-speaking checkbox on MyCase Client/Contact",
+        "Create MyCase fields: Booked / closed by · Case ranking (A/B/C) — see Field build below · T068",
         "Cleanse Lead Source · phone · name · email · practice/case type · Created dates · open vs closed · duplicates",
-        "Confirm marketing consent / do-not-contact field for safe HubSpot import",
-        "Export hygiene → map to HubSpot `pl_lead_source` · Spanish flag · Booked / closed by · Case ranking · import batch tag",
-        "Run rows in INTAKE-DATA-CLEANSE-SPANISH-CALLS.md §1 · CSV filter `system` = MyCase",
-        "After fields live: closed-matters export with Closed by + Case ranking → unlocks KPI #04 staff + mix reporting (OpsDash)"
+        "Confirm marketing consent / do-not-contact field for safe HubSpot import"
       ],
       "abQuestions": [],
       "kpiRefs": [
@@ -558,17 +543,17 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 4300,
+      "feeEstimate": 4000,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "intake_voip",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 23.65,
+        "raw": 13.65,
         "parts": {
           "valueAdd": 6,
-          "tasks": 12,
+          "tasks": 4,
           "completed": 1,
           "info": 0,
           "ab": 0,
@@ -579,8 +564,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2800,
-      "feeEstimateNote": "intake voip lane · local mid $2,500 · national mid $3,250 · scope ×1.36 (23.65 units) · complexity ×1.1"
+      "feeEstimateDelta": 2500,
+      "feeEstimateNote": "intake voip lane · local mid $2,500 · national mid $3,250 · scope ×1.27 (13.65 units) · complexity ×1.1"
     },
     {
       "priority": 5,
@@ -832,11 +817,10 @@ window.PROJECT_DATA = {
       ],
       "id": "PerfPay",
       "title": "Performance Plan Payouts",
-      "tldr": "Clear performance-based bonus model with goals the team can work toward — including a commission-only sales track that can equal full-time pay without a salary.",
+      "tldr": "Clear performance-based bonus model with goals the team can work toward.",
       "valueAdded": [
-        "Clear performance-based bonus model with goals the team can work toward — including a commission-only sales track that can equal full-time pay without a salary.",
+        "Clear performance-based bonus model with goals the team can work toward.",
         "Ties pay to measurable outcomes — booked consults, signed matters, outbound pipeline",
-        "Uses collectible pace vs target as a Romina performance indicator, paired with intake and payment-follow-up actions she directly controls",
         "Commission-only sales: rising flat $ through client lifecycle (not % of fees/trust)",
         "Employee appreciation markers (apparel/gift sets at set thresholds)",
         "Separate tracks for employee, contractor, and referral-partner payout styles"
@@ -849,12 +833,7 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "[ ] Lock business goals G1–G6 + incentive-eligible KPIs",
-        "[ ] Fill target FTE $/mo + expected volume → publish L1–L5 flats",
         "[ ] Counsel review of L4 (signed) and L5 (first funds) gates",
-        "[ ] Re-add outbound / attributed matter KPIs to `kpi-list.md` if paying on them",
-        "[ ] Set Romina's collectible pace target, controlled action gates, source of truth, and fixed-dollar tier",
-        "[ ] Replace the 80% collectible estimate with QuickBooks actual cash before activating the tier",
-        "[ ] Draft tier matrix for remaining employees vs contractors",
         "[ ] List cash-generating tasks already tracked (calls, bookings, referrals)"
       ],
       "abQuestions": [],
@@ -863,29 +842,29 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 3000,
+      "feeEstimate": 2600,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "performance_comp",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1600,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 16.31,
+        "raw": 8.89,
         "parts": {
-          "valueAdd": 6,
-          "tasks": 8,
+          "valueAdd": 5,
+          "tasks": 3,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.31
+          "descUnits": 0.14
         }
       },
-      "feeEstimateComplexity": 1.145,
+      "feeEstimateComplexity": 1.08,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1500,
-      "feeEstimateNote": "performance comp lane · local mid $1,600 · national mid $2,500 · scope ×1.30 (16.31 units) · complexity ×1.145"
+      "feeEstimateDelta": 1100,
+      "feeEstimateNote": "performance comp lane · local mid $1,600 · national mid $2,500 · scope ×1.20 (8.89 units) · complexity ×1.08"
     },
     {
       "priority": 9,
@@ -1201,91 +1180,105 @@ window.PROJECT_DATA = {
       "campaignType": "Yelp Ads",
       "status": "available",
       "publishStatus": "unpublished",
-      "estimatedLeads": "4–8/mo when boosted with military geo + keyword focus",
+      "estimatedLeads": "4–10/mo once promo + upgrades + tracking are live",
       "keywords": [
         "yelp",
-        "military",
-        "fort carson",
-        "active duty",
-        "clearance",
-        "career",
+        "ads",
+        "promo",
+        "upgrade",
+        "hubspot",
+        "utm",
+        "tracking",
+        "phone",
+        "criminal",
         "dv",
         "assault",
         "felony",
-        "weapons",
-        "protection order",
-        "colorado springs",
-        "el paso"
+        "military",
+        "colorado springs"
       ],
       "parentId": "DigProf",
       "id": "Yelpv1",
       "title": "Yelp Ads",
-      "tldr": "Active-duty, reservist, and veteran criminal defense marketing built from pav.law military practice messaging — civilian charges with career, clearance, command, and base-access stakes",
+      "tldr": "Yelp Ads and listing performance for Pav Law criminal defense — not a military-only campaign",
       "valueAdded": [
-        "Active-duty, reservist, and veteran criminal defense marketing built from pav.law military practice messaging — civilian charges with career, clearance, command, and base-access stakes",
-        "Positions Pav Law for service members in Colorado who face dual systems: civilian court and military consequences that can outlast the case file",
-        "Highlights high-risk charge lanes that trigger reporting, clearance review, or protection-order / base-access issues — domestic violence, assault, felonies, weapons, and related matters",
-        "Delivers as a Yelp Ads military flight: custom text, Military Criminal Defense Lawyer boost, Fort Carson / El Paso–weighted geos, and tracked leads/calls separate from Google Search",
-        "Landing path: https://pav.law/areas-of-practice/active-duty-military/ with UTM; pairs with DigProf listing refresh and CONTENT-WRITING-GUIDE voice — rights, record, career, future; free confidential case evaluation",
-        "Does not lead Yelp with auto/DUI; treats every military lead as a career-impact matter, not a generic criminal click"
+        "Yelp Ads and listing performance for Pav Law criminal defense — not a military-only campaign",
+        "Boost winner lanes from Ads evidence: military · domestic violence · assault · felonies; keep auto/DUI off the Yelp lead story",
+        "Spend the $300 Yelp ad credit / promo while the listing is live; keep daily budget tight and measured",
+        "Test Yelp platform upgrades one at a time — keep only what improves leads and calls",
+        "Add HubSpot-tracked links on the listing and posts so GA4/HubSpot can attribute Yelp activity",
+        "Switch the Yelp phone path to the HubSpot number only after the team is trained and using the HubSpot app for calls — gated on HsVoip / LsaCall"
       ],
       "valueIcons": [
         "leads",
+        "crm",
+        "hubspot",
+        "referrals",
+        "efficiency",
         "finance",
         "intake",
         "creative"
       ],
       "completedItems": [
-        "Practice-page source reviewed: https://pav.law/areas-of-practice/active-duty-military/",
-        "Copy draft locked to CONTENT-WRITING-GUIDE voice — no tenure claims, no outcome promises, free confidential case evaluation CTA"
+        "Listing / specialties / unique / history / intro / owner copy drafted under CONTENT-WRITING-GUIDE",
+        "DigProf listing refresh and review-ask email in motion — Yelpv1 owns ads performance, promo, upgrades, and tracking"
       ],
       "inProgressItems": [
-        "Launch custom ad text + Military Criminal Defense Lawyer boost for El Paso / Fort Carson–weighted geos",
-        "Log Yelp leads and calls weekly against military vs general criminal",
-        "After Casey call training gate on DigProf/HsVoip, route Yelp calls to HubSpot number when ready"
+        "Apply $300 Yelp promo / credit against live ads; log spend vs leads weekly",
+        "Rotate platform upgrades one feature at a time; keep winners, drop duds",
+        "Wire HubSpot/UTM links on listing website, Connect posts, and ad destinations",
+        "Custom ad text + keyword boosts for criminal lanes — military as one boost, not the whole account",
+        "August CTA button A/B — coordinate with DigProf schedule",
+        "Gate: HubSpot phone on Yelp only after team is trained on HubSpot app answering"
       ],
       "taskItems": [
-        "Paste locked military custom ad text and CTA into Yelp Ads Customize Ad",
-        "Boost keyword set below; block divorce, bankruptcy, PI, theft, free lawyer junk",
-        "Point landing path to https://pav.law/areas-of-practice/active-duty-military/ or Contact with UTM `yelp-military`",
-        "One-week photo A/B if two approved images exist — change one variable only"
+        "Claim / apply $300 promo; confirm it appears on the Ads billing line",
+        "Inventory Yelp upgrades — remove competitor ads, specialty badges, Call to Action variants, etc. — test one change per week",
+        "Set website and post URLs with HubSpot-friendly UTMs — `utm_source=yelp&utm_medium=referral&utm_campaign=pav-yelp`",
+        "Boost Military Criminal Defense Lawyer · Domestic Violence Lawyer · Assault Lawyer · Felony Lawyer · Protection Order / Restraining Order Lawyer as capacity allows",
+        "Keep public 888 / current Yelp call path until HsVoip + LsaCall training gate clears; then point Yelp to HubSpot number for CRM logging",
+        "Block divorce, bankruptcy, PI, theft, free lawyer junk from boost list"
       ],
       "informationNeeded": [
-        "Confirm weekly Yelp budget and whether military uses the same campaign as general criminal or a separate budget cap",
-        "Confirm photo for military ad — professional headshot vs firm/team image",
-        "Confirm whether Protection Order / Restraining Order Lawyer chips stay boosted with the military flight"
+        "Confirm remaining $300 promo / credit balance and end date",
+        "List which Yelp upgrades are currently on vs available to test",
+        "Confirm HubSpot tracking URL set for website + CTA buttons",
+        "Confirm Casey / Romina HubSpot app call readiness before any phone swap"
       ],
       "abQuestions": [],
       "kpiRefs": [
         "#08",
         "#10",
+        "#11",
         "#14",
         "#15",
-        "#21"
+        "#16",
+        "#21",
+        "#22"
       ],
-      "feeEstimate": 3100,
+      "feeEstimate": 4300,
       "feeEstimateOngoing": null,
-      "feeEstimateLane": "profiles_local",
+      "feeEstimateLane": "intake_voip",
       "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1900,
-      "feeEstimateNationalMid": 2500,
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 19.24,
+        "raw": 26.99,
         "parts": {
           "valueAdd": 6,
-          "tasks": 7,
+          "tasks": 12,
           "completed": 2,
-          "info": 3,
+          "info": 4,
           "ab": 0,
-          "kpis": 5,
-          "descUnits": 0.29
+          "kpis": 8,
+          "descUnits": 0.19
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.33 (19.24 units) · complexity ×1.1"
+      "feeEstimateDelta": 3400,
+      "feeEstimateNote": "intake voip lane · local mid $2,500 · national mid $3,250 · scope ×1.39 (26.99 units) · complexity ×1.1"
     },
     {
       "priority": 13,
@@ -1439,7 +1432,7 @@ window.PROJECT_DATA = {
       "category": "Creative / Social",
       "campaignType": "Social + paid social",
       "status": "available",
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "estimatedLeads": "Upper-funnel traffic → site and remarketing pool",
       "keywords": [
         "creative",
@@ -1478,8 +1471,11 @@ window.PROJECT_DATA = {
       "inProgressItems": [
         "Romina event social support — HubSpot-connected publishing not finished",
         "Reddit Ads account + pixel/UTM",
+        "Reddit promo credit — recheck Ads account (may have expired June)",
         "Creative from NtguiltAd prompt library for Reddit + Display",
-        "Landing destination (NTGUILT.com vs pav.law contact)"
+        "Landing destination (NTGUILT.com vs pav.law contact)",
+        "LinkedIn company showcase still shows low followers and 2024-era launch copy",
+        "Andrew + Casey personal LinkedIn and directory profiles"
       ],
       "informationNeeded": [
         "Run Reddit before or after next PPIR/ASCEND weekend?"
@@ -1490,17 +1486,17 @@ window.PROJECT_DATA = {
       "estCostLabel": "$4,500",
       "paymentPlanLabel": "30%",
       "depositPct": 0.3,
-      "feeEstimate": 5900,
+      "feeEstimate": 6100,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "social_setup",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 4300,
       "feeEstimateNationalMid": 5300,
       "feeEstimateScope": {
-        "raw": 11.79,
+        "raw": 15.54,
         "parts": {
           "valueAdd": 4,
-          "tasks": 4,
+          "tasks": 7,
           "completed": 5,
           "info": 1,
           "ab": 0,
@@ -1511,8 +1507,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1400,
-      "feeEstimateNote": "social setup lane · local mid $4,250 · national mid $5,250 · scope ×1.24 (11.79 units) · complexity ×1"
+      "feeEstimateDelta": 1600,
+      "feeEstimateNote": "social setup lane · local mid $4,250 · national mid $5,250 · scope ×1.29 (15.54 units) · complexity ×1"
     },
     {
       "priority": 16,
@@ -2202,7 +2198,7 @@ window.PROJECT_DATA = {
       "fee": 500,
       "category": "Finance / Operations",
       "campaignType": "Full Financial Audit",
-      "status": "recommended",
+      "status": "available",
       "publishStatus": "published",
       "estimatedLeads": "N/A — cost savings (not lead-gen)",
       "keywords": [
@@ -2229,13 +2225,11 @@ window.PROJECT_DATA = {
       "tldr": "Reconcile the firm’s full operating spend across QuickBooks, bank and credit-card statements, ad platforms, software, phone systems, payroll, contractors, sponsorships, vendor agreements, and toll-pass / vehicle-plate billing. Turn the subscription waste already observed into a verified monthly and annual savings plan.",
       "valueAdded": [
         "Reconcile the firm’s full operating spend across QuickBooks, bank and credit-card statements, ad platforms, software, phone systems, payroll, contractors, sponsorships, vendor agreements, and toll-pass / vehicle-plate billing. Turn the subscription waste already observed into a verified monthly and annual savings plan.",
-        "Produce a transaction-level spend ledger by vendor, owner, department, payment method, and contract term",
         "Inventory every recurring subscription, software seat, phone line, domain, hosting plan, directory, and ad tool",
-        "Label each charge keep · renegotiate · consolidate · cancel · dispute · needs owner",
         "Cancel or replace unused SaaS and overlapping tools; document confirmation numbers and effective dates",
-        "Reconcile ad-platform spend and credits against bank and credit-card charges",
         "Reconcile LSA charged leads, disputes, credits, booked leads, and signed cases",
         "Review payroll, contractor, sponsorship, event, and commission costs against actual use and measurable return",
+        "Review FindLaw / Justia contracts, services, and contract terms",
         "Update toll-pass payment method and registered plates so billing matches current vehicles and a working card",
         "Build a 30-day savings action list plus monthly and annual run-rate savings forecast",
         "Add renewal dates and owners so waste does not return"
@@ -2266,19 +2260,18 @@ window.PROJECT_DATA = {
       ],
       "shortTitle": "Financial Waste Audit",
       "estCostLabel": "$500 + 20% verified savings",
-      "ongoingFee": 20,
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 4800,
+      "feeEstimate": 4700,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "audit_finance",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 4300,
       "feeEstimateScope": {
-        "raw": 25.06,
+        "raw": 23.06,
         "parts": {
-          "valueAdd": 11,
+          "valueAdd": 9,
           "tasks": 10,
           "completed": 0,
           "info": 0,
@@ -2290,8 +2283,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1.06,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 4300,
-      "feeEstimateNote": "audit finance lane · local mid $2,500 · national mid $4,250 · scope ×1.37 (25.06 units) · complexity ×1.06"
+      "feeEstimateDelta": 4200,
+      "feeEstimateNote": "audit finance lane · local mid $2,500 · national mid $4,250 · scope ×1.36 (23.06 units) · complexity ×1.06"
     },
     {
       "priority": 50,
@@ -2947,7 +2940,8 @@ window.PROJECT_DATA = {
       "valueAdded": [
         "Unified view of KPIs, data trends, projects, and results",
         "Clearer team goal progress",
-        "Break-even / cash-flow tracking"
+        "Break-even / cash-flow tracking",
+        "Channel ROI tracking and marketing spend per case closed"
       ],
       "valueIcons": [
         "foundation",
@@ -2956,25 +2950,22 @@ window.PROJECT_DATA = {
         "finance"
       ],
       "completedItems": [
-        "2025–2026 MyCase, Google Ads, and LSA data downloaded (limited)",
-        "MyCase contact refresh **2026-07-25** — `Contact_07-25-2026.csv` filed under `mycase/as-of-2026-07-25/` · Guide #02 / Cases Created updated (Jun=36 · Jul*=23 · Jan–Jun=116)",
-        "#28/#29 fee means recomputed from Jul-25 file — **$5,587** n=142 unchanged · trust snapshot n=245 mean $4,283 · forecast H1 quoted $648k / FY cases 201",
+        "First draft completed and waiting on feedback for revisions",
+        "Google Ads API approved and data downloaded from the previous Google Ads account",
+        "MyCase contact refresh 2026-07-25 — `Contact_07-25-2026.csv` filed under `mycase/as-of-2026-07-25/` · Guide #02 / Cases Created updated (Jun=36 · Jul*=23 · Jan–Jun=116)",
+        "#28/#29 fee means recomputed from Jul-25 file — $5,587 n=142 unchanged · trust snapshot n=245 mean $4,283 · forecast H1 quoted $648k / FY cases 201",
         "Known A/R payment-cycle analysis on Predictions (28 plans · assumed monthly)",
         "UTM logic drafted",
         "KPI master table",
         "Wireframe v1 / foundational data"
       ],
       "inProgressItems": [
-        "MyCase data quality is not great; additional fields are needed before transferring to HubSpot",
-        "**T068 / MyCaseClr:** Create MyCase **Booked / closed by** + **Case ranking** (A/B/C) · then pull closed-matters export with those columns for #04 staff + mix reporting",
-        "First draft completed and waiting on feedback for revisions"
+        "MyCase data quality is not great; additional fields are needed before transferring to HubSpot"
       ],
       "informationNeeded": [
-        "Google Ads API credentials (monthly pull + LSA backfill)",
         "HubSpot → Integrations → Google Ads connected",
-        "Previous Google Ads / LSA data",
         "More financial data",
-        "MyCase closed-matters export with **close date · practice · Booked / closed by · Case ranking** (after T068 fields live)"
+        "MyCase closed-matters export with close date · practice · Booked / closed by · Case ranking (after T068 fields live)"
       ],
       "abQuestions": [],
       "kpiRefs": [
@@ -2988,19 +2979,19 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,600",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 4200,
+      "feeEstimate": 4100,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "sprint_general",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 14.16,
+        "raw": 11.96,
         "parts": {
-          "valueAdd": 3,
-          "tasks": 3,
-          "completed": 7,
-          "info": 5,
+          "valueAdd": 4,
+          "tasks": 1,
+          "completed": 8,
+          "info": 3,
           "ab": 0,
           "kpis": 5,
           "descUnits": 0.11
@@ -3009,8 +3000,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2600,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.28 (14.16 units) · complexity ×1"
+      "feeEstimateDelta": 2500,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.25 (11.96 units) · complexity ×1"
     }
   ]
 };

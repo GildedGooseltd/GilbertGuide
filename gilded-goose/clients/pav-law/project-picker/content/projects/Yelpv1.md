@@ -155,6 +155,8 @@ Keep only upgrades that move leads or answered calls. Drop the rest.
 - Default set: `utm_source=yelp&utm_medium=referral&utm_campaign=pav-yelp&utm_content=listing`
 - Ad destinations: same campaign name; change `utm_content` only if A/B testing CTAs
 - Create HubSpot contacts for real Yelp leads; source Yelp
+- Message lead baseline as of 2026-07-29: 3 visible · 2 Criminal defense · 1 Vehicular law · recency 3 / 5 / 13 days · no customer data saved
+- At least 1 of 3 visibly shows a reply; response status for the other 2 is not visible in the screenshot
 - Do not put phone numbers in Yelp Connect post body if the platform blocks them — use the button URL
 
 ### Phone → HubSpot number
@@ -208,6 +210,7 @@ Use the affluent / El Paso–weighted set already in the account. Do not rebuild
 ## Notes
 
 - 2026-07-26: First draft was military-heavy; revised 2026-07-27 to whole-account Yelp performance — promo, upgrades test, HubSpot links, phone gate. Military remains one boost lane.
+- 2026-07-29: Updated Yelp message-lead aggregate from inbox screenshot — 3 messages · Criminal defense 2 · Vehicular law 1.
 - Related: DigProf · HsVoip · LsaCall · CONTENT-WRITING-GUIDE § Yelp
 
 

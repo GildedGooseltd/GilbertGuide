@@ -115,6 +115,7 @@ Links on light: `--gg-royal` + underline. Focus: `outline: 2px solid var(--gg-ro
 | Section / zone labels | `.picker-zone-label`   | Uppercase royal label + royal/burnt rule                                      |
 | KPI section titles    | `.kpi-section-title`   | Bold white; summary = solid royal-deep fill + burnt left bar                  |
 | Card titles           | `.card-title`          | ~`1.28rem`, weight 800, royal                                               |
+| Card summary bullets  | `.card-summary-bullets li` | `1.11rem` — 2pt above the `0.94rem` detail bullet in `.card-objectives li` |
 | KPI report title      | `.kpi-report-title`    | `1.35rem`, weight 800, royal                                                |
 | Table headers         | `.toc-table thead`     | Uppercase, muted brown                                                      |
 
