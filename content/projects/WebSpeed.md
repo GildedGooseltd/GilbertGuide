@@ -82,4 +82,4 @@
 
 Extra detail for Kate / ops only — brainstorms, vendor notes, quotes, timelines, and anything that should not publish to the Guide.
 
-- Google Translate widget + Spanish-first config lives on **WebContent** — this project only owns header/nav placement when AB unblocks
+- Google Translate widget + Spanish-first config lives on WebContent — this project only owns header/nav placement when AB unblocks

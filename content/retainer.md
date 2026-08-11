@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Ongoing oversight of Google Ads, Local Services Ads, and Microsoft Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.
+- Ongoing oversight of Google Ads and Local Services Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.
 - Monthly reporting catches waste before it runs another month
-- Keeps Google Ads, LSA, and Microsoft Ads under one scope
-- LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing
+- Keeps Google Ads and LSA under one scope
+- LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing and improved lead scoring
 
 ## KPI links
 
@@ -89,9 +89,7 @@ June 2026 check (media-only digital ~$60/call · LSA ~$159/call): all-in digital
 - UTM tracking on contact form URLs, media, and ads
 - Lead flow optimization
 - LSA audit and county targeting cleanup
-- LSA Phase 1 — speed-to-lead intake recommendations, limited implementation
 - GBP content, hours, and service-area cleanup
-- Paused Mountain DUI + Demand Gen bleed (confirmed $0 in Jul Search period)
 
 ---
 

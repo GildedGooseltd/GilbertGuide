@@ -7,7 +7,7 @@
 | Category | Creative / Social                                          |
 | Campaign type | Social + paid social                                       |
 | Status | available|
-| Publish status | published|
+| Publish status | unpublished|
 | Estimated leads gained | Upper-funnel traffic → site and remarketing pool           |
 | Keywords | creative, social, hubspot, facebook, instagram, linkedin, reddit, ntguilt, calendar, utm |
 
@@ -71,8 +71,11 @@
 
 - Romina event social support — HubSpot-connected publishing not finished
 - Reddit Ads account + pixel/UTM
+- Reddit promo credit — recheck Ads account (may have expired June)
 - Creative from NtguiltAd prompt library for Reddit + Display
 - Landing destination (NTGUILT.com vs pav.law contact)
+- LinkedIn company showcase still shows low followers and 2024-era launch copy
+- Andrew + Casey personal LinkedIn and directory profiles
 
 ## Completed
 

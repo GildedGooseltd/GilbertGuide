@@ -21,7 +21,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Digital Profiles         | Recommended          | [x]  | [Digital Presence Refresh](projects/DigProf.md)                                         |
 | Perf Plan Payouts        | Recommended          | [x]  | [Performance Plan Payouts](projects/PerfPay.md)                                         |
 | NTGUILT Ads Launch       | Launched             | [x]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
-| Financial Waste Audit    | Recommended          | [x]  | [Full Financial Waste Audit](projects/WasteAud.md)                                        |
+| Financial Waste Audit    | available            | [x]  | [Full Financial Waste Audit](projects/WasteAud.md)                                        |
 | HubSpot VoIP             | On Hold              | [x]  | [Phone(s) & VoIP Setup](projects/HsVoip.md)                                             |
 | HubSpot Marketing        | wip                  | [x]  | [HubSpot Marketing Setup](projects/HsSetup.md)                                          |
 | Client Referral          | Started              | [x]  | [Client Referral Program](projects/Referral.md)                                           |
@@ -32,7 +32,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Website Content          | available            | [ ]  | [Website Content Overhaul](projects/WebContent.md)                                          |
 | Pipeline Sprint          | available            | [ ]  | [HubSpot Pipeline Sprint](projects/HsPipe.md)                                           |
 | Site Speed & Nav         | available            | [x]  | [Website Speed and Navigation](projects/WebSpeed.md)                                      |
-| Social Campaigns         | available            | [x]  | [NTGUILT & Firm Social Campaigns](projects/SocialAds.md)                                   |
+| Social Campaigns         | available            | [ ]  | [NTGUILT & Firm Social Campaigns](projects/SocialAds.md)                                   |
 | Marketing Contacts       | available            | [x]  | [HubSpot Marketing Contacts Upload](projects/HsContacts.md)                                 |
 | Adult Site Ads           | available            | [x]  | [Adult Site(s) Ad Campaign](projects/AdultAds.md)                                        |
 | Gabriel Outbound         | available            | [x]  | [Gabriel Outbound Sales Calling](projects/GabrielOut.md)                                    |
@@ -243,6 +243,6 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **PerfPay** — Performance Plan payouts for cash-generating tasks; employee + contractor tiers
 - **CaseyBrand** — Casey rebrand (like DigProf): clothing, makeup, hair, presentation, speech, digital presence
 - **SwagPrint** — Design printables, swag & apparel · **includes all NTGUILT design work Kate already did** (flyers, QR cards, banners, prop plate, stickers, apparel art) · holiday & anniversary gifts for employee occasions · Printify portal still open
-- **WasteAud** — Recommended · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste is the verified floor before subscription, phone, LSA-credit, and vendor leakage
+- **WasteAud** — available · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste is the verified floor before subscription, phone, LSA-credit, and vendor leakage
 - Fee market context: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)
 

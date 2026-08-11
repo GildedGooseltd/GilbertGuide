@@ -20,6 +20,7 @@
 - Unified view of KPIs, data trends, projects, and results
 - Clearer team goal progress
 - Break-even / cash-flow tracking
+- Channel ROI tracking and marketing spend per case closed
 
 
 
@@ -77,27 +78,23 @@
 
 ## Information needed
 
-- Google Ads API credentials (monthly pull + LSA backfill)
 - HubSpot → Integrations → Google Ads connected
-- Previous Google Ads / LSA data
 - More financial data
-- MyCase closed-matters export with **close date · practice · Booked / closed by · Case ranking** (after T068 fields live)
+- MyCase closed-matters export with close date · practice · Booked / closed by · Case ranking (after T068 fields live)
 
 
 
 ## WIP
 
 - MyCase data quality is not great; additional fields are needed before transferring to HubSpot
-- **T068 / MyCaseClr:** Create MyCase **Booked / closed by** + **Case ranking** (A/B/C) · then pull closed-matters export with those columns for #04 staff + mix reporting
-- First draft completed and waiting on feedback for revisions
-
 
 
 ## Completed
 
-- 2025–2026 MyCase, Google Ads, and LSA data downloaded (limited)
-- MyCase contact refresh **2026-07-25** — `Contact_07-25-2026.csv` filed under `mycase/as-of-2026-07-25/` · Guide #02 / Cases Created updated (Jun=36 · Jul*=23 · Jan–Jun=116)
-- #28/#29 fee means recomputed from Jul-25 file — **$5,587** n=142 unchanged · trust snapshot n=245 mean $4,283 · forecast H1 quoted $648k / FY cases 201
+- First draft completed and waiting on feedback for revisions
+- Google Ads API approved and data downloaded from the previous Google Ads account
+- MyCase contact refresh 2026-07-25 — `Contact_07-25-2026.csv` filed under `mycase/as-of-2026-07-25/` · Guide #02 / Cases Created updated (Jun=36 · Jul*=23 · Jan–Jun=116)
+- #28/#29 fee means recomputed from Jul-25 file — $5,587 n=142 unchanged · trust snapshot n=245 mean $4,283 · forecast H1 quoted $648k / FY cases 201
 - Known A/R payment-cycle analysis on Predictions (28 plans · assumed monthly)
 - UTM logic drafted
 - KPI master table

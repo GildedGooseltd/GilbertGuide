@@ -7,7 +7,7 @@
 | Fee                    | 500 + % recovered                                                                                                                                     |
 | Category               | Finance / Operations                                                                                                                                  |
 | Campaign type          | Full Financial Audit                                                                                                                                  |
-| Status                 | Recommended                                                                                                                                           |
+| Status                 | available                                                                                                                                             |
 | Publish status         | published                                                                                                                                             |
 | Estimated leads gained | N/A — cost savings (not lead-gen)                                                                                                                     |
 | Keywords               | financial, credit card, subscription, leak, spend, audit, saas, recurring, cancel, waste, budget, quickbooks, phone, payroll, toll, toll pass, plates |
@@ -20,13 +20,11 @@
 ## Summary
 
 - Reconcile the firm’s full operating spend across QuickBooks, bank and credit-card statements, ad platforms, software, phone systems, payroll, contractors, sponsorships, vendor agreements, and toll-pass / vehicle-plate billing. Turn the subscription waste already observed into a verified monthly and annual savings plan.
-- Produce a transaction-level spend ledger by vendor, owner, department, payment method, and contract term
 - Inventory every recurring subscription, software seat, phone line, domain, hosting plan, directory, and ad tool
-- Label each charge keep · renegotiate · consolidate · cancel · dispute · needs owner
 - Cancel or replace unused SaaS and overlapping tools; document confirmation numbers and effective dates
-- Reconcile ad-platform spend and credits against bank and credit-card charges
 - Reconcile LSA charged leads, disputes, credits, booked leads, and signed cases
 - Review payroll, contractor, sponsorship, event, and commission costs against actual use and measurable return
+- Review FindLaw / Justia contracts, services, and contract terms
 - Update toll-pass payment method and registered plates so billing matches current vehicles and a working card
 - Build a 30-day savings action list plus monthly and annual run-rate savings forecast
 - Add renewal dates and owners so waste does not return

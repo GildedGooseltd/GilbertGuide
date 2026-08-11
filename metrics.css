@@ -264,9 +264,7 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-chart-grid { stroke: rgba(61, 48, 40, 0.14); stroke-width: 1; }
 .kpi-chart-baseline { stroke: rgba(61, 48, 40, 0.4); stroke-width: 1.5; }
 .kpi-chart-svg-stacked rect:not(.kpi-chart-plot-bg) {
-  stroke: var(--gg-royal-deep);
-  stroke-width: 1.25;
-  vector-effect: non-scaling-stroke;
+  stroke: none;
 }
 .kpi-chart-total { fill: var(--gg-royal-deep); font-size: 13px; font-weight: 800; }
 .kpi-chart-detail {
@@ -337,11 +335,14 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-goals-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 0.85rem;
-  row-gap: 0.45rem;
+  column-gap: 1.35rem;
+  row-gap: 0.85rem;
   align-items: stretch;
 }
 .kpi-stat-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.kpi-goals-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .kpi-stat-card .kpi-metric-icon {
@@ -463,6 +464,33 @@ body.feedback-mode-on .feedback-target:hover {
   font-weight: 900;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+.kpi-goals-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.kpi-goals-related-band {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.15rem;
+}
+.kpi-goals-related-head {
+  display: block;
+  width: 100%;
+}
+.kpi-goals-related-grid > .kpi-related-projects-spacer {
+  min-height: 0;
+}
+.kpi-goals-related-grid .kpi-related-projects {
+  margin-top: 0;
+  padding-top: 0;
+}
+.kpi-goals-funnel {
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  margin-top: 0.75rem;
 }
 .kpi-related-projects ul {
   display: grid;
@@ -648,13 +676,16 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-goals-grid {
   max-width: none;
 }
+@media (max-width: 1200px) {
+  .kpi-goals-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 900px) {
   .kpi-goals-grid { grid-template-columns: 1fr; max-width: 22rem; }
 }
 .kpi-goal-card {
-  display: flex; flex-direction: column; align-items: stretch; gap: 0.65rem;
+  display: flex; flex-direction: column; align-items: stretch; gap: 0.8rem;
   text-align: left; font: inherit; cursor: pointer;
-  padding: 1.45rem 1rem 1rem 1.55rem; border-radius: 12px;
+  padding: 1.85rem 2rem 1.15rem 2rem; border-radius: 12px;
   border: 2px solid var(--gg-royal-border); background: linear-gradient(165deg, var(--gg-royal-dim) 0%, var(--gg-paper) 55%);
   color: var(--gg-brown); box-shadow: 0 1px 4px rgba(45, 20, 84, 0.08);
   position: relative; min-width: 0;
@@ -1253,9 +1284,11 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   gap: 0.65rem 1rem;
   align-items: start;
 }
-.data-chart-table-grid > .kpi-chart-card {
+.data-chart-table-grid > .kpi-chart-card,
+.data-chart-table-grid > .kpi-chart-wip-shell {
   margin: 0;
   padding: 0;
+  min-width: 0;
 }
 .data-chart-table-side.data-chart-presence-cost-row {
   display: grid;

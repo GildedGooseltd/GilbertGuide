@@ -324,11 +324,6 @@
     return rank;
   }
 
-  /** TOC priority cell — short title (not score digits). */
-  function priorityTocHtml(item, displayPriority) {
-    return escapeHtml(displayTitle(item));
-  }
-
   /* Colors live in index.html :root --vi-* + .value-icon.icon-{id}. Filter + table share those classes — never hardcode badge colors here. */
   const VALUE_ICON_DEFS = [
     { id: "foundation", svgId: "foundation", cls: "icon-foundation", label: "Foundation", match: item => !!item.enabler },
@@ -1703,7 +1698,7 @@
     "#21": { name: "Answered Calls", tracking: "Clean — Call details Received vs Missed for Search; LSA status separate." },
     "#22": { name: "Speed to lead", tracking: "Partial — needs HubSpot workflow timestamps." },
     "#28": { name: "Avg case fee", tracking: "Clean — MyCase Client contracted mean; not cash collected." },
-    "#30": { name: "Est. value per lead", tracking: "Firm-wide only — complete-month cases ÷ full leads × #28 fee × 80% collection until fees-collected. Not by channel." },
+    "#30": { name: "Marketing cost / closed case", tracking: "Firm-wide only — all-in complete-month media + management retainer + forms fee ÷ new cases; media-only shown as secondary. Not by channel." },
     "#31": { name: "Cost per signed case", tracking: "By channel when Lead Source on hire — spend ÷ signed cases." },
     "#32": { name: "Channel ROI", tracking: "Hold until measured signed ÷ leads per channel." },
     "#23": { name: "Intake coverage / after-hours", tracking: "Partial — needs routing logs and after-hours disposition." },
@@ -1745,13 +1740,6 @@
     if (item.tldr) return String(item.tldr).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
     if (item.goal) return String(item.goal).replace(/\s+/g, " ").trim().slice(0, 160);
     return item.title || item.id;
-  }
-
-  /** INDEX Short title when set; else full project name. Never fall back to file IDs. */
-  function displayTitle(item) {
-    const short = String(item?.shortTitle || "").trim();
-    if (short) return short;
-    return item?.title || item?.id || "";
   }
 
   function itemHasHubspotIcon(item) {
@@ -2140,10 +2128,10 @@
     return (item.completedItems || []).length > 0 || (item.inProgressItems || []).length > 0;
   }
 
-  function wipBadgeUnderCheckbox(item) {
+  function wipBadgeHtml(item) {
     if (item.status === "completed") return "";
     if (item.status === "wip" || hasPartialProgress(item)) {
-      return `<span class="badge badge-wip card-wip-under-chk" title="Work already started on this project">WIP</span>`;
+      return `<span class="badge badge-wip card-wip-badge" title="Work already started on this project">WIP</span>`;
     }
     return "";
   }
@@ -2155,7 +2143,6 @@
     return `<div class="card-check-col">
       <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled}${abTitle} ${sel ? "checked" : ""}>
       ${reqMark}
-      ${wipBadgeUnderCheckbox(item)}
     </div>`;
   }
 
@@ -2863,27 +2850,6 @@
     return items.filter(item => keep.has(item.id));
   }
 
-  function updateTocSortUi() {
-    const btn = document.getElementById("toc-sort-priority");
-    const arrow = document.getElementById("sort-arrow-priority");
-    if (!btn || !arrow) return;
-    btn.classList.add("active");
-    const dir = state.tocSort.field === "priority" ? state.tocSort.dir : "asc";
-    arrow.textContent = dir === "asc" ? "▲" : "▼";
-    btn.setAttribute("aria-sort", dir === "asc" ? "ascending" : "descending");
-    btn.title = dir === "asc" ? "Short title order ascending — click for descending" : "Short title order descending — click for ascending";
-  }
-
-  function toggleTocSort(field) {
-    if (state.tocSort.field === field) {
-      state.tocSort.dir = state.tocSort.dir === "asc" ? "desc" : "asc";
-    } else {
-      state.tocSort.field = field;
-      state.tocSort.dir = field === "priority" ? "asc" : "desc";
-    }
-    renderProjectToc();
-  }
-
   function gilbertRankedPicks(limit) {
     const goal = state.goalText.trim();
     const pool = getAllItems().filter(item => {
@@ -2942,8 +2908,7 @@
     const items = sortTocItems(baseItems, priorityMap);
     if (state.priorityEdit) ensureClientPriorityIds(items);
     const visibleItems = visibleTocItems(items);
-    const usedPriorities = new Set();
-    listEl.innerHTML = visibleItems.map((item, rowIdx) => {
+    listEl.innerHTML = visibleItems.map(item => {
       const selected = isItemSelected(item);
       const inPkg = isInRecommendedPackage(item);
       const isRetainer = !!item.isRetainer || item.id === "RETAINER";
@@ -2952,15 +2917,6 @@
       const abPending = hasAbQuestions(item) && !abQuestionAnswered(item.id);
       const abTitle = abPending ? ' title="Blocked: answer before cart"' : "";
       const chkClass = isRetainer ? "toc-proj-chk" : "proj-chk toc-proj-chk";
-      const displayPriority = useClientRanks
-        ? (clientPriorityRank(item) || rowIdx + 1)
-        : uniqueTocPriority(item, usedPriorities, priorityMap);
-      const editControls = state.priorityEdit
-        ? `<span class="toc-prio-edit">
-            <button type="button" class="toc-prio-btn" data-prio-move="up" data-id="${escapeHtml(item.id)}" title="Move up" aria-label="Move ${escapeHtml(item.title)} up">↑</button>
-            <button type="button" class="toc-prio-btn" data-prio-move="down" data-id="${escapeHtml(item.id)}" title="Move down" aria-label="Move ${escapeHtml(item.title)} down">↓</button>
-          </span>`
-        : "";
       const statusNorm = normalizeStatus(item);
       const statusRowClass =
         statusNorm === "recommended"
@@ -2972,7 +2928,6 @@
         <td class="toc-col-select">
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
         </td>
-        <td class="toc-col-priority"><span class="toc-priority">${priorityTocHtml(item, displayPriority)}</span>${editControls}</td>
         <td class="toc-col-project toc-title"><div class="toc-title-row"><a href="#project-${item.id}" title="${escapeHtml(item.title)}">${hubspotTitleMarkHtml(item)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a><span class="toc-value">${valueIconsHtml(item)}</span></div></td>
       </tr>`;
     }).join("");
@@ -3021,7 +2976,6 @@
         expandEl.innerHTML = "";
       }
     }
-    updateTocSortUi();
   }
 
   function getFilters() {
@@ -3037,6 +2991,8 @@
   }
 
   function feeLabelFor(item) {
+    const label = String(item.estCostLabel || "").trim();
+    if (label && label !== "—" && label !== "-") return label;
     if (item.ongoingFee) return `${fmt(item.fee)} + ${fmt(item.ongoingFee)}`;
     if (item.perCampaignFee) return `${fmt(item.fee)} per campaign`;
     if (item.monthlyOnly || item.id === "RETAINER" || item.id === "DataMgmt") return `${fmt(item.fee)}/mo`;
@@ -3060,16 +3016,6 @@
 
   function feeQuoteLineHtml(item) {
     return `<div class="card-fee-quote">${escapeHtml(feeLabelFor(item))}</div>`;
-  }
-
-  function kpiLinksChipsHtml(item) {
-    const refs = (item.kpiRefs || []).map(normalizeKpiRef).filter(Boolean);
-    if (!refs.length) return "";
-    const chips = refs.map(id => {
-      const name = (KPI_IMPACT_META[id] && KPI_IMPACT_META[id].name) || id;
-      return `<button type="button" class="card-kpi-chip" data-kpi-jump="${escapeHtml(id)}" title="Open ${escapeHtml(name)}">${escapeHtml(name)}</button>`;
-    });
-    return `<div class="card-kpi-links" aria-label="Linked KPIs">${chips.join("")}</div>`;
   }
 
   function itemSelectionCost(item) {
@@ -3473,6 +3419,7 @@
     const extra = getItemFilterClasses(item, isRetainer);
     const pkgClass = isInRecommendedPackage({ ...item, isRetainer }) ? " package-included" : "";
     const iconsHtml = cardCornerIconsHtml(item, isRetainer, true) || "";
+    const wipBadge = wipBadgeHtml(item);
     const retainerClass = isRetainer ? " retainer-card required-retainer" : "";
     const maintClass = item.monthlyOnly ? ` maintenance-card${required ? " required-maintenance" : ""}` : "";
     const subClass = item.parentId ? " card-sub-related" : "";
@@ -3499,7 +3446,8 @@
           ${cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending)}
             <div class="card-body">
               <div class="card-top-row">
-                <div class="card-title"><span class="card-title-hubspot">${hubspotTitleMarkHtml(item)}${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
+                <div class="card-title">${escapeHtml(item.title)}${publishStatusBadgeHtml(item)}</div>
+                ${wipBadge ? `<div class="card-title-icons">${wipBadge}</div>` : ""}
               </div>
             </div>
         </div>
@@ -3514,11 +3462,10 @@
               ${cardFeaturedImageHtml(item)}
               ${cardReferenceLinkHtml(item)}
               <div class="card-top-row">
-                <div class="card-title"><span class="card-title-hubspot">${hubspotTitleMarkHtml(item)}${escapeHtml(item.title)}</span>${publishStatusBadgeHtml(item)}</div>
-                ${iconsHtml ? `<div class="card-title-icons">${iconsHtml}</div>` : ""}
+                <div class="card-title">${escapeHtml(item.title)}${publishStatusBadgeHtml(item)}</div>
+                ${wipBadge || iconsHtml ? `<div class="card-title-icons">${wipBadge}${iconsHtml}</div>` : ""}
               </div>
               ${feeQuoteLineHtml(item)}
-              ${kpiLinksChipsHtml(item)}
               ${relatedSubHtml(item) ? `<div class="card-meta-row">${relatedSubHtml(item)}</div>` : ""}
               ${descriptionHtml(item)}
             <button type="button" class="expand-btn" aria-expanded="${exp ? "true" : "false"}">${expandBtnLabel(item, exp)}</button>
@@ -4888,23 +4835,6 @@
   }
 
   document.addEventListener("click", e => {
-    const kpiChip = e.target.closest("[data-kpi-jump]");
-    if (kpiChip) {
-      e.preventDefault();
-      e.stopPropagation();
-      setActiveViewTab("kpis");
-      renderAllCards();
-      const id = kpiChip.getAttribute("data-kpi-jump");
-      const target =
-        document.querySelector(`[data-feedback-id="${CSS.escape(id)}"]`) ||
-        document.querySelector(`[data-feedback-label*="${CSS.escape(id)}"]`) ||
-        document.getElementById("view-kpis") ||
-        document.querySelector('[data-view="kpis"]');
-      if (target && typeof target.scrollIntoView === "function") {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-      return;
-    }
     const help = e.target.closest(".tab-help, .kpi-help");
     if (help) {
       e.preventDefault();
@@ -4947,14 +4877,6 @@
     if (!chk) return;
     e.stopPropagation();
     applyCartCheckboxChange(chk.dataset.id, chk.checked, chk);
-  });
-
-  document.querySelectorAll(".toc-sort-btn").forEach(btn => {
-    btn.addEventListener("click", e => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleTocSort(btn.dataset.sort);
-    });
   });
 
   loadState();

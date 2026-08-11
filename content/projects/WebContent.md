@@ -91,7 +91,7 @@ Extra detail for Kate / ops only — brainstorms, vendor notes, quotes, timeline
 3. `includedLanguages`: `en,es` first; add more only if Andrew asks
 4. QA: Home · Contact · one practice page · one `/team/` bio — Spanish switch persists on nav
 5. Note: free Website Translator widget is deprecated by Google but still widely used; if it dies, fall back to a WP multilingual plugin
-6. Complements MyCaseClr Spanish intake flag · HsVoip Spanish queue · does **not** replace bilingual staff or Spanish ads phone Option A/B/C
+6. Complements MyCaseClr Spanish intake flag · HsVoip Spanish queue · does not replace bilingual staff or Spanish ads phone Option A/B/C
 
 ### Related
 

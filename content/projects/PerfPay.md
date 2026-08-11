@@ -15,9 +15,8 @@
 
 ## Summary
 
-- Clear performance-based bonus model with goals the team can work toward — including a commission-only sales track that can equal full-time pay without a salary.
+- Clear performance-based bonus model with goals the team can work toward.
 - Ties pay to measurable outcomes — booked consults, signed matters, outbound pipeline
-- Uses collectible pace vs target as a Romina performance indicator, paired with intake and payment-follow-up actions she directly controls
 - Commission-only sales: rising flat $ through client lifecycle (not % of fees/trust)
 - Employee appreciation markers (apparel/gift sets at set thresholds)
 - Separate tracks for employee, contractor, and referral-partner payout styles
@@ -82,12 +81,7 @@ The current +$67,043 vs mid-year target is evidence that the indicator is useful
 ## WIP
 
 - [ ] Lock business goals G1–G6 + incentive-eligible KPIs
-- [ ] Fill target FTE $/mo + expected volume → publish L1–L5 flats
 - [ ] Counsel review of L4 (signed) and L5 (first funds) gates
-- [ ] Re-add outbound / attributed matter KPIs to `kpi-list.md` if paying on them
-- [ ] Set Romina's collectible pace target, controlled action gates, source of truth, and fixed-dollar tier
-- [ ] Replace the 80% collectible estimate with QuickBooks actual cash before activating the tier
-- [ ] Draft tier matrix for remaining employees vs contractors
 - [ ] List cash-generating tasks already tracked (calls, bookings, referrals)
 
 ---
