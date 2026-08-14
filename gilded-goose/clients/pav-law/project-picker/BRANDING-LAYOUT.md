@@ -156,6 +156,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
 | Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | `--gg-box-border` / paper; yellow only for written caution; **same-row equal height** via `.kpi-tile-with-projects` subgrid |
 | Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
+| KPI tile grid     | `.kpi-tiles-4`                         | Goal cards and metric tiles in one flow, 4 per row; narrow-pane trim ≤1000px, 2-col ≤560px, 1-col ≤380px |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
 | Project cards     | `.card`, `.card.selected`              | Box border/shadow; selected = royal wash        |
 | Zone labels       | `.picker-zone` + `.picker-zone-label`  | Royal/burnt accent heads; scan breaks between areas |
@@ -245,7 +246,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 - Keep Georgia body on the cockpit for memo/brief tone.
 - Keep chart series distinguishable (royal / blue / burnt / rose / plum / slate).
 - Shared box chrome: `--gg-box-border`, `--gg-box-shadow`, `--gg-head-accent` on section heads.
-- Use red only for negatives and unverified **✕** badges. Verified tiles use a **green outline** (no star).
+- Use red only for negatives and unverified **✕** badges. Verified tiles and panels use **one** green check corner mark — never stack a second check on a nested chart card inside an already-verified panel.
 - One job per section; collapsible KPI topics stay focused.
 
 
@@ -297,7 +298,7 @@ Replace files or update paths in `content/settings.md`, then `npm run build` if 
 - [ ] No light-on-light on Priorities / plan / outlines tables
 - [ ] Links underlined or clearly distinct
 - [ ] Tab/button `:focus-visible` ring
-- [ ] Red **✕** = unverified; green outline = export-backed (no ★)
+- [ ] Red **✕** = unverified; one green check = export-backed — never two checks on one panel
 
 ---
 

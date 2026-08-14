@@ -374,13 +374,50 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-goals-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-/* Financial Breakdown — Cost per Case · Avg case value */
-.kpi-stat-grid.kpi-cost-tiles {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+/* Tile rows on KPIs and Financial Breakdown — one flow, 4 per row */
+.kpi-goals-grid.kpi-tiles-4,
+.kpi-stat-grid.kpi-tiles-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 1rem;
   margin-bottom: 0.9rem;
+  max-width: none;
 }
-@media (max-width: 640px) {
-  .kpi-stat-grid.kpi-cost-tiles { grid-template-columns: 1fr; max-width: 22rem; }
+/* 4-up in a narrow pane: trim side gutters only. Chrome stays in the top band. */
+@media (max-width: 1000px) {
+  .kpi-tiles-4 .kpi-stat-card,
+  .kpi-tiles-4 .kpi-goal-card { padding-left: 0.7rem; padding-right: 0.7rem; }
+  .kpi-tiles-4 .kpi-goal-visual svg,
+  .kpi-tiles-4 .kpi-stat-card svg { max-width: 100%; height: auto; }
+  .kpi-tiles-4 .kpi-stat-id,
+  .kpi-tiles-4 .kpi-goal-card .kpi-goal-visual .kpi-stat-id,
+  .kpi-tiles-4 .kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual .kpi-stat-id { font-size: 0.95rem; }
+  .kpi-tiles-4 .kpi-stat-val,
+  .kpi-tiles-4 .kpi-val-negative { font-size: 0.95rem !important; }
+  .kpi-tiles-4 .kpi-goal-track { font-size: 0.7rem; }
+  /* Stack label over value so a narrow tile never breaks a word mid-way. */
+  .kpi-tiles-4 .kpi-goal-track tr {
+    display: block;
+    height: auto !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .kpi-tiles-4 .kpi-goal-track th,
+  .kpi-tiles-4 .kpi-goal-track td {
+    display: block;
+    width: auto !important;
+    padding: 0.08rem 0 !important;
+    border-bottom: none;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+}
+@media (max-width: 560px) {
+  .kpi-goals-grid.kpi-tiles-4,
+  .kpi-stat-grid.kpi-tiles-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 380px) {
+  .kpi-goals-grid.kpi-tiles-4,
+  .kpi-stat-grid.kpi-tiles-4 { grid-template-columns: 1fr; max-width: 22rem; }
 }
 .kpi-stat-card .kpi-metric-icon {
   display: inline-flex;
@@ -523,11 +560,6 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-goals-related-grid .kpi-related-projects {
   margin-top: 0;
   padding-top: 0;
-}
-.kpi-goals-funnel {
-  grid-template-columns: minmax(0, 1fr);
-  width: 100%;
-  margin-top: 0.75rem;
 }
 .kpi-related-projects ul {
   display: grid;
@@ -860,6 +892,25 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-verified-mark::after { content: "✓"; }
 .kpi-verified-mark::before { content: none; display: none; }
 .kpi-verified-mark-inline { margin-right: 0.15rem; }
+/* Method not verified — always paired with a written status line on the card. */
+.kpi-unverified-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.95rem;
+  height: 0.95rem;
+  border: none;
+  border-radius: 3px;
+  background: var(--gg-negative, #b91c1c);
+  color: #fff;
+  vertical-align: -0.12em;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  line-height: 1;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+.kpi-unverified-mark::after { content: "✕"; }
 .kpi-source-footnote {
   display: block;
   margin: 0.55rem 0 0;
@@ -990,7 +1041,10 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-split-panel .kpi-chart-card {
   border: none; padding: 0; background: transparent; box-shadow: none;
 }
-.kpi-split-panel .kpi-chart-card > .kpi-status-corner {
+.kpi-split-panel .kpi-chart-card > .kpi-status-corner,
+.kpi-split-panel .kpi-chart-card > .kpi-verified-mark,
+.kpi-split-panel .kpi-chart-card > .kpi-outdated-mark,
+.kpi-split-panel .kpi-chart-card > .kpi-aug-updated-mark {
   display: none;
 }
 .kpi-mini-card h3 { margin: 0 0 0.45rem; font-size: calc(0.875rem + 2pt); color: var(--gg-royal); }

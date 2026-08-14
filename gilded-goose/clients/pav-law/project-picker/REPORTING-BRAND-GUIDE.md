@@ -192,6 +192,10 @@ Team Goals tiles use exactly three tracking rows. Each row is `3.25rem` high wit
 
 **Equal-height tiles in a row (all pages):** In `.kpi-goals-grid` and `.kpi-stat-grid`, every tile in the same row shares one card-band height. Wrappers use CSS subgrid (`grid-row: span 2`) so the KPI card band aligns across the row and Solutions sit in a second shared band below — never let Solutions make one card taller than its neighbors. Apply the same rule on Guide (`index.html`) and Metrics (`metrics.css`). Direct grid children that are not wrapped must use `.kpi-tile-with-projects` so they participate in the card band.
 
+Section shape: each section opens with a tile row, then charts. KPIs holds Auto Cases, Cashflow, Leads Generated, New Cases, Yelp Reviews, Yelp Leads. Financial Breakdown holds Cost per Case, Avg Case Value, Missed Opportunity, then the chart grid — New cases contacts & spend, Cost per response, Sales Funnel. Tiles run 4 per row; chart blocks run 2 per row in `.data-chart-table-grid` and never join the tile row.
+
+KPIs section tile grid: goal cards and metric tiles share one grid, `.kpi-tiles-4`, at 4 tiles per row. Tiles keep source order — Auto Cases, Cashflow, then the metric tiles — and wrap into a second row of 4. Below 1000px the same 4-up grid trims side gutters, drops goal-track rows to label over value, and steps titles down to 0.95rem so narrow columns never clip a value or break a word. It falls back to 2 columns under 560px and 1 under 380px.
+
 Do not redesign the tile layout; future changes are color, typography, border, or spacing refinements only.
 
 ---
@@ -219,7 +223,10 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Unavailable data:** slate/gray with a written “No data” label — never red.
 - **Target lines:** every plotted number below its applicable target or minimum line is red (`--gg-negative`); values on or above the line use ink `--gg-brown` (`#3d3028`) unless a series color is already required for a line. Keep the number visible so color is not the only signal.
 - **Chart number labels:** ink `--gg-brown` (`#3d3028`) or `#111` only. Never white, `#fff`, or `#ffffff`. Place counts outside the bar fill, above or beside the bar, on the plot field. Short goal-tile bars such as Yelp Leads must not put the count inside the fill. Combo charts: sit count and spend labels above the series — never on the line.
-- **Goal-tile chart box:** every target-bar chart inside a `.kpi-goal-card` uses the same drawing box so tiles in one row read at the same scale — viewBox `320 × 210`, pad `l 36 · r 10 · t 18 · b 28`, bar width up to `88`. Auto Cases is the reference; Missed Opportunity and any new goal tile match it. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` rather than letting the compact defaults shrink one tile.
+- **Goal-tile chart box:** every target-bar chart inside a `.kpi-goal-card` uses the same drawing box so tiles in one row read at the same scale — viewBox `320 × 210`, pad `l 36 · r 10 · t 18 · b 28`, bar width up to `88`. Auto Cases is the reference and any new goal tile matches it. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` rather than letting the compact defaults shrink one tile.
+- **Unverified tiles:** a tile whose method is still in question carries the red ✕ corner mark, `.kpi-unverified-mark`, instead of the green check, plus a written `Method not verified` status line and a note saying what is wrong. Do not grey the tile out — the number still renders. Avg Case Value holds this state while the collections basis is open. Do not restore a green check on it without confirming the denominator.
+- **One green check only:** each tile, panel, or section gets at most one `.kpi-verified-mark`. Never put a check on both a parent `.kpi-split-panel` / `.kpi-section` and a nested `.kpi-chart-card`. Nested chart-card checks inside a verified split panel are hidden in CSS. Do not restore a second check for “emphasis.”
+- **Text tiles:** Financial Breakdown tiles carry no mini chart. Cost per Case, Avg Case Value, and Missed Opportunity use title, period subhead, value, written status, one math line, then one note — `.kpi-stat-subhead` · `.kpi-stat-val` · `.kpi-stat-label` · `.kpi-stat-formula` · `.kpi-stat-note`. Missed Opportunity shows current missed-call rate vs target, plus estimated money lost for month, quarter, and year.
 - **Half-moon gauges:** show only the numeric value at the inside base of the arc. Do not place descriptive text or target captions inside or beneath the gauge; put that context in the adjacent title/stat block.
 - **Gauge scales:** both endpoint labels use the same black text (`#111`) regardless of progress or target state. A success state may recolor the arc and center value, never the scale.
 - **Gauge goal marks:** use an unlabeled tick. Explain the goal in the adjacent stats rather than on the gauge.
@@ -235,7 +242,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 | Section | Headers |
 |---|---|
 | Cases MoM | Month · Closed · New cases · Red accounts · Total · MoM notes |
-| Key Channel Activity | Period · New cases · Direct contacts · Marketing spend · Channel · Spend · Responses · Cost / response. Cost per response includes LSA · LSA all answered · Digital · Website forms · Yelp |
+| Key Channel Activity | Period · New cases · Direct contacts · Marketing spend · Channel · Responses · Cost / response. Cost per response includes LSA · LSA all answered · Digital · Website forms · Yelp. Spend column is not on the Cost per response table. |
 | Cases forecast | Month · Cases · Status |
 | Mean fee by practice area (#29) | Practice area · n · Mean fee |
 | Avg deposit | Measure · Amount |
@@ -265,7 +272,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 | Section | Headers |
 |---|---|
 | Cash collected MoM | Month · Cash collected · New cases · Cash / new case |
-| Cases Created (Data tab) | Year · Span · Total · Avg / month · Avg MoM · Trend · then Month · YoY vs 2025. Chart has monthly bars plus a trend line per year. Table does not repeat monthly counts. |
+| Cases Created (Data tab) | Year · Span · Total · Avg / month · Avg MoM · Trend. Chart has monthly bars plus a trend line per year. Table does not repeat monthly counts or YoY. |
 | Expense pace (working md) | See `content/forecasting-planning.md` — not on Financials |
 | Cash arrives (projection) | Cash arrives · Projected cash‑in · From prior cohorts · From new intake · Notes |
 | Cohorts | Signing month · New cases · Billed · Collectible (80%) |
@@ -287,7 +294,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 - **Structure:** every chart card uses `chartBlock()` — plot + legend (2+ series) + detail table always visible below (not hidden behind "Show table").
 - **Zebra:** `.kpi-chart-table tbody tr:nth-child(even)` soft royal wash `rgba(45,20,84,0.035)`.
 - **Headers:** `.kpi-table th` royal (`--gg-royal`), left‑aligned; numeric columns right‑aligned.
-- **Verification:** red **✕** = unverified; green outline = export‑backed (no star).
+- **Verification:** red **✕** = unverified; one green check = export‑backed. Never two checks on the same panel.
 - **Time order:** charts run oldest → newest. Table month rows run current → oldest. Totals rows stay pinned at the bottom.
 - **Categorical cells:** royal, blue, burnt orange, rose, plum, or slate only. Gold is reserved for critical highlights, never an ordinary category.
 - **Fees and totals:** plum or royal; do not use green unless the value explicitly means cash received or a positive result.
