@@ -61,7 +61,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 
 | Est. cost                   | Payment plan | Project                                                                             |
 | --------------------------- | ------------ | ----------------------------------------------------------------------------------- |
-| $2,900/mo                   | monthly      | [Digital Ads Maintenance Retainer](retainer.md)                                     |
+| $3,000/mo                   | monthly      | [Digital Ads Maintenance Retainer](retainer.md)                                     |
 | $1,600                      | 50%          | [Operations Dashboard V1](projects/OpsDash.md)                                           |
 | $1,500                      | 50%          | [LSA Call Process Update](projects/LsaCall.md)                                          |
 | $1,500                      | 50%          | [MyCase Data Cleanse](projects/MyCaseClr.md)                                              |

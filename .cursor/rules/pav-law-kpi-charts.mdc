@@ -26,9 +26,9 @@ When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
    - Spend / cost → `#6a5acd` (plum / `--gg-plum`)
    - **Gold is never an ordinary chart category.** Reserve it for a rare critical CTA or milestone outside the plot.
 3. **Normal chart formatting** — labeled axes/ticks, plot background (`--gg-chart-plot` light yellow), baseline, totals above columns (not colliding with y-axis labels or the spend/cash line), month/category labels under bars, explicit legend with swatches.
-   - **Month ordering:** always run **oldest → newest, left to right**, so the most recent month is the rightmost bar. Label the axis `oldest → newest`. Same for period detail tables and for month columns in a table. In `kpi-report.js` use `chronological()` or `lastPeriods()` for display order; `newestFirst()` is math and lookups only.
+   - **Month ordering:** charts always run **oldest → newest, left to right**, so the most recent month is the rightmost bar. Detail-table month rows run current → oldest. Do not reverse chart arrays when reversing table rows.
    - **Forecast periods:** append to the right of the last actual month, divided by a dashed rule, drawn at reduced opacity.
-   - **Y-scale headroom:** top of scale must be **at least one integer above** the highest data point. Use `chartAxisMax()` / `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js`. **Forbidden:** hardcoded axis tops like `leftMax = 300` or `axisMax = 40`; setting `axisMax` equal to the data max; clipping with `Math.min(v, leftMax)` so bars look shorter than their labels. Before shipping a chart, confirm highest plotted value < axis max.
+   - **Y-scale headroom:** top of scale must be **at least one integer above** the highest data point. Use `chartAxisMax()` / `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js. Financial Breakdown is locked to 300 contacts and $40k spend while every plotted value remains below those tops. Never clip values to preserve a locked top.
    - **casesLeadsSpend `leads`:** already the channel stack total. Do not add `adsLeads` / `websiteLeads` on top via `incomingTotal` — that double-counts and blows the scale.
    - **Goal-tile chart box:** target-bar charts inside a `.kpi-goal-card` all share one box — viewBox **320 × 210**, pad `l 36 · r 10 · t 18 · b 28`, bar width up to **88**. Auto Cases is the reference tile. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` so no goal tile falls back to the smaller compact default.
    - **Stacked bar outlines:** one royal-deep stroke only — never white/paper hairlines between segments.
@@ -50,6 +50,7 @@ When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
 ## Detail tables
 
 - Include May/Jun (or period) columns, deltas, MoM, and spend/share when the data exists.
+- Month rows display current month first. Charts keep oldest → newest order.
 - Swatch + series name in the first column when the chart is multi-color.
 - Totals row when summing adds clarity.
 

@@ -23,7 +23,7 @@ window.PROJECT_DATA = {
     ]
   },
   "retainer": {
-    "fee": 2900,
+    "fee": 3000,
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
     "status": "required",
@@ -96,7 +96,7 @@ window.PROJECT_DATA = {
     "feeEstimateComplexity": 1.1,
     "feeEstimateBlend": "55% local / 45% national",
     "feeEstimatePackaged": false,
-    "feeEstimateDelta": 1500,
+    "feeEstimateDelta": 1400,
     "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.20 (9.25 units) · complexity ×1.1"
   },
   "projects": [

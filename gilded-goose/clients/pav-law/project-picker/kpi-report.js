@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260813-cases-trend";
+  const RENDER_VER = "20260814-data-notes-r3";
   /** Tile-month pills — oldest → newest. Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   const PERIOD_OPTIONS = ["June 2026", "July 2026", "August 2026"];
   /** Cash collected chart: timeline = years end-to-end · yoy = same month paired. */
@@ -65,6 +65,10 @@
     "#30": {
       file: "casesLeadsSpend media + new cases · $3,000/mo digital management · $1,000/mo HubSpot from Jun · $1,500/mo Referral Sites",
       fields: "May–Jul complete · $60,331 media + $9,000 management + $2,000 HubSpot + $4,500 Referral Sites, all ÷ 93 cases = $815/case · known stack only · prior installments ≥$20k YTD not fully visible"
+    },
+    "avg-case-value": {
+      file: "ledger_account_activity_report (1).csv credits · MyCase new cases by Created month",
+      fields: "Same complete months as #30 · ledger credits ÷ new cases created in those months · contracted mean fee from KPI #28 shown for comparison"
     },
     "#29": {
       file: "Ad Reports/exports/mycase/as-of-2026-07-25/Contact_07-25-2026.csv · fee-means-by-practice.csv",
@@ -177,6 +181,11 @@
       title: "#30 Cost per Case",
       desc: "Firm-wide marketing cost to sign one new case. Not split by channel. Only complete months with a full lead stack — Aug* excluded. Cases = MyCase Created. Known stack = Search + LSA media + $3,000/mo digital management + $1,000/mo HubSpot forms fee from Jun onward + $1,500/mo Referral Sites. Total cost is higher: prior payments and subscriptions still in monthly installments are not fully visible. At least $20k this year is not paid off. Final amount unknown.",
       formula: "Cost per case = media + management + HubSpot + Referral Sites ÷ new cases. Known stack only. Does not include prior installment subscriptions."
+    },
+    "avg-case-value": {
+      title: "Avg case value — cash per new case",
+      desc: "Cash actually collected divided by new cases created, over the same complete months as #30 Cost per Case so the two tiles compare directly. This is collected money, not contracted fee. Collections lag signing, so the window mixes payments on older cases with deposits on cases signed inside it. Contracted mean fee is the separate #28 figure.",
+      formula: "Ledger credits ÷ new cases for the same months as #30. Aug* excluded because the month is partial."
     },
     "#29": {
       title: "#29 Mean fee by practice",
@@ -1128,11 +1137,42 @@
     DATA.marketingCostPerCase = m;
   }
 
+  /**
+   * Avg case value — cash collected ÷ new cases created.
+   * Scoped to the same complete months as #30 so cost and value sit on one basis.
+   */
+  function avgCaseValueModel() {
+    const complete = (DATA.cashCollected2026Ytd || []).filter(r => r && !/\*/.test(String(r.month || "")));
+    if (!complete.length) return null;
+    const basis = (DATA.marketingCostPerCase && DATA.marketingCostPerCase.basisMonths) || [];
+    const scoped = basis.length ? complete.filter(r => basis.indexOf(String(r.month)) !== -1) : [];
+    const use = scoped.length ? scoped : complete;
+    let cash = 0;
+    let cases = 0;
+    use.forEach(r => {
+      cash += Number(r.credit) || 0;
+      cases += Number(r.newCases) || 0;
+    });
+    if (!cases || !cash) return null;
+    return {
+      cash: Math.round(cash),
+      cases,
+      perCase: Math.round(cash / cases),
+      months: use.map(r => String(r.month)),
+      sameBasisAsCost: scoped.length > 0
+    };
+  }
+
+  function hydrateAvgCaseValue() {
+    DATA.avgCaseValue = avgCaseValueModel();
+  }
+
   applyLsaAverageCallCostTarget();
   applyDirectContactCostKpi();
   applyNewCasesCashGoalTarget();
   applyLeadsCashGoalTarget();
   hydrateMarketingCostPerCaseKpi();
+  hydrateAvgCaseValue();
   applyTileMonth(DATA.period);
 
   /**
@@ -1763,10 +1803,39 @@
   }
 
   function kpiDetailTable(headers, rows) {
+    const monthRank = {
+      Dec: 12, Nov: 11, Oct: 10, Sep: 9, Aug: 8, Jul: 7,
+      Jun: 6, May: 5, Apr: 4, Mar: 3, Feb: 2, Jan: 1
+    };
+    const monthRowRank = row => {
+      const label = String(row && row[0] != null ? row[0] : "")
+        .replace(/<[^>]*>/g, "")
+        .trim();
+      const match = label.match(
+        /^(?:20\d{2}\s+)?(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\*?(?:\s+20\d{2})?$/i
+      );
+      if (!match) return null;
+      const key = match[1][0].toUpperCase() + match[1].slice(1, 3).toLowerCase();
+      const yearMatch = label.match(/\b(20\d{2})\b/);
+      return (yearMatch ? Number(yearMatch[1]) * 100 : 0) + monthRank[key];
+    };
+    const monthRows = [];
+    const otherRows = [];
+    (rows || []).forEach((row, index) => {
+      const rank = monthRowRank(row);
+      if (rank == null) otherRows.push({ row, index });
+      else monthRows.push({ row, index, rank });
+    });
+    const displayRows = monthRows.length >= 2
+      ? monthRows
+          .sort((a, b) => b.rank - a.rank || b.index - a.index)
+          .map(item => item.row)
+          .concat(otherRows.map(item => item.row))
+      : (rows || []);
     return `<div class="kpi-chart-detail">
       <table class="kpi-table kpi-chart-table">
         <thead><tr>${headers.map(h => `<th scope="col">${h}</th>`).join("")}</tr></thead>
-        <tbody>${rows.map(r => `<tr>${r.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody>
+        <tbody>${displayRows.map(r => `<tr>${r.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody>
       </table>
     </div>`;
   }
@@ -1881,12 +1950,8 @@
     const pad = { l: 58, r: 78, t: 40, b: 48 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
-    const leftValues = rows.flatMap(r => {
-      const leads = incomingTotal(r);
-      return [Number(r.cases) || 0, leads != null ? leads : 0];
-    });
-    const leftMax = chartAxisMax(leftValues);
-    const rightMax = chartAxisMax(rows.map(r => r.spend || 0));
+    const leftMax = 300;
+    const rightMax = 40000;
     const leftY = v => pad.t + plotH * (1 - Math.max(0, Number(v) || 0) / leftMax);
     const rightY = v => pad.t + plotH * (1 - Math.max(0, Number(v) || 0) / rightMax);
     const slot = plotW / Math.max(rows.length, 1);
@@ -1990,7 +2055,9 @@
   function costPerResponseChannelsForMonth(rows, month) {
     const row = findCasesLeadsSpendRow(month)
       || (rows || []).find(r => String(r.month || "").replace(/\*$/, "") === String(month || "").replace(/\*$/, ""));
-    if (!row || !row.adsLeads) return [];
+    if (!row) return [];
+    const key = String(month || "").replace(/\*$/, "");
+    const channelRow = findChannelMonthRow(key) || {};
     const lsaResponses = lsaResponsesForMonth(month);
     const lsaAllAnswered = lsaChargedUnchargedForMonth(month);
     const channels = [];
@@ -2025,7 +2092,40 @@
         color: "#c45c26"
       });
     }
-    return channels.filter(c => c.value > 0);
+    if (channelRow.hubspotForms != null || channelRow.hubspot != null || row.websiteLeads != null) {
+      const responses = Number(
+        channelRow.hubspotForms != null
+          ? channelRow.hubspotForms
+          : channelRow.hubspot != null
+          ? channelRow.hubspot
+          : row.websiteLeads
+      ) || 0;
+      const spend = /^(Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/.test(key)
+        ? Number(DATA.websiteHubspotMonthlyFromJun) || 0
+        : 0;
+      channels.push({
+        label: "Website forms",
+        chartLabel: "Forms",
+        unit: "$/form",
+        spend,
+        responses,
+        value: responses > 0 ? spend / responses : null,
+        color: "#b23a78"
+      });
+    }
+    if (channelRow.yelp != null) {
+      const responses = Number(channelRow.yelp) || 0;
+      const spend = Number(channelRow.yelpSpend) || 0;
+      channels.push({
+        label: "Yelp",
+        unit: "$/lead",
+        spend,
+        responses,
+        value: responses > 0 ? spend / responses : null,
+        color: "#64748b"
+      });
+    }
+    return channels.filter(c => c.value == null || Number(c.value) >= 0);
   }
 
   function junCostPerResponseChannels(rows) {
@@ -2074,7 +2174,7 @@
         escapeHtml(c.label),
         fmtMoney(c.spend),
         String(c.responses),
-        fmtMoney(c.value)
+        c.value == null ? "—" : fmtMoney(c.value)
       ])
     );
   }
@@ -2111,7 +2211,10 @@
     const pad = { l: 84, r: 18, t: 34, b: 58 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
-    const axisMax = chartAxisMax(channels.map(c => c.value), 50);
+    const numericValues = channels
+      .map(c => Number(c.value))
+      .filter(value => Number.isFinite(value) && value >= 0);
+    const axisMax = chartAxisMax(numericValues, 50);
     const ticks = axisTicks(axisMax, 5).map(value => {
       const y = pad.t + plotH * (1 - value / axisMax);
       return `<g>
@@ -2122,17 +2225,25 @@
     const slot = plotW / channels.length;
     const barW = Math.min(84, slot * 0.56);
     const bars = channels.map((c, i) => {
-      const bh = Math.max(6, (plotH * c.value) / axisMax);
+      const numericValue = Number(c.value);
+      const hasValue = c.value != null && Number.isFinite(numericValue);
+      const bh = hasValue && numericValue > 0
+        ? Math.max(6, (plotH * numericValue) / axisMax)
+        : 0;
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
+      const valueLabel = hasValue ? fmtMoney(numericValue) : "—";
+      const bar = bh > 0
+        ? `<rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="5" fill="${c.color}"/>`
+        : `<line x1="${x}" y1="${pad.t + plotH}" x2="${x + barW}" y2="${pad.t + plotH}" stroke="${c.color}" stroke-width="4"/>`;
       return `<g>
-        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="5" fill="${c.color}"/>
-        <text x="${x + barW / 2}" y="${y - 9}" text-anchor="middle" class="kpi-chart-total">${fmtMoney(c.value)}</text>
+        ${bar}
+        <text x="${x + barW / 2}" y="${y - 9}" text-anchor="middle" class="kpi-chart-total">${valueLabel}</text>
         <text x="${x + barW / 2}" y="${h - 28}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(c.chartLabel || c.label)}</text>
         <text x="${x + barW / 2}" y="${h - 12}" text-anchor="middle" class="kpi-chart-axis">${c.unit}</text>
       </g>`;
     }).join("");
-    const aria = channels.map(c => `${c.label} ${fmtMoney(c.value)} ${c.unit}`).join(", ");
+    const aria = channels.map(c => `${c.label} ${c.value == null ? "unavailable" : fmtMoney(c.value)} ${c.unit}`).join(", ");
     const axisTitleX = 18;
     const axisTitleY = pad.t + plotH / 2;
     return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cost per response: ${aria}">
@@ -2759,7 +2870,7 @@
       `${rows.length} months · CY ${yearLabel}`,
       ["Month", "Cash collected", "New cases", "Cash / new case"],
       [
-        ...rows.map(r => {
+        ...newestFirst(rows).map(r => {
           const per = r.newCases ? r.credit / r.newCases : null;
           return [
             escapeHtml(r.month) + " " + yearLabel,
@@ -3671,9 +3782,6 @@
 
   function reportHeader() {
     return `<header class="kpi-report-head">
-      <div>
-        <h2 class="kpi-report-title">Pav Law KPI Report</h2>
-      </div>
       ${reportPeriodPillsHtml()}
     </header>
     ${reportKey()}`;
@@ -4091,6 +4199,33 @@
     </button>`;
   }
 
+  /** Sits beside #30 — same card shape so cost and value read as a pair. */
+  function avgCaseValueCardHtml() {
+    const m = DATA.avgCaseValue;
+    if (!m) return "";
+    const months = m.months || [];
+    const range = months.length >= 2
+      ? `${months[0]}–${months[months.length - 1]} 2026`
+      : months[0] ? `${months[0]} 2026` : "";
+    const cost = DATA.marketingCostPerCase && DATA.marketingCostPerCase.allInPerCase;
+    const fee = Number((DATA.cashCollectedTotals || {}).contractedMean) || 0;
+    const formula = `${fmtMoney(m.cash)} collected ÷ ${m.cases} new cases`;
+    const noteParts = [
+      "Cash collected in these months, not contracted fee. Collections lag signing, so the window mixes payments on older cases with deposits on new ones."
+    ];
+    if (fee) noteParts.push(`Contracted mean fee is ${fmtMoney(fee)}.`);
+    if (cost) noteParts.push(`Net of the ${fmtMoney(cost)} marketing cost per case, ${fmtMoney(m.perCase - cost)} stays with the firm.`);
+    return `<button type="button" class="kpi-stat-card kpi-verified kpi-aug-updated" data-kpi-focus="avg-case-value">
+      ${statusCorner(true)}
+      ${kpiHelpBtn("avg-case-value")}
+      ${kpiCardTitle("Avg Case Value")}
+      ${range ? `<span class="kpi-stat-subhead">${escapeHtml(range)}</span>` : ""}
+      <span class="kpi-stat-val">${escapeHtml(fmtMoney(m.perCase))}</span>
+      <span class="kpi-stat-formula">${escapeHtml(formula)}</span>
+      <span class="kpi-stat-note">${escapeHtml(noteParts.join(" "))}</span>
+    </button>`;
+  }
+
   function kpiStatCardHtml(k) {
     if (k.lostTracker) return missedRevenueTrackerHtml();
     if (k.letterGrade || k.id === "#BHI") return bhiLetterGradeCardHtml(k);
@@ -4420,7 +4555,16 @@
     if (!(opts && opts.force) && el.dataset.rendered === RENDER_VER) return;
     const liveKpis = DATA.kpis.filter(k => !k.archived);
     const goals = liveKpis.filter(k => k.goal);
-    const metrics = liveKpis.filter(k => !k.goal && k.id !== "#28");
+    const metrics = liveKpis.filter(k => !k.goal && k.id !== "#28" && k.id !== "#30");
+    /* Financial Breakdown leads with the cost/value pair — #30 Cost per Case · Avg Case Value */
+    const costPerCaseKpi = liveKpis.find(k => k.id === "#30");
+    const costTiles = [
+      costPerCaseKpi ? kpiStatCardHtml(costPerCaseKpi) : "",
+      avgCaseValueCardHtml()
+    ]
+      .filter(Boolean)
+      .map(html => `<div class="kpi-tile-with-projects">${html}</div>`)
+      .join("");
     const goalsSpecs = [
       ...goals.map(k => ({ id: k.id, html: kpiGoalCardHtml(k) })),
       { id: "#03", html: teamDuiGoalCardHtml() },
@@ -4429,36 +4573,32 @@
     const goalsCards = goalsSpecs.map(s =>
       `<div class="kpi-tile-with-projects">${s.html}</div>`
     ).join("");
+    const kpiCards = [
+      ...metrics.map(k => kpiStatCardHtml(k)),
+      yelpGoalCardHtml(),
+      yelpLeadsCardHtml()
+    ].map(html => `<div class="kpi-tile-with-projects">${html}</div>`).join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="KPIs">
-          ${kpiSectionStaticHead("KPIs", `${tileMonthMeta().full} · Auto Cases · Cashflow · Sales Funnel`)}
+          ${kpiSectionStaticHead("KPIs")}
           <div class="kpi-section-body">
             <div class="kpi-goals-layout">
               <div class="kpi-goals-grid">${goalsCards}</div>
+              <div class="kpi-stat-grid">${kpiCards}</div>
               <div class="kpi-split-grid kpi-goals-funnel">
                 ${salesCostFunnelPanelHtml()}
               </div>
             </div>
           </div>
         </section>`;
-    const kpiCards = [
-      ...metrics.map(k => kpiStatCardHtml(k)),
-      yelpGoalCardHtml(),
-      yelpLeadsCardHtml()
-    ].map(html => `<div class="kpi-tile-with-projects">${html}</div>`).join("");
 
     el.innerHTML = `${reportHeader()}
       ${goalsBlock}
-      <section class="kpi-section kpi-section-static" data-feedback-id="section-key-metrics" data-feedback-label="Key metrics">
-        ${kpiSectionStaticHead("Key metrics", keyMetricsPeriodHint())}
-        <div class="kpi-section-body">
-          <div class="kpi-goals-layout">
-            <div class="kpi-stat-grid">${kpiCards}</div>
-          </div>
-        </div>
-      </section>
       <section class="kpi-section kpi-section-static" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Key Channel Activity">
-        ${kpiSectionStaticHead("Channel Details", "Cases, leads, and Search + LSA spend by month")}
+        ${kpiSectionStaticHead("Financial Breakdown")}
         <div class="kpi-section-body">
+          ${costTiles ? `<div class="kpi-goals-layout">
+            <div class="kpi-stat-grid kpi-cost-tiles">${costTiles}</div>
+          </div>` : ""}
           ${casesLeadsSpendSectionHtml()}
         </div>
       </section>`;

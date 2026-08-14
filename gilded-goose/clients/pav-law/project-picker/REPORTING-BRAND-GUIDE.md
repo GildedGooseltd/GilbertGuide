@@ -210,10 +210,10 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title })` — one clear title, no subtitle or period/source subhead. Section/panel titles are not a substitute. Then plot + detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the table or ? help.
 - **Plot area:** light yellow `--gg-chart-plot` (`#fff5ca`) behind every graph for series contrast; stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
 - **Chart border:** thin royal inner line plus aged-brass accent details; ornament must not compete with labels or data.
-- **Time axis direction:** every month or period axis reads **oldest → newest, left to right**, so the most recent period is the rightmost bar or point. Caption the direction as `oldest → newest`. In `kpi-report.js` use `chronological()` or `lastPeriods()` for display order — `newestFirst()` is reserved for MoM math and current-period lookups, never for rendering.
+- **Time axis direction:** every chart month or period axis reads **oldest → newest, left to right**, so the most recent period is the rightmost bar or point. Caption the direction as `oldest → newest`. Detail-table month rows use current month first. Chart order and table row order are intentionally different.
 - **Forecast periods:** extend to the right of the last actual period, separated by a dashed divider, drawn at reduced opacity, with the actual and forecast spans captioned above the plot.
 - **Axis labels:** include metric and unit; never rely on color alone.
-- **Y-scale headroom:** the top of the numeric scale must always be **at least one integer above** the highest plotted data point. Bars and lines must not touch or clip the top tick. Use `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js` — never set `axisMax` equal to the data max.
+- **Y-scale headroom:** the top of the numeric scale must always be **at least one integer above** the highest plotted data point. Bars and lines must not touch or clip the top tick. Use `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js`. Financial Breakdown is the explicit exception: 300 contacts and $40k spend while every plotted value remains below those tops.
 - **Y-axis title clearance:** leave clear space between the rotated axis title and the numeric tick labels. Use left plot pad ≥ **84** when the title is a multi-word phrase (e.g. “Cost per response ($)”). Title sits near the outer edge (~18px); tick labels sit just left of the plot (~pad.l − 10). Do not let the title overlap `$` ticks.
 - **Channel lock:** LSA = blue; Digital/Search = burnt orange; Website/HubSpot = rose; Spend = plum.
 - **Unavailable data:** slate/gray with a written “No data” label — never red.
@@ -228,14 +228,14 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 
 ## 8. Reporting table catalog
 
-Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with its column headers. All tables: zebra rows, right‑aligned numeric columns, and periods ordered oldest → newest where a period axis exists — top row or leftmost month column is the earliest period, most recent is last.
+Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with its column headers. All tables: zebra rows, right‑aligned numeric columns, and month rows ordered current → oldest. Charts remain oldest → newest.
 
 ### Pipeline & cases
 
 | Section | Headers |
 |---|---|
 | Cases MoM | Month · Closed · New cases · Red accounts · Total · MoM notes |
-| Key Channel Activity | Period · New cases · Direct contacts · Marketing spend · Channel · Spend · Responses · Cost / response. Cost per response includes LSA · LSA all answered · Digital |
+| Key Channel Activity | Period · New cases · Direct contacts · Marketing spend · Channel · Spend · Responses · Cost / response. Cost per response includes LSA · LSA all answered · Digital · Website forms · Yelp |
 | Cases forecast | Month · Cases · Status |
 | Mean fee by practice area (#29) | Practice area · n · Mean fee |
 | Avg deposit | Measure · Amount |
@@ -288,7 +288,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 - **Zebra:** `.kpi-chart-table tbody tr:nth-child(even)` soft royal wash `rgba(45,20,84,0.035)`.
 - **Headers:** `.kpi-table th` royal (`--gg-royal`), left‑aligned; numeric columns right‑aligned.
 - **Verification:** red **✕** = unverified; green outline = export‑backed (no star).
-- **Time order:** oldest period first, reading forward to the most recent — label the axis direction as `oldest → newest`. Totals rows stay pinned at the bottom.
+- **Time order:** charts run oldest → newest. Table month rows run current → oldest. Totals rows stay pinned at the bottom.
 - **Categorical cells:** royal, blue, burnt orange, rose, plum, or slate only. Gold is reserved for critical highlights, never an ordinary category.
 - **Fees and totals:** plum or royal; do not use green unless the value explicitly means cash received or a positive result.
 - **Missing/unavailable:** slate/gray; red is reserved for an actual error, gap, loss, or below-target state.

@@ -10,10 +10,16 @@ alwaysApply: true
 
 ## User owns the markdown
 
-- **`content/**/*.md`** — Kate edits by hand (Ctrl+S). Source of truth for project copy.
-- **`INDEX.md`** — Kate edits only. **Agents never write, merge, or reformat it** unless she explicitly asks in that message.
-- **`npm run build`** — regenerates **`projects-data.js` only**. Must **not** rewrite any `content/**/*.md`.
-- **`npm run sync-impact`** / **`projectToMarkdown`** — **rewrites** project markdown. Run **only** when Kate explicitly asks to sync impact / reformat. Prefer patching Impact estimates in place over full file rewrite.
+- `content/**/*.md` — Kate edits by hand (Ctrl+S). Source of truth for project copy.
+- `INDEX.md` — Kate edits only. Agents never write, merge, or reformat it unless she explicitly asks in that message.
+- `npm run build` — regenerates `projects-data.js` only. Must not rewrite any `content/**/*.md`.
+- `npm run sync-impact` / `projectToMarkdown` — rewrites project markdown. Run only when Kate explicitly asks to sync impact / reformat. Prefer patching Impact estimates in place over full file rewrite.
+
+## No bold or parentheses in main content
+
+Do not use `**bold**` or `__bold__` in Guide project copy, INDEX notes you add, or linked Pav SOPs/training docs. Headings, lists, links, and `` `field names` `` are fine.
+
+Do not use `(...)` asides in that same copy. Markdown links `[label](url)` are fine. See `communication-style.mdc`.
 
 ## Do not clobber edits (why Ctrl+S “fails”)
 
