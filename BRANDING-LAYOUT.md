@@ -170,7 +170,7 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 ## 6. KPI chart colors
 
-**Structure:** every graph card uses `chartBlock({ title, chart, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + legend (2+ series) + detail table always below (not behind “Show table” alone). Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7).
+**Structure:** every graph card uses `chartBlock({ title, chart, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + legend (2+ series) + detail table always below (not behind “Show table” alone). Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7). Financial Breakdown is locked to 300 contacts and $40k spend while current data remains below those tops.
 
 **Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 

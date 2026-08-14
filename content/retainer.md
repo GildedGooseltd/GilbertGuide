@@ -3,7 +3,7 @@
 
 | Field                  | Value                                                                                      |
 | ---------------------- | ------------------------------------------------------------------------------------------ |
-| Fee                    | 2900                                                                                       |
+| Fee                    | 3000                                                                                       |
 | Category               | Retainer                                                                                   |
 | Campaign type          | Paid Media Mgmt                                                                            |
 | Status                 | Required                                                                                   |
@@ -52,10 +52,10 @@
 
 ## LSA → digital reallocation (costing)
 
-When modeling a shift of LSA media → Search/digital media, include this retainer as the contractor management cost for digital ads ($2,900/mo).
+When modeling a shift of LSA media → Search/digital media, include this retainer as the contractor management cost for digital ads, $3,000/mo.
 
-- Media $/call stays media-only (platform spend ÷ calls).
-- Divert split rule: pay $2,900 management first; put remaining diverted LSA dollars into digital media.
+- Media $/call stays media-only: platform spend ÷ calls.
+- Divert split rule: pay $3,000 management first; put remaining diverted LSA dollars into digital media.
 - Media dollars moved LSA → digital are budget-neutral once management is funded; do not stack a second management fee if this retainer is already active.
 - Use all-in digital $/call when deciding whether the retainer is justified vs leaving spend on LSA.
 

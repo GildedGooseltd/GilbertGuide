@@ -23,7 +23,7 @@ window.PROJECT_DATA = {
     ]
   },
   "retainer": {
-    "fee": 2900,
+    "fee": 3000,
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
     "status": "required",
@@ -96,7 +96,7 @@ window.PROJECT_DATA = {
     "feeEstimateComplexity": 1.1,
     "feeEstimateBlend": "55% local / 45% national",
     "feeEstimatePackaged": false,
-    "feeEstimateDelta": 1500,
+    "feeEstimateDelta": 1400,
     "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.20 (9.25 units) · complexity ×1.1"
   },
   "projects": [
@@ -1817,7 +1817,8 @@ window.PROJECT_DATA = {
         "Long-tail questions become organic consult paths.",
         "Internal links from posts to DUI, military, and traffic pages",
         "Results compound over 8–12 weeks",
-        "Titles and meta rewritten for search intent, not generic firm copy"
+        "Titles and meta rewritten for search intent, not generic firm copy",
+        "Top 2026 landings already include protection orders, DUI/DWAI, and the Denver photo-radar post — the `/blog` hub itself is not the traffic source"
       ],
       "valueIcons": [
         "leads",
@@ -1834,16 +1835,16 @@ window.PROJECT_DATA = {
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3500,
+      "feeEstimate": 3600,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "blog_seo",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 4000,
       "feeEstimateScope": {
-        "raw": 4.48,
+        "raw": 5.48,
         "parts": {
-          "valueAdd": 4,
+          "valueAdd": 5,
           "tasks": 0,
           "completed": 1,
           "info": 0,
@@ -1855,8 +1856,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1000,
-      "feeEstimateNote": "blog seo lane · local mid $2,500 · national mid $4,000 · scope ×1.09 (4.48 units) · complexity ×1"
+      "feeEstimateDelta": 1100,
+      "feeEstimateNote": "blog seo lane · local mid $2,500 · national mid $4,000 · scope ×1.12 (5.48 units) · complexity ×1"
     },
     {
       "priority": 21,
