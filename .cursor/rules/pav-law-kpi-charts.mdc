@@ -13,7 +13,7 @@ When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
 ## Required structure
 
 1. **Use `chartBlock()`** (or the same HTML shape) for every graph card:
-   - optional head / title
+   - required title only in `.kpi-chart-head` — no subtitle, no period/source subhead
    - plot (SVG or placeholder)
    - color legend when there are 2+ series
    - **detail table always visible below the graph** — never hide behind “Show table” alone
@@ -25,12 +25,20 @@ When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
    - LSA / intake → `#1e3a8a` (royal blue / `--gg-royal-blue`)
    - Spend / cost → `#6a5acd` (plum / `--gg-plum`)
    - **Gold is never an ordinary chart category.** Reserve it for a rare critical CTA or milestone outside the plot.
-3. **Normal chart formatting** — labeled axes/ticks, plot background (`--gg-chart-plot` light yellow), baseline, totals above columns (not colliding with y-axis labels), month/category labels under bars, explicit legend with swatches.
-   - **Month ordering:** always place the **current (most recent) month first**, then go backward in time. Label the axis so the newest → oldest direction is clear. Same for period detail tables.
-   - **Y-scale headroom:** top of scale must be **at least one integer above** the highest data point (`axisMaxAboveData` / `niceAxisMax`). Never set `axisMax` equal to the data max.
+3. **Normal chart formatting** — labeled axes/ticks, plot background (`--gg-chart-plot` light yellow), baseline, totals above columns (not colliding with y-axis labels or the spend/cash line), month/category labels under bars, explicit legend with swatches.
+   - **Month ordering:** always run **oldest → newest, left to right**, so the most recent month is the rightmost bar. Label the axis `oldest → newest`. Same for period detail tables and for month columns in a table. In `kpi-report.js` use `chronological()` or `lastPeriods()` for display order; `newestFirst()` is math and lookups only.
+   - **Forecast periods:** append to the right of the last actual month, divided by a dashed rule, drawn at reduced opacity.
+   - **Y-scale headroom:** top of scale must be **at least one integer above** the highest data point. Use `chartAxisMax()` / `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js`. **Forbidden:** hardcoded axis tops like `leftMax = 300` or `axisMax = 40`; setting `axisMax` equal to the data max; clipping with `Math.min(v, leftMax)` so bars look shorter than their labels. Before shipping a chart, confirm highest plotted value < axis max.
+   - **casesLeadsSpend `leads`:** already the channel stack total. Do not add `adsLeads` / `websiteLeads` on top via `incomingTotal` — that double-counts and blows the scale.
+   - **Goal-tile chart box:** target-bar charts inside a `.kpi-goal-card` all share one box — viewBox **320 × 210**, pad `l 36 · r 10 · t 18 · b 28`, bar width up to **88**. Auto Cases is the reference tile. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` so no goal tile falls back to the smaller compact default.
    - **Stacked bar outlines:** one royal-deep stroke only — never white/paper hairlines between segments.
+   - **Value labels:** `--gg-brown` (`#3d3028`) or `#111` only. Never white / `#fff` / `#ffffff`. Sit counts outside the bar fill, above or beside the bar. Short goal-tile bars must not hide the number inside the fill.
 4. **Positive counts** never red/magenta. Red only for negative MoM / negative metric values. Green only means positive/verified/target reached; target-hit gauges finish green, not gold.
 5. Keep `BRANDING-LAYOUT.md` chart notes in sync when palette or chart conventions change.
+
+## Section subheads
+
+`kpiSectionStaticHead` hint text is a short description of the section only. Never live counts, spend, or month totals. Put numbers on tiles, charts, and tables.
 
 ## Half-moon gauges
 

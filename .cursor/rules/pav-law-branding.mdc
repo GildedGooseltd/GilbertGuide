@@ -21,7 +21,7 @@ Before changing **any** Gilbert Guide surface (KPIs, Data, Recommendations, Pred
    - Section heads = solid royal-deep + white uppercase title + lavender hint + burnt left rule
    - Recommendation **Do** / Solutions blocks use aged-brass **double** outline + thin royal inner line (`.kpi-related-projects`) — **no diamond ornaments**
    - KPI / goal tiles in the same grid row share equal card height (`.kpi-tile-with-projects` subgrid) on Guide and Metrics
-   - Charts use `chartBlock()` with a **required** header title (`title` / `.kpi-chart-head`); newest month first; one color = one meaning
+   - Charts use `chartBlock()` with a **required** header title only (`title` / `.kpi-chart-head`) — no subtitle or period/source subhead; time axes run oldest → newest, left to right; one color = one meaning
 
 4. **When branding and a one-off design conflict**, branding wins. Update the brand docs in the same change if a new meaning is truly required.
 

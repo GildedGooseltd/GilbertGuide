@@ -207,7 +207,7 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Combo chart:** bars for volumes, line for money; separate left/right units.
 - **Donut:** maximum 4–5 segments; legend always present; exact share in the detail table.
 - **Practice-area bars:** one fixed color per practice area; never recolor by rank.
-- **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title, subtitle })` — section/panel titles are not a substitute. Then period/source caption (subtitle) + plot + detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the caption/table.
+- **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title })` — one clear title, no subtitle or period/source subhead. Section/panel titles are not a substitute. Then plot + detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the table or ? help.
 - **Plot area:** light yellow `--gg-chart-plot` (`#fff5ca`) behind every graph for series contrast; stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
 - **Chart border:** thin royal inner line plus aged-brass accent details; ornament must not compete with labels or data.
 - **Time axis direction:** every month or period axis reads **oldest → newest, left to right**, so the most recent period is the rightmost bar or point. Caption the direction as `oldest → newest`. In `kpi-report.js` use `chronological()` or `lastPeriods()` for display order — `newestFirst()` is reserved for MoM math and current-period lookups, never for rendering.
@@ -217,7 +217,8 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Y-axis title clearance:** leave clear space between the rotated axis title and the numeric tick labels. Use left plot pad ≥ **84** when the title is a multi-word phrase (e.g. “Cost per response ($)”). Title sits near the outer edge (~18px); tick labels sit just left of the plot (~pad.l − 10). Do not let the title overlap `$` ticks.
 - **Channel lock:** LSA = blue; Digital/Search = burnt orange; Website/HubSpot = rose; Spend = plum.
 - **Unavailable data:** slate/gray with a written “No data” label — never red.
-- **Target lines:** every plotted number below its applicable target or minimum line is red (`--gg-negative`); values on or above the line keep their assigned nonnegative color. Keep the number visible so color is not the only signal.
+- **Target lines:** every plotted number below its applicable target or minimum line is red (`--gg-negative`); values on or above the line use ink `--gg-brown` (`#3d3028`) unless a series color is already required for a line. Keep the number visible so color is not the only signal.
+- **Chart number labels:** ink `--gg-brown` (`#3d3028`) or `#111` only. Never white, `#fff`, or `#ffffff`. Place counts outside the bar fill, above or beside the bar, on the plot field. Short goal-tile bars such as Yelp Leads must not put the count inside the fill. Combo charts: sit count and spend labels above the series — never on the line.
 - **Goal-tile chart box:** every target-bar chart inside a `.kpi-goal-card` uses the same drawing box so tiles in one row read at the same scale — viewBox `320 × 210`, pad `l 36 · r 10 · t 18 · b 28`, bar width up to `88`. Auto Cases is the reference; Missed Opportunity and any new goal tile match it. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` rather than letting the compact defaults shrink one tile.
 - **Half-moon gauges:** show only the numeric value at the inside base of the arc. Do not place descriptive text or target captions inside or beneath the gauge; put that context in the adjacent title/stat block.
 - **Gauge scales:** both endpoint labels use the same black text (`#111`) regardless of progress or target state. A success state may recolor the arc and center value, never the scale.
@@ -234,7 +235,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 | Section | Headers |
 |---|---|
 | Cases MoM | Month · Closed · New cases · Red accounts · Total · MoM notes |
-| Key Channel Activity | Period · Cases · Leads · Calls · Marketing spend · Cash · Conversion · Leads per case |
+| Key Channel Activity | Period · New cases · Direct contacts · Marketing spend · Channel · Spend · Responses · Cost / response. Cost per response includes LSA · LSA all answered · Digital |
 | Cases forecast | Month · Cases · Status |
 | Mean fee by practice area (#29) | Practice area · n · Mean fee |
 | Avg deposit | Measure · Amount |
@@ -264,7 +265,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 | Section | Headers |
 |---|---|
 | Cash collected MoM | Month · Cash collected · New cases · Cash / new case |
-| Cases Created (Data tab) | Month bars · 2025 full year + 2026 YTD |
+| Cases Created (Data tab) | Year · Span · Total · Avg / month · Avg MoM · Trend · then Month · YoY vs 2025. Chart has monthly bars plus a trend line per year. Table does not repeat monthly counts. |
 | Expense pace (working md) | See `content/forecasting-planning.md` — not on Financials |
 | Cash arrives (projection) | Cash arrives · Projected cash‑in · From prior cohorts · From new intake · Notes |
 | Cohorts | Signing month · New cases · Billed · Collectible (80%) |
