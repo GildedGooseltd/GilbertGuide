@@ -98,6 +98,8 @@ On cream/paper (`--bg`, `--gg-paper`, `--surface-plan`): use `--text`, `--gg-bro
 
 **Never** put `#f0f4fc`, `--pav-text`, or white rgba washes on light panels.
 
+**Chart number labels** on plots and goal tiles: `--gg-brown` (`#3d3028`) or `#111`. Never `#fff`, `#ffffff`, or white. Place the count outside the bar fill, above or beside the bar, so ink sits on the plot field. Short bars must not hide the number inside the fill.
+
 Links on light: `--gg-royal` + underline. Focus: `outline: 2px solid var(--gg-royal-mid)`.
 
 ---
@@ -157,7 +159,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
 | Project cards     | `.card`, `.card.selected`              | Box border/shadow; selected = royal wash        |
 | Zone labels       | `.picker-zone` + `.picker-zone-label`  | Royal/burnt accent heads; scan breaks between areas |
-| Charts            | `chartBlock()` in JS                   | **Required** `.kpi-chart-head` title (+ subtitle) · plot · legend (2+ series) · detail table |
+| Charts            | `chartBlock()` in JS                   | **Required** `.kpi-chart-head` title only · plot · legend (2+ series) · detail table |
 
 
 Confirm flow: payment options → submit → fixed SOW emailed by private link → Andrew checkbox signature → Kate private countersign link → final PDF email + Drive archive. Andrew can continue to the QuickBooks deposit after his signature. Action items appear on thank-you / email — not on the picker browse zones.
@@ -168,9 +170,11 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 ## 6. KPI chart colors
 
-**Structure:** every graph card uses `chartBlock({ title, subtitle, chart, … })` — **required** header title in `.kpi-chart-head`, then plot + legend (2+ series) + detail table always below (not behind “Show table” alone). Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7).
+**Structure:** every graph card uses `chartBlock({ title, chart, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + legend (2+ series) + detail table always below (not behind “Show table” alone). Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7).
 
 **Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
+
+**Value labels:** `.kpi-target-bar-val` and other plotted counts use `--gg-brown` (`#3d3028`). Gauge scale ticks stay `#111`. Never white text on bars, goal tiles, or light plots. Counts sit above or beside the fill, not inside it. Combo charts: counts and spend labels sit above the series — never on the line.
 
 **Locked triad** (unique, high-contrast — no two similar purples adjacent):
 
@@ -253,6 +257,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 - Gold on ranks, scores, table chrome, ordinary badges, category series, target-hit gauges, or selected rows.
 - Teal/cyan chart or UI accents (`#00d4c4`, `#2dd4bf`, peacock teal).
 - Light-on-light or `--pav-text` on cream panels.
+- White or `#fff` number labels on chart bars, goal tiles, or light plots.
 - Swap chart series to two near-identical purples.
 - Recolor value icons on one surface only.
 - Put branding hex in project markdown or `projects-data.js`.

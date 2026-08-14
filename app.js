@@ -405,9 +405,9 @@
 
   function normalizeViewTab(tab) {
     const t = String(tab || "kpis").toLowerCase().trim();
-    if (t === "revenue" || t === "completed" || t === "results") return "impact";
+    if (t === "revenue" || t === "completed" || t === "results" || t === "impact") return "kpis";
     if (t === "dashboards") return "kpis";
-    if (t === "recs" || t === "recommendation") return "recommendations";
+    if (t === "recs" || t === "recommendation" || t === "recommendations") return "kpis";
     if (
       t === "prediction" ||
       t === "predictions" ||
@@ -415,14 +415,12 @@
       t === "cash-projection" ||
       t === "recs-predictions"
     ) {
-      return "recommendations";
+      return "kpis";
     }
     if (
       t === "kpis" ||
       t === "data" ||
-      t === "recommendations" ||
-      t === "picker" ||
-      t === "impact"
+      t === "picker"
     ) {
       return t;
     }
@@ -1698,7 +1696,7 @@
     "#21": { name: "Answered Calls", tracking: "Clean — Call details Received vs Missed for Search; LSA status separate." },
     "#22": { name: "Speed to lead", tracking: "Partial — needs HubSpot workflow timestamps." },
     "#28": { name: "Avg case fee", tracking: "Clean — MyCase Client contracted mean; not cash collected." },
-    "#30": { name: "Marketing cost / closed case", tracking: "Firm-wide only — all-in complete-month media + management retainer + forms fee ÷ new cases; media-only shown as secondary. Not by channel." },
+    "#30": { name: "Cost per Case", tracking: "Firm-wide — Search + LSA media + management retainer + HubSpot forms + Referral Sites ÷ new cases on complete months. Known stack only. Prior installment subscriptions ≥$20k YTD not fully visible. Not by channel." },
     "#31": { name: "Cost per signed case", tracking: "By channel when Lead Source on hire — spend ÷ signed cases." },
     "#32": { name: "Channel ROI", tracking: "Hold until measured signed ÷ leads per channel." },
     "#23": { name: "Intake coverage / after-hours", tracking: "Partial — needs routing logs and after-hours disposition." },
