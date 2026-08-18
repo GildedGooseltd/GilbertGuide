@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260814-standard-tile-chrome";
+  const RENDER_VER = "20260818-funnel-first";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
@@ -385,6 +385,7 @@
     period: "August 2026",
     asOf: "2026-08-12",
     lastUpdated: "2026-08-12",
+    lastPublished: "2026-08-18",
     updateLabel: "August 2026",
     updateScope: "",
     source: "Contact_08-12-2026 · Call details (1) through Aug 6 · Call details.csv Jun lock · LSA inbox (17) Aug 11 · account_activities May–Aug · ledger through Aug 12 · HubSpot form exports Jul 16 = Aug 0 forms · Yelp Contacted Leads screenshot Aug 12 2:26 PM",
@@ -2199,6 +2200,7 @@
       ${statusCorner(true)}
       ${kpiHelpBtn("cases-leads-spend")}
       <div class="kpi-split-panel-body data-chart-table-grid">
+        ${salesCostFunnelChartBlockHtml()}
         ${chartBlock({
           title: "New cases, contacts & spend",
           chart: dualAxisCasesSpendChart(rows),
@@ -2210,7 +2212,6 @@
           chart: costPerResponseChart(pack.channels),
           table: costPerResponseDetailTable(rows)
         }) : ""}
-        ${salesCostFunnelChartBlockHtml()}
       </div>
       ${kpiRefMark("#05")}
     </article>`;
@@ -3771,6 +3772,15 @@
     </div>`;
   }
 
+  function monthlyKpisAsOfHint() {
+    const pulled = DATA.lastUpdated || DATA.asOf || "";
+    const published = DATA.lastPublished || "";
+    if (pulled && published) return `Pulled ${pulled} · Published ${published}`;
+    if (pulled) return `Pulled ${pulled}`;
+    if (published) return `Published ${published}`;
+    return "";
+  }
+
   function kpiSectionIntro(text) {
     if (!text) return "";
     return `<p class="kpi-section-intro">${text}</p>`;
@@ -4588,7 +4598,7 @@
       yelpGoalCardHtml()
     ].map(html => `<div class="kpi-tile-with-projects">${html}</div>`).join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="KPIs">
-          ${kpiSectionStaticHead("Monthly KPIs")}
+          ${kpiSectionStaticHead("Monthly KPIs", monthlyKpisAsOfHint())}
           <div class="kpi-section-body">
             <div class="kpi-goals-layout">
               <div class="kpi-goals-grid kpi-stat-grid kpi-tiles-4">${goalsCards}${kpiCards}</div>
