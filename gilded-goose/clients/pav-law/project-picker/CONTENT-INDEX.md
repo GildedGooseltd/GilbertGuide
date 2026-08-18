@@ -42,7 +42,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Main headline           | `index.html` | `.cockpit-title span` — “Operations Dashboard”; Gold       |
 | Subtitle + how-to intro | `index.html` | `.cockpit-subtitle`, `.cockpit-intro`, `.cockpit-howto`                  |
 | Default tab on load     | `app.js`     | `activeViewTab: "kpis"` — KPIs panel visible first                       |
-| Tab: Guide (leftmost)   | `index.html` | `button[data-view="picker"]` — Project Guide first in tab order          |
+| Tab: Guide              | `index.html` | `button[data-view="picker"]` — **Under construction** overlay on cart, outlines, Review Plan |
 | Tab: KPIs               | `index.html` | `button[data-view="kpis"]` — default active; charts at bottom of panel   |
 | Tab: Data               | `index.html` | `button[data-view="data"]`                                               |
 | Tab: Results            | `index.html` | `button[data-view="impact"]` — **Under construction** + project-tied cards |

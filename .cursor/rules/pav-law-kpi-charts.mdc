@@ -36,6 +36,13 @@ When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
 4. **Positive counts** never red/magenta. Red only for negative MoM / negative metric values. Green only means positive/verified/target reached; target-hit gauges finish green, not gold.
 5. Keep `BRANDING-LAYOUT.md` chart notes in sync when palette or chart conventions change.
 
+## Standardized KPI tile chrome
+
+- `.kpi-stat-card` and `.kpi-goal-card` keep their standard component border and surface in every status.
+- Never add yellow, red, or green status borders, left rules, backgrounds, or washes to KPI tiles.
+- Communicate status with written text, value color, and one corner check or red ✕.
+- Light yellow `--gg-chart-plot` remains required inside graph plots; it is not a tile highlight.
+
 ## Section subheads
 
 `kpiSectionStaticHead` hint text is a short description of the section only. Never live counts, spend, or month totals. Put numbers on tiles, charts, and tables.

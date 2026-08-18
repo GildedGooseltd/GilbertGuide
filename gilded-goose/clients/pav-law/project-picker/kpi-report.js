@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260814-kpi-batch-r2";
+  const RENDER_VER = "20260814-standard-tile-chrome";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
@@ -12,16 +12,12 @@
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Call details + LSA inbox (17) + HubSpot form submits · Ad Reports/exports aggregates as-of-2026-08-12",
-      fields: "Jun 226 = 138 Search + 83 LSA + 5 forms · Jul 267 = 131 Search + 132 LSA + 4 forms · Aug* 47 = 23 Search through Aug 6 + 24 LSA through Aug 11 + 0 HubSpot forms"
+      file: "Call details + LSA inbox (17) + HubSpot form submits · Ad Reports/exports aggregates as-of-2026-08-12 · Yelp Contacted Leads screenshot 2026-08-12",
+      fields: "Jun 226 = 138 Search + 83 LSA + 5 forms · Jul 267 = 131 Search + 132 LSA + 4 forms · Aug* 47 = 23 Search through Aug 6 + 24 LSA through Aug 11 + 0 HubSpot forms · Yelp track table Jun 0 · Jul 5 · Aug* 2 of 20"
     },
     "yelp": {
       file: "yelp.com/biz/pav-law-colorado-springs live 2026-08-12 · Contacted Leads screenshot same day",
       fields: "Reviews 4.6 · 7 · Tile month row: Jun — · Jul new 0 · Aug new 1 vs prior 6 · Messages last-30 7 · Aug calendar 2 · Jul calendar 5"
-    },
-    "yelp-leads": {
-      file: "Yelp Contacted Leads screenshot 2026-08-12 · Ad Reports/exports/yelp/message-leads-as-of-2026-08-12.csv",
-      fields: "Tile month: Jun 0 · Jul 5 · Aug 2 including today · last-30 messages 7 · messages only from Contacted Leads screenshot"
     },
     "#02": {
       file: "Downloads/Contact_08-12-2026.csv · Ad Reports/exports/mycase/as-of-2026-08-12/new-cases-by-month.csv",
@@ -104,8 +100,8 @@
   const KPI_HELP = {
     "#01": {
       title: "#01 Leads Generated",
-      desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid — that is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot form submits when present.",
-      formula: "Jun 226 · Jul 267 · Aug* 47 = Search 23 + LSA 24 + HubSpot 0. Yelp Contacted Leads tracked on Yelp Leads tile. Target = floor($100k ÷ cash/lead) + 1 from complete months."
+      desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid — that is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot form submits when present. Yelp Contacted Leads are not in the gauge — they live in the track table under the tile with a 20-lead goal.",
+      formula: "Jun 226 · Jul 267 · Aug* 47 = Search 23 + LSA 24 + HubSpot 0. Yelp Contacted Leads sit in the tile track table · Jun 0 · Jul 5 · Aug* 2 of a 20 goal. Target = floor($100k ÷ cash/lead) + 1 from complete months."
     },
     "#02": {
       title: "#02 New Cases",
@@ -129,8 +125,8 @@
     },
     "#19": {
       title: "#19 Missed Opportunity",
-      desc: "Estimated potential revenue not earned from unanswered Search calls. Shows current missed-call rate vs the ≤10% target, plus estimated money lost for the tile month, the calendar quarter, and YTD. June locked from Call details.csv Jul 11. July and August* from Call details (1).csv through Aug 6.",
-      formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,587). Month / quarter / year sum missed calls in that window from phoneByMonth."
+      desc: "Estimated potential revenue not earned from unanswered Search calls. Shows estimated money lost for the tile month, the calendar quarter, and YTD, then the missed-call rate split weekday vs weekend against the ≤10% target. June locked from Call details.csv Jul 11. July and August* from Call details (1).csv through Aug 6. Weekday/weekend splits come from Start time day-of-week in those same pulls and each pair sums to the month total.",
+      formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,587). Month / quarter / year sum missed calls in that window from phoneByMonth. Uncharged LSA calls are not in this number: filter the LSA inbox to not charged, check each against the phone log for a callback within 48 hours, and count only never-reached calls as lost."
     },
     "#21": {
       title: "#21 Answered Calls",
@@ -167,11 +163,6 @@
       title: "Yelp Reviews — listing count",
       desc: "Public Yelp listing review total toward the 20-review goal. Tile month row follows the KPI pill: June unknown · July new 0 · August new = live total minus prior 6.",
       formula: "Total 7 / 20 · live Yelp listing 2026-08-12. Rating 4.6."
-    },
-    "yelp-leads": {
-      title: "Yelp Leads — monthly and total",
-      desc: "Monthly Yelp Contacted Leads follow the KPI tile month: June 0 · July calendar 5 · August calendar 2 including today. Goal line is 20 channel referrals. Last-30 list length is not the monthly score.",
-      formula: "June 0 · July 5 · August 2 including today. Goal 20."
     },
     "#28": {
       title: "#28 Avg case fee",
@@ -292,10 +283,9 @@
     "#19": ["HsVoip", "LsaCall"],
     "#07": ["REC:savings", "RETAINER"],
     "#03": ["NtguiltAd", "InsMailer"], // Add HolidayAds back in August; add SummerAds back next summer.
-    "#01": ["HsVoip", "DigProf"],
+    "#01": ["HsVoip", "DigProf", "InsMailer"],
     "#12": ["HsVoip", "RETAINER"],
     yelp: ["DigProf", "HsSetup"],
-    "yelp-leads": ["DigProf", "InsMailer"],
     "cash-pace": ["REC:savings", "RETAINER"],
     financial: ["REC:savings", "RETAINER"]
   };
@@ -402,7 +392,7 @@
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
       { id: "#01", label: "Leads Generated", value: "47", target: "≥ 219", mom: "−82%", count: 47, verified: true, hit: false, alert: false, gauge: true, augUpdated: true },
       { id: "#02", label: "New Cases", value: "11", target: "≥ 24", mom: "−69%", count: 11, verified: true, hit: false, alert: true, gauge: true, augUpdated: true },
-      /* Key metrics: #19 Missed Opportunity · Yelp Leads added in renderKpis */
+      /* Key metrics: #19 Missed Opportunity in Financial Breakdown */
       { id: "#19", label: "Missed Opportunity", value: "$4,079/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true, augUpdated: true },
       { id: "#21", label: "Answered Calls", value: "57%", target: "≥ 90%", mom: "+1%", verified: true, alert: true, gauge: true, goal: true, archived: true },
       /* archived for future iteration — restore by removing archived: true */
@@ -501,11 +491,24 @@
       { name: "NTGUILT", count: 15, prior: 0, mom: "—", spend: "$1,924", color: "#b23a78" }
     ],
     /** Search phone by calendar month — Jun from Call details.csv Jul 11; Jul/Aug* from Call details (1). */
+    /* Weekday/weekend splits from the same Call details pulls — each pair sums to the month total. */
     phoneByMonth: {
-      May: { calls: 39, received: 26, missed: 13, answeredPct: 67 },
-      Jun: { calls: 138, received: 100, missed: 38, answeredPct: 72 },
-      Jul: { calls: 131, received: 73, missed: 58, answeredPct: 56 },
-      Aug: { calls: 23, received: 13, missed: 10, answeredPct: 57 }
+      May: {
+        calls: 39, received: 26, missed: 13, answeredPct: 67,
+        weekdayCalls: 39, weekdayMissed: 13, weekendCalls: 0, weekendMissed: 0
+      },
+      Jun: {
+        calls: 138, received: 100, missed: 38, answeredPct: 72,
+        weekdayCalls: 129, weekdayMissed: 33, weekendCalls: 9, weekendMissed: 5
+      },
+      Jul: {
+        calls: 131, received: 73, missed: 58, answeredPct: 56,
+        weekdayCalls: 125, weekdayMissed: 56, weekendCalls: 6, weekendMissed: 2
+      },
+      Aug: {
+        calls: 23, received: 13, missed: 10, answeredPct: 57,
+        weekdayCalls: 18, weekdayMissed: 7, weekendCalls: 5, weekendMissed: 3
+      }
     },
     phoneIntake: {
       targetPct: 90,
@@ -4174,18 +4177,19 @@
     return "";
   }
 
+  /* Red ✕: the media stack is export-backed but the denominator misses installments still owed. */
   function kpiCostPerCaseCardHtml(k) {
-    const vClass = verifiedClass(!!k.verified);
     const foot = k.verified ? sourceFootnote(k.id) : "";
     const range = k.periodRange || "";
     const formula = k.formulaLine || "";
     const note = k.noteLine || "";
-    return `<button type="button" class="kpi-stat-card${vClass}${periodFreshClass(!!k.augUpdated, !!k.verified)}" data-kpi-focus="${k.id}">
-      ${periodFreshMark(!!k.augUpdated, !!k.verified)}
+    return `<button type="button" class="kpi-stat-card" data-kpi-focus="${k.id}">
+      ${unverifiedMark()}
       ${kpiHelpBtn(k.id)}
       ${kpiCardTitle(k.label)}
       ${range ? `<span class="kpi-stat-subhead">${escapeHtml(range)}</span>` : ""}
       <span class="kpi-stat-val">${escapeHtml(k.value)}</span>
+      <span class="kpi-stat-label">Method not verified</span>
       ${formula ? `<span class="kpi-stat-formula">${escapeHtml(formula)}</span>` : ""}
       ${note ? `<span class="kpi-stat-note">${escapeHtml(note)}</span>` : ""}
       ${foot}
@@ -4227,26 +4231,37 @@
     if (!p) return "";
     const model = missedRevenueModel(p);
     const key = periodToChannelMonth(DATA.period);
-    const monthName = key === "Jun" ? "June" : key === "Jul" ? "July" : "August";
+    const monthName = key === "May" ? "May" : key === "Jun" ? "June" : key === "Jul" ? "July" : "August";
     const lsaRow = (DATA.lsaEfficiency || []).find(r => String(r.month).replace(/\*$/, "") === key) || {};
     const lsaCalls = Number(lsaRow.leads) || 0;
     const lsaCharged = Number(lsaRow.charged) || 0;
-    const phoneReady = !!(DATA.phoneByMonth && DATA.phoneByMonth[key]);
-    const formula = `${model.missedSearchCalls} of ${p.monthlyCalls} Search calls missed · ${p.missedPct}% missed call rate against a goal of ${p.missedTargetPct}% or less`;
-    const noteParts = [
-      model.formulaWorked + ".",
-      lsaCalls ? `LSA took ${lsaCalls} calls with ${lsaCharged} charged.` : "LSA call count not on file for this month.",
-      `Lost so far this year ${fmtMoney(model.cumulativeYtd)}.`
-    ];
-    return `<button type="button" class="kpi-stat-card kpi-stat-attention${phoneReady ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="#19">
-      ${phoneReady ? statusCorner(true) : outdatedMark()}
+    const lsaUncharged = lsaRow.notCharged != null
+      ? Number(lsaRow.notCharged)
+      : Math.max(0, lsaCalls - lsaCharged);
+    const phone = (DATA.phoneByMonth && DATA.phoneByMonth[key]) || {};
+    const splitRows = [
+      ["Weekday", phone.weekdayCalls, phone.weekdayMissed],
+      ["Weekend", phone.weekendCalls, phone.weekendMissed]
+    ].map(([label, calls, missed]) => {
+      const n = Number(calls) || 0;
+      const m = Number(missed) || 0;
+      const value = n ? `${Math.round((m / n) * 100)}% · ${m} of ${n}` : "No calls";
+      return `<tr><th scope="row">${label}</th><td>${escapeHtml(value)}</td></tr>`;
+    }).join("");
+    const lostLine = `Est. lost · month ${fmtMoney(model.monthlyLost)} · quarter ${fmtMoney(model.quarterLost)} · year ${fmtMoney(model.yearLost)}`;
+    const unchargedNote = lsaCalls
+      ? `Uncharged LSA calls this month: ${lsaUncharged} of ${lsaCalls}. To value them, pull the LSA inbox, filter Charge status to not charged, then check each one against the phone log for an outbound callback to the same number within 48 hours. Count only the never-reached calls as lost, and apply the same lead-to-case rate.`
+      : "LSA call count not on file for this month. Pull the LSA inbox, filter Charge status to not charged, then check each one against the phone log for a callback within 48 hours before counting any as lost.";
+    return `<button type="button" class="kpi-stat-card kpi-stat-attention" data-kpi-focus="#19">
+      ${unverifiedMark()}
       ${kpiHelpBtn("#19")}
       ${kpiCardTitle("Missed Opportunity")}
       <span class="kpi-stat-subhead">${escapeHtml(monthName)} 2026</span>
       <span class="kpi-stat-val kpi-val-negative">${escapeHtml(fmtMoney(model.monthlyLost))}/mo</span>
-      <span class="kpi-stat-label">Behind goal of $0 lost</span>
-      <span class="kpi-stat-formula">${escapeHtml(formula)}</span>
-      <span class="kpi-stat-note">${escapeHtml(noteParts.join(" "))}</span>
+      <span class="kpi-stat-label">Method not verified</span>
+      <span class="kpi-stat-formula">${escapeHtml(lostLine)}</span>
+      <table class="kpi-goal-track kpi-missed-split"><caption class="kpi-stat-formula">Missed call rate · target ${escapeHtml(String(p.missedTargetPct))}% or less</caption><tbody>${splitRows}</tbody></table>
+      <span class="kpi-stat-note">${escapeHtml(unchargedNote)}</span>
       ${kpiRefMark("#19")}
     </button>`;
   }
@@ -4271,6 +4286,15 @@
       const goalLine = targetLine;
       const gOpts = halfMoonOptsForKpi(k, nums, hit);
       const gauge = halfMoonGauge(gOpts.pct, grad, gOpts);
+      const yelpTrack = k.id === "#01"
+        ? (() => {
+            const y = yelpLeadsMonthCount();
+            return goalTrackRows([
+              ["Yelp leads", escapeHtml(y.label)],
+              ["Yelp goal", escapeHtml(y.goalLabel)]
+            ]);
+          })()
+        : "";
       return `<button type="button" class="kpi-stat-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified)}" data-kpi-focus="${k.id}">
         ${periodFreshMark(!!k.augUpdated, !!k.verified)}
         ${kpiHelpBtn(k.id)}
@@ -4279,6 +4303,7 @@
         ${kpiCardTitle(k.label)}
         ${metricWithDeltaHtml(gauge, k.id === "#01" || k.id === "#02" ? null : k.mom)}
         ${goalLine ? `<span class="kpi-stat-label">${goalLine}</span>` : ""}
+        ${yelpTrack}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
         ${foot}
         ${kpiRefMark(k.id)}
@@ -4477,33 +4502,24 @@
     };
   }
 
-  function yelpLeadsMonthlyTotalChart(y) {
+  function yelpLeadsMonthCount() {
+    const leadTarget = 20;
+    const y = yelpBaselineData();
     const key = periodToChannelMonth(DATA.period);
-    const monthly = key === "Jul"
-      ? (Number(y.julyLeads) || 0)
-      : key === "Aug"
-        ? (Number(y.augustLeads) || 0)
-        : 0;
-    const target = 20;
-    return barWithTargetChart(
-      [
-        { label: "Monthly", value: monthly, color: "#b23a78" }
-      ],
-      {
-        target,
-        lowerIsBetter: false,
-        format: "count",
-        compact: true,
-        fullCategoryLabels: true,
-        width: 320,
-        height: 210,
-        pad: { l: 36, r: 10, t: 18, b: 28 },
-        barWidth: 88,
-        ariaLabel: `Yelp leads ${monthly} this month vs goal ${target}`
-      }
-    );
+    const ch = findChannelMonthRow(key);
+    let monthly = null;
+    if (ch && ch.yelp != null) monthly = Number(ch.yelp);
+    else if (key === "Aug") monthly = Number(y.augustLeads) || 0;
+    else if (key === "Jul") monthly = Number(y.julyLeads) || 0;
+    else if (key === "Jun") monthly = 0;
+    const count = Number.isFinite(monthly) ? monthly : null;
+    return {
+      count,
+      label: count == null ? "—" : String(count),
+      goal: leadTarget,
+      goalLabel: count == null ? `—/${leadTarget}` : `${count}/${leadTarget}`
+    };
   }
-
 
   function yelpGoalCardHtml() {
     const reviewTarget = 20;
@@ -4543,38 +4559,6 @@
     </button>`;
   }
 
-  function yelpLeadsCardHtml() {
-    const leadTarget = 20;
-    const y = yelpBaselineData();
-    const key = periodToChannelMonth(DATA.period);
-    const monthName = key === "Jun" ? "June" : key === "Jul" ? "July" : "August";
-    let monthly = null;
-    const ch = findChannelMonthRow(key);
-    if (ch && ch.yelp != null) monthly = Number(ch.yelp);
-    else if (key === "Aug") monthly = Number(y.augustLeads) || 0;
-    else if (key === "Jul") monthly = Number(y.julyLeads) || 0;
-    const monthlyLabel = monthly == null || !Number.isFinite(monthly) ? "—" : String(monthly);
-    const goalCount = Number.isFinite(monthly) ? monthly : 0;
-    const pacePct = Math.round((goalCount / leadTarget) * 100);
-    const todayN = Number(y.todayLeads) || 0;
-    const rows = [
-      ["Pace", `${pacePct}%`],
-      [monthName, monthlyLabel],
-      ["Goal", `${goalCount}/${leadTarget}`]
-    ];
-    if (key === "Aug") rows.splice(1, 0, ["Today", String(todayN)]);
-    return `<button type="button" class="kpi-goal-card kpi-stat-target-bar kpi-verified kpi-aug-updated" data-kpi-focus="yelp-leads" aria-label="Yelp Leads pace ${pacePct}% · ${monthName} ${monthlyLabel} · today ${todayN} · goal ${goalCount} of ${leadTarget}">
-      ${statusCorner(true)}
-      ${kpiHelpBtn("yelp-leads")}
-      <div class="kpi-goal-visual">
-        ${kpiCardTitle("Yelp Leads")}
-        ${yelpLeadsMonthlyTotalChart(y)}
-      </div>
-      ${goalTrackRows(rows)}
-      ${kpiRefMark("#17")}
-    </button>`;
-  }
-
   function renderKpis(el, opts) {
     if (!el) return;
     if (!(opts && opts.force) && el.dataset.rendered === RENDER_VER) return;
@@ -4601,8 +4585,7 @@
     ).join("");
     const kpiCards = [
       ...metrics.map(k => kpiStatCardHtml(k)),
-      yelpGoalCardHtml(),
-      yelpLeadsCardHtml()
+      yelpGoalCardHtml()
     ].map(html => `<div class="kpi-tile-with-projects">${html}</div>`).join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="KPIs">
           ${kpiSectionStaticHead("Monthly KPIs")}
