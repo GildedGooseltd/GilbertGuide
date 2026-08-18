@@ -1641,11 +1641,52 @@
       position: relative;
       min-height: 18rem;
     }
-    .impact-panel-body {
+    .impact-panel-body,
+    .picker-panel-body {
       filter: grayscale(0.55);
       opacity: 0.42;
       pointer-events: none;
       user-select: none;
+    }
+    .picker-panel-wip {
+      position: relative;
+      min-height: 18rem;
+    }
+    .picker-under-construction {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 3rem 2rem 2rem;
+      background: rgba(248, 245, 239, 0.78);
+      backdrop-filter: blur(1.5px);
+      border-radius: var(--radius);
+      pointer-events: none;
+    }
+    .picker-under-construction-card {
+      text-align: center;
+      padding: 1.5rem 2rem;
+      border: 2px dashed rgba(100, 116, 139, 0.55);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      max-width: 22rem;
+      box-shadow: 0 8px 28px rgba(45, 20, 84, 0.08);
+    }
+    .picker-under-construction-card strong {
+      display: block;
+      font-size: 1.35rem;
+      color: var(--gg-royal-deep);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+    .picker-under-construction-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--secondary);
+      line-height: 1.45;
     }
     .impact-under-construction {
       position: absolute;
@@ -3202,7 +3243,7 @@
       row-gap: 0.85rem;
       align-items: stretch;
     }
-    /* Key Metrics — Leads · Cases · Missed Opportunity · Yelp Reviews · Yelp Leads */
+    /* Key Metrics — Leads · Cases · Yelp Reviews */
     .kpi-stat-grid {
       grid-template-columns: repeat(5, minmax(0, 1fr));
     }
@@ -3469,8 +3510,7 @@
     }
     .kpi-stat-card:hover { border-color: var(--gg-royal-border); }
     .kpi-stat-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
-    .kpi-stat-card.kpi-stat-attention { border-left: 4px solid var(--gg-caution); }
-    .kpi-stat-card.kpi-stat-negative { border-left: 4px solid var(--gg-negative, #b91c1c); }
+    /* Tile chrome is standardized. Status lives in text, value color, and corner mark. */
     .kpi-lost-tracker {
       text-align: left; min-height: auto;
     }
@@ -3672,7 +3712,6 @@
     }
     .kpi-goal-card:hover { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
     .kpi-goal-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
-    .kpi-goal-card.kpi-stat-attention { border-left-width: 5px; }
     .kpi-goal-card.kpi-stat-gauge .kpi-gauge-svg { max-width: 168px; width: 100%; margin: 0.35rem auto 0.15rem; }
     .kpi-goal-card .kpi-metric-with-delta,
     .kpi-stat-card.kpi-stat-gauge .kpi-metric-with-delta {
@@ -3719,6 +3758,14 @@
       padding-bottom: 0.12rem;
       font-size: 0.72rem;
     }
+    /* Weekday / weekend missed-rate split on the Missed Opportunity text tile. */
+    .kpi-missed-split { margin-top: 0.4rem; }
+    .kpi-missed-split caption {
+      text-align: left; padding: 0 0 0.15rem; caption-side: top;
+    }
+    .kpi-stat-grid .kpi-missed-split tr { height: auto; }
+    .kpi-missed-split th { width: 4.6rem; }
+    .kpi-missed-split td { font-variant-numeric: tabular-nums; }
     .kpi-goal-month-need { font-variant-numeric: tabular-nums; }
     .kpi-goal-month-ytd {
       color: var(--gg-brown-muted, #5c4f45);
@@ -5557,7 +5604,7 @@
     <div class="cockpit-tabs-wrap">
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
         <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs <span class="tab-help" data-help-title="KPIs" data-help-desc="August 2026 MTD through Aug 12. Tile pills switch June · July · August. Leads 47 · cases 11 · Sales Funnel follows the selected month. Search ads paused unpaid in August. Tap ? on a KPI for description, formula, and export fields." aria-label="How to use KPIs">?</span></button>
-        <button type="button" class="view-tab view-tab-wip" data-view="picker" role="tab" aria-selected="false">Guide <span class="tab-help" data-help-title="Guide" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use Guide">?</span></button>
+        <button type="button" class="view-tab view-tab-wip" data-view="picker" role="tab" aria-selected="false" aria-description="Under construction">Guide <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Guide" data-help-desc="Project Guide is under construction. Cart, outlines, and Review Plan stay here when it reopens." aria-label="How to use Guide">?</span></button>
         <button type="button" class="view-tab" data-view="data" role="tab" aria-selected="false">Data <span class="tab-help" data-help-title="Data" data-help-desc="Operating charts from the same exports as KPIs through 2026-08-12. Lead channel stack, cases MoM, reviews, Cases Created 2025–2026. Tile month on KPIs also refreshes the Data lead stack. Each card ? shows description, formula, and file/fields." aria-label="How to use Data">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="impact" role="tab" aria-selected="false" aria-description="Under construction" hidden>Results <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Results" data-help-desc="Project-tied campaign results, completed report-out, and cart revenue calculator. Under construction until exports and INDEX statuses are wired end-to-end." aria-label="How to use Results">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="recommendations" role="tab" aria-selected="false" aria-description="Under construction" hidden>Recommendations &amp; Predictions <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Recommendations & Predictions" data-help-desc="Ranked actions plus rest-of-year case forecast, expense pace, and collectible-cash projection. Blurred until ready to publish." aria-label="How to use Recommendations and Predictions">?</span></button>
@@ -5573,6 +5620,14 @@
     </section>
 
     <section class="cockpit-panel picker-panel outlines-panel" id="cockpit-panel-picker" aria-label="Project guide" hidden>
+      <div class="picker-panel-wip">
+        <div class="picker-under-construction" role="status" aria-live="polite">
+          <div class="picker-under-construction-card">
+            <strong>Under Construction</strong>
+            <p>Project Guide — cart, outlines, and Review Plan — is paused. KPIs and Data stay live.</p>
+          </div>
+        </div>
+        <div class="picker-panel-body" aria-hidden="true">
       <div class="picker-zone picker-zone-priorities">
         <div class="pav-guide-ask-section" aria-label="Ask Gilbert and Pav Priorities" data-feedback-id="guide-ask-gilbert" data-feedback-label="Ask Gilbert + Pav Priorities">
           <!-- Ask Gilbert parked — edit parked/ASK-GILBERT-WIP.md then remove hidden to restore -->
@@ -5639,6 +5694,8 @@
           </div>
           <div id="project-list"></div>
           <div id="research-section-wrap"></div>
+        </div>
+      </div>
         </div>
       </div>
     </section>
@@ -5712,7 +5769,7 @@
   <script src="projects-data.js?v=20260811-retainer-3k"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
-  <script src="kpi-report.js?v=20260814-kpi-batch-r2"></script>
+  <script src="kpi-report.js?v=20260814-standard-tile-chrome"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20260811-hide-results"></script>
 </body>

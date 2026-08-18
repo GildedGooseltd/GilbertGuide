@@ -630,8 +630,7 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-stat-card:hover { border-color: var(--gg-royal-border); }
 .kpi-stat-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
-.kpi-stat-card.kpi-stat-attention { border-left: 4px solid var(--gg-caution); }
-.kpi-stat-card.kpi-stat-negative { border-left: 4px solid var(--gg-negative, #b91c1c); }
+/* Tile chrome is standardized. Status lives in text, value color, and corner mark. */
 .kpi-lost-tracker {
   text-align: left; min-height: auto;
 }
@@ -774,7 +773,6 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-goal-card:hover { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
 .kpi-goal-card.kpi-stat-active { border-color: var(--gg-royal); box-shadow: 0 0 0 2px var(--gg-royal-dim); }
-.kpi-goal-card.kpi-stat-attention { border-left-width: 5px; }
 .kpi-goal-card.kpi-stat-gauge .kpi-gauge-svg { max-width: 148px; width: 100%; margin: 0.1rem auto 0; }
 .kpi-goal-track {
   width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left;
@@ -802,6 +800,14 @@ body.feedback-mode-on .feedback-target:hover {
   padding-bottom: 0.12rem;
   font-size: 0.72rem;
 }
+/* Weekday / weekend missed-rate split on the Missed Opportunity text tile. */
+.kpi-missed-split { margin-top: 0.4rem; }
+.kpi-missed-split caption {
+  text-align: left; padding: 0 0 0.15rem; caption-side: top;
+}
+.kpi-stat-grid .kpi-missed-split tr { height: auto; }
+.kpi-missed-split th { width: 4.6rem; }
+.kpi-missed-split td { font-variant-numeric: tabular-nums; }
 .kpi-goal-month-need { font-variant-numeric: tabular-nums; }
 .kpi-goal-month-ytd {
   color: var(--gg-brown-muted, #5c4f45);

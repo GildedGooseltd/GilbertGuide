@@ -78,7 +78,7 @@ Percentage-change labels use black, regular-weight `↑ +N%` / `↓ −N%` text.
 
 Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` sources.
 
-**Gold lock:** live gold is limited to the primary Review Plan/continue CTA, completion/thank-you milestones, the premium Why Gilded Goose frame, and the critical Solutions callout. Use royal purple or semantic red/yellow/green everywhere else.
+**Gold lock:** live gold is limited to the primary Review Plan/continue CTA, completion/thank-you milestones, the premium Why Gilded Goose frame, and the critical Solutions callout. Semantic red/yellow/green stays in written status, values, corner marks, and non-tile callouts. It does not recolor KPI tile chrome.
 
 ### Layout scale
 
@@ -154,7 +154,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
 | KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
-| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | `--gg-box-border` / paper; yellow only for written caution; **same-row equal height** via `.kpi-tile-with-projects` subgrid |
+| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | Standard border / paper or standard royal wash; no yellow, red, or green status border/wash; **same-row equal height** via `.kpi-tile-with-projects` subgrid |
 | Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
 | KPI tile grid     | `.kpi-tiles-4`                         | Goal cards and metric tiles in one flow, 4 per row; narrow-pane trim ≤1000px, 2-col ≤560px, 1-col ≤380px |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
@@ -247,6 +247,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 - Keep chart series distinguishable (royal / blue / burnt / rose / plum / slate).
 - Shared box chrome: `--gg-box-border`, `--gg-box-shadow`, `--gg-head-accent` on section heads.
 - Use red only for negatives and unverified **✕** badges. Verified tiles and panels use **one** green check corner mark — never stack a second check on a nested chart card inside an already-verified panel.
+- Keep every KPI tile on its standard component surface. Status may change the written label, value color, or corner mark, never the tile border, left rule, background, or wash.
 - One job per section; collapsible KPI topics stay focused.
 
 
@@ -299,6 +300,7 @@ Replace files or update paths in `content/settings.md`, then `npm run build` if 
 - [ ] Links underlined or clearly distinct
 - [ ] Tab/button `:focus-visible` ring
 - [ ] Red **✕** = unverified; one green check = export-backed — never two checks on one panel
+- [ ] KPI tiles use standard chrome — no yellow, red, or green status border/wash
 
 ---
 

@@ -28,7 +28,7 @@ The locked meaning for each color. Same series keeps the same color in every cha
 | Caution / watch / pending review | `#eab308` | `--gg-caution` (new reporting semantic) |
 | Neutral / unavailable | `#5c4f45` | `--gg-brown-muted` |
 
-**Semantics:** use red / yellow / green only for negative / caution / positive states — never for arbitrary chart series, table columns, fees, priorities, totals, missing data, or decorative progress bars. Never communicate by color alone; always keep the written status, icon, or legend.
+**Semantics:** use red / yellow / green only for negative / caution / positive states — never for arbitrary chart series, table columns, fees, priorities, totals, missing data, decorative progress bars, or KPI tile chrome. Never communicate by color alone; always keep the written status, icon, or legend.
 
 **Percentage-change labels:** use black, regular-weight text in the consistent `↑ +N%` / `↓ −N%` format. Do not color or bold percentage-change labels.
 
@@ -112,13 +112,14 @@ Practice areas keep one fixed color in every chart and matching table swatch:
 
 | State | Hex | Border / fill example | Use |
 |---|---|---|---|
-| Negative / action required | `#cf2d56` | red left border + pale red wash | Below target, error, negative delta, missed opportunity |
-| Caution / watch | `#eab308` | yellow left border + pale yellow wash | Pending, near threshold, review needed, WIP |
-| Positive / verified | `#1f8a65` | green outline/left border + pale green wash | On track, verified, target reached, cash in |
+| Negative / action required | `#cf2d56` | red value, label, icon, or non-tile callout | Below target, error, negative delta, missed opportunity |
+| Caution / watch | `#eab308` | written badge/icon or non-tile callout | Pending, near threshold, review needed, WIP |
+| Positive / verified | `#1f8a65` | green value, check, or non-tile callout | On track, verified, target reached, cash in |
 
 - Pair every state color with a written label: **Below target**, **Watch**, or **On track**.
 - Use dark brown text on yellow; white or paper text on full red/green fills.
 - Do not use semantic colors as practice-area or channel categories.
+- KPI tiles never change border, left rule, background, or wash by status. Their component chrome stays uniform; use status text, value color, and one corner mark instead.
 
 ---
 
@@ -150,9 +151,9 @@ One map only — filter tiles + Project Outlines ICONS share `.value-icon.icon-{
 | Active/selected | `1.5px #3a1a6e` + 2px royal wash ring | Paper/royal wash | Preserve current tile size |
 | Recommended project | 4px left `#4c1d95` | `#f3eefa` | Royal-mid label |
 | Information/context | 4px left `#3a1a6e` | Paper | Definition or methodology |
-| Attention/pending | 4px left `#eab308` | `#fff8d6` | Must say **Watch** or **Pending** |
-| Verified/success | 4px left or outline `#1f8a65` | `#e2f3ec` | Data-backed only |
-| Negative/action | 4px left `#cf2d56` | `#f8d5de` | Must name the gap/error |
+| Attention/pending callout | 4px left `#eab308` | `#fff8d6` | Non-tile callout only; must say **Watch** or **Pending** |
+| Verified/success callout | 4px left or outline `#1f8a65` | `#e2f3ec` | Non-tile callout only; data-backed |
+| Negative/action callout | 4px left `#cf2d56` | `#f8d5de` | Non-tile callout only; must name the gap/error |
 | Ornate callout | Aged-brass **double** outer line + thin royal inner line · **no diamond / corner ornaments** | Semantic wash or paper | Solutions (`.kpi-related-projects`) and rare critical recommendation only |
 
 ### Formatting rules
@@ -186,13 +187,15 @@ Approved 2026-07-18. Keep the tile proportions and information hierarchy shown i
 2. Large primary value
 3. Target/context line
 4. Written semantic status badge
-5. Matching 5px red/yellow/green left rule
+5. Standard component border and surface, unchanged by status
 
 Team Goals tiles use exactly three tracking rows. Each row is `3.25rem` high with vertically centered cells so the three tiles align.
 
 **Equal-height tiles in a row (all pages):** In `.kpi-goals-grid` and `.kpi-stat-grid`, every tile in the same row shares one card-band height. Wrappers use CSS subgrid (`grid-row: span 2`) so the KPI card band aligns across the row and Solutions sit in a second shared band below — never let Solutions make one card taller than its neighbors. Apply the same rule on Guide (`index.html`) and Metrics (`metrics.css`). Direct grid children that are not wrapped must use `.kpi-tile-with-projects` so they participate in the card band.
 
-Section shape: each section opens with a tile row, then charts. KPIs holds Auto Cases, Cashflow, Leads Generated, New Cases, Yelp Reviews, Yelp Leads. Financial Breakdown holds Cost per Case, Avg Case Value, Missed Opportunity, then the chart grid — New cases contacts & spend, Cost per response, Sales Funnel. Tiles run 4 per row; chart blocks run 2 per row in `.data-chart-table-grid` and never join the tile row.
+**Standardized tile chrome:** `.kpi-stat-card` and `.kpi-goal-card` keep their normal border and surface in every status. Classes such as `.kpi-stat-attention` may remain as data hooks, but must not add yellow, red, or green borders, left rules, backgrounds, or washes. Use written status, value color, and the single corner check or ✕.
+
+Section shape: each section opens with a tile row, then charts. KPIs holds Auto Cases, Cashflow, Leads Generated, New Cases, Yelp Reviews. Yelp Contacted Leads count and 20-lead goal live in the Leads Generated track table, not as a separate tile. Financial Breakdown holds Cost per Case, Avg Case Value, Missed Opportunity, then the chart grid — New cases contacts & spend, Cost per response, Sales Funnel. Tiles run 4 per row; chart blocks run 2 per row in `.data-chart-table-grid` and never join the tile row.
 
 KPIs section tile grid: goal cards and metric tiles share one grid, `.kpi-tiles-4`, at 4 tiles per row. Tiles keep source order — Auto Cases, Cashflow, then the metric tiles — and wrap into a second row of 4. Below 1000px the same 4-up grid trims side gutters, drops goal-track rows to label over value, and steps titles down to 0.95rem so narrow columns never clip a value or break a word. It falls back to 2 columns under 560px and 1 under 380px.
 
@@ -222,11 +225,11 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Channel lock:** LSA = blue; Digital/Search = burnt orange; Website/HubSpot = rose; Spend = plum.
 - **Unavailable data:** slate/gray with a written “No data” label — never red.
 - **Target lines:** every plotted number below its applicable target or minimum line is red (`--gg-negative`); values on or above the line use ink `--gg-brown` (`#3d3028`) unless a series color is already required for a line. Keep the number visible so color is not the only signal.
-- **Chart number labels:** ink `--gg-brown` (`#3d3028`) or `#111` only. Never white, `#fff`, or `#ffffff`. Place counts outside the bar fill, above or beside the bar, on the plot field. Short goal-tile bars such as Yelp Leads must not put the count inside the fill. Combo charts: sit count and spend labels above the series — never on the line.
+- **Chart number labels:** ink `--gg-brown` (`#3d3028`) or `#111` only. Never white, `#fff`, or `#ffffff`. Place counts outside the bar fill, above or beside the bar, on the plot field. Short goal-tile bars must not put the count inside the fill. Combo charts: sit count and spend labels above the series — never on the line.
 - **Goal-tile chart box:** every target-bar chart inside a `.kpi-goal-card` uses the same drawing box so tiles in one row read at the same scale — viewBox `320 × 210`, pad `l 36 · r 10 · t 18 · b 28`, bar width up to `88`. Auto Cases is the reference and any new goal tile matches it. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` rather than letting the compact defaults shrink one tile.
-- **Unverified tiles:** a tile whose method is still in question carries the red ✕ corner mark, `.kpi-unverified-mark`, instead of the green check, plus a written `Method not verified` status line and a note saying what is wrong. Do not grey the tile out — the number still renders. Avg Case Value holds this state while the collections basis is open. Do not restore a green check on it without confirming the denominator.
+- **Unverified tiles:** a tile whose method is still in question carries the red ✕ corner mark, `.kpi-unverified-mark`, instead of the green check, plus a written `Method not verified` status line and a note saying what is wrong. Do not grey the tile out — the number still renders. Avg Case Value holds this state while the collections basis is open. Cost per Case holds it too: the media stack is export-backed but installments still owed are not in the denominator. Missed Opportunity holds it as well: the missed-call counts are export-backed, but the 7.3% lead→case rate and $5,587 case value are estimates, so the dollar loss is directional. Do not restore a green check on any of the three without confirming the estimated inputs.
 - **One green check only:** each tile, panel, or section gets at most one `.kpi-verified-mark`. Never put a check on both a parent `.kpi-split-panel` / `.kpi-section` and a nested `.kpi-chart-card`. Nested chart-card checks inside a verified split panel are hidden in CSS. Do not restore a second check for “emphasis.”
-- **Text tiles:** Financial Breakdown tiles carry no mini chart. Cost per Case, Avg Case Value, and Missed Opportunity use title, period subhead, value, written status, one math line, then one note — `.kpi-stat-subhead` · `.kpi-stat-val` · `.kpi-stat-label` · `.kpi-stat-formula` · `.kpi-stat-note`. Missed Opportunity shows current missed-call rate vs target, plus estimated money lost for month, quarter, and year.
+- **Text tiles:** Financial Breakdown tiles carry no mini chart. Cost per Case, Avg Case Value, and Missed Opportunity use title, period subhead, value, written status, one math line, then one note — `.kpi-stat-subhead` · `.kpi-stat-val` · `.kpi-stat-label` · `.kpi-stat-formula` · `.kpi-stat-note`. Missed Opportunity shows estimated money lost for month, quarter, and year, carries the red ✕ with `Method not verified` because its loss inputs are estimates, then a weekday / weekend missed-rate split in `.kpi-missed-split`, and closes with the method note for valuing uncharged LSA calls. No descriptive paragraph.
 - **Half-moon gauges:** show only the numeric value at the inside base of the arc. Do not place descriptive text or target captions inside or beneath the gauge; put that context in the adjacent title/stat block.
 - **Gauge scales:** both endpoint labels use the same black text (`#111`) regardless of progress or target state. A success state may recolor the arc and center value, never the scale.
 - **Gauge goal marks:** use an unlabeled tick. Explain the goal in the adjacent stats rather than on the gauge.
