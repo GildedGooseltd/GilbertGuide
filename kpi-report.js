@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260818-funnel-first";
+  const RENDER_VER = "20260818-pulled-md";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
@@ -385,7 +385,6 @@
     period: "August 2026",
     asOf: "2026-08-12",
     lastUpdated: "2026-08-12",
-    lastPublished: "2026-08-18",
     updateLabel: "August 2026",
     updateScope: "",
     source: "Contact_08-12-2026 · Call details (1) through Aug 6 · Call details.csv Jun lock · LSA inbox (17) Aug 11 · account_activities May–Aug · ledger through Aug 12 · HubSpot form exports Jul 16 = Aug 0 forms · Yelp Contacted Leads screenshot Aug 12 2:26 PM",
@@ -3772,13 +3771,14 @@
     </div>`;
   }
 
+  function formatPulledMd(iso) {
+    const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return m ? `${m[2]}/${m[3]}` : "";
+  }
+
   function monthlyKpisAsOfHint() {
-    const pulled = DATA.lastUpdated || DATA.asOf || "";
-    const published = DATA.lastPublished || "";
-    if (pulled && published) return `Pulled ${pulled} · Published ${published}`;
-    if (pulled) return `Pulled ${pulled}`;
-    if (published) return `Published ${published}`;
-    return "";
+    const pulled = formatPulledMd(DATA.lastUpdated || DATA.asOf);
+    return pulled ? `Pulled ${pulled}` : "";
   }
 
   function kpiSectionIntro(text) {
