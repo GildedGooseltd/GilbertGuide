@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260824-data-tab";
+  const RENDER_VER = "20260824-search-calls";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
@@ -13,7 +13,7 @@
   const KPI_SOURCES = {
     "#01": {
       file: "Call details + LSA inbox(3) + HubSpot form submits · Ad Reports/exports aggregates as-of-2026-08-24 · Yelp Contacted Leads screenshot 2026-08-12",
-      fields: "Jun 226 = 138 Search + 83 LSA + 5 forms · Jul 267 = 131 Search + 132 LSA + 4 forms · Aug* 84 = 23 Search through Aug 6 + 61 LSA through Aug 21 + 0 HubSpot forms · Yelp track table Jun 0 · Jul 5 · Aug* 2 of 20"
+      fields: "Jun 226 = 138 Search + 83 LSA + 5 forms · Jul 267 = 131 Search + 132 LSA + 4 forms · Aug* 86 = 25 Search through Aug 14 + 61 LSA through Aug 21 + 0 HubSpot forms · Yelp track table Jun 0 · Jul 5 · Aug* 2 of 20"
     },
     "yelp": {
       file: "yelp.com/biz/pav-law-colorado-springs live 2026-08-12 · Contacted Leads screenshot same day",
@@ -81,7 +81,7 @@
     },
     "sales-cost-funnel": {
       file: "channelMonths + casesLeadsSpend as-of-2026-08-24 · Jul Ads window Campaign Jun 11–Jul 10 · Aug no Campaign calendar",
-      fields: "Follows tile month · Aug* contacts 86 = 23 Search + 61 LSA + 0 forms + 2 Yelp · cases 17 · Search+LSA $6,686 · Impr/clicks — ads paused"
+      fields: "Follows tile month · Aug* contacts 88 = 25 Search + 61 LSA + 0 forms + 2 Yelp · cases 17 · Search+LSA $6,686 · Impr/clicks — ads paused"
     },
     "cash-collected": {
       file: "Downloads/ledger_account_activity_report (2).csv · Ad Reports/exports/mycase/as-of-2026-08-24/cash-credits-by-month.csv",
@@ -101,7 +101,7 @@
     "#01": {
       title: "#01 Leads Generated",
       desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid — that is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot form submits when present. Yelp Contacted Leads are not in the gauge — they live in the track table under the tile with a 20-lead goal.",
-      formula: "Jun 226 · Jul 267 · Aug* 84 = Search 23 + LSA 61 + HubSpot 0. Yelp Contacted Leads sit in the tile track table · Jun 0 · Jul 5 · Aug* 2 of a 20 goal. Target = floor($100k ÷ cash/lead) + 1 from complete months."
+      formula: "Jun 226 · Jul 267 · Aug* 86 = Search 25 + LSA 61 + HubSpot 0. Yelp Contacted Leads sit in the tile track table · Jun 0 · Jul 5 · Aug* 2 of a 20 goal. Target = floor($100k ÷ cash/lead) + 1 from complete months."
     },
     "#02": {
       title: "#02 New Cases",
@@ -125,12 +125,12 @@
     },
     "#19": {
       title: "#19 Missed Opportunity",
-      desc: "Estimated potential revenue not earned from unanswered Search calls. Shows estimated money lost for the tile month, the calendar quarter, and YTD, then the missed-call rate split weekday vs weekend against the ≤10% target. June locked from Call details.csv Jul 11. July and August* from Call details (1).csv through Aug 6. Weekday/weekend splits come from Start time day-of-week in those same pulls and each pair sums to the month total.",
+      desc: "Estimated potential revenue not earned from unanswered Search calls. Shows estimated money lost for the tile month, the calendar quarter, and YTD, then the missed-call rate split weekday vs weekend against the ≤10% target. June locked from Call details.csv Jul 11. July from Call details (1)/(4). August* from Call details (4) through Aug 14. Weekday/weekend splits come from Start time day-of-week in those same pulls and each pair sums to the month total.",
       formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,662). Month / quarter / year sum missed calls in that window from phoneByMonth. Uncharged LSA calls are not in this number: filter the LSA inbox to not charged, check each against the phone log for a callback within 48 hours, and count only never-reached calls as lost."
     },
     "#21": {
       title: "#21 Answered Calls",
-      desc: "Share of Search call details that were answered vs missed. June 72% from Call details.csv. July 56% and August* 57% from Call details (1).",
+      desc: "Share of Search call details that were answered vs missed. June 72% from Call details.csv. July 56% and August* 52% from Call details (4) through Aug 14.",
       formula: "Answered ÷ (Answered + Missed). Target ≥ 90%."
     },
     "#03": {
@@ -387,14 +387,14 @@
     lastUpdated: "2026-08-24",
     updateLabel: "August 2026",
     updateScope: "",
-    source: "Contact_08-24-2026 · Call details (1) through Aug 6 · Call details.csv Jun lock · LSA inbox(3) through Aug 21 · account_activities May–Jul lock · Aug 202608(3) · ledger_account_activity_report (2) through Aug 24 · HubSpot form exports Jul 16 = Aug 0 forms · Yelp Contacted Leads screenshot Aug 12 2:26 PM",
+    source: "Contact_08-24-2026 · Call details (4) through Aug 14 · Call details.csv Jun lock · LSA inbox(3) through Aug 21 · account_activities May–Jul lock · Aug 202608(3) · ledger_account_activity_report (2) through Aug 24 · HubSpot form exports Jul 16 = Aug 0 forms · Yelp Contacted Leads screenshot Aug 12 2:26 PM",
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Leads Generated", value: "84", target: "≥ 219", mom: "−69%", count: 84, verified: true, hit: false, alert: false, gauge: true, augUpdated: true },
+      { id: "#01", label: "Leads Generated", value: "86", target: "≥ 219", mom: "−68%", count: 86, verified: true, hit: false, alert: false, gauge: true, augUpdated: true },
       { id: "#02", label: "New Cases", value: "17", target: "≥ 24", mom: "−51%", count: 17, verified: true, hit: false, alert: true, gauge: true, augUpdated: true },
       /* Key metrics: #19 Missed Opportunity in Financial Breakdown */
-      { id: "#19", label: "Missed Opportunity", value: "$4,133/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true, augUpdated: true },
-      { id: "#21", label: "Answered Calls", value: "57%", target: "≥ 90%", mom: "+1%", verified: true, alert: true, gauge: true, goal: true, archived: true },
+      { id: "#19", label: "Missed Opportunity", value: "$4,960/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true, augUpdated: true },
+      { id: "#21", label: "Answered Calls", value: "52%", target: "≥ 90%", mom: "−4%", verified: true, alert: true, gauge: true, goal: true, archived: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
       { id: "#28", label: "Avg case fee", value: "$5,662", target: "MyCase mean", mom: null, verified: true },
@@ -403,7 +403,7 @@
       { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, letterGrade: true, archived: true }
     ],
     channels: [
-      { name: "Search calls", count: 23, prior: 131, mom: "−82%", spend: "$400", color: "#3a1a6e", verified: true },
+      { name: "Search calls", count: 25, prior: 131, mom: "−81%", spend: "$400", color: "#3a1a6e", verified: true },
       { name: "LSA inbox", count: 61, prior: 132, mom: "−54%", spend: "$6,286", color: "#1e3a8a", verified: true },
       { name: "HubSpot forms", count: 0, prior: 4, mom: "−100%", spend: "—", color: "#b23a78", verified: true }
     ],
@@ -442,7 +442,7 @@
       },
       {
         month: "Aug*",
-        search: 23,
+        search: 25,
         lsa: 61,
         hubspot: 0,
         hubspotForms: 0,
@@ -450,7 +450,7 @@
         yelpSpend: 0,
         searchSpend: 400,
         lsaSpend: 6286,
-        note: "Search Call details (1) through Aug 6 · Search $ = NTGUILT clicks in account_activities_202608(3) · prior $1,274 wrongly included HS: click lines · LSA inbox(3) through Aug 21 · LSA Home Services 20 leads · HubSpot = 0 Aug · ads paused · Yelp Aug calendar from Aug 12 screenshot"
+        note: "Search Call details (4) through Aug 14 · no Search calls Aug 15–24 in export · Search $ = NTGUILT in account_activities_202608(3) · LSA inbox(3) through Aug 21 · HubSpot = 0 Aug · ads paused · Yelp Aug calendar from Aug 12 screenshot"
       }
     ],
     /** Search Campaign Impr/Clicks by tile month. Only Jul has a day-range export on disk. */
@@ -506,22 +506,22 @@
         weekdayCalls: 125, weekdayMissed: 56, weekendCalls: 6, weekendMissed: 2
       },
       Aug: {
-        calls: 23, received: 13, missed: 10, answeredPct: 57,
-        weekdayCalls: 18, weekdayMissed: 7, weekendCalls: 5, weekendMissed: 3
+        calls: 25, received: 13, missed: 12, answeredPct: 52,
+        weekdayCalls: 20, weekdayMissed: 9, weekendCalls: 5, weekendMissed: 3
       }
     },
     phoneIntake: {
       targetPct: 90,
       missedTargetPct: 10,
-      answeredPct: 57,
+      answeredPct: 52,
       priorAnsweredPct: 56,
-      missedPct: 43,
+      missedPct: 48,
       priorMissedPct: 44,
-      missedMomPp: -1,
-      monthlyCalls: 23,
-      missedSearchCalls: 10,
+      missedMomPp: 4,
+      monthlyCalls: 25,
+      missedSearchCalls: 12,
       priorMissedSearchCalls: 58,
-      missedLsaCalls: 10,
+      missedLsaCalls: 12,
       priorMissedLsaCalls: 58,
       closeRateEst: 0.073,
       avgCaseFee: 5662,
@@ -622,7 +622,7 @@
       { month: "May", cases: 22, leads: 111, spend: 17011, lsaSpend: 11006, adsSpend: 6005, adsLeads: 39, websiteLeads: null },
       { month: "Jun", cases: 36, leads: 226, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
       { month: "Jul", cases: 35, leads: 267, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 4 },
-      { month: "Aug*", cases: 17, leads: 84, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 23, websiteLeads: 0 }
+      { month: "Aug*", cases: 17, leads: 86, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 }
     ],
     /**
      * Yelp Contacted Leads screenshot as-of 2026-08-12 2:26 PM — messages only.
@@ -1416,7 +1416,7 @@
     if (key === "May") return "May 2026 · Search+LSA stack · verified";
     if (key === "Jun") return "June 2026 complete stack · verified";
     if (key === "Jul") return "July 2026 · Search+LSA full · HubSpot 4 · verified";
-    return "August 2026 MTD · ads paused · HubSpot forms 0 · Search through Aug 6 · LSA through Aug 21 · cases through Aug 24";
+    return "August 2026 MTD · ads paused · HubSpot forms 0 · Search Call details through Aug 14 · LSA through Aug 21 · cases through Aug 24";
   }
 
   function reportPeriodPillsHtml() {
@@ -5032,7 +5032,7 @@
             rows
           )
         })}
-        <p class="data-inline-note">Aug* Search calls through Aug 6 · Search $ from account_activities_202608(3) NTGUILT clicks only.</p>
+        <p class="data-inline-note">Aug* Search calls through Aug 14 from Call details (4) · no rows Aug 15–24 · Search $ from account_activities_202608(3) NTGUILT clicks only.</p>
       </div>
     </section>`;
   }
