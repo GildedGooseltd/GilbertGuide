@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260824-cash-outdated";
+  const RENDER_VER = "20260824-cash-ledger";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
@@ -72,8 +72,8 @@
       fields: "Client + fee · Case Type / practice · n≥5 means · last updated 2026-08-24"
     },
     "cash-pace": {
-      file: "ledger_account_activity_report (1).csv through 2026-08-12 · $150k goal line on Cash collected chart · no newer ledger in Aug 24 Downloads",
-      fields: "Follows tile month · Jun $103,485 · Jul $108,350 · Aug* collected $29,995 through day 12 · expected $38,710 · projected $77,487"
+      file: "ledger_account_activity_report (2).csv through 2026-08-24 · $150k goal line on Cash collected chart",
+      fields: "Follows tile month · Jun $103,485 · Jul $108,350 · Aug* collected $60,045 through day 24 · expected $77,419 · projected $77,558"
     },
     "cases-leads-spend": {
       file: "Contact_08-24 aggregates · LSA inbox(3) · Call details · HubSpot Jul 16 · account_activities May–Aug (3)",
@@ -84,12 +84,12 @@
       fields: "Follows tile month · Aug* contacts 86 = 23 Search + 61 LSA + 0 forms + 2 Yelp · cases 17 · Search+LSA $6,686 · Impr/clicks — ads paused"
     },
     "cash-collected": {
-      file: "Downloads/ledger_account_activity_report (1).csv · Ad Reports/exports/mycase/as-of-2026-08-12/cash-credits-by-month.csv",
-      fields: "Ledger Credit by month · CY 2025 Jan–Apr prior pull · May 2025–Aug* 2026 from ledger through 2026-08-12 · Jul full $108,350 · Aug* $29,995 · no Aug 24 ledger pull"
+      file: "Downloads/ledger_account_activity_report (2).csv · Ad Reports/exports/mycase/as-of-2026-08-24/cash-credits-by-month.csv",
+      fields: "Ledger Credit by month · CY 2025 Jan–Apr prior pull · May 2025–Aug* 2026 from ledger through 2026-08-24 · Jul full $108,350 · Aug* $60,045"
     },
     "financial": {
-      file: "ledger_account_activity_report (1).csv through 2026-08-12 · Contact_08-24-2026 new cases",
-      fields: "Cash credits by month · $100k monthly goal · Aug* collected $29,995 · projected $77,487 · cash days 12 of 31 · cases through Aug 24"
+      file: "ledger_account_activity_report (2).csv through 2026-08-24 · Contact_08-24-2026 new cases",
+      fields: "Cash credits by month · $100k monthly goal · Aug* collected $60,045 · projected $77,558 · cash days 24 of 31 · cases through Aug 24"
     },
     "cases-created": {
       file: "mycase/as-of-2026-08-24/new-cases-by-month.csv · Contact_08-24-2026 aggregates",
@@ -196,13 +196,13 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel — unit cost stack",
-      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Contacts = Search calls + HubSpot forms + LSA inbox + Yelp messages. August MTD: ads paused unpaid · no August Campaign Impr/Clicks on file · Search through Aug 6 · LSA through Aug 21 · cases through Aug 24 · cash ledger still through Aug 12. July Impr/Clicks still use the Jun 11–Jul 10 Campaign window only — not July calendar. June Impr/Clicks not on file. Not channel ROI — volume and unit cost only.",
+      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Contacts = Search calls + HubSpot forms + LSA inbox + Yelp messages. August MTD: ads paused unpaid · no August Campaign Impr/Clicks on file · Search through Aug 6 · LSA through Aug 21 · cases through Aug 24 · cash ledger through Aug 24. July Impr/Clicks still use the Jun 11–Jul 10 Campaign window only — not July calendar. June Impr/Clicks not on file. Not channel ROI — volume and unit cost only.",
       formula: "Cost/impression and cost/click = Search spend ÷ Ads volume when a Campaign window exists. Cost/direct contact = Search + LSA media + HubSpot fee if forms > 0 ÷ calls + forms + LSA + Yelp. Cost/signed case = Search + LSA media ÷ new cases."
     },
     "financial": {
       title: "#09 Financials",
-      desc: "Cash collected by month from MyCase ledger credits. CY 2025 full · 2026 YTD through 2026-08-12. Jul full $108,350 · Aug* collected $29,995 · projected $77,487. 2026 goal line = $150k. 2025 expense line = $35k Jan–Mar · $65k Apr–Dec. Cash / new case uses MyCase Created counts.",
-      formula: "Cash = ledger credits by month. Aug* projected = Aug credits ÷ 12 × 31. Goal = $100,000."
+      desc: "Cash collected by month from MyCase ledger credits. CY 2025 full · 2026 YTD through 2026-08-24. Jul full $108,350 · Aug* collected $60,045 · projected $77,558. 2026 goal line = $150k. 2025 expense line = $35k Jan–Mar · $65k Apr–Dec. Cash / new case uses MyCase Created counts.",
+      formula: "Cash = ledger credits by month. Aug* projected = Aug credits ÷ 24 × 31. Goal = $100,000."
     },
     "cases-created": {
       title: "Cases Created",
@@ -211,8 +211,8 @@
     },
     "cash-collected": {
       title: "Cash collected",
-      desc: "Ledger Credits by month. Timeline shows 2025 then 2026 YTD left to right. 2026 royal dashed line is the $150k monthly cash goal. Aug* solid bar is collected; marker is full-month projected pace. 2025 dashed expense line is $35k for Jan–Mar and $65k for Apr–Dec. Source through 2026-08-12.",
-      formula: "Sum of Credit column by calendar month. 2026 Aug* collected through Aug 12. Projected = collected ÷ 12 × 31."
+      desc: "Ledger Credits by month. Timeline shows 2025 then 2026 YTD left to right. 2026 royal dashed line is the $150k monthly cash goal. Aug* solid bar is collected; marker is full-month projected pace. 2025 dashed expense line is $35k for Jan–Mar and $65k for Apr–Dec. Source through 2026-08-24.",
+      formula: "Sum of Credit column by calendar month. 2026 Aug* collected through Aug 24. Projected = collected ÷ 24 × 31."
     }
   };
 
@@ -387,7 +387,7 @@
     lastUpdated: "2026-08-24",
     updateLabel: "August 2026",
     updateScope: "",
-    source: "Contact_08-24-2026 · Call details (1) through Aug 6 · Call details.csv Jun lock · LSA inbox(3) through Aug 21 · account_activities May–Jul lock · Aug 202608(3) · ledger through Aug 12 · HubSpot form exports Jul 16 = Aug 0 forms · Yelp Contacted Leads screenshot Aug 12 2:26 PM",
+    source: "Contact_08-24-2026 · Call details (1) through Aug 6 · Call details.csv Jun lock · LSA inbox(3) through Aug 21 · account_activities May–Jul lock · Aug 202608(3) · ledger_account_activity_report (2) through Aug 24 · HubSpot form exports Jul 16 = Aug 0 forms · Yelp Contacted Leads screenshot Aug 12 2:26 PM",
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
       { id: "#01", label: "Leads Generated", value: "84", target: "≥ 219", mom: "−69%", count: 84, verified: true, hit: false, alert: false, gauge: true, augUpdated: true },
@@ -685,7 +685,7 @@
       { month: "Nov", credit: 42775, newCases: 5 },
       { month: "Dec", credit: 64300, newCases: 9 }
     ],
-    /* 2026 YTD ledger Credits — Jul full · Aug* through Aug 12. */
+    /* 2026 YTD ledger Credits — Jul full · Aug* through Aug 24. */
     cashCollected2026Ytd: [
       { month: "Jan", credit: 57925, newCases: 12 },
       { month: "Feb", credit: 83950, newCases: 14 },
@@ -694,19 +694,19 @@
       { month: "May", credit: 92140, newCases: 22 },
       { month: "Jun", credit: 103485, newCases: 36 },
       { month: "Jul", credit: 108350, newCases: 35 },
-      { month: "Aug*", credit: 29995, newCases: 17 }
+      { month: "Aug*", credit: 60045, newCases: 17 }
     ],
     cashCollectedTotals: {
       total2025: 945436,
-      total2026ToDate: 626371,
-      allCredits: 1571807,
+      total2026ToDate: 656421,
+      allCredits: 1601857,
       contractedMean: 5662,
       yearLabel: "2025",
-      asOf: "2026-08-12",
-      augDaysElapsed: 12,
+      asOf: "2026-08-24",
+      augDaysElapsed: 24,
       augDaysInMonth: 31,
       cashGoalMonthly: 100000,
-      rangeNote: "Ledger Credits · CY 2025 Jan–Apr prior pull · May 2025–Aug* 2026 from ledger_account_activity_report (1) through 2026-08-12 · no newer ledger in Aug 24 Downloads · cases on Aug* row from Contact_08-24"
+      rangeNote: "Ledger Credits · CY 2025 Jan–Apr prior pull · May 2025–Aug* 2026 from ledger_account_activity_report (2) through 2026-08-24 · cases on Aug* row from Contact_08-24"
     },
     /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) */
     lsaEfficiency: [
@@ -2824,7 +2824,7 @@
     if (partial) {
       body.push([
         "2026 Aug*",
-        "MTD through Aug 12",
+        "MTD through Aug 24",
         String(partial.newCases),
         "—",
         "—",
