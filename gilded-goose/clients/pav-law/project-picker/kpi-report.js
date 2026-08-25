@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260824-dl-refresh";
+  const RENDER_VER = "20260824-cash-outdated";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
@@ -3019,10 +3019,15 @@
     const cashRows = DATA.cashCollected || [];
     const chartRows = cashAndCasesChartRows();
     if (!cashRows.length) return "";
-    return `<section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-cash-collected" data-feedback-label="#09 Cash collected">
-      ${statusCorner(true)}
+    const cashFresh = cashLedgerIsCurrent();
+    const ledgerHint = formatPulledMd(cashLedgerAsOf());
+    const sectionClass = cashFresh
+      ? "kpi-section kpi-section-static kpi-verified kpi-aug-updated"
+      : "kpi-section kpi-section-static kpi-outdated";
+    return `<section class="${sectionClass}" data-feedback-id="section-cash-collected" data-feedback-label="#09 Cash collected">
+      ${cashFresh ? statusCorner(true) : outdatedMark()}
       ${kpiHelpBtn("cash-collected")}
-      ${kpiSectionStaticHead("Cash collected", "Ledger credits by month")}
+      ${kpiSectionStaticHead("Cash collected", ledgerHint ? `Ledger through ${ledgerHint}` : "Ledger credits by month")}
       <div class="kpi-section-body">
         ${chartBlock({
           title: "Cash collected",
@@ -3623,6 +3628,17 @@
     });
   }
 
+  function cashLedgerAsOf() {
+    return String((DATA.cashCollectedTotals && DATA.cashCollectedTotals.asOf) || "");
+  }
+
+  /** Cash tiles stay Outdated when the ledger pull is older than the KPI refresh stamp. */
+  function cashLedgerIsCurrent() {
+    const cashAsOf = cashLedgerAsOf();
+    const pulled = String(DATA.lastUpdated || DATA.asOf || "");
+    return !!(cashAsOf && pulled && cashAsOf >= pulled);
+  }
+
   function cashMonthPaceModel() {
     const totals = DATA.cashCollectedTotals || {};
     const target = cashGoalMonthly();
@@ -3677,6 +3693,7 @@
     const m = cashMonthPaceModel();
     if (!m) return "";
     const hit = m.projected >= m.target;
+    const cashFresh = cashLedgerIsCurrent();
     const gauge = halfMoonGauge(m.credit / m.target, "cash-pace", {
       valueLabel: fmtMoney(m.credit),
       endLabel: fmtMoney(m.target),
@@ -3687,8 +3704,11 @@
       celebrate: hit
     });
     const paceCell = `${m.pacePct}% <span class="kpi-mom-change ${m.cls}" title="${escapeHtml(m.detail)}">${m.arrow} ${escapeHtml(m.label)}</span>`;
-    return `<button type="button" class="kpi-goal-card kpi-stat-gauge kpi-verified kpi-aug-updated" data-kpi-focus="cash-pace" aria-label="Cash collected ${fmtMoney(m.credit)} of ${fmtMoney(m.target)} · forecast ${fmtMoney(m.projected)} · ${m.label} · ${m.monthDisplay}">
-      ${statusCorner(true)}
+    const ledgerStamp = formatPulledMd(cashLedgerAsOf()) || "—";
+    const freshClass = cashFresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
+    const freshMark = cashFresh ? statusCorner(true) : outdatedMark();
+    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${freshClass}" data-kpi-focus="cash-pace" aria-label="Cash collected ${fmtMoney(m.credit)} of ${fmtMoney(m.target)} · forecast ${fmtMoney(m.projected)} · ${m.label} · ${m.monthDisplay} · ledger ${cashLedgerAsOf() || "stale"}">
+      ${freshMark}
       ${kpiHelpBtn("cash-pace")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Cashflow")}
@@ -3697,7 +3717,8 @@
       ${goalTrackRows([
         ["Pace", paceCell],
         ["Collected", fmtMoney(m.credit)],
-        ["Projected", `${fmtMoney(m.projected)} / ${fmtMoney(m.target)}`]
+        ["Projected", `${fmtMoney(m.projected)} / ${fmtMoney(m.target)}`],
+        ["Ledger through", ledgerStamp]
       ])}
       ${hit ? '<span class="kpi-target-hit">On track for $100k</span>' : ""}
       ${kpiRefMark("#09")}
