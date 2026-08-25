@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260818-pulled-md";
+  const RENDER_VER = "20260824-dl-refresh";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
@@ -12,20 +12,20 @@
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Call details + LSA inbox (17) + HubSpot form submits · Ad Reports/exports aggregates as-of-2026-08-12 · Yelp Contacted Leads screenshot 2026-08-12",
-      fields: "Jun 226 = 138 Search + 83 LSA + 5 forms · Jul 267 = 131 Search + 132 LSA + 4 forms · Aug* 47 = 23 Search through Aug 6 + 24 LSA through Aug 11 + 0 HubSpot forms · Yelp track table Jun 0 · Jul 5 · Aug* 2 of 20"
+      file: "Call details + LSA inbox(3) + HubSpot form submits · Ad Reports/exports aggregates as-of-2026-08-24 · Yelp Contacted Leads screenshot 2026-08-12",
+      fields: "Jun 226 = 138 Search + 83 LSA + 5 forms · Jul 267 = 131 Search + 132 LSA + 4 forms · Aug* 84 = 23 Search through Aug 6 + 61 LSA through Aug 21 + 0 HubSpot forms · Yelp track table Jun 0 · Jul 5 · Aug* 2 of 20"
     },
     "yelp": {
       file: "yelp.com/biz/pav-law-colorado-springs live 2026-08-12 · Contacted Leads screenshot same day",
       fields: "Reviews 4.6 · 7 · Tile month row: Jun — · Jul new 0 · Aug new 1 vs prior 6 · Messages last-30 7 · Aug calendar 2 · Jul calendar 5"
     },
     "#02": {
-      file: "Downloads/Contact_08-12-2026.csv · Ad Reports/exports/mycase/as-of-2026-08-12/new-cases-by-month.csv",
-      fields: "Contact group=Client · Created date · Jun 36 · Jul 35 · Aug* 11 through 2026-08-12"
+      file: "Downloads/Contact_08-24-2026.csv · Ad Reports/exports/mycase/as-of-2026-08-24/new-cases-by-month.csv",
+      fields: "Contact group=Client · Created date · Jun 36 · Jul 35 · Aug* 17 through 2026-08-24"
     },
     "#07": {
-      file: "LSA inbox (17) · Call details · account_activities May–Aug",
-      fields: "LSA MoM + Search spend from account_activities · Jul LSA $14,555.67 · Aug* LSA $4,233.07"
+      file: "LSA inbox(3) · Call details · account_activities May–Aug",
+      fields: "LSA MoM + Search spend from account_activities · Jul LSA $14,555.67 · Aug* LSA $6,285.70"
     },
     "#08": {
       file: "Campaign report (17) Jun 11 – Jul 10 · Call details May prior",
@@ -40,8 +40,8 @@
       fields: "Tile-month Search media + HubSpot forms fee ÷ Search calls + forms + Yelp messages · LSA ceiling from May–Aug Home Services $ ÷ inbox leads"
     },
     "#13": {
-      file: "LSA leads-inbox (17) · account_activities_202607(1) · account_activities_202608(2)",
-      fields: "May 72/27 · Jun 83/39 locked · Jul 132/52 · Aug* 24/7 · Jul LSA $14,555.67 · Aug* LSA $4,233.07"
+      file: "LSA leads-inbox(3) · account_activities_202607(2) · account_activities_202608(3)",
+      fields: "May 72/27 · Jun 83/39 locked · Jul 132/52 · Aug* 61/19 · Jul LSA $14,555.67 · Aug* LSA $6,285.70"
     },
     "#16": {
       file: "Google Maps + Yelp public pages · scraped 2026-07-16 · 102 S Tejon St",
@@ -49,15 +49,15 @@
     },
     "#19": {
       file: "Call details.csv Jun lock · Call details (1).csv Jul–Aug*",
-      fields: "Jun missed 38/138 · Jul missed 58/131 · Aug* missed 10/23 through Aug 6 · × 7.3% × $5,587"
+      fields: "Jun missed 38/138 · Jul missed 58/131 · Aug* missed 10/23 through Aug 6 · × 7.3% × $5,662"
     },
     "#21": {
       file: "Call details.csv · Call details (1).csv",
       fields: "Jun answered 100/138 = 72% · Jul 73/131 = 56% · Aug* 13/23 = 57%"
     },
     "#28": {
-      file: "Ad Reports/exports/mycase/as-of-2026-07-25/Contact_07-25-2026.csv · fee-means-by-practice.csv",
-      fields: "Client + fee mean $5,587 · n=142 · last updated 2026-07-25 (unchanged vs Jul-1)"
+      file: "Ad Reports/exports/mycase/as-of-2026-08-24/fee-means-summary.csv · fee-means-by-practice.csv",
+      fields: "Client + fee mean $5,662 · n=138 · last updated 2026-08-24 · Contact_08-24-2026 aggregates only"
     },
     "#30": {
       file: "casesLeadsSpend media + new cases · $3,000/mo digital management · $1,000/mo HubSpot from Jun · $1,500/mo Referral Sites",
@@ -68,32 +68,32 @@
       fields: "Same complete months as #30 · ledger credits ÷ new cases created in those months · contracted mean fee from KPI #28 shown for comparison"
     },
     "#29": {
-      file: "Ad Reports/exports/mycase/as-of-2026-07-25/Contact_07-25-2026.csv · fee-means-by-practice.csv",
-      fields: "Client + fee · Case Type / practice · n≥5 means · last updated 2026-07-25 (unchanged vs Jul-1)"
+      file: "Ad Reports/exports/mycase/as-of-2026-08-24/fee-means-by-practice.csv",
+      fields: "Client + fee · Case Type / practice · n≥5 means · last updated 2026-08-24"
     },
     "cash-pace": {
-      file: "ledger_account_activity_report (1).csv through 2026-08-12 · $150k goal line on Cash collected chart",
+      file: "ledger_account_activity_report (1).csv through 2026-08-12 · $150k goal line on Cash collected chart · no newer ledger in Aug 24 Downloads",
       fields: "Follows tile month · Jun $103,485 · Jul $108,350 · Aug* collected $29,995 through day 12 · expected $38,710 · projected $77,487"
     },
     "cases-leads-spend": {
-      file: "Contact_08-12-2026 · LSA inbox (17) · Call details · HubSpot Jul 16 · account_activities May–Aug",
-      fields: "May–Aug* cases/leads/spend · tile month cost/channel · Aug* LSA $176 · LSA all answered $223 on charged+uncharged · Digital $55 · HubSpot forms fee not plotted as a channel"
+      file: "Contact_08-24 aggregates · LSA inbox(3) · Call details · HubSpot Jul 16 · account_activities May–Aug (3)",
+      fields: "May–Aug* cases/leads/spend · tile month cost/channel · Aug* LSA $103/inbox · Search $400 NTGUILT only · HubSpot forms fee not plotted as a channel"
     },
     "sales-cost-funnel": {
-      file: "channelMonths + casesLeadsSpend as-of-2026-08-12 · Jul Ads window Campaign Jun 11–Jul 10 · Aug no Campaign calendar",
-      fields: "Follows tile month · Aug* contacts 49 = 23 Search + 24 LSA + 0 forms + 2 Yelp · cases 11 · Search+LSA $5,507 · Impr/clicks — ads paused"
+      file: "channelMonths + casesLeadsSpend as-of-2026-08-24 · Jul Ads window Campaign Jun 11–Jul 10 · Aug no Campaign calendar",
+      fields: "Follows tile month · Aug* contacts 86 = 23 Search + 61 LSA + 0 forms + 2 Yelp · cases 17 · Search+LSA $6,686 · Impr/clicks — ads paused"
     },
     "cash-collected": {
       file: "Downloads/ledger_account_activity_report (1).csv · Ad Reports/exports/mycase/as-of-2026-08-12/cash-credits-by-month.csv",
-      fields: "Ledger Credit by month · CY 2025 Jan–Apr prior pull · May 2025–Aug* 2026 from ledger through 2026-08-12 · Jul full $108,350 · Aug* $29,995"
+      fields: "Ledger Credit by month · CY 2025 Jan–Apr prior pull · May 2025–Aug* 2026 from ledger through 2026-08-12 · Jul full $108,350 · Aug* $29,995 · no Aug 24 ledger pull"
     },
     "financial": {
-      file: "ledger_account_activity_report (1).csv through 2026-08-12 · Contact_08-12-2026 new cases",
-      fields: "Cash credits by month · $100k monthly goal · Aug* collected $29,995 · projected $77,487 · 12 of 31 days"
+      file: "ledger_account_activity_report (1).csv through 2026-08-12 · Contact_08-24-2026 new cases",
+      fields: "Cash credits by month · $100k monthly goal · Aug* collected $29,995 · projected $77,487 · cash days 12 of 31 · cases through Aug 24"
     },
     "cases-created": {
-      file: "mycase/as-of-2026-08-12/new-cases-by-month.csv · Contact_08-12-2026.csv",
-      fields: "Cases created by month · 2026 Jun 36 · Jul 35 · Aug* 11 through 2026-08-12"
+      file: "mycase/as-of-2026-08-24/new-cases-by-month.csv · Contact_08-24-2026 aggregates",
+      fields: "Cases created by month · 2026 Jun 36 · Jul 35 · Aug* 17 through 2026-08-24"
     },
   };
 
@@ -101,11 +101,11 @@
     "#01": {
       title: "#01 Leads Generated",
       desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid — that is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot form submits when present. Yelp Contacted Leads are not in the gauge — they live in the track table under the tile with a 20-lead goal.",
-      formula: "Jun 226 · Jul 267 · Aug* 47 = Search 23 + LSA 24 + HubSpot 0. Yelp Contacted Leads sit in the tile track table · Jun 0 · Jul 5 · Aug* 2 of a 20 goal. Target = floor($100k ÷ cash/lead) + 1 from complete months."
+      formula: "Jun 226 · Jul 267 · Aug* 84 = Search 23 + LSA 61 + HubSpot 0. Yelp Contacted Leads sit in the tile track table · Jun 0 · Jul 5 · Aug* 2 of a 20 goal. Target = floor($100k ÷ cash/lead) + 1 from complete months."
     },
     "#02": {
       title: "#02 New Cases",
-      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months from Contact_08-12-2026. August 11 is MTD through Created 2026-08-12. Case target exists so monthly cash can clear $100k. Gauge only — no On track or Behind label.",
+      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months from Contact_08-24-2026. August 17 is MTD through Created 2026-08-24. Case target exists so monthly cash can clear $100k. Gauge only — no On track or Behind label.",
       formula: "Count of Client contacts with Created date in month. Target = floor($100k ÷ cash/case) + 1 so monthly cash clears $100k."
     },
     "#07": {
@@ -120,13 +120,13 @@
     },
     "#13": {
       title: "#13 LSA % charged · leads · avg charge cost",
-      desc: "Local Services inbox Charge status + Home Services media from account_activities. May 72/27 and Jun 83/39 stay locked. Jul 132/52 full month from inbox (17). Aug* 24/7 through Aug 11. Jul Home Services $14,555.67 · Aug* $4,233.07 from account_activities.",
+      desc: "Local Services inbox Charge status + Home Services media from account_activities. May 72/27 and Jun 83/39 stay locked. Jul 132/52 full month from inbox(3). Aug* 61/19 through Aug 21. Jul Home Services $14,555.67 · Aug* $6,285.70 from account_activities_202608(3).",
       formula: "% charged = Charged ÷ LSA leads. Avg charge cost = LSA Home Services activity $ ÷ Charged when spend is known."
     },
     "#19": {
       title: "#19 Missed Opportunity",
       desc: "Estimated potential revenue not earned from unanswered Search calls. Shows estimated money lost for the tile month, the calendar quarter, and YTD, then the missed-call rate split weekday vs weekend against the ≤10% target. June locked from Call details.csv Jul 11. July and August* from Call details (1).csv through Aug 6. Weekday/weekend splits come from Start time day-of-week in those same pulls and each pair sums to the month total.",
-      formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,587). Month / quarter / year sum missed calls in that window from phoneByMonth. Uncharged LSA calls are not in this number: filter the LSA inbox to not charged, check each against the phone log for a callback within 48 hours, and count only never-reached calls as lost."
+      formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,662). Month / quarter / year sum missed calls in that window from phoneByMonth. Uncharged LSA calls are not in this number: filter the LSA inbox to not charged, check each against the phone log for a callback within 48 hours, and count only never-reached calls as lost."
     },
     "#21": {
       title: "#21 Answered Calls",
@@ -166,7 +166,7 @@
     },
     "#28": {
       title: "#28 Avg case fee",
-      desc: "Mean contracted / quoted Client fee from MyCase Contact_07-25-2026.csv · last updated 2026-07-25. $5,587 · n=142 (unchanged vs Jul-1). Not cash collected.",
+      desc: "Mean contracted / quoted Client fee from Contact_08-24-2026 aggregates · last updated 2026-08-24. $5,662 · n=138. Not cash collected.",
       formula: "First nonzero among Pre-Trial Flat Fee → pre-File flat → trial → retainer → down payments → AR. Contact group = Client."
     },
     "#30": {
@@ -181,12 +181,12 @@
     },
     "#29": {
       title: "#29 Mean fee by practice",
-      desc: "Mean contracted / quoted fee by practice area (Client + fee · n ≥ 5) from MyCase Contact_07-25-2026.csv · last updated 2026-07-25. Not cash collected.",
+      desc: "Mean contracted / quoted fee by practice area (Client + fee · n ≥ 5) from Contact_08-24-2026 aggregates · last updated 2026-08-24. Not cash collected.",
       formula: "Contracted / quoted fees (mostly Pre-Trial Flat Fee) — not cash collected. Fees-collected export still missing."
     },
     "cases-leads-spend": {
       title: "#05 Key Channel Activity",
-      desc: "Last 4 months: new cases and direct contacts on the left axis, Search + LSA media spend on the right. Jun/Jul full · Aug* through 2026-08-12. Cost per response uses LSA + Search media only. LSA all answered is media ÷ charged plus uncharged inbox calls. Review and credited leads are not in that count. HubSpot forms fee is not a channel cost.",
+      desc: "Last 4 months: new cases and direct contacts on the left axis, Search + LSA media spend on the right. Jun/Jul full · Aug* cases/LSA through 2026-08-24 · Search Call details through Aug 6 · cash ledger still through 2026-08-12. Cost per response uses LSA + Search media only. LSA all answered is media ÷ charged plus uncharged inbox calls. Review and credited leads are not in that count. HubSpot forms fee is not a channel cost.",
       formula: "Bars = new cases + leads. Line = Search + LSA media spend. LSA all answered = LSA media ÷ charged + uncharged. Table under each chart lists the plotted values."
     },
     "cash-pace": {
@@ -196,7 +196,7 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel — unit cost stack",
-      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Contacts = Search calls + HubSpot forms + LSA inbox + Yelp messages. August MTD: ads paused unpaid · no August Campaign Impr/Clicks on file · Search through Aug 6 · LSA through Aug 11 · cases through Aug 12. July Impr/Clicks still use the Jun 11–Jul 10 Campaign window only — not July calendar. June Impr/Clicks not on file. Not channel ROI — volume and unit cost only.",
+      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Contacts = Search calls + HubSpot forms + LSA inbox + Yelp messages. August MTD: ads paused unpaid · no August Campaign Impr/Clicks on file · Search through Aug 6 · LSA through Aug 21 · cases through Aug 24 · cash ledger still through Aug 12. July Impr/Clicks still use the Jun 11–Jul 10 Campaign window only — not July calendar. June Impr/Clicks not on file. Not channel ROI — volume and unit cost only.",
       formula: "Cost/impression and cost/click = Search spend ÷ Ads volume when a Campaign window exists. Cost/direct contact = Search + LSA media + HubSpot fee if forms > 0 ÷ calls + forms + LSA + Yelp. Cost/signed case = Search + LSA media ÷ new cases."
     },
     "financial": {
@@ -206,7 +206,7 @@
     },
     "cases-created": {
       title: "Cases Created",
-      desc: "MyCase Client contacts by Created month — 2026 from Contact_08-12-2026 · Jun 36 · Jul 35 · Aug* 11 through 2026-08-12. Chart shows monthly bars plus a trend line per year. Table is year totals, average MoM change, and trend slope — not the same monthly counts.",
+      desc: "MyCase Client contacts by Created month — 2026 from Contact_08-24-2026 · Jun 36 · Jul 35 · Aug* 17 through 2026-08-24. Chart shows monthly bars plus a trend line per year. Table is year totals, average MoM change, and trend slope — not the same monthly counts.",
       formula: "Count of Client contacts with Created date in month. Trend = OLS on complete months. Avg MoM = mean of month-to-month percent change. Aug* MTD is not in trend or avg MoM."
     },
     "cash-collected": {
@@ -383,28 +383,28 @@
 
   const DATA = {
     period: "August 2026",
-    asOf: "2026-08-12",
-    lastUpdated: "2026-08-12",
+    asOf: "2026-08-24",
+    lastUpdated: "2026-08-24",
     updateLabel: "August 2026",
     updateScope: "",
-    source: "Contact_08-12-2026 · Call details (1) through Aug 6 · Call details.csv Jun lock · LSA inbox (17) Aug 11 · account_activities May–Aug · ledger through Aug 12 · HubSpot form exports Jul 16 = Aug 0 forms · Yelp Contacted Leads screenshot Aug 12 2:26 PM",
+    source: "Contact_08-24-2026 · Call details (1) through Aug 6 · Call details.csv Jun lock · LSA inbox(3) through Aug 21 · account_activities May–Jul lock · Aug 202608(3) · ledger through Aug 12 · HubSpot form exports Jul 16 = Aug 0 forms · Yelp Contacted Leads screenshot Aug 12 2:26 PM",
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Leads Generated", value: "47", target: "≥ 219", mom: "−82%", count: 47, verified: true, hit: false, alert: false, gauge: true, augUpdated: true },
-      { id: "#02", label: "New Cases", value: "11", target: "≥ 24", mom: "−69%", count: 11, verified: true, hit: false, alert: true, gauge: true, augUpdated: true },
+      { id: "#01", label: "Leads Generated", value: "84", target: "≥ 219", mom: "−69%", count: 84, verified: true, hit: false, alert: false, gauge: true, augUpdated: true },
+      { id: "#02", label: "New Cases", value: "17", target: "≥ 24", mom: "−51%", count: 17, verified: true, hit: false, alert: true, gauge: true, augUpdated: true },
       /* Key metrics: #19 Missed Opportunity in Financial Breakdown */
-      { id: "#19", label: "Missed Opportunity", value: "$4,079/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true, augUpdated: true },
+      { id: "#19", label: "Missed Opportunity", value: "$4,133/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true, augUpdated: true },
       { id: "#21", label: "Answered Calls", value: "57%", target: "≥ 90%", mom: "+1%", verified: true, alert: true, gauge: true, goal: true, archived: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
-      { id: "#28", label: "Avg case fee", value: "$5,587", target: "MyCase mean", mom: null, verified: true },
+      { id: "#28", label: "Avg case fee", value: "$5,662", target: "MyCase mean", mom: null, verified: true },
       /* #30 value hydrated by hydrateMarketingCostPerCaseKpi() after DATA + model exist */
       { id: "#30", label: "Cost per Case", value: "—", target: "", mom: null, verified: true },
       { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, letterGrade: true, archived: true }
     ],
     channels: [
-      { name: "Search calls", count: 23, prior: 131, mom: "−82%", spend: "$1,274", color: "#3a1a6e", verified: true },
-      { name: "LSA inbox", count: 24, prior: 132, mom: "−82%", spend: "$4,233", color: "#1e3a8a", verified: true },
+      { name: "Search calls", count: 23, prior: 131, mom: "−82%", spend: "$400", color: "#3a1a6e", verified: true },
+      { name: "LSA inbox", count: 61, prior: 132, mom: "−54%", spend: "$6,286", color: "#1e3a8a", verified: true },
       { name: "HubSpot forms", count: 0, prior: 4, mom: "−100%", spend: "—", color: "#b23a78", verified: true }
     ],
     /* Lead Channel Stack — Jun Search locked from Call details.csv Jul 11; Jul/Aug* from Call details (1) */
@@ -438,19 +438,19 @@
         yelpSpend: 0,
         searchSpend: 7262,
         lsaSpend: 14556,
-        note: "Search Call details (1) Jul 1–31 · LSA inbox (17) Jul full · HubSpot forms 4 in Jul 16 exports · Yelp Jul calendar in Aug 12 Contacted Leads view = 5"
+        note: "Search Call details (1) Jul 1–31 · LSA inbox(3) Jul full · HubSpot forms 4 in Jul 16 exports · Yelp Jul calendar in Aug 12 Contacted Leads view = 5"
       },
       {
         month: "Aug*",
         search: 23,
-        lsa: 24,
+        lsa: 61,
         hubspot: 0,
         hubspotForms: 0,
         yelp: 2,
         yelpSpend: 0,
-        searchSpend: 1274,
-        lsaSpend: 4233,
-        note: "Search Call details (1) through Aug 6 · LSA inbox (17) through Aug 11 · HubSpot form exports = 0 Aug rows · ads paused · Yelp Aug calendar 2 includes today a moment ago"
+        searchSpend: 400,
+        lsaSpend: 6286,
+        note: "Search Call details (1) through Aug 6 · Search $ = NTGUILT clicks in account_activities_202608(3) · prior $1,274 wrongly included HS: click lines · LSA inbox(3) through Aug 21 · LSA Home Services 20 leads · HubSpot = 0 Aug · ads paused · Yelp Aug calendar from Aug 12 screenshot"
       }
     ],
     /** Search Campaign Impr/Clicks by tile month. Only Jul has a day-range export on disk. */
@@ -524,24 +524,24 @@
       missedLsaCalls: 10,
       priorMissedLsaCalls: 58,
       closeRateEst: 0.073,
-      avgCaseFee: 5587,
+      avgCaseFee: 5662,
       leadToCaseRate: 0.073,
-      cumulativeYtd: 44456 /* 109 missed May–Jul × 7.3% × $5,587 */
+      cumulativeYtd: 45095 /* 109 missed May–Jul × 7.3% × $5,662 */
     },
     /* #30 fee + collection inputs for the cost-per-case ceiling. Collection rate updates when fees-collected lands. */
     estValuePerLead: {
       collectionRate: 0.8,
-      avgCaseFee: 5587
+      avgCaseFee: 5662
     },
-    /* KPI #29 support — Client + fee means · n≥5 · CLIENT-VALUE-BASELINE.md · as of 2026-07-25 */
+    /* KPI #29 support — Client + fee means · n≥5 · CLIENT-VALUE-BASELINE.md · as of 2026-08-24 */
     feeByPractice: [
-      { name: "Sex Assault / Sex Offense", n: 6, mean: 9500 },
-      { name: "Theft / Property", n: 12, mean: 7333 },
-      { name: "Assault / Menacing", n: 20, mean: 6538 },
-      { name: "Domestic Violence / DV", n: 52, mean: 5414 },
-      { name: "Criminal Defense (other)", n: 11, mean: 4582 },
-      { name: "Probation Revocation", n: 5, mean: 4500 },
-      { name: "DUI / DWAI / Traffic", n: 24, mean: 3542 }
+      { name: "Theft / Property", n: 10, mean: 8000 },
+      { name: "Sex Assault / Sex Offense", n: 9, mean: 7778 },
+      { name: "Assault / Menacing", n: 17, mean: 7721 },
+      { name: "Domestic Violence / DV", n: 35, mean: 5693 },
+      { name: "Criminal Defense (other)", n: 21, mean: 4471 },
+      { name: "Probation Revocation", n: 9, mean: 4056 },
+      { name: "DUI / DWAI / Traffic", n: 20, mean: 3600 }
     ],
     costPerCall: [
       { channel: "Direct contact (blended)", cost: "$65" },
@@ -607,7 +607,7 @@
       { month: "May", closed: 8, newCases: 22, redAccounts: 2 },
       { month: "Jun", closed: 11, newCases: 36, redAccounts: 4 },
       { month: "Jul", closed: null, newCases: 35, redAccounts: null },
-      { month: "Aug*", closed: null, newCases: 11, redAccounts: null }
+      { month: "Aug*", closed: null, newCases: 17, redAccounts: null }
     ],
     pipeline: [
       { month: "Jun", closed: 11, mom: "+38%" },
@@ -622,7 +622,7 @@
       { month: "May", cases: 22, leads: 111, spend: 17011, lsaSpend: 11006, adsSpend: 6005, adsLeads: 39, websiteLeads: null },
       { month: "Jun", cases: 36, leads: 226, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
       { month: "Jul", cases: 35, leads: 267, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 4 },
-      { month: "Aug*", cases: 11, leads: 47, spend: 5507, lsaSpend: 4233, adsSpend: 1274, adsLeads: 23, websiteLeads: 0 }
+      { month: "Aug*", cases: 17, leads: 84, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 23, websiteLeads: 0 }
     ],
     /**
      * Yelp Contacted Leads screenshot as-of 2026-08-12 2:26 PM — messages only.
@@ -694,28 +694,28 @@
       { month: "May", credit: 92140, newCases: 22 },
       { month: "Jun", credit: 103485, newCases: 36 },
       { month: "Jul", credit: 108350, newCases: 35 },
-      { month: "Aug*", credit: 29995, newCases: 11 }
+      { month: "Aug*", credit: 29995, newCases: 17 }
     ],
     cashCollectedTotals: {
       total2025: 945436,
       total2026ToDate: 626371,
       allCredits: 1571807,
-      contractedMean: 5587,
+      contractedMean: 5662,
       yearLabel: "2025",
       asOf: "2026-08-12",
       augDaysElapsed: 12,
       augDaysInMonth: 31,
       cashGoalMonthly: 100000,
-      rangeNote: "Ledger Credits · CY 2025 Jan–Apr prior pull · May 2025–Aug* 2026 from ledger_account_activity_report (1) through 2026-08-12"
+      rangeNote: "Ledger Credits · CY 2025 Jan–Apr prior pull · May 2025–Aug* 2026 from ledger_account_activity_report (1) through 2026-08-12 · no newer ledger in Aug 24 Downloads · cases on Aug* row from Contact_08-24"
     },
-    /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul/Aug* from inbox (17) + account_activities */
+    /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) */
     lsaEfficiency: [
       { month: "May", leads: 72, charged: 27, notCharged: 45, lsaSpend: 11006 },
       { month: "Jun", leads: 83, charged: 39, notCharged: 44, lsaSpend: 13206 },
       { month: "Jul", leads: 132, charged: 52, notCharged: 79, lsaSpend: 14556 },
-      { month: "Aug*", leads: 24, charged: 7, notCharged: 12, lsaSpend: 4233 }
+      { month: "Aug*", leads: 61, charged: 19, notCharged: 41, lsaSpend: 6286 }
     ],
-    lsaChargeRateOverall: { charged: 125, leads: 311, pct: 40.2 },
+    lsaChargeRateOverall: { charged: 137, leads: 348, pct: 39.4 },
     /* NEW-E — Payment Method = Trust applications (ledger) + Client trust balance snapshot */
     trustTransfers: {
       rangeStart: "2025-05-01",
@@ -745,11 +745,11 @@
         { month: "Aug* 2026", applications: 0, rows: 0 }
       ],
       snapshot: {
-        asOf: "2026-07-25",
-        sourceFile: "mycase/as-of-2026-07-25/Contact_07-25-2026.csv",
-        clientsWithBalance: 245,
-        totalBalance: 1049222,
-        meanBalance: 4283
+        asOf: "2026-08-24",
+        sourceFile: "mycase/as-of-2026-08-24/trust-balance-snapshot.csv",
+        clientsWithBalance: 270,
+        totalBalance: 1126567,
+        meanBalance: 4172
       },
       refundCredits2025Feb: 7000
     }
@@ -916,7 +916,7 @@
     });
     const fee = Number(DATA.cashCollectedTotals && DATA.cashCollectedTotals.contractedMean)
       || Number(DATA.phoneIntake && DATA.phoneIntake.avgCaseFee)
-      || 5587;
+      || 5662;
     const feeCollectible = fee * 0.8;
     let cashPerCase = cases > 0 ? cash / cases : 0;
     let basis = cases > 0
@@ -1062,7 +1062,7 @@
    */
   function marketingCostPerClosedCaseModel() {
     const cfg = DATA.estValuePerLead || {};
-    const fee = Number(cfg.avgCaseFee) || Number(DATA.phoneIntake && DATA.phoneIntake.avgCaseFee) || 5587;
+    const fee = Number(cfg.avgCaseFee) || Number(DATA.phoneIntake && DATA.phoneIntake.avgCaseFee) || 5662;
     const collectionRate = Number(cfg.collectionRate);
     const coll = Number.isFinite(collectionRate) && collectionRate > 0 ? collectionRate : 0.8;
     const mgmt = Number(DATA.digitalMgmtMonthly) || 0;
@@ -1252,7 +1252,7 @@
           ? pi.missedPct - pi.priorMissedPct
           : null;
       }
-      const monthlyLost = Math.round(phone.missed * (pi.leadToCaseRate || 0.073) * (pi.avgCaseFee || 5587));
+      const monthlyLost = Math.round(phone.missed * (pi.leadToCaseRate || 0.073) * (pi.avgCaseFee || 5662));
       const k19 = (DATA.kpis || []).find(item => item.id === "#19");
       if (k19) {
         k19.value = `$${monthlyLost.toLocaleString("en-US")}/mo`;
@@ -1416,7 +1416,7 @@
     if (key === "May") return "May 2026 · Search+LSA stack · verified";
     if (key === "Jun") return "June 2026 complete stack · verified";
     if (key === "Jul") return "July 2026 · Search+LSA full · HubSpot 4 · verified";
-    return "August 2026 MTD · ads paused · HubSpot forms 0 · Search through Aug 6 · LSA through Aug 11";
+    return "August 2026 MTD · ads paused · HubSpot forms 0 · Search through Aug 6 · LSA through Aug 21 · cases through Aug 24";
   }
 
   function reportPeriodPillsHtml() {
@@ -4998,7 +4998,7 @@
       { month: "May", cases: 22 },
       { month: "Jun", cases: 36 },
       { month: "Jul", cases: 35 },
-      { month: "Aug*", cases: 11 }
+      { month: "Aug*", cases: 17 }
     ];
     const rows = [
       ...actual.map(r => ({ ...r, forecast: false })),
@@ -5059,7 +5059,7 @@
       <p class="data-formula-line">Seasonal H2 = 2025 H2 (57) × 2026/2025 H1 factor (116 ÷ 121) = 54 cases</p>
       <p class="data-formula-line">Run-rate H2 = 2026 H1 average (~19.3/mo) × 6 = 116 cases</p>
       <p class="data-formula-line">Blended H2 = (54 seasonal + 116 run-rate) ÷ 2 = 85 cases · full year = 116 actual H1 + 85 forecast H2 = 201</p>
-      <p class="data-warning-note">Jul 35 and Aug* 11 are actuals from Contact_08-12-2026 Contact group=Client. Sep–Dec remain estimates until those months close.</p>`;
+      <p class="data-warning-note">Jul 35 and Aug* 17 are actuals from Contact_08-24-2026 Contact group=Client. Sep–Dec remain estimates until those months close.</p>`;
   }
 
   function expensePaceGraphHtml() {
@@ -5144,7 +5144,7 @@
 
   /** Shared $80k/mo expense-pace math for Financials + Predictions. */
   function expensePaceMetrics() {
-    const mean = 5587;
+    const mean = 5662;
     const collectionRate = 0.8;
     const monthlyExpense = 80000;
     const monthsElapsed = 6;
@@ -5215,7 +5215,7 @@
 
   /** Intake-driven cash projection — historical case volume × practice-weighted fee × financed payment curve. */
   function cashProjectionPanelHtml() {
-    const meanFee = 5587;
+    const meanFee = 5662;
     const collectionRate = 0.8;
     /* Financing / payment-plan curve: month 0 deposit through month 6. */
     const payCurve = [0.4, 0.2, 0.15, 0.1, 0.07, 0.05, 0.03];
