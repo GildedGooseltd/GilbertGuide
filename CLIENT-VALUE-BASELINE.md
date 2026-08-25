@@ -1,76 +1,64 @@
 # Client value baseline (aggregates only)
 
-**As of:** 2026-07-25  
-**Source file (local):** `Ad Reports/exports/mycase/as-of-2026-07-25/Contact_07-25-2026.csv` · **last updated 2026-07-25**  
-**Derived:** `Ad Reports/exports/mycase/as-of-2026-07-25/fee-means-by-practice.csv`  
+**As of:** 2026-08-24  
+**Source file (local):** `Downloads/Contact_08-24-2026.csv` · aggregates in `Ad Reports/exports/mycase/as-of-2026-08-24/` · **last updated 2026-08-24**  
+**Derived:** `Ad Reports/exports/mycase/as-of-2026-08-24/fee-means-by-practice.csv`  
 **No PII in this doc** — counts and means only.
 
 ## Locked Guide baseline (KPI #28)
 
 | Metric | Value | Definition |
 |--------|-------|------------|
-| **Mean client fee** | **$5,587** | Contact group = Client · fee present · n = 142 |
-| Fee selection order | Pre-Trial Flat Fee → pre-File flat → trial_fee → retainer → down payments → AR last | First nonzero wins |
+| **Mean client fee** | **$5,662** | Contact group = Client · fee present · n = 138 |
+| Fee selection order | Pre-Trial Flat Fee → pre-File flat → trial_fee → retainer → payment_amount | First nonzero wins |
 
-Recompute on Jul-25 file: **unchanged** vs Jul-1 ($5,587 · n=142 · same fee set).
+Prior Jul-25 lock was $5,587 · n=142. Aug-24 recompute: **$5,662 · n=138**.
 
 ### Sensitivity (do not use as primary unless Kate re-locks)
 
 | Slice | n | Mean |
 |-------|---|------|
-| Client + fee (primary) | 142 | **$5,587** |
-| Exclude AR from fee pick | 136 | $5,694 |
-| Flat/trial/retainer only | 135 | $5,725 |
-| Pre-Trial Flat Fee only | 125 | $5,855 |
+| Client + fee (primary) | 138 | **$5,662** |
 
 ## Practice area means (Client + fee · n ≥ 5)
 
-Classification from MyCase `Case Type` when filled, else `Cases (practice area)` text. Fuzzy — not a formal matter taxonomy. **Unchanged** on Jul-25 recompute.
+Classification from MyCase `Cases (practice area)` text. Fuzzy — not a formal matter taxonomy. Refreshed 2026-08-24.
 
 | Practice area | n | Mean |
 |---------------|---|------|
-| Sex Assault / Sex Offense | 6 | $9,500 |
-| Theft / Property | 12 | $7,333 |
-| Assault / Menacing | 20 | $6,538 |
-| Domestic Violence / DV | 52 | $5,414 |
-| Criminal Defense (other) | 11 | $4,582 |
-| Probation Revocation | 5 | $4,500 |
-| DUI / DWAI / Traffic | 24 | $3,542 |
+| Theft / Property | 10 | $8,000 |
+| Sex Assault / Sex Offense | 9 | $7,778 |
+| Assault / Menacing | 17 | $7,721 |
+| Domestic Violence / DV | 35 | $5,693 |
+| Criminal Defense (other) | 21 | $4,471 |
+| Probation Revocation | 9 | $4,056 |
+| DUI / DWAI / Traffic | 20 | $3,600 |
 
 ## Trust / balance fields (Client · nonzero)
 
 | Field | n | Mean | Notes |
 |-------|---|------|-------|
-| Trust balance | 245 | $4,283 | Total ≈ $1,049,222 · refreshed 2026-07-25 |
-| Accounts receivable | 56 | $4,574 | Client-group only |
+| Trust balance | 270 | $4,172 | Total ≈ $1,126,567 · refreshed 2026-08-24 |
 | Credit balance | 0 | — | |
 
-Trust balance ≠ contracted fee. AR incomplete per DATA-PULL-LIST — not used as revenue.
+Trust balance ≠ contracted fee.
 
-## Data quality checks (2026-07-25)
+## Data quality checks (2026-08-24)
 
 | Check | Result |
 |-------|--------|
-| Sample/[TEST] rows in fee set | 0 |
-| Client + fee duplicate emails | 0 |
-| Fees &gt; $50k | 0 |
-| Fees &lt; $500 | 0 |
-| Client contacts total | 480 |
-| Client + fee coverage | 142 / 480 (30%) |
-| Case Type filled (all contacts) | 343 / 5,138 (sparse) |
+| Client contacts total | 510 |
+| Client + fee coverage | 138 / 510 |
 | Fees-collected billing export | **Not available from MyCase — use QuickBooks** |
 
 ## Downstream Guide updates
 
-When #28 changes, scale modeled #19 missed revenue by `5587 / 3870`:
+When #28 changes, scale modeled #19 missed revenue with the new mean.
 
-| Field | Prior | Updated |
-|-------|-------|---------|
-| #28 Avg case fee | $3,870 | **$5,587** |
-| app.js `PAV_HISTORICAL.avgCaseFee` | $4,800 | **$5,587** |
-| #19 monthlyLost | $4,200 | **$6,060** |
-| #19 priorMonthlyLost | $4,800 | **$6,930** |
-| #19 cumulativeYtd | $27,300 | **$39,400** |
+| Field | Prior Jul-25 | Updated Aug-24 |
+|-------|--------------|----------------|
+| #28 Avg case fee | $5,587 | **$5,662** |
+| #19 Aug* Search missed 10 | ~$4,079 | **~$4,133** |
 
 ## Still needed for cash-collected truth
 
@@ -80,4 +68,4 @@ When #28 changes, scale modeled #19 missed revenue by `5587 / 3870`:
 2. HubSpot deals × lead source / military status  
 3. Better Case Type + practice fill rate  
 
-Re-run analysis after next MyCase pull; update this file + `kpi-report.js` + `app.js` together.
+Re-run analysis after next MyCase pull; update this file + `kpi-report.js` together.
