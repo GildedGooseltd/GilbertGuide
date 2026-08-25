@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260824-cash-ledger";
+  const RENDER_VER = "20260824-data-tab";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
@@ -186,7 +186,7 @@
     },
     "cases-leads-spend": {
       title: "#05 Key Channel Activity",
-      desc: "Last 4 months: new cases and direct contacts on the left axis, Search + LSA media spend on the right. Jun/Jul full · Aug* cases/LSA through 2026-08-24 · Search Call details through Aug 6 · cash ledger still through 2026-08-12. Cost per response uses LSA + Search media only. LSA all answered is media ÷ charged plus uncharged inbox calls. Review and credited leads are not in that count. HubSpot forms fee is not a channel cost.",
+      desc: "Last 4 months: new cases and direct contacts on the left axis, Search + LSA media spend on the right. Jun/Jul full · Aug* cases/LSA through 2026-08-24 · Search Call details through Aug 6 · cash ledger through 2026-08-24. Cost per response uses LSA + Search media only. LSA all answered is media ÷ charged plus uncharged inbox calls. Review and credited leads are not in that count. HubSpot forms fee is not a channel cost.",
       formula: "Bars = new cases + leads. Line = Search + LSA media spend. LSA all answered = LSA media ÷ charged + uncharged. Table under each chart lists the plotted values."
     },
     "cash-pace": {
@@ -719,7 +719,7 @@
     /* NEW-E — Payment Method = Trust applications (ledger) + Client trust balance snapshot */
     trustTransfers: {
       rangeStart: "2025-05-01",
-      rangeEnd: "2026-08-12",
+      rangeEnd: "2026-08-24",
       method: "Payment Method = Trust",
       /* Debits = trust applied to invoices. Credits on Trust method are rare refunds (excluded from MoM bars). */
       monthly: [
@@ -2870,7 +2870,12 @@
           yearCases ? String(yearCases) : "—",
           yearCases ? fmtMoney(yearCredit / yearCases) : "—"
         ],
-        ["2026 to date through Aug* 12", fmtCashTier(DATA.cashCollectedTotals.total2026ToDate), "—", "—"],
+        [
+          `2026 to date through Aug* ${Number((DATA.cashCollectedTotals || {}).augDaysElapsed) || 24}`,
+          fmtCashTier(DATA.cashCollectedTotals.total2026ToDate),
+          "—",
+          "—"
+        ],
         ...extra2026
       ]
     );
@@ -2930,7 +2935,7 @@
               title: "LSA charge rate",
               table: lsaEfficiencyTable(rows)
             })}
-            <p class="data-inline-note">Jul full LSA media from account_activities_202607(1). Aug* from account_activities_202608(2) through Aug 13.</p>
+            <p class="data-inline-note">Jul full LSA media from account_activities_202607(2). Aug* from account_activities_202608(3) through Aug 24 · inbox(3) through Aug 21.</p>
           </div>
           ${kpiRefMark("#13")}
         </article>
@@ -2992,7 +2997,7 @@
             String(r.rows)
           ]),
           ["2025 total (ledger)", fmtMoney(sumApps(y2025)), String(sumRows(y2025))],
-          ["2026 to date through Aug 12", fmtMoney(sumApps(y2026)), String(sumRows(y2026))]
+          ["2026 to date through Aug 24", fmtMoney(sumApps(y2026)), String(sumRows(y2026))]
         ]
       )}
       ${kpiDetailTable(
@@ -3679,7 +3684,7 @@
       monthLabel,
       monthDisplay: isPartial ? `${monthLabel}*` : monthLabel,
       pacePct,
-      asOf: totals.asOf || "2026-08-12",
+      asOf: totals.asOf || cashLedgerAsOf() || "2026-08-24",
       cls: onPace ? "kpi-mom-up" : "kpi-mom-down",
       arrow: onPace ? "↑" : "↓",
       label: onPace ? `Ahead ${fmtMoney(gap)}` : `Behind ${fmtMoney(gap)}`,
@@ -4977,6 +4982,61 @@
     </section>`;
   }
 
+  function trustTransfersSectionHtml() {
+    const trust = DATA.trustTransfers;
+    if (!trust) return "";
+    const rows = (trust.monthly || []).filter(r => (r.applications || 0) > 0 || /\*/.test(String(r.month || "")));
+    return `<section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-trust-transfers" data-feedback-label="Trust applications">
+      ${statusCorner(true)}
+      ${kpiSectionStaticHead("Trust applications", `Ledger through ${formatPulledMd(trust.rangeEnd) || "—"}`)}
+      <div class="kpi-section-body">
+        ${chartBlock({
+          title: "Trust applications",
+          chart: trustApplicationsChart(trust.monthly || []),
+          table: trustTransfersTable(trust)
+        })}
+      </div>
+    </section>`;
+  }
+
+  function searchEfficiencyDataSectionHtml() {
+    const months = chronological(DATA.channelMonths || []).filter(m => m && Number(m.searchSpend) >= 0);
+    if (!months.length) return "";
+    const phone = DATA.phoneByMonth || {};
+    const rows = newestFirst(months).map(m => {
+      const key = String(m.month || "").replace(/\*$/, "");
+      const p = phone[key] || {};
+      const calls = Number(p.calls) || Number(m.search) || 0;
+      const received = Number(p.received) || 0;
+      const missed = Number(p.missed) || 0;
+      const spend = Number(m.searchSpend) || 0;
+      const answeredPct = p.answeredPct != null ? p.answeredPct : (calls ? Math.round((received / calls) * 100) : null);
+      return [
+        escapeHtml(m.month),
+        fmtMoney(spend),
+        String(received),
+        String(missed),
+        answeredPct != null ? `${answeredPct}%` : "—",
+        calls ? fmtMoney(spend / calls) : "—",
+        received ? fmtMoney(spend / received) : "—"
+      ];
+    });
+    return `<section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-search-efficiency" data-feedback-label="Search efficiency">
+      ${statusCorner(true)}
+      ${kpiSectionStaticHead("Search efficiency", "Call details + activities")}
+      <div class="kpi-section-body">
+        ${chartBlock({
+          title: "Search efficiency",
+          table: kpiDetailTable(
+            ["Month", "Search $", "Received", "Missed", "Answer %", "$ / call", "$ / answered"],
+            rows
+          )
+        })}
+        <p class="data-inline-note">Aug* Search calls through Aug 6 · Search $ from account_activities_202608(3) NTGUILT clicks only.</p>
+      </div>
+    </section>`;
+  }
+
   function renderData(el, opts) {
     if (!el) return;
     if (!(opts && opts.force) && el.dataset.rendered === RENDER_VER) return;
@@ -4991,6 +5051,16 @@
         </div>
       </section>
       ${cashCollectedDataSectionHtml()}
+      ${lsaChargeRateSectionHtml()}
+      ${searchEfficiencyDataSectionHtml()}
+      <section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-fee-practice" data-feedback-label="#29 Mean fee by practice">
+        ${statusCorner(true)}
+        ${kpiSectionStaticHead("Mean fee by practice", "Client + fee · as-of 2026-08-24")}
+        <div class="kpi-section-body data-chart-table-grid">
+          ${feeByPracticeSectionHtml()}
+        </div>
+      </section>
+      ${trustTransfersSectionHtml()}
       <section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-cases-created" data-feedback-label="Cases created">
         ${statusCorner(true)}
         ${kpiSectionStaticHead("Cases created", "MyCase created month")}
