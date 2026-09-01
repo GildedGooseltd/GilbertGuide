@@ -2,7 +2,7 @@
 
 **Purpose:** Single source of truth for all agents. **Do not re-ask** facts listed here. Update this file when Kate answers in chat, then sync CSVs/Todoist.
 
-**Last updated:** 2026-07-16 (GGL co-client MSA · payment deferral · deposit ladder · contracts kit synced)
+**Last updated:** 2026-08-25 · Google Ads asset UI unreliable locked · Alignable pitch · consulting-first site
 
 ---
 
@@ -10,13 +10,24 @@
 
 | Field | Value |
 |-------|--------|
-| Medium | **Oil painting** |
-| Geography | Colorado preferred; **out-of-state OK** if work **not shipped** (drop-off / deliver in person only) |
+| Medium | **Oil + mixed media** |
+| Sales | Shipping · **Printify** · originals with **listed prices** · commissions **open** |
+| Portfolio | `/art` on GGL · 4 pieces · T040 · see `website/shared/SITE-MAP.md` |
+| Coloring book | Physical · untitled · link TBD |
+| Geography | Colorado preferred; out-of-state OK |
 | Entry fees | **No paid entry** unless grant-sponsored |
 | Shows | Group shows OK under same fee rules |
-| Portfolio | **Not built** — build on **GildedGooseLimited.com** (`/art`, `/coloring-book`) before applying |
 | Pollock-Krasner | **Not qualified** — do not pursue |
 | Sponsorship | Include in art + grant scans (CCI, corporate, residency stipends) |
+
+## Websites
+
+| Field | Value |
+|-------|--------|
+| Map | `gilded-goose/website/shared/SITE-MAP.md` |
+| Homepage | Consulting-first |
+| Contact | Form only |
+| Channels | `/art` `/shop` `/lazy-goose` `/pantry` — footer, not main nav |
 
 **Tools:** [ART-OPPORTUNITY-FINDER.md](../gilded-goose/ART-OPPORTUNITY-FINDER.md) · Skout profile `kate-art` in free-stuff-alerts
 
@@ -38,6 +49,7 @@
 | **Financial forecaster** | **T050** build after **T039** QB export · `daily/FORECAST-2026.md` · income + mortgages + $4k floor |
 | **Tow truck shop** | **Used · max $20k** · **Chevy/GMC preferred** · **avoid Ford 6.0 Power Stroke** · **Ram deprioritized** (45RFE ~170k) · **hold purchase until Dec 2026** — monitor feed only · compare export in **Auto Skout** |
 | **Auto Skout** | `kate-vehicles` — Carebear logo · **Buy tab:** tow trucks · **Sell tab:** 1969 Avion comps · CL/FB/OfferUp + **AutoTempest** · fit ranking · compare CSV · [vehicle-market/](personal/vehicle-market/) |
+| **Daily driver** | **2008 Mercury Mountaineer Premier V8** · **P235/65R18** · needs **≥2 tires** Jul 2026 · last set was **Nexen** |
 
 ---
 
@@ -51,7 +63,7 @@
 | FSA microloan | **5.0% direct (Jun 2026)** · **not guaranteed** — revisit if ≤$50k **farm** spend beats paperwork; **cannot** pay HELOC |
 | FSA **guaranteed** operating | **More likely** for larger needs · Farm Credit quote · rate often **>5%** direct |
 | Farm status | Opens **better ag lending** — not automatic HELOC refi |
-| Jump-Start (GG-023) | **Try if easy** — HCED Walsenburg |
+| Jump-Start (GG-023) | **Try if easy** — HCED Walsenburg · programs + incentives: [huerfano.org/support](https://www.huerfano.org/support) · plan matrix [`PROJECT-BUSINESS-PLAN.md`](../gilded-goose/PROJECT-BUSINESS-PLAN.md) §7A |
 | CDA equipment credit | **December 2026** batch confirmed (Jul 2026) |
 | OP-01 pickup site | **Raymond Aguirre CC, 28 CR 632 Gardner** — no house address on land |
 | Charity | **Start now** — CNDC fiscal sponsor + own nonprofit corp (see prep sequence) |
@@ -64,7 +76,7 @@
 | Pre-action plan | **`PRE-ACTION-PLAN.md`** — desk work before Lester / LA-H / wholesaler calls |
 | Contact | Kate **Stannard** · support@gildedgooselimited.com · **720-701-2646** |
 | CO sales tax # | **96288442** ✅ — DOR before LA-H retail license (**GG-037**) |
-| EIN | Kate has it — paste into profile H1 #1 |
+| EIN | **92-3680818** |
 | Historically underserved | Likely yes — woman, 36, beginning farmer — confirm Garrett |
 | EQIP entity | **Lazy Goose Acres LLC** when filed (GG-007) |
 | Farm resource concerns | Water, soil quality, sun/wind, erosion, rocky terrain, budget |
@@ -103,7 +115,7 @@
 | Email / phone | support@gildedgooselimited.com · **720-701-2646** |
 | Business entity | **Gilded Goose Limited** (100% woman-owned) |
 | CO sales tax # | **96288442** |
-| EIN | Kate has it — paste into profile **H1 #1** |
+| EIN | **92-3680818** |
 | Beginning farmer | **Year 1** on Gardner |
 | 2026 YTD GGL (QB, Mar–Jun) | ~**$13,100** (see `income-streams-monthly.csv`) |
 | CPA | **Self-guided** |
@@ -136,6 +148,8 @@
 | Sales | **Cross-list** all platforms; consider Vendoo/List Perfectly before custom app |
 | Pav consulting | Up to ~$6k/mo target; trust gate OPEN after June invoice |
 | **GGL public consulting** | Site [gildedgooselimited.com](https://gildedgooselimited.com) — Marketing & Business Operations Consulting · offers from Pav *work patterns*, not client identity · copy in `gilded-goose/website/` |
+| **Profile / pitch copy** | Before drafting Alignable, LinkedIn, Google, Yelp, or outreach pitches: **ask clarifying questions first**. Use Kate’s history so copy is specific. **Referral reality:** former colleagues + past consulting relationships · hired by agencies/consultants for support and project leadership · open to all partners · professional service trades with other small businesses · Alignable tone: warm, approachable |
+| **Alignable** | Supportive channel · not September tip priority · finish design before connection invites · paste [`website/LISTING-ALIGNABLE.md`](../gilded-goose/website/LISTING-ALIGNABLE.md) · Sept client push: [`MARKETING-PLAN.md`](../gilded-goose/MARKETING-PLAN.md) § September 2026 |
 
 ---
 
@@ -151,7 +165,7 @@
 | Project deposits | **50%** ≤$2k · **30%** ≤$5k · **20%** ≤$10k · **15%** ≤$25k · **10%** ≤$50k+ (`PAYMENT-TIERS.md` §8) |
 | Pricing units | **Fixed list / retainer / change-order** plus the financial-management savings-share rider only — no hourly quotes |
 | Budget bands (intake) | Under $2k · $2–5k · $5–7.5k · $7.5–10k · $10–15k · $15–20k · $20–25k · $25–50k |
-| Contracts | Co-client MSA (firm + individual) + SOW + payment modules: `gilded-goose/website/contracts/` — law-firm ad ethics · collections · P0–P5 · **have counsel review** |
+| Contracts | MSA + SOW: **Pav Law** + **Andrew Brown** co-clients (joint/several if Pav Law goes under) · kit `gilded-goose/website/contracts/` · fill [`PAV-PARTY-FILL.md`](../gilded-goose/website/contracts/PAV-PARTY-FILL.md) · ICA archive under `clients/pav-law/` · P0–P5 · **have counsel review** |
 | Payment rate charts | Internal: `gilded-goose/website/PAYMENT-TIERS.md` (P0–P5, additional-cash deferral examples, budget tiers, R1–R4) — **not** for public site |
 | Intake | **Squarespace Form → `support@gildedgooselimited.com` only** |
 | **GGL ≠ Pav HubSpot** | Do **not** send GGL site leads to Pav HubSpot, MyCase, or Gilbert Guide webhooks — systems stay separate |
@@ -170,6 +184,29 @@
 
 ---
 
+## Pav Law — entity / contracts (durable)
+
+| Field | Value |
+|-------|--------|
+| **Co-Client 1 — Firm** | **Pav Law** only — **never** “Andrew Brown Law PLLC” / DBA on MSA, SOW, or Guide |
+| **Co-Client 2 — Individual** | **Andrew Brown** (owner · Attorney) — jointly and severally liable with Pav Law |
+| **Owner** | Andrew Brown owns Pav Law; same person signs both capacities |
+| **Notice address** | **102 S Tejon St, Colorado Springs, CO 80903** |
+| **Venue** | **El Paso County, Colorado** · Colorado law |
+| **ICA** | Separate ICA with Kate · effective **04/18/2026** · Firm signed **4/22/2026** · [archive](../gilded-goose/clients/pav-law/ICA-CONFIDENTIALITY-INDEPENDENT-CONTRACTOR.md) — do not copy wrong entity name from archive into MSA |
+| **Kate ICA address** | PO Box 34, Gardner, CO 81040 |
+| **MSA / SOW fill** | [`gilded-goose/website/contracts/PAV-PARTY-FILL.md`](../gilded-goose/website/contracts/PAV-PARTY-FILL.md) |
+| **ICA vs MSA** | MSA/SOW = **GGL ↔ Pav Law + Andrew Brown** (joint/several) · firm name = **Pav Law** |
+
+## Pav Law — finance / debt (durable)
+
+| Field | Value |
+|-------|--------|
+| **Monthly cash collection goal** | **$100k** · Guide Financials + Cash Pace · not the $80k expense assumption |
+| **Monthly operating expense run-rate** | June sample baseline: **36 cases** · **$20k** digital + **$6k** ops · rest **~$59k** salaries/misc · ~**$85k** all-in at June pace · typed cases scale digital + ops · prior Guide pace used **$80k/mo** until updated in tiles |
+| **Outside operating debt** | **$250k** fixed principal · **7% APR** compounds monthly on unpaid balance · interest is additional debt over payoff duration · no slider · paid from leftover after monthly/annual expenses |
+| **Implication** | Gross cash is not debt capacity — lawyers earn on a % basis · after expenses, at most **15¢/$** of cash pays outside debt · all-in burn = salaries/misc + scaled digital/ops |
+
 ## Pav Law — staff / comp (durable)
 
 | Field | Value |
@@ -181,9 +218,20 @@
 
 | Field | Value |
 |-------|--------|
+| **“Open the dash” / ops dashboard to edit** | Open [`kpi-report.js`](../gilded-goose/clients/pav-law/project-picker/kpi-report.js) — Pav Law KPI Report. Not Guide HTML, not OpsDash.md, not a canvas. Verify against newest screenshot if labels differ. |
 | Impact metrics shown | **Leads impacted** · **Leads connected** only |
 | **Clients retained** | **Do not show** — not tracked; remove from cards, priorities table, impact chips |
-| **B2 execution gate** | **No team chat. Keep moving:** route HubSpot Romina first → Casey backup → voicemail; same-day missed-call task; use 7-day answered-rate + cost/call check before Military budget increase |
+| **B2 execution gate** | **No team chat. Keep moving:** transfer **one** phone first · write setup docs · HubSpot onboarding deck · **forms → Casey** same-day callback · Casey answers more auto calls · route Romina first → Casey backup → voicemail on line; 7-day answered-rate + cost/call before Military budget increase · Academy + Loom + Gamma/Canva for training deck |
+| **Channel attribution #30–#32** | **#30** = firm-wide est. value per lead only — full leads × #28 fee × 80% collection until fees-collected · not by channel · caveats in Guide ? · **#31** = spend ÷ signed by channel when Lead Source tagged · **#32** blank until measured signed÷leads · LSA phone join · Search Call details Caller phone · Form HubSpot manual · Referral MyCase · Direct residual · no firm-wide lead→case on channel tiles · Google Ads API LSA phone pull blocked until Basic Access approved · MCC `501-973-1435` · [`CHANNEL-ROI-SPEC.md`](../gilded-goose/clients/pav-law/CHANNEL-ROI-SPEC.md) · [`GOOGLE-ADS-API-SETUP.md`](../pav-law-analytics/google-ads/GOOGLE-ADS-API-SETUP.md) |
+| **Practice mix EV** | **Exclude Theft / Property** from mix-weighted case value — firm tries not to take those cases |
+| **Client PII** | **Never save** names · case numbers · phones · emails · addresses · row-level joins into the workspace, canvases, or git. Read Downloads in memory if needed; write **aggregates only**. Rule: [`no-client-pii.mdc`](../.cursor/rules/no-client-pii.mdc) · global `~/.cursor/rules/no-client-pii.mdc` |
+| **Branding** | Always align Guide UI to [`BRANDING-LAYOUT.md`](../gilded-goose/clients/pav-law/project-picker/BRANDING-LAYOUT.md) + [`REPORTING-BRAND-GUIDE.md`](../gilded-goose/clients/pav-law/project-picker/REPORTING-BRAND-GUIDE.md) · rule [`.cursor/rules/pav-law-branding.mdc`](../.cursor/rules/pav-law-branding.mdc) |
+| **Yelp pilot (Aug 2026)** | **B10** · promo live **$5/day** · profile updated for promotion · add stories + enhancements · **Aug goal 20 channel referrals** · past-client Yelp review email sent 2026-07-26 · weekly CTA A/B in [`CONTENT-WRITING-GUIDE.md`](../gilded-goose/clients/pav-law/project-picker/CONTENT-WRITING-GUIDE.md) · double-check HubSpot setup and push daily phone/app use now · Yelp → HubSpot number after Casey call-trained (gate B2) · Contacted Leads screenshot 2026-08-12 2:26 PM: Aug calendar **2** includes today · Jul still-in-view 5 · goal progress = Aug calendar / 20 not last-30 list length · live listing 2026-08-12: **4.6 · 7 reviews** |
+| **Ads pause Aug 2026** | Search ads paused in August because **Pav is not paying** — Aug MTD quiet is a funding gap, **not** expected/positive. Guide: Jun/Jul = proof the stack works; Aug = unpaid pause, treat as attention not “quiet expected” |
+| **Google Ads asset UI** | **Unreliable — decided long ago.** Never send Kate to Assets → Associations, Asset performance, or RSA → View asset details for performance or bulk remove. Those views stay empty. Use Expanded final URL export for text assets; Google Ads Script/API for image/asset metrics; Editor only for list/remove without ranking. Rule: [`.cursor/rules/google-ads-asset-ui.mdc`](../.cursor/rules/google-ads-asset-ui.mdc) |
+| **HubSpot forms empty month** | If form-submit exports are downloaded and have **no rows for that month**, count = **0** — not “missing” |
+| **MyCase monthly cash export** | UI: **Reports → Trust account activity** — cannot be saved in MyCase; export CSV each pull · Downloads: `ledger_account_activity_report*.csv` · sum **Credit** column · not Electronic payments · rule [`pav-mycase-trust-activity.mdc`](../.cursor/rules/pav-mycase-trust-activity.mdc) |
+| **GA4 properties** | Prefer **pav.law**. **Pav Law - GA4** is still valid after scrub — site was hacked; remove India / Türkiye spike, Cross-network / Referral spam, fake key events. Organic queries from the polluted spike window stay unusable. Do **not** discard the whole Pav Law - GA4 property. |
 
 ---
 
@@ -196,3 +244,4 @@
 5. **Vehicle scans:** `SKOUT_PROFILE=kate-vehicles` → `cd ~/free-stuff-alerts && .venv/bin/python src/main.py --test --open`
 6. **Grant scans:** `GRANT-SEARCH.md` + CSV — not full GG list in Todoist ([TODOIST-FREE.md](TODOIST-FREE.md)).
 7. **Todoist:** max **5 active projects + Inbox** — Kate’s project placement wins; complete/delete per CSV status ([TODOIST-FREE.md](TODOIST-FREE.md)).
+8. **Client PII:** never save names · case numbers · phones · emails · row-level client data. Aggregates only. See `no-client-pii.mdc`.

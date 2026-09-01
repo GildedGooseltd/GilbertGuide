@@ -1,0 +1,29 @@
+---
+description: MyCase cash export — Trust account activity UI name vs Downloads filename
+globs: gilded-goose/clients/pav-law/**/*
+alwaysApply: false
+---
+
+# MyCase cash pull — Trust account activity
+
+When Kate asks for the ledger file, monthly cash, or cash collected export:
+
+## MyCase UI
+
+**Reports → Trust account activity**
+
+MyCase cannot save this report — export CSV each month. That is why it gets missed.
+
+## Downloads filename
+
+`ledger_account_activity_report.csv` with `(1)`, `(2)`, `(3)` on repeat downloads. Newest mtime wins.
+
+## Dash math
+
+Sum **Credit** column by calendar month. Not Electronic payments. Not Trust account summary balances.
+
+## Sep 1 2026 reference
+
+`ledger_account_activity_report (4).csv` · Aug Credits **$104,545** · matches ~$104k firm total vs $101,045 electronic-only.
+
+Clickpath doc: [`DATA-EXPORT-CLICKPATHS.md`](../gilded-goose/clients/pav-law/project-picker/DATA-EXPORT-CLICKPATHS.md) §10.
