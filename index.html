@@ -2929,6 +2929,10 @@
     .kpi-report-pills {
       display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; justify-content: flex-end;
     }
+    .kpi-cash-year-pills {
+      justify-content: flex-start;
+      margin: 0 0 0.75rem;
+    }
     .kpi-report-pill {
       appearance: none; cursor: pointer; font: inherit;
       display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px;
@@ -4107,10 +4111,6 @@
       stroke: var(--gg-royal-blue);
       opacity: 0.32;
     }
-    .kpi-half-moon-gauge.kpi-gauge-fill-cash .kpi-gauge-progress {
-      stroke: var(--gg-positive);
-    }
-    .kpi-gauge-celebrate.kpi-gauge-fill-cash .kpi-gauge-center { fill: var(--gg-positive); }
     .kpi-goal-card .kpi-source-footnote {
       margin-right: 2.25rem;
       margin-bottom: 0.15rem;
@@ -5604,8 +5604,8 @@
     <div class="cockpit-tabs-wrap">
       <div class="cockpit-tabs view-tabs" role="tablist" aria-label="Cockpit views">
         <button type="button" class="view-tab active" data-view="kpis" role="tab" aria-selected="true">KPIs <span class="tab-help" data-help-title="KPIs" data-help-desc="August 2026 MTD through Aug 12. Tile pills switch June · July · August. Leads 47 · cases 11 · Sales Funnel follows the selected month. Search ads paused unpaid in August. Tap ? on a KPI for description, formula, and export fields." aria-label="How to use KPIs">?</span></button>
-        <button type="button" class="view-tab view-tab-wip" data-view="picker" role="tab" aria-selected="false" aria-description="Under construction">Guide <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Guide" data-help-desc="Project Guide is under construction. Cart, outlines, and Review Plan stay here when it reopens." aria-label="How to use Guide">?</span></button>
         <button type="button" class="view-tab" data-view="data" role="tab" aria-selected="false">Data <span class="tab-help" data-help-title="Data" data-help-desc="Operating charts from the same exports as KPIs through 2026-08-12. Lead channel stack, cases MoM, reviews, Cases Created 2025–2026. Tile month on KPIs also refreshes the Data lead stack. Each card ? shows description, formula, and file/fields." aria-label="How to use Data">?</span></button>
+        <button type="button" class="view-tab view-tab-wip" data-view="picker" role="tab" aria-selected="false" aria-description="Under construction">Guide <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Guide" data-help-desc="Project Guide is under construction. Cart, outlines, and Review Plan stay here when it reopens." aria-label="How to use Guide">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="impact" role="tab" aria-selected="false" aria-description="Under construction" hidden>Results <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Results" data-help-desc="Project-tied campaign results, completed report-out, and cart revenue calculator. Under construction until exports and INDEX statuses are wired end-to-end." aria-label="How to use Results">?</span></button>
         <button type="button" class="view-tab view-tab-wip" data-view="recommendations" role="tab" aria-selected="false" aria-description="Under construction" hidden>Recommendations &amp; Predictions <span class="tab-uc">Under construction</span> <span class="tab-help" data-help-title="Recommendations & Predictions" data-help-desc="Ranked actions plus rest-of-year case forecast, expense pace, and collectible-cash projection. Blurred until ready to publish." aria-label="How to use Recommendations and Predictions">?</span></button>
       </div>
@@ -5769,7 +5769,7 @@
   <script src="projects-data.js?v=20260811-retainer-3k"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
-  <script src="kpi-report.js?v=20260824-search-calls"></script>
+  <script src="kpi-report.js?v=20260901-trust-activity"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20260811-hide-results"></script>
 </body>

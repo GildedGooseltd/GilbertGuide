@@ -1,8 +1,8 @@
 # Client value baseline (aggregates only)
 
-**As of:** 2026-08-24  
-**Source file (local):** `Downloads/Contact_08-24-2026.csv` · aggregates in `Ad Reports/exports/mycase/as-of-2026-08-24/` · **last updated 2026-08-24**  
-**Derived:** `Ad Reports/exports/mycase/as-of-2026-08-24/fee-means-by-practice.csv`  
+**As of:** 2026-09-01  
+**Source file (local):** `Downloads/Contact_09-01-2026.csv` · aggregates in `Ad Reports/exports/mycase/as-of-2026-09-01/` · **last updated 2026-09-01**  
+**Derived:** `Ad Reports/exports/mycase/as-of-2026-09-01/fee-means-by-practice.csv`  
 **No PII in this doc** — counts and means only.
 
 ## Locked Guide baseline (KPI #28)

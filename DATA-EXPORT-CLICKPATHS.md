@@ -104,7 +104,28 @@ If Calls report unavailable: **CRM** → **Activities** → filter Call → expo
 
 ---
 
-## 10. MyCase — retained matters (if used for #02 / #28)
+## 10. MyCase — monthly cash collected (KPI cash tiles)
+
+MyCase UI name: **Trust account activity**
+
+Downloads filename: `ledger_account_activity_report.csv` — browser adds `(1)`, `(2)`, etc. Always use newest by file date.
+
+1. MyCase → **Reports** → **Trust account activity**
+2. Set date range to the target month or YTD
+3. Export CSV — MyCase does not save this report; export each pull
+4. Sum **Credit** column by calendar month for cash collected tiles
+
+Not this report:
+
+| Wrong name / file | What it actually is |
+| ----------------- | ------------------- |
+| Electronic payments | Card payments only — understates month cash |
+| Trust account summary | Balances snapshot — not monthly Credits |
+| `account_activities_*.csv` | Google LSA billing |
+
+---
+
+## 11. MyCase — retained matters (if used for #02 / #28)
 
 1. MyCase → **Reports** or **Cases** → closed/retained in period
 2. Export aggregate counts + avg fee — avoid client names in shared docs
