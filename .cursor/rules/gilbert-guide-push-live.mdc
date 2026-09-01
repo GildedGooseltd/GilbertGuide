@@ -1,0 +1,16 @@
+---
+description: Gilbert Guide push updates = branch push + auto deploy to live Pages
+globs: gilded-goose/clients/pav-law/project-picker/**
+alwaysApply: false
+---
+
+# Gilbert Guide — push = live
+
+When Kate says push updates, publish, or push live for the KPI report or picker:
+
+1. Push to **`cursor/op01-submission-updates`** on **GildedGooseltd/GilbertGuide**.
+2. That push auto-runs **Deploy Gilbert Guide** when `project-picker/**` changes.
+3. Confirm live — Actions success or `kpi-report.js?v=` on https://gildedgooseltd.github.io/GilbertGuide/index.html
+4. Tell Kate it is live with the URL. Do not end with “run workflow manually” unless Actions failed.
+
+See [GITHUB-PUSH.md](../gilded-goose/clients/pav-law/project-picker/GITHUB-PUSH.md).
