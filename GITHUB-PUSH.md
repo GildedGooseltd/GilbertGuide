@@ -182,6 +182,17 @@ Then open `index.html` in browser from that folder.
 
 **After push:** GitHub **Actions** tab → latest run green (~1 min) → refresh public Pages URL.
 
+## Agent default — push = live
+
+When Kate says **push updates**, **publish**, or **push live** for the KPI report or picker:
+
+1. Commit picker changes on branch **`cursor/op01-submission-updates`** and `git push origin HEAD:cursor/op01-submission-updates`.
+2. Do **not** stop at branch-only push — that branch triggers **Deploy Gilbert Guide** automatically on `project-picker/**` changes.
+3. Confirm deploy: Actions run **success** on that branch, or live `index.html` shows the new `kpi-report.js?v=` cache-bust string.
+4. Reply with live URL: https://gildedgooseltd.github.io/GilbertGuide/
+
+Manual **Run workflow** is only if Actions did not fire after the push.
+
 ---
 
 ## Cursor UI instead of Terminal (same steps)
