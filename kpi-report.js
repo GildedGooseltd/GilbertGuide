@@ -3,10 +3,10 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260901-trust-activity";
-  /** Tile-month pills — current month first. May/Jun/Jul = proof months; Aug MTD with Search ads paused unpaid. */
+  const RENDER_VER = "20260901-sep-reset";
+  /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
-  const PERIOD_OPTIONS = ["August 2026", "July 2026", "June 2026", "May 2026"];
+  const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
   /** Cash collected chart year: 2026 default · 2025 via toggle. */
   let cashCollectedViewYear = 2026;
   /** Cases created chart year: 2026 default · 2025 via toggle. */
@@ -74,8 +74,8 @@
       fields: "Client + fee · Case Type / practice · n≥5 means · last updated 2026-09-01"
     },
     "cash-pace": {
-      file: "MyCase Trust account activity → ledger_account_activity_report (4).csv · Jan–Jul from ledger (2)",
-      fields: "Follows tile month · Jun $103,485 · Jul $108,350 · Aug $104,545 Credits Aug 1–31 · clears $100k goal"
+      file: "MyCase Trust account activity → ledger_account_activity_report (4).csv · Jan–Aug from prior pulls",
+      fields: "Follows tile month · Sep* $5,500 MTD Sep 1 · Aug $104,545 full month · clears $100k goal"
     },
     "cases-leads-spend": {
       file: "Contact_09-01 aggregates · LSA inbox(3) · Call details · HubSpot Jul 16 · account_activities May–Aug (3)",
@@ -87,11 +87,11 @@
     },
     "cash-collected": {
       file: "ledger_account_activity_report (4).csv · ledger (2) Jan–Jul · mycase/as-of-2026-09-01/cash-credits-by-month.csv",
-      fields: "MyCase Trust account activity export · Aug $104,545 Credits · Jul $108,350 · Jan–Jul from prior ledger pull"
+      fields: "MyCase Trust account activity · Aug $104,545 revenue · Jul $108,350 · Jan–Jul from prior ledger pull"
     },
     "financial": {
       file: "ledger_account_activity_report (4).csv · Contact_09-01-2026 new cases",
-      fields: "Cash Credits by month · $100k monthly goal · Aug $104,545 full month · cases 19 through Sep 1"
+      fields: "Trust Credits by month = client revenue collected · $100k monthly goal · Aug $104,545 full month · cases 19 through Sep 1"
     },
     "cases-created": {
       file: "mycase/as-of-2026-09-01/new-cases-by-month.csv · Contact_09-01-2026 aggregates",
@@ -103,12 +103,12 @@
     "#01": {
       title: "#01 Leads Generated",
       desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid — that is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot form submits when present. Track table under the tile breaks out Search · LSA · HubSpot. Yelp Contacted Leads are tracked on the Yelp Reviews tile / Data views — not in this gauge.",
-      formula: "Jun 226 · Jul 267 · Aug* 86 = Search 25 + LSA 61 + HubSpot 0. Target = floor($100k ÷ cash/lead) + 1 from complete months."
+      formula: "Jun 226 · Jul 267 · Aug* 86 = Search 25 + LSA 61 + HubSpot 0. Target = floor($100k ÷ revenue/lead) + 1 from complete months."
     },
     "#02": {
       title: "#02 New Cases",
-      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months from Contact_09-01-2026. August 19 is MTD through Created 2026-09-01. Case target exists so monthly cash can clear $100k. Gauge only — no On track or Behind label.",
-      formula: "Count of Client contacts with Created date in month. Target = floor($100k ÷ cash/case) + 1 so monthly cash clears $100k."
+      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months from Contact_09-01-2026. August 19 is MTD through Created 2026-09-01. Case target exists so monthly revenue can clear $100k. Gauge only — no On track or Behind label.",
+      formula: "Count of Client contacts with Created date in month. Target = floor($100k ÷ revenue/case) + 1 so monthly revenue clears $100k."
     },
     "#07": {
       title: "#07 Spend Waste",
@@ -192,9 +192,9 @@
       formula: "Bars = new cases + leads. Line = Search + LSA media spend. LSA all answered = LSA media ÷ charged + uncharged. Table under each chart lists the plotted values."
     },
     "cash-pace": {
-      title: "Cashflow",
-      desc: "Follows the KPI tile month. June and July use full-month ledger credits vs the $100k cash goal. August* projects full-month pace from days elapsed. Gauge fill is MTD collected on the $100k scale. Shadow arc is the full-month forecast at the current daily pace. Ahead/Behind compares collected cash to the straight-line share of $100k. $80k remains the operating-expense assumption on Predictions, not this cash goal.",
-      formula: "Expected to date = $100,000 × days elapsed ÷ days in month. Projected = MTD ÷ days elapsed × days in month. Gauge fill = collected ÷ $100k. Shadow = projected ÷ $100k."
+      title: "Revenue",
+      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity — sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (4) Sep 1 pull. $80k remains the operating-expense assumption on Predictions, not this revenue goal.",
+      formula: "Revenue = Trust account activity Credit sum by month. Goal = $100,000 client revenue collected."
     },
     "sales-cost-funnel": {
       title: "Sales Funnel — unit cost stack",
@@ -203,8 +203,8 @@
     },
     "financial": {
       title: "#09 Financials",
-      desc: "Cash collected by month from MyCase Trust account activity export — Credit column. Jan–Jul from ledger_account_activity_report (2). Aug from ledger (4) pull Sep 1 · $104,545. Not billed revenue. 2026 goal line = $150k.",
-      formula: "Cash = Credit sum by calendar month. Goal = $100,000."
+      desc: "Monthly client revenue from MyCase Trust account activity export — Credit column. Jan–Jul from ledger_account_activity_report (2). Aug $104,545 from ledger (4) Sep 1. Not operating cash flow. Not accrual billed revenue. 2026 chart goal line = $150k.",
+      formula: "Revenue = Credit sum by calendar month. Monthly goal = $100,000."
     },
     "cases-created": {
       title: "Cases Created",
@@ -212,8 +212,8 @@
       formula: "Count of Client contacts with Created date in month. Trend = OLS on complete months. Avg MoM = mean of month-to-month percent change. Aug* MTD is not in trend or avg MoM."
     },
     "cash-collected": {
-      title: "Cash collected",
-      desc: "MyCase cash by month. Default chart is 2026 YTD. Aug $104,545 from Trust account activity export Sep 1. Jan–Jul from ledger (2). 2026 royal dashed line = $150k monthly cash goal.",
+      title: "Monthly revenue",
+      desc: "MyCase Trust account activity — client revenue collected by month. Default chart is 2026 YTD. Aug $104,545 full month from Sep 1 pull. Jan–Jul from ledger (2). 2026 royal dashed line = $150k monthly revenue goal.",
       formula: "Sum Credit column by month from Trust account activity CSV."
     }
   };
@@ -384,19 +384,19 @@
   }
 
   const DATA = {
-    period: "August 2026",
+    period: "September 2026",
     asOf: "2026-09-01",
     lastUpdated: "2026-09-01",
-    updateLabel: "August 2026",
-    updateScope: "",
-    source: "MyCase Sep 1 · Contact_09-01-2026 · Trust account activity → ledger_account_activity_report (4) Aug cash $104,545 · Paid media Aug 24 ceiling",
+    updateLabel: "September 2026",
+    updateScope: "Sep 1 MTD · MyCase Trust activity · Contact Created",
+    source: "MyCase Sep 1 · Contact_09-01-2026 · Sep revenue $5,500 MTD · Aug full month $104,545 · Paid media pending Sep pull",
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Leads Generated", value: "86", target: "≥ 219", mom: "−68%", count: 86, verified: true, hit: false, alert: false, gauge: true, augUpdated: true },
-      { id: "#02", label: "New Cases", value: "19", target: "≥ 24", mom: "−46%", count: 19, verified: true, hit: false, alert: true, gauge: true, augUpdated: true },
+      { id: "#01", label: "Leads Generated", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false },
+      { id: "#02", label: "New Cases", value: "0", target: "≥ 24", mom: null, count: 0, verified: true, hit: false, alert: true, gauge: true, augUpdated: false },
       /* Key metrics: #19 Missed Opportunity in Financial Breakdown */
-      { id: "#19", label: "Missed Opportunity", value: "$4,960/mo", target: "$0", mom: null, verified: true, alert: true, lostTracker: true, augUpdated: true },
-      { id: "#21", label: "Answered Calls", value: "52%", target: "≥ 90%", mom: "−4%", verified: true, alert: true, gauge: true, goal: true, archived: true },
+      { id: "#19", label: "Missed Opportunity", value: "—", target: "$0", mom: null, verified: false, alert: false, lostTracker: true, augUpdated: false },
+      { id: "#21", label: "Answered Calls", value: "—", target: "≥ 90%", mom: null, verified: false, alert: false, gauge: true, goal: true, archived: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
       { id: "#28", label: "Avg case fee", value: "$5,662", target: "MyCase mean", mom: null, verified: true },
@@ -405,9 +405,9 @@
       { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, letterGrade: true, archived: true }
     ],
     channels: [
-      { name: "Search calls", count: 25, prior: 131, mom: "−81%", spend: "$400", color: "#3a1a6e", verified: true },
-      { name: "LSA inbox", count: 61, prior: 132, mom: "−54%", spend: "$6,286", color: "#1e3a8a", verified: true },
-      { name: "HubSpot forms", count: 0, prior: 4, mom: "−100%", spend: "—", color: "#b23a78", verified: true }
+      { name: "Search calls", count: null, prior: 25, mom: "—", spend: "—", color: "#3a1a6e", verified: false },
+      { name: "LSA inbox", count: null, prior: 61, mom: "—", spend: "—", color: "#1e3a8a", verified: false },
+      { name: "HubSpot forms", count: null, prior: 0, mom: "—", spend: "—", color: "#b23a78", verified: false }
     ],
     /* Lead Channel Stack — Jun Search locked from Call details.csv Jul 11; Jul/Aug* from Call details (1) */
     channelMonths: [
@@ -443,7 +443,7 @@
         note: "Search Call details (1) Jul 1–31 · LSA inbox(3) Jul full · HubSpot forms 4 in Jul 16 exports · Yelp Jul calendar in Aug 12 Contacted Leads view = 5"
       },
       {
-        month: "Aug*",
+        month: "Aug",
         search: 25,
         lsa: 61,
         hubspot: 0,
@@ -452,7 +452,19 @@
         yelpSpend: 0,
         searchSpend: 400,
         lsaSpend: 6286,
-        note: "Search Call details (4) through Aug 14 · no Search calls Aug 15–24 in export · Search $ = NTGUILT in account_activities_202608(3) · LSA inbox(3) through Aug 21 · HubSpot = 0 Aug · ads paused · Yelp Aug calendar from Aug 12 screenshot"
+        note: "Search Call details (4) through Aug 14 · LSA inbox(3) through Aug 21 · HubSpot 0 · Yelp Aug calendar 2 · ads paused unpaid"
+      },
+      {
+        month: "Sep*",
+        search: null,
+        lsa: null,
+        hubspot: null,
+        hubspotForms: null,
+        yelp: null,
+        yelpSpend: 0,
+        searchSpend: null,
+        lsaSpend: null,
+        note: "Sep pull pending — Search · LSA · HubSpot not on file Sep 1"
       }
     ],
     /** Search Campaign Impr/Clicks by tile month. Only Jul has a day-range export on disk. */
@@ -474,6 +486,12 @@
         clicks: null,
         searchSpendLock: null,
         windowNote: "Search ads paused unpaid · no August Campaign calendar"
+      },
+      Sep: {
+        impressions: null,
+        clicks: null,
+        searchSpendLock: null,
+        windowNote: "September paid-media pull pending"
       }
     },
     sourceMix: [
@@ -609,7 +627,8 @@
       { month: "May", closed: 8, newCases: 22, redAccounts: 2 },
       { month: "Jun", closed: 11, newCases: 36, redAccounts: 4 },
       { month: "Jul", closed: null, newCases: 35, redAccounts: null },
-      { month: "Aug*", closed: null, newCases: 19, redAccounts: null }
+      { month: "Aug", closed: null, newCases: 19, redAccounts: null },
+      { month: "Sep*", closed: null, newCases: 0, redAccounts: null }
     ],
     pipeline: [
       { month: "Jun", closed: 11, mom: "+38%" },
@@ -624,7 +643,8 @@
       { month: "May", cases: 22, leads: 111, spend: 17011, lsaSpend: 11006, adsSpend: 6005, adsLeads: 39, websiteLeads: null },
       { month: "Jun", cases: 36, leads: 226, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
       { month: "Jul", cases: 35, leads: 267, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 4 },
-      { month: "Aug*", cases: 19, leads: 86, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 }
+      { month: "Aug", cases: 19, leads: 86, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 },
+      { month: "Sep*", cases: 0, leads: null, spend: null, lsaSpend: null, adsSpend: null, adsLeads: null, websiteLeads: null }
     ],
     /**
      * Yelp Contacted Leads screenshot as-of 2026-08-12 2:26 PM — messages only.
@@ -687,7 +707,7 @@
       { month: "Nov", credit: 42775, newCases: 5 },
       { month: "Dec", credit: 64300, newCases: 9 }
     ],
-    /* 2026 YTD cash — Jan–Jul ledger (2) · Aug Trust account activity ledger (4) Sep 1. */
+    /* 2026 YTD revenue — Jan–Aug Trust activity · Sep* MTD Sep 1. */
     cashCollected2026Ytd: [
       { month: "Jan", credit: 57925, newCases: 12 },
       { month: "Feb", credit: 83950, newCases: 14 },
@@ -696,26 +716,29 @@
       { month: "May", credit: 92140, newCases: 22 },
       { month: "Jun", credit: 103485, newCases: 36 },
       { month: "Jul", credit: 108350, newCases: 35 },
-      { month: "Aug*", credit: 104545, newCases: 19 }
+      { month: "Aug", credit: 104545, newCases: 19 },
+      { month: "Sep*", credit: 5500, newCases: 0 }
     ],
     cashCollectedTotals: {
       total2025: 945436,
-      total2026ToDate: 700921,
+      total2026ToDate: 706421,
       allCredits: 1601857,
       contractedMean: 5662,
       yearLabel: "2025",
       asOf: "2026-09-01",
-      augDaysElapsed: 31,
-      augDaysInMonth: 31,
+      partialMonthKey: "Sep",
+      partialDaysElapsed: 1,
+      partialDaysInMonth: 30,
       cashGoalMonthly: 100000,
-      rangeNote: "Jan–Jul ledger (2) Credits · Aug $104,545 Trust account activity → ledger_account_activity_report (4) · cases Contact_09-01"
+      rangeNote: "Jan–Aug Trust activity Credits · Sep* $5,500 MTD Sep 1 · cases Contact_09-01"
     },
     /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) */
     lsaEfficiency: [
       { month: "May", leads: 72, charged: 27, notCharged: 45, lsaSpend: 11006 },
       { month: "Jun", leads: 83, charged: 39, notCharged: 44, lsaSpend: 13206 },
       { month: "Jul", leads: 132, charged: 52, notCharged: 79, lsaSpend: 14556 },
-      { month: "Aug*", leads: 61, charged: 19, notCharged: 41, lsaSpend: 6286 }
+      { month: "Aug", leads: 61, charged: 19, notCharged: 41, lsaSpend: 6286 },
+      { month: "Sep*", leads: null, charged: null, notCharged: null, lsaSpend: null }
     ],
     lsaChargeRateOverall: { charged: 137, leads: 348, pct: 39.4 },
     /* NEW-E — Payment Method = Trust applications (ledger) + Client trust balance snapshot */
@@ -827,9 +850,8 @@
     const ch = findChannelMonthRow(key);
     const cls = findCasesLeadsSpendRow(key);
     const partial = !!(ch && /\*/.test(String(ch.month || "")))
-      || !!(cls && /\*/.test(String(cls.month || "")))
-      || key === "Aug";
-    const names = { Jun: "June", Jul: "July", Aug: "August", May: "May" };
+      || !!(cls && /\*/.test(String(cls.month || "")));
+    const names = { Jun: "June", Jul: "July", Aug: "August", Sep: "September", May: "May" };
     const short = names[key] || key || "";
     const label = `${short}${partial ? "*" : ""}`;
     return { key, ch, cls, partial, short, label, full: `${label} 2026` };
@@ -1221,7 +1243,7 @@
    * Jun/Jul = proof months. Aug MTD with Search ads paused unpaid — not a positive quiet read.
    */
   function applyTileMonth(period) {
-    const label = PERIOD_OPTIONS.includes(period) ? period : "August 2026";
+    const label = PERIOD_OPTIONS.includes(period) ? period : "September 2026";
     DATA.period = label;
     DATA.updateLabel = label;
     const key = periodToChannelMonth(label);
@@ -1233,7 +1255,7 @@
     const priorLeads = channelLeadTotal(prior);
     const casesVal = cls && cls.cases != null ? Number(cls.cases) : null;
     const priorCases = priorCls && priorCls.cases != null ? Number(priorCls.cases) : null;
-    const isAug = key === "Aug";
+    const isTileMonth = key === periodToChannelMonth(DATA.period);
     const isPartial = !!(ch && /\*/.test(String(ch.month || ""))) || !!(cls && /\*/.test(String(cls.month || "")));
 
     const phone = (DATA.phoneByMonth && DATA.phoneByMonth[key]) || null;
@@ -1259,7 +1281,7 @@
       if (k19) {
         k19.value = `$${monthlyLost.toLocaleString("en-US")}/mo`;
         k19.verified = true;
-        k19.augUpdated = isAug;
+        k19.augUpdated = isTileMonth;
         k19.alert = phone.missed > 0;
       }
       const k21 = (DATA.kpis || []).find(item => item.id === "#21");
@@ -1269,6 +1291,22 @@
         k21.verified = true;
         k21.hit = phone.answeredPct >= (pi.targetPct || 90);
         k21.alert = !k21.hit;
+      }
+    } else {
+      const k19 = (DATA.kpis || []).find(item => item.id === "#19");
+      if (k19) {
+        k19.value = "—";
+        k19.verified = false;
+        k19.alert = false;
+        k19.augUpdated = false;
+      }
+      const k21 = (DATA.kpis || []).find(item => item.id === "#21");
+      if (k21) {
+        k21.value = "—";
+        k21.mom = null;
+        k21.verified = false;
+        k21.hit = false;
+        k21.alert = false;
       }
     }
 
@@ -1281,20 +1319,22 @@
         leads.verified = false;
         leads.hit = false;
         leads.alert = true;
-        leads.cashGoalNote = isAug ? "Aug*" : "stack missing";
-        leads.augUpdated = isAug;
+        leads.cashGoalNote = key === "Sep" ? "Sep* · stack pending" : "stack missing";
+        leads.augUpdated = isTileMonth;
       } else {
         leads.value = String(leadsTotal);
         leads.count = leadsTotal;
-        leads.mom = null;
+        leads.mom = priorLeads != null ? momPct(leadsTotal, priorLeads) : null;
         const leadTarget = Number(String(leads.target || "").replace(/[^0-9.]/g, ""));
         leads.hit = Number.isFinite(leadTarget) ? leadsTotal >= leadTarget : false;
         leads.alert = !leads.hit;
         leads.gauge = true;
-        leads.augUpdated = isAug;
+        leads.augUpdated = isTileMonth;
         leads.verified = true;
-        if (isAug) {
-          leads.cashGoalNote = "Aug*";
+        if (key === "Sep") {
+          leads.cashGoalNote = "Sep*";
+        } else if (key === "Aug") {
+          leads.cashGoalNote = "Aug full month";
         } else if (key === "Jul") {
           leads.cashGoalNote = "Jul stack · HubSpot through Jul 16";
         } else {
@@ -1313,14 +1353,14 @@
         cases.trackOn = false;
         cases.verified = false;
         cases.hit = false;
-        cases.alert = isAug ? false : true;
+        cases.alert = isPartial ? false : true;
         cases.gauge = false;
         cases.augUpdated = false;
-        cases.cashGoalNote = isAug ? "Aug Created dates pending" : "cases missing";
+        cases.cashGoalNote = key === "Sep" ? "Sep Created through export" : "cases missing";
       } else {
         cases.value = String(casesVal);
         cases.count = casesVal;
-        cases.mom = null;
+        cases.mom = priorCases != null ? momPct(casesVal, priorCases) : null;
         const caseTarget = Number(String(cases.target || "").replace(/[^0-9.]/g, ""));
         const cash = cashMonthPaceModel();
         const cashBehind = !!(cash && !cash.onPace);
@@ -1331,7 +1371,7 @@
         cases.verified = true;
         cases.alert = !!(cashBehind || fullMonthShort);
         cases.gauge = true;
-        cases.augUpdated = isAug;
+        cases.augUpdated = isTileMonth;
         cases.cashGoalNote = isPartial ? `${cls.month} Created through export` : `${key} Created`;
       }
     }
@@ -1418,11 +1458,12 @@
     if (key === "May") return "May 2026 · Search+LSA stack · verified";
     if (key === "Jun") return "June 2026 complete stack · verified";
     if (key === "Jul") return "July 2026 · Search+LSA full · HubSpot 4 · verified";
-    return "August 2026 MTD · ads paused · HubSpot forms 0 · Search Call details through Aug 14 · LSA through Aug 21 · cases through Aug 24";
+    if (key === "Aug") return "August 2026 full month · revenue $104,545 · 19 cases · ads paused";
+    return "September 2026 MTD · Sep 1 · revenue $5,500 · 0 cases Created · Search/LSA/HubSpot pull pending";
   }
 
   function reportPeriodPillsHtml() {
-    const active = DATA.period || "August 2026";
+    const active = DATA.period || "September 2026";
     const buttons = PERIOD_OPTIONS.map(label => {
       const on = label === active;
       const ready = periodTileReady(label);
@@ -1476,20 +1517,20 @@
   }
 
   function outdatedMark() {
-    return `<span class="kpi-outdated-mark" title="Not yet updated for August" aria-label="Outdated"><span class="kpi-outdated-label">Outdated</span></span>`;
+    return `<span class="kpi-outdated-mark" title="Source not updated for this month" aria-label="Outdated"><span class="kpi-outdated-label">Outdated</span></span>`;
   }
 
   function periodFreshClass(updated, verified) {
     if (verified) return " kpi-verified kpi-aug-updated";
     const key = periodToChannelMonth(DATA.period);
-    if (key !== "Aug") return "";
+    if (key !== "Aug" && key !== "Sep") return "";
     return updated ? " kpi-aug-updated" : " kpi-outdated";
   }
 
   function periodFreshMark(updated, verified) {
     if (verified) return statusCorner(true);
     const key = periodToChannelMonth(DATA.period);
-    if (key !== "Aug") return "";
+    if (key !== "Aug" && key !== "Sep") return "";
     return updated ? augUpdatedMark() : outdatedMark();
   }
 
@@ -2570,8 +2611,14 @@
     }
     const current = rows.find(r => /\*/.test(r.month || ""));
     const totals = DATA.cashCollectedTotals || {};
-    const daysElapsed = Number(totals.augDaysElapsed) || 12;
-    const daysInMonth = Number(totals.augDaysInMonth) || 31;
+    const partialKey = String(totals.partialMonthKey || "").replace(/\*$/, "");
+    const tileKey = periodToChannelMonth(DATA.period);
+    const daysElapsed = partialKey && tileKey === partialKey
+      ? Number(totals.partialDaysElapsed) || 1
+      : Number(totals.augDaysElapsed) || Number(totals.partialDaysElapsed) || 12;
+    const daysInMonth = partialKey && tileKey === partialKey
+      ? Number(totals.partialDaysInMonth) || daysInCalendarMonth(partialKey)
+      : Number(totals.augDaysInMonth) || Number(totals.partialDaysInMonth) || 31;
     const currentPace = current
       ? {
           collected: Number(current.credit) || 0,
@@ -2703,7 +2750,7 @@
       <text x="${(singleYear === 2026 ? pad.l : dividerX) + 8}" y="${goalY - 8}" text-anchor="start" class="kpi-chart-total" style="fill:#3a1a6e">$${Math.round(cashGoal / 1000)}k goal</text>`
       : "";
     const ariaYear = singleYear ? String(singleYear) : "2025 through Aug* 2026";
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cash collected by month — ${ariaYear}">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Monthly revenue by month — ${ariaYear}">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}
       ${yearTitle}
@@ -2850,8 +2897,8 @@
     ]);
     if (partial) {
       body.push([
-        "2026 Aug*",
-        "MTD through Aug 24",
+        `2026 ${String(partial.month || "Sep*").replace(/\*$/, "")}*`,
+        "MTD through export",
         String(partial.newCases),
         "—",
         "—",
@@ -2875,12 +2922,12 @@
       ? [
           [`${pace.monthDisplay} collected`, fmtCashTier(pace.credit), "—", "—"],
           [`${pace.monthDisplay} projected`, fmtMoney(pace.projected), "—", "—"],
-          ["Monthly cash goal", fmtMoney(pace.target), "—", "—"]
+          ["Monthly revenue goal", fmtMoney(pace.target), "—", "—"]
         ]
       : [];
     const ytdRow = show2026Extras
       ? [[
-          `2026 to date through Aug* ${Number((DATA.cashCollectedTotals || {}).augDaysElapsed) || 24}`,
+          `2026 to date through ${pace ? pace.monthDisplay : "Sep*"} ${Number((DATA.cashCollectedTotals || {}).partialDaysElapsed) || 1}`,
           fmtCashTier(DATA.cashCollectedTotals.total2026ToDate),
           "—",
           "—"
@@ -2889,7 +2936,7 @@
     return kpiDetailAccordion(
       "Cash table",
       `${rows.length} months · CY ${label}`,
-      ["Month", "Cash collected", "New cases", "Cash / new case"],
+      ["Month", "Revenue", "New cases", "Revenue / new case"],
       [
         ...newestFirst(rows).map(r => {
           const per = r.newCases ? r.credit / r.newCases : null;
@@ -3053,7 +3100,7 @@
 
   function cashCollectedYearToggleHtml() {
     const y = Number(cashCollectedViewYear) === 2025 ? 2025 : 2026;
-    return `<div class="kpi-report-pills kpi-cash-year-pills" role="group" aria-label="Cash collected year">
+    return `<div class="kpi-report-pills kpi-cash-year-pills" role="group" aria-label="Monthly revenue year">
       <button type="button" class="kpi-report-pill${y === 2026 ? " is-active" : ""}" data-cash-year="2026" aria-pressed="${y === 2026 ? "true" : "false"}">2026</button>
       <button type="button" class="kpi-report-pill${y === 2025 ? " is-active" : ""}" data-cash-year="2025" aria-pressed="${y === 2025 ? "true" : "false"}">2025</button>
     </div>`;
@@ -3085,11 +3132,11 @@
     return `<section class="${sectionClass}" data-feedback-id="section-finances" data-feedback-label="Finances">
       ${cashFresh ? statusCorner(true) : outdatedMark()}
       ${kpiHelpBtn("cash-collected")}
-      ${kpiSectionStaticHead("Finances", ledgerHint ? `Ledger through ${ledgerHint}` : "Cash collected by month")}
+      ${kpiSectionStaticHead("Finances", ledgerHint ? `Trust activity through ${ledgerHint}` : "Monthly revenue")}
       <div class="kpi-section-body">
         ${cashCollectedYearToggleHtml()}
         ${chartBlock({
-          title: year === 2026 ? "Cash collected · 2026 YTD" : "Cash collected · 2025",
+          title: year === 2026 ? "Monthly revenue · 2026 YTD" : "Monthly revenue · 2025",
           chart: cashCollectedChart(chartRows),
           legend: `<ul class="kpi-stack-legend" aria-label="Cash chart marks">
             <li><span class="kpi-stack-swatch" style="background:#5c4f45" aria-hidden="true"></span><span>Collected</span></li>
@@ -3707,10 +3754,10 @@
       || rows[rows.length - 1];
     if (!row) return null;
     const credit = Number(row.credit) || 0;
-    const isPartial = /\*/.test(String(row.month || "")) || meta.key === "Aug";
+    const isPartial = /\*/.test(String(row.month || ""));
     const daysInMonth = daysInCalendarMonth(meta.key);
     const daysElapsed = isPartial
-      ? Number(totals.augDaysElapsed) || 12
+      ? Number(totals.partialDaysElapsed) || 1
       : daysInMonth;
     const expectedToDate = target * (daysElapsed / daysInMonth);
     const projected = isPartial
@@ -3742,8 +3789,8 @@
       arrow: onPace ? "↑" : "↓",
       label: onPace ? `Ahead ${fmtMoney(gap)}` : `Behind ${fmtMoney(gap)}`,
       detail: isPartial
-        ? `Through day ${daysElapsed} of ${daysInMonth}: expected ${fmtMoney(expectedToDate)} for an ${fmtMoney(target)} month · collected ${fmtMoney(credit)} · projected ${fmtMoney(projected)}`
-        : `${monthLabel} full month vs ${fmtMoney(target)} target · collected ${fmtMoney(credit)}`
+        ? `Through day ${daysElapsed} of ${daysInMonth}: expected ${fmtMoney(expectedToDate)} for an ${fmtMoney(target)} month · revenue ${fmtMoney(credit)} · projected ${fmtMoney(projected)}`
+        : `${monthLabel} full month vs ${fmtMoney(target)} target · revenue ${fmtMoney(credit)}`
     };
   }
 
@@ -3763,18 +3810,18 @@
     const paceCell = `${m.pacePct}% <span class="kpi-mom-change ${m.cls}" title="${escapeHtml(m.detail)}">${m.arrow} ${escapeHtml(m.label)}</span>`;
     const freshClass = cashFresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
     const freshMark = cashFresh ? statusCorner(true) : outdatedMark();
-    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${freshClass}" data-kpi-focus="cash-pace" aria-label="Cash collected ${fmtMoney(m.credit)} of ${fmtMoney(m.target)} · forecast ${fmtMoney(m.projected)} · ${m.label} · ${m.monthDisplay} · ledger ${cashLedgerAsOf() || "stale"}">
+    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${freshClass}" data-kpi-focus="cash-pace" aria-label="Revenue ${fmtMoney(m.credit)} of ${fmtMoney(m.target)} · forecast ${fmtMoney(m.projected)} · ${m.label} · ${m.monthDisplay} · Trust activity ${cashLedgerAsOf() || "stale"}">
       ${freshMark}
       ${kpiHelpBtn("cash-pace")}
       <div class="kpi-goal-visual">
-        ${kpiCardTitle("Cashflow")}
+        ${kpiCardTitle("Revenue")}
         ${metricWithDeltaHtml(gauge, null)}
       </div>
       ${goalTrackRows([
         ["Pace", paceCell],
         ["Projected", `${fmtMoney(m.projected)} / ${fmtMoney(m.target)}`]
       ])}
-      ${hit ? '<span class="kpi-target-hit">On track for $100k</span>' : ""}
+      ${hit ? '<span class="kpi-target-hit">On track for $100k revenue</span>' : ""}
       ${kpiRefMark("#09")}
     </button>`;
   }
