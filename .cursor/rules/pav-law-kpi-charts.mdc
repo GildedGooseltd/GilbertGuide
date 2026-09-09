@@ -1,67 +1,53 @@
 ---
-description: Pav Law KPI charts — unique series colors, legend, detail table under every graph
+description: Pav Law KPI charts — 2-column grid, series colors, legend, detail table under every graph
 globs: gilded-goose/clients/pav-law/project-picker/**/{kpi-report.js,metrics.css,metrics.html,index.html,BRANDING-LAYOUT.md,REPORTING-BRAND-GUIDE.md}
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Pav Law KPI charts
 
-Align to [`BRANDING-LAYOUT.md`](../gilded-goose/clients/pav-law/project-picker/BRANDING-LAYOUT.md) and [`REPORTING-BRAND-GUIDE.md`](../gilded-goose/clients/pav-law/project-picker/REPORTING-BRAND-GUIDE.md) first — see [`pav-law-branding.mdc`](pav-law-branding.mdc).
+Align to [`BRANDING-LAYOUT.md`](gilded-goose/clients/pav-law/project-picker/BRANDING-LAYOUT.md) and [`REPORTING-BRAND-GUIDE.md`](gilded-goose/clients/pav-law/project-picker/REPORTING-BRAND-GUIDE.md) first — see [`pav-law-branding.mdc`](pav-law-branding.mdc).
 
-When adding or editing charts in the Gilbert Guide KPIs view (`kpi-report.js`):
+When adding or editing charts in Gilbert Guide (`kpi-report.js`) on **any** tab:
 
-## Required structure
+## Locked layout
 
-1. **Use `chartBlock()`** (or the same HTML shape) for every graph card:
+1. **2 columns side by side** — wrap chart cards in `chartPairGridHtml(...)` → `.data-chart-table-grid`. Never publish a lone full-width graph when the section can hold a pair.
+2. **Each card** uses `chartBlock()`:
    - required title only in `.kpi-chart-head` — no subtitle, no period/source subhead
-   - plot (SVG or placeholder)
+   - plot
    - color legend when there are 2+ series
-   - **detail table always visible below the graph** — never hide behind “Show table” alone
-2. **Stacked / multi-series bars** — unique, high-contrast series colors (do not use two similar purples next to each other). **No teal/cyan.** Locked palette (GGL):
-   - Cases / Military / primary → `#3a1a6e` (royal / `--gg-series-1`)
-   - Digital / Search / Core DV → `#c45c26` (burnt orange / `--gg-series-2`)
-   - Website / HubSpot / NTGUILT / referral → `#b23a78` (rose / `--gg-series-3`)
-   - Neutral / unavailable → `#64748b` (slate / `--gg-series-4`)
-   - LSA / intake → `#1e3a8a` (royal blue / `--gg-royal-blue`)
-   - Spend / cost → `#6a5acd` (plum / `--gg-plum`)
-   - **Gold is never an ordinary chart category.** Reserve it for a rare critical CTA or milestone outside the plot.
-3. **Normal chart formatting** — labeled axes/ticks, plot background (`--gg-chart-plot` light yellow), baseline, totals above columns (not colliding with y-axis labels or the spend/cash line), month/category labels under bars, explicit legend with swatches.
-   - **Month ordering:** charts always run **oldest → newest, left to right**, so the most recent month is the rightmost bar. Detail-table month rows run current → oldest. Do not reverse chart arrays when reversing table rows.
-   - **Forecast periods:** append to the right of the last actual month, divided by a dashed rule, drawn at reduced opacity.
-   - **Y-scale headroom:** top of scale must be **at least one integer above** the highest data point. Use `chartAxisMax()` / `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js. Financial Breakdown is locked to 300 contacts and $40k spend while every plotted value remains below those tops. Never clip values to preserve a locked top.
-   - **casesLeadsSpend `leads`:** already the channel stack total. Do not add `adsLeads` / `websiteLeads` on top via `incomingTotal` — that double-counts and blows the scale.
-   - **Goal-tile chart box:** target-bar charts inside a `.kpi-goal-card` all share one box — viewBox **320 × 210**, pad `l 36 · r 10 · t 18 · b 28`, bar width up to **88**. Auto Cases is the reference tile. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` so no goal tile falls back to the smaller compact default.
-   - **Stacked bar outlines:** one royal-deep stroke only — never white/paper hairlines between segments.
-   - **Value labels:** `--gg-brown` (`#3d3028`) or `#111` only. Never white / `#fff` / `#ffffff`. Sit counts outside the bar fill, above or beside the bar. Short goal-tile bars must not hide the number inside the fill.
-4. **Positive counts** never red/magenta. Red only for negative MoM / negative metric values. Green only means positive/verified/target reached; target-hit gauges finish green, not gold.
-5. Keep `BRANDING-LAYOUT.md` chart notes in sync when palette or chart conventions change.
+   - **detail / breakdown table always visible below the graph** — never hide behind “Show table”
+3. Odd leftover charts sit in the left cell of the next 2-col row. Do not stretch one chart across both columns to “fill space.”
+4. KPI goal tiles and Financial Breakdown text tiles are not chart cards — this lock is for `chartBlock` graphs only.
 
-## Standardized KPI tile chrome
+## Series colors
 
-- `.kpi-stat-card` and `.kpi-goal-card` keep their standard component border and surface in every status.
-- Never add yellow, red, or green status borders, left rules, backgrounds, or washes to KPI tiles.
-- Communicate status with written text, value color, and one corner check or red ✕.
-- Light yellow `--gg-chart-plot` remains required inside graph plots; it is not a tile highlight.
+Unique, high-contrast series colors. **No teal/cyan.** Locked palette:
 
-## Section subheads
+- Cases / Military / primary → `#3a1a6e` (royal / `--gg-series-1`)
+- Digital / Search / Core DV → `#c45c26` (burnt orange / `--gg-series-2`)
+- Website / HubSpot / NTGUILT / referral → `#b23a78` (rose / `--gg-series-3`)
+- Neutral / unavailable → `#64748b` (slate / `--gg-series-4`)
+- LSA / intake → `#1e3a8a` (royal blue / `--gg-royal-blue`)
+- Spend / cost → `#6a5acd` (plum / `--gg-plum`)
+- **Gold is never an ordinary chart category.**
 
-`kpiSectionStaticHead` hint text is a short description of the section only. Never live counts, spend, or month totals. Put numbers on tiles, charts, and tables.
+## Formatting
 
-## Half-moon gauges
-
-- Put the numeric value only at the inside base of the arc.
-- Do not render descriptive text or target captions inside or beneath the gauge.
-- Keep both endpoint scale labels black (`#111`) in every state.
-- Goal marks are unlabeled ticks; adjacent title/stat copy explains the goal.
+- Labeled axes/ticks, plot background (`--gg-chart-plot`), baseline, totals above columns, month labels under bars.
+- **Month ordering:** charts oldest → newest left to right. Detail-table month rows current → oldest.
+- **Y-scale headroom:** top of scale ≥ one integer above highest data point. Use `chartAxisMax()` / `axisMaxAboveData()` / `niceAxisMax()`.
+- **Value labels:** `--gg-brown` or `#111` only. Never white on bars.
+- Positive counts never red. Red only for negative MoM / negative values.
 
 ## Detail tables
 
-- Include May/Jun (or period) columns, deltas, MoM, and spend/share when the data exists.
-- Month rows display current month first. Charts keep oldest → newest order.
-- Swatch + series name in the first column when the chart is multi-color.
+- Include period columns, deltas, MoM, and spend/share when the data exists.
+- Swatch + series name in the first column when multi-color.
 - Totals row when summing adds clarity.
 
 ## Channel classification
 
-- **#17 Referrals** — people/partner referral paths only (past-client, friend/family, attorney cross-referral, directory referral programs). **Do not** list Google Business Profile as a referral — GBP is a **lead** source.
-- GBP may still appear under **#16 Reviews** (review presence), not under referrals.
+- **#17 Referrals** — people/partner referral paths only. Do not list Google Business Profile as a referral.
+- GBP may appear under **#16 Reviews**, not under referrals.

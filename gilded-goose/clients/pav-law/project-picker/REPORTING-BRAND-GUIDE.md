@@ -158,7 +158,7 @@ One map only — filter tiles + Project Outlines ICONS share `.value-icon.icon-{
 
 ### Formatting rules
 
-- Keep the existing **KPIs / Project Guide / Impact** tabs and current tile grid.
+- Keep the existing **KPIs / Data / Guide** tabs and current tile grid.
 - Active tab = royal fill; inactive tabs remain paper with dark text.
 - KPI tile hierarchy: ID/label → large value → target/context → status.
 - Section heads: solid royal-deep background, white title, lavender hint, and burnt left rule. Do not use gradients or pale washes for KPI section headers.
@@ -195,7 +195,7 @@ Team Goals tiles use exactly three tracking rows. Each row is `3.25rem` high wit
 
 **Standardized tile chrome:** `.kpi-stat-card` and `.kpi-goal-card` keep their normal border and surface in every status. Classes such as `.kpi-stat-attention` may remain as data hooks, but must not add yellow, red, or green borders, left rules, backgrounds, or washes. Use written status, value color, and the single corner check or ✕.
 
-Section shape: each section opens with a tile row, then charts. KPIs holds Auto Cases, Cashflow, Leads Generated, New Cases, Yelp Reviews. Yelp Contacted Leads count and 20-lead goal live in the Leads Generated track table, not as a separate tile. Financial Breakdown holds Cost per Case, Avg Case Value, Missed Opportunity, then the chart grid — Sales Funnel, New cases contacts & spend, Cost per response. Tiles run 4 per row; chart blocks run 2 per row in `.data-chart-table-grid` and never join the tile row.
+Section shape: each section opens with a tile row, then charts. KPIs holds Auto Cases, Cashflow, Leads Generated, New Cases, Yelp Reviews, then Channel activity charts. Leads Generated track table breaks out Search · LSA · HubSpot for the tile month — not Yelp. Data tab opens with Financial Breakdown tiles — Cost per Case, Avg Case Value, Missed Opportunity — then paired chart rows. Tiles run 4 per row. **Charts always run 2 per row** in `.data-chart-table-grid` via `chartPairGridHtml()`, each with its detail table under the plot. Charts never join the tile row and never stretch full width alone when a pair is possible. Do not restore Data-tab **Leads by channel**, **Cases by month**, **Cases created · YTD**, or **Cases · 2025 vs 2026 same months** unless Kate asks.
 
 KPIs section tile grid: goal cards and metric tiles share one grid, `.kpi-tiles-4`, at 4 tiles per row. Tiles keep source order — Auto Cases, Cashflow, then the metric tiles — and wrap into a second row of 4. Below 1000px the same 4-up grid trims side gutters, drops goal-track rows to label over value, and steps titles down to 0.95rem so narrow columns never clip a value or break a word. It falls back to 2 columns under 560px and 1 under 380px.
 
@@ -214,7 +214,8 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Combo chart:** bars for volumes, line for money; separate left/right units.
 - **Donut:** maximum 4–5 segments; legend always present; exact share in the detail table.
 - **Practice-area bars:** one fixed color per practice area; never recolor by rank.
-- **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title })` — one clear title, no subtitle or period/source subhead. Section/panel titles are not a substitute. Then plot + detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the table or ? help.
+- **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title })` — one clear title, no subtitle or period/source subhead. Section/panel titles are not a substitute. Then plot + detail table under that plot. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the table or ? help.
+- **2-column lock:** every reporting graph row uses `.data-chart-table-grid` / `chartPairGridHtml()` — two chart cards side by side, each with its own breakdown table below the graph. Applies to KPIs, Data, Recommendations, and any future Guide tab. Do not leave orphan full-width charts when a pair belongs in the section.
 - **Plot area:** light yellow `--gg-chart-plot` (`#fff5ca`) behind every graph for series contrast; stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
 - **Chart border:** thin royal inner line plus aged-brass accent details; ornament must not compete with labels or data.
 - **Time axis direction:** every chart month or period axis reads **oldest → newest, left to right**, so the most recent period is the rightmost bar or point. Caption the direction as `oldest → newest`. Detail-table month rows use current month first. Chart order and table row order are intentionally different.
@@ -227,10 +228,11 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Target lines:** every plotted number below its applicable target or minimum line is red (`--gg-negative`); values on or above the line use ink `--gg-brown` (`#3d3028`) unless a series color is already required for a line. Keep the number visible so color is not the only signal.
 - **Chart number labels:** ink `--gg-brown` (`#3d3028`) or `#111` only. Never white, `#fff`, or `#ffffff`. Place counts outside the bar fill, above or beside the bar, on the plot field. Short goal-tile bars must not put the count inside the fill. Combo charts: sit count and spend labels above the series — never on the line.
 - **Goal-tile chart box:** every target-bar chart inside a `.kpi-goal-card` uses the same drawing box so tiles in one row read at the same scale — viewBox `320 × 210`, pad `l 36 · r 10 · t 18 · b 28`, bar width up to `88`. Auto Cases is the reference and any new goal tile matches it. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` rather than letting the compact defaults shrink one tile.
-- **Unverified tiles:** a tile whose method is still in question carries the red ✕ corner mark, `.kpi-unverified-mark`, instead of the green check, plus a written `Method not verified` status line and a note saying what is wrong. Do not grey the tile out — the number still renders. Avg Case Value holds this state while the collections basis is open. Cost per Case holds it too: the media stack is export-backed but installments still owed are not in the denominator. Missed Opportunity holds it as well: the missed-call counts are export-backed, but the 7.3% lead→case rate and $5,587 case value are estimates, so the dollar loss is directional. Do not restore a green check on any of the three without confirming the estimated inputs.
+- **Unverified method notes:** when a formula is directional only, say so in the tile note. Do not force a red freshness mark solely for method caveats if the export numbers are on file.
+- **Period freshness on Monthly KPIs and Data Financial Breakdown:** green check = period source on file and value filled (`0` counts). Red check = value is `—` or source missing. Do not use UPDATED / OUTDATED text badges. Never mark green when the value is `—`. Cost per Case / Avg Case Value turn green when their stack is hydrated. Missed Opportunity turns green only when Call details for the selected month are in `phoneByMonth`.
 - **One green check only:** each tile, panel, or section gets at most one `.kpi-verified-mark`. Never put a check on both a parent `.kpi-split-panel` / `.kpi-section` and a nested `.kpi-chart-card`. Nested chart-card checks inside a verified split panel are hidden in CSS. Do not restore a second check for “emphasis.”
 - **Text tiles:** Financial Breakdown tiles carry no mini chart. Cost per Case, Avg Case Value, and Missed Opportunity use title, period subhead, value, written status, one math line, then one note — `.kpi-stat-subhead` · `.kpi-stat-val` · `.kpi-stat-label` · `.kpi-stat-formula` · `.kpi-stat-note`. Missed Opportunity shows estimated money lost for month, quarter, and year, carries the red ✕ with `Method not verified` because its loss inputs are estimates, then a weekday / weekend missed-rate split in `.kpi-missed-split`, and closes with the method note for valuing uncharged LSA calls. No descriptive paragraph.
-- **Half-moon gauges:** show only the numeric value at the inside base of the arc. Do not place descriptive text or target captions inside or beneath the gauge; put that context in the adjacent title/stat block.
+- **Half-moon gauges:** show only the numeric value at the inside base of the arc. Do not place descriptive text or target captions inside or beneath the gauge; put that context in the adjacent title/stat block. In-progress arcs use the shared red → caution → positive gradient (`PROGRESS_GAUGE`). Do not use solid `--gg-positive` on Cashflow or any other half-moon until celebrate / target hit.
 - **Gauge scales:** both endpoint labels use the same black text (`#111`) regardless of progress or target state. A success state may recolor the arc and center value, never the scale.
 - **Gauge goal marks:** use an unlabeled tick. Explain the goal in the adjacent stats rather than on the gauge.
 
@@ -247,7 +249,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 | Cases MoM | Month · Closed · New cases · Red accounts · Total · MoM notes |
 | Key Channel Activity | Period · New cases · Direct contacts · Marketing spend · Channel · Responses · Cost / response. Cost per response includes LSA · LSA all answered · Digital · Website forms · Yelp. Spend column is not on the Cost per response table. |
 | Cases forecast | Month · Cases · Status |
-| Mean fee by practice area (#29) | Practice area · n · Mean fee |
+| Mean fee by practice area (#29) | Practice area · n · Mean fee · LOE |
 | Avg deposit | Measure · Amount |
 
 ### Lead channels & source
@@ -296,6 +298,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 
 - **Structure:** every chart card uses `chartBlock()` — plot + legend (2+ series) + detail table always visible below (not hidden behind "Show table").
 - **Zebra:** `.kpi-chart-table tbody tr:nth-child(even)` soft royal wash `rgba(45,20,84,0.035)`.
+- **Biggest opportunity row:** `.kpi-row-opportunity` stronger royal wash + 3px royal inset rule + written `Biggest opportunity` mark. Mark only after LOE is set · score = mean fee ÷ LOE · never fee pool alone. Never gold; never color alone.
 - **Headers:** `.kpi-table th` royal (`--gg-royal`), left‑aligned; numeric columns right‑aligned.
 - **Verification:** red **✕** = unverified; one green check = export‑backed. Never two checks on the same panel.
 - **Time order:** charts run oldest → newest. Table month rows run current → oldest. Totals rows stay pinned at the bottom.

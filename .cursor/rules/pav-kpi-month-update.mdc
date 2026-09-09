@@ -1,0 +1,49 @@
+---
+description: Updating Pav KPI dashboard for a named month
+alwaysApply: true
+---
+
+# Pav KPI month update
+
+When Kate says update the dashboard for a month:
+
+1. Set `DATA.period` to that month. Headline Key metrics tiles must match that period.
+2. Incomplete sources show as `—` or a partial count with the source named. Never leave the prior complete month’s numbers on the tiles while labeling the new month.
+3. Do not wait for a full Search + LSA + HubSpot + Contact stack before changing the period.
+4. Header, tab help, and `asOf` must not say the new month if tiles still show the old month.
+
+## Downloads / still-need lists
+
+Before saying a source is missing or incomplete:
+
+1. Re-scan `~/Downloads` by mtime this turn — every name variant for that export.
+2. Open the newest file and confirm the in-file date range and needed columns.
+3. LSA spend = newest `account_activities_YYYYMM*.csv` with Home Services rows for that month. Do not trust an older partial twin.
+4. Search Direct contacts / Sales Funnel Search leg = Phone calls from every Search campaign in a calendar Campaign report window, or Call details calendar count when that is the locked month source. Prefer Call details for answered/missed. Campaign All-time does not replace a month column for MoM spend.
+5. HubSpot tile input = form-submit exports, not CRM Contacts export.
+6. Yelp may be a screenshot with relative dates — convert from screenshot timestamp; no CSV required.
+
+**Never publish still-need / Content needed tables, Ads-suite extract notes, or Downloads recheck paragraphs on Guide KPIs or Data.** Gaps stay in chat and in [`PAID-MEDIA-STILL-NEED.md`](../../gilded-goose/clients/pav-law/project-picker/PAID-MEDIA-STILL-NEED.md) only. Keep Monthly KPIs simple.
+
+## Data freshness checkboxes · logic path
+
+Monthly KPI tiles show **only** a green or red corner checkbox. No UPDATED / OUTDATED text badges. No pull lists on the dash.
+
+| Mark | When |
+|---|---|
+| Green `.kpi-verified-mark` | Period source is on file **and** the tile value is filled. `0` is valid data. |
+| Red `.kpi-unverified-mark` | Period source is missing **or** value is `—`. |
+
+Agent steps every month update:
+
+1. Confirm the export for that tile + month exists and was opened this turn.
+2. Write the real number or `0` into the tile. Set `verified: true` and `augUpdated: true` only when that export backs the value.
+3. If the export is missing: set `value: "—"`, `verified: false`, `augUpdated: false`. The UI must show **red**.
+4. Never set `augUpdated: true` or `verified: true` when value is `—`.
+5. Render path: `periodFreshMark(augUpdated, verified, value)` / `tilePeriodFresh` in `kpi-report.js` — green only if `tileValuePresent(value) && (verified || augUpdated)`.
+
+Examples: Sep Leads with no Call details / LSA / HubSpot → `—` + red. Sep New Cases `0` from Contact_09-01 → green.
+
+Financial Breakdown on Data uses the same rule. Cost per Case and Avg Case Value go green when the Jun–Jul stack / ledger÷cases numbers are on file. Method caveats stay in the note text — they do not force a red mark. Missed Opportunity is green only when `phoneByMonth` has the selected month; otherwise `—` + red.
+
+See [`validate-before-claim.mdc`](validate-before-claim.mdc).
