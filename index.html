@@ -93,9 +93,9 @@
       --highlight-dim: var(--gg-royal-dim);
       --gradient-brand: linear-gradient(135deg, var(--gg-royal-deep) 0%, var(--gg-royal) 48%, var(--gg-royal-mid) 100%);
       --gradient-gold: linear-gradient(135deg, var(--gg-gold-dark) 0%, var(--gg-gold-bright) 100%);
-      /* Active cockpit tab — even gold→umber, no highlight sheen */
-      --gradient-tab-active: linear-gradient(135deg, var(--gg-gold) 0%, #c9893a 45%, var(--gg-burnt) 100%);
-      --gradient-tab-hover: linear-gradient(135deg, rgba(227, 197, 141, 0.35) 0%, rgba(196, 92, 38, 0.22) 100%);
+      /* Active cockpit tab — solid royal fill · gold reserved for approved CTAs only */
+      --gradient-tab-active: var(--gg-royal);
+      --gradient-tab-hover: rgba(45, 20, 84, 0.08);
       --radius: 12px;
       --font-min: 14px;
       --font-min-rem: 0.875rem;
@@ -1354,7 +1354,7 @@
     .kpi-aug-updated .kpi-help,
     .kpi-outdated .kpi-help,
     .kpi-verified .kpi-help {
-      right: 5.65rem;
+      right: 1.85rem;
     }
     .kpi-aug-updated-mark,
     .kpi-outdated-mark {
@@ -1513,37 +1513,37 @@
       font-weight: 800;
     }
     .cockpit-tabs .view-tab:hover {
-      border-color: var(--gg-burnt);
-      color: var(--gg-burnt-dark);
+      border-color: var(--gg-royal-mid);
+      color: var(--gg-royal-deep);
       background: var(--gradient-tab-hover);
     }
     .cockpit-tabs .view-tab.active {
-      background: var(--gradient-tab-active);
-      color: #1a0c04;
-      border-color: var(--gg-burnt-dark);
-      box-shadow: 0 1px 4px rgba(154, 63, 20, 0.18);
+      background: var(--gg-royal);
+      color: #fffcf7;
+      border-color: var(--gg-royal-deep);
+      box-shadow: 0 1px 4px rgba(45, 20, 84, 0.18);
       font-size: 1.38rem;
       font-weight: 900;
       letter-spacing: 0.01em;
     }
     .cockpit-tabs .view-tab.active:hover {
-      color: #1a0c04;
-      border-color: var(--gg-burnt-dark);
-      background: var(--gradient-tab-active);
+      color: #fffcf7;
+      border-color: var(--gg-royal-deep);
+      background: var(--gg-royal-deep);
     }
     .cockpit-tabs .view-tab .tab-count {
       display: inline-block; margin-left: 0.35rem; padding: 0.05rem 0.4rem; border-radius: 999px;
       font-size: var(--font-min-rem); background: rgba(255,255,255,0.2);
     }
     .cockpit-tabs .view-tab.active .tab-count {
-      background: rgba(26, 12, 4, 0.16);
-      color: #1a0c04;
+      background: rgba(255, 252, 247, 0.22);
+      color: #fffcf7;
     }
     .cockpit-tabs .view-tab:not(.active) .tab-count {
       background: var(--gg-royal-dim); color: var(--gg-royal-deep);
     }
     .cockpit-tabs .view-tab.active .tab-help {
-      color: rgba(26, 12, 4, 0.78);
+      color: rgba(255, 252, 247, 0.85);
     }
     .cockpit-tabs .view-tab.view-tab-wip {
       opacity: 0.55;
@@ -3208,6 +3208,30 @@
     .kpi-chart-table tbody tr:nth-child(even) {
       background: rgba(45, 20, 84, 0.035);
     }
+    .kpi-chart-table tbody tr.kpi-row-opportunity {
+      background: rgba(58, 26, 110, 0.1);
+      box-shadow: inset 3px 0 0 var(--gg-royal);
+    }
+    .kpi-chart-table tbody tr.kpi-row-opportunity td {
+      color: var(--gg-royal-deep);
+      font-weight: 600;
+    }
+    .kpi-opportunity-mark {
+      display: block;
+      margin-top: 0.12rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gg-royal);
+    }
+    .kpi-chart-opp-label {
+      fill: var(--gg-royal);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
     .kpi-subtable-title {
       font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
       color: var(--gg-brown); margin: 0.85rem 0 0.35rem;
@@ -3402,11 +3426,11 @@
       gap: 0.7rem;
       position: relative;
       margin-top: 0.45rem;
-      padding: 0.72rem 0;
-      border: none;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
+      padding: 0.72rem 0.85rem;
+      border: 1.5px solid #a67c2e;
+      border-radius: 8px;
+      background: var(--gg-paper);
+      box-shadow: inset 0 0 0 1px var(--gg-royal-border);
       text-align: left;
     }
     .kpi-related-projects::before,
@@ -5769,7 +5793,7 @@
   <script src="projects-data.js?v=20260811-retainer-3k"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
-  <script src="kpi-report.js?v=20260901-sep-reset"></script>
+  <script src="kpi-report.js?v=20260908-ch-open"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20260811-hide-results"></script>
 </body>

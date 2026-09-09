@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260901-sep-reset";
+  const RENDER_VER = "20260908-ch-open";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -14,24 +14,24 @@
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Call details + LSA inbox(3) + HubSpot form submits · Ad Reports/exports aggregates as-of-2026-08-24 · Yelp Contacted Leads screenshot 2026-08-12",
-      fields: "Jun 226 = 138 Search + 83 LSA + 5 forms · Jul 267 = 131 Search + 132 LSA + 4 forms · Aug* 86 = 25 Search through Aug 14 + 61 LSA through Aug 21 + 0 HubSpot forms · Yelp track table Jun 0 · Jul 5 · Aug* 2 of 20"
+      file: "STILL NEED Sep Call details + LSA leads-inbox + HubSpot form submits · last stack as-of-2026-08-24 · Yelp screenshot 2026-08-12 · Downloads recheck 2026-09-08",
+      fields: "Jun 226 · Jul 267 · Aug* 86 · Sep* pending · Campaign report (32) 2026-09-08 is All time; cannot fill Sep calendar leads"
     },
     "yelp": {
-      file: "yelp.com/biz/pav-law-colorado-springs live 2026-08-12 · Contacted Leads screenshot same day",
-      fields: "Reviews 4.6 · 7 · Tile month row: Jun — · Jul new 0 · Aug new 1 vs prior 6 · Messages last-30 7 · Aug calendar 2 · Jul calendar 5"
+      file: "STILL NEED Sep Yelp Contacted Leads screenshot · last live scrape 2026-08-12 · recheck 2026-09-08",
+      fields: "Reviews 4.6 · 7 · Aug calendar 2 · Jul calendar 5 · last-30 messages 7"
     },
     "#02": {
-      file: "Downloads/Contact_09-01-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-01/new-cases-by-month.csv",
-      fields: "Contact group=Client · Created date · Jun 36 · Jul 35 · Aug* 19 through 2026-09-01"
+      file: "Downloads/Contact_09-01-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-01/new-cases-by-month.csv · export 2026-09-01 · rechecked 2026-09-08",
+      fields: "Contact group=Client · Created date · Jun 36 · Jul 35 · Aug 19 · Sep* 0 through 2026-09-01 · no newer Contact in Downloads 2026-09-08"
     },
     "#07": {
-      file: "LSA inbox(3) · Call details · account_activities May–Aug",
-      fields: "LSA MoM + Search spend from account_activities · Jul LSA $14,555.67 · Aug* LSA $6,285.70"
+      file: "STILL NEED account_activities_202609* · last LSA activities 202608(3) mtime 2026-08-24 · recheck 2026-09-08",
+      fields: "LSA MoM + Search spend from account_activities · Jul LSA $14,555.67 · Aug* LSA $6,285.70 · Sep* pending"
     },
     "#08": {
-      file: "Campaign report (17) Jun 11 – Jul 10 · Call details May prior",
-      fields: "Campaign Cost ÷ Phone calls (Military · Core DV · NTGUILT)"
+      file: "Campaign report (32) All time 2026-09-08 · HS live Lifetime: Military $3,412 / 35 calls · DV $1,303 / 7 · NTGUILT $196 / 0 · shared $350 portfolio",
+      fields: "All-time HS unit cost only · not Sep calendar · Call details still required for MoM $/call"
     },
     "#10": {
       file: "Derived from #01 channel stack (Call details + LSA inbox)",
@@ -42,60 +42,72 @@
       fields: "Tile-month Search media + HubSpot forms fee ÷ Search calls + forms + Yelp messages · LSA ceiling from May–Aug Home Services $ ÷ inbox leads"
     },
     "#13": {
-      file: "LSA leads-inbox(3) · account_activities_202607(2) · account_activities_202608(3)",
-      fields: "May 72/27 · Jun 83/39 locked · Jul 132/52 · Aug* 61/19 · Jul LSA $14,555.67 · Aug* LSA $6,285.70"
+      file: "STILL NEED Sep LSA inbox + account_activities_202609* · last inbox(3) + 202608(3) mtime 2026-08-24 · recheck 2026-09-08",
+      fields: "May 72/27 · Jun 83/39 locked · Jul 132/52 · Aug* 61/19 · Jul LSA $14,555.67 · Aug* LSA $6,285.70 · Sep* pending"
     },
     "#16": {
       file: "Google Maps + Yelp public pages · scraped 2026-07-16 · 102 S Tejon St",
       fields: "GBP 4.9 · 121 reviews · Yelp 4.6 · 7 reviews · FindLaw 0 (no firm reviews)"
     },
     "#19": {
-      file: "Call details.csv Jun lock · Call details (1).csv Jul–Aug*",
-      fields: "Jun missed 38/138 · Jul missed 58/131 · Aug* missed 10/23 through Aug 6 · × 7.3% × $5,662"
+      file: "STILL NEED Sep Call details · last Call details (4) 2026-08-24 · Jun–Aug* on file · recheck 2026-09-08",
+      fields: "Jun missed 38/138 · Jul missed 58/131 · Aug* 12/25 · Sep* pending · × 7.3% × $5,662"
     },
     "#21": {
-      file: "Call details.csv · Call details (1).csv",
-      fields: "Jun answered 100/138 = 72% · Jul 73/131 = 56% · Aug* 13/23 = 57%"
+      file: "STILL NEED Sep Call details · last Call details (4) 2026-08-24 · recheck 2026-09-08",
+      fields: "Jun answered 100/138 = 72% · Jul 73/131 = 56% · Aug* 13/25 = 52% · Sep* pending"
     },
     "#28": {
-      file: "Ad Reports/exports/mycase/as-of-2026-09-01/fee-means-summary.csv · fee-means-by-practice.csv",
-      fields: "Client + fee mean $5,662 · n=138 · last updated 2026-09-01 · Contact_09-01-2026 aggregates only"
+      file: "Ad Reports/exports/mycase/as-of-2026-09-01/fee-means-summary.csv · fee-means-by-practice.csv · export 2026-09-01 · rechecked 2026-09-08",
+      fields: "Client + fee mean $5,662 · n=138 · Contact_09-01-2026 aggregates · no newer Contact fee export 2026-09-08"
     },
     "#30": {
       file: "casesLeadsSpend media + new cases · $3,000/mo digital management · $1,000/mo HubSpot from Jun · $1,500/mo Referral Sites",
       fields: "May–Jul complete · $60,331 media + $9,000 management + $2,000 HubSpot + $4,500 Referral Sites, all ÷ 93 cases = $815/case · known stack only · prior installments ≥$20k YTD not fully visible"
+    },
+    "#33": {
+      file: "Staging — PAV_HISTORICAL 9/124 in app.js · phoneIntake.leadToCaseRate in kpi-report.js · not a measured MoM join yet",
+      fields: "Placeholder 7.3% · replace with signed cases ÷ #01 leads on a defined window · channel split is #32"
     },
     "avg-case-value": {
       file: "ledger_account_activity_report (1).csv credits · MyCase new cases by Created month",
       fields: "Same complete months as #30 · ledger credits ÷ new cases created in those months · contracted mean fee from KPI #28 shown for comparison"
     },
     "#29": {
-      file: "Ad Reports/exports/mycase/as-of-2026-09-01/fee-means-by-practice.csv",
-      fields: "Client + fee · Case Type / practice · n≥5 means · last updated 2026-09-01"
+      file: "Ad Reports/exports/mycase/as-of-2026-09-01/fee-means-by-practice.csv · export 2026-09-01 · rechecked 2026-09-08",
+      fields: "Client + fee · Case Type / practice · n≥5 means · LOE pending feedback · last updated 2026-09-01"
     },
     "cash-pace": {
-      file: "MyCase Trust account activity → ledger_account_activity_report (4).csv · Jan–Aug from prior pulls",
-      fields: "Follows tile month · Sep* $5,500 MTD Sep 1 · Aug $104,545 full month · clears $100k goal"
+      file: "ledger_account_activity_report (4).csv export 2026-09-01 · rechecked 2026-09-08 · Credits Aug $104,545 · Sep* $5,500 · STILL NEED ledger after Sep 1 for Sep MTD pace",
+      fields: "Follows tile month · Sep* MTD locked to Sep 1 export · $100k monthly goal"
     },
     "cases-leads-spend": {
-      file: "Contact_09-01 aggregates · LSA inbox(3) · Call details · HubSpot Jul 16 · account_activities May–Aug (3)",
-      fields: "May–Aug* cases/leads/spend · tile month cost/channel · Aug* LSA $103/inbox · Search $400 NTGUILT only · HubSpot forms fee not plotted as a channel"
+      file: "Contact_09-01 · LSA inbox(3) · Call details (4) · account_activities May–Aug · STILL NEED Sep stack · recheck 2026-09-08",
+      fields: "May–Aug cases/leads/spend on file · Sep* cases 0 · leads/spend null"
     },
     "sales-cost-funnel": {
-      file: "channelMonths + casesLeadsSpend as-of-2026-08-24 · Jul Ads window Campaign Jun 11–Jul 10 · Aug no Campaign calendar",
-      fields: "Follows tile month · Aug* contacts 88 = 25 Search + 61 LSA + 0 forms + 2 Yelp · cases 19 · Search+LSA $6,686 · Impr/clicks — ads paused"
+      file: "Campaign report (35) Sep 1–8 · Phone calls all Search campaigns · channelMonths + casesLeadsSpend",
+      fields: "Sep* Impr 1,012 · Interactions 47 · Search Phone calls 17 · Search $2,636.90 · LSA/HubSpot/Yelp still pending"
     },
     "cash-collected": {
-      file: "ledger_account_activity_report (4).csv · ledger (2) Jan–Jul · mycase/as-of-2026-09-01/cash-credits-by-month.csv",
-      fields: "MyCase Trust account activity · Aug $104,545 revenue · Jul $108,350 · Jan–Jul from prior ledger pull"
+      file: "ledger_account_activity_report (4).csv · ledger (2) Jan–Jul · mycase/as-of-2026-09-01/cash-credits-by-month.csv · export 2026-09-01 · rechecked 2026-09-08",
+      fields: "Trust Credits · Aug $104,545 · Jul $108,350 · Sep* $5,500 MTD Sep 1"
     },
     "financial": {
-      file: "ledger_account_activity_report (4).csv · Contact_09-01-2026 new cases",
-      fields: "Trust Credits by month = client revenue collected · $100k monthly goal · Aug $104,545 full month · cases 19 through Sep 1"
+      file: "ledger_account_activity_report (4).csv · Contact_09-01-2026 · export 2026-09-01 · rechecked 2026-09-08",
+      fields: "Trust Credits · $100k goal · Aug $104,545 · Sep* cases 0 · Sep* revenue $5,500"
     },
     "cases-created": {
-      file: "mycase/as-of-2026-09-01/new-cases-by-month.csv · Contact_09-01-2026 aggregates",
+      file: "mycase/as-of-2026-09-01/new-cases-by-month.csv · Contact_09-01-2026 aggregates · export 2026-09-01 · rechecked 2026-09-08",
       fields: "Cases created by month · 2026 Jun 36 · Jul 35 · Aug* 19 through 2026-09-01"
+    },
+    "cases-yoy": {
+      file: "Contact_09-01-2026 · cashCollected 2025 newCases + cashCollected2026Ytd · Jan–Aug complete only",
+      fields: "YoY % = (2026 − 2025) ÷ 2025 for same calendar month · Sep* excluded until complete"
+    },
+    "roas-monthly": {
+      file: "Contact_09-01 cases × $4,346 collectible · Search + LSA from channelMonths / casesLeadsSpend · target 5×",
+      fields: "ROAS = est. collectible ÷ Search + LSA · paid-stack target 5× · watch below 4×"
     },
   };
 
@@ -143,8 +155,8 @@
     },
     "#08": {
       title: "#08 Leads by campaign",
-      desc: "Search call volume by campaign brand from Campaign report (17). Military · Core DV · NTGUILT. Guide projects: Retainer, NtguiltAd, AdEnhance, SocialAds.",
-      formula: "Campaign report phone calls by campaign (Military · Core DV · NTGUILT)."
+      desc: "MoM chart still uses prior Campaign day-range pulls. Sep 8 Campaign report (32) is All time only: live HS Lifetime Military $3,412 / 35 calls · DV $1,303 / 7 · NTGUILT $196 / 0 · shared $350 Maximize Conversions portfolio. Not a Sep calendar fill. Guide projects: Retainer, NtguiltAd, AdEnhance, SocialAds.",
+      formula: "Campaign report phone calls by campaign. Prefer calendar-month Campaign + Call details for tile month."
     },
     "#10": {
       title: "#10 Source mix",
@@ -176,6 +188,11 @@
       desc: "Firm-wide marketing cost to sign one new case. Not split by channel. Only complete months with a full lead stack — Aug* excluded. Cases = MyCase Created. Known stack = Search + LSA media + $3,000/mo digital management + $1,000/mo HubSpot forms fee from Jun onward + $1,500/mo Referral Sites. Total cost is higher: prior payments and subscriptions still in monthly installments are not fully visible. At least $20k this year is not paid off. Final amount unknown.",
       formula: "Cost per case = media + management + HubSpot + Referral Sites ÷ new cases. Known stack only. Does not include prior installment subscriptions."
     },
+    "#33": {
+      title: "#33 Lead → case %",
+      desc: "Staging. Share of leads that become signed cases. Live tile is archived until the measured formula is locked. Current 7.3% is the historical estimate used by #19 Missed Opportunity from PAV_HISTORICAL 9÷124 — not a verified monthly join. Do not treat as channel ROI; that is #32.",
+      formula: "Target method: new cases in window ÷ #01 leads in the same defined window. Placeholder until then: 9 ÷ 124 ≈ 7.3%."
+    },
     "avg-case-value": {
       title: "Avg case value — cash per new case",
       desc: "Method not verified — carries a red X. Collections are probably the wrong denominator for case value: cash in a month mixes payments on older cases with deposits on cases signed inside the window, so this divides one cohort of money by a different cohort of cases. Open question is whether the tile should move to contracted fee at signing, or to cash traced back to the case it belongs to. Contracted mean fee is the separate #28 figure. Until that is settled, read the number as directional only.",
@@ -183,8 +200,8 @@
     },
     "#29": {
       title: "#29 Mean fee by practice",
-      desc: "Mean contracted / quoted fee by practice area (Client + fee · n ≥ 5) from Contact_09-01-2026 aggregates · last updated 2026-09-01. Not cash collected.",
-      formula: "Contracted / quoted fees (mostly Pre-Trial Flat Fee) — not cash collected. Fees-collected export still missing."
+      desc: "Mean contracted / quoted fee by practice area (Client + fee · n ≥ 5) from Contact_09-01-2026 aggregates · last updated 2026-09-01. Not cash collected. LOE is level of effort for growing that practice — blank until feedback fills it. Biggest opportunity is not fee pool; it waits on LOE.",
+      formula: "Mean fee from contracted / quoted fees. Biggest opportunity = highest mean fee ÷ LOE once LOE is set. LOE blank = no opportunity mark."
     },
     "cases-leads-spend": {
       title: "#05 Key Channel Activity",
@@ -198,8 +215,8 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel — unit cost stack",
-      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Contacts = Search calls + HubSpot forms + LSA inbox + Yelp messages. August MTD: ads paused unpaid · no August Campaign Impr/Clicks on file · Search through Aug 6 · LSA through Aug 21 · cases through Aug 24 · cash ledger through Aug 24. July Impr/Clicks still use the Jun 11–Jul 10 Campaign window only — not July calendar. June Impr/Clicks not on file. Not channel ROI — volume and unit cost only.",
-      formula: "Cost/impression and cost/click = Search spend ÷ Ads volume when a Campaign window exists. Cost/direct contact = Search + LSA media + HubSpot fee if forms > 0 ÷ calls + forms + LSA + Yelp. Cost/signed case = Search + LSA media ÷ new cases."
+      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Direct contacts = Phone calls from every Search campaign in the Campaign report window + HubSpot forms + LSA inbox + Yelp messages. Prefer Call details for answered/missed splits; Campaign Phone calls fill Search when Call details for that month is not on file. September MTD: Campaign report (35) Sep 1–8 for Impr/Clicks/Phone calls. LSA/HubSpot/Yelp still pending. Not channel ROI — volume and unit cost only.",
+      formula: "Search calls = sum of Phone calls across all Search campaigns in the Campaign window, or Call details calendar count when that is the locked month source. Direct contacts = Search calls + HubSpot forms + LSA inbox + Yelp. Cost/impression and cost/click = Search spend ÷ Ads volume. Cost/direct contact = Search + LSA media + HubSpot fee if forms > 0 ÷ direct contacts. Cost/signed case = Search + LSA media ÷ new cases."
     },
     "financial": {
       title: "#09 Financials",
@@ -210,6 +227,16 @@
       title: "Cases Created",
       desc: "MyCase Client contacts by Created month — 2026 from Contact_09-01-2026 · Jun 36 · Jul 35 · Aug* 19 through 2026-09-01. Chart shows monthly bars plus a trend line per year. Table is year totals, average MoM change, and trend slope — not the same monthly counts.",
       formula: "Count of Client contacts with Created date in month. Trend = OLS on complete months. Avg MoM = mean of month-to-month percent change. Aug* MTD is not in trend or avg MoM."
+    },
+    "cases-yoy": {
+      title: "YoY % change · comparable months",
+      desc: "Same calendar month 2025 vs 2026 new cases on the Data tab under Cases created. Jun–Jul YoY % spikes from soft 2025 bases — read the count columns beside %. Do not average YoY % into one Key metrics tile without base-month labels.",
+      formula: "YoY % = (2026 cases − 2025 cases) ÷ 2025 cases × 100. Jan–Aug complete months only. Sep* held out until the month is complete."
+    },
+    "roas-monthly": {
+      title: "Return on marketing spend · monthly",
+      desc: "Est. collectible from new cases ÷ Search + LSA media. Collectible = cases × $4,346 from Contact_09-01 mix fee × 80%. Industry criminal-defense mature ROAS often ~3.5×–7×. Firm May–Jul paid stack ran 5.6×–7.3×. Guide target 5× when both Search and LSA run. Watch below 4×. Feb–Apr inflate when Search is $0.",
+      formula: "ROAS = (new cases × $4,346) ÷ (Search media + LSA media). Target line = 5× on paid-stack months."
     },
     "cash-collected": {
       title: "Monthly revenue",
@@ -386,10 +413,10 @@
   const DATA = {
     period: "September 2026",
     asOf: "2026-09-01",
-    lastUpdated: "2026-09-01",
+    lastUpdated: "2026-09-08",
     updateLabel: "September 2026",
-    updateScope: "Sep 1 MTD · MyCase Trust activity · Contact Created",
-    source: "MyCase Sep 1 · Contact_09-01-2026 · Sep revenue $5,500 MTD · Aug full month $104,545 · Paid media pending Sep pull",
+    updateScope: "Downloads recheck 2026-09-08 · MyCase still Sep 1 · paid media Sep calendar still pending",
+    source: "Recheck 2026-09-08 · Contact_09-01 + ledger (4) still newest MyCase · Sep revenue $5,500 MTD Sep 1 · Aug $104,545 · Ads Campaign (32) All time only · Sep Call details / LSA / HubSpot / Yelp still need",
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
       { id: "#01", label: "Leads Generated", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false },
@@ -402,6 +429,8 @@
       { id: "#28", label: "Avg case fee", value: "$5,662", target: "MyCase mean", mom: null, verified: true },
       /* #30 value hydrated by hydrateMarketingCostPerCaseKpi() after DATA + model exist */
       { id: "#30", label: "Cost per Case", value: "—", target: "", mom: null, verified: true },
+      /* staging — restore by removing archived: true · work doc parked/KPI-33-LEAD-TO-CASE.md */
+      { id: "#33", label: "Lead → case %", value: "7.3%", target: "Measure signed ÷ leads", mom: null, verified: false, archived: true },
       { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, letterGrade: true, archived: true }
     ],
     channels: [
@@ -456,42 +485,46 @@
       },
       {
         month: "Sep*",
-        search: null,
+        search: 17,
         lsa: null,
         hubspot: null,
         hubspotForms: null,
         yelp: null,
         yelpSpend: 0,
-        searchSpend: null,
+        searchSpend: 2636.9,
         lsaSpend: null,
-        note: "Sep pull pending — Search · LSA · HubSpot not on file Sep 1"
+        note: "Search = Campaign report (35) Phone calls Sep 1–8 · all Search campaigns · Military 17 · DV 0 · NTGUILT 0 · still need Sep Call details for answered/missed · LSA inbox · HubSpot forms · account_activities_202609"
       }
     ],
-    /** Search Campaign Impr/Clicks by tile month. Only Jul has a day-range export on disk. */
+    /** Search Campaign Impr/Clicks/Phone calls by tile month. */
     funnelAds: {
       Jun: {
         impressions: null,
         clicks: null,
+        phoneCalls: null,
         searchSpendLock: null,
         windowNote: "No June 1–30 Campaign with Impr. + Clicks on file"
       },
       Jul: {
         impressions: 15871,
         clicks: 640,
+        phoneCalls: null,
         searchSpendLock: 6277.36,
-        windowNote: "Campaign Jun 11–Jul 10 · not July calendar"
+        windowNote: "Campaign Jun 11–Jul 10 · not July calendar · Search calls from Call details"
       },
       Aug: {
         impressions: null,
         clicks: null,
+        phoneCalls: null,
         searchSpendLock: null,
         windowNote: "Search ads paused unpaid · no August Campaign calendar"
       },
       Sep: {
-        impressions: null,
-        clicks: null,
-        searchSpendLock: null,
-        windowNote: "September paid-media pull pending"
+        impressions: 1012,
+        clicks: 47,
+        phoneCalls: 17,
+        searchSpendLock: 2636.9,
+        windowNote: "Campaign report (35) Sep 1–8 · all Search campaigns · Phone calls 17 · Interactions as clicks"
       }
     },
     sourceMix: [
@@ -553,15 +586,16 @@
       collectionRate: 0.8,
       avgCaseFee: 5662
     },
-    /* KPI #29 support — Client + fee means · n≥5 · CLIENT-VALUE-BASELINE.md · as of 2026-09-01 */
+    /* KPI #29 support — Client + fee means · n≥5 · CLIENT-VALUE-BASELINE.md · as of 2026-09-01
+       loe = level of effort to grow that practice · null until feedback fills it · Low/Med/High or 1–5 */
     feeByPractice: [
-      { name: "Theft / Property", n: 10, mean: 8000 },
-      { name: "Sex Assault / Sex Offense", n: 9, mean: 7778 },
-      { name: "Assault / Menacing", n: 17, mean: 7721 },
-      { name: "Domestic Violence / DV", n: 35, mean: 5693 },
-      { name: "Criminal Defense (other)", n: 21, mean: 4471 },
-      { name: "Probation Revocation", n: 9, mean: 4056 },
-      { name: "DUI / DWAI / Traffic", n: 20, mean: 3600 }
+      { name: "Theft / Property", n: 10, mean: 8000, loe: null },
+      { name: "Sex Assault / Sex Offense", n: 9, mean: 7778, loe: null },
+      { name: "Assault / Menacing", n: 17, mean: 7721, loe: null },
+      { name: "Domestic Violence / DV", n: 35, mean: 5693, loe: null },
+      { name: "Criminal Defense (other)", n: 21, mean: 4471, loe: null },
+      { name: "Probation Revocation", n: 9, mean: 4056, loe: null },
+      { name: "DUI / DWAI / Traffic", n: 20, mean: 3600, loe: null }
     ],
     costPerCall: [
       { channel: "Direct contact (blended)", cost: "$65" },
@@ -644,7 +678,7 @@
       { month: "Jun", cases: 36, leads: 226, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
       { month: "Jul", cases: 35, leads: 267, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 4 },
       { month: "Aug", cases: 19, leads: 86, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 },
-      { month: "Sep*", cases: 0, leads: null, spend: null, lsaSpend: null, adsSpend: null, adsLeads: null, websiteLeads: null }
+      { month: "Sep*", cases: 0, leads: null, spend: null, lsaSpend: null, adsSpend: 2636.9, adsLeads: 17, websiteLeads: null }
     ],
     /**
      * Yelp Contacted Leads screenshot as-of 2026-08-12 2:26 PM — messages only.
@@ -730,7 +764,7 @@
       partialDaysElapsed: 1,
       partialDaysInMonth: 30,
       cashGoalMonthly: 100000,
-      rangeNote: "Jan–Aug Trust activity Credits · Sep* $5,500 MTD Sep 1 · cases Contact_09-01"
+      rangeNote: "Jan–Aug Trust activity Credits · Sep* $5,500 MTD Sep 1 · cases Contact_09-01 · rechecked 2026-09-08 no newer ledger"
     },
     /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) */
     lsaEfficiency: [
@@ -1320,7 +1354,8 @@
         leads.hit = false;
         leads.alert = true;
         leads.cashGoalNote = key === "Sep" ? "Sep* · stack pending" : "stack missing";
-        leads.augUpdated = isTileMonth;
+        /* Missing value → red freshness only. Never mark Updated when value is —. */
+        leads.augUpdated = false;
       } else {
         leads.value = String(leadsTotal);
         leads.count = leadsTotal;
@@ -1501,37 +1536,55 @@
     return "";
   }
 
-  /** Green checkbox when tile values were double-checked against exports. */
+  /**
+   * Data freshness corner marks — Monthly KPIs use these only.
+   * Green check = period source on file and value filled (0 is valid).
+   * Red check = period source missing or value is —.
+   * Never show UPDATED / OUTDATED text badges on tiles.
+   */
+  function tileValuePresent(value) {
+    const s = String(value == null ? "" : value).trim();
+    return s !== "" && s !== "—";
+  }
+
+  function tilePeriodFresh(updated, verified, value) {
+    return tileValuePresent(value) && !!(verified || updated);
+  }
+
+  /** Green checkbox when period data is on file. Pass false to omit the mark. */
   function statusCorner(ok) {
     if (!ok) return "";
-    return `<span class="kpi-verified-mark" title="Verified against export" aria-label="Verified"></span>`;
+    return freshMark();
   }
 
+  function freshMark() {
+    return `<span class="kpi-verified-mark" title="Period data on file" aria-label="Data on file"></span>`;
+  }
+
+  function staleMark() {
+    return `<span class="kpi-unverified-mark" title="Period data missing" aria-label="Data missing"></span>`;
+  }
+
+  /* Alias — same green checkbox, no text badge. */
   function augUpdatedMark() {
-    return `<span class="kpi-aug-updated-mark" title="August numbers updated" aria-label="August numbers updated"><span class="kpi-aug-check" aria-hidden="true"></span><span class="kpi-aug-updated-label">Updated</span></span>`;
+    return freshMark();
   }
 
-  /* Red X: the number renders but its method is still in question. Pair with a written label. */
+  /* Red check: method still open, or period source missing. Pair method issues with a written status line. */
   function unverifiedMark() {
-    return `<span class="kpi-unverified-mark" title="Method not verified" aria-label="Method not verified"></span>`;
+    return staleMark();
   }
 
   function outdatedMark() {
-    return `<span class="kpi-outdated-mark" title="Source not updated for this month" aria-label="Outdated"><span class="kpi-outdated-label">Outdated</span></span>`;
+    return staleMark();
   }
 
-  function periodFreshClass(updated, verified) {
-    if (verified) return " kpi-verified kpi-aug-updated";
-    const key = periodToChannelMonth(DATA.period);
-    if (key !== "Aug" && key !== "Sep") return "";
-    return updated ? " kpi-aug-updated" : " kpi-outdated";
+  function periodFreshClass(updated, verified, value) {
+    return tilePeriodFresh(updated, verified, value) ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
   }
 
-  function periodFreshMark(updated, verified) {
-    if (verified) return statusCorner(true);
-    const key = periodToChannelMonth(DATA.period);
-    if (key !== "Aug" && key !== "Sep") return "";
-    return updated ? augUpdatedMark() : outdatedMark();
+  function periodFreshMark(updated, verified, value) {
+    return tilePeriodFresh(updated, verified, value) ? freshMark() : staleMark();
   }
 
   function verifiedClass(verified) {
@@ -1585,11 +1638,12 @@
       : fmtMoney(n);
   }
 
-  function kpiDetailAccordion(title, hint, headers, rows) {
+  function kpiDetailAccordion(title, hint, headers, rows, startOpen) {
     const hintHtml = hint
       ? `<span class="kpi-table-acc-hint">${escapeHtml(hint)}</span>`
       : "";
-    return `<details class="kpi-table-acc">
+    const openAttr = startOpen ? " open" : "";
+    return `<details class="kpi-table-acc"${openAttr}>
       <summary class="kpi-table-acc-summary">${escapeHtml(title)}${hintHtml}</summary>
       <div class="kpi-chart-detail kpi-chart-detail-acc">
         <table class="kpi-table kpi-chart-table kpi-table-dense">
@@ -1896,8 +1950,20 @@
   }
 
   /**
+   * Locked chart layout for every Guide tab:
+   * 2-column grid of chart cards; each card = title · plot · optional legend · detail table below.
+   * Pass chartBlock() HTML only. Odd leftovers stay in the left cell of the next row.
+   */
+  function chartPairGridHtml(...blocks) {
+    const cells = blocks.filter(Boolean);
+    if (!cells.length) return "";
+    return `<div class="data-chart-table-grid">${cells.join("")}</div>`;
+  }
+
+  /**
    * Required chart card title — one line, no subhead.
    * Brand: REPORTING-BRAND-GUIDE §7 + BRANDING-LAYOUT chart pattern.
+   * Required: title · plot · detail table under the graph. Never a plot without a breakdown table.
    */
   function chartHeadHtml(title) {
     return `<div class="kpi-chart-title-large"><strong>${escapeHtml(title)}</strong></div>`;
@@ -1907,7 +1973,8 @@
     const headInner = opts.head || (opts.title ? chartHeadHtml(opts.title) : "");
     const head = headInner ? `<div class="kpi-chart-head">${headInner}</div>` : "";
     const legend = opts.legend || "";
-    const table = opts.table || "";
+    const table = opts.table
+      || `<div class="kpi-chart-detail"><p class="data-inline-note">Breakdown table pending.</p></div>`;
     const focus = opts.focus ? ` data-kpi-focus="${opts.focus}"` : "";
     const helpId = opts.helpId || opts.focus || "";
     const help = helpId ? kpiHelpBtn(helpId) : "";
@@ -2010,7 +2077,7 @@
     const leftY = v => pad.t + plotH * (1 - Math.max(0, Number(v) || 0) / leftMax);
     const rightY = v => pad.t + plotH * (1 - Math.max(0, Number(v) || 0) / rightMax);
     const slot = plotW / Math.max(rows.length, 1);
-    const colors = { cases: "#4f8a63", leads: "#1e3a8a", spend: "#6a5acd" };
+    const colors = { cases: "#3a1a6e", leads: "#1e3a8a", spend: "#6a5acd" };
     const barW = Math.min(48, slot * 0.28);
     const gap = 10;
     const leftTicks = axisTicks(leftMax, 5).map(t => {
@@ -2079,7 +2146,7 @@
 
   function casesLeadsSpendLegend() {
     const items = [
-      { name: "New cases", color: "#4f8a63" },
+      { name: "New cases", color: "#3a1a6e" },
       { name: "Direct Contacts", color: "#1e3a8a" },
       { name: "Marketing spend", color: "#6a5acd" }
     ];
@@ -2238,24 +2305,20 @@
   function casesLeadsSpendSectionHtml() {
     const rows = DATA.casesLeadsSpend || [];
     if (!rows.length) return "";
-    const pack = tileMonthCostPerResponsePack(rows);
     /* One green check on the panel — never also on nested chart cards. */
     return `<article class="kpi-split-panel data-chart-table-panel kpi-verified kpi-aug-updated" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Key Channel Activity">
       ${statusCorner(true)}
       ${kpiHelpBtn("cases-leads-spend")}
-      <div class="kpi-split-panel-body data-chart-table-grid">
-        ${salesCostFunnelChartBlockHtml()}
-        ${chartBlock({
-          title: "New cases, contacts & spend",
-          chart: dualAxisCasesSpendChart(rows),
-          legend: casesLeadsSpendLegend(),
-          table: `${casesLeadsSpendDetailTable(rows)}${sourceFootnote("cases-leads-spend")}`
-        })}
-        ${pack.channels.length ? chartBlock({
-          title: "Cost per response",
-          chart: costPerResponseChart(pack.channels),
-          table: costPerResponseDetailTable(rows)
-        }) : ""}
+      <div class="kpi-split-panel-body">
+        ${chartPairGridHtml(
+          salesCostFunnelChartBlockHtml(),
+          chartBlock({
+            title: "New cases, contacts & spend",
+            chart: dualAxisCasesSpendChart(rows),
+            legend: casesLeadsSpendLegend(),
+            table: `${casesLeadsSpendDetailTable(rows)}${sourceFootnote("cases-leads-spend")}`
+          })
+        )}
       </div>
       ${kpiRefMark("#05")}
     </article>`;
@@ -2317,19 +2380,22 @@
 
   /**
    * Sales Funnel — tapered volume bands + unit-cost accordion.
-   * Follows KPI tile month. Jul Impr/Clicks = Campaign Jun 11–Jul 10 only.
-   * Jun/Aug Impr/Clicks not on file. Contacts/cases/spend from channelMonths + casesLeadsSpend.
+   * Follows KPI tile month. Direct contacts Search leg = Phone calls from every
+   * Search campaign (funnelAds.phoneCalls or channelMonths.search). Plus forms + LSA + Yelp.
    * Brand colors only — no teal/cyan.
    */
   function salesCostFunnelWindowNote() {
     const meta = tileMonthMeta();
     if (meta.key === "Jul") {
-      return `${meta.full} · Impr/clicks Jun 11–Jul 10 · contacts & cases July calendar`;
+      return `${meta.full} · Impr/clicks Jun 11–Jul 10 · contacts July calendar`;
     }
     if (meta.key === "Aug") {
-      return `${meta.full} · ads paused · Impr/clicks not on file · contacts & cases MTD`;
+      return `${meta.full} · ads paused · Impr/clicks not on file · contacts MTD`;
     }
-    return `${meta.full} · Impr/clicks not on file · contacts & cases ${meta.short} calendar`;
+    if (meta.key === "Sep") {
+      return `${meta.full} · Campaign Sep 1–8 · Phone calls all Search campaigns · LSA/HubSpot/Yelp pending`;
+    }
+    return `${meta.full} · Impr/clicks when on file · contacts ${meta.short}`;
   }
 
   function salesCostFunnelStages() {
@@ -2340,13 +2406,24 @@
     const impressions = ads.impressions != null ? Number(ads.impressions) : null;
     const clicks = ads.clicks != null ? Number(ads.clicks) : null;
     const adsSpend = ads.searchSpendLock != null ? Number(ads.searchSpendLock) : null;
-    const search = Number(ch.search) || 0;
-    const forms = Number(ch.hubspotForms != null ? ch.hubspotForms : ch.hubspot) || 0;
-    const lsa = Number(ch.lsa) || 0;
-    const yelp = Number(ch.yelp) || 0;
-    const searchSpend = Number(ch.searchSpend) || 0;
+    /* Search direct calls: Campaign Phone calls for all Search campaigns when set, else channelMonths.search. */
+    const searchFromAds = ads.phoneCalls != null ? Number(ads.phoneCalls) : null;
+    const searchFromCh = ch.search != null ? Number(ch.search) : null;
+    const search = searchFromAds != null ? searchFromAds : (searchFromCh != null ? searchFromCh : 0);
+    const searchKnown = searchFromAds != null || searchFromCh != null;
+    const formsRaw = ch.hubspotForms != null ? ch.hubspotForms : ch.hubspot;
+    const forms = formsRaw != null ? Number(formsRaw) || 0 : 0;
+    const formsKnown = formsRaw != null;
+    const lsa = ch.lsa != null ? Number(ch.lsa) || 0 : 0;
+    const lsaKnown = ch.lsa != null;
+    const yelp = ch.yelp != null ? Number(ch.yelp) || 0 : 0;
+    const yelpKnown = ch.yelp != null;
+    const searchSpend = ch.searchSpend != null
+      ? Number(ch.searchSpend) || 0
+      : (adsSpend != null ? adsSpend : 0);
     const lsaSpend = Number(ch.lsaSpend) || 0;
     const formFee = forms > 0 ? Number(DATA.websiteHubspotMonthlyFromJun) || 0 : 0;
+    const directKnown = searchKnown || formsKnown || lsaKnown || yelpKnown;
     const direct = search + forms + lsa + yelp;
     const directSpend = searchSpend + lsaSpend + formFee;
     const cases = cls.cases != null ? Number(cls.cases) : null;
@@ -2359,7 +2436,7 @@
         maximumFractionDigits: digits
       });
     const adsBasis = ads.windowNote || `${meta.label} Search Ads · not on file`;
-    const contactBasis = `${meta.label} calls + forms + LSA + Yelp`;
+    const contactBasis = `${meta.label} Search Phone calls all campaigns + forms + LSA + Yelp`;
     const caseBasis = `${meta.label} Search + LSA media`;
     return [
       {
@@ -2388,10 +2465,10 @@
         key: "contacts",
         label: "Direct contacts",
         volume: direct,
-        volumeText: direct ? String(direct) : "—",
+        volumeText: directKnown ? String(direct) : "—",
         color: "#1e3a8a",
-        unitCost: direct && directSpend ? fmtMoney(directSpend / direct) : "—",
-        spend: directSpend ? fmtMoney(directSpend) : "—",
+        unitCost: directKnown && direct && directSpend ? fmtMoney(directSpend / direct) : "—",
+        spend: directKnown && directSpend ? fmtMoney(directSpend) : "—",
         spendBasis: contactBasis,
         conversion: "—"
       },
@@ -2404,7 +2481,7 @@
         unitCost: cases && media ? fmtMoney(media / cases) : "—",
         spend: media ? fmtMoney(media) : "—",
         spendBasis: caseBasis,
-        conversion: stepPct(cases, direct)
+        conversion: stepPct(cases, directKnown ? direct : null)
       }
     ];
   }
@@ -2412,12 +2489,13 @@
   function salesCostFunnelSvg(stages) {
     const n = stages.length;
     const labelCol = 176;
-    const chartW = 360;
+    const chartW = 300;
+    const valueCol = 72;
     const segH = 58;
     const gap = 8;
     const top = 8;
     const height = top + n * segH + (n - 1) * gap;
-    const width = labelCol + chartW + 16;
+    const width = labelCol + chartW + valueCol + 16;
     const cx = labelCol + chartW / 2;
     const topHalf = chartW / 2 - 4;
     const botHalf = 28;
@@ -2435,10 +2513,11 @@
         `${cx - half1},${y1}`
       ].join(" ");
       const midY = (y0 + y1) / 2;
+      const valueX = labelCol + chartW + 8;
       return `<g>
         <polygon points="${poly}" fill="${stage.color}"/>
         <text x="6" y="${midY}" dominant-baseline="middle" class="kpi-chart-label" style="fill:var(--gg-brown);font-weight:700;font-size:14px">${escapeHtml(stage.label)}</text>
-        <text x="${cx}" y="${midY}" dominant-baseline="middle" text-anchor="middle" class="kpi-chart-total" style="fill:#fffcf7;font-size:18px;font-weight:700">${escapeHtml(stage.volumeText)}</text>
+        <text x="${valueX}" y="${midY}" dominant-baseline="middle" text-anchor="start" class="kpi-chart-total" style="fill:#3d3028;font-size:18px;font-weight:700">${escapeHtml(stage.volumeText)}</text>
       </g>`;
     }).join("");
     const aria = stages.map(s => `${s.label} ${s.volumeText}`).join(", ");
@@ -3121,30 +3200,32 @@
       ? (DATA.cashCollected2026Ytd || []).map(row => ({ ...row, year: 2026 }))
       : (DATA.cashCollected || []).map(row => ({ ...row, year: 2025 }));
     if (!chartRows.length && !tableRows.length) return "";
-    const cashFresh = cashLedgerIsCurrent();
     const ledgerHint = formatPulledMd(cashLedgerAsOf());
-    const sectionClass = cashFresh
-      ? "kpi-section kpi-section-static kpi-verified kpi-aug-updated"
-      : "kpi-section kpi-section-static kpi-outdated";
+    /* Do not gray the whole Finances block when ledger MTD is older than the KPI recheck.
+       Green = cash months on file. Partial Sep* stays labeled in the chart/table. */
+    const hasCash = !!(chartRows.length || tableRows.length);
     const legendGoal = year === 2026
       ? `<li><span class="kpi-stack-swatch" style="background:#3a1a6e" aria-hidden="true"></span><span>$150k goal</span></li>`
       : `<li><span class="kpi-stack-swatch" style="background:#9a3f14" aria-hidden="true"></span><span>Expense pace</span></li>`;
-    return `<section class="${sectionClass}" data-feedback-id="section-finances" data-feedback-label="Finances">
-      ${cashFresh ? statusCorner(true) : outdatedMark()}
+    return `<section class="kpi-section kpi-section-static${hasCash ? " kpi-verified kpi-aug-updated" : ""}" data-feedback-id="section-finances" data-feedback-label="Finances">
+      ${hasCash ? freshMark() : staleMark()}
       ${kpiHelpBtn("cash-collected")}
       ${kpiSectionStaticHead("Finances", ledgerHint ? `Trust activity through ${ledgerHint}` : "Monthly revenue")}
       <div class="kpi-section-body">
         ${cashCollectedYearToggleHtml()}
-        ${chartBlock({
-          title: year === 2026 ? "Monthly revenue · 2026 YTD" : "Monthly revenue · 2025",
-          chart: cashCollectedChart(chartRows),
-          legend: `<ul class="kpi-stack-legend" aria-label="Cash chart marks">
-            <li><span class="kpi-stack-swatch" style="background:#5c4f45" aria-hidden="true"></span><span>Collected</span></li>
-            <li><span class="kpi-stack-swatch" style="background:#1e3a8a" aria-hidden="true"></span><span>Projected</span></li>
-            ${legendGoal}
-          </ul>`,
-          table: cashCollectedTable(tableRows, String(year))
-        })}
+        ${chartPairGridHtml(
+          chartBlock({
+            title: year === 2026 ? "Monthly revenue · 2026 YTD" : "Monthly revenue · 2025",
+            chart: cashCollectedChart(chartRows),
+            legend: `<ul class="kpi-stack-legend" aria-label="Cash chart marks">
+              <li><span class="kpi-stack-swatch" style="background:#5c4f45" aria-hidden="true"></span><span>Collected</span></li>
+              <li><span class="kpi-stack-swatch" style="background:#1e3a8a" aria-hidden="true"></span><span>Projected</span></li>
+              ${legendGoal}
+            </ul>`,
+            table: cashCollectedTable(tableRows, String(year))
+          }),
+          roasMonthlyPanelHtml()
+        )}
         ${sourceFootnote("financial")}
       </div>
     </section>`;
@@ -3888,11 +3969,15 @@
 
   function formatPulledMd(iso) {
     const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
-    return m ? `${m[2]}/${m[3]}` : "";
+    return m ? `${m[2]}/${m[3]}/${m[1]}` : "";
   }
 
   function monthlyKpisAsOfHint() {
     const pulled = formatPulledMd(DATA.lastUpdated || DATA.asOf);
+    const mycase = formatPulledMd(DATA.asOf);
+    if (pulled && mycase && pulled !== mycase) {
+      return `Recheck ${pulled} · MyCase ${mycase}`;
+    }
     return pulled ? `Pulled ${pulled}` : "";
   }
 
@@ -4302,19 +4387,19 @@
     return "";
   }
 
-  /* Red ✕: the media stack is export-backed but the denominator misses installments still owed. */
+  /* Freshness = export numbers on file. Method caveats stay in the note, not the corner mark. */
   function kpiCostPerCaseCardHtml(k) {
     const foot = k.verified ? sourceFootnote(k.id) : "";
     const range = k.periodRange || "";
     const formula = k.formulaLine || "";
     const note = k.noteLine || "";
-    return `<button type="button" class="kpi-stat-card" data-kpi-focus="${k.id}">
-      ${unverifiedMark()}
+    const fresh = tilePeriodFresh(!!k.augUpdated, !!k.verified, k.value);
+    return `<button type="button" class="kpi-stat-card${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="${k.id}">
+      ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
       ${kpiHelpBtn(k.id)}
       ${kpiCardTitle(k.label)}
       ${range ? `<span class="kpi-stat-subhead">${escapeHtml(range)}</span>` : ""}
       <span class="kpi-stat-val">${escapeHtml(k.value)}</span>
-      <span class="kpi-stat-label">Method not verified</span>
       ${formula ? `<span class="kpi-stat-formula">${escapeHtml(formula)}</span>` : ""}
       ${note ? `<span class="kpi-stat-note">${escapeHtml(note)}</span>` : ""}
       ${foot}
@@ -4334,17 +4419,18 @@
     const fee = Number((DATA.cashCollectedTotals || {}).contractedMean) || 0;
     const formula = `${fmtMoney(m.cash)} collected ÷ ${m.cases} new cases`;
     const noteParts = [
-      "Collections are probably the wrong denominator for case value. Cash in a month mixes payments on older cases with deposits on new ones, so this figure needs a contracted-fee basis before it can be trusted."
+      "Collections mix older-case payments with new deposits. Contracted fee at signing is the cleaner case-value basis when available."
     ];
     if (fee) noteParts.push(`Contracted mean fee is ${fmtMoney(fee)}.`);
     if (cost) noteParts.push(`Net of the ${fmtMoney(cost)} marketing cost per case, ${fmtMoney(m.perCase - cost)} stays with the firm.`);
-    return `<button type="button" class="kpi-stat-card" data-kpi-focus="avg-case-value">
-      ${unverifiedMark()}
+    const value = fmtMoney(m.perCase);
+    const fresh = tilePeriodFresh(true, true, value);
+    return `<button type="button" class="kpi-stat-card${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="avg-case-value">
+      ${periodFreshMark(true, true, value)}
       ${kpiHelpBtn("avg-case-value")}
       ${kpiCardTitle("Avg Case Value")}
       ${range ? `<span class="kpi-stat-subhead">${escapeHtml(range)}</span>` : ""}
-      <span class="kpi-stat-val">${escapeHtml(fmtMoney(m.perCase))}</span>
-      <span class="kpi-stat-label">Method not verified</span>
+      <span class="kpi-stat-val">${escapeHtml(value)}</span>
       <span class="kpi-stat-formula">${escapeHtml(formula)}</span>
       <span class="kpi-stat-note">${escapeHtml(noteParts.join(" "))}</span>
     </button>`;
@@ -4354,9 +4440,12 @@
   function missedOpportunityTextCardHtml() {
     const p = DATA.phoneIntake;
     if (!p) return "";
-    const model = missedRevenueModel(p);
     const key = periodToChannelMonth(DATA.period);
-    const monthName = key === "May" ? "May" : key === "Jun" ? "June" : key === "Jul" ? "July" : "August";
+    const monthNames = { May: "May", Jun: "June", Jul: "July", Aug: "August", Sep: "September" };
+    const monthName = monthNames[key] || key || "—";
+    const phoneReady = !!(DATA.phoneByMonth && DATA.phoneByMonth[key]);
+    const model = phoneReady ? missedRevenueModel(p) : null;
+    const value = model ? `${fmtMoney(model.monthlyLost)}/mo` : "—";
     const lsaRow = (DATA.lsaEfficiency || []).find(r => String(r.month).replace(/\*$/, "") === key) || {};
     const lsaCalls = Number(lsaRow.leads) || 0;
     const lsaCharged = Number(lsaRow.charged) || 0;
@@ -4370,21 +4459,26 @@
     ].map(([label, calls, missed]) => {
       const n = Number(calls) || 0;
       const m = Number(missed) || 0;
-      const value = n ? `${Math.round((m / n) * 100)}% · ${m} of ${n}` : "No calls";
-      return `<tr><th scope="row">${label}</th><td>${escapeHtml(value)}</td></tr>`;
+      const cell = !phoneReady
+        ? "—"
+        : n
+        ? `${Math.round((m / n) * 100)}% · ${m} of ${n}`
+        : "No calls";
+      return `<tr><th scope="row">${label}</th><td>${escapeHtml(cell)}</td></tr>`;
     }).join("");
-    const lostLine = `Est. lost · month ${fmtMoney(model.monthlyLost)} · quarter ${fmtMoney(model.quarterLost)} · year ${fmtMoney(model.yearLost)}`;
+    const lostLine = model
+      ? `Est. lost · month ${fmtMoney(model.monthlyLost)} · quarter ${fmtMoney(model.quarterLost)} · year ${fmtMoney(model.yearLost)}`
+      : "Sep Call details still need · missed Search not on file for this month";
     const unchargedNote = lsaCalls
       ? `Uncharged LSA calls this month: ${lsaUncharged} of ${lsaCalls}. To value them, pull the LSA inbox, filter Charge status to not charged, then check each one against the phone log for an outbound callback to the same number within 48 hours. Count only the never-reached calls as lost, and apply the same lead-to-case rate.`
       : "LSA call count not on file for this month. Pull the LSA inbox, filter Charge status to not charged, then check each one against the phone log for a callback within 48 hours before counting any as lost.";
-    return `<button type="button" class="kpi-stat-card kpi-stat-attention" data-kpi-focus="#19">
-      ${unverifiedMark()}
+    return `<button type="button" class="kpi-stat-card${phoneReady ? " kpi-verified kpi-aug-updated" : " kpi-outdated kpi-stat-attention"}" data-kpi-focus="#19">
+      ${periodFreshMark(phoneReady, phoneReady, value)}
       ${kpiHelpBtn("#19")}
       ${kpiCardTitle("Missed Opportunity")}
       <span class="kpi-stat-subhead">${escapeHtml(monthName)} 2026</span>
-      <span class="kpi-stat-val kpi-val-negative">${escapeHtml(fmtMoney(model.monthlyLost))}/mo</span>
-      <span class="kpi-stat-label">Method not verified</span>
-      <span class="kpi-stat-formula">${escapeHtml(lostLine)}</span>
+      <span class="kpi-stat-val${phoneReady ? " kpi-val-negative" : ""}">${escapeHtml(value)}</span>
+      ${model ? `<span class="kpi-stat-formula">${escapeHtml(lostLine)}</span>` : `<span class="kpi-stat-note">${escapeHtml(lostLine)}</span>`}
       <table class="kpi-goal-track kpi-missed-split"><caption class="kpi-stat-formula">Missed call rate · target ${escapeHtml(String(p.missedTargetPct))}% or less</caption><tbody>${splitRows}</tbody></table>
       <span class="kpi-stat-note">${escapeHtml(unchargedNote)}</span>
       ${kpiRefMark("#19")}
@@ -4422,8 +4516,8 @@
             ]);
           })()
         : "";
-      return `<button type="button" class="kpi-stat-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified)}" data-kpi-focus="${k.id}">
-        ${periodFreshMark(!!k.augUpdated, !!k.verified)}
+      return `<button type="button" class="kpi-stat-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
+        ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
         ${kpiHelpBtn(k.id)}
         ${kicker}
         ${icon}
@@ -4439,8 +4533,8 @@
     if (k.targetBar) {
       const targetNum = parseTargetNum(k.target);
       const hit = meetsTarget(parseMetricNum(k.value), targetNum, k.lowerIsBetter !== false);
-      return `<button type="button" class="kpi-stat-card kpi-stat-target-bar${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified)}" data-kpi-focus="${k.id}">
-        ${periodFreshMark(!!k.augUpdated, !!k.verified)}
+      return `<button type="button" class="kpi-stat-card kpi-stat-target-bar${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
+        ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
         ${kpiHelpBtn(k.id)}
         ${icon}
         ${kpiCardTitle(k.label)}
@@ -4451,8 +4545,8 @@
         ${kpiRefMark(k.id)}
       </button>`;
     }
-    return `<button type="button" class="kpi-stat-card${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified)}" data-kpi-focus="${k.id}">
-      ${periodFreshMark(!!k.augUpdated, !!k.verified)}
+    return `<button type="button" class="kpi-stat-card${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
+      ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
       ${kpiHelpBtn(k.id)}
       ${icon}
       ${kpiCardTitle(k.label)}
@@ -4465,8 +4559,39 @@
     </button>`;
   }
 
+  /**
+   * Biggest opportunity needs LOE from feedback — not fee pool.
+   * When numeric LOE is set: highest mean fee ÷ LOE wins.
+   * Blank LOE on every row → no mark.
+   */
+  function feePracticeLoeNumeric(row) {
+    if (!row || row.loe == null || row.loe === "") return null;
+    if (typeof row.loe === "number" && Number.isFinite(row.loe) && row.loe > 0) return row.loe;
+    const map = { low: 1, med: 2, medium: 2, high: 3 };
+    const key = String(row.loe).trim().toLowerCase();
+    if (map[key] != null) return map[key];
+    const n = Number(row.loe);
+    return Number.isFinite(n) && n > 0 ? n : null;
+  }
+
+  function feePracticeLoeLabel(row) {
+    if (!row || row.loe == null || row.loe === "") return "—";
+    return escapeHtml(String(row.loe));
+  }
+
+  function feeByPracticeOpportunity(rows) {
+    const scored = (rows || []).filter(r => feePracticeLoeNumeric(r) != null);
+    if (!scored.length) return null;
+    return scored.reduce((best, row) => {
+      const score = Number(row.mean) / feePracticeLoeNumeric(row);
+      const bestScore = Number(best.mean) / feePracticeLoeNumeric(best);
+      return score > bestScore ? row : best;
+    });
+  }
+
   function feeByPracticeBarChart(rows) {
     const items = rows || DATA.feeByPractice || [];
+    const opportunity = feeByPracticeOpportunity(items);
     const practiceColors = {
       "Sex Assault / Sex Offense": "#6a5acd",
       "Theft / Property": "#334155",
@@ -4479,7 +4604,7 @@
     const max = niceAxisMax(Math.max(...items.map(r => r.mean), 1));
     const w = 720;
     const h = 300;
-    const pad = { l: 52, r: 16, t: 32, b: 72 };
+    const pad = { l: 52, r: 16, t: opportunity ? 40 : 32, b: 72 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
     const slot = plotW / Math.max(items.length, 1);
@@ -4497,6 +4622,7 @@
       const bh = Math.max(6, plotH * (r.mean / max));
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
+      const isOpp = opportunity && r.name === opportunity.name;
       const short = String(r.name)
         .replace(" / Sex Offense", "")
         .replace("Domestic Violence / DV", "DV")
@@ -4510,8 +4636,19 @@
         ? `$${(r.mean / 1000).toFixed(r.mean % 1000 === 0 ? 0 : 1)}k`
         : `$${r.mean}`;
       const color = practiceColors[r.name] || "#64748b";
+      const stroke = isOpp
+        ? ` stroke="#3a1a6e" stroke-width="2.5"`
+        : "";
+      const wash = isOpp
+        ? `<rect x="${x - 6}" y="${pad.t}" width="${barW + 12}" height="${plotH}" rx="6" fill="rgba(58,26,110,0.08)"/>`
+        : "";
+      const oppTag = isOpp
+        ? `<text x="${x + barW / 2}" y="${Math.max(12, y - 22)}" text-anchor="middle" class="kpi-chart-opp-label">Biggest opportunity</text>`
+        : "";
       return `<g>
-        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="5" fill="${color}"/>
+        ${wash}
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="5" fill="${color}"${stroke}/>
+        ${oppTag}
         <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total">${valLabel}</text>
         <text x="${x + barW / 2}" y="${h - 28}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(short)}</text>
         <text x="${x + barW / 2}" y="${h - 12}" text-anchor="middle" class="kpi-chart-axis">n=${r.n}</text>
@@ -4525,25 +4662,32 @@
 
   function feeByPracticeSectionHtml() {
     const rows = DATA.feeByPractice || [];
-    const table = kpiDetailTable(
-      ["Practice area", "n", "Mean fee"],
-      rows.map(r => [r.name, String(r.n), fmtMoney(r.mean)])
-    );
-    return `<article class="kpi-split-panel" data-feedback-id="section-fee-by-practice" data-feedback-label="#29 Mean fee by practice">
-      ${statusCorner(true)}
-      ${kpiHelpBtn("#29")}
-      ${kpiSectionStaticHead("Mean fee by practice area", "KPI #29 · Client + fee · n ≥ 5")}
-      <div class="kpi-split-panel-body">
-        ${chartBlock({
-          focus: "#29",
-          title: "Mean fee by practice",
-          chart: feeByPracticeBarChart(rows),
-          table
-        })}
-        ${sourceFootnote("#29")}
-      </div>
-      ${kpiRefMark("#29")}
-    </article>`;
+    const opportunity = feeByPracticeOpportunity(rows);
+    const body = rows.map(r => {
+      const isOpp = opportunity && r.name === opportunity.name;
+      const nameCell = isOpp
+        ? `${escapeHtml(r.name)}<span class="kpi-opportunity-mark">Biggest opportunity</span>`
+        : escapeHtml(r.name);
+      const trClass = isOpp ? ` class="kpi-row-opportunity"` : "";
+      return `<tr${trClass}><td>${nameCell}</td><td>${r.n}</td><td>${fmtMoney(r.mean)}</td><td>${feePracticeLoeLabel(r)}</td></tr>`;
+    }).join("");
+    const table = `<div class="kpi-chart-detail">
+      <table class="kpi-table kpi-chart-table">
+        <thead><tr><th scope="col">Practice area</th><th scope="col">n</th><th scope="col">Mean fee</th><th scope="col">LOE</th></tr></thead>
+        <tbody>${body}</tbody>
+      </table>
+    </div>`;
+    const note = opportunity
+      ? `<p class="kpi-table-note">Biggest opportunity = highest mean fee ÷ LOE · ${escapeHtml(opportunity.name)}.</p>`
+      : `<p class="kpi-table-note">Biggest opportunity waits on LOE · level of effort via feedback · not fee pool.</p>`;
+    return chartBlock({
+      focus: "#29",
+      helpId: "#29",
+      verified: true,
+      title: "Mean fee by practice",
+      chart: feeByPracticeBarChart(rows),
+      table: `${table}${note}${sourceFootnote("#29")}`
+    });
   }
 
   function forecastExpenseCoverageDialHtml() {
@@ -4945,7 +5089,8 @@
       "Channel table",
       `${DATA.reviews.length} directories`,
       ["Channel", "Rating", "#", "Status"],
-      rows
+      rows,
+      true
     );
     return chartBlock({
       focus: "#16",
@@ -5030,7 +5175,7 @@
     const trendLegend = year === 2026
       ? `<li><span class="kpi-stack-swatch" style="background:#1e3a8a" aria-hidden="true"></span><span>2026 trend</span></li>`
       : `<li><span class="kpi-stack-swatch" style="background:#c45c26" aria-hidden="true"></span><span>2025 trend</span></li>`;
-    return `${casesCreatedYearToggleHtml()}${chartBlock({
+    return chartBlock({
       helpId: "cases-created",
       title: year === 2026 ? "Cases created · 2026 YTD" : "Cases created · 2025",
       chart: casesCreatedChart(chartRows),
@@ -5039,7 +5184,260 @@
         ${trendLegend}
       </ul>`,
       table: `${casesCreatedTrendTable(chartRows)}${sourceFootnote("cases-created")}`
-    })}`;
+    });
+  }
+
+  /** Jan–Aug complete months only · YoY % for Data tab. */
+  function casesYoyComparableRows() {
+    const y25 = new Map(
+      (DATA.cashCollected || [])
+        .filter(r => r.newCases != null && !/\*/.test(String(r.month || "")))
+        .map(r => [String(r.month).replace(/\*$/, ""), Number(r.newCases) || 0])
+    );
+    const y26 = new Map(
+      (DATA.cashCollected2026Ytd || [])
+        .filter(r => r.newCases != null && !/\*/.test(String(r.month || "")))
+        .map(r => [String(r.month).replace(/\*$/, ""), Number(r.newCases) || 0])
+    );
+    const order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
+    return order
+      .filter(m => y25.has(m) && y26.has(m) && y25.get(m) > 0)
+      .map(month => {
+        const c25 = y25.get(month);
+        const c26 = y26.get(month);
+        const delta = c26 - c25;
+        const yoyPct = Math.round(((c26 - c25) / c25) * 1000) / 10;
+        return { month, c25, c26, delta, yoyPct };
+      });
+  }
+
+  function casesYoyPctChart(rows) {
+    rows = chronological(rows || []);
+    if (!rows.length) return "";
+    const vals = rows.map(r => Number(r.yoyPct) || 0);
+    const maxAbs = Math.max(...vals.map(v => Math.abs(v)), 1);
+    const axisMax = chartAxisMax([maxAbs]);
+    const w = Math.max(720, rows.length * 72 + 110);
+    const h = 290;
+    const pad = { l: 58, r: 22, t: 28, b: 48 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / rows.length;
+    const barW = Math.min(42, slot * 0.58);
+    const zeroY = pad.t + plotH / 2;
+    const halfH = plotH / 2;
+    const tickVals = [-axisMax, -Math.round(axisMax / 2), 0, Math.round(axisMax / 2), axisMax];
+    const ticks = tickVals.map(val => {
+      const y = zeroY - (halfH * val) / axisMax;
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}%</text>
+      </g>`;
+    }).join("");
+    const bars = rows.map((r, i) => {
+      const pct = Number(r.yoyPct) || 0;
+      const bh = Math.max(4, (halfH * Math.abs(pct)) / axisMax);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pct >= 0 ? zeroY - bh : zeroY;
+      const fill = pct >= 0 ? "var(--gg-positive)" : "var(--gg-negative)";
+      const label = `${pct > 0 ? "+" : ""}${pct}%`;
+      const labelY = pct >= 0 ? y - 8 : y + bh + 14;
+      return `<g>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"/>
+        <text x="${x + barW / 2}" y="${labelY}" text-anchor="middle" class="kpi-chart-total" style="fill:${fill}">${escapeHtml(label)}</text>
+        <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="YoY percent change in new cases, comparable months Jan through Aug">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}
+      <line x1="${pad.l}" y1="${zeroY}" x2="${w - pad.r}" y2="${zeroY}" stroke="var(--gg-brown)" stroke-width="1.5"/>
+      ${bars}
+    </svg>`;
+  }
+
+  function casesYoyCountsChart(rows) {
+    rows = chronological(rows || []);
+    if (!rows.length) return "";
+    const values = rows.flatMap(r => [r.c25, r.c26]);
+    const max = chartAxisMax(values);
+    const w = Math.max(720, rows.length * 72 + 110);
+    const h = 290;
+    const pad = { l: 58, r: 22, t: 28, b: 48 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / rows.length;
+    const groupW = Math.min(48, slot * 0.7);
+    const barW = Math.max(8, (groupW - 4) / 2);
+    const ticks = axisTicks(max, 4).map(val => {
+      const y = pad.t + plotH * (1 - val / max);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}</text>
+      </g>`;
+    }).join("");
+    const bars = rows.map((r, i) => {
+      const x0 = pad.l + i * slot + (slot - groupW) / 2;
+      const h25 = Math.max(4, (plotH * r.c25) / max);
+      const h26 = Math.max(4, (plotH * r.c26) / max);
+      return `<g>
+        <rect x="${x0}" y="${pad.t + plotH - h25}" width="${barW}" height="${h25}" rx="3" fill="#64748b"/>
+        <rect x="${x0 + barW + 4}" y="${pad.t + plotH - h26}" width="${barW}" height="${h26}" rx="3" fill="#3a1a6e"/>
+        <text x="${x0 + groupW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="New cases 2025 versus 2026 by comparable month">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}
+      ${bars}
+    </svg>`;
+  }
+
+  function casesYoyDetailTable(rows) {
+    return kpiDetailTable(
+      ["Month", "2025", "2026", "Δ cases", "YoY %"],
+      rows.map(r => [
+        r.month,
+        String(r.c25),
+        String(r.c26),
+        `${r.delta > 0 ? "+" : ""}${r.delta}`,
+        `${r.yoyPct > 0 ? "+" : ""}${r.yoyPct}%`
+      ])
+    );
+  }
+
+  function casesYoyPanelHtml() {
+    const rows = casesYoyComparableRows();
+    if (!rows.length) return "";
+    return chartBlock({
+      helpId: "cases-yoy",
+      title: "YoY % change · comparable months",
+      chart: casesYoyPctChart(rows),
+      legend: `<ul class="kpi-stack-legend" aria-label="YoY percent marks">
+        <li><span class="kpi-stack-swatch" style="background:var(--gg-positive)" aria-hidden="true"></span><span>Up vs 2025</span></li>
+        <li><span class="kpi-stack-swatch" style="background:var(--gg-negative)" aria-hidden="true"></span><span>Down vs 2025</span></li>
+      </ul>`,
+      table: `${casesYoyDetailTable(rows)}${sourceFootnote("cases-yoy")}`
+    });
+  }
+
+  function casesYoyCountsPanelHtml() {
+    const rows = casesYoyComparableRows();
+    if (!rows.length) return "";
+    return chartBlock({
+      helpId: "cases-yoy",
+      title: "Cases · 2025 vs 2026 same months",
+      chart: casesYoyCountsChart(rows),
+      legend: `<ul class="kpi-stack-legend" aria-label="Year count marks">
+        <li><span class="kpi-stack-swatch" style="background:#64748b" aria-hidden="true"></span><span>2025</span></li>
+        <li><span class="kpi-stack-swatch" style="background:#3a1a6e" aria-hidden="true"></span><span>2026</span></li>
+      </ul>`,
+      table: casesYoyDetailTable(rows)
+    });
+  }
+
+  /** Est. collectible / case for ROAS · Contact_09-01 mix × 80%. */
+  const ROAS_COLLECTIBLE_PER_CASE = 4346;
+  const ROAS_TARGET_X = 5;
+
+  function roasMonthlyRows() {
+    const rows = chronological(DATA.casesLeadsSpend || []).filter(r => r && r.month);
+    return rows.map(r => {
+      const cases = r.cases == null ? null : Number(r.cases);
+      const search = r.adsSpend == null ? null : Number(r.adsSpend);
+      const lsa = r.lsaSpend == null ? null : Number(r.lsaSpend);
+      const media =
+        search == null && lsa == null
+          ? null
+          : (Number(search) || 0) + (Number(lsa) || 0);
+      const collectible =
+        cases == null ? null : Math.round(cases * ROAS_COLLECTIBLE_PER_CASE);
+      let roas = null;
+      if (collectible != null && media != null && media > 0) {
+        roas = Math.round((collectible / media) * 10) / 10;
+      }
+      return {
+        month: r.month,
+        cases,
+        collectible,
+        search,
+        lsa,
+        media,
+        roas
+      };
+    });
+  }
+
+  function roasMonthlyChart(rows) {
+    const plot = chronological((rows || []).filter(r => r.roas != null));
+    if (!plot.length) return "";
+    const vals = plot.map(r => Number(r.roas) || 0);
+    const max = chartAxisMax([...vals, ROAS_TARGET_X]);
+    const w = Math.max(720, plot.length * 72 + 110);
+    const h = 290;
+    const pad = { l: 58, r: 22, t: 28, b: 48 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / plot.length;
+    const barW = Math.min(42, slot * 0.58);
+    const targetY = pad.t + plotH * (1 - ROAS_TARGET_X / max);
+    const ticks = axisTicks(max, 4).map(val => {
+      const y = pad.t + plotH * (1 - val / max);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}×</text>
+      </g>`;
+    }).join("");
+    const bars = plot.map((r, i) => {
+      const v = Number(r.roas) || 0;
+      const bh = Math.max(4, (plotH * v) / max);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pad.t + plotH - bh;
+      const fill = v >= ROAS_TARGET_X ? "var(--gg-positive)" : v >= 4 ? "var(--gg-royal-mid, #5b2d91)" : "var(--gg-watch, #c9a227)";
+      return `<g>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"/>
+        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total">${v.toFixed(1)}×</text>
+        <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Monthly return on marketing spend with ${ROAS_TARGET_X} times target">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}
+      <line x1="${pad.l}" y1="${targetY}" x2="${w - pad.r}" y2="${targetY}" stroke="var(--gg-brown)" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <text x="${w - pad.r}" y="${targetY - 6}" text-anchor="end" class="kpi-chart-axis">target ${ROAS_TARGET_X}×</text>
+      ${bars}
+    </svg>`;
+  }
+
+  function roasMonthlyTable(rows) {
+    return kpiDetailTable(
+      ["Month", "Cases", "Est. collectible", "Search", "LSA", "Media", "ROAS"],
+      chronological(rows || []).map(r => [
+        r.month,
+        r.cases == null ? "—" : String(r.cases),
+        r.collectible == null ? "—" : `$${r.collectible.toLocaleString("en-US")}`,
+        r.search == null ? "—" : `$${Math.round(r.search).toLocaleString("en-US")}`,
+        r.lsa == null ? "—" : `$${Math.round(r.lsa).toLocaleString("en-US")}`,
+        r.media == null ? "—" : `$${Math.round(r.media).toLocaleString("en-US")}`,
+        r.roas == null ? "—" : `${r.roas.toFixed(1)}×`
+      ])
+    );
+  }
+
+  function roasMonthlyPanelHtml() {
+    const rows = roasMonthlyRows();
+    if (!rows.length) return "";
+    return chartBlock({
+      helpId: "roas-monthly",
+      title: "Return on marketing spend · 2026",
+      chart: roasMonthlyChart(rows),
+      legend: `<ul class="kpi-stack-legend" aria-label="ROAS marks">
+        <li><span class="kpi-stack-swatch" style="background:var(--gg-positive)" aria-hidden="true"></span><span>At or above ${ROAS_TARGET_X}× target</span></li>
+        <li><span class="kpi-stack-swatch" style="background:var(--gg-royal-mid, #5b2d91)" aria-hidden="true"></span><span>4×–under target</span></li>
+        <li><span class="kpi-stack-swatch" style="background:var(--gg-watch, #c9a227)" aria-hidden="true"></span><span>Below 4× watch</span></li>
+      </ul>`,
+      table: `${roasMonthlyTable(rows)}${sourceFootnote("roas-monthly")}`
+    });
   }
 
   function avgDepositPanelHtml() {
@@ -5142,38 +5540,25 @@
     if (!(opts && opts.force) && el.dataset.rendered === RENDER_VER) return;
     el.innerHTML = `
       ${financialBreakdownTilesHtml()}
-      <section class="kpi-section kpi-section-static" data-feedback-id="section-audience-breakdown" data-feedback-label="Audience Breakdown">
-        ${kpiSectionStaticHead("Audience Breakdown", "Lead volume by channel")}
-        <div class="kpi-section-body data-chart-table-grid">
-          ${leadsByChannelPanelHtml()}
-        </div>
-      </section>
-      <section class="kpi-section kpi-section-static" data-feedback-id="section-data-channel-mix" data-feedback-label="Channel mix">
-        ${kpiSectionStaticHead("Channel mix", "Cases by month")}
-        <div class="kpi-section-body data-chart-table-grid">
-          ${casesMomPanelHtml()}
-        </div>
-      </section>
       <section class="kpi-section kpi-section-static" data-feedback-id="section-digital-brand-presence" data-feedback-label="Digital Brand Presence">
         ${kpiSectionStaticHead("Digital Brand Presence", "Reviews and referral network")}
-        <div class="kpi-section-body data-chart-table-grid">
-          ${reviewsByChannelPanelHtml()}
-          ${totalReferralNetworkPanelHtml()}
+        <div class="kpi-section-body">
+          ${chartPairGridHtml(reviewsByChannelPanelHtml(), totalReferralNetworkPanelHtml())}
         </div>
       </section>
       ${cashCollectedDataSectionHtml()}
+      <section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-cases-yoy" data-feedback-label="Cases YoY">
+        ${statusCorner(true)}
+        ${kpiSectionStaticHead("Cases YoY", "Comparable months Jan–Aug")}
+        <div class="kpi-section-body">
+          ${chartPairGridHtml(casesYoyPanelHtml())}
+        </div>
+      </section>
       <section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-fee-practice" data-feedback-label="#29 Mean fee by practice">
         ${statusCorner(true)}
         ${kpiSectionStaticHead("Mean fee by practice", "Client + fee · as-of 2026-09-01")}
-        <div class="kpi-section-body data-chart-table-grid">
-          ${feeByPracticeSectionHtml()}
-        </div>
-      </section>
-      <section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-cases-created" data-feedback-label="Cases created">
-        ${statusCorner(true)}
-        ${kpiSectionStaticHead("Cases created", "MyCase created month")}
         <div class="kpi-section-body">
-          ${casesCreatedPanelHtml()}
+          ${chartPairGridHtml(feeByPracticeSectionHtml())}
         </div>
       </section>`;
     el.dataset.rendered = RENDER_VER;
@@ -5757,7 +6142,7 @@
   }
 
   function recSexCrimesChartHtml() {
-    return `<div class="rec-chart">${chartBlock({
+    return chartPairGridHtml(chartBlock({
       title: "Case recovery",
       chart: barWithTargetChart(
         [
@@ -5783,13 +6168,13 @@
           ["Recovery", "13"]
         ]
       )
-    })}</div>`;
+    }));
   }
 
   function recYelpAugustChartHtml() {
     const baseline = 6;
     const goal = 20;
-    return `<div class="rec-chart">${chartBlock({
+    return chartPairGridHtml(chartBlock({
       title: "Yelp referral target",
       chart: barWithTargetChart(
         [
@@ -5815,14 +6200,14 @@
           ["Goal", String(goal)]
         ]
       )
-    })}</div>`;
+    }));
   }
 
   function recLsaVsDigitalChartHtml() {
     const rows = DATA.casesLeadsSpend || [];
     if (!rows.length) return "";
     const months = costCompareMonths(rows);
-    return `<div class="rec-chart">${chartBlock({
+    return `${chartPairGridHtml(chartBlock({
       title: "LSA vs digital cost per call",
       chart: lsaVsDigitalCostTrendChart(rows),
       legend: lsaVsDigitalCostTrendLegend(),
@@ -5834,7 +6219,7 @@
           fmtMoney(m.digCpl)
         ])
       )
-    })}${lsaVsDigitalCostTrendNote(rows)}</div>`;
+    }))}${lsaVsDigitalCostTrendNote(rows)}`;
   }
 
   function recommendationsPageHtml() {

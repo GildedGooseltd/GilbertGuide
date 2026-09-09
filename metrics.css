@@ -519,11 +519,11 @@ body.feedback-mode-on .feedback-target:hover {
   gap: 0.7rem;
   position: relative;
   margin-top: 0.45rem;
-  padding: 0.72rem 0;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  padding: 0.72rem 0.85rem;
+  border: 1.5px solid #a67c2e;
+  border-radius: 8px;
+  background: var(--gg-paper);
+  box-shadow: inset 0 0 0 1px var(--gg-royal-border);
   text-align: left;
 }
 .kpi-related-projects::before,
@@ -840,9 +840,9 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-val-negative,
 .kpi-negative-value { color: var(--gg-negative) !important; }
 .kpi-stat-label { display: block; font-size: 0.875rem; color: var(--secondary); margin-top: 0.2rem; }
-.kpi-mom-down { color: var(--gg-negative); font-size: 0.875rem; font-weight: 700; }
-.kpi-mom-up { color: var(--gg-positive); font-size: 0.875rem; font-weight: 700; }
-.kpi-mom-flat { color: var(--secondary); font-size: 0.875rem; font-weight: 700; }
+.kpi-mom-down { color: var(--gg-contrast-dark, #111); font-size: 0.875rem; font-weight: 400; }
+.kpi-mom-up { color: var(--gg-contrast-dark, #111); font-size: 0.875rem; font-weight: 400; }
+.kpi-mom-flat { color: var(--gg-contrast-dark, #111); font-size: 0.875rem; font-weight: 400; }
 .kpi-metric-with-delta {
   display: flex;
   align-items: center;
@@ -1089,9 +1089,6 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-half-moon-gauge .kpi-gauge-shadow {
   stroke: var(--gg-royal-blue);
   opacity: 0.32;
-}
-.kpi-half-moon-gauge.kpi-gauge-fill-cash .kpi-gauge-progress {
-  stroke: var(--gg-positive);
 }
 .kpi-gauge-celebrate .kpi-gauge-center { fill: var(--gg-positive); }
 .kpi-gauge-val { font-size: 1.35rem; font-weight: 800; color: var(--gg-royal-deep); }

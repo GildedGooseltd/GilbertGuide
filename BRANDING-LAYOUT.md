@@ -134,7 +134,7 @@ To switch cockpit body to sans: change only `body { font-family }` in `index.htm
 
 ```
 ┌─ cockpit-header ───────────── title + subtitle
-├─ cockpit-tabs ─────────────── KPIs | Project Guide | Impact
+├─ cockpit-tabs ─────────────── KPIs | Data | Guide
 │
 ├─ [KPIs] ───────────────────── kpi-report.js → #kpi-report-kpis
 │     collapsible .kpi-section (<details>)
@@ -160,7 +160,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
 | Project cards     | `.card`, `.card.selected`              | Box border/shadow; selected = royal wash        |
 | Zone labels       | `.picker-zone` + `.picker-zone-label`  | Royal/burnt accent heads; scan breaks between areas |
-| Charts            | `chartBlock()` in JS                   | **Required** `.kpi-chart-head` title only · plot · legend (2+ series) · detail table |
+| Charts            | `chartBlock()` + `.data-chart-table-grid` | **Locked:** 2 columns side by side on every tab · each card = required `.kpi-chart-head` title · plot · legend · **detail table below the graph** · never a lone full-width chart · never hide the breakdown behind “Show table” |
 
 
 Confirm flow: payment options → submit → fixed SOW emailed by private link → Andrew checkbox signature → Kate private countersign link → final PDF email + Drive archive. Andrew can continue to the QuickBooks deposit after his signature. Action items appear on thank-you / email — not on the picker browse zones.
@@ -171,7 +171,7 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 ## 6. KPI chart colors
 
-**Structure:** every graph card uses `chartBlock({ title, chart, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + legend (2+ series) + detail table always below (not behind “Show table” alone). Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7). Financial Breakdown is locked to 300 contacts and $40k spend while current data remains below those tops.
+**Structure:** every graph card uses `chartBlock({ title, chart, table, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + legend (2+ series) + detail table always below. **Layout lock:** wrap every chart pair in `chartPairGridHtml()` / `.data-chart-table-grid` — two columns side by side on KPIs, Data, and any other Guide tab. Never publish a single full-width chart row when a partner chart exists or can share the section. Odd leftovers sit in the left cell of the next row. Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7). Financial Breakdown is locked to 300 contacts and $40k spend while current data remains below those tops.
 
 **Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 
@@ -192,7 +192,7 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 **Cases MoM stack:** Closed `#64748b` · New `#1e3a8a` · Red accounts `#b23a78` (red accounts are rose as a named category, not alert red).
 
-**Forbidden:** teal/cyan (`#00d4c4`, `#2dd4bf`, etc.) anywhere in the cockpit. `--gg-negative` only for negative deltas. Half-moon gauges finish in `--gg-positive`; target achievement is green, not gold.
+**Forbidden:** teal/cyan (`#00d4c4`, `#2dd4bf`, etc.) anywhere in the cockpit. `--gg-negative` only for negative deltas. Half-moon gauges in progress use the red → caution → positive rim gradient — never a solid green fill while behind target. Solid `--gg-positive` is only for celebrate / target hit. Target achievement is green, not gold.
 
 **Half-moon gauge format:** numeric value only at the inside base of the arc; no descriptive or target text inside/beneath the gauge. Keep both endpoint scale labels black (`#111`) in every state. Goal ticks are unlabeled; nearby title/stat copy carries the context.
 
