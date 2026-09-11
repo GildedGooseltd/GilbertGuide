@@ -78,7 +78,7 @@ Percentage-change labels use black, regular-weight `↑ +N%` / `↓ −N%` text.
 
 Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` sources.
 
-**Gold lock:** live gold is limited to the primary Review Plan/continue CTA, completion/thank-you milestones, the premium Why Gilded Goose frame, and the critical Solutions callout. Semantic red/yellow/green stays in written status, values, corner marks, and non-tile callouts. It does not recolor KPI tile chrome.
+**Gold lock:** live gold is limited to the primary Review Plan/continue CTA, completion/thank-you milestones, the premium Why Gilded Goose frame, and the critical Solutions callout. Semantic red/yellow/green stays in written status, values, corner marks, and non-tile callouts. It does not recolor KPI tile chrome. Monthly KPIs tiles always match the Revenue card wash.
 
 ### Layout scale
 
@@ -154,7 +154,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
 | KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
-| Stat / goal cards | `.kpi-stat-card`, `.kpi-goal-card`     | Standard border / paper or standard royal wash; no yellow, red, or green status border/wash; **same-row equal height** via `.kpi-tile-with-projects` subgrid |
+| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid |
 | Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
 | KPI tile grid     | `.kpi-tiles-4`                         | Goal cards and metric tiles in one flow, 4 per row; narrow-pane trim ≤1000px, 2-col ≤560px, 1-col ≤380px |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
@@ -171,7 +171,7 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 ## 6. KPI chart colors
 
-**Structure:** every graph card uses `chartBlock({ title, chart, table, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + legend (2+ series) + detail table always below. **Layout lock:** wrap every chart pair in `chartPairGridHtml()` / `.data-chart-table-grid` — two columns side by side on KPIs, Data, and any other Guide tab. Never publish a single full-width chart row when a partner chart exists or can share the section. Odd leftovers sit in the left cell of the next row. Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7). Financial Breakdown is locked to 300 contacts and $40k spend while current data remains below those tops.
+**Structure:** every graph card uses `chartBlock({ title, chart, table, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + legend (2+ series) + detail table. **KPIs / Recommendations:** wrap pairs in `chartPairGridHtml()` / `.data-chart-table-grid` — two columns side by side; detail table under each plot. **Data tab:** stack full-width cards in `.data-chart-table-stack`; inside each card `.kpi-chart-split` puts plot left and descriptive table right. Odd leftovers on paired tabs sit in the left cell of the next row. Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7). Financial Breakdown is locked to 300 contacts and $40k spend while current data remains below those tops.
 
 **Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 

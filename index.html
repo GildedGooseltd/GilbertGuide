@@ -2374,6 +2374,70 @@
       width: 100%;
       max-width: none;
     }
+    #kpi-report-data .kpi-chart-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(14rem, 0.95fr);
+      gap: 1rem 1.35rem;
+      align-items: start;
+      width: 100%;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-detail,
+    #kpi-report-data .kpi-chart-split .kpi-table-acc {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+    /* Keep long cash SVGs inside the left column — never paint over the table. */
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot {
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: visible;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+      isolation: isolate;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot .kpi-chart-svg,
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot .kpi-chart-svg-plot,
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot .kpi-chart-svg-wide,
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot .kpi-cash-long-chart {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-desc {
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+      background: var(--gg-paper, #fffcf7);
+      border-left: 1px solid var(--gg-royal-border);
+      padding: 0.2rem 0 0.2rem 0.85rem;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-table {
+      width: 100%;
+      font-size: 0.8rem;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-table th,
+    #kpi-report-data .kpi-chart-split .kpi-chart-table td {
+      padding: 0.4rem 0.45rem;
+      vertical-align: top;
+      line-height: 1.35;
+    }
+    @media (max-width: 480px) {
+      #kpi-report-data .kpi-chart-split { grid-template-columns: 1fr; }
+      #kpi-report-data .kpi-chart-split .kpi-chart-desc {
+        border-left: 0;
+        border-top: 1px solid var(--gg-royal-border);
+        padding: 0.75rem 0 0;
+      }
+    }
     .data-report-root .data-chart-table-side {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3686,6 +3750,29 @@
       color: var(--gg-brown); box-shadow: var(--gg-box-shadow);
       position: relative; min-width: 0;
     }
+    /* Monthly KPIs lock: every tile matches Revenue · royal wash, 12px radius, 2px royal border.
+       Plain paper `.kpi-stat-card` chrome is not allowed inside this grid. */
+    .kpi-goals-grid .kpi-stat-card {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.8rem;
+      text-align: left;
+      padding: 1.85rem 2rem 1.15rem 2rem;
+      border-radius: 12px;
+      border: 2px solid var(--gg-royal-border);
+      background: linear-gradient(165deg, var(--gg-royal-dim) 0%, var(--gg-paper) 55%);
+      color: var(--gg-brown);
+      box-shadow: var(--gg-box-shadow);
+    }
+    .kpi-goals-grid .kpi-stat-card.kpi-stat-gauge {
+      text-align: left;
+      align-items: stretch;
+    }
+    /* Attention / alert is a data hook only — never recolor tile chrome. */
+    .kpi-stat-attention {
+      /* no border, background, or wash overrides */
+    }
     .kpi-goals-grid .kpi-lost-tracker.kpi-goal-card {
       border-left: 2px solid var(--gg-royal);
     }
@@ -4612,6 +4699,84 @@
     .data-chart-table-grid .data-chart-side-table {
       min-width: 0;
       align-self: stretch;
+    }
+    /* Default: plot above table. Data tab overrides to plot | descriptive table. */
+    .kpi-chart-split {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      min-width: 0;
+    }
+    .kpi-chart-desc {
+      min-width: 0;
+    }
+    #kpi-report-data .kpi-chart-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(14rem, 0.95fr);
+      gap: 1rem 1.35rem;
+      align-items: start;
+      width: 100%;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot {
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: visible;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+      isolation: isolate;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot .kpi-chart-svg,
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot .kpi-chart-svg-plot,
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot .kpi-chart-svg-wide,
+    #kpi-report-data .kpi-chart-split .kpi-chart-plot .kpi-cash-long-chart {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-desc {
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      background: var(--gg-paper, #fffcf7);
+      border-left: 1px solid var(--gg-royal-border);
+      padding: 0.2rem 0 0.2rem 0.85rem;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-detail,
+    #kpi-report-data .kpi-chart-split .kpi-table-acc {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-table {
+      width: 100%;
+      font-size: 0.8rem;
+    }
+    #kpi-report-data .kpi-chart-split .kpi-chart-table th,
+    #kpi-report-data .kpi-chart-split .kpi-chart-table td {
+      padding: 0.4rem 0.45rem;
+      vertical-align: top;
+      line-height: 1.35;
+    }
+    #kpi-report-data .data-chart-table-stack > .kpi-chart-card,
+    #kpi-report-data .data-chart-table-stack > .kpi-chart-wip-shell {
+      width: 100%;
+    }
+    @media (max-width: 480px) {
+      #kpi-report-data .kpi-chart-split {
+        grid-template-columns: 1fr;
+      }
+      #kpi-report-data .kpi-chart-split .kpi-chart-desc {
+        border-left: 0;
+        border-top: 1px solid var(--gg-royal-border);
+        padding: 0.75rem 0 0;
+      }
     }
     /* Brand lock: keep 2 chart columns in Design Mode / side panels. Stack only on tiny phones. */
     @media (max-width: 360px) {
@@ -5841,7 +6006,7 @@
   <script src="projects-data.js?v=20260811-retainer-3k"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
-  <script src="kpi-report.js?v=20260910-rm-referral-net"></script>
+  <script src="kpi-report.js?v=20260910-answer-rate"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20260811-hide-results"></script>
 </body>

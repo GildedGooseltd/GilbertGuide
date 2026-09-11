@@ -1699,6 +1699,7 @@
     "#30": { name: "Cost per Case", tracking: "Firm-wide — Search + LSA media + management retainer + HubSpot forms + Referral Sites ÷ new cases on complete months. Known stack only. Prior installment subscriptions ≥$20k YTD not fully visible. Not by channel." },
     "#31": { name: "Cost per signed case", tracking: "By channel when Lead Source on hire — spend ÷ signed cases." },
     "#32": { name: "Channel ROI", tracking: "Hold until measured signed ÷ leads per channel." },
+    "#33": { name: "Lead → case %", tracking: "Staging — archived on dash. Placeholder 7.3% from 9÷124 until measured cases ÷ #01 leads. Doc: parked/KPI-33-LEAD-TO-CASE.md" },
     "#23": { name: "Intake coverage / after-hours", tracking: "Partial — needs routing logs and after-hours disposition." },
     "#27": { name: "Ops backlog / open tasks", tracking: "Partial — HubSpot task queues when owners and due dates are used." },
     "#28": { name: "Avg case fee", tracking: "Clean — MyCase Client mean fee baseline." }
