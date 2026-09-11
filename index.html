@@ -3301,6 +3301,35 @@
       text-transform: uppercase;
       color: var(--gg-royal);
     }
+    .kpi-outlier-mark {
+      display: block;
+      margin-top: 0.12rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gg-royal);
+    }
+    .kpi-chart-table tbody tr:has(.kpi-outlier-mark) {
+      background: rgba(58, 26, 110, 0.1);
+      box-shadow: inset 3px 0 0 var(--gg-royal);
+    }
+    .kpi-chart-outlier-label {
+      fill: var(--gg-royal);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .kpi-chart-table td.kpi-td-missing {
+      color: var(--gg-negative);
+      background: color-mix(in srgb, var(--gg-negative) 10%, transparent);
+      font-weight: 700;
+    }
+    .kpi-cell-missing {
+      color: var(--gg-negative);
+      font-weight: 800;
+    }
     .kpi-chart-opp-label {
       fill: var(--gg-royal);
       font-size: 9px;
@@ -4188,8 +4217,25 @@
     .kpi-split-panel .kpi-chart-card > .kpi-status-corner,
     .kpi-split-panel .kpi-chart-card > .kpi-verified-mark,
     .kpi-split-panel .kpi-chart-card > .kpi-outdated-mark,
-    .kpi-split-panel .kpi-chart-card > .kpi-aug-updated-mark {
+    .kpi-split-panel .kpi-chart-card > .kpi-aug-updated-mark,
+    .kpi-section .kpi-chart-card > .kpi-status-corner,
+    .kpi-section .kpi-chart-card > .kpi-verified-mark,
+    .kpi-section .kpi-chart-card > .kpi-outdated-mark,
+    .kpi-section .kpi-chart-card > .kpi-aug-updated-mark,
+    .kpi-section .kpi-chart-card > .kpi-unverified-mark {
       display: none;
+    }
+    .kpi-section > .kpi-verified-mark,
+    .kpi-section > .kpi-unverified-mark {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.75rem;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .kpi-section > .kpi-help {
+      top: 0.65rem;
+      right: 2.1rem;
     }
     .kpi-split-panel .kpi-dash-card-flush {
       border: none; padding: 0.35rem 0 0; background: transparent; box-shadow: none;
@@ -6006,7 +6052,7 @@
   <script src="projects-data.js?v=20260811-retainer-3k"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
-  <script src="kpi-report.js?v=20260910-answer-rate"></script>
+  <script src="kpi-report.js?v=20260911-answer-avg"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20260811-hide-results"></script>
 </body>

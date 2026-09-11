@@ -194,7 +194,7 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 **Forbidden:** teal/cyan (`#00d4c4`, `#2dd4bf`, etc.) anywhere in the cockpit. `--gg-negative` only for negative deltas. Half-moon gauges in progress use the red → caution → positive rim gradient — never a solid green fill while behind target. Solid `--gg-positive` is only for celebrate / target hit. Target achievement is green, not gold.
 
-**Half-moon gauge format:** numeric value only at the inside base of the arc; no descriptive or target text inside/beneath the gauge. Keep both endpoint scale labels black (`#111`) in every state. Goal ticks are unlabeled; nearby title/stat copy carries the context.
+**Half-moon gauge format:** numeric value only at the inside base of the arc; no descriptive or target text inside/beneath the gauge. Keep both endpoint scale labels black (`#111`) in every state. Goal ticks are unlabeled; nearby title/stat copy carries the context. Revenue dial matches Lead Calls: progress rim while collected is under goal; solid positive only when collected hits the monthly goal.
 
 Agent rule: `[.cursor/rules/pav-law-kpi-charts.mdc](../../../../.cursor/rules/pav-law-kpi-charts.mdc)`
 
@@ -246,7 +246,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 - Keep Georgia body on the cockpit for memo/brief tone.
 - Keep chart series distinguishable (royal / blue / burnt / rose / plum / slate).
 - Shared box chrome: `--gg-box-border`, `--gg-box-shadow`, `--gg-head-accent` on section heads.
-- Use red only for negatives and unverified **✕** badges. Verified tiles and panels use **one** green check corner mark — never stack a second check on a nested chart card inside an already-verified panel.
+- Use red only for negatives and unverified **✕** badges. Verified tiles and panels use **one** green check corner mark — never stack a second check on a nested chart card inside an already-verified panel or Data `.kpi-section`. One `?` help control per owner: section help or chart help, not both on the same single-chart section.
 - Keep every KPI tile on its standard component surface. Status may change the written label, value color, or corner mark, never the tile border, left rule, background, or wash.
 - One job per section; collapsible KPI topics stay focused.
 
