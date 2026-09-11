@@ -422,7 +422,7 @@ window.PROJECT_DATA = {
       "tldr": "One HubSpot foundation so email, referrals, forms, and booking share the same contacts, stages, and reporting.",
       "valueAdded": [
         "One HubSpot foundation so email, referrals, forms, and booking share the same contacts, stages, and reporting.",
-        "Packages holiday email (SummerEmail), contact upload (HsContacts), pipeline (HsPipe), and LPs (HsLanding) under one CRM build",
+        "Packages holiday email (SummerEmail), Affirm financing email (AffirmEmail), contact upload (HsContacts), pipeline (HsPipe), and LPs (HsLanding) under one CRM build",
         "Stops duplicate fees looking like separate “email agencies”",
         "Makes OpsDash dashboard HubSpot rows possible once contacts export cleanly"
       ],
@@ -441,7 +441,8 @@ window.PROJECT_DATA = {
       ],
       "inProgressItems": [
         "HsContacts America / MyCase marketing contact pass",
-        "HsPipe speed-to-lead workflows live and measured"
+        "HsPipe speed-to-lead workflows live and measured",
+        "AffirmEmail Affirm Financing Email campaign"
       ],
       "abQuestions": [],
       "kpiRefs": [
@@ -455,17 +456,17 @@ window.PROJECT_DATA = {
       "estCostLabel": "$5,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 10000,
+      "feeEstimate": 10200,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "hubspot_foundation",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 5500,
       "feeEstimateNationalMid": 10000,
       "feeEstimateScope": {
-        "raw": 9.65,
+        "raw": 10.9,
         "parts": {
           "valueAdd": 4,
-          "tasks": 2,
+          "tasks": 3,
           "completed": 3,
           "info": 0,
           "ab": 0,
@@ -476,8 +477,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 4500,
-      "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×1.21 (9.65 units) · complexity ×1.1"
+      "feeEstimateDelta": 4700,
+      "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×1.23 (10.9 units) · complexity ×1.1"
     },
     {
       "priority": 4,
@@ -1817,7 +1818,8 @@ window.PROJECT_DATA = {
         "Long-tail questions become organic consult paths.",
         "Internal links from posts to DUI, military, and traffic pages",
         "Results compound over 8–12 weeks",
-        "Titles and meta rewritten for search intent, not generic firm copy"
+        "Titles and meta rewritten for search intent, not generic firm copy",
+        "Top 2026 landings already include protection orders, DUI/DWAI, and the Denver photo-radar post — the `/blog` hub itself is not the traffic source"
       ],
       "valueIcons": [
         "leads",
@@ -1834,16 +1836,16 @@ window.PROJECT_DATA = {
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3500,
+      "feeEstimate": 3600,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "blog_seo",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 4000,
       "feeEstimateScope": {
-        "raw": 4.48,
+        "raw": 5.48,
         "parts": {
-          "valueAdd": 4,
+          "valueAdd": 5,
           "tasks": 0,
           "completed": 1,
           "info": 0,
@@ -1855,8 +1857,79 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1000,
-      "feeEstimateNote": "blog seo lane · local mid $2,500 · national mid $4,000 · scope ×1.09 (4.48 units) · complexity ×1"
+      "feeEstimateDelta": 1100,
+      "feeEstimateNote": "blog seo lane · local mid $2,500 · national mid $4,000 · scope ×1.12 (5.48 units) · complexity ×1"
+    },
+    {
+      "priority": 21,
+      "fee": 0,
+      "category": "Creative / Paid Media",
+      "campaignType": "Search + Display creative",
+      "status": "available",
+      "publishStatus": "unpublished",
+      "estimatedLeads": "Stronger RSA, sitelink, and video response on live campaigns",
+      "keywords": [
+        "creative",
+        "rsa",
+        "sitelinks",
+        "callouts",
+        "pmax",
+        "video",
+        "trueview",
+        "assets",
+        "ads",
+        "design",
+        "next round"
+      ],
+      "id": "AdCreative",
+      "title": "Next-Round Ad Creative",
+      "tldr": "Next design round for Google Ads creative, driven by what already ran, not a new media channel.",
+      "valueAdded": [
+        "Next design round for Google Ads creative, driven by what already ran, not a new media channel.",
+        "Keep winners: sitelinks, callouts, and RSA lines that already carry impressions",
+        "Rebuild or replace Poor-strength RSA and weak PMax asset groups before more spend",
+        "Refresh DV video from the TrueView snapshot instead of guessing new scripts",
+        "Production path stays the creative pipeline: Pav Law military images vs NTGUILT separately"
+      ],
+      "valueIcons": [
+        "leads",
+        "efficiency",
+        "creative"
+      ],
+      "inProgressItems": [
+        "Rank RSA headlines and descriptions from `Ad report (11).csv` before writing new copy",
+        "Rank sitelinks and callouts from `Asset association report (7).csv`",
+        "Rank PMax / asset-group strength from `Asset groups report.csv`",
+        "Decide whether DV video gets a new cut or stays as a Demand Gen-only asset"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [
+        "#07",
+        "#14"
+      ],
+      "feeEstimate": 5100,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "display_search_launch",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 3100,
+      "feeEstimateNationalMid": 4800,
+      "feeEstimateScope": {
+        "raw": 10.91,
+        "parts": {
+          "valueAdd": 5,
+          "tasks": 4,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 2,
+          "descUnits": 0.21
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.23 (10.91 units) · complexity ×1.08"
     },
     {
       "priority": 21,
@@ -2067,6 +2140,89 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1400,
       "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×1.11 (4.95 units) · complexity ×1.1"
+    },
+    {
+      "priority": 23,
+      "fee": 2200,
+      "category": "Paid Media",
+      "campaignType": "Seasonal Search / Display creative",
+      "status": "available",
+      "publishStatus": "published",
+      "estimatedLeads": "Estimate after image set + winter go-live lock",
+      "keywords": [
+        "winter",
+        "driving",
+        "snow",
+        "ice",
+        "seasonal",
+        "ntguilt",
+        "tickets",
+        "dui",
+        "colorado",
+        "images",
+        "google",
+        "ads",
+        "search",
+        "display"
+      ],
+      "id": "WinterAds",
+      "title": "Winter Driving Images — NTGUILT Seasonal Ads",
+      "tldr": "Winter driving image set and seasonal ad flight for NTGUILT: snow/ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic.",
+      "valueAdded": [
+        "Winter driving image set and seasonal ad flight for NTGUILT: snow/ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic.",
+        "Produce Search-safe winter stills for `HS: NTGUILT` and Display heroes that stay on-theme with plate/driver converters",
+        "Plan go-live ≥1 month before projected winter spend so creative is ready when ice hits Front Range corridors",
+        "Pairs with live HS: NTGUILT Search; does not restart ended Campaign Total twins",
+        "Separate from HolidayAds Oktoberfest/holiday windows and SummerAds college Bend & Snap"
+      ],
+      "valueIcons": [
+        "leads",
+        "efficiency",
+        "intake",
+        "creative"
+      ],
+      "inProgressItems": [
+        "Card added 2026-09-03 · winter driving images for NTGUILT queued",
+        "Local keep pack for now: `ntguilt/assets/ad-images-by-campaign/hs-ntguilt-recommended/` converters only",
+        "Do not reuse incomplete letterboxed plate tests or squished Logo Stacked landscape",
+        "New winter stills not on disk yet · produce via creative pipeline NTGUILT lane · full frame · correct logo proportions · then attach"
+      ],
+      "informationNeeded": [
+        "Target go-live week for first freeze / holiday corridor spend",
+        "How many new winter stills vs reuse of current plate converters with winter overlays",
+        "Primary landing: ntguilt.com vs practice-area deep links"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [
+        "#14"
+      ],
+      "shortTitle": "Winter Driving Ads",
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 5200,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "display_search_launch",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 3100,
+      "feeEstimateNationalMid": 4800,
+      "feeEstimateScope": {
+        "raw": 12.3,
+        "parts": {
+          "valueAdd": 5,
+          "tasks": 4,
+          "completed": 0,
+          "info": 3,
+          "ab": 0,
+          "kpis": 1,
+          "descUnits": 0.3
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 3000,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.25 (12.3 units) · complexity ×1.08"
     },
     {
       "priority": 24,
@@ -2285,6 +2441,75 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 4200,
       "feeEstimateNote": "audit finance lane · local mid $2,500 · national mid $4,250 · scope ×1.36 (23.06 units) · complexity ×1.06"
+    },
+    {
+      "priority": 45,
+      "fee": 0,
+      "category": "Email",
+      "campaignType": "Client Email",
+      "status": "available",
+      "publishStatus": "published",
+      "parentId": "HsSetup",
+      "estimatedLeads": "Past-client and open-balance list · payment plan inquiries",
+      "keywords": [
+        "affirm",
+        "financing",
+        "payment plan",
+        "email",
+        "hubspot",
+        "fee",
+        "deposit",
+        "past client"
+      ],
+      "id": "AffirmEmail",
+      "title": "Affirm Financing Email Campaign",
+      "tldr": "Explains Affirm and when it can help clients start representation without paying the full fee at once",
+      "valueAdded": [
+        "Explains Affirm and when it can help clients start representation without paying the full fee at once",
+        "HubSpot email to past clients and open-balance contacts with a clear next step to Romina or intake",
+        "Sets expectations: Affirm approval is not guaranteed · each checkout is underwritten · law-fee eligibility depends on merchant setup",
+        "Packaged under HsSetup HubSpot setup — not a standalone email fee"
+      ],
+      "valueIcons": [
+        "retainer",
+        "leads",
+        "crm",
+        "hubspot",
+        "finance",
+        "intake"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [
+        "#06",
+        "#09",
+        "#20"
+      ],
+      "shortTitle": "Affirm Email",
+      "estCostLabel": "incl. HsSetup",
+      "paymentPlanLabel": "—",
+      "feeEstimate": 2000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "email_campaign",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1600,
+      "feeEstimateNationalMid": 2100,
+      "feeEstimateScope": {
+        "raw": 5.26,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 3,
+          "descUnits": 0.21
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": true,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "email campaign lane · local mid $1,550 · national mid $2,100 · scope ×1.11 (5.26 units) · complexity ×1"
     },
     {
       "priority": 50,

@@ -44,6 +44,6 @@ Agent steps every month update:
 
 Examples: Sep Leads with no Call details / LSA / HubSpot → `—` + red. Sep New Cases `0` from Contact_09-01 → green.
 
-Financial Breakdown on Data uses the same rule. Cost per Case and Avg Case Value go green when the Jun–Jul stack / ledger÷cases numbers are on file. Method caveats stay in the note text — they do not force a red mark. Missed Opportunity is green only when `phoneByMonth` has the selected month; otherwise `—` + red.
+Financial Breakdown on Data uses the same rule. Multi-month averages such as Avg Case Value and Cost per Case are green only when the current tile month is inside that complete-month stack. A May–Aug average while the dash period is September stays red. Method caveats stay in the note text. They do not force a red mark by themselves. Missed Opportunity #19 is staged in DASHBOARD-STAGING.md.
 
 See [`validate-before-claim.mdc`](validate-before-claim.mdc).

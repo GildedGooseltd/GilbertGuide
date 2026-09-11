@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260910-rm-referral-net";
+  const RENDER_VER = "20260910-answer-rate";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -22,8 +22,8 @@
       fields: "Contacts = Messages + round(Calls × 40% answered) · Jun 2 · Jul 6 · Aug 10 · Sep* 2 · raw totals Jun 2 · Jul 10 · Aug 16 · Sep 5"
     },
     "#02": {
-      file: "Downloads/Contact_09-10-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-10/new-cases-by-month.csv · export 2026-09-10",
-      fields: "Contact group=Client · Created date · Jun 36 · Jul 35 · Aug 20 full · Sep* 4 through 2026-09-10"
+      file: "Downloads/Contact_09-10-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-10/new-cases-by-month.csv · new-cases-by-practice-month.csv · export 2026-09-10",
+      fields: "Contact group=Client · Created date · practice mix fuzzy from Cases (practice area) · Jun 36 · Jul 35 · Aug 20 · Sep* 4 = DV 1 · Assault 1 · Traffic/DUI 1 · Other 1"
     },
     "#07": {
       file: "account_activities_202609.csv · Home Services Ads activity · Sep 1–30 window on export mtime 2026-09-08 · recheck 2026-09-10",
@@ -50,19 +50,23 @@
       fields: "GBP 4.9 · 121 reviews · Yelp 4.6 · 7 reviews · FindLaw 0 (no firm reviews)"
     },
     "#19": {
-      file: "Staging — DASHBOARD-STAGING-MISSED-OPPORTUNITY.md · Call details (5) Sep 1–10 still in phoneByMonth",
+      file: "Staging — DASHBOARD-STAGING.md · Missed Opportunity · Call details (5) Sep 1–10 still in phoneByMonth",
       fields: "Sep* snapshot · $6,200/mo · quarter $35,133 · year $56,212 · weekday 15/26 missed · LSA uncharged 11/15 · × 7.3% × $5,662"
     },
     "#21": {
-      file: "Call details (5).csv Sep 1–10 · Received 11 / 26 = 42%",
+      file: "Call details (5).csv Sep 1–10 · Received 11 / 26 = 42% · Data tab Answer rate chart",
       fields: "Jun answered 100/138 = 72% · Jul 73/131 = 56% · Aug* 13/25 = 52% · Sep* 11/26 = 42%"
+    },
+    "answer-rate": {
+      file: "Call details stack in phoneByMonth · Jun Call details.csv · Jul/Aug* Call details (4) through Aug 14 · Sep* Call details (5) Sep 1–10",
+      fields: "Answer % = Received ÷ Calls · May 67% · Jun 72% · Jul 56% · Aug* 52% · Sep* 42% · target ≥ 90%"
     },
     "#28": {
       file: "Ad Reports/exports/mycase/as-of-2026-09-01/fee-means-summary.csv · fee-means-by-practice.csv · export 2026-09-01 · rechecked 2026-09-08",
       fields: "Client + fee mean $5,662 · n=138 · Contact_09-01-2026 aggregates · no newer Contact fee export 2026-09-08"
     },
     "#30": {
-      file: "Staging — DASHBOARD-STAGING-COST-PER-CASE.md · model still hydrates for Avg Case Value notes",
+      file: "Staging — DASHBOARD-STAGING.md · Cost per Case · model still hydrates for Avg Case Value notes",
       fields: "May–Aug complete · $67,017 media + $12,000 management + $3,000 HubSpot + $6,000 Referral Sites ÷ 113 cases = $779/case · known stack only · prior installments ≥$20k YTD not fully visible"
     },
     "#33": {
@@ -119,8 +123,8 @@
     },
     "#02": {
       title: "#02 New Cases",
-      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months. August 20 is full month from Contact_09-10-2026. September* is 4 through Created 2026-09-10. Case target exists so monthly revenue can clear $100k. Gauge only — no On track or Behind label.",
-      formula: "Count of Client contacts with Created date in month. Target = floor($100k ÷ revenue/case) + 1 so monthly revenue clears $100k."
+      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months. August 20 is full month from Contact_09-10-2026. September* is 4 through Created 2026-09-10. Track table is practice mix for that month from Cases (practice area) text. Fuzzy buckets only. Case target exists so monthly revenue can clear $100k. Gauge only — no On track or Behind label.",
+      formula: "Count of Client contacts with Created date in month. Practice rows = same contacts bucketted from Cases (practice area). Target = floor($100k ÷ revenue/case) + 1 so monthly revenue clears $100k."
     },
     "#07": {
       title: "#07 Spend Waste",
@@ -139,13 +143,18 @@
     },
     "#19": {
       title: "#19 Missed Opportunity",
-      desc: "Staged off the Data tab. Estimated potential revenue not earned from unanswered Search calls. Shows estimated money lost for the tile month, the calendar quarter, and YTD, then the missed-call rate split weekday vs weekend against the ≤10% target. June locked from Call details.csv Jul 11. July from Call details (1)/(4). August* from Call details (4) through Aug 14. September* from Call details (5) Sep 1–10. Weekday/weekend splits come from Start time day-of-week in those same pulls and each pair sums to the month total. Snapshot and restore notes: DASHBOARD-STAGING-MISSED-OPPORTUNITY.md.",
+      desc: "Staged off the Data tab. Estimated potential revenue not earned from unanswered Search calls. Shows estimated money lost for the tile month, the calendar quarter, and YTD, then the missed-call rate split weekday vs weekend against the ≤10% target. June locked from Call details.csv Jul 11. July from Call details (1)/(4). August* from Call details (4) through Aug 14. September* from Call details (5) Sep 1–10. Weekday/weekend splits come from Start time day-of-week in those same pulls and each pair sums to the month total. Snapshot and restore notes: DASHBOARD-STAGING.md · Missed Opportunity.",
       formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,662). Month / quarter / year sum missed calls in that window from phoneByMonth. Uncharged LSA calls are not in this number: filter the LSA inbox to not charged, check each against the phone log for a callback within 48 hours, and count only never-reached calls as lost."
     },
     "#21": {
       title: "#21 Answered Calls",
-      desc: "Share of Search call details that were answered vs missed. June 72% from Call details.csv. July 56% and August* 52% from Call details (4) through Aug 14.",
+      desc: "Share of Search call details that were answered vs missed. June 72% from Call details.csv. July 56% and August* 52% from Call details (4) through Aug 14. September* 42% from Call details (5) Sep 1–10. Monthly series lives on the Data tab Answer rate tile.",
       formula: "Answered ÷ (Answered + Missed). Target ≥ 90%."
+    },
+    "answer-rate": {
+      title: "Answer rate · Search calls",
+      desc: "Monthly Search Call details answer rate. Received ÷ Calls. Target line 90%. May–Jul full months. August* through Aug 14 from Call details (4). September* Sep 1–10 from Call details (5).",
+      formula: "Answer % = Received ÷ Calls × 100. Same stack as #21 · phoneByMonth."
     },
     "#03": {
       title: "#03 Auto Cases",
@@ -185,7 +194,7 @@
     },
     "#30": {
       title: "#30 Cost per Case",
-      desc: "Staged off the Data tab. Firm-wide marketing cost to sign one new case. Not split by channel. Only complete months with a full lead stack — Sep* excluded. Cases = MyCase Created. Known stack = Search + LSA media + $3,000/mo digital management + $1,000/mo HubSpot forms fee from Jun onward + $1,500/mo Referral Sites. Total cost is higher: prior payments and subscriptions still in monthly installments are not fully visible. At least $20k this year is not paid off. Final amount unknown. Snapshot and restore notes: DASHBOARD-STAGING-COST-PER-CASE.md.",
+      desc: "Staged off the Data tab. Firm-wide marketing cost to sign one new case. Not split by channel. Only complete months with a full lead stack — Sep* excluded. Cases = MyCase Created. Known stack = Search + LSA media + $3,000/mo digital management + $1,000/mo HubSpot forms fee from Jun onward + $1,500/mo Referral Sites. Total cost is higher: prior payments and subscriptions still in monthly installments are not fully visible. At least $20k this year is not paid off. Final amount unknown. Snapshot and restore notes: DASHBOARD-STAGING.md · Cost per Case.",
       formula: "Cost per case = media + management + HubSpot + Referral Sites ÷ new cases. Known stack only. Does not include prior installment subscriptions."
     },
     "#33": {
@@ -235,8 +244,8 @@
     },
     "cases-yoy": {
       title: "YoY % change · comparable months",
-      desc: "Same calendar month 2025 vs 2026 new cases on the Data tab under Cases created. Jun–Jul YoY % spikes from soft 2025 bases — read the count columns beside %. Do not average YoY % into one Key metrics tile without base-month labels.",
-      formula: "YoY % = (2026 cases − 2025 cases) ÷ 2025 cases × 100. Jan–Aug complete months only. Sep* held out until the month is complete."
+      desc: "Same calendar month 2025 vs 2026 new cases on the Data tab under Cases created. Jun–Jul YoY % spikes from soft 2025 bases — read the count columns beside %. Chart scale ends at −100% on the downside. Do not average YoY % into one Key metrics tile without base-month labels.",
+      formula: "YoY % = (2026 cases − 2025 cases) ÷ 2025 cases × 100. Jan–Aug complete months only. Sep* held out until the month is complete. Negative axis floor = −100%."
     },
     "roas-monthly": {
       title: "Return on marketing spend · monthly",
@@ -426,13 +435,13 @@
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
       { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false },
       { id: "#02", label: "New Cases", value: "4", target: "≥ 24", mom: null, count: 4, verified: true, hit: false, alert: true, gauge: true, augUpdated: true },
-      /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING-MISSED-OPPORTUNITY.md */
+      /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Missed Opportunity */
       { id: "#19", label: "Missed Opportunity", value: "—", target: "$0", mom: null, verified: false, alert: false, lostTracker: true, augUpdated: false, archived: true },
       { id: "#21", label: "Answered Calls", value: "—", target: "≥ 90%", mom: null, verified: false, alert: false, gauge: true, goal: true, archived: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
       { id: "#28", label: "Avg case fee", value: "$5,662", target: "MyCase mean", mom: null, verified: true },
-      /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING-COST-PER-CASE.md */
+      /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Cost per Case */
       { id: "#30", label: "Cost per Case", value: "—", target: "", mom: null, verified: true, archived: true },
       /* staging — restore by removing archived: true · work doc parked/KPI-33-LEAD-TO-CASE.md */
       { id: "#33", label: "Lead → case %", value: "7.3%", target: "Measure signed ÷ leads", mom: null, verified: false, archived: true },
@@ -668,6 +677,37 @@
       { name: "Traffic", jun: 2, ytd: 6 },
       { name: "DV", jun: 1, ytd: 3 }
     ],
+    /* Client Created practice mix · Contact_09-10-2026 · fuzzy Cases (practice area) · aggregates only */
+    newCasesByPractice: {
+      Jun: [
+        { name: "DV", n: 2 },
+        { name: "Assault", n: 5 },
+        { name: "Theft", n: 2 },
+        { name: "Traffic / DUI", n: 12 },
+        { name: "Other", n: 15 }
+      ],
+      Jul: [
+        { name: "DV", n: 11 },
+        { name: "Assault", n: 4 },
+        { name: "Sex offense", n: 1 },
+        { name: "Traffic / DUI", n: 7 },
+        { name: "Other", n: 12 }
+      ],
+      Aug: [
+        { name: "DV", n: 9 },
+        { name: "Assault", n: 3 },
+        { name: "Sex offense", n: 2 },
+        { name: "Theft", n: 3 },
+        { name: "Traffic / DUI", n: 2 },
+        { name: "Other", n: 1 }
+      ],
+      Sep: [
+        { name: "DV", n: 1 },
+        { name: "Assault", n: 1 },
+        { name: "Traffic / DUI", n: 1 },
+        { name: "Other", n: 1 }
+      ]
+    },
     bhi: { value: 71, target: 100, mom: "−3%" },
     avgDeposit: { current: 400, target: 700 },
     duiGoal: (function () {
@@ -2006,7 +2046,9 @@
 
   /**
    * Locked chart layout for every Guide tab:
-   * 2-column grid of chart cards; each card = title · plot · optional legend · detail table below.
+   * chartPairGridHtml = 2 chart cards per row where paired.
+   * Each card = title · plot · optional legend · detail table.
+   * Data tab CSS places plot left and detail table right inside `.kpi-chart-split`.
    * Pass chartBlock() HTML only. Odd leftovers stay in the left cell of the next row.
    */
   function chartPairGridHtml(...blocks) {
@@ -2018,7 +2060,7 @@
   /**
    * Required chart card title — one line, no subhead.
    * Brand: REPORTING-BRAND-GUIDE §7 + BRANDING-LAYOUT chart pattern.
-   * Required: title · plot · detail table under the graph. Never a plot without a breakdown table.
+   * Required: title · plot · detail table. Never a plot without a breakdown table.
    */
   function chartHeadHtml(title) {
     return `<div class="kpi-chart-title-large"><strong>${escapeHtml(title)}</strong></div>`;
@@ -2039,12 +2081,15 @@
     const badge = typeof opts.verified === "boolean" ? statusCorner(opts.verified) : "";
     const wipClass = opts.wip ? " kpi-chart-wip" : "";
     const extraClass = opts.cardClass ? ` ${opts.cardClass}` : "";
+    const plot = `<div class="kpi-chart-plot">${opts.chart || ""}${legend}</div>`;
+    const body = table
+      ? `<div class="kpi-chart-split">${plot}<div class="kpi-chart-desc">${table}</div></div>`
+      : plot;
     const card = `<div class="kpi-chart-card${wipClass}${extraClass}"${focus}>
       ${badge}
       ${help}
       ${head}
-      <div class="kpi-chart-plot">${opts.chart || ""}${legend}</div>
-      ${table}
+      ${body}
     </div>`;
     if (!opts.wip) return card;
     const note = opts.wipNote
@@ -2453,12 +2498,14 @@
     if (!pack.channels.length) return "";
     const total = fmtAdSpend(pack.total);
     const fresh = tilePeriodFresh(true, true, total);
-    return `<button type="button" class="kpi-stat-card${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="ad-spend-by-channel" aria-label="Ad spend ${total} · ${pack.meta.label}">
+    return `<button type="button" class="kpi-goal-card${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="ad-spend-by-channel" aria-label="Ad spend ${total} · ${pack.meta.label}">
       ${periodFreshMark(true, true, total)}
       ${kpiHelpBtn("ad-spend-by-channel")}
-      ${kpiCardTitle("Ad Spend")}
-      <span class="kpi-stat-subhead">${escapeHtml(pack.meta.label)}</span>
-      <span class="kpi-stat-val">${total}</span>
+      <div class="kpi-goal-visual">
+        ${kpiCardTitle("Ad Spend")}
+        <span class="kpi-stat-subhead">${escapeHtml(pack.meta.label)}</span>
+        <span class="kpi-stat-val">${total}</span>
+      </div>
       ${goalTrackRows(pack.channels.map(c => [escapeHtml(c.label), fmtAdSpend(c.spend)]))}
     </button>`;
   }
@@ -3379,8 +3426,8 @@
       ${kpiSectionStaticHead("Finances", ledgerHint ? `Trust activity through ${ledgerHint}` : "Monthly revenue")}
       <div class="kpi-section-body">
         ${cashCollectedYearToggleHtml()}
-        ${chartPairGridHtml(
-          chartBlock({
+        <div class="data-chart-table-stack">
+          ${chartBlock({
             title: year === 2026 ? "Monthly revenue · 2026 YTD" : "Monthly revenue · 2025",
             chart: cashCollectedChart(chartRows),
             legend: `<ul class="kpi-stack-legend" aria-label="Cash chart marks">
@@ -3389,9 +3436,9 @@
               ${legendGoal}
             </ul>`,
             table: cashCollectedTable(tableRows, String(year))
-          }),
-          roasMonthlyPanelHtml()
-        )}
+          })}
+          ${roasMonthlyPanelHtml()}
+        </div>
         ${sourceFootnote("financial")}
       </div>
     </section>`;
@@ -4121,6 +4168,13 @@
     ).join("")}</tbody></table>`;
   }
 
+  function newCasesPracticeTrackHtml(monthKey) {
+    const key = String(monthKey || "").replace(/\*$/, "");
+    const rows = (DATA.newCasesByPractice && DATA.newCasesByPractice[key]) || [];
+    if (!rows.length) return "";
+    return goalTrackRows(rows.map(r => [escapeHtml(r.name), String(Number(r.n) || 0)]));
+  }
+
   function placeholderGoalCardHtml() {
     return `<button type="button" class="kpi-goal-card kpi-goal-placeholder kpi-outdated" data-kpi-focus="#GOAL3" disabled aria-disabled="true">
       ${outdatedMark()}
@@ -4701,15 +4755,20 @@
               ["Pav.Law website", n(ch && ch.pavLawWebsite != null ? ch.pavLawWebsite : 0)]
             ]);
           })()
+        : k.id === "#02"
+        ? newCasesPracticeTrackHtml(periodToChannelMonth(DATA.period))
         : "";
-      return `<button type="button" class="kpi-stat-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
+      /* Monthly KPIs grid chrome = Revenue tile · always kpi-goal-card, never plain kpi-stat-card. */
+      return `<button type="button" class="kpi-goal-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
         ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
         ${kpiHelpBtn(k.id)}
-        ${kicker}
-        ${icon}
-        ${kpiCardTitle(k.label)}
-        ${metricWithDeltaHtml(gauge, k.id === "#01" || k.id === "#02" ? null : k.mom)}
-        ${goalLine ? `<span class="kpi-stat-label">${goalLine}</span>` : ""}
+        <div class="kpi-goal-visual">
+          ${kicker}
+          ${icon}
+          ${kpiCardTitle(k.label)}
+          ${metricWithDeltaHtml(gauge, k.id === "#01" || k.id === "#02" ? null : k.mom)}
+          ${goalLine ? `<span class="kpi-stat-label">${goalLine}</span>` : ""}
+        </div>
         ${channelTrack}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
         ${foot}
@@ -4719,26 +4778,30 @@
     if (k.targetBar) {
       const targetNum = parseTargetNum(k.target);
       const hit = meetsTarget(parseMetricNum(k.value), targetNum, k.lowerIsBetter !== false);
-      return `<button type="button" class="kpi-stat-card kpi-stat-target-bar${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
+      return `<button type="button" class="kpi-goal-card kpi-stat-target-bar${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
         ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
         ${kpiHelpBtn(k.id)}
-        ${icon}
-        ${kpiCardTitle(k.label)}
-        ${metricWithDeltaHtml(targetBarChartForKpi(k), k.mom)}
-        <span class="kpi-stat-label">Avg ${escapeHtml(k.value)} · ${escapeHtml(targetLine)}</span>
+        <div class="kpi-goal-visual">
+          ${icon}
+          ${kpiCardTitle(k.label)}
+          ${metricWithDeltaHtml(targetBarChartForKpi(k), k.mom)}
+          <span class="kpi-stat-label">Avg ${escapeHtml(k.value)} · ${escapeHtml(targetLine)}</span>
+        </div>
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
         ${foot}
         ${kpiRefMark(k.id)}
       </button>`;
     }
-    return `<button type="button" class="kpi-stat-card${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
+    return `<button type="button" class="kpi-goal-card${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
       ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
       ${kpiHelpBtn(k.id)}
-      ${icon}
-      ${kpiCardTitle(k.label)}
-      ${kicker}
-      ${metricWithDeltaHtml(`<span class="kpi-stat-val">${k.value}</span>`, k.mom)}
-      <span class="kpi-stat-label">${targetLine}</span>
+      <div class="kpi-goal-visual">
+        ${icon}
+        ${kpiCardTitle(k.label)}
+        ${kicker}
+        ${metricWithDeltaHtml(`<span class="kpi-stat-val">${k.value}</span>`, k.mom)}
+        <span class="kpi-stat-label">${targetLine}</span>
+      </div>
       ${k.hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
       ${foot}
       ${kpiRefMark(k.id)}
@@ -5002,7 +5065,7 @@
   }
 
   function financialBreakdownTilesHtml() {
-    /* Avg Case Value staged 09/10/2026 · DASHBOARD-STAGING-AVG-CASE-VALUE.md */
+    /* Avg Case Value staged 09/10/2026 · DASHBOARD-STAGING.md */
     const tiles = []
       .filter(Boolean)
       .map(html => `<div class="kpi-tile-with-projects">${html}</div>`)
@@ -5417,8 +5480,10 @@
     rows = chronological(rows || []);
     if (!rows.length) return "";
     const vals = rows.map(r => Number(r.yoyPct) || 0);
-    const maxAbs = Math.max(...vals.map(v => Math.abs(v)), 1);
-    const axisMax = chartAxisMax([maxAbs]);
+    /* Negative scale ends at −100%. Positive scale still clears the highest YoY bar. */
+    const axisMin = -100;
+    const posMax = Math.max(...vals.filter(v => v > 0), 1);
+    const axisMax = chartAxisMax([posMax]);
     const w = Math.max(720, rows.length * 72 + 110);
     const h = 290;
     const pad = { l: 58, r: 22, t: 28, b: 48 };
@@ -5426,11 +5491,18 @@
     const plotH = h - pad.t - pad.b;
     const slot = plotW / rows.length;
     const barW = Math.min(42, slot * 0.58);
-    const zeroY = pad.t + plotH / 2;
-    const halfH = plotH / 2;
-    const tickVals = [-axisMax, -Math.round(axisMax / 2), 0, Math.round(axisMax / 2), axisMax];
-    const ticks = tickVals.map(val => {
-      const y = zeroY - (halfH * val) / axisMax;
+    const span = axisMax - axisMin;
+    const yFor = val => {
+      const clamped = Math.max(axisMin, Math.min(axisMax, Number(val) || 0));
+      return pad.t + plotH * (1 - (clamped - axisMin) / span);
+    };
+    const zeroY = yFor(0);
+    const tickVals = [axisMin, Math.round(axisMin / 2), 0];
+    const posStep = axisMax >= 200 ? Math.round(axisMax / 2) : Math.round(axisMax / 2) || axisMax;
+    if (posStep > 0 && posStep < axisMax) tickVals.push(posStep);
+    tickVals.push(axisMax);
+    const ticks = [...new Set(tickVals)].sort((a, b) => a - b).map(val => {
+      const y = yFor(val);
       return `<g>
         <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
         <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}%</text>
@@ -5438,9 +5510,10 @@
     }).join("");
     const bars = rows.map((r, i) => {
       const pct = Number(r.yoyPct) || 0;
-      const bh = Math.max(4, (halfH * Math.abs(pct)) / axisMax);
+      const y1 = yFor(pct);
+      const y = Math.min(zeroY, y1);
+      const bh = Math.max(4, Math.abs(zeroY - y1));
       const x = pad.l + i * slot + (slot - barW) / 2;
-      const y = pct >= 0 ? zeroY - bh : zeroY;
       const fill = pct >= 0 ? "var(--gg-positive)" : "var(--gg-negative)";
       const label = `${pct > 0 ? "+" : ""}${pct}%`;
       const labelY = pct >= 0 ? y - 8 : y + bh + 14;
@@ -5450,7 +5523,7 @@
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="YoY percent change in new cases, comparable months Jan through Aug">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="YoY percent change in new cases, comparable months Jan through Aug, scale from negative 100 percent to positive peak">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}
       <line x1="${pad.l}" y1="${zeroY}" x2="${w - pad.r}" y2="${zeroY}" stroke="var(--gg-brown)" stroke-width="1.5"/>
@@ -5642,6 +5715,129 @@
     });
   }
 
+  function answerRateRows() {
+    const phone = DATA.phoneByMonth || {};
+    const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
+    const order = ["May", "Jun", "Jul", "Aug", "Sep"];
+    const partial = { Aug: true, Sep: true };
+    return order.filter(k => phone[k]).map(k => {
+      const p = phone[k] || {};
+      const calls = Number(p.calls) || 0;
+      const received = Number(p.received) || 0;
+      const missed = Number(p.missed) || 0;
+      const answeredPct = p.answeredPct != null
+        ? Number(p.answeredPct)
+        : (calls ? Math.round((received / calls) * 100) : null);
+      return {
+        month: partial[k] ? `${k}*` : k,
+        key: k,
+        calls,
+        received,
+        missed,
+        answeredPct,
+        target
+      };
+    });
+  }
+
+  function answerRateChart(rows) {
+    const plot = chronological((rows || []).filter(r => r.answeredPct != null));
+    if (!plot.length) return "";
+    const target = (plot[0] && plot[0].target) || 90;
+    const max = 100;
+    const w = Math.max(720, plot.length * 72 + 110);
+    const h = 290;
+    const pad = { l: 58, r: 22, t: 28, b: 48 };
+    const plotW = w - pad.l - pad.r;
+    const plotH = h - pad.t - pad.b;
+    const slot = plotW / plot.length;
+    const barW = Math.min(42, slot * 0.58);
+    const targetY = pad.t + plotH * (1 - target / max);
+    const ticks = [0, 25, 50, 75, 100].map(val => {
+      const y = pad.t + plotH * (1 - val / max);
+      return `<g>
+        <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
+        <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${val}%</text>
+      </g>`;
+    }).join("");
+    const bars = plot.map((r, i) => {
+      const v = Number(r.answeredPct) || 0;
+      const bh = Math.max(4, (plotH * v) / max);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = pad.t + plotH - bh;
+      const hit = v >= target;
+      const fill = hit ? "var(--gg-positive)" : "var(--gg-negative)";
+      return `<g>
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"/>
+        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total" style="fill:${fill}">${v}%</text>
+        <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
+      </g>`;
+    }).join("");
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Search call answer rate by month with ${target} percent target">
+      <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
+      ${ticks}
+      <line x1="${pad.l}" y1="${targetY}" x2="${w - pad.r}" y2="${targetY}" stroke="var(--gg-brown)" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <text x="${w - pad.r}" y="${targetY - 6}" text-anchor="end" class="kpi-chart-axis">target ${target}%</text>
+      ${bars}
+    </svg>`;
+  }
+
+  function answerRateTable(rows) {
+    const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
+    return kpiDetailTable(
+      ["Month", "Answer %", "Received", "Missed", "Calls", `vs ${target}%`],
+      newestFirst(rows || []).map(r => {
+        const pct = r.answeredPct;
+        const vs = pct == null
+          ? "—"
+          : pct >= target
+            ? `+${pct - target} pp`
+            : `${pct - target} pp`;
+        return [
+          escapeHtml(r.month),
+          pct == null ? "—" : `${pct}%`,
+          String(r.received),
+          String(r.missed),
+          String(r.calls),
+          vs
+        ];
+      })
+    );
+  }
+
+  function answerRatePanelHtml() {
+    const rows = answerRateRows();
+    if (!rows.length) return "";
+    const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
+    return chartBlock({
+      helpId: "answer-rate",
+      focus: "#21",
+      verified: true,
+      title: "Answer rate · Search calls",
+      chart: answerRateChart(rows),
+      legend: `<ul class="kpi-stack-legend" aria-label="Answer rate marks">
+        <li><span class="kpi-stack-swatch" style="background:var(--gg-positive)" aria-hidden="true"></span><span>At or above ${target}% target</span></li>
+        <li><span class="kpi-stack-swatch" style="background:var(--gg-negative)" aria-hidden="true"></span><span>Below ${target}% target</span></li>
+      </ul>`,
+      table: `${answerRateTable(rows)}${sourceFootnote("answer-rate")}`
+    });
+  }
+
+  function answerRateDataSectionHtml() {
+    const panel = answerRatePanelHtml();
+    if (!panel) return "";
+    return `<section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-answer-rate" data-feedback-label="Answer rate">
+      ${statusCorner(true)}
+      ${kpiHelpBtn("answer-rate")}
+      ${kpiSectionStaticHead("Answer rate", "Search Call details · target ≥ 90%")}
+      <div class="kpi-section-body">
+        <div class="data-chart-table-stack">
+          ${panel}
+        </div>
+      </div>
+    </section>`;
+  }
+
   function avgDepositPanelHtml() {
     const depositHit = meetsTarget(DATA.avgDeposit.current, DATA.avgDeposit.target, false);
     return `<div class="kpi-dash-card kpi-dash-target-bar" data-kpi-focus="#20">
@@ -5743,12 +5939,16 @@
     el.innerHTML = `
       ${financialBreakdownTilesHtml()}
       ${cashCollectedDataSectionHtml()}
+      ${answerRateDataSectionHtml()}
       <section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-cases-yoy-fee" data-feedback-label="Cases YoY and fees">
         ${statusCorner(true)}
         ${kpiSectionStaticHead("Cases and fees", "Contacts & spend · YoY cases · mean fee by practice")}
         <div class="kpi-section-body">
-          ${chartPairGridHtml(newCasesContactsSpendChartBlockHtml(), casesYoyPanelHtml())}
-          ${chartPairGridHtml(feeByPracticeSectionHtml())}
+          <div class="data-chart-table-stack">
+            ${newCasesContactsSpendChartBlockHtml()}
+            ${casesYoyPanelHtml()}
+            ${feeByPracticeSectionHtml()}
+          </div>
         </div>
       </section>`;
     el.dataset.rendered = RENDER_VER;

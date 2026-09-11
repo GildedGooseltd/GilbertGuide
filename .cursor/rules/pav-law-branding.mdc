@@ -21,8 +21,9 @@ Before changing **any** Gilbert Guide surface (KPIs, Data, Recommendations, Pred
    - Section heads = solid royal-deep + white uppercase title + lavender hint + burnt left rule
    - Recommendation **Do** / Solutions blocks use aged-brass **double** outline + thin royal inner line (`.kpi-related-projects`) — **no diamond ornaments**
    - KPI / goal tiles in the same grid row share equal card height (`.kpi-tile-with-projects` subgrid) on Guide and Metrics
+   - **Monthly KPIs tile chrome = Revenue:** every tile in `.kpi-goals-grid` uses `.kpi-goal-card` royal wash. Never ship plain paper `.kpi-stat-card` there. `.kpi-stat-attention` must not change border or background
    - Charts use `chartBlock()` with a **required** header title only (`title` / `.kpi-chart-head`) — no subtitle or period/source subhead; time axes run oldest → newest, left to right; one color = one meaning
-   - **Charts always 2 columns** via `chartPairGridHtml()` / `.data-chart-table-grid` on every tab; each card has its detail table under the plot — see [`pav-law-kpi-charts.mdc`](pav-law-kpi-charts.mdc)
+   - **Charts:** KPIs / Recommendations use 2-column `chartPairGridHtml()` / `.data-chart-table-grid` with detail table under each plot. Data tab stacks full-width cards with plot left and descriptive table right via `.kpi-chart-split` — see [`pav-law-kpi-charts.mdc`](pav-law-kpi-charts.mdc)
 
 4. **When branding and a one-off design conflict**, branding wins. Update the brand docs in the same change if a new meaning is truly required.
 
