@@ -1,32 +1,32 @@
 # Parked — #17 Total Referral Network
 
-**Removed from:** KPIs tab · Reputation section (2026-07-15)  
-**Data tab (2026-07-16):** shows placeholder donut + table (`DATA.referrals` — null counts) — not Coming soon  
-**UI:** `totalReferralNetworkPanelHtml()` in `kpi-report.js`  
-**Live data object:** `DATA.referrals` — fill when Referral tracking wires
+Removed from: KPIs tab · Reputation section · 07/15/2026  
+Data tab: placeholder donut was live 07/16/2026 · staged off Data again 09/10/2026  
+UI: `totalReferralNetworkPanelHtml()` in `kpi-report.js` · still in `KPI_REPORT.parked`  
+Live data object: `DATA.referrals` — fill when Referral tracking wires  
+Restore: put `${chartPairGridHtml(totalReferralNetworkPanelHtml())}` back on Data, or call via `KPI_REPORT.parked.totalReferralNetworkPanelHtml()`
 
-GBP is a lead source — **not** listed here (referral channels only).
+GBP is a lead source. Not listed here. Referral channels only.
 
-## Snapshot (as parked)
+## Snapshot when staged off Data · 09/10/2026
 
-| Channel | Referrers | Δ MoM | Status | Verified |
-| ------- | --------- | ----- | ------ | -------- |
-| Past-client program | — | — | building | no |
-| Friend / family | — | — | not wired | no |
-| Attorney cross-referral | — | — | not wired | no |
-| Yelp | — | — | not on | no |
-| Nextdoor | — | — | not on | no |
+| Channel | Referrers | Status | Verified |
+| ------- | --------- | ------ | -------- |
+| Past-client program | — | building | no |
+| Friend / family | — | not wired | no |
+| Attorney cross-referral | — | not wired | no |
+| Yelp | 9 | active | yes |
+| Nextdoor | — | not on | no |
 
-Counts and MoM deltas were null placeholders when parked — fill when referral tracking wires.
+Title on chart was Referral Network Activity. Presence pie showed Listed / Unlisted from channel status.
 
 ## Tile layout (saved)
 
-- Mini-card title: `#17 Total Referral Network`
+- Chart title: Referral Network Activity
 - Donut: presence pie from channel `status` (active / building / outdated / not on / not wired)
-- Table columns: Channel · Referrers · Δ MoM
-- Gap rows: any status other than `active`
+- Table columns: Channel · Referrers · Change
 
 ## Related
 
-- Project: **Referral** Client Referral Program · DigProf KPI link `#17` still valid for planning
-- Placeholder UI is on Data tab; do not mark verified until tracking is wired
+- Project: Referral Client Referral Program · DigProf KPI link `#17` still valid for planning
+- Do not mark verified until tracking is wired
