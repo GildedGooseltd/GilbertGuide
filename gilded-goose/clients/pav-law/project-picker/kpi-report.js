@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260910-answer-rate";
+  const RENDER_VER = "20260911-answer-avg";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -54,12 +54,12 @@
       fields: "Sep* snapshot · $6,200/mo · quarter $35,133 · year $56,212 · weekday 15/26 missed · LSA uncharged 11/15 · × 7.3% × $5,662"
     },
     "#21": {
-      file: "Call details (5).csv Sep 1–10 · Received 11 / 26 = 42% · Data tab Answer rate chart",
-      fields: "Jun answered 100/138 = 72% · Jul 73/131 = 56% · Aug* 13/25 = 52% · Sep* 11/26 = 42%"
+      file: "Call details (5).csv Sep 1–10 · LSA leads-inbox / lsaEfficiency · Yelp Ads Leads by type byMonth",
+      fields: "Search answer · LSA % charged · Yelp call answer · Data tab Answer Rate chart"
     },
     "answer-rate": {
-      file: "Call details stack in phoneByMonth · Jun Call details.csv · Jul/Aug* Call details (4) through Aug 14 · Sep* Call details (5) Sep 1–10",
-      fields: "Answer % = Received ÷ Calls · May 67% · Jun 72% · Jul 56% · Aug* 52% · Sep* 42% · target ≥ 90%"
+      file: "phoneByMonth Call details · lsaEfficiency Charged÷Leads · yelpBaseline.byMonth answeredCalls÷calls",
+      fields: "Search May–Sep* · LSA May–Sep* · Yelp Jun–Sep* when calls > 0 · Search target ≥ 90%"
     },
     "#28": {
       file: "Ad Reports/exports/mycase/as-of-2026-09-01/fee-means-summary.csv · fee-means-by-practice.csv · export 2026-09-01 · rechecked 2026-09-08",
@@ -147,14 +147,14 @@
       formula: "Missed Search calls × 7.3% lead→case × avg case value ($5,662). Month / quarter / year sum missed calls in that window from phoneByMonth. Uncharged LSA calls are not in this number: filter the LSA inbox to not charged, check each against the phone log for a callback within 48 hours, and count only never-reached calls as lost."
     },
     "#21": {
-      title: "#21 Answered Calls",
-      desc: "Share of Search call details that were answered vs missed. June 72% from Call details.csv. July 56% and August* 52% from Call details (4) through Aug 14. September* 42% from Call details (5) Sep 1–10. Monthly series lives on the Data tab Answer rate tile.",
-      formula: "Answered ÷ (Answered + Missed). Target ≥ 90%."
+      title: "Answer Rate",
+      desc: "Data chart shows one bar per month: mean of available Search answer, LSA % charged, and Yelp call answer. Target 90%. Monthly KPI tile stays Search-only.",
+      formula: "Avg % = mean of channel rates on file that month. Search: Received ÷ Calls. LSA: Charged ÷ Leads. Yelp: answeredCalls ÷ calls."
     },
     "answer-rate": {
-      title: "Answer rate · Search calls",
-      desc: "Monthly Search Call details answer rate. Received ÷ Calls. Target line 90%. May–Jul full months. August* through Aug 14 from Call details (4). September* Sep 1–10 from Call details (5).",
-      formula: "Answer % = Received ÷ Calls × 100. Same stack as #21 · phoneByMonth."
+      title: "Answer Rate",
+      desc: "One column per month = average of Search, LSA, and Yelp rates when each is available. Table still lists channel %. KPI tile remains Search Received ÷ Calls.",
+      formula: "Avg % = mean of available channel percentages. Target ≥ 90%."
     },
     "#03": {
       title: "#03 Auto Cases",
@@ -208,7 +208,7 @@
       formula: "Ledger credits ÷ new cases for the same months as #30. Aug* excluded because the month is partial."
     },
     "#29": {
-      title: "#29 Mean fee by practice",
+      title: "#29 Practice Area Average Fee",
       desc: "Mean contracted / quoted fee by practice area (Client + fee · n ≥ 5) from Contact_09-01-2026 aggregates · last updated 2026-09-01. Not cash collected. LOE is level of effort for growing that practice — blank until feedback fills it. Biggest opportunity is not fee pool; it waits on LOE.",
       formula: "Mean fee from contracted / quoted fees. Biggest opportunity = highest mean fee ÷ LOE once LOE is set. LOE blank = no opportunity mark."
     },
@@ -243,17 +243,17 @@
       formula: "Count of Client contacts with Created date in month. Trend = OLS on complete months. Avg MoM = mean of month-to-month percent change. Aug* MTD is not in trend or avg MoM."
     },
     "cases-yoy": {
-      title: "YoY % change · comparable months",
+      title: "YOY Cases",
       desc: "Same calendar month 2025 vs 2026 new cases on the Data tab under Cases created. Jun–Jul YoY % spikes from soft 2025 bases — read the count columns beside %. Chart scale ends at −100% on the downside. Do not average YoY % into one Key metrics tile without base-month labels.",
       formula: "YoY % = (2026 cases − 2025 cases) ÷ 2025 cases × 100. Jan–Aug complete months only. Sep* held out until the month is complete. Negative axis floor = −100%."
     },
     "roas-monthly": {
-      title: "Return on marketing spend · monthly",
+      title: "Return on Marketing Spend",
       desc: "Est. collectible from new cases ÷ Search + LSA media. Collectible = cases × $4,346 from Contact_09-01 mix fee × 80%. Industry criminal-defense mature ROAS often ~3.5×–7×. Firm May–Jul paid stack ran 5.6×–7.3×. Guide target 5× when both Search and LSA run. Watch below 4×. Feb–Apr inflate when Search is $0.",
       formula: "ROAS = (new cases × $4,346) ÷ (Search media + LSA media). Target line = 5× on paid-stack months."
     },
     "cash-collected": {
-      title: "Monthly revenue",
+      title: "Monthly Revenue",
       desc: "MyCase Trust account activity — client revenue collected by month. Default chart is 2026 YTD. Aug $104,545 full month from Sep 1 pull. Jan–Jul from ledger (2). 2026 royal dashed line = $150k monthly revenue goal.",
       formula: "Sum Credit column by month from Trust account activity CSV."
     }
@@ -1418,6 +1418,7 @@
         k21.value = `${phone.answeredPct}%`;
         k21.mom = priorPhone ? momPct(phone.answeredPct, priorPhone.answeredPct) : null;
         k21.verified = true;
+        k21.augUpdated = isTileMonth;
         k21.hit = phone.answeredPct >= (pi.targetPct || 90);
         k21.alert = !k21.hit;
       }
@@ -1434,6 +1435,7 @@
         k21.value = "—";
         k21.mom = null;
         k21.verified = false;
+        k21.augUpdated = false;
         k21.hit = false;
         k21.alert = false;
       }
@@ -2075,10 +2077,11 @@
       : (opts.table
         || `<div class="kpi-chart-detail"><p class="data-inline-note">Breakdown table pending.</p></div>`);
     const focus = opts.focus ? ` data-kpi-focus="${opts.focus}"` : "";
-    const helpId = opts.helpId || opts.focus || "";
-    const help = helpId ? kpiHelpBtn(helpId) : "";
+    /* help: false suppresses ?. Otherwise helpId, then focus id. */
+    const helpKey = opts.help === false ? "" : (opts.helpId || opts.focus || "");
+    const help = helpKey ? kpiHelpBtn(helpKey) : "";
     /* Footnotes live under ? help — not under the chart. */
-    const badge = typeof opts.verified === "boolean" ? statusCorner(opts.verified) : "";
+    const badge = opts.verified === true ? statusCorner(true) : "";
     const wipClass = opts.wip ? " kpi-chart-wip" : "";
     const extraClass = opts.cardClass ? ` ${opts.cardClass}` : "";
     const plot = `<div class="kpi-chart-plot">${opts.chart || ""}${legend}</div>`;
@@ -2503,7 +2506,6 @@
       ${kpiHelpBtn("ad-spend-by-channel")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Ad Spend")}
-        <span class="kpi-stat-subhead">${escapeHtml(pack.meta.label)}</span>
         <span class="kpi-stat-val">${total}</span>
       </div>
       ${goalTrackRows(pack.channels.map(c => [escapeHtml(c.label), fmtAdSpend(c.spend)]))}
@@ -2515,7 +2517,7 @@
     if (!rows.length) return "";
     return chartBlock({
       helpId: "cases-leads-spend",
-      title: "New cases, contacts & spend",
+      title: "New Cases, Contacts & Spend",
       chart: dualAxisCasesSpendChart(rows),
       legend: casesLeadsSpendLegend(),
       table: `${casesLeadsSpendDetailTable(rows)}${sourceFootnote("cases-leads-spend")}`
@@ -2994,7 +2996,7 @@
       const labelY = yForChrono(labelPt.chrono);
       return `<g class="kpi-cash-trend-${year}" aria-label="${year} cash trend line">
         <polyline points="${fitted.join(" ")}" fill="none" stroke="${trendColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="${labelPt.cx + 10}" y="${Math.max(pad.t + 12, labelY - 10)}" text-anchor="start" class="kpi-chart-total" style="fill:${trendColor}">${year} trend</text>
+        <text x="${labelPt.cx + 10}" y="${Math.max(pad.t + 12, labelY - 10)}" text-anchor="start" class="kpi-chart-total" style="fill:${trendColor}">Trend</text>
       </g>`;
     }).join("");
     const bars = rows.map((r, i) => {
@@ -3025,24 +3027,16 @@
         <text x="${cx}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
-    const yearTitle = singleYear === 2026
-      ? `<text x="${pad.l + plotW / 2}" y="22" text-anchor="middle" class="kpi-chart-total">2026 YTD</text>`
-      : singleYear === 2025
-        ? `<text x="${pad.l + plotW / 2}" y="22" text-anchor="middle" class="kpi-chart-total">2025</text>`
-        : (() => {
-            const firstYearCenter = pad.l + (dividerIndex * slot) / 2;
-            const secondYearCenter = dividerX + ((rows.length - dividerIndex) * slot) / 2;
-            return `<text x="${firstYearCenter}" y="22" text-anchor="middle" class="kpi-chart-total">2025</text>
-      <text x="${secondYearCenter}" y="22" text-anchor="middle" class="kpi-chart-total">2026 YTD</text>
-      <line x1="${dividerX}" y1="10" x2="${dividerX}" y2="${h - pad.b + 10}" stroke="#7a6a58" stroke-width="2" stroke-dasharray="4 6"/>`;
-          })();
+    const yearTitle = singleYear != null
+      ? ""
+      : `<line x1="${dividerX}" y1="10" x2="${dividerX}" y2="${h - pad.b + 10}" stroke="#7a6a58" stroke-width="2" stroke-dasharray="4 6"/>`;
     const showGoal = singleYear == null || singleYear === 2026;
     const goalLineHtml = showGoal
       ? `<line x1="${singleYear === 2026 ? pad.l : dividerX}" y1="${goalY}" x2="${w - pad.r}" y2="${goalY}" stroke="#3a1a6e" stroke-width="2.5" stroke-dasharray="7 5"/>
       <text x="${(singleYear === 2026 ? pad.l : dividerX) + 8}" y="${goalY - 8}" text-anchor="start" class="kpi-chart-total" style="fill:#3a1a6e">$${Math.round(cashGoal / 1000)}k goal</text>`
       : "";
-    const ariaYear = singleYear ? String(singleYear) : "2025 through Aug* 2026";
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Monthly revenue by month — ${ariaYear}">
+    const ariaYear = singleYear ? String(singleYear) : "selected year";
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Monthly Revenue">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}
       ${yearTitle}
@@ -3110,22 +3104,14 @@
       const color = trendColors[year];
       return `<g class="kpi-cases-trend-${year}" aria-label="${year} cases trend">
         <polyline points="${pts.join(" ")}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="${firstCx + 8}" y="${Math.max(pad.t + 14, firstY - 8)}" text-anchor="start" class="kpi-chart-total" style="fill:${color}">${year} trend</text>
+        <text x="${firstCx + 8}" y="${Math.max(pad.t + 14, firstY - 8)}" text-anchor="start" class="kpi-chart-total" style="fill:${color}">Trend</text>
       </g>`;
     }).join("");
-    const yearTitle = singleYear === 2026
-      ? `<text x="${pad.l + plotW / 2}" y="22" text-anchor="middle" class="kpi-chart-total">2026 YTD</text>`
-      : singleYear === 2025
-        ? `<text x="${pad.l + plotW / 2}" y="22" text-anchor="middle" class="kpi-chart-total">2025</text>`
-        : (() => {
-            const firstYearCenter = pad.l + (dividerIndex * slot) / 2;
-            const secondYearCenter = dividerX + ((rows.length - dividerIndex) * slot) / 2;
-            return `<text x="${firstYearCenter}" y="22" text-anchor="middle" class="kpi-chart-total">2025</text>
-      <text x="${secondYearCenter}" y="22" text-anchor="middle" class="kpi-chart-total">2026 YTD</text>
-      <line x1="${dividerX}" y1="10" x2="${dividerX}" y2="${h - pad.b + 10}" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="4 6"/>`;
-          })();
-    const ariaYear = singleYear ? String(singleYear) : "2025 through Aug* 2026";
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart kpi-cases-created-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cases created by month — ${ariaYear}">
+    const yearTitle = singleYear != null
+      ? ""
+      : `<line x1="${dividerX}" y1="10" x2="${dividerX}" y2="${h - pad.b + 10}" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="4 6"/>`;
+    const ariaYear = singleYear ? String(singleYear) : "comparable months";
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart kpi-cases-created-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cases created by month">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}
       ${yearTitle}
@@ -3203,51 +3189,21 @@
     );
   }
 
-  function cashCollectedTable(rows, yearLabel) {
-    const label = String(yearLabel || DATA.cashCollectedTotals.yearLabel || "2025");
-    const withCases = rows.filter(r => r.newCases != null);
-    const yearCredit = rows.reduce((s, r) => s + (Number(r.credit) || 0), 0);
-    const yearCases = withCases.reduce((s, r) => s + r.newCases, 0);
-    const pace = cashMonthPaceModel();
-    const show2026Extras = label === "2026";
-    const extra2026 = show2026Extras && pace
-      ? [
-          [`${pace.monthDisplay} collected`, fmtCashTier(pace.credit), "—", "—"],
-          [`${pace.monthDisplay} projected`, fmtMoney(pace.projected), "—", "—"],
-          ["Monthly revenue goal", fmtMoney(pace.target), "—", "—"]
-        ]
-      : [];
-    const ytdRow = show2026Extras
-      ? [[
-          `2026 to date through ${pace ? pace.monthDisplay : "Sep*"} ${Number((DATA.cashCollectedTotals || {}).partialDaysElapsed) || 1}`,
-          fmtCashTier(DATA.cashCollectedTotals.total2026ToDate),
-          "—",
-          "—"
-        ]]
-      : [];
+  function cashCollectedTable(rows) {
     return kpiDetailAccordion(
-      "Cash table",
-      `${rows.length} months · CY ${label}`,
+      "Cash Table",
+      `${(rows || []).length} months`,
       ["Month", "Revenue", "New cases", "Revenue / new case"],
-      [
-        ...newestFirst(rows).map(r => {
-          const per = r.newCases ? r.credit / r.newCases : null;
-          return [
-            escapeHtml(r.month) + " " + label,
-            fmtCashTier(r.credit),
-            r.newCases != null ? String(r.newCases) : "—",
-            per != null ? fmtMoney(per) : "—"
-          ];
-        }),
-        [
-          label + " total",
-          fmtCashTier(yearCredit),
-          yearCases ? String(yearCases) : "—",
-          yearCases ? fmtMoney(yearCredit / yearCases) : "—"
-        ],
-        ...ytdRow,
-        ...extra2026
-      ]
+      newestFirst(rows).map(r => {
+        const per = r.newCases ? r.credit / r.newCases : null;
+        return [
+          escapeHtml(r.month),
+          fmtCashTier(r.credit),
+          r.newCases != null ? String(r.newCases) : "—",
+          per != null ? fmtMoney(per) : "—"
+        ];
+      }),
+      true
     );
   }
 
@@ -3422,13 +3378,13 @@
       : `<li><span class="kpi-stack-swatch" style="background:#9a3f14" aria-hidden="true"></span><span>Expense pace</span></li>`;
     return `<section class="kpi-section kpi-section-static${hasCash ? " kpi-verified kpi-aug-updated" : ""}" data-feedback-id="section-finances" data-feedback-label="Finances">
       ${hasCash ? freshMark() : staleMark()}
-      ${kpiHelpBtn("cash-collected")}
       ${kpiSectionStaticHead("Finances", ledgerHint ? `Trust activity through ${ledgerHint}` : "Monthly revenue")}
       <div class="kpi-section-body">
         ${cashCollectedYearToggleHtml()}
         <div class="data-chart-table-stack">
           ${chartBlock({
-            title: year === 2026 ? "Monthly revenue · 2026 YTD" : "Monthly revenue · 2025",
+            helpId: "cash-collected",
+            title: "Monthly Revenue",
             chart: cashCollectedChart(chartRows),
             legend: `<ul class="kpi-stack-legend" aria-label="Cash chart marks">
               <li><span class="kpi-stack-swatch" style="background:#5c4f45" aria-hidden="true"></span><span>Collected</span></li>
@@ -4108,13 +4064,14 @@
   function cashCollectedPaceCardHtml() {
     const m = cashMonthPaceModel();
     if (!m) return "";
-    const hit = m.projected >= m.target;
+    /* Same dial format as Lead Calls: fill = collected ÷ scale, celebrate only when collected hits goal. Pace/projected stay in the track rows, not as a shadow arc or early green celebrate. */
+    const hit = m.credit >= m.target;
+    const scaleMax = Math.max(m.credit, m.target, 1);
     const cashFresh = cashLedgerIsCurrent();
-    const gauge = halfMoonGauge(m.credit / m.target, "cash-pace", {
+    const gauge = halfMoonGauge(m.credit / scaleMax, "cash-pace", {
       valueLabel: fmtMoney(m.credit),
-      endLabel: fmtMoney(m.target),
-      goalMark: 1,
-      shadowPct: m.projected / m.target,
+      endLabel: fmtMoney(scaleMax),
+      goalMark: m.target / scaleMax,
       centerClass: "kpi-gauge-center-amt",
       celebrate: hit
     });
@@ -4132,6 +4089,7 @@
         ["Pace", paceCell],
         ["Projected", `${fmtMoney(m.projected)} / ${fmtMoney(m.target)}`]
       ])}
+      ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
       ${kpiRefMark("#09")}
     </button>`;
   }
@@ -4824,7 +4782,9 @@
   }
 
   function feePracticeLoeLabel(row) {
-    if (!row || row.loe == null || row.loe === "") return "—";
+    if (!row || row.loe == null || row.loe === "") {
+      return `<span class="kpi-cell-missing" title="LOE not set">—</span>`;
+    }
     return escapeHtml(String(row.loe));
   }
 
@@ -4903,7 +4863,7 @@
         <text x="${x + barW / 2}" y="${h - 12}" text-anchor="middle" class="kpi-chart-axis">n=${r.n}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Mean client fee by practice area">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Practice Area Average Fee">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}${bars}
     </svg>`;
@@ -4918,7 +4878,11 @@
         ? `${escapeHtml(r.name)}<span class="kpi-opportunity-mark">Biggest opportunity</span>`
         : escapeHtml(r.name);
       const trClass = isOpp ? ` class="kpi-row-opportunity"` : "";
-      return `<tr${trClass}><td>${nameCell}</td><td>${r.n}</td><td>${fmtMoney(r.mean)}</td><td>${feePracticeLoeLabel(r)}</td></tr>`;
+      const loeMissing = r.loe == null || r.loe === "";
+      const loeTd = loeMissing
+        ? `<td class="kpi-td-missing">${feePracticeLoeLabel(r)}</td>`
+        : `<td>${feePracticeLoeLabel(r)}</td>`;
+      return `<tr${trClass}><td>${nameCell}</td><td>${r.n}</td><td>${fmtMoney(r.mean)}</td>${loeTd}</tr>`;
     }).join("");
     const table = `<div class="kpi-chart-detail">
       <table class="kpi-table kpi-chart-table">
@@ -4932,8 +4896,7 @@
     return chartBlock({
       focus: "#29",
       helpId: "#29",
-      verified: true,
-      title: "Mean fee by practice",
+      title: "Practice Area Average Fee",
       chart: feeByPracticeBarChart(rows),
       table: `${table}${note}${sourceFootnote("#29")}`
     });
@@ -5023,6 +4986,64 @@
     };
   }
 
+  function answerRateYearAvgPct() {
+    const phone = DATA.phoneByMonth || {};
+    let calls = 0;
+    let received = 0;
+    Object.keys(phone).forEach(k => {
+      const row = phone[k] || {};
+      calls += Number(row.calls) || 0;
+      received += Number(row.received) || 0;
+    });
+    if (!calls) return null;
+    return Math.round((received / calls) * 100);
+  }
+
+  function answerRateGoalCardHtml() {
+    const key = periodToChannelMonth(DATA.period);
+    const phone = DATA.phoneByMonth || {};
+    const cur = phone[key];
+    const prior = phone[priorMonthAbbrev(key)];
+    const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
+    const pct = cur && cur.answeredPct != null ? Number(cur.answeredPct) : null;
+    const priorPct = prior && prior.answeredPct != null ? Number(prior.answeredPct) : null;
+    const yearAvg = answerRateYearAvgPct();
+    const deltaPp = pct != null && priorPct != null ? Math.round(pct - priorPct) : null;
+    const ready = pct != null && Number.isFinite(pct);
+    const hit = ready && pct >= target;
+    const gauge = ready
+      ? halfMoonGauge(Math.min(1, pct / Math.max(target, pct, 1)), "answer-rate-kpi", {
+          valueLabel: `${pct}%`,
+          endLabel: `${target}%`,
+          goalMark: target / Math.max(target, pct, 1),
+          celebrate: hit
+        })
+      : halfMoonGauge(0, "answer-rate-kpi", {
+          valueLabel: "—",
+          endLabel: `${target}%`
+        });
+    const momHtml = deltaPp == null
+      ? "—"
+      : `<span class="kpi-mom-change ${deltaPp >= 0 ? "kpi-mom-up" : "kpi-mom-down"}">${
+          deltaPp === 0 ? "0 pp" : `${deltaPp > 0 ? "↑" : "↓"} ${Math.abs(deltaPp)} pp`
+        }</span>`;
+    const fresh = ready;
+    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}${!hit && ready ? " kpi-stat-attention" : ""}" data-kpi-focus="answer-rate" aria-label="Answer rate ${ready ? pct + "%" : "unavailable"} of ${target}% · year avg ${yearAvg != null ? yearAvg + "%" : "—"} · vs last month ${deltaPp == null ? "—" : deltaPp + " pp"}">
+      ${periodFreshMark(fresh, fresh, ready ? `${pct}%` : "—")}
+      ${kpiHelpBtn("answer-rate")}
+      <div class="kpi-goal-visual">
+        ${kpiCardTitle("Answer Rate")}
+        ${metricWithDeltaHtml(gauge, null)}
+      </div>
+      ${goalTrackRows([
+        ["Year avg", yearAvg == null ? "—" : `${yearAvg}%`],
+        ["vs last month", momHtml]
+      ])}
+      ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
+      ${kpiRefMark("#21")}
+    </button>`;
+  }
+
   function yelpGoalCardHtml() {
     const reviewTarget = 20;
     const y = yelpBaselineData();
@@ -5098,7 +5119,8 @@
     const kpiCards = [
       ...metrics.map(k => kpiStatCardHtml(k)),
       yelpGoalCardHtml(),
-      adSpendStatCardHtml()
+      adSpendStatCardHtml(),
+      answerRateGoalCardHtml()
     ].filter(Boolean).map(html => `<div class="kpi-tile-with-projects">${html}</div>`).join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="KPIs">
           ${kpiSectionStaticHead("Monthly KPIs", monthlyKpisAsOfHint())}
@@ -5442,7 +5464,7 @@
       : `<li><span class="kpi-stack-swatch" style="background:#c45c26" aria-hidden="true"></span><span>2025 trend</span></li>`;
     return chartBlock({
       helpId: "cases-created",
-      title: year === 2026 ? "Cases created · 2026 YTD" : "Cases created · 2025",
+      title: "Cases Created",
       chart: casesCreatedChart(chartRows),
       legend: `<ul class="kpi-stack-legend" aria-label="Cases chart marks">
         <li><span class="kpi-stack-swatch" style="background:#3a1a6e" aria-hidden="true"></span><span>Cases</span></li>
@@ -5586,7 +5608,7 @@
     if (!rows.length) return "";
     return chartBlock({
       helpId: "cases-yoy",
-      title: "YoY % change · comparable months",
+      title: "YOY Cases",
       chart: casesYoyPctChart(rows),
       legend: `<ul class="kpi-stack-legend" aria-label="YoY percent marks">
         <li><span class="kpi-stack-swatch" style="background:var(--gg-positive)" aria-hidden="true"></span><span>Up vs 2025</span></li>
@@ -5601,7 +5623,7 @@
     if (!rows.length) return "";
     return chartBlock({
       helpId: "cases-yoy",
-      title: "Cases · 2025 vs 2026 same months",
+      title: "Cases by Comparable Month",
       chart: casesYoyCountsChart(rows),
       legend: `<ul class="kpi-stack-legend" aria-label="Year count marks">
         <li><span class="kpi-stack-swatch" style="background:#64748b" aria-hidden="true"></span><span>2025</span></li>
@@ -5614,6 +5636,32 @@
   /** Est. collectible / case for ROAS · Contact_09-01 mix × 80%. */
   const ROAS_COLLECTIBLE_PER_CASE = 4346;
   const ROAS_TARGET_X = 5;
+
+  /** Tukey high fence · months above Q3 + 1.5×IQR. March excluded from callouts. */
+  function roasHighOutlierMonths(rows) {
+    const vals = (rows || [])
+      .map(r => Number(r.roas))
+      .filter(v => Number.isFinite(v))
+      .sort((a, b) => a - b);
+    if (vals.length < 4) return new Set();
+    const qAt = p => {
+      const i = (vals.length - 1) * p;
+      const lo = Math.floor(i);
+      const hi = Math.ceil(i);
+      if (lo === hi) return vals[lo];
+      return vals[lo] + (vals[hi] - vals[lo]) * (i - lo);
+    };
+    const q1 = qAt(0.25);
+    const q3 = qAt(0.75);
+    const fence = q3 + 1.5 * (q3 - q1);
+    const skip = new Set(["mar", "march"]);
+    return new Set(
+      (rows || [])
+        .filter(r => Number.isFinite(Number(r.roas)) && Number(r.roas) > fence)
+        .map(r => String(r.month))
+        .filter(m => !skip.has(String(m).replace(/\*$/, "").trim().toLowerCase()))
+    );
+  }
 
   function roasMonthlyRows() {
     const rows = chronological(DATA.casesLeadsSpend || []).filter(r => r && r.month);
@@ -5646,11 +5694,12 @@
   function roasMonthlyChart(rows) {
     const plot = chronological((rows || []).filter(r => r.roas != null));
     if (!plot.length) return "";
+    const outliers = roasHighOutlierMonths(plot);
     const vals = plot.map(r => Number(r.roas) || 0);
     const max = chartAxisMax([...vals, ROAS_TARGET_X]);
     const w = Math.max(720, plot.length * 72 + 110);
     const h = 290;
-    const pad = { l: 58, r: 22, t: 28, b: 48 };
+    const pad = { l: 58, r: 22, t: outliers.size ? 40 : 28, b: 48 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
     const slot = plotW / plot.length;
@@ -5668,9 +5717,19 @@
       const bh = Math.max(4, (plotH * v) / max);
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
+      const isOutlier = outliers.has(String(r.month));
       const fill = v >= ROAS_TARGET_X ? "var(--gg-positive)" : v >= 4 ? "var(--gg-royal-mid, #5b2d91)" : "var(--gg-watch, #c9a227)";
+      const wash = isOutlier
+        ? `<rect x="${x - 6}" y="${pad.t}" width="${barW + 12}" height="${plotH}" rx="6" fill="rgba(58,26,110,0.1)"/>`
+        : "";
+      const stroke = isOutlier ? ` stroke="#3a1a6e" stroke-width="2.5"` : "";
+      const tag = isOutlier
+        ? `<text x="${x + barW / 2}" y="${Math.max(12, y - 22)}" text-anchor="middle" class="kpi-chart-outlier-label">Outlier</text>`
+        : "";
       return `<g>
-        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"/>
+        ${wash}
+        <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"${stroke}/>
+        ${tag}
         <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total">${v.toFixed(1)}×</text>
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
@@ -5685,63 +5744,114 @@
   }
 
   function roasMonthlyTable(rows) {
+    const list = chronological(rows || []);
+    const outliers = roasHighOutlierMonths(list.filter(r => r.roas != null));
     return kpiDetailTable(
       ["Month", "Cases", "Est. collectible", "Search", "LSA", "Media", "ROAS"],
-      chronological(rows || []).map(r => [
-        r.month,
-        r.cases == null ? "—" : String(r.cases),
-        r.collectible == null ? "—" : `$${r.collectible.toLocaleString("en-US")}`,
-        r.search == null ? "—" : `$${Math.round(r.search).toLocaleString("en-US")}`,
-        r.lsa == null ? "—" : `$${Math.round(r.lsa).toLocaleString("en-US")}`,
-        r.media == null ? "—" : `$${Math.round(r.media).toLocaleString("en-US")}`,
-        r.roas == null ? "—" : `${r.roas.toFixed(1)}×`
-      ])
+      list.map(r => {
+        const isOutlier = outliers.has(String(r.month));
+        const monthCell = isOutlier
+          ? `${escapeHtml(r.month)}<span class="kpi-outlier-mark">Outlier</span>`
+          : escapeHtml(r.month);
+        return [
+          monthCell,
+          r.cases == null ? "—" : String(r.cases),
+          r.collectible == null ? "—" : `$${r.collectible.toLocaleString("en-US")}`,
+          r.search == null ? "—" : `$${Math.round(r.search).toLocaleString("en-US")}`,
+          r.lsa == null ? "—" : `$${Math.round(r.lsa).toLocaleString("en-US")}`,
+          r.media == null ? "—" : `$${Math.round(r.media).toLocaleString("en-US")}`,
+          r.roas == null ? "—" : `${r.roas.toFixed(1)}×`
+        ];
+      })
     );
   }
 
   function roasMonthlyPanelHtml() {
     const rows = roasMonthlyRows();
     if (!rows.length) return "";
+    const outliers = roasHighOutlierMonths(rows.filter(r => r.roas != null));
+    const outlierNote = outliers.size
+      ? `<p class="kpi-table-note">Outlier months sit above the Tukey high fence · ${[...outliers].map(m => escapeHtml(m)).join(", ")}. Often Search media near $0 inflates the ratio.</p>`
+      : "";
+    const outlierLegend = outliers.size
+      ? `<li><span class="kpi-stack-swatch" style="background:#3a1a6e" aria-hidden="true"></span><span>Outlier month</span></li>`
+      : "";
     return chartBlock({
       helpId: "roas-monthly",
-      title: "Return on marketing spend · 2026",
+      title: "Return on Marketing Spend",
       chart: roasMonthlyChart(rows),
       legend: `<ul class="kpi-stack-legend" aria-label="ROAS marks">
         <li><span class="kpi-stack-swatch" style="background:var(--gg-positive)" aria-hidden="true"></span><span>At or above ${ROAS_TARGET_X}× target</span></li>
         <li><span class="kpi-stack-swatch" style="background:var(--gg-royal-mid, #5b2d91)" aria-hidden="true"></span><span>4×–under target</span></li>
         <li><span class="kpi-stack-swatch" style="background:var(--gg-watch, #c9a227)" aria-hidden="true"></span><span>Below 4× watch</span></li>
+        ${outlierLegend}
       </ul>`,
-      table: `${roasMonthlyTable(rows)}${sourceFootnote("roas-monthly")}`
+      table: `${roasMonthlyTable(rows)}${outlierNote}${sourceFootnote("roas-monthly")}`
     });
+  }
+
+  function findLsaEfficiencyMonth(key) {
+    const want = String(key || "").replace(/\*$/, "");
+    return (DATA.lsaEfficiency || []).find(r => String(r.month || "").replace(/\*$/, "") === want) || null;
   }
 
   function answerRateRows() {
     const phone = DATA.phoneByMonth || {};
+    const yelpBy = (DATA.yelpBaseline && DATA.yelpBaseline.byMonth) || {};
     const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
     const order = ["May", "Jun", "Jul", "Aug", "Sep"];
     const partial = { Aug: true, Sep: true };
-    return order.filter(k => phone[k]).map(k => {
+    return order.filter(k => phone[k] || findLsaEfficiencyMonth(k) || yelpBy[k] || yelpBy[String(k).toLowerCase()]).map(k => {
       const p = phone[k] || {};
-      const calls = Number(p.calls) || 0;
-      const received = Number(p.received) || 0;
-      const missed = Number(p.missed) || 0;
-      const answeredPct = p.answeredPct != null
+      const searchCalls = Number(p.calls) || 0;
+      const searchReceived = Number(p.received) || 0;
+      const searchMissed = Number(p.missed) || 0;
+      const searchPct = p.answeredPct != null
         ? Number(p.answeredPct)
-        : (calls ? Math.round((received / calls) * 100) : null);
+        : (searchCalls ? Math.round((searchReceived / searchCalls) * 100) : null);
+      const lsa = findLsaEfficiencyMonth(k);
+      const lsaLeads = lsa ? Number(lsa.leads) || 0 : null;
+      const lsaCharged = lsa ? Number(lsa.charged) || 0 : null;
+      const lsaPct = lsaLeads
+        ? Math.round((lsaCharged / lsaLeads) * 100)
+        : null;
+      const y = yelpBy[k] || yelpBy[String(k).toLowerCase()] || null;
+      const yelpCalls = y ? Number(y.calls) || 0 : null;
+      const yelpAnswered = y ? Number(y.answeredCalls) || 0 : null;
+      const yelpPct = yelpCalls > 0
+        ? Math.round((yelpAnswered / yelpCalls) * 100)
+        : null;
+      const channelPcts = [searchPct, lsaPct, yelpPct].filter(v => v != null && Number.isFinite(v));
+      const avgPct = channelPcts.length
+        ? Math.round(channelPcts.reduce((sum, v) => sum + v, 0) / channelPcts.length)
+        : null;
       return {
         month: partial[k] ? `${k}*` : k,
         key: k,
-        calls,
-        received,
-        missed,
-        answeredPct,
-        target
+        searchCalls,
+        searchReceived,
+        searchMissed,
+        searchPct,
+        lsaLeads,
+        lsaCharged,
+        lsaPct,
+        yelpCalls,
+        yelpAnswered,
+        yelpPct,
+        avgPct,
+        channelCount: channelPcts.length,
+        target,
+        /* Keep answeredPct alias for KPI tile Search-only callers. */
+        answeredPct: searchPct,
+        calls: searchCalls,
+        received: searchReceived,
+        missed: searchMissed
       };
     });
   }
 
   function answerRateChart(rows) {
-    const plot = chronological((rows || []).filter(r => r.answeredPct != null));
+    const plot = chronological((rows || []).filter(r => r.avgPct != null));
     if (!plot.length) return "";
     const target = (plot[0] && plot[0].target) || 90;
     const max = 100;
@@ -5761,7 +5871,7 @@
       </g>`;
     }).join("");
     const bars = plot.map((r, i) => {
-      const v = Number(r.answeredPct) || 0;
+      const v = Number(r.avgPct) || 0;
       const bh = Math.max(4, (plotH * v) / max);
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
@@ -5773,7 +5883,7 @@
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Search call answer rate by month with ${target} percent target">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot kpi-cash-long-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Average answer rate across Search, LSA, and Yelp with ${target} percent target">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}
       <line x1="${pad.l}" y1="${targetY}" x2="${w - pad.r}" y2="${targetY}" stroke="var(--gg-brown)" stroke-width="1.5" stroke-dasharray="6 4"/>
@@ -5785,20 +5895,26 @@
   function answerRateTable(rows) {
     const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
     return kpiDetailTable(
-      ["Month", "Answer %", "Received", "Missed", "Calls", `vs ${target}%`],
+      [
+        "Month",
+        "Avg %",
+        "Search %",
+        "LSA %",
+        "Yelp %",
+        `vs ${target}%`
+      ],
       newestFirst(rows || []).map(r => {
-        const pct = r.answeredPct;
-        const vs = pct == null
+        const vs = r.avgPct == null
           ? "—"
-          : pct >= target
-            ? `+${pct - target} pp`
-            : `${pct - target} pp`;
+          : r.avgPct >= target
+            ? `+${r.avgPct - target} pp`
+            : `${r.avgPct - target} pp`;
         return [
           escapeHtml(r.month),
-          pct == null ? "—" : `${pct}%`,
-          String(r.received),
-          String(r.missed),
-          String(r.calls),
+          r.avgPct == null ? "—" : `${r.avgPct}%`,
+          r.searchPct == null ? "—" : `${r.searchPct}%`,
+          r.lsaPct == null ? "—" : `${r.lsaPct}%`,
+          r.yelpPct == null ? "—" : `${r.yelpPct}%`,
           vs
         ];
       })
@@ -5809,17 +5925,17 @@
     const rows = answerRateRows();
     if (!rows.length) return "";
     const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
+    const note = `<p class="kpi-table-note">Avg % = mean of available channels that month. Search = Received ÷ Calls. LSA = Charged ÷ Leads. Yelp = answered ÷ Yelp calls when calls &gt; 0. Target ${target}%.</p>`;
     return chartBlock({
-      helpId: "answer-rate",
       focus: "#21",
-      verified: true,
-      title: "Answer rate · Search calls",
+      help: false,
+      title: "Answer Rate",
       chart: answerRateChart(rows),
       legend: `<ul class="kpi-stack-legend" aria-label="Answer rate marks">
         <li><span class="kpi-stack-swatch" style="background:var(--gg-positive)" aria-hidden="true"></span><span>At or above ${target}% target</span></li>
         <li><span class="kpi-stack-swatch" style="background:var(--gg-negative)" aria-hidden="true"></span><span>Below ${target}% target</span></li>
       </ul>`,
-      table: `${answerRateTable(rows)}${sourceFootnote("answer-rate")}`
+      table: `${answerRateTable(rows)}${note}${sourceFootnote("answer-rate")}`
     });
   }
 
@@ -5829,7 +5945,7 @@
     return `<section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-answer-rate" data-feedback-label="Answer rate">
       ${statusCorner(true)}
       ${kpiHelpBtn("answer-rate")}
-      ${kpiSectionStaticHead("Answer rate", "Search Call details · target ≥ 90%")}
+      ${kpiSectionStaticHead("Answer Rate", "Avg of Search · LSA · Yelp · target ≥ 90%")}
       <div class="kpi-section-body">
         <div class="data-chart-table-stack">
           ${panel}
@@ -5942,12 +6058,12 @@
       ${answerRateDataSectionHtml()}
       <section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-cases-yoy-fee" data-feedback-label="Cases YoY and fees">
         ${statusCorner(true)}
-        ${kpiSectionStaticHead("Cases and fees", "Contacts & spend · YoY cases · mean fee by practice")}
+        ${kpiSectionStaticHead("Cases and Fees", "Practice area average fee · year-over-year cases · contacts and spend")}
         <div class="kpi-section-body">
           <div class="data-chart-table-stack">
-            ${newCasesContactsSpendChartBlockHtml()}
-            ${casesYoyPanelHtml()}
             ${feeByPracticeSectionHtml()}
+            ${casesYoyPanelHtml()}
+            ${newCasesContactsSpendChartBlockHtml()}
           </div>
         </div>
       </section>`;

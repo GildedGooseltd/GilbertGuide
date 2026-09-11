@@ -1079,8 +1079,25 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-split-panel .kpi-chart-card > .kpi-status-corner,
 .kpi-split-panel .kpi-chart-card > .kpi-verified-mark,
 .kpi-split-panel .kpi-chart-card > .kpi-outdated-mark,
-.kpi-split-panel .kpi-chart-card > .kpi-aug-updated-mark {
+.kpi-split-panel .kpi-chart-card > .kpi-aug-updated-mark,
+.kpi-section .kpi-chart-card > .kpi-status-corner,
+.kpi-section .kpi-chart-card > .kpi-verified-mark,
+.kpi-section .kpi-chart-card > .kpi-outdated-mark,
+.kpi-section .kpi-chart-card > .kpi-aug-updated-mark,
+.kpi-section .kpi-chart-card > .kpi-unverified-mark {
   display: none;
+}
+.kpi-section > .kpi-verified-mark,
+.kpi-section > .kpi-unverified-mark {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.75rem;
+  z-index: 3;
+  pointer-events: none;
+}
+.kpi-section > .kpi-help {
+  top: 0.65rem;
+  right: 2.1rem;
 }
 .kpi-mini-card h3 { margin: 0 0 0.45rem; font-size: calc(0.875rem + 2pt); color: var(--gg-royal); }
 .kpi-row-gap td { color: var(--gg-brown-muted); }

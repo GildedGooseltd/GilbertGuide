@@ -28,7 +28,7 @@ The locked meaning for each color. Same series keeps the same color in every cha
 | Caution / watch / pending review | `#eab308` | `--gg-caution` (new reporting semantic) |
 | Neutral / unavailable | `#5c4f45` | `--gg-brown-muted` |
 
-**Semantics:** use red / yellow / green only for negative / caution / positive states — never for arbitrary chart series, table columns, fees, priorities, totals, missing data, decorative progress bars, or KPI tile chrome. Never communicate by color alone; always keep the written status, icon, or legend.
+**Semantics:** use red / yellow / green only for negative / caution / positive states — never for arbitrary chart series, table columns, fees, priorities, totals, decorative progress bars, or KPI tile chrome. Gap cells that need input may use red with a written mark: Mean fee LOE blanks are `—` with `.kpi-td-missing` / `.kpi-cell-missing`. Never communicate by color alone; always keep the written status, icon, or legend.
 
 **Percentage-change labels:** use black, regular-weight text in the consistent `↑ +N%` / `↓ −N%` format. Do not color or bold percentage-change labels.
 
@@ -231,9 +231,10 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Goal-tile chart box:** every target-bar chart inside a `.kpi-goal-card` uses the same drawing box so tiles in one row read at the same scale — viewBox `320 × 210`, pad `l 36 · r 10 · t 18 · b 28`, bar width up to `88`. Auto Cases is the reference and any new goal tile matches it. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` rather than letting the compact defaults shrink one tile.
 - **Unverified method notes:** when a formula is directional only, say so in the tile note. Do not force a red freshness mark solely for method caveats if the export numbers are on file.
 - **Period freshness on Monthly KPIs and Data Financial Breakdown:** green check = period source on file and value filled (`0` counts). Red check = value is `—` or source missing. Do not use UPDATED / OUTDATED text badges. Never mark green when the value is `—`. Avg Case Value turns green only when the current tile month is inside its complete-month stack. A May–Aug average during September stays red. Cost per Case #30 and Missed Opportunity #19 are staged off the Data tab.
-- **One green check only:** each tile, panel, or section gets at most one `.kpi-verified-mark`. Never put a check on both a parent `.kpi-split-panel` / `.kpi-section` and a nested `.kpi-chart-card`. Nested chart-card checks inside a verified split panel are hidden in CSS. Do not restore a second check for “emphasis.”
+- **One green check only:** each tile, panel, or Data section gets at most one `.kpi-verified-mark`. Never put a check on both a parent `.kpi-split-panel` / `.kpi-section` and a nested `.kpi-chart-card`. Nested chart-card checks inside a verified section or split panel are hidden in CSS. Do not restore a second check for “emphasis.”
+- **One help ? only per owner:** if the `.kpi-section` already has `kpiHelpBtn`, nested `chartBlock` must pass `help: false` and omit `helpId`. Multi-chart sections with no section-level help may give each chart card its own `helpId`. Never stack section help plus card help for the same single-chart section.
 - **Text tiles:** Financial Breakdown tiles carry no mini chart. Avg Case Value / Cost per Case / Missed Opportunity copy lives in [DASHBOARD-STAGING.md](DASHBOARD-STAGING.md) until restored.
-- **Half-moon gauges:** show only the numeric value at the inside base of the arc. Do not place descriptive text or target captions inside or beneath the gauge; put that context in the adjacent title/stat block. In-progress arcs use the shared red → caution → positive gradient (`PROGRESS_GAUGE`). Do not use solid `--gg-positive` on Cashflow or any other half-moon until celebrate / target hit.
+- **Half-moon gauges:** show only the numeric value at the inside base of the arc. Do not place descriptive text or target captions inside or beneath the gauge; put that context in the adjacent title/stat block. In-progress arcs use the shared red → caution → positive gradient (`PROGRESS_GAUGE`). Do not use solid `--gg-positive` on Cashflow or any other half-moon until celebrate / target hit. Revenue matches Lead Calls dial rules: fill from collected ÷ scale, dark center value while in progress, no projection shadow arc, celebrate only when collected ≥ monthly goal. Pace and projected stay in the track rows under the dial.
 - **Gauge scales:** both endpoint labels use the same black text (`#111`) regardless of progress or target state. A success state may recolor the arc and center value, never the scale.
 - **Gauge goal marks:** use an unlabeled tick. Explain the goal in the adjacent stats rather than on the gauge.
 
@@ -250,7 +251,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 | Cases MoM | Month · Closed · New cases · Red accounts · Total · MoM notes |
 | Key Channel Activity | Period · New cases · Direct contacts · Marketing spend · Channel · Responses · Cost / response. Cost per response includes LSA · LSA all answered · Digital · Website forms · Yelp. Spend column is not on the Cost per response table. |
 | Cases forecast | Month · Cases · Status |
-| Mean fee by practice area (#29) | Practice area · n · Mean fee · LOE |
+| Practice Area Average Fee (#29) | Practice area · n · Mean fee · LOE · blank LOE cells use red gap highlight (`—` · LOE not set) |
 | Avg deposit | Measure · Amount |
 
 ### Lead channels & source
