@@ -2400,6 +2400,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.85rem 1rem;
       align-items: start;
+      width: 100%;
     }
     .data-report-root .data-chart-table-grid > .kpi-chart-card,
     .data-report-root .data-chart-table-grid > .kpi-chart-wip-shell {
@@ -2408,6 +2409,9 @@
       margin: 0;
       padding: 0.35rem 0.2rem 0.5rem;
       min-width: 0;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
     .data-report-root .data-chart-table-grid > .kpi-chart-card .kpi-chart-svg-wide,
     .data-report-root .data-chart-table-grid > .kpi-chart-card .kpi-chart-svg-plot {
@@ -2478,7 +2482,7 @@
     .data-report-root .data-chart-table-side .kpi-source-footnote {
       margin-top: 0.45rem;
     }
-    @media (max-width: 480px) {
+    @media (max-width: 360px) {
       .data-report-root .data-chart-table-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 980px) {
@@ -3142,6 +3146,14 @@
       gap: 0.75rem;
       overflow: visible;
       padding: 0.2rem 0.1rem 0.35rem;
+    }
+    .kpi-ad-spend-tile .kpi-chart-plot {
+      justify-content: center;
+      min-height: 4.5rem;
+      padding: 0.45rem 0.15rem 0.85rem;
+    }
+    .kpi-ad-spend-tile .kpi-ad-spend-hero .kpi-stat-val {
+      font-size: 1.85rem;
     }
     .kpi-chart-plot-bg { fill: var(--gg-chart-plot); }
     .guide-data-as-of {
@@ -4106,8 +4118,38 @@
     }
     .kpi-presence-on { background: rgba(31, 138, 101, 0.14); color: var(--gg-positive); }
     .kpi-presence-building { background: var(--gg-caution-dim); color: #785b00; }
+    .kpi-presence-updated { background: rgba(30, 58, 138, 0.12); color: #1e3a8a; }
     .kpi-presence-outdated { background: rgba(207, 45, 86, 0.12); color: var(--gg-negative); }
     .kpi-presence-gap { background: rgba(45, 20, 84, 0.08); color: var(--gg-royal-mid); }
+    .kpi-presence-link {
+      color: var(--gg-royal);
+      text-decoration: underline;
+      text-underline-offset: 0.12em;
+      font-weight: 600;
+    }
+    .kpi-presence-link:hover { color: var(--gg-royal-mid); }
+    .kpi-presence-rank {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 3.5rem;
+      padding: 0.35rem 0.55rem;
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      border-radius: 8px;
+      background: #fff;
+      color: #1e3a8a;
+      line-height: 1.15;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+    .kpi-presence-rank-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #1e3a8a;
+    }
     .kpi-gauge-card { text-align: center; }
     .kpi-dash-card.kpi-dash-target-bar { text-align: center; }
     .kpi-dash-target-bar .kpi-target-bar-chart-compact {
@@ -4533,6 +4575,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.85rem 1rem;
       align-items: start;
+      width: 100%;
     }
     .data-chart-table-grid > .kpi-chart-card,
     .data-chart-table-grid > .kpi-chart-wip-shell {
@@ -4541,6 +4584,9 @@
       margin: 0;
       padding: 0.35rem 0.2rem 0.5rem;
       min-width: 0;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
     .data-chart-table-grid > .kpi-chart-card .kpi-chart-svg-wide,
     .data-chart-table-grid > .kpi-chart-card .kpi-chart-svg-plot {
@@ -4554,7 +4600,8 @@
       overscroll-behavior-inline: contain;
     }
     .data-chart-table-grid .kpi-chart-table {
-      min-width: 30rem;
+      min-width: 0;
+      width: 100%;
     }
     .data-chart-table-stack {
       display: flex;
@@ -4566,7 +4613,8 @@
       min-width: 0;
       align-self: stretch;
     }
-    @media (max-width: 480px) {
+    /* Brand lock: keep 2 chart columns in Design Mode / side panels. Stack only on tiny phones. */
+    @media (max-width: 360px) {
       .data-chart-table-grid { grid-template-columns: 1fr; }
     }
     .kpi-missed-panel { display: grid; gap: 0.75rem; }
@@ -5793,7 +5841,7 @@
   <script src="projects-data.js?v=20260811-retainer-3k"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
-  <script src="kpi-report.js?v=20260908-ch-open"></script>
+  <script src="kpi-report.js?v=20260910-rm-referral-net"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20260811-hide-results"></script>
 </body>
