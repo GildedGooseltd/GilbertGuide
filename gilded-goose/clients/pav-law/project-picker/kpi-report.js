@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260911-answer-avg";
+  const RENDER_VER = "20260915-mycase-cash";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -82,8 +82,8 @@
       fields: "Client + fee · Case Type / practice · n≥5 means · LOE pending feedback · last updated 2026-09-01"
     },
     "cash-pace": {
-      file: "ledger_account_activity_report (5).csv export 2026-09-10 · Credits Aug $104,545 · Sep* $38,065 through Sep 10 · mycase/as-of-2026-09-10/cash-credits-by-month.csv",
-      fields: "Follows tile month · Sep* MTD through Sep 10 · $100k monthly goal"
+      file: "ledger_account_activity_report (6).csv export 2026-09-15 · Credits Sep* $66,465 through Sep 15 · Jan–Aug from ledger (5) · mycase/as-of-2026-09-15/cash-credits-by-month.csv",
+      fields: "Follows tile month · Sep* MTD through Sep 15 · $100k monthly goal"
     },
     "cases-leads-spend": {
       file: "Contact_09-10 · leads-inbox (18) · Call details (5) · account_activities_202609 · HubSpot Sep forms 1 · Yelp Sep Messages 1 · recheck 2026-09-10",
@@ -94,12 +94,12 @@
       fields: "Sep* Impr 1,012 · Interactions 47 · Search Call details 26 · LSA inbox 15 · HubSpot forms 1 · Yelp contacts 2 · cases 4 · Search $2,636.90 · LSA $1,516.94"
     },
     "cash-collected": {
-      file: "ledger_account_activity_report (5).csv · mycase/as-of-2026-09-10/cash-credits-by-month.csv · export 2026-09-10",
-      fields: "Trust Credits · Aug $104,545 · Jul $108,350 · Sep* $38,065 through Sep 10"
+      file: "ledger_account_activity_report (6).csv · mycase/as-of-2026-09-15/cash-credits-by-month.csv · export 2026-09-15",
+      fields: "Trust Credits · Aug $104,545 · Jul $108,350 · Sep* $66,465 through Sep 15"
     },
     "financial": {
-      file: "ledger_account_activity_report (5).csv · Contact_09-10-2026 · export 2026-09-10",
-      fields: "Trust Credits · $100k goal · Aug $104,545 · Sep* cases 4 · Sep* revenue $38,065"
+      file: "ledger_account_activity_report (6).csv · Contact_09-10-2026 · export 2026-09-15",
+      fields: "Trust Credits · $100k goal · Aug $104,545 · Sep* cases 4 · Sep* revenue $66,465"
     },
     "cases-created": {
       file: "mycase/as-of-2026-09-10/new-cases-by-month.csv · Contact_09-10-2026 aggregates · export 2026-09-10",
@@ -224,7 +224,7 @@
     },
     "cash-pace": {
       title: "Revenue",
-      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity — sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (5). September* is $38,065 through Sep 10. $80k remains the operating-expense assumption on Predictions, not this revenue goal.",
+      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity — sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (5). September* is $66,465 through Sep 15 from ledger (6). $80k remains the operating-expense assumption on Predictions, not this revenue goal.",
       formula: "Revenue = Trust account activity Credit sum by month. Goal = $100,000 client revenue collected."
     },
     "sales-cost-funnel": {
@@ -234,7 +234,7 @@
     },
     "financial": {
       title: "#09 Financials",
-      desc: "Monthly client revenue from MyCase Trust account activity export — Credit column. Jan–Jul from ledger_account_activity_report (2). Aug $104,545 and Sep* $38,065 through Sep 10 from ledger (5). Not operating cash flow. Not accrual billed revenue. 2026 chart goal line = $150k.",
+      desc: "Monthly client revenue from MyCase Trust account activity export — Credit column. Jan–Jul from ledger_account_activity_report (2). Aug $104,545 from ledger (5). Sep* $66,465 through Sep 15 from ledger (6). Not operating cash flow. Not accrual billed revenue. 2026 chart goal line = $150k.",
       formula: "Revenue = Credit sum by calendar month. Monthly goal = $100,000."
     },
     "cases-created": {
@@ -426,11 +426,11 @@
 
   const DATA = {
     period: "September 2026",
-    asOf: "2026-09-10",
-    lastUpdated: "2026-09-10",
+    asOf: "2026-09-15",
+    lastUpdated: "2026-09-15",
     updateLabel: "September 2026",
-    updateScope: "Yelp Jun–Sep* from Ads Leads by type · contacts = Messages + Calls×40% answered · Call details (5) on file",
-    source: "Yelp answer rate 40% · Jun contacts 2 · Jul 6 · Aug 10 · Sep* 2 · Call details (5) · HubSpot 1 · Contact_09-10 · ledger (5) · LSA inbox (18)",
+    updateScope: "MyCase Trust Credits Sep* through Sep 15 · trust balance snapshot 09/15 · cases still Contact_09-10",
+    source: "ledger (6) Sep Credits · Trust_account_summary_09-15 · Contact_09-10 cases · Call details (5) · LSA inbox (18)",
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
       { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false },
@@ -825,7 +825,7 @@
       { month: "Nov", credit: 42775, newCases: 5 },
       { month: "Dec", credit: 64300, newCases: 9 }
     ],
-    /* 2026 YTD revenue — Jan–Aug Trust activity · Sep* MTD Sep 10. */
+    /* 2026 YTD revenue — Jan–Aug Trust activity · Sep* MTD Sep 15. */
     cashCollected2026Ytd: [
       { month: "Jan", credit: 57925, newCases: 12 },
       { month: "Feb", credit: 83950, newCases: 14 },
@@ -835,20 +835,20 @@
       { month: "Jun", credit: 103485, newCases: 36 },
       { month: "Jul", credit: 108350, newCases: 35 },
       { month: "Aug", credit: 104545, newCases: 20 },
-      { month: "Sep*", credit: 38065, newCases: 4 }
+      { month: "Sep*", credit: 66465, newCases: 4 }
     ],
     cashCollectedTotals: {
       total2025: 945436,
-      total2026ToDate: 738986,
-      allCredits: 1684422,
+      total2026ToDate: 767386,
+      allCredits: 1712822,
       contractedMean: 5662,
       yearLabel: "2025",
-      asOf: "2026-09-10",
+      asOf: "2026-09-15",
       partialMonthKey: "Sep",
-      partialDaysElapsed: 10,
+      partialDaysElapsed: 15,
       partialDaysInMonth: 30,
       cashGoalMonthly: 100000,
-      rangeNote: "Jan–Aug Trust activity Credits · Sep* $38,065 MTD Sep 10 · cases Contact_09-10 · Aug cases recount 20"
+      rangeNote: "Jan–Aug Trust activity Credits · Sep* $66,465 MTD Sep 15 · cases Contact_09-10 · Aug cases recount 20"
     },
     /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) · Sep* inbox (18) + account_activities_202609 */
     lsaEfficiency: [
@@ -888,11 +888,11 @@
         { month: "Aug* 2026", applications: 0, rows: 0 }
       ],
       snapshot: {
-        asOf: "2026-09-10",
-        sourceFile: "mycase/as-of-2026-09-10/trust-balance-snapshot.csv",
-        clientsWithBalance: 355,
-        totalBalance: 1608564,
-        meanBalance: 4531
+        asOf: "2026-09-15",
+        sourceFile: "mycase/as-of-2026-09-15/trust-balance-snapshot.csv",
+        clientsWithBalance: 357,
+        totalBalance: 1636964,
+        meanBalance: 4585
       },
       refundCredits2025Feb: 7000
     }
@@ -1591,7 +1591,7 @@
     if (key === "Jun") return "June 2026 complete stack · verified";
     if (key === "Jul") return "July 2026 · Search+LSA full · HubSpot 4 · verified";
     if (key === "Aug") return "August 2026 full month · revenue $104,545 · 20 cases · ads paused";
-    return "September 2026 MTD · Call details through Sep 10 · LSA through Sep 8 · revenue $38,065 · 4 cases · answered 42%";
+    return "September 2026 MTD · revenue $66,465 through Sep 15 · cases still Contact_09-10 · 4 cases · answered 42%";
   }
 
   function reportPeriodPillsHtml() {
