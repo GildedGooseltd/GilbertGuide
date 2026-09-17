@@ -18,6 +18,7 @@ const META_KEYS = {
   "payment type": "paymentType",
   "monthly only": "monthlyOnly",
   "ongoing fee": "ongoingFee",
+  retainer: "ongoingFee",
   "per campaign fee": "perCampaignFee",
   "deposit pct": "depositPct",
   "deposit amount": "depositAmount",
@@ -35,8 +36,34 @@ const META_KEYS = {
   "start date": "startDate",
   "campaign start": "startDate",
   "projected start": "startDate",
-  "season start": "startDate"
+  "season start": "startDate",
+  "end date": "endDate",
+  "campaign end": "endDate",
+  "projected end": "endDate",
+  "recommended end": "endDate",
+  "recommended start": "startDate",
+  "duration weeks": "durationWeeks",
+  weeks: "durationWeeks",
+  "invoice count": "invoiceCount",
+  invoices: "invoiceCount",
+  "payment count": "invoiceCount",
+  "payment grace days": "paymentGraceDays",
+  "pay through days past close": "paymentGraceDays"
 };
+
+/** Accept ISO YYYY-MM-DD or American MM/DD/YYYY → ISO for calculator date inputs. */
+function normalizeMetaDateToIso(raw) {
+  const s = String(raw || "").trim();
+  if (!s || s === "—" || s === "-") return "";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  const am = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (am) {
+    const m = String(am[1]).padStart(2, "0");
+    const d = String(am[2]).padStart(2, "0");
+    return `${am[3]}-${m}-${d}`;
+  }
+  return "";
+}
 
 const BRAND_FIXES = [
   [/\bhubspot\b/gi, "HubSpot"],
@@ -107,6 +134,14 @@ function parseMetaTable(text) {
         meta.priority = parseInt(val, 10);
     } else if (field === "fee" || field === "ongoingFee" || field === "perCampaignFee" || field === "depositAmount")
       meta[field] = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
+    else if (field === "durationWeeks" || field === "paymentGraceDays" || field === "invoiceCount") {
+      const n = parseInt(String(val).replace(/[^0-9]/g, ""), 10);
+      if (Number.isFinite(n) && n >= 0) meta[field] = n;
+    }
+    else if (field === "startDate" || field === "endDate") {
+      const iso = normalizeMetaDateToIso(val);
+      if (iso) meta[field] = iso;
+    }
     else if (field === "depositPct") {
       const n = parseFloat(val.replace(/[^0-9.]/g, ""));
       if (Number.isFinite(n)) meta.depositPct = n > 1 ? n / 100 : n;

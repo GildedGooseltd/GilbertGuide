@@ -7,16 +7,17 @@
 | Category               | Retainer                                                                                   |
 | Campaign type          | Paid Media Mgmt                                                                            |
 | Status                 | Required                                                                                   |
-| Publish status         | published                                                                                  |
-| Estimated leads gained | ~89 Search calls/mo · ~78 LSA phone leads/mo · May–Jun 2026 avg                            |
-| Keywords               | ongoing, monthly, steady, maintain, retainer, report, crm, hubspot, referral, routine, lsa |
+| Publish status         | unpublished                                                                                |
 
 
 ---
 
 ## Summary
 
-- Ongoing oversight of Google Ads and Local Services Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.
+- Ongoing oversight of Google Ads and Local Services Ads: monitoring spend, tuning bids, reviewing lead quality, and reporting out
+- Includes ongoing NTGUILT Search improvements under the same monthly scope · not a separate project sell
+- After Digital Ad Enhancements finishes its ~1-month test window, selected long-term Search keepers add onto this retainer. Rough starter add: about $500/mo on the $3,000/mo base. Requote after winners are proven
+- Yelp keepers stay on the separate Yelp $500/mo line · not inside this Google / LSA retainer
 - Monthly reporting catches waste before it runs another month
 - Keeps Google Ads and LSA under one scope
 - LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing and improved lead scoring

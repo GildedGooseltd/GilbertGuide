@@ -93,7 +93,8 @@
 
   function isRequiredProject(item, isRetainer) {
     if (!item) return false;
-    if (isRetainer || item.id === "RETAINER" || item.category === "Retainer") {
+    if (isPlanningPublish(item)) return false;
+    if (isRetainer || item.id === "RETAINER" || item.id === "retainer" || item.category === "Retainer") {
       const st = String(item.status || "required").toLowerCase();
       return st.includes("required") || st.includes("ongoing");
     }
@@ -109,10 +110,64 @@
   }
 
   function fitScoreLabel(item, isRetainer) {
-    if (!item || isRequiredProject(item, isRetainer)) return "—";
-    const scoreRaw = computeProjectScore(item);
-    if (scoreRaw == null || scoreRaw <= -999) return "—";
-    return String(scoreRaw);
+    return priorityGroupLabel(item);
+  }
+
+  /**
+   * Andrew priority groups from HUBSPOT-PROJECTS-REVIEW / PRIORITY-0N docs.
+   * 1 Digital Ads · 2 HubSpot setup · 3 Lawyer referral · 4 Website and SEO.
+   */
+  const PRIORITY_GROUP_BY_ID = {
+    RETAINER: 1,
+    retainer: 1,
+    AdEnhance: 1,
+    Yelpv1: 1,
+    AdultAds: 1,
+    LegalDirs: 1,
+    HolidayAds: 1,
+    WinterAds: 1,
+    DigProf: 1,
+    NtguiltAd: 1,
+    HsMktExpand: 2,
+    LsaCall: 2,
+    OpsDash: 2,
+    HsVoip: 2,
+    HsSvcExpand: 2,
+    MyCaseClr: 2,
+    DataMgmt: 2,
+    LawyerRef: 3,
+    NetCoach: 3,
+    HsWebRebuild: 4,
+    WebContent: 4,
+    WebSpeed: 4,
+    BlogRevamp: 4,
+    HsLanding: 4,
+    HsEmailSetup: 4,
+    AffirmEmail: 4,
+    SummerEmail: 4
+  };
+
+  function priorityGroupOf(item) {
+    if (!item) return null;
+    const id = normalizeCatalogId(item);
+    if (PRIORITY_GROUP_BY_ID[id] != null) return PRIORITY_GROUP_BY_ID[id];
+    const parentId = item.parentId && String(item.parentId);
+    if (parentId && PRIORITY_GROUP_BY_ID[parentId] != null) return PRIORITY_GROUP_BY_ID[parentId];
+    return null;
+  }
+
+  function priorityGroupLabel(item) {
+    const g = priorityGroupOf(item);
+    return g != null ? String(g) : "—";
+  }
+
+  function priorityGroupTitle(item) {
+    const g = priorityGroupOf(item);
+    if (g === 1) return "Priority Group 1 · Digital Ads";
+    if (g === 2) return "Priority Group 2 · HubSpot setup";
+    if (g === 3) return "Priority Group 3 · Lawyer referral";
+    if (g === 4) return "Priority Group 4 · Website and SEO";
+    return "Not in Andrew Priority Groups 1–4";
   }
 
   function findProjectById(id) {
@@ -381,6 +436,7 @@
     expanded: new Set(),
     recommended: new Set(),
     notes: {},
+    projectDates: {},
     submitterEmail: "",
     invoicePaymentMonths: "",
     invoicePaymentMonthlyAmount: "",
@@ -461,6 +517,55 @@
     { id: "research", label: "Research / draft" }
   ];
 
+  /**
+   * Project Picklist TOC + outlines · Andrew catalog only.
+   * Priority 1 = PRIORITY-01-DIGITAL-ADS.md table.
+   * Ad Hoc = Guide cards that carry PAV-ADHOC-WORK / PAV-NON-DIGITAL-WORK.
+   * Priority 2–4 packages stay out unless also on Ad Hoc.
+   */
+  const TOC_PRIORITY_1_IDS = new Set([
+    "RETAINER",
+    "retainer",
+    "AdEnhance",
+    "Yelpv1",
+    "AdultAds",
+    "LegalDirs",
+    "HolidayAds",
+    "WinterAds"
+  ]);
+  const TOC_ADHOC_IDS = new Set([
+    "DigProf",
+    "LsaCall",
+    "OpsDash",
+    "HsVoip",
+    "Referral",
+    "SealReeng",
+    "LawyerRef",
+    "NetCoach",
+    "SwagPrint",
+    "MyCaseClr",
+    "AffirmEmail",
+    "SummerEmail",
+    "PerfPay",
+    "DataMgmt",
+    "PaviChat",
+    "InsMailer",
+    "WasteAud",
+    "CaseWins",
+    "TwistWrnch"
+  ]);
+
+  function normalizeCatalogId(item) {
+    if (!item) return "";
+    if (item.isRetainer || item.id === "RETAINER" || item.id === "retainer") return "RETAINER";
+    return String(item.id || "");
+  }
+
+  function isPicklistCatalogItem(item) {
+    const id = normalizeCatalogId(item);
+    return TOC_PRIORITY_1_IDS.has(id) || TOC_ADHOC_IDS.has(id);
+  }
+
   function statusFilterLabel(id) {
     return STATUS_FILTER_DEFS.find(d => d.id === id)?.label || id;
   }
@@ -516,6 +621,7 @@
 
   function activeOptionalProjects() {
     return orderedProjects().filter(p => {
+      if (!isPicklistCatalogItem(p)) return false;
       if (p.monthlyOnly || isCompletedStatus(p)) return false;
       if (isResearchStatus(p) && !isPlanningPublish(p)) return false;
       return true;
@@ -523,7 +629,9 @@
   }
 
   function researchProjects() {
-    return sortByPriority(orderedProjects().filter(p => !p.monthlyOnly && isResearchStatus(p) && !isPlanningPublish(p)));
+    return sortByPriority(orderedProjects().filter(p =>
+      isPicklistCatalogItem(p) && !p.monthlyOnly && isResearchStatus(p) && !isPlanningPublish(p)
+    ));
   }
 
   function completedProjects() {
@@ -673,9 +781,10 @@
   function rankedInvoiceForBestFit() {
     const ranked = getInvoiceLineItems().map(row => {
       const item = findProjectById(row.id) || { id: row.id, title: row.title, isRetainer: row.id === "RETAINER" };
-      const isRet = !!item.isRetainer || item.id === "RETAINER";
-      const score = isRequiredProject(item, isRet) ? -999 : computeProjectScore(item);
-      return { item: { ...item, isRetainer: isRet }, score };
+      const isRet = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
+      const full = { ...item, isRetainer: isRet, monthlyOnly: !!(item.monthlyOnly || isMonthlyRetainerItem(item, isRet)) };
+      const score = isRequiredProject(full, isRet) ? -999 : computeProjectScore(full);
+      return { item: full, score };
     });
     return nestRankedList(ranked);
   }
@@ -691,64 +800,240 @@
     bestFitSessionActive = false;
   }
 
+  function calcDateBounds() {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const y = now.getFullYear();
+    const max = new Date(y, 11, 31);
+    return { min: toIsoDate(now), max: toIsoDate(max) };
+  }
+
+  function addDaysIso(iso, days) {
+    const d = parseIsoDate(iso);
+    if (!d) return "";
+    d.setDate(d.getDate() + Number(days));
+    return toIsoDate(d);
+  }
+
+  function daysBetweenIso(startISO, endISO) {
+    const a = parseIsoDate(startISO);
+    const b = parseIsoDate(endISO);
+    if (!a || !b) return null;
+    return Math.round((b - a) / 86400000);
+  }
+
+  function clampIsoToCalcBounds(iso) {
+    if (!iso) return "";
+    const { min, max } = calcDateBounds();
+    if (iso < min) return min;
+    if (iso > max) return max;
+    return iso;
+  }
+
+  function defaultDurationWeeks(item) {
+    if (!item) return 4;
+    if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return null;
+    const catalog = item.durationWeeks != null && Number(item.durationWeeks) > 0 ? Number(item.durationWeeks) : null;
+    const saved = state.projectDates[item.id]?.durationWeeks;
+    if (saved != null && saved !== "" && Number(saved) > 0) {
+      const n = Number(saved);
+      /* Prefer catalog default when saved looks like a stale 1-week placeholder. */
+      if (catalog != null && n === 1 && catalog !== 1) return catalog;
+      return n;
+    }
+    if (catalog != null) return catalog;
+    const tl = String(item.timeline || "").toLowerCase();
+    const m = tl.match(/(\d+)\s*[–-]\s*(\d+)\s*week/);
+    if (m) return Math.round((Number(m[1]) + Number(m[2])) / 2);
+    const m2 = tl.match(/(\d+)\s*week/);
+    if (m2) return Number(m2[1]);
+    return 4;
+  }
+
+  function getProjectDurationWeeks(item) {
+    return defaultDurationWeeks(item);
+  }
+
+  function setProjectDurationWeeks(id, weeks) {
+    if (!state.projectDates[id]) state.projectDates[id] = { start: "", end: "", durationWeeks: "", invoiceCount: "" };
+    state.projectDates[id].durationWeeks = weeks != null && weeks !== "" ? String(weeks) : "";
+    saveState();
+  }
+
+  function maxInvoiceCountForItem(item) {
+    if (!item || isMonthlyRetainerItem(item, !!item.isRetainer)) return 1;
+    const dates = getProjectDateRange(item.id);
+    if (dates.start && dates.end) {
+      return Math.max(1, maxEqualBiweeklyPayments(item, dates.start, dates.end));
+    }
+    const rec = recommendedProjectDates(item);
+    if (rec.start && rec.end) {
+      return Math.max(1, maxEqualBiweeklyPayments(item, rec.start, rec.end));
+    }
+    const weeks = getProjectDurationWeeks(item);
+    if (weeks != null && Number(weeks) <= 4) return 3;
+    if (weeks != null && Number(weeks) > 0) return Math.max(1, Math.floor(Number(weeks) / 2) + 1);
+    return 3;
+  }
+
+  function getProjectInvoiceCount(item) {
+    if (!item || isMonthlyRetainerItem(item, !!item.isRetainer)) return null;
+    const maxN = maxInvoiceCountForItem(item);
+    const saved = state.projectDates[item.id]?.invoiceCount;
+    if (saved != null && saved !== "" && Number(saved) > 0) {
+      return Math.min(maxN, Math.max(1, Number(saved)));
+    }
+    if (item.invoiceCount != null && Number(item.invoiceCount) > 0) {
+      return Math.min(maxN, Math.max(1, Number(item.invoiceCount)));
+    }
+    return maxN;
+  }
+
+  function setProjectInvoiceCount(id, count) {
+    if (!state.projectDates[id]) state.projectDates[id] = { start: "", end: "", durationWeeks: "", invoiceCount: "" };
+    state.projectDates[id].invoiceCount = count != null && count !== "" ? String(count) : "";
+    saveState();
+  }
+
+  /** When start or end is set, backfill the other from Kate-set duration weeks. */
+  function backfillProjectDates(id, changedField) {
+    const item = findProjectById(id);
+    if (!item) return;
+    const weeks = getProjectDurationWeeks(item);
+    if (weeks == null || weeks <= 0) return;
+    const days = Math.round(weeks * 7);
+    const dates = getProjectDateRange(id);
+    if (changedField === "start" && dates.start) {
+      setProjectDateField(id, "end", clampIsoToCalcBounds(addDaysIso(dates.start, days)));
+    } else if (changedField === "end" && dates.end) {
+      setProjectDateField(id, "start", clampIsoToCalcBounds(addDaysIso(dates.end, -days)));
+    } else if (changedField === "duration") {
+      if (dates.start) {
+        setProjectDateField(id, "end", clampIsoToCalcBounds(addDaysIso(dates.start, days)));
+      } else if (dates.end) {
+        setProjectDateField(id, "start", clampIsoToCalcBounds(addDaysIso(dates.end, -days)));
+      }
+    }
+  }
+
+  function isMonthlyRetainerItem(item, isRetainer) {
+    if (!item) return !!isRetainer;
+    if (isRetainer || item.isRetainer || item.id === "RETAINER" || item.id === "retainer") return true;
+    if (item.monthlyOnly) return true;
+    if (item.id === "DataMgmt" || item.id === "OpsDash") return true;
+    if (String(item.category || "").toLowerCase() === "retainer") return true;
+    return false;
+  }
+
+  function projectQuoteLabel(item, isRetainer) {
+    if (isMonthlyRetainerItem(item, isRetainer)) {
+      const mo = projectMonthlyBill(item) || item.fee || 0;
+      return mo ? `${fmt(mo)}/mo` : "—";
+    }
+    /* Setup quote only. Ongoing / retainer after first-phase implementation is not in this column. */
+    const fee = projectScheduleFee(item);
+    if (fee) return fmt(fee);
+    return "—";
+  }
+
+  function projectPaymentTermsLabel(item, isRetainer) {
+    if (isMonthlyRetainerItem(item, isRetainer)) {
+      const mo = projectMonthlyBill(item) || item.fee || 0;
+      return mo ? `${fmt(mo)}/mo` : "Monthly";
+    }
+    const plan = computeProjectBiweeklyPlan({ ...item, isRetainer: false });
+    if (plan.payInFull) {
+      return plan.ready ? `1 × ${fmt(plan.scheduleFee)}` : `1 × full setup`;
+    }
+    const n = getProjectInvoiceCount(item) || plan.paymentCount;
+    if (!plan.ready) {
+      const fee = projectScheduleFee(item);
+      if (fee > 0 && n > 0) {
+        const each = Math.round(fee / n);
+        return `${n} × ~${fmt(each)}`;
+      }
+      return "set dates";
+    }
+    if (plan.paymentCount <= 1) {
+      return `1 × ${fmt(plan.dueNow || plan.scheduleFee)}`;
+    }
+    return `${plan.paymentCount} × ${fmt(plan.biweeklyEach)}`;
+  }
+
   function bestFitRankedListHtml(ranked) {
     if (!ranked.length) {
-      return `<p class="kpi-dashboard-note">No recommended projects in INDEX yet — set Status to Recommended, or finish the survey.</p>`;
+      return `<p class="kpi-dashboard-note">No projects in the plan yet. Check projects below or finish the survey.</p>`;
     }
-    const bodyRows = ranked.map(({ item, score }, i) => {
-      const isRetainer = !!item.isRetainer || item.id === "RETAINER";
+    const { min: dateMin, max: dateMax } = calcDateBounds();
+
+    const bodyRows = ranked.map(({ item }) => {
+      const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
       const required = isRequiredMaintenance(item, isRetainer);
       const selected = isItemSelected(item);
       const chkDisabled = required ? " disabled" : "";
       const req = requiredMarkerHtml(item, isRetainer);
-      const scoreLabel = score <= -999 ? "—" : String(score);
-      const scoreTitle = required ? "Required — no fit score" : "Best-fit / impact — higher is better";
-      return `<tr data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer}" data-required="${required}">
+      const scoreLabel = priorityGroupLabel(item);
+      const scoreTitle = priorityGroupTitle(item);
+      const monthlyOnly = isMonthlyRetainerItem(item, isRetainer);
+      if (!monthlyOnly) ensureRecommendedProjectDates(item);
+      const quote = projectQuoteLabel(item, isRetainer);
+      const terms = projectPaymentTermsLabel(item, isRetainer);
+      const dates = monthlyOnly ? { start: "", end: "" } : getProjectDateRange(item.id);
+      const invMax = monthlyOnly ? 1 : maxInvoiceCountForItem(item);
+      const invCount = monthlyOnly ? null : getProjectInvoiceCount(item);
+      const dateCells = monthlyOnly
+        ? `<td class="col-start"><span class="payment-date-na">—</span></td>
+           <td class="col-end"><span class="payment-date-na">—</span></td>
+           <td class="col-invoices"><span class="payment-date-na">—</span></td>`
+        : `<td class="col-start"><input type="date" class="calc-date-input" data-project-id="${escapeHtml(item.id)}" data-date-field="start" min="${dateMin}" max="${dateMax}" value="${escapeHtml(dates.start)}" aria-label="Start date for ${escapeHtml(item.title)}"></td>
+           <td class="col-end"><input type="date" class="calc-date-input" data-project-id="${escapeHtml(item.id)}" data-date-field="end" min="${dateMin}" max="${dateMax}" value="${escapeHtml(dates.end)}" aria-label="End date for ${escapeHtml(item.title)}"></td>
+           <td class="col-invoices"><input type="number" class="calc-invoice-count-input" data-project-id="${escapeHtml(item.id)}" min="1" max="${invMax}" step="1" value="${invCount != null ? escapeHtml(String(invCount)) : ""}" aria-label="Number of invoices for ${escapeHtml(item.title)}" title="Number of invoices (1–${invMax}). Set per project."></td>`;
+      return `<tr data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer || monthlyOnly}" data-required="${required}">
+        <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
         <td class="col-select">
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled} ${selected ? "checked" : ""}>
         </td>
         <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</span></a></td>
-        <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
+        <td class="col-quote">${escapeHtml(quote)}</td>
+        ${dateCells}
+        <td class="col-terms"><span class="calc-terms-text">${escapeHtml(terms)}</span></td>
       </tr>`;
     }).join("");
-    return `<div class="pav-priorities-scroll"><table class="pav-priorities-table pav-priorities-cart-only pav-priorities-best-fit">
+
+    return `<div class="pav-priorities-scroll calc-quote-scroll"><table class="pav-priorities-table pav-priorities-cart-only pav-priorities-best-fit calc-quote-table">
       <thead>
         <tr>
+          <th class="col-score" scope="col" title="Andrew Priority Groups 1-4">Priority Group</th>
           <th class="col-select" scope="col">Add</th>
           <th class="col-project" scope="col">Project</th>
-          <th class="col-score" scope="col" title="Best-fit / impact — higher is better. Required items show —.">Fit</th>
+          <th class="col-quote" scope="col">Quote</th>
+          <th class="col-start" scope="col">Start</th>
+          <th class="col-end" scope="col">End</th>
+          <th class="col-invoices" scope="col" title="Number of biweekly invoices (1–max for this project's dates). Set per project.">Invoices (bi-weekly)</th>
+          <th class="col-terms" scope="col">Payment terms</th>
         </tr>
       </thead>
-      <tbody>${bodyRows}</tbody>
+      <tbody>
+        ${bodyRows}
+      </tbody>
     </table></div>`;
-  }
-
-  function renderKpiDashboard() {
-    if (!window.KPI_REPORT) return;
-    const kpis = document.getElementById("kpi-report-kpis");
-    if (kpis) KPI_REPORT.renderKpis(kpis);
-  }
-
-  function pinKpiTabToTop() {
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
   }
 
   function renderDoNextPanel() {
     const el = document.getElementById("do-next-panel");
     if (!el) return;
     el.hidden = false;
-    const cartItems = getInvoiceLineItems();
-    const hasCart = cartItems.length > 0;
     const head = `<div class="do-next-head">
       <div class="do-next-head-copy">
-        <h3>Best Fit Projects for Pav Law</h3>
+        <h3>Project Quote Calculator</h3>
+        <p class="do-next-subhead">Select the project checkbox to kick off a project. Set the start date as well as the number of invoices the sum should be divided into. End date and payment terms options will vary based on size of the project.</p>
+      </div>
+      <div class="do-next-head-actions">
+        <button type="button" class="btn btn-primary" id="calc-send-plan-summary">Submit SOW</button>
       </div>
     </div>`;
 
-    /* Best Fit and invoice always show the same projects (cart line items).
+    /* Calculator and invoice always show the same projects (cart line items).
        Fresh load seeds cart to INDEX Required + Recommended. */
     let ranked = rankedInvoiceForBestFit();
     if (!ranked.length) {
@@ -759,9 +1044,65 @@
     const body = bestFitRankedListHtml(ranked);
 
     el.innerHTML = `${head}
-      <div class="total-box" id="plan-summary">${body}</div>
-      <button type="button" class="btn btn-primary project-continue-btn" id="continue-to-confirm" ${hasCart ? "" : "disabled"}>Review Plan</button>`;
+      <div class="total-box" id="plan-summary">${body}</div>`;
+    bindCalcQuoteInputs();
+    document.getElementById("calc-send-plan-summary")?.addEventListener("click", () => submitProjectRequest());
+  }
 
+  function bindCalcQuoteInputs() {
+    const panel = document.getElementById("do-next-panel");
+    if (!panel) return;
+    panel.querySelectorAll(".calc-date-input").forEach(input => {
+      const { min, max } = calcDateBounds();
+      input.min = min;
+      input.max = max;
+      if (input.value) input.value = clampIsoToCalcBounds(input.value);
+      if (input.dataset.calcBound === "1") return;
+      input.dataset.calcBound = "1";
+      input.addEventListener("change", () => {
+        const id = input.dataset.projectId;
+        const field = input.dataset.dateField;
+        if (!id || !field) return;
+        setProjectDateField(id, field, clampIsoToCalcBounds(input.value));
+        backfillProjectDates(id, field);
+        const dates = getProjectDateRange(id);
+        if (dates.start && dates.end && dates.end < dates.start) {
+          showToast("End date must be on or after start date.", true);
+        }
+        const item = findProjectById(id);
+        if (item) {
+          const maxN = maxInvoiceCountForItem(item);
+          const cur = getProjectInvoiceCount(item);
+          if (cur != null && cur > maxN) setProjectInvoiceCount(id, maxN);
+        }
+        renderDoNextPanel();
+        updateInvoiceScheduleAmount();
+      });
+    });
+    panel.querySelectorAll(".calc-invoice-count-input").forEach(input => {
+      if (input.dataset.calcBound === "1") return;
+      input.dataset.calcBound = "1";
+      input.addEventListener("change", () => {
+        const id = input.dataset.projectId;
+        if (!id) return;
+        const item = findProjectById(id);
+        const maxN = item ? maxInvoiceCountForItem(item) : 1;
+        let n = Number(input.value);
+        if (!Number.isFinite(n) || n < 1) n = 1;
+        if (n > maxN) n = maxN;
+        setProjectInvoiceCount(id, n);
+        input.value = String(n);
+        input.max = String(maxN);
+        renderDoNextPanel();
+        updateInvoiceScheduleAmount();
+      });
+    });
+  }
+
+  function renderKpiDashboard() {
+    if (!window.KPI_REPORT) return;
+    const kpis = document.getElementById("kpi-report-kpis");
+    if (kpis) KPI_REPORT.renderKpis(kpis);
   }
 
   function renderPlanSummary() {
@@ -976,14 +1317,287 @@
     return Math.max(0, Math.round(Number(item.ongoingFee) || 0));
   }
 
-  function normalizeDepositPct(raw) {
+  function americanDate(iso) {
+    if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(String(iso))) return iso || "n/a";
+    const [y, m, d] = String(iso).split("-");
+    return `${m}/${d}/${y}`;
+  }
+
+  function parseIsoDate(iso) {
+    if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(String(iso))) return null;
+    const d = new Date(`${iso}T12:00:00`);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  function toIsoDate(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+
+  function recommendedProjectDates(item) {
+    if (!item) return { start: "", end: "" };
+    const start = clampIsoToCalcBounds(String(item.startDate || "").trim());
+    let end = clampIsoToCalcBounds(String(item.endDate || "").trim());
+    const weeks = item.durationWeeks != null && Number(item.durationWeeks) > 0
+      ? Number(item.durationWeeks)
+      : null;
+    if (start && !end && weeks) {
+      end = clampIsoToCalcBounds(addDaysIso(start, Math.round(weeks * 7)));
+    }
+    if (end && !start && weeks) {
+      return {
+        start: clampIsoToCalcBounds(addDaysIso(end, -Math.round(weeks * 7))),
+        end
+      };
+    }
+    return { start: start || "", end: end || "" };
+  }
+
+  function getProjectDateRange(id) {
+    const row = state.projectDates[id] || {};
+    if (row.start || row.end) {
+      return { start: row.start || "", end: row.end || "" };
+    }
+    return recommendedProjectDates(findProjectById(id));
+  }
+
+  /** Seed calculator dates from project recommended start/end when empty. */
+  function ensureRecommendedProjectDates(item) {
+    if (!item || isMonthlyRetainerItem(item, !!item.isRetainer)) return;
+    const id = item.id;
+    if (!state.projectDates[id]) state.projectDates[id] = { start: "", end: "", durationWeeks: "", invoiceCount: "" };
+    const row = state.projectDates[id];
+    const rec = recommendedProjectDates(item);
+    let changed = false;
+    if (!row.start && rec.start) {
+      row.start = rec.start;
+      changed = true;
+    }
+    if (!row.end && rec.end) {
+      row.end = rec.end;
+      changed = true;
+    }
+    if (!row.durationWeeks && item.durationWeeks != null && Number(item.durationWeeks) > 0) {
+      row.durationWeeks = String(item.durationWeeks);
+      changed = true;
+    }
+    if (!row.invoiceCount && item.invoiceCount != null && Number(item.invoiceCount) > 0) {
+      row.invoiceCount = String(item.invoiceCount);
+      changed = true;
+    }
+    if (changed) {
+      if (row.start && !row.end) backfillProjectDates(id, "start");
+      saveState();
+    }
+  }
+
+  function setProjectDateField(id, field, value) {
+    if (!state.projectDates[id]) state.projectDates[id] = { start: "", end: "", durationWeeks: "", invoiceCount: "" };
+    state.projectDates[id][field] = value || "";
+    saveState();
+  }
+
+  /** Biweekly invoice dates from start through end, inclusive of start, every 14 days while <= end. */
+  function biweeklyInvoiceDates(startISO, endISO) {
+    const start = parseIsoDate(startISO);
+    const end = parseIsoDate(endISO);
+    if (!start || !end || end < start) return [];
+    const dates = [];
+    let cur = new Date(start.getTime());
+    while (cur <= end) {
+      dates.push(toIsoDate(cur));
+      cur = new Date(cur.getTime() + 14 * 86400000);
+    }
+    return dates.length ? dates : [startISO];
+  }
+
+  /** ~1 month window: Weeks ≤ 4 or calendar span ≤ 31 days. */
+  function isOneMonthProjectWindow(item, dates) {
+    const weeks = getProjectDurationWeeks(item);
+    if (weeks != null && Number(weeks) > 0 && Number(weeks) <= 4) return true;
+    if (dates?.start && dates?.end) {
+      const days = daysBetweenIso(dates.start, dates.end);
+      if (days != null && days <= 31) return true;
+    }
+    return false;
+  }
+
+  /** Pick up to maxN dates, keeping first and last when trimming a longer list. */
+  function pickBoundedDates(dates, maxN) {
+    const list = Array.isArray(dates) ? dates.filter(Boolean) : [];
+    const n = Math.max(0, Number(maxN) || 0);
+    if (!list.length || n <= 0) return [];
+    if (list.length <= n) return list.slice();
+    if (n === 1) return [list[list.length - 1]];
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const idx = Math.round((i * (list.length - 1)) / (n - 1));
+      out.push(list[idx]);
+    }
+    return [...new Set(out)];
+  }
+
+  function addMonthsIso(iso, months) {
+    const d = parseIsoDate(iso);
+    if (!d) return "";
+    const day = d.getDate();
+    d.setMonth(d.getMonth() + Number(months));
+    /* Clamp to last day of month if day overflowed */
+    if (d.getDate() < day) d.setDate(0);
+    return toIsoDate(d);
+  }
+
+  /**
+   * Max equal biweekly payments for a start→end window. No deposit %.
+   * One-month windows still cap at 3.
+   */
+  function maxEqualBiweeklyPayments(item, startISO, endISO) {
+    if (!startISO || !endISO) return 0;
+    const dates = biweeklyInvoiceDates(startISO, endISO);
+    if (!dates.length) return 0;
+    if (isOneMonthProjectWindow(item, { start: startISO, end: endISO })) {
+      return Math.min(3, dates.length);
+    }
+    return dates.length;
+  }
+
+  /**
+   * Equal biweekly payment dates for the full setup fee.
+   * Work window = start→end. Payment window may extend paymentGraceDays past close
+   * unless that would exceed an explicit recommended end with no grace.
+   * One-month work windows: at most 3 equal payments.
+   */
+  function paymentEndISO(item, endISO) {
+    const grace = Number(item?.paymentGraceDays) || 0;
+    if (!endISO || grace <= 0) return endISO || "";
+    return addDaysIso(endISO, grace);
+  }
+
+  function equalBiweeklyPaymentDates(item, startISO, endISO) {
+    const payEnd = paymentEndISO(item, endISO) || endISO;
+    let dates = biweeklyInvoiceDates(startISO, payEnd);
+    if (!dates.length && startISO) return [startISO];
+    const maxN = maxEqualBiweeklyPayments(item, startISO, endISO);
+    const wanted = getProjectInvoiceCount(item);
+    const n = Math.min(Math.max(1, wanted || maxN), Math.max(1, maxN));
+    return pickBoundedDates(dates, n);
+  }
+
+  function splitEvenCents(total, n) {
+    const count = Math.max(1, Number(n) || 1);
+    const base = Math.floor(total / count);
+    const parts = Array(count).fill(base);
+    let leftover = total - base * count;
+    for (let i = count - 1; i >= 0 && leftover > 0; i--, leftover--) parts[i] += 1;
+    return parts;
+  }
+
+  function isPayInFullProject(item) {
+    const pct = normalizeDepositPct(item?.depositPct);
+    const label = String(item?.paymentPlanLabel || item?.paymentType || "").toLowerCase();
+    if (/pay in full|100%|100\/0/.test(label)) return true;
+    if (item?.depositAmount != null && item.depositAmount !== "" && projectScheduleFee(item) > 0) {
+      return Math.round(Number(item.depositAmount)) >= projectScheduleFee(item);
+    }
+    return pct >= 0.999;
+  }
+
+  /** Per-project biweekly plan: setup fee in equal biweekly parts. No deposit %. */
+  function computeProjectBiweeklyPlan(item) {
+    const scheduleFee = projectScheduleFee(item);
+    const monthly = projectMonthlyBill(item);
+    const dates = getProjectDateRange(item.id);
+    const oneMonth = isOneMonthProjectWindow(item, dates);
+    const payInFull = isPayInFullProject(item);
+    const payEnd = dates.end ? paymentEndISO(item, dates.end) : "";
+
+    let invoiceDates = [];
+    if (dates.start && dates.end && scheduleFee > 0) {
+      invoiceDates = payInFull ? [dates.start] : equalBiweeklyPaymentDates(item, dates.start, dates.end);
+    }
+    const ready = !!(dates.start && dates.end && scheduleFee > 0 && invoiceDates.length);
+    const amounts = ready ? splitEvenCents(scheduleFee, invoiceDates.length) : [];
+    const invoices = ready
+      ? invoiceDates.map((iso, i) => ({ date: iso, amount: amounts[i], label: americanDate(iso) }))
+      : [];
+    const dueNow = invoices.length ? invoices[0].amount : 0;
+    const remaining = Math.max(0, scheduleFee - dueNow);
+    const paymentCount = invoices.length;
+    const biweeklyEach = invoices.length ? invoices[0].amount : null;
+    const graceDays = Number(item.paymentGraceDays) || 0;
+    const opt = {
+      scheduleFee,
+      dueNow,
+      remaining,
+      monthly,
+      equalParts: true,
+      payInFull,
+      graceDays,
+      payEnd
+    };
+    return {
+      id: item.id,
+      title: item.title,
+      scheduleFee,
+      dueNow,
+      remaining,
+      monthly,
+      start: dates.start,
+      end: dates.end,
+      payEnd: payEnd || dates.end,
+      graceDays,
+      ready,
+      oneMonth,
+      payInFull,
+      paymentCount,
+      invoiceCount: Math.max(0, paymentCount - (dueNow > 0 ? 1 : 0)),
+      invoices: invoices.slice(1),
+      allPayments: invoices,
+      biweeklyEach,
+      totalDue: scheduleFee,
+      writeup: ready
+        ? buildInvoiceWriteupLine(item.title, opt, dates, invoices, oneMonth, paymentCount)
+        : null
+    };
+  }
+
+  function buildInvoiceWriteupLine(title, opt, dates, invoices, oneMonth, paymentCount) {
+    const each = invoices[0]?.amount || 0;
+    const payThrough = opt.payEnd || dates.end;
+    const lines = [
+      `Project: ${title}`,
+      `Setup fee: ${fmt(opt.scheduleFee)}`,
+      `Work window: ${americanDate(dates.start)} to ${americanDate(dates.end)}`,
+      `Equal biweekly payments: ${paymentCount} × about ${fmt(each)}`,
+      `First payment due ${americanDate(dates.start)}: ${fmt(invoices[0]?.amount || 0)}`
+    ];
+    if (opt.graceDays > 0 && payThrough) {
+      lines.push(`Payments through ${americanDate(payThrough)} · ${opt.graceDays} days past close`);
+    }
+    if (oneMonth) lines.push(`One-month work window · max 3 equal payments · this plan uses ${paymentCount}`);
+    if (opt.monthly) lines.push(`Ongoing / retainer separate: ${fmt(opt.monthly)}/mo`);
+    lines.push("Invoice dates: " + invoices.map(inv => `${inv.label} ${fmt(inv.amount)}`).join("; "));
+    return lines.join("\n");
+  }
+
+  function getCartBiweeklyPlans() {
+    const plans = [];
+    getSelectedProjects().forEach(p => {
+      if (projectScheduleFee(p) > 0) plans.push(computeProjectBiweeklyPlan({ ...p, isRetainer: false }));
+    });
+    return plans;
+  }
+
+    function normalizeDepositPct(raw) {
     if (raw == null || raw === "") return PAYMENT_DEPOSIT_PCT;
     const n = Number(raw);
     if (!Number.isFinite(n) || n < 0) return PAYMENT_DEPOSIT_PCT;
     return n > 1 ? Math.min(1, n / 100) : Math.min(1, n);
   }
 
-  /** Per-project payment option: due now, remaining on schedule, optional monthly bill. */
+  /** Per-project payment option: first equal biweekly part due on start, rest on schedule. */
   function getProjectPaymentOption(item) {
     const isRetainer = !!(item.isRetainer || item.id === "RETAINER");
     const scheduleFee = projectScheduleFee(item);
@@ -1000,25 +1614,44 @@
         remaining: 0,
         monthly,
         depositPct: null,
+        equalParts: true,
         paymentType: payType
       };
     }
 
-    const depositPct = normalizeDepositPct(item.depositPct);
-    let dueNow = item.depositAmount != null && item.depositAmount !== ""
-      ? Math.round(Number(item.depositAmount))
-      : Math.round(scheduleFee * depositPct);
-    dueNow = Math.max(0, Math.min(scheduleFee, dueNow));
-    const remaining = scheduleFee - dueNow;
+    const bi = computeProjectBiweeklyPlan({ ...item, isRetainer: false });
+    if (bi.ready) {
+      return {
+        id: item.id,
+        title: item.title,
+        kind: "project",
+        scheduleFee,
+        dueNow: bi.dueNow,
+        remaining: bi.remaining,
+        monthly,
+        depositPct: null,
+        equalParts: true,
+        paymentCount: bi.paymentCount,
+        paymentType: payType
+      };
+    }
+
+    const weeks = getProjectDurationWeeks(item) || 4;
+    const payInFull = isPayInFullProject(item);
+    const n = payInFull ? 1 : (weeks <= 4 ? Math.min(3, Math.max(1, Number(weeks) || 3)) : Math.max(1, Math.ceil(Number(weeks) / 2)));
+    const parts = splitEvenCents(scheduleFee, n);
+    const dueNow = parts[0] || 0;
     return {
       id: item.id,
       title: item.title,
       kind: "project",
       scheduleFee,
       dueNow,
-      remaining,
+      remaining: Math.max(0, scheduleFee - dueNow),
       monthly,
-      depositPct: dueNow / scheduleFee,
+      depositPct: null,
+      equalParts: true,
+      paymentCount: n,
       paymentType: payType
     };
   }
@@ -1046,37 +1679,91 @@
   function buildPaymentOptionsHtml() {
     const rows = getCartPaymentOptions();
     if (!rows.length) {
-      return `<p class="payment-options-empty">Add projects to see deposit and schedule amounts.</p>`;
+      return `<p class="payment-options-empty">Add projects to see equal biweekly payment amounts.</p>`;
     }
     const totals = cartPaymentTotals(rows);
-    const body = rows.map(r => `<tr>
+    const body = rows.map(r => {
+      const dates = getProjectDateRange(r.id);
+      const dateCells = r.kind === "monthly" || !r.scheduleFee
+        ? `<td class="col-start"><span class="payment-date-na">—</span></td><td class="col-end"><span class="payment-date-na">—</span></td>`
+        : `<td class="col-start"><input type="date" class="project-date-input" data-project-id="${escapeHtml(r.id)}" data-date-field="start" value="${escapeHtml(dates.start)}" aria-label="Start date for ${escapeHtml(r.title)}"></td>
+      <td class="col-end"><input type="date" class="project-date-input" data-project-id="${escapeHtml(r.id)}" data-date-field="end" value="${escapeHtml(dates.end)}" aria-label="End date for ${escapeHtml(r.title)}"></td>`;
+      return `<tr>
       <td class="col-project"><a href="${projectAnchor(r.id)}" class="priority-desc-link" data-project-id="${escapeHtml(r.id)}">${escapeHtml(r.title)}</a></td>
       <td class="col-fee">${r.scheduleFee ? fmt(r.scheduleFee) : (r.monthly ? `${fmt(r.monthly)}/mo` : "—")}</td>
       <td class="col-due">${r.dueNow ? fmt(r.dueNow) : (r.kind === "monthly" ? "Monthly" : "—")}</td>
       <td class="col-remain">${r.remaining ? fmt(r.remaining) : "—"}</td>
-    </tr>`).join("");
+      ${dateCells}
+    </tr>`;
+    }).join("");
     return `<div class="payment-options-scroll"><table class="payment-options-table">
       <thead>
         <tr>
           <th scope="col">Project</th>
           <th scope="col">Total fee</th>
-          <th scope="col">Deposit due</th>
-          <th scope="col">Scheduled</th>
+          <th scope="col">First payment</th>
+          <th scope="col">Rest of schedule</th>
+          <th scope="col">Start</th>
+          <th scope="col">End</th>
         </tr>
       </thead>
       <tbody>
         ${body}
         <tr class="payment-options-totals">
-          <td>Totals</td>
-          <td>${totals.scheduleFees ? fmt(totals.scheduleFees) : "—"}</td>
-          <td>${totals.dueNow ? fmt(totals.dueNow) : "—"}</td>
-          <td>${totals.remaining ? fmt(totals.remaining) : "—"}</td>
+          <td class="col-project">Totals</td>
+          <td class="col-fee">${totals.scheduleFees ? fmt(totals.scheduleFees) : "—"}</td>
+          <td class="col-due">${totals.dueNow ? fmt(totals.dueNow) : "—"}</td>
+          <td class="col-remain">${totals.remaining ? fmt(totals.remaining) : "—"}</td>
+          <td class="col-start"></td>
+          <td class="col-end"></td>
         </tr>
       </tbody>
     </table></div>`;
   }
 
-  /** Payment calculator: deposit from payment options; remaining on schedule.
+  function biweeklyPlansBreakdownHtml() {
+    const plans = getCartBiweeklyPlans();
+    if (!plans.length) {
+      return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">
+        <p class="payment-calc-empty">Select one-time projects, then set each project start and end date to build biweekly invoice terms.</p>
+      </div>`;
+    }
+    const blocks = plans.map(plan => {
+      if (!plan.ready) {
+        return `<div class="biweekly-plan-card">
+          <h5 class="biweekly-plan-title">${escapeHtml(plan.title)}</h5>
+          <p class="payment-calc-empty">Set start and end dates to split ${fmt(plan.scheduleFee)} into equal biweekly payments.</p>
+        </div>`;
+      }
+      const paymentList = plan.allPayments && plan.allPayments.length ? plan.allPayments : plan.invoices;
+      const rows = [
+        ["Setup fee", fmt(plan.scheduleFee)],
+        ["Equal biweekly payments", `${plan.paymentCount} × about ${fmt(plan.biweeklyEach)}`],
+        [`First payment due ${americanDate(plan.start)}`, fmt(plan.dueNow)],
+        ["Total setup due", fmt(plan.totalDue)]
+      ];
+      if (plan.oneMonth) rows.splice(2, 0, ["One-month cap", `${plan.paymentCount} of max 3 equal payments`]);
+      if (plan.graceDays > 0 && plan.payEnd) {
+        rows.splice(2, 0, ["Pay through", `${americanDate(plan.payEnd)} · +${plan.graceDays}d past close`]);
+      }
+      if (plan.monthly) rows.push(["Ongoing / retainer", `${fmt(plan.monthly)}/mo separate`]);
+      const tableRows = rows.map(([label, val]) =>
+        `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(String(val))}</td></tr>`
+      ).join("");
+      const schedule = paymentList.map(inv =>
+        `<li><span>${escapeHtml(inv.label)}</span><strong>${fmt(inv.amount)}</strong></li>`
+      ).join("");
+      return `<div class="biweekly-plan-card">
+        <h5 class="biweekly-plan-title">${escapeHtml(plan.title)}</h5>
+        <table class="payment-calc-table"><tbody>${tableRows}</tbody></table>
+        <p class="biweekly-schedule-label">Equal biweekly invoice dates</p>
+        <ul class="biweekly-schedule-list">${schedule}</ul>
+      </div>`;
+    }).join("");
+    return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">${blocks}</div>`;
+  }
+
+    /** Payment calculator: deposit from payment options; remaining on schedule.
    *  Surcharge: 0% for first 30 days (1 month); then +10% per additional month on remaining balance.
    *  rate = max(0, months - 1) × 0.10 */
 
@@ -1155,7 +1842,7 @@
     if (plan.months) {
       rows.push(["Payoff window", `~${plan.daysEstimate} days (${plan.months} invoice${plan.months === 1 ? "" : "s"})`]);
       if (plan.noSurcharge) {
-        rows.push(["Schedule surcharge", "None — paid within 30 days"]);
+        rows.push(["Schedule surcharge", "None - paid within 30 days"]);
       } else {
         rows.push([`Schedule surcharge (+${ratePct}% on remaining)`, fmt(plan.surchargeAmount)]);
         rows.push(["Financed remaining", fmt(plan.financedRemaining)]);
@@ -1189,30 +1876,46 @@
     const monthsEl = document.getElementById("invoice-payment-months");
     const amountEl = document.getElementById("invoice-payment-amount");
     const breakdownHost = document.getElementById("payment-calc-breakdown-host");
-    if (!monthsEl || !amountEl) return;
+    const biweeklyHost = document.getElementById("biweekly-calc-breakdown-host");
 
-    const months = monthsEl.value !== "" ? Number(monthsEl.value) : null;
+    if (biweeklyHost) biweeklyHost.innerHTML = biweeklyPlansBreakdownHtml();
+
+    const months = monthsEl && monthsEl.value !== "" ? Number(monthsEl.value) : null;
     const projectTotal = getProjectsInvoiceTotal();
     const plan = computePaymentPlan(months, projectTotal);
 
     if (breakdownHost) breakdownHost.innerHTML = paymentPlanBreakdownHtml(plan);
 
-    if (projectTotal <= 0) {
-      amountEl.value = "";
-      amountEl.placeholder = "No project fees to invoice";
-      syncPaymentTermsFromDom();
-      return;
+    if (amountEl) {
+      if (projectTotal <= 0) {
+        amountEl.value = "";
+        amountEl.placeholder = "No project fees to invoice";
+      } else if (!months || months < 1) {
+        amountEl.value = "";
+        amountEl.placeholder = "Optional monthly fallback";
+      } else {
+        amountEl.value = String(plan.perInvoice != null ? plan.perInvoice : "");
+      }
     }
-
-    if (!months || months < 1) {
-      amountEl.value = "";
-      amountEl.placeholder = "Select schedule first";
-      syncPaymentTermsFromDom();
-      return;
-    }
-
-    amountEl.value = String(plan.perInvoice != null ? plan.perInvoice : "");
     syncPaymentTermsFromDom();
+  }
+
+  function bindProjectDateInputs() {
+    document.querySelectorAll(".project-date-input").forEach(input => {
+      if (input.dataset.bound === "1") return;
+      input.dataset.bound = "1";
+      input.addEventListener("change", () => {
+        const id = input.dataset.projectId;
+        const field = input.dataset.dateField;
+        if (!id || !field) return;
+        setProjectDateField(id, field, input.value);
+        const dates = getProjectDateRange(id);
+        if (dates.start && dates.end && dates.end < dates.start) {
+          showToast("End date must be on or after start date.", true);
+        }
+        updateInvoiceScheduleAmount();
+      });
+    });
   }
 
   function getPaymentTermsPayload() {
@@ -1224,14 +1927,20 @@
     const monthlyAmount = amountRaw !== "" && amountRaw != null ? Math.max(0, Number(amountRaw)) : null;
     const projectTotal = getProjectsInvoiceTotal();
     const plan = computePaymentPlan(months, projectTotal);
+    const biweeklyPlans = getCartBiweeklyPlans();
+    const readyBiweekly = biweeklyPlans.filter(p => p.ready);
     let label = null;
-    if (months && monthlyAmount != null && plan.projectFees > 0) {
+    if (readyBiweekly.length) {
+      label = readyBiweekly.map(p => {
+        return `${p.title}: ${p.paymentCount} equal biweekly payments of about ${fmt(p.biweeklyEach)} from ${americanDate(p.start)} to ${americanDate(p.end)} · first due ${americanDate(p.start)}`;
+      }).join(" | ");
+    } else if (months && monthlyAmount != null && plan.projectFees > 0) {
       const surchargeNote = plan.surchargeAmount
         ? `; +${Math.round(plan.surchargeRate * 100)}% schedule surcharge ${fmt(plan.surchargeAmount)} on remaining`
-        : "; no surcharge (≤30 days)";
+        : "; no surcharge (<=30 days)";
       label = `Due now ${fmt(plan.deposit)}; then ${months} QuickBooks invoice${months === 1 ? "" : "s"} of ${fmt(monthlyAmount)} (financed remaining ${fmt(plan.financedRemaining)}${surchargeNote}; total ${fmt(plan.totalDue)})`;
     } else if (months) {
-      label = `${months} invoice${months === 1 ? "" : "s"} — deposit billed immediately per payment options`;
+      label = `${months} invoice${months === 1 ? "" : "s"}; deposit billed immediately per payment options`;
     }
     return {
       months,
@@ -1248,6 +1957,7 @@
       within60Days: plan.within60Days,
       monthlySeparate: plan.monthlySeparate || 0,
       lineItems: getCartPaymentOptions(),
+      biweeklyPlans,
       label
     };
   }
@@ -1259,7 +1969,7 @@
     state.invoicePaymentMonthlyAmount = amountEl ? amountEl.value : "";
   }
 
-  function getPaymentType(item, isRetainer) {
+    function getPaymentType(item, isRetainer) {
     const raw = item.paymentType;
     if (raw === "performance" || raw === "flat") return raw;
     if (isRetainer || item.id === "RETAINER") return "performance";
@@ -1344,11 +2054,9 @@
     return `<span class="value-icons">${icons.map(valueIconMarkup).join("")}</span>`;
   }
 
-  function cardCornerIconsHtml(item, isRetainer, inline) {
-    const valueHtml = valueIconsHtml({ ...item, isRetainer });
-    if (!valueHtml) return "";
-    const cls = inline ? "card-icons-inline" : "card-icons-corner";
-    return `<div class="${cls}">${valueHtml}</div>`;
+  function cardCornerIconsHtml() {
+    /* Value icons retired from project card headers. */
+    return "";
   }
 
   function itemMatchesIconFilters(item) {
@@ -1430,9 +2138,8 @@
     renderProjectToc();
     renderSummary();
     requestAnimationFrame(() => {
-      const banner = document.getElementById("kpi-project-filter-banner");
-      const list = document.getElementById("project-list");
-      (banner || list)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const list = document.getElementById("project-list") || document.getElementById("project-toc");
+      list?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }
 
@@ -1498,56 +2205,24 @@
   }
 
   function renderOutlineFilters() {
-    renderValueIconKey();
-    renderStatusFilterKey();
+    let dirty = false;
+    if (state.iconFilters.length) {
+      state.iconFilters = [];
+      dirty = true;
+    }
+    if (state.statusFilters.length) {
+      state.statusFilters = [];
+      dirty = true;
+    }
+    if (dirty) saveState();
   }
 
   function renderStatusFilterKey() {
-    const el = document.getElementById("status-filter-key");
-    if (!el) return;
-    const defs = statusesPresentInPool();
-    const activeCount = state.statusFilters.length;
-    const clearBtn = activeCount
-      ? `<button type="button" class="icon-filter-clear" id="status-filter-clear">Clear status (${activeCount})</button>`
-      : "";
-    el.innerHTML =
-      `<span class="value-icon-key-title">Filter by status <span class="tab-help" data-help-title="Filter by status" data-help-desc="Show only projects with these INDEX statuses. WIP includes Started. Multi-select is OR. Clears with Clear status." aria-label="How to use status filters">?</span></span>${clearBtn}` +
-      defs.map(d => {
-        const active = state.statusFilters.includes(d.id) ? " filter-active" : "";
-        return `<button type="button" class="key-item key-filter-btn status-filter-btn${active}" data-status-filter="${d.id}" title="Show ${escapeHtml(d.label)} projects"><span class="key-item-meta"><span class="key-item-label">${escapeHtml(d.label)}</span></span></button>`;
-      }).join("");
-    el.querySelectorAll("[data-status-filter]").forEach(btn => {
-      btn.addEventListener("click", () => toggleStatusFilter(btn.dataset.statusFilter));
-    });
-    el.querySelector("#status-filter-clear")?.addEventListener("click", clearStatusFilters);
+    /* Status filter UI retired from Guide Project Outlines. */
   }
 
   function renderValueIconKey() {
-    const el = document.getElementById("value-icon-key");
-    if (!el) return;
-    const totalActive = state.iconFilters.length + state.statusFilters.length + (state.kpiFilter ? 1 : 0);
-    const hint = totalActive
-      ? `<button type="button" class="icon-filter-clear" id="icon-filter-clear">Clear all filters (${totalActive})</button>`
-      : "";
-    const kpiKey = resolveKpiFilterKey(state.kpiFilter);
-    const kpiBanner = kpiKey
-      ? `<div class="kpi-project-filter-banner" id="kpi-project-filter-banner" role="status">
-          <span>Showing projects that impact <span class="kpi-filter-name">${escapeHtml(kpiFilterLabel(kpiKey))}</span>${/^#\d{2}$/.test(kpiKey) ? ` · ${escapeHtml(kpiKey)}` : ""}</span>
-          <button type="button" class="icon-filter-clear" id="kpi-filter-clear">Clear KPI filter</button>
-        </div>`
-      : "";
-    el.innerHTML = `${kpiBanner}<span class="value-icon-key-title">Filter by value <span class="tab-help" data-help-title="Filter by value" data-help-desc="Filter by value icon, check projects into your cart, read details, then Review Plan for fees, payment options, and next steps." aria-label="How to use value filters">?</span></span>${hint}` +
-      VALUE_ICON_DEFS.map(d => {
-        const active = state.iconFilters.includes(d.id) ? " filter-active" : "";
-        return `<button type="button" class="key-item key-filter-btn key-filter-${d.id}${active}" data-icon-filter="${d.id}" title="Show projects that add ${escapeHtml(d.label)} value">${valueIconMarkup(d)}<span class="key-item-meta"><span class="key-item-label">${escapeHtml(d.label)}</span></span></button>`;
-      }).join("");
-    el.querySelectorAll(".key-filter-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        toggleIconFilter(btn.dataset.iconFilter);
-      });
-    });
-    el.querySelector("#icon-filter-clear")?.addEventListener("click", clearOutlineFilters);
-    el.querySelector("#kpi-filter-clear")?.addEventListener("click", clearKpiFilter);
+    /* Filter by value key retired from Guide Project Outlines. */
   }
 
   function normalizeKpiId(kpiId) {
@@ -1900,6 +2575,7 @@
     }
     const payEl = document.getElementById("confirm-payment-options-body");
     if (payEl) payEl.innerHTML = buildPaymentOptionsHtml();
+    bindProjectDateInputs();
     updateInvoiceScheduleAmount();
   }
 
@@ -2346,6 +3022,8 @@
       let t = cleanBusinessText(String(raw || "").replace(/^Deliverable:\s*/i, "").trim());
       t = t.replace(/^[-•*]\s*/, "").trim();
       if (!t || isExecutionBlurb(t)) return;
+      /* Skip markdown section labels that leaked into Summary bullets. */
+      if (/^(scope|deliverables|goal|current state|completed current state|estimate|work|notes|next steps|transition to standard digital ads channel)$/i.test(t)) return;
       const key = t.toLowerCase().replace(/\s+/g, " ").slice(0, 72);
       if (seen.has(key)) return;
       seen.add(key);
@@ -2409,10 +3087,26 @@
     </div>`;
   }
 
+  function cardKpiRefsHtml(item) {
+    const ids = (item.kpiRefs || [])
+      .map(normalizeKpiRef)
+      .filter(Boolean)
+      .filter((id, i, arr) => arr.indexOf(id) === i);
+    if (!ids.length) return "";
+    return `<div class="card-kpi-refs">${ids.map(id => {
+      const label = kpiFilterLabel(id) || id;
+      return `<a href="#kpi-${id.replace("#", "")}" class="kpi-ref-link" data-kpi="${escapeHtml(id)}">${escapeHtml(label)}</a>`;
+    }).join("")}</div>`;
+  }
+
   function descriptionHtml(item) {
     const progress = progressHtml(item);
+    const highlights = conciseDescriptionBulletsHtml(item);
+    const kpis = cardKpiRefsHtml(item);
+    if (!highlights && !kpis && !progress) return "";
     return `<div class="card-summary card-merged-desc">
-      ${conciseDescriptionBulletsHtml(item)}
+      ${highlights ? `<div class="card-highlights">${highlights}</div>` : ""}
+      ${kpis}
       ${progress ? `<div class="card-progress-under">${progress}</div>` : ""}
     </div>`;
   }
@@ -2600,7 +3294,10 @@
   }
 
   function ensureRequiredMaintenance() {
-    if (isRequiredProject(RETAINER, true)) {
+    if (isPlanningPublish(RETAINER)) {
+      state.retainer = false;
+      state.recommended.delete("RETAINER");
+    } else if (isRequiredProject(RETAINER, true)) {
       state.retainer = true;
       state.recommended.add("RETAINER");
     }
@@ -2617,7 +3314,10 @@
 
   /** Fresh cart from INDEX Status: Required (locked) + Recommended. */
   function applyIndexDefaultSelections() {
-    if (isIndexDefaultSelected(RETAINER, true)) {
+    if (isPlanningPublish(RETAINER)) {
+      state.retainer = false;
+      state.recommended.delete("RETAINER");
+    } else if (isIndexDefaultSelected(RETAINER, true)) {
       state.retainer = true;
       state.recommended.add("RETAINER");
     }
@@ -2636,7 +3336,15 @@
 
   function renderPackageIntro() {
     const el = document.getElementById("package-intro");
-    if (el) el.textContent = "";
+    if (!el) return;
+    el.innerHTML =
+      `<p class="priority-summary-lead">Projects that support the top 4 priorities.</p>` +
+      `<ol class="priority-summary-list">` +
+      `<li><span class="priority-summary-name">Digital Ads Expansion.</span> Grow and diversify paid channels. Google Ads and LSA stay under the monthly retainer.</li>` +
+      `<li><span class="priority-summary-name">HubSpot Setup.</span> Know where leads come from and which sources produce the best matters. Connect CRM, ads, intake, and phones.</li>` +
+      `<li><span class="priority-summary-name">Lawyer Referral.</span> Reciprocal attorney referrals, ABM outreach to priority firms, and networking skills.</li>` +
+      `<li><span class="priority-summary-name">Website and SEO.</span> Rebuild pav.law on HubSpot with phased SEO cutover.</li>` +
+      `</ol>`;
   }
 
   function sortedProjects() {
@@ -2731,6 +3439,7 @@
 
   function tocSortableItems() {
     return allItemsByPriority().filter(item => {
+      if (!isPicklistCatalogItem(item)) return false;
       if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return true;
       return !isCompletedStatus(item);
     }).filter(item => itemMatchesOutlineFilters(item));
@@ -2832,21 +3541,9 @@
     return nestChildrenUnderParents(flat, (a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
   }
 
-  /** Collapsed TOC still shows every selected project (and its HubSpot parent if needed). */
+  /** TOC always lists the full filtered set (Show all / top 5 toggle retired). */
   function visibleTocItems(items) {
-    if (state.tocExpanded || state.priorityEdit || items.length <= 5) return items;
-    const keep = new Set();
-    items.slice(0, 5).forEach(item => keep.add(item.id));
-    items.forEach(item => {
-      if (!isItemSelected(item)) return;
-      keep.add(item.id);
-      if (item.parentId) keep.add(item.parentId);
-    });
-    /* Keep already-included parents’ children that were in the opening slice. */
-    items.forEach((item, idx) => {
-      if (idx < 5 && item.parentId && keep.has(item.parentId)) keep.add(item.id);
-    });
-    return items.filter(item => keep.has(item.id));
+    return items;
   }
 
   function gilbertRankedPicks(limit) {
@@ -2897,9 +3594,6 @@
 
   function renderProjectToc() {
     const listEl = document.getElementById("toc-list");
-    const statusEl = document.getElementById("table-filter-status");
-    const hintEl = document.getElementById("toc-summary-hint");
-    const expandEl = document.getElementById("toc-expand-row");
     if (!listEl) return;
     const baseItems = tocSortableItems();
     const useClientRanks = !!(state.clientPriorityIds?.length);
@@ -2927,7 +3621,7 @@
         <td class="toc-col-select">
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
         </td>
-        <td class="toc-col-project toc-title"><div class="toc-title-row"><a href="#project-${item.id}" title="${escapeHtml(item.title)}">${hubspotTitleMarkHtml(item)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a><span class="toc-value">${valueIconsHtml(item)}</span></div></td>
+        <td class="toc-col-project toc-title"><div class="toc-title-row"><a href="#project-${item.id}" title="${escapeHtml(item.title)}">${hubspotTitleMarkHtml(item)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></div></td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
@@ -2939,42 +3633,6 @@
         : "Reorder projects for your preferred project score";
     }
     document.getElementById("project-toc")?.classList.toggle("priority-editing", state.priorityEdit);
-    if (hintEl) {
-      const selCount = items.filter(i => isItemSelected(i)).length;
-      const countLabel = state.tocExpanded || state.priorityEdit || items.length <= 5
-        ? `${items.length} projects`
-        : `Top 5 of ${items.length} projects`;
-      hintEl.textContent = state.priorityEdit
-        ? "Use ↑ ↓ to set your priority order, then Done"
-        : (selCount ? `${countLabel} · ${selCount} selected` : countLabel);
-    }
-    if (statusEl) {
-      const total = allItemsByPriority().filter(item => {
-        if (item.isRetainer || item.id === "RETAINER" || item.monthlyOnly) return true;
-        return !isCompletedStatus(item);
-      }).length;
-      const shown = items.length;
-      const parts = [];
-      if (state.statusFilters.length) {
-        parts.push(`status: ${state.statusFilters.map(statusFilterLabel).join(", ")}`);
-      }
-      if (state.iconFilters.length) parts.push("value icons");
-      if (state.kpiFilter) parts.push(`KPI ${kpiFilterLabel(state.kpiFilter)}`);
-      statusEl.textContent = parts.length && shown !== total
-        ? `Showing ${shown} of ${total} projects · ${parts.join(" · ")}`
-        : (state.priorityEdit ? "Editing client priority order — saved with your submission." : "");
-    }
-    if (expandEl) {
-      if (items.length > 5 && !state.priorityEdit) {
-        expandEl.hidden = false;
-        expandEl.innerHTML = state.tocExpanded
-          ? `<button type="button" class="btn btn-secondary btn-sm toc-expand-btn" data-expand="top">Show top 5 only</button>`
-          : `<button type="button" class="btn btn-secondary btn-sm toc-expand-btn" data-expand="all">Show all ${items.length} projects</button>`;
-      } else {
-        expandEl.hidden = true;
-        expandEl.innerHTML = "";
-      }
-    }
   }
 
   function getFilters() {
@@ -3126,6 +3784,7 @@
       /* Notes / email / survey may persist. Cart always resets to INDEX Required +
          Recommended so Best Fit and the invoice stay the same project set. */
       state.notes = saved.notes || {};
+      state.projectDates = saved.projectDates && typeof saved.projectDates === "object" ? saved.projectDates : {};
       sanitizeCartForAbQ();
       state.submitterEmail = saved.submitterEmail || "";
       if (state.submitterEmail) document.getElementById("submitted-email").value = state.submitterEmail;
@@ -3146,12 +3805,10 @@
       if (Array.isArray(saved.gilbertChat) && saved.gilbertChat.length) {
         state.gilbertChat = saved.gilbertChat;
       }
-      if (Array.isArray(saved.iconFilters)) {
-        state.iconFilters = saved.iconFilters.filter(f => f && f !== "account-data");
-      }
-      if (Array.isArray(saved.statusFilters)) {
-        state.statusFilters = saved.statusFilters.filter(f => STATUS_FILTER_DEFS.some(d => d.id === f));
-      }
+      /* Status filter UI retired — do not restore statusFilters from localStorage. */
+      state.statusFilters = [];
+      /* Filter by value key retired — do not restore iconFilters from localStorage. */
+      state.iconFilters = [];
       if (saved.kpiFilter) {
         state.kpiFilter = resolveKpiFilterKey(saved.kpiFilter);
       }
@@ -3163,8 +3820,9 @@
       /* Client reorder is session-only. Restoring it from localStorage kept the old
          Priority column after refresh and hid score ranking (+20 Recommended). */
       state.clientPriorityIds = [];
-      if (saved.expanded) state.expanded = new Set(saved.expanded);
-      if (saved.expandAll) allProjectIds().forEach(id => state.expanded.add(id));
+      /* Cards start collapsed. Expand is session-only so retainers / current projects
+         do not reopen WIP lists after refresh. */
+      state.expanded = new Set();
       state.retainer = false;
       state.projects = new Set();
       applyIndexDefaultSelections();
@@ -3182,6 +3840,7 @@
       expanded: [...state.expanded],
       expandAll: isExpandAll(),
       notes: state.notes,
+      projectDates: state.projectDates || {},
       submitterEmail: state.submitterEmail,
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
@@ -3408,16 +4067,83 @@
     return `<span class="publish-status-badge" title="Research &amp; Planning">Research &amp; Planning</span>`;
   }
 
+  function projectFocusArea(item) {
+    return [item?.category, item?.campaignType].filter(Boolean).join(" · ") || "—";
+  }
+
+  function projectTileImageSrc(item) {
+    const featured = item?.featuredImage && String(item.featuredImage).trim();
+    if (featured) return featured;
+    const byId = {
+      RETAINER: "assets/gigi-thinking.png",
+      retainer: "assets/gigi-thinking.png",
+      AdEnhance: "assets/google-ads-tile.svg?v=logo-only",
+      Yelpv1: "assets/yelp-ads-tile.svg?v=logo-only",
+      LegalDirs: "assets/network-internet.svg",
+      HolidayAds: "assets/gigi-celebrating.png",
+      WinterAds: "assets/gigi-celebrating.png",
+      DigProf: "assets/pav-law-shield.svg",
+      DataMgmt: "assets/gigi-lightbulb-idea.png",
+      OpsDash: "assets/admin-dashboard.svg",
+      AdultAds: "assets/gigi-lightbulb-idea.png"
+    };
+    return byId[item?.id] || "assets/gg-shield-emblem.png";
+  }
+
+  function projectTileBrandLogoSrc(item) {
+    return null;
+  }
+
+  /** Projects currently on the Quote Calculator / invoice plan. */
+  function calculatorWorkingProjects() {
+    let ranked = rankedInvoiceForBestFit();
+    if (!ranked.length) ranked = nestRankedList(indexPlanBestFit());
+    return ranked.map(r => r.item).filter(Boolean);
+  }
+
+  function projectTileHtml(item, isFirstSelected) {
+    const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
+    const id = item.id;
+    const required = isRequiredMaintenance(item, isRetainer) || isRequiredProject(item, isRetainer);
+    const sel = isItemSelected(item);
+    const chkDisabled = required ? " disabled" : "";
+    const group = priorityGroupLabel(item);
+    const groupTitle = priorityGroupTitle(item);
+    const focus = projectFocusArea(item);
+    const summary = itemTldr(item) || "—";
+    const quote = projectQuoteLabel(item, isRetainer);
+    const img = projectTileImageSrc(item);
+    const brandLogo = projectTileBrandLogoSrc(item);
+    const brandLogoHtml = brandLogo
+      ? `<img class="project-tile-brand-logo" src="${escapeHtml(brandLogo.src)}" alt="${escapeHtml(brandLogo.alt)}" width="48" height="48" loading="lazy">`
+      : "";
+    const selFirst = isFirstSelected ? " selected-first" : "";
+    const reqClass = required ? " tile-required" : "";
+    return `
+      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" role="listitem">
+        <div class="project-tile-media">
+          <img class="project-tile-image" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="360">
+          ${brandLogoHtml}
+        </div>
+        <div class="project-tile-body">
+          <h3 class="project-tile-title">${escapeHtml(item.title)}</h3>
+          <p class="project-tile-focus" title="${escapeHtml(groupTitle)}">${group && group !== "—" ? `P${escapeHtml(group)}` : ""}${group && group !== "—" && focus ? " · " : ""}${escapeHtml(focus)}</p>
+          <p class="project-tile-cost">${escapeHtml(quote)}</p>
+          <p class="project-tile-summary">${escapeHtml(summary)}</p>
+        </div>
+      </article>`;
+  }
+
   function cardHtml(item, isRetainer, isFirstSelected) {
     const id = item.id;
     const required = isRequiredMaintenance(item, isRetainer);
     const sel = isRetainer ? state.retainer : state.projects.has(id);
-    const unpublished = !isRetainer && isPlanningPublish(item);
+    const unpublished = isPlanningPublish(item);
     if (unpublished) state.expanded.delete(id);
     const exp = !unpublished && state.expanded.has(id);
     const extra = getItemFilterClasses(item, isRetainer);
     const pkgClass = isInRecommendedPackage({ ...item, isRetainer }) ? " package-included" : "";
-    const iconsHtml = cardCornerIconsHtml(item, isRetainer, true) || "";
+    const iconsHtml = "";
     const wipBadge = wipBadgeHtml(item);
     const retainerClass = isRetainer ? " retainer-card required-retainer" : "";
     const maintClass = item.monthlyOnly ? ` maintenance-card${required ? " required-maintenance" : ""}` : "";
@@ -3487,33 +4213,22 @@
       }
       return;
     }
-    const maintenance = sortCartFirst(getMaintenanceProjects());
-    const optional = sortCartFirst(activeOptionalProjects());
-    // Live cards first; Research & Planning (unpublished) always at bottom
-    const maintLive = maintenance.filter(p => !isPlanningPublish(p));
-    const maintPlan = maintenance.filter(p => isPlanningPublish(p));
-    const optLive = optional.filter(p => !isPlanningPublish(p));
-    const optPlan = optional.filter(p => isPlanningPublish(p));
-    const visible = visibleOptionalProjects(optLive);
-    const hidden = hiddenOptionalCount(optLive);
+    const working = calculatorWorkingProjects();
+    const controls = document.querySelector(".project-list-controls");
+    if (controls) controls.hidden = true;
     let markedFirst = false;
-    const projectCards = visible.map(p => {
-      const sel = state.projects.has(p.id);
+    const tiles = working.map(item => {
+      const sel = isItemSelected(item);
       const isFirst = sel && !markedFirst;
       if (isFirst) markedFirst = true;
-      return cardHtml(p, false, isFirst);
+      return projectTileHtml(item, isFirst);
     }).join("");
-    const maintCards = maintLive.map(p => cardHtml(p, false, false)).join("");
-    const showMoreBtn = hidden > 0
-      ? `<div class="project-list-show-more"><button type="button" class="btn btn-secondary" id="show-more-projects">Show ${hidden} more project${hidden === 1 ? "" : "s"}</button></div>`
-      : state.showAllProjects && optLive.length > PROJECT_LIST_LIMIT
-        ? `<div class="project-list-show-more"><button type="button" class="btn btn-secondary" id="show-more-projects">Show fewer</button></div>`
-        : "";
-    const planCards = maintPlan.concat(optPlan).map(p => cardHtml(p, false, false)).join("");
-    const planBlock = planCards
-      ? `<div class="research-planning-list" role="group" aria-label="Research and Planning"><div class="research-planning-heading">Research &amp; Planning</div>${planCards}</div>`
-      : "";
-    list.innerHTML = cardHtml(RETAINER, true, true) + maintCards + projectCards + showMoreBtn + planBlock;
+    list.innerHTML = working.length
+      ? `<div class="project-tile-grid-head">
+           <h3 class="project-tile-grid-title">Project Overviews</h3>
+         </div>
+         <div class="project-tile-grid" role="list">${tiles}</div>`
+      : `<p class="project-tile-empty">No calculator projects yet. Check projects in the Quote Calculator above.</p>`;
     syncExpandAllCheckbox();
     attachProjectListListeners(list);
     attachProjectListListeners(document.getElementById("research-section-wrap"));
@@ -3705,17 +4420,27 @@
       monthlyOnly: true,
       paymentType: getPaymentType(p, false)
     }));
-    const projectRows = selected.map(p => ({
-      id: p.id,
-      title: p.title,
-      fee: feeLabelFor(p),
-      feeNum: itemSelectionCost(p),
-      timeline: p.timeline || "",
-      priority: p.priority ?? null,
-      clientPriority: clientPriorityRank(p),
-      parentId: p.parentId || null,
-      paymentType: getPaymentType(p, false)
-    }));
+    const projectRows = selected.map(p => {
+      const dates = getProjectDateRange(p.id);
+      const bi = computeProjectBiweeklyPlan({ ...p, isRetainer: false });
+      return {
+        id: p.id,
+        title: p.title,
+        fee: feeLabelFor(p),
+        feeNum: itemSelectionCost(p),
+        timeline: p.timeline || "",
+        priority: p.priority ?? null,
+        clientPriority: clientPriorityRank(p),
+        parentId: p.parentId || null,
+        paymentType: getPaymentType(p, false),
+        startDate: dates.start || null,
+        endDate: dates.end || null,
+        biweeklyInvoiceCount: bi.ready ? bi.paymentCount : null,
+        biweeklyAmount: bi.ready ? bi.biweeklyEach : null,
+        biweeklyInvoices: bi.ready ? (bi.allPayments || bi.invoices) : [],
+        invoiceWriteup: bi.writeup
+      };
+    });
     return {
       submittedAt: new Date().toISOString(),
       submittedBy: "",
@@ -3747,6 +4472,8 @@
       paymentTotalDue: paymentTerms.totalDue != null ? paymentTerms.totalDue : null,
       paymentWithin30Days: paymentTerms.within30Days,
       paymentWithin60Days: paymentTerms.within60Days,
+      biweeklyPlans: paymentTerms.biweeklyPlans || [],
+      invoiceWriteupForKate: (paymentTerms.biweeklyPlans || []).filter(p => p.writeup).map(p => p.writeup).join("\n\n"),
       quickbooksDepositUrl: CONFIG.quickbooksDepositUrl || null,
       signingBaseUrl: window.location.origin + window.location.pathname,
       projects: [...maintRows, ...projectRows],
@@ -4492,8 +5219,8 @@
       const required = item ? isRequiredMaintenance(item, isRetainer) : false;
       const req = item ? requiredMarkerHtml(item, isRetainer) : "";
       const chkDisabled = required ? " disabled" : "";
-      const scoreLabel = item ? fitScoreLabel(item, isRetainer) : "—";
-      const scoreTitle = required ? "Required — no fit score" : "Best-fit / impact — higher is better";
+      const scoreLabel = item ? priorityGroupLabel(item) : "—";
+      const scoreTitle = item ? priorityGroupTitle(item) : "Not in Andrew Priority Groups 1–4";
       return `<tr data-id="${escapeHtml(row.id)}" data-retainer="${isRetainer}" data-required="${required}">
         <td class="col-select">
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(row.id)}" aria-label="Keep ${escapeHtml(row.title)} in cart"${chkDisabled} checked>
@@ -4508,7 +5235,7 @@
         <tr>
           <th class="col-select" scope="col">Add</th>
           <th class="col-project" scope="col">Project</th>
-          <th class="col-score" scope="col" title="Best-fit / impact — higher is better. Required items show —.">Fit</th>
+          <th class="col-score" scope="col" title="Andrew Priority Groups 1–4 · Digital Ads · HubSpot setup · Lawyer referral · Website and SEO">Priority Group 1–4</th>
         </tr>
       </thead>
       <tbody>
@@ -4635,7 +5362,89 @@
     setTimeout(() => t.classList.remove("show"), 4000);
   }
 
-  async function submitSelections() {
+  function buildProjectRequestEmailBody(payload) {
+    const projects = payload.projects || [];
+    const lines = [
+      "Gilbert Guide - project request for invoice terms",
+      "",
+      "From: " + (payload.submitterEmail || "(no email)"),
+      "Submitted: " + (payload.submittedAt || new Date().toISOString()),
+      "",
+      "Projects requested:"
+    ];
+    projects.forEach(p => {
+      if (p.monthlyOnly) {
+        lines.push(`- ${p.title}: ${p.fee} / mo`);
+      } else {
+        lines.push(`- ${p.title}: ${p.fee}`);
+        if (p.startDate || p.endDate) {
+          lines.push(`  Window: ${americanDate(p.startDate)} to ${americanDate(p.endDate)}`);
+        }
+        if (p.biweeklyInvoiceCount) {
+          lines.push(`  Equal biweekly: ${p.biweeklyInvoiceCount} payments of about ${fmt(p.biweeklyAmount)}`);
+        }
+      }
+    });
+    lines.push("", "Invoice terms to write up:", payload.invoiceWriteupForKate || payload.invoicePaymentTermsLabel || "(set project start and end dates for biweekly terms)");
+    lines.push("", "Setup fees use equal biweekly payments. One-month projects · max 3.", "Action: create QuickBooks invoices to match the biweekly schedule above.");
+    return lines.join("\n");
+  }
+
+  async function submitProjectRequest() {
+    CONFIG = getConfig();
+    const selected = getSelectedProjects();
+    if (!selected.length && !state.retainer) {
+      showToast("Select at least one project first.", true);
+      return;
+    }
+    const plans = getCartBiweeklyPlans();
+    const missingDates = plans.filter(p => !p.ready);
+    if (missingDates.length) {
+      showToast("Set start and end dates for each one-time project before requesting invoice terms.", true);
+      return;
+    }
+    const payload = {
+      ...buildPayload(),
+      type: "project_request",
+      submittedBy: "Pav Law Guide request"
+    };
+    const btn = document.getElementById("calc-send-plan-summary") || document.getElementById("submit-project-request");
+    const btnIdle = btn?.id === "calc-send-plan-summary" ? "Submit SOW" : "Submit project request";
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Sending…";
+    }
+    const notify = CONFIG.notifyEmail || "support@gildedgooselimited.com";
+
+    if (!CONFIG.webhookUrl) {
+      const subject = encodeURIComponent("Gilbert Guide · plan summary for review and kickoff");
+      const body = encodeURIComponent(buildProjectRequestEmailBody(payload));
+      window.location.href = `mailto:${encodeURIComponent(notify)}?subject=${subject}&body=${body}`;
+      showToast("Opened email draft to " + notify);
+      if (btn) {
+        btn.textContent = btnIdle;
+        btn.disabled = false;
+      }
+      return;
+    }
+
+    try {
+      await postToWebhook(CONFIG.webhookUrl, payload, true);
+      saveSubmissionLocally(payload);
+      showToast("Plan summary emailed to " + notify);
+    } catch (err) {
+      const subject = encodeURIComponent("Gilbert Guide · plan summary for review and kickoff");
+      const body = encodeURIComponent(buildProjectRequestEmailBody(payload));
+      window.location.href = `mailto:${encodeURIComponent(notify)}?subject=${subject}&body=${body}`;
+      showToast("Webhook failed — opened email draft instead. " + err.message, true);
+    }
+    if (btn) {
+      btn.textContent = btnIdle;
+      btn.disabled = false;
+    }
+  }
+
+    async function submitSelections() {
     if (!canSubmit()) return;
     CONFIG = getConfig();
     const payload = buildPayload();
@@ -4705,6 +5514,7 @@
   });
   document.getElementById("confirm-back").addEventListener("click", hideConfirmPage);
   document.getElementById("submit-selections").addEventListener("click", submitSelections);
+  document.getElementById("submit-project-request")?.addEventListener("click", submitProjectRequest);
   document.getElementById("btn-back-picker").addEventListener("click", hideThankYou);
   document.getElementById("sow-send-esign")?.addEventListener("click", signSowAndEmail);
   document.getElementById("sow-continue-thankyou")?.addEventListener("click", continueToThankYou);
@@ -4881,7 +5691,8 @@
   loadState();
   ensureRequiredMaintenance();
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  setActiveViewTab("kpis");
+  const hashTab = String(location.hash || "").replace(/^#/, "").toLowerCase();
+  setActiveViewTab(hashTab === "picker" || hashTab === "projects" ? "picker" : "kpis");
   initGilbertGuide();
   renderPackageIntro();
   renderOutlineFilters();
@@ -4889,11 +5700,14 @@
   renderDoNextPanel();
   renderCondensedToc();
   renderAllCards();
-  pinKpiTabToTop();
-  requestAnimationFrame(() => {
+  renderViewLayout();
+  if (state.activeViewTab === "kpis") {
     pinKpiTabToTop();
-    requestAnimationFrame(pinKpiTabToTop);
-  });
+    requestAnimationFrame(() => {
+      pinKpiTabToTop();
+      requestAnimationFrame(pinKpiTabToTop);
+    });
+  }
   window.addEventListener("kpi-report-rendered", () => {
     if (state.activeViewTab === "kpis" && !window.__gilbertKpiScrolledOnce) {
       window.__gilbertKpiScrolledOnce = true;

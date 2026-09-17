@@ -27,26 +27,15 @@ window.PROJECT_DATA = {
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
     "status": "required",
-    "publishStatus": "published",
-    "estimatedLeads": "~89 Search calls/mo · ~78 LSA phone leads/mo · May–Jun 2026 avg",
-    "keywords": [
-      "ongoing",
-      "monthly",
-      "steady",
-      "maintain",
-      "retainer",
-      "report",
-      "crm",
-      "hubspot",
-      "referral",
-      "routine",
-      "lsa"
-    ],
+    "publishStatus": "unpublished",
     "id": "retainer",
     "title": "Digital Ads Maintenance Retainer",
-    "tldr": "Ongoing oversight of Google Ads and Local Services Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
+    "tldr": "Ongoing oversight of Google Ads and Local Services Ads: monitoring spend, tuning bids, reviewing lead quality, and reporting out",
     "valueAdded": [
-      "Ongoing oversight of Google Ads and Local Services Ads — monitoring spend, tuning bids, reviewing lead quality, and reporting out.",
+      "Ongoing oversight of Google Ads and Local Services Ads: monitoring spend, tuning bids, reviewing lead quality, and reporting out",
+      "Includes ongoing NTGUILT Search improvements under the same monthly scope · not a separate project sell",
+      "After Digital Ad Enhancements finishes its ~1-month test window, selected long-term Search keepers add onto this retainer. Rough starter add: about $500/mo on the $3,000/mo base. Requote after winners are proven",
+      "Yelp keepers stay on the separate Yelp $500/mo line · not inside this Google / LSA retainer",
       "Monthly reporting catches waste before it runs another month",
       "Keeps Google Ads and LSA under one scope",
       "LSA lead-status SOP so booked, spam, and follow-up stay accurate for billing and improved lead scoring"
@@ -75,29 +64,29 @@ window.PROJECT_DATA = {
       "#09",
       "#15"
     ],
-    "feeEstimate": 4400,
+    "feeEstimate": 4200,
     "feeEstimateOngoing": null,
     "feeEstimateLane": "retainer_ads",
     "feeEstimateUnit": "mo",
     "feeEstimateLocalMid": 3000,
     "feeEstimateNationalMid": 3800,
     "feeEstimateScope": {
-      "raw": 9.25,
+      "raw": 12.24,
       "parts": {
-        "valueAdd": 4,
+        "valueAdd": 7,
         "tasks": 1,
         "completed": 5,
         "info": 0,
         "ab": 0,
         "kpis": 5,
-        "descUnits": 0.25
+        "descUnits": 0.24
       }
     },
-    "feeEstimateComplexity": 1.1,
+    "feeEstimateComplexity": 1,
     "feeEstimateBlend": "55% local / 45% national",
     "feeEstimatePackaged": false,
-    "feeEstimateDelta": 1400,
-    "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.20 (9.25 units) · complexity ×1.1"
+    "feeEstimateDelta": 1200,
+    "feeEstimateNote": "retainer ads lane · local mid $3,000 · national mid $3,750 · scope ×1.25 (12.24 units) · complexity ×1"
   },
   "projects": [
     {
@@ -296,6 +285,89 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1600,
       "feeEstimateNote": "lsa process lane · local mid $1,600 · national mid $2,500 · scope ×1.40 (28.68 units) · complexity ×1.1"
+    },
+    {
+      "priority": 3,
+      "fee": 2200,
+      "durationWeeks": 4,
+      "invoiceCount": 3,
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-29",
+      "category": "Paid Media",
+      "campaignType": "Paid Search",
+      "status": "available",
+      "publishStatus": "published",
+      "id": "AdEnhance",
+      "title": "Digital Ad Enhancements",
+      "tldr": "Focused Search enhancements and pilots on the live account. Add on targeted campaigns and ad groups to get leads for additional legal service areas.",
+      "valueAdded": [
+        "Focused Search enhancements and pilots on the live account. Add on targeted campaigns and ad groups to get leads for additional legal service areas.",
+        "Creative and account upgrades for ads already running, including a priority Sex Crimes Defense Search pilot",
+        "Test and select the best campaigns for long-term performance",
+        "After that month, keepers add onto the Digital Ads Maintenance Retainer. Rough starter add: about $500/mo on top of the base retainer. Revisit after winners are proven",
+        "Expands Search beyond the current account structure without inventing a new media channel",
+        "Keyword and ad copy: tighten so spend maps to stronger ad strength and tracked calls",
+        "Call-only troubleshooting and CDL / federal-masking creative angles already in WIP",
+        "Content beyond RSAs: customer review responses and listing / profile copy that support paid and organic referral paths",
+        "Short non-directory listing shortlist only · directories live on LegalDirs · LinkedIn firm + Andrew on Lawyer Referral"
+      ],
+      "valueIcons": [
+        "leads",
+        "efficiency",
+        "intake",
+        "creative"
+      ],
+      "completedItems": [
+        "Search campaign planning across practice areas",
+        "Keyword and description rewrite for ad strength",
+        "Paid search optimization and daily monitoring setup",
+        "---"
+      ],
+      "inProgressItems": [
+        "Call-only campaign troubleshooting",
+        "Ad creative for CDL-licensed drivers with personal tickets (federal masking can force court appearances)",
+        "Sex Crimes Defense Search pilot: exact/phrase high-intent keywords, discreet RSA copy, dedicated landing page, call tracking, and negative-keyword QA",
+        "Keep Sex Crimes Defense off Display and broad match; review sensitive-policy language before launch",
+        "Review-response content templates for Yelp and other live profiles",
+        "Shortlist 2–3 non-Google referral / listing platforms to test · add winners to the channel brainstorm proposal",
+        "After keepers are selected: quote the Digital Ads Maintenance Retainer add and move long-term care off this setup card"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [
+        "#01",
+        "#05",
+        "#08",
+        "#14",
+        "#15",
+        "#21"
+      ],
+      "shortTitle": "Ad Enhancements",
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 5000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "ads_campaign",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3800,
+      "feeEstimateScope": {
+        "raw": 21.75,
+        "parts": {
+          "valueAdd": 9,
+          "tasks": 7,
+          "completed": 4,
+          "info": 0,
+          "ab": 0,
+          "kpis": 6,
+          "descUnits": 0.3
+        }
+      },
+      "feeEstimateComplexity": 1.21,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2800,
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.35 (21.75 units) · complexity ×1.21"
     },
     {
       "priority": 3,
@@ -568,6 +640,66 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "intake voip lane · local mid $2,500 · national mid $3,250 · scope ×1.27 (13.65 units) · complexity ×1.1"
     },
     {
+      "priority": 4,
+      "fee": 2600,
+      "ongoingFee": 500,
+      "durationWeeks": 8,
+      "invoiceCount": 5,
+      "startDate": "2026-10-01",
+      "endDate": "2026-12-01",
+      "category": "Paid Media",
+      "campaignType": "Reviews",
+      "status": "recommended",
+      "publishStatus": "published",
+      "parentId": "DigProf",
+      "id": "Yelpv1",
+      "title": "Yelp Ads",
+      "tldr": "Yelp listing setup, message response, review nurture, and ads testing so winners can be judged next to Search and LSA",
+      "valueAdded": [
+        "Yelp listing setup, message response, review nurture, and ads testing so winners can be judged next to Search and LSA",
+        "Recommended window: 10/01/2026 start · end no later than 12/01/2026 · two calendar months",
+        "Setup fee splits into equal biweekly payments with no deposit %. Max 5 payments over that window · about $520 each on $2,600",
+        "After the setup window, keepers stay on a Yelp platform line. Rough starter: $500/mo. Revisit after traffic and maintenance load are clear",
+        "Expand budget after message response and lead intake are solid, including HubSpot intake when live",
+        "Lock who answers messages · CRM-tracked links · message-response marketing · review nurture",
+        "Standalone fee line: $2,600 setup + $500/mo · not inside the Google / LSA Digital Ads Maintenance Retainer · media and Yelp upgrades separate",
+        "As of 09/10/2026: listing live · ads near $25/day · $300 promo · 40% call answer · 4.6 stars / 9 reviews"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [
+        "#01",
+        "#05",
+        "#09",
+        "#10",
+        "#15",
+        "#16",
+        "#21"
+      ],
+      "feeEstimate": 2900,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 10.7,
+        "parts": {
+          "valueAdd": 8,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 7,
+          "descUnits": 0.25
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 300,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.23 (10.7 units) · complexity ×1.1"
+    },
+    {
       "priority": 5,
       "fee": 1700,
       "category": "Referral",
@@ -632,6 +764,56 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1100,
       "feeEstimateNote": "referral program lane · local mid $2,100 · national mid $3,150 · scope ×1.08 (4.18 units) · complexity ×1"
+    },
+    {
+      "priority": 6,
+      "fee": 1200,
+      "durationWeeks": 4,
+      "invoiceCount": 3,
+      "startDate": "2026-10-01",
+      "endDate": "2026-10-29",
+      "category": "Brand / Local Presence",
+      "campaignType": "Directories & Profiles",
+      "status": "recommended",
+      "publishStatus": "published",
+      "parentId": "DigProf",
+      "id": "LegalDirs",
+      "title": "Directories & Profile Channels",
+      "tldr": "Directory profile and contract pass: accurate profiles, clear CTAs, tracked links, then keep / cut / boost across Justia, FindLaw, and Avvo",
+      "valueAdded": [
+        "Directory profile and contract pass: accurate profiles, clear CTAs, tracked links, then keep / cut / boost across Justia, FindLaw, and Avvo",
+        "Maximize Justia through December · FindLaw keep/cut · Avvo light cleanup",
+        "Same pattern on every channel: accurate profile, clear CTA, tracked link, then keep / cut / boost",
+        "Not a HubSpot package. Skip cold Martindale / US Attorneys",
+        "Justia already paid through December · under ~10 leads/mo for the spend · make the remaining months count",
+        "Open ops: FindLaw / Justia contract · content updates · tracked-URL audit · Avvo cleanup",
+        "LinkedIn firm + Andrew refresh lives on Lawyer Referral, not this card"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "feeEstimate": 2500,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 7.28,
+        "parts": {
+          "valueAdd": 7,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.28
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1300,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.17 (7.28 units) · complexity ×1"
     },
     {
       "priority": 6,
@@ -1017,86 +1199,6 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.16 (6.84 units) · complexity ×1.08"
     },
     {
-      "priority": 11,
-      "fee": 2200,
-      "category": "Paid Media",
-      "campaignType": "Paid Search",
-      "status": "available",
-      "publishStatus": "published",
-      "estimatedLeads": "Sex Crimes Defense pilot targets recovery toward 2025 volume (8-case YTD gap)",
-      "keywords": [
-        "search",
-        "google",
-        "ads",
-        "military",
-        "calls",
-        "waste",
-        "ppc",
-        "spend",
-        "dui",
-        "mountain",
-        "fix",
-        "sex crimes defense",
-        "sex offense"
-      ],
-      "id": "AdEnhance",
-      "title": "Digital Ad Enhancements",
-      "tldr": "Builds additional targeted Search campaigns for new audiences and practice angles already planned for Pav Law, including a priority Sex Crimes Defense pilot.",
-      "valueAdded": [
-        "Builds additional targeted Search campaigns for new audiences and practice angles already planned for Pav Law, including a priority Sex Crimes Defense pilot.",
-        "Expands Search beyond the current account structure without inventing a new media channel",
-        "Tightens keyword and ad copy so spend maps to stronger ad strength and tracked calls",
-        "Includes call-only troubleshooting and CDL / federal-masking creative angles already in WIP",
-        "Rebuilds Sex Crimes Defense demand around Pav Law’s highest-value measured practice line"
-      ],
-      "valueIcons": [
-        "leads",
-        "efficiency",
-        "intake",
-        "creative"
-      ],
-      "completedItems": [
-        "Search campaign planning across practice areas",
-        "Keyword and description rewrite for ad strength",
-        "Paid search optimization and daily monitoring setup"
-      ],
-      "inProgressItems": [
-        "Call-only campaign troubleshooting",
-        "Ad creative for CDL-licensed drivers with personal tickets (federal masking can force court appearances)",
-        "Sex Crimes Defense Search pilot: exact/phrase high-intent keywords, discreet RSA copy, dedicated landing page, call tracking, and negative-keyword QA",
-        "Keep Sex Crimes Defense off Display and broad match; review sensitive-policy language before launch"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "shortTitle": "Ad Enhancements",
-      "estCostLabel": "$2,200",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 4600,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "ads_campaign",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2500,
-      "feeEstimateNationalMid": 3800,
-      "feeEstimateScope": {
-        "raw": 11.49,
-        "parts": {
-          "valueAdd": 5,
-          "tasks": 4,
-          "completed": 3,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 0.29
-        }
-      },
-      "feeEstimateComplexity": 1.21,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2400,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.24 (11.49 units) · complexity ×1.21"
-    },
-    {
       "priority": 12,
       "fee": 2500,
       "category": "SEO",
@@ -1172,113 +1274,6 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1700,
       "feeEstimateNote": "website content lane · local mid $2,650 · national mid $4,250 · scope ×1.23 (10.94 units) · complexity ×1"
-    },
-    {
-      "priority": 12,
-      "fee": 900,
-      "category": "Paid Media",
-      "campaignType": "Yelp Ads",
-      "status": "available",
-      "publishStatus": "unpublished",
-      "estimatedLeads": "4–10/mo once promo + upgrades + tracking are live",
-      "keywords": [
-        "yelp",
-        "ads",
-        "promo",
-        "upgrade",
-        "hubspot",
-        "utm",
-        "tracking",
-        "phone",
-        "criminal",
-        "dv",
-        "assault",
-        "felony",
-        "military",
-        "colorado springs"
-      ],
-      "parentId": "DigProf",
-      "id": "Yelpv1",
-      "title": "Yelp Ads",
-      "tldr": "Yelp Ads and listing performance for Pav Law criminal defense — not a military-only campaign",
-      "valueAdded": [
-        "Yelp Ads and listing performance for Pav Law criminal defense — not a military-only campaign",
-        "Boost winner lanes from Ads evidence: military · domestic violence · assault · felonies; keep auto/DUI off the Yelp lead story",
-        "Spend the $300 Yelp ad credit / promo while the listing is live; keep daily budget tight and measured",
-        "Test Yelp platform upgrades one at a time — keep only what improves leads and calls",
-        "Add HubSpot-tracked links on the listing and posts so GA4/HubSpot can attribute Yelp activity",
-        "Switch the Yelp phone path to the HubSpot number only after the team is trained and using the HubSpot app for calls — gated on HsVoip / LsaCall"
-      ],
-      "valueIcons": [
-        "leads",
-        "crm",
-        "hubspot",
-        "referrals",
-        "efficiency",
-        "finance",
-        "intake",
-        "creative"
-      ],
-      "completedItems": [
-        "Listing / specialties / unique / history / intro / owner copy drafted under CONTENT-WRITING-GUIDE",
-        "DigProf listing refresh and review-ask email in motion — Yelpv1 owns ads performance, promo, upgrades, and tracking"
-      ],
-      "inProgressItems": [
-        "Apply $300 Yelp promo / credit against live ads; log spend vs leads weekly",
-        "Rotate platform upgrades one feature at a time; keep winners, drop duds",
-        "Wire HubSpot/UTM links on listing website, Connect posts, and ad destinations",
-        "Custom ad text + keyword boosts for criminal lanes — military as one boost, not the whole account",
-        "August CTA button A/B — coordinate with DigProf schedule",
-        "Gate: HubSpot phone on Yelp only after team is trained on HubSpot app answering"
-      ],
-      "taskItems": [
-        "Claim / apply $300 promo; confirm it appears on the Ads billing line",
-        "Inventory Yelp upgrades — remove competitor ads, specialty badges, Call to Action variants, etc. — test one change per week",
-        "Set website and post URLs with HubSpot-friendly UTMs — `utm_source=yelp&utm_medium=referral&utm_campaign=pav-yelp`",
-        "Boost Military Criminal Defense Lawyer · Domestic Violence Lawyer · Assault Lawyer · Felony Lawyer · Protection Order / Restraining Order Lawyer as capacity allows",
-        "Keep public 888 / current Yelp call path until HsVoip + LsaCall training gate clears; then point Yelp to HubSpot number for CRM logging",
-        "Block divorce, bankruptcy, PI, theft, free lawyer junk from boost list"
-      ],
-      "informationNeeded": [
-        "Confirm remaining $300 promo / credit balance and end date",
-        "List which Yelp upgrades are currently on vs available to test",
-        "Confirm HubSpot tracking URL set for website + CTA buttons",
-        "Confirm Casey / Romina HubSpot app call readiness before any phone swap"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [
-        "#08",
-        "#10",
-        "#11",
-        "#14",
-        "#15",
-        "#16",
-        "#21",
-        "#22"
-      ],
-      "feeEstimate": 4300,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "intake_voip",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2500,
-      "feeEstimateNationalMid": 3300,
-      "feeEstimateScope": {
-        "raw": 26.99,
-        "parts": {
-          "valueAdd": 6,
-          "tasks": 12,
-          "completed": 2,
-          "info": 4,
-          "ab": 0,
-          "kpis": 8,
-          "descUnits": 0.19
-        }
-      },
-      "feeEstimateComplexity": 1.1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 3400,
-      "feeEstimateNote": "intake voip lane · local mid $2,500 · national mid $3,250 · scope ×1.39 (26.99 units) · complexity ×1.1"
     },
     {
       "priority": 13,
@@ -2923,29 +2918,26 @@ window.PROJECT_DATA = {
     {
       "fee": 1600,
       "category": "Analytics",
-      "campaignType": "Dashboard / Reporting",
+      "campaignType": "Platform / Data Ops",
       "status": "required",
       "publishStatus": "published",
-      "keywords": [
-        "dashboard",
-        "kpi",
-        "utm",
-        "ga4",
-        "google ads api",
-        "attribution",
-        "hubspot"
-      ],
+      "monthlyOnly": true,
       "id": "OpsDash",
       "title": "Operations Dashboard V1",
-      "tldr": "Unified view of KPIs, data trends, projects, and results",
+      "tldr": "Optional monthly platform management retainer for Pav systems: MyCase, Google Workspace / Google Suite, Guide dashboard, data management, and posting",
       "valueAdded": [
-        "Unified view of KPIs, data trends, projects, and results",
-        "Clearer team goal progress",
-        "Break-even / cash-flow tracking",
-        "Channel ROI tracking and marketing spend per case closed"
+        "Optional monthly platform management retainer for Pav systems: MyCase, Google Workspace / Google Suite, Guide dashboard, data management, and posting",
+        "Not locked Required · check on when Andrew wants ongoing systems ops",
+        "Unified view of KPIs, data trends, projects, and results so the team can track goals, break-even / cash flow, channel ROI, and spend per case",
+        "MyCase hygiene and fields that unlock trustworthy case and close-time reporting",
+        "Google Suite / Workspace admin and shared ops so access, docs, and posting workflows stay usable",
+        "Guide dashboard staging, KPI month pulls, tile math, and branding outside ads creative",
+        "Data management so HubSpot, MyCase, ads, and LSA numbers stay reconciled and archive-ready",
+        "Posting: Google Business Profile and related profile / review posts that keep presence current"
       ],
       "valueIcons": [
         "foundation",
+        "retainer",
         "hubspot",
         "efficiency",
         "finance"
@@ -2958,10 +2950,17 @@ window.PROJECT_DATA = {
         "Known A/R payment-cycle analysis on Predictions (28 plans · assumed monthly)",
         "UTM logic drafted",
         "KPI master table",
-        "Wireframe v1 / foundational data"
+        "Wireframe v1 / foundational data",
+        "---"
       ],
       "inProgressItems": [
-        "MyCase data quality is not great; additional fields are needed before transferring to HubSpot"
+        "MyCase data quality is not great; additional fields are needed before transferring to HubSpot",
+        "Dashboard staging · financial tiles / pace / ROAS / time-to-close",
+        "MyCase Booked/closed by + Case ranking fields",
+        "MyCase closed matters + FA signed export",
+        "Trust ledger May–Jun+ for cash forecast",
+        "Gilbert Guide KPI month pulls · tile math · branding",
+        "Google Suite / Workspace access and posting workflow ownership"
       ],
       "informationNeeded": [
         "HubSpot → Integrations → Google Ads connected",
@@ -2980,29 +2979,29 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,600",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 4100,
+      "feeEstimate": 3900,
       "feeEstimateOngoing": null,
-      "feeEstimateLane": "sprint_general",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2900,
-      "feeEstimateNationalMid": 3900,
+      "feeEstimateLane": "digital_bundle_mo",
+      "feeEstimateUnit": "mo",
+      "feeEstimateLocalMid": 2300,
+      "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 11.96,
+        "raw": 24,
         "parts": {
-          "valueAdd": 4,
-          "tasks": 1,
-          "completed": 8,
+          "valueAdd": 8,
+          "tasks": 7,
+          "completed": 9,
           "info": 3,
           "ab": 0,
           "kpis": 5,
-          "descUnits": 0.11
+          "descUnits": 0.25
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2500,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.25 (11.96 units) · complexity ×1"
+      "feeEstimateDelta": 2300,
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.37 (24 units) · complexity ×1"
     }
   ]
 };
