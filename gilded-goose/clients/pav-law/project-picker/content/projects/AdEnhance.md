@@ -2,47 +2,58 @@
 
 | Field | Value |
 | -------------------------- | --------------------------------------------------------------------------- |
-| Priority | 11 |
+| Priority | 3 |
 | Fee | 2200|
+| Ongoing fee | 500 |
+| Duration weeks | 4 |
+| Invoice count | 3 |
+| Recommended start | 10/01/2026 |
+| Recommended end | 10/29/2026 |
 | Category | Paid Media                                                                  |
 | Campaign type | Paid Search                                                                 |
-| Status | available|
+| Status | Recommended |
 | Publish status | published|
-| Estimated leads gained | Sex Crimes Defense pilot targets recovery toward 2025 volume (8-case YTD gap) |
-| Keywords | search, google, ads, military, calls, waste, ppc, spend, dui, mountain, fix, sex crimes defense, sex offense |
 
 ---
 
 ## Summary
 
-- Builds additional targeted Search campaigns for new audiences and practice angles already planned for Pav Law, including a priority Sex Crimes Defense pilot.
+- Focused Search enhancements and pilots on the live account. Add on targeted campaigns and ad groups to get leads for additional legal service areas.
+- Creative and account upgrades for ads already running, including a priority Sex Crimes Defense Search pilot
+- Test and select the best campaigns for long-term performance
+- After that month, keepers add onto the Digital Ads Maintenance Retainer. Rough starter add: about $500/mo on top of the base retainer. Revisit after winners are proven
 - Expands Search beyond the current account structure without inventing a new media channel
-- Tightens keyword and ad copy so spend maps to stronger ad strength and tracked calls
-- Includes call-only troubleshooting and CDL / federal-masking creative angles already in WIP
-- Rebuilds Sex Crimes Defense demand around Pav Law’s highest-value measured practice line
+- Keyword and ad copy: tighten so spend maps to stronger ad strength and tracked calls
+- Call-only troubleshooting and CDL / federal-masking creative angles already in WIP
+- Content beyond RSAs: customer review responses and listing / profile copy that support paid and organic referral paths
+- Short non-directory listing shortlist only · directories live on LegalDirs · LinkedIn firm + Andrew on Lawyer Referral
+
+## Fee note
+
+Setup is $2,200 for about one month of enhancement and pilot work. Rough ongoing add after keepers are selected: $500/mo into Digital Ads Maintenance Retainer scope. Media spend stays client budget. Starter estimate only. Adjust after the first keepers are locked.
 
 ## KPI links
 
 | Show | Name |
 | ---- | ---- |
-| [ ] | Total leads |
+| [x] | Total leads |
 | [ ] | New cases |
-| [ ] | Key Channel Activity |
+| [x] | Key Channel Activity |
 | [ ] | Pipeline / CRM completeness |
 | [ ] | Spend Waste |
-| [ ] | Campaign cost efficiency |
+| [x] | Campaign cost efficiency |
 | [ ] | Intake conversion |
 | [ ] | Lead channel mix |
 | [ ] | Organic / local search presence |
 | [ ] | Avg. Cost per Call |
-| [ ] | Creative / channel response |
-| [ ] | Cost per lead |
+| [x] | Creative / channel response |
+| [x] | Cost per lead |
 | [ ] | Reviews by channel |
 | [ ] | Referral Network |
 | [ ] | Website / SEO contribution |
 | [ ] | Missed Opportunity |
 | [ ] | CRM follow-up discipline |
-| [ ] | Answered Calls |
+| [x] | Answered Calls |
 | [ ] | Speed to lead |
 | [ ] | Intake coverage / after-hours |
 | [ ] | Ops backlog / open tasks |
@@ -70,6 +81,9 @@
 - Ad creative for CDL-licensed drivers with personal tickets (federal masking can force court appearances)
 - Sex Crimes Defense Search pilot: exact/phrase high-intent keywords, discreet RSA copy, dedicated landing page, call tracking, and negative-keyword QA
 - Keep Sex Crimes Defense off Display and broad match; review sensitive-policy language before launch
+- Review-response content templates for Yelp and other live profiles
+- Shortlist 2–3 non-Google referral / listing platforms to test · add winners to the channel brainstorm proposal
+- After keepers are selected: quote the Digital Ads Maintenance Retainer add and move long-term care off this setup card
 
 ## Sex Crimes Defense recommendation
 
@@ -91,11 +105,3 @@ Recommendation: move a controlled share of new Search testing toward Sex Crimes 
 - Paid search optimization and daily monitoring setup
 
 ---
-
-—— Unpublished below ——
-
-## Project plan
-
-Extra detail for Kate / ops only — brainstorms, vendor notes, quotes, timelines, and anything that should not publish to the Guide.
-
-- _Add:_
