@@ -1,0 +1,8 @@
+object,internal_name,label,type,allowed_values,when_to_set,feeds,status
+Contact or Deal,pl_issue_category,Practice / issue,Dropdown,Theft / Property | Sex Assault / Sex Offense | Assault / Menacing | Domestic Violence / DV | Criminal Defense (other) | Probation Revocation | DUI / DWAI / Traffic,At hire · confirm at close,KPI 11 · 29 mean fee by practice · close-time by practice,Create or lock values
+Deal preferred,pl_contracted_fee,Contracted fee,Number currency,Positive dollars · quoted or FA amount,At hire when fee locked,Mean fee by practice automation,Create
+Deal preferred,pl_fee_schedule,Fee schedule,Dropdown,Flat fee | Payment plan | Hybrid | Other,At hire when payment shape locked,Practice fee-schedule mix · cash curve later,Create · expand options when sheet locks names
+Deal preferred,pl_fa_signed_date,Fee Agreement signed date,Date,Calendar date · not Created date unless labeled proxy,When FA signed,Time to close start,Create
+Deal preferred,pl_matter_closed_date,Matter closed date,Date,Calendar date when Case Stage closed,When matter closes,Time to close end,Create
+Deal preferred,pl_days_fa_to_close,Days FA to close,Number,Closed date minus FA signed · exclude negatives,Workflow or report calc on close,Median / mean time to close by practice,Create after FA + closed dates live
+Firm sheet not contact,practice_loe,Practice LOE,Number 1-5,1 easiest grow · 5 hardest,Kate feedback on practice line,Biggest opportunity = mean fee ÷ LOE,Keep in PRACTICE-LOE-CLOSE-FEE-SCHEDULE.csv until Practice custom object
