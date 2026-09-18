@@ -6,7 +6,7 @@
 | Fee               | 1500                     |
 | Category          | Referral / Outbound      |
 | Campaign type     | Past-Client Reengagement |
-| Parent            | Referral                 |
+| Parent            | WinterSeason             |
 
 ---
 

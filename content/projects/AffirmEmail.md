@@ -1,18 +1,19 @@
 # Affirm Financing Email Campaign
 
+
 | Field             | Value                |
 | ----------------- | -------------------- |
-| Priority          | 21                   |
+| Priority          | 98                   |
 | Fee               | 0                    |
-| Category          |                      |
 | Campaign type     | Monthly Client Email |
-| Parent            | HsWebRebuild         |
+| Parent            | HsSvcExpand          |
+
 
 ---
 
 ## Project Overview
 
-Monthly HubSpot email to clients explaining how Affirm works and who is often not approved Goal: more paid bills by giving open-balance and payment-plan clients a clear financing path without promising approval Work CTA to Romina or intake for Affirm checkout when merchant is live Packaged under HsWebRebuild. A/B and template framework live on HsEmailSetup. Not a standalone email fee.
+Monthly Affirm how-it-works email plus Nov–Dec financing and collections sends — merged into HsSvcExpand HubSpot Client Intake; keep this file for history only.
 
 ## HubSpot Application
 
@@ -20,4 +21,4 @@ Monthly HubSpot email to clients explaining how Affirm works and who is often no
 
 ## Fee note
 
-Setup fee $0.
+Merged into HubSpot Client Intake · not a standalone sell.

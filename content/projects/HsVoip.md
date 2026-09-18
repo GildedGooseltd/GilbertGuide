@@ -1,24 +1,25 @@
 # Phone(s) & VoIP Setup
 
+
 | Field             | Value               |
 | ----------------- | ------------------- |
-| Priority          | 15                  |
+| Priority          | 98                  |
 | Fee               | 0                   |
 | Category          | Infrastructure      |
 | Campaign type     | Call Infrastructure |
-| Parent            | HsWebRebuild        |
+| Parent            | HsSvcExpand         |
+
 
 ---
 
 ## Project Overview
 
-Create dedicated lines for call types (Spanish, current client etc.). Branding remains on (719) 888-7888 only. Automated Call logging, tracking and reporting. Start: transfer one phone into HubSpot · write setup docs · short onboarding deck. HubSpot forms → assign to Casey · same-day callback · Casey starts answering more auto calls.
+Dedicated HubSpot phone lines · logging · same-day callback — merged into HsSvcExpand HubSpot Client Intake; keep this file for history only.
 
 ## HubSpot Application
 
-- Calling · logged calls and missed-call tasks
-- Workflows · same-day callback ownership
+- No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
 
 ## Fee note
 
-Quoted as incl. HsSetup (HubSpot Marketing Setup) — component of HS setup, not a standalone agency fee.
+Merged into HubSpot Client Intake · not a standalone sell.
