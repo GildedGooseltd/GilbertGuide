@@ -15,31 +15,31 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Short title              | Status               | Show | Project                                                                             |
 | ------------------------ | -------------------- | ---- | ----------------------------------------------------------------------------------- |
 | Digital Ads Retainer     | Required             | [ ]  | [Digital Ads Maintenance Retainer](retainer.md)                                     |
-| Platform Mgmt            | Recommended          | [x]  | [Platform Management](projects/OpsDash.md)                                           |
-| MyCase Data Cleanse      | available            | [x]  | [MyCase Data Cleanse](projects/MyCaseClr.md)                                              |
-| Digital Profiles         | wip                  | [x]  | [Digital Presence Refresh](projects/DigProf.md)                                         |
+| Platform Mgmt            | wip                  | [ ]  | [Platform Management](projects/OpsDash.md)                                           |
+| MyCase Data Cleanse      | available            | [ ]  | [MyCase Data Cleanse](projects/MyCaseClr.md)                                              |
+| Digital Profiles         | wip                  | [ ]  | [Digital Presence Refresh](projects/DigProf.md)                                         |
 | Directories & Profiles   | Recommended          | [x]  | [Directories & Profile Channels](projects/LegalDirs.md)                                   |
-| LSA Call Process         | wip                  | [x]  | [LSA Call Process Update](projects/LsaCall.md)                                          |
-| Client Referral          | Started              | [x]  | [Client Referral Program](projects/Referral.md)                                           |
-| Sealing Reengagement     | Started              | [x]  | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
-| Printables & Swag        | Started              | [x]  | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
-| NTGUILT Ads Launch       | Launched             | [x]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
-| Ad Enhancements          | Recommended          | [x]  | [Digital Ad Enhancements](projects/AdEnhance.md)                                           |
+| LSA Call Process         | wip                  | [ ]  | [LSA Call Process Update](projects/LsaCall.md)                                          |
+| Client Referral          | Started              | [ ]  | [Client Referral Program](projects/Referral.md)                                           |
+| Sealing Reengagement     | Started              | [ ]  | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
+| Printables & Swag        | wip                  | [ ]  | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
+| NTGUILT Ads Launch       | Launched             | [ ]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
+| AdExpan                  | wip                  | [ ]  | [AdExpan](projects/AdEnhance.md)                                                           |
 | Yelp Ads                 | Recommended          | [x]  | [Yelp Ads](projects/Yelpv1.md)                                                              |
 | Adult Site Ads           | On Hold              | [ ]  | [Adult Site(s) Ad Campaign](projects/AdultAds.md)                                        |
-| Holiday Ads              | On Hold              | [x]  | [Holiday Digital Ad(s) Campaign Expansion](projects/HolidayAds.md)                         |
-| Winter Driving Ads       | On Hold              | [x]  | [Winter Driving Images — NTGUILT Seasonal Ads](projects/WinterAds.md)                     |
-| HS Marketing Expand      | available            | [x]  | [HubSpot Marketing Hub Expansion](projects/HsMktExpand.md)                                |
-| HS Service Expand        | available            | [x]  | [HubSpot Service Hub Expansion](projects/HsSvcExpand.md)                                  |
-| Lawyer Referral          | available            | [x]  | [Lawyer Referral Program](projects/LawyerRef.md)                                          |
-| Network Speech Coaching  | available            | [x]  | [Networking Speech And Communications Coaching](projects/NetCoach.md)                       |
-| HubSpot Site Rebuild     | available            | [x]  | [HubSpot Website Rebuild](projects/HsWebRebuild.md)                                       |
-| Insurance Mailer         | available            | [x]  | [Insurance Envelope Mailer](projects/InsMailer.md)                                         |
-| Financial Waste Audit    | available            | [x]  | [Full Financial Waste Audit](projects/WasteAud.md)                                        |
-| HS Email Nurture Setup   | available            | [x]  | [HubSpot Email Nurture · Setup & Design](projects/HsEmailSetup.md)                          |
-| Affirm Email             | available            | [x]  | [Affirm Financing Email Campaign](projects/AffirmEmail.md)                                |
-| Winter Safety Email      | available            | [x]  | [Winter Safety Email Campaign](projects/SummerEmail.md)                                      |
-| Gabriel Outbound         | available            | [x]  | [Gabriel Outbound Sales Calling](projects/GabrielOut.md)                                    |
+| Holiday Ads              | On Hold              | [ ]  | [Holiday Digital Ad(s) Campaign Expansion](projects/HolidayAds.md)                         |
+| Winter Driving Ads       | On Hold              | [ ]  | [Winter Driving Images — NTGUILT Seasonal Ads](projects/WinterAds.md)                     |
+| HS Marketing Expand      | available            | [ ]  | [HubSpot Marketing Hub Expansion](projects/HsMktExpand.md)                                |
+| HS Service Expand        | available            | [ ]  | [HubSpot Service Hub Expansion](projects/HsSvcExpand.md)                                  |
+| Lawyer Referral          | available            | [ ]  | [Lawyer Referral Program](projects/LawyerRef.md)                                          |
+| Network Speech Coaching  | available            | [ ]  | [Networking Speech And Communications Coaching](projects/NetCoach.md)                       |
+| HubSpot Site Rebuild     | available            | [ ]  | [HubSpot Website Rebuild](projects/HsWebRebuild.md)                                       |
+| Insurance Mailer         | available            | [ ]  | [Insurance Envelope Mailer](projects/InsMailer.md)                                         |
+| Financial Waste Audit    | available            | [ ]  | [Full Financial Waste Audit](projects/WasteAud.md)                                        |
+| HS Email Nurture Setup   | available            | [ ]  | [HubSpot Email Nurture · Setup & Design](projects/HsEmailSetup.md)                          |
+| Affirm Email             | available            | [ ]  | [Affirm Financing Email Campaign](projects/AffirmEmail.md)                                |
+| Winter Safety Email      | available            | [ ]  | [Winter Safety Email Campaign](projects/SummerEmail.md)                                      |
+| Gabriel Outbound         | available            | [ ]  | [Gabriel Outbound Sales Calling](projects/GabrielOut.md)                                    |
 | Website Content          | available            | [ ]  | [Website Content Overhaul](projects/WebContent.md)                                          |
 | Prequote & Booking       | available            | [ ]  | [HubSpot Prequote & Booking](projects/HsPipe.md)                                           |
 | Site Speed & Nav         | available            | [ ]  | [Website Speed and Navigation](projects/WebSpeed.md)                                      |
@@ -48,20 +48,20 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Blog Revamp              | available            | [ ]  | [Blog Revamp](projects/BlogRevamp.md)                                                       |
 | Casey Rebrand            | available            | [ ]  | [Casey Rebrand Digital & Professional Presence](projects/CaseyBrand.md)                    |
 | Pavi Chat QA             | available            | [ ]  | [Enable Pavi Chat QA for After-Hours Support](projects/PaviChat.md)                      |
-| Summer Seasonal Ads      | Planning             | [x]  | [Summer Seasonal Digital Ad Campaign](projects/SummerAds.md)                              |
+| Summer Seasonal Ads      | Planning             | [ ]  | [Summer Seasonal Digital Ad Campaign](projects/SummerAds.md)                              |
 | Landing Page Module      | Planning             | [ ]  | [HubSpot Landing Page or Website Module](projects/HsLanding.md)                            |
-| Case Wins & Testimonials | Planning             | [x]  | [Case Win Log and Testimonials](projects/CaseWins.md)                                     |
-| Perf Plan Payouts        | Planning             | [x]  | [Performance Plan Payouts](projects/PerfPay.md)                                         |
+| Case Wins & Testimonials | Planning             | [ ]  | [Case Win Log and Testimonials](projects/CaseWins.md)                                     |
+| Perf Plan Payouts        | Planning             | [ ]  | [Performance Plan Payouts](projects/PerfPay.md)                                         |
 | Twisted Wrench           | Planning             | [ ]  | [Twisted Wrench](projects/TwistWrnch.md)                                                   |
-| Data Mgmt Retainer       | ongoing              | [x]  | [Data Management — Retainer](projects/DataMgmt.md)                                       |
-| HubSpot VoIP             | On Hold              | [x]  | [Phone(s) & VoIP Setup](projects/HsVoip.md)                                             |
+| Data Mgmt Retainer       | ongoing              | [ ]  | [Data Management — Retainer](projects/DataMgmt.md)                                       |
+| HubSpot VoIP             | On Hold              | [ ]  | [Phone(s) & VoIP Setup](projects/HsVoip.md)                                             |
 | HubSpot Marketing        | canceled · moved HsWebRebuild | [ ]  | [HubSpot Marketing Setup](projects/HsSetup.md)                                          |
 | Marketing Stack Audit    | completed            | [ ]  | [Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone](projects/StackAudit.md) |
 | Systems Access Audit     | completed            | [ ]  | [Systems Access Audit & Cleanse](projects/AccessAud.md)                                    |
 | Email Outage Runbook     | completed            | [ ]  | [Email Outage Triage & DNS Runbook](projects/EmailDns.md)                                 |
 | Summer Event Activation  | Archived             | [ ]  | [Summer Event Activation & Lead Capture](projects/EventAct.md)                           |
-| Reddit NTGUILT Ads       | archived · merged SocialAds | [x]  | [Reddit NTGUILT Ads Test](projects/RedditAds.md)                                          |
-| HubSpot Social           | archived · merged SocialAds | [x]  | [HubSpot Social Media Marketing](projects/HsSocial.md)                                    |
+| Reddit NTGUILT Ads       | archived · merged SocialAds | [ ]  | [Reddit NTGUILT Ads Test](projects/RedditAds.md)                                          |
+| HubSpot Social           | archived · merged SocialAds | [ ]  | [HubSpot Social Media Marketing](projects/HsSocial.md)                                    |
 
 
 
@@ -74,14 +74,14 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $3,000/mo                   | monthly      | [Digital Ads Maintenance Retainer](retainer.md)                                     |
 | $800/mo                     | monthly      | [Platform Management](projects/OpsDash.md)                                           |
 | $1,500                      | 50%          | [MyCase Data Cleanse](projects/MyCaseClr.md)                                              |
-| $1,800                      | 40%          | [Digital Presence Refresh](projects/DigProf.md)                                         |
+| $2,200                      | 40%          | [Digital Presence Refresh](projects/DigProf.md)                                         |
 | $1,200                      | 40%          | [Directories & Profile Channels](projects/LegalDirs.md)                                   |
 | $1,500                      | 50%          | [LSA Call Process Update](projects/LsaCall.md)                                          |
 | $1,700                      | 20%          | [Client Referral Program](projects/Referral.md)                                           |
 | $1,500                      | 20%          | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
 | $1,200                      | 20%          | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | $2,900                      | 20%          | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
-| $2,200 + $500/mo            | 20%          | [Digital Ad Enhancements](projects/AdEnhance.md)                                           |
+| $3,800 + $900/mo            | 20%          | [AdExpan](projects/AdEnhance.md)                                                           |
 | $2,600 + $500/mo            | 50%          | [Yelp Ads](projects/Yelpv1.md)                                                              |
 | $2,400                      | 30%          | [Adult Site(s) Ad Campaign](projects/AdultAds.md)                                        |
 | $2,200                      | 20%          | [Holiday Digital Ad(s) Campaign Expansion](projects/HolidayAds.md)                         |
@@ -248,18 +248,18 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 ## Notes
 
 - **SocialAds** — merged **RedditAds** + **HsSocial** into one social card; **HsContacts** packages under **HsWebRebuild**
-- NtguiltAd — Launched · NTGUILT AdWords Campaign Launch · $2,900
+- NtguiltAd — Launched · Publish status unpublished · Show off · $2,900 · not on Guide sell surface until republished
 - SummerEmail file · Winter Safety Email Campaign · available · packaged under **HsWebRebuild**
 - AffirmEmail — available · Affirm financing email · packaged under **HsWebRebuild**
 - HsSetup — canceled · background only · open work moved to HsWebRebuild and live HS cards
-- **HsMktExpand** · attribution + behavioral workflows · Ads sync on LsaCall · SEO on HsWebRebuild · email A/B + CSAT on HsEmailSetup
-- **HsSvcExpand** · inbox · KB · SLAs · chatbot · intake tickets on LsaCall
+- **HsMktExpand** · available · Publish status unpublished · Show off · attribution + behavioral workflows · Ads sync on LsaCall · SEO on HsWebRebuild · email A/B + CSAT on HsEmailSetup
+- **HsSvcExpand** · available · Publish status unpublished · Show off · inbox · KB · SLAs · chatbot · intake tickets on LsaCall
 - **HsEmailSetup** · nurture setup · A/B · CSAT/NPS · templates · e-sign · design add-on / freelancer when special
 - **HsWebRebuild** — available · HubSpot CMS rebuild · SEO tools in overhaul · $18,500 · Show on · folds site work that was WebContent / WebSpeed / BlogRevamp / HsLanding · absorbs HsSetup
 - WebContent/WebSpeed/BlogRevamp/HsLanding — kept on INDEX for history · Show off while rebuild is the path
 - Referral — client / F/F Track 1 · **LawyerRef** attorney network · **SealReeng** Track 2 sealing/probation · see **PerfPay** for Phase 2 payout tiers
 - **HsPipe** — Prequote & Booking · chatbots can support · Show off until scoped with rebuild
-- **DataMgmt** — separate systems / platform retainer · Show on · not inside HS setup fee
+- **DataMgmt** — separate systems / platform retainer · Show off · unpublished · not inside HS setup fee
 - **PerfPay** — Planning · Phase 2 after core HubSpot
 - CaseWins sits in Marketing with review-request follow-ups · pairs with HsEmailSetup
 - EventAct — event activation archived · **TwistWrnch Twisted Wrench** — shop partnership (giveaway, Corvette trade, counter display); not event-tied
@@ -271,15 +271,17 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - MyCaseClr — available · MyCase cleanse · Spanish-speaking checkbox · Booked / closed by ↔ HubSpot `pl_booked_closed_by` · Lead Source / phone / dedupe before import
 - **HsVoip** — **On Hold** · Priority 2 phones · waiting on line transfer · public **888 only** · HubSpot DID internal
 - **DigProf** — wip · profile layer (Pav / Andrew / Casey); LegalDirs / Yelpv1 carry directory and Yelp sell lines
-- Priority 1 Recommended stack: AdEnhance · Yelpv1 · LegalDirs · HolidayAds · Required Digital Ads Retainer unpublished / Show off
-- **AdEnhance** — ~1 month setup $2,200 · then ~$500/mo rough add into Digital Ads Maintenance Retainer after keepers
+- Priority 1 Recommended stack: Yelpv1 · LegalDirs · HolidayAds · AdExpan unpublished pending audience update · Required Digital Ads Retainer unpublished / Show off
+- **OpsDash** — wip · Publish status unpublished · Show off · $800/mo platform management · separate from DataMgmt
+- **AdExpan** — wip · Show off · three new Google ad areas · republish when ready · ~8 week setup $3,800 · then ~$900/mo into Digital Ads Maintenance Retainer if all three stay
 - **Yelpv1** — 2 months · start 10/01/2026 · max end 12/01/2026 · $2,600 setup max 5 × ~$520 equal biweekly · no deposit % · then $500/mo Yelp platform · not inside Google / LSA retainer
-- **Digital Ads Retainer** — Required status in INDEX · Publish status unpublished · Show off · not on Guide sell calculator until republished · base $3,000/mo before AdEnhance keeper add
+- **Digital Ads Retainer** — Required status in INDEX · Publish status unpublished · Show off · not on Guide sell calculator until republished · base $3,000/mo before AdExpan add
 - **AdultAds** — On Hold · unpublished · Show off · deferred until buyable site shortlist is ready · never on survivor advocacy properties
 - **HolidayAds** — On Hold · Google Search / ad-group expansion · holiday and colder-weather themes · separate from WinterAds and SummerAds
 - **PerfPay** — Performance Plan payouts for cash-generating tasks; employee + contractor tiers
 - **CaseyBrand** — Casey rebrand (like DigProf): clothing, makeup, hair, presentation, speech, digital presence
 - **SwagPrint** — Design printables, swag & apparel · **includes all NTGUILT design work Kate already did** (flyers, QR cards, banners, prop plate, stickers, apparel art) · holiday & anniversary gifts for employee occasions · Printify portal still open
 - **WasteAud** — available · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste is the verified floor before subscription, phone, LSA-credit, and vendor leakage
+- **Bulk unpublish** · live Show only: Yelpv1 · LegalDirs · DataMgmt unpublished with the rest pending review
 - Fee market context: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)
 

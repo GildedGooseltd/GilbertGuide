@@ -126,7 +126,8 @@ function parseMetaTable(text) {
     if (!m) continue;
     const key = m[1].trim().toLowerCase().replace(/\*\*/g, "");
     let val = m[2].trim();
-    if (/^-{3,}$/.test(key) || key === "field" || key === "value") continue;
+    if (!key || /^-{3,}$/.test(key) || key === "field" || key === "value" || key === "|") continue;
+    if (!val || val === "|") continue;
     const field = META_KEYS[key];
     if (!field) continue;
     if (field === "priority") {
@@ -697,7 +698,9 @@ export function parseProjectMarkdown(text, fallbackId) {
   if (unpublishedMarkdown) project.unpublishedMarkdown = unpublishedMarkdown;
 
   if (sections.description) project.description = applyProperCase(sections.description.trim());
-  const summaryBody = sections.summary || sections.tldr;
+  const overviewBody =
+    findSectionBody(sections, "project overview") || findSectionBody(sections, "overview");
+  const summaryBody = sections.summary || sections.tldr || overviewBody;
   const valueAdded = [];
   if (summaryBody) {
     const summaryBullets = parseListSection(summaryBody);
@@ -705,8 +708,13 @@ export function parseProjectMarkdown(text, fallbackId) {
       valueAdded.push(...summaryBullets);
       project.tldr = summaryBullets[0];
     } else {
-      project.tldr = applyProperCase(summaryBody.trim());
+      const prose = applyProperCase(summaryBody.trim());
+      project.tldr = prose;
+      if (prose) valueAdded.push(prose);
     }
+  }
+  if (overviewBody && !sections.summary && !sections.tldr) {
+    project.description = applyProperCase(overviewBody.trim());
   }
   if (sections["value added"]) valueAdded.push(...parseListSection(sections["value added"]));
   if (sections["value bullets"]) valueAdded.push(...parseListSection(sections["value bullets"]));
@@ -733,6 +741,28 @@ export function parseProjectMarkdown(text, fallbackId) {
   }
   project.valueAdded = cleanValue;
   if (deliverables.length) project.deliverables = deliverables;
+
+  const clientSummaryBody =
+    findSectionBody(sections, "client summary") ||
+    findSectionBody(sections, "outward summary") ||
+    findSectionBody(sections, "client popup");
+  if (clientSummaryBody) {
+    const list = parseListSection(clientSummaryBody);
+    if (list.length) project.clientSummary = list;
+  }
+  const hubSpotBody = findSectionBody(sections, "hubspot parts") || findSectionBody(sections, "hubspot");
+  if (hubSpotBody) {
+    const list = parseListSection(hubSpotBody);
+    if (list.length) project.hubSpotParts = list;
+  }
+  const employeesBody =
+    findSectionBody(sections, "employees impacted") ||
+    findSectionBody(sections, "employees") ||
+    findSectionBody(sections, "who it impacts");
+  if (employeesBody) {
+    const list = parseListSection(employeesBody);
+    if (list.length) project.employeesImpacted = list;
+  }
 
   if (sections["value icons"]) {
     project.valueIcons = parseValueIconsSection(sections["value icons"]);

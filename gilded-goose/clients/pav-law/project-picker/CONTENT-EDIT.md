@@ -13,7 +13,7 @@ Agents: run rewrite scripts **only** when Kate asks in that message. See `.curso
 
 **Also see:** [BRANDING-LAYOUT.md](BRANDING-LAYOUT.md) — colors, spacing, zones · [CONTENT-INDEX.md](CONTENT-INDEX.md) — every text string by page · [CONTENT-WRITING-GUIDE.md](CONTENT-WRITING-GUIDE.md) — Yelp, SEO, external copy
 
-**Template:** copy `[_TEMPLATE.md](_TEMPLATE.md)` — same layout as `[projects/HsVoip.md](projects/HsVoip.md)`.
+**Template:** copy `[_TEMPLATE.md](_TEMPLATE.md)` — same layout as `[projects/AdEnhance.md](projects/AdEnhance.md)`.
 
 ### Project IDs
 
@@ -39,36 +39,27 @@ ID = filename without `.md`. Use a short name from the project title — letters
 
 
 
-## HsVoip Section Layout
+## Project outline layout
 
 ```
-Meta table · Estimated leads gained row when needed
-## Summary
-## Value icons
-## KPI links
-## Information needed
-## WIP
-## Completed
-
----
-—— Unpublished below ——
-## Project plan
-## Where to use…
-## Notes
+Meta table · Priority · Fee · Ongoing fee · Duration weeks · Invoice count · Recommended start · Category · Campaign type · Publish status
+## Project Overview
+## HubSpot parts
 ## Fee note
 ```
 
-See `[_TEMPLATE.md](content/_TEMPLATE.md)`. Fee market context: `[FEE-BENCHMARK-CO-SPRINGS.md](FEE-BENCHMARK-CO-SPRINGS.md)`.
+Do not use empty spacer rows in the meta table.
+Reference format: `[projects/AdEnhance.md](projects/AdEnhance.md)` · AdExpan. Template: `[_TEMPLATE.md](_TEMPLATE.md)`.
 
-- **Summary** bullets feed the card (`## Summary`; legacy `## TLDR` still parses).
-- **No bold in project markdown** — do not use `**…**` in Summary, tables, WIP, Project plan, or `_TEMPLATE.md`. Meta field labels are plain (`| Priority |`).
-- **No project ID in meta or Guide copy** — ID comes from the filename (`HsVoip.md` → HsVoip). Do not put `| ID |` in the meta table. Client-facing text uses titles only.
-- **Value icons** — Show | Name table only. Toggle with `[x]` / `[ ]`; build matches names to icon ids.
-- **KPI links** — Show | Name table only. Toggle with `[x]` / `[ ]`; build matches names to dashboard KPIs.
-- **Estimated leads gained** = incremental leads expected from that campaign, not existing lead volume.
-- **Project plan**, **Where to use**, **Notes**, and **Fee note** live below the unpublished divider — build ignores them.
-- **AB - Q** removed from project docs and Guide (no cart block).
-- **`npm run build`** updates `projects-data.js` and `recommendations-data.js` only — it does **not** rewrite project markdown or `recommendations.md`.
+- **Project Overview** — short prose. Feeds Guide tile / popup summary. Legacy `## Summary` / `## TLDR` still parse if present.
+- **HubSpot parts** — CRM / Marketing / Service surfaces, or “No HubSpot build in scope”.
+- **Fee note** — setup and ongoing in plain language. Media stay client budget when paid media.
+- **Tone — positive and direct.** State what the work does and when it is ready. Do not write against a missing ideal.
+- **No bold in project markdown** — meta field labels are plain (`| Priority |`).
+- **No project ID in meta** — ID comes from the filename.
+- **Retired from project outlines:** Status row when INDEX has Status · Client summary · Employees impacted · Value icons · KPI links · Summary bullet lists · WIP · Tasks · Completed · Project plan · Estimated leads · Keywords.
+- Optional meta rows: Parent · Monthly only · Payment type · Per campaign fee.
+- **`npm run build`** updates `projects-data.js` and `recommendations-data.js` only — it does **not** rewrite project markdown.
 
 ### Recommendations tab
 

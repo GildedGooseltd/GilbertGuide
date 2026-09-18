@@ -1,75 +1,24 @@
-# Summer Safety Email Campaign
+# Winter Safety Email Campaign
 
-| Field | Value |
-| ----------------- | ---------------------------------------------------------- |
-| Priority | 50 |
-| Fee | 0|
-| Category | Email                                                      |
-| Campaign type | Holiday Email                                              |
-| Status | completed|
-| Publish status | published|
-| Parent | HsSetup                                                        |
-| Estimated leads gained | Past-client and prospect email list                        |
-| Keywords | july, holiday, email, safety, dui, fourth, 4th, warning, past client |
+| Field             | Value          |
+| ----------------- | -------------- |
+| Priority          | 22             |
+| Fee               | 0              |
+| Category          | Email          |
+| Campaign type     | Seasonal Email |
+| Publish status    | published      |
+| Parent            | HsWebRebuild   |
 
 ---
 
-## Summary
+## Project Overview
 
-- Reaches past clients when DUI and ticket volume spikes around July 4.
-- Pre-holiday safety send plus post-holiday “what to do if charged” guide
-- Direct path to book with Romina in every message
-- Packaged under HsSetup HubSpot setup — not a standalone email fee
+Reaches past clients when DUI and ticket volume spikes around July 4. Pre-holiday safety send plus post-holiday “what to do if charged” guide. Direct path to book with Romina in every message. Packaged under HsSetup HubSpot setup — not a standalone email fee.
 
-## KPI links
+## HubSpot parts
 
-| Show | Name |
-| ---- | ---- |
-| [ ] | Total leads |
-| [ ] | New cases |
-| [ ] | Key Channel Activity |
-| [ ] | Pipeline / CRM completeness |
-| [ ] | Spend Waste |
-| [ ] | Campaign cost efficiency |
-| [ ] | Intake conversion |
-| [ ] | Lead channel mix |
-| [ ] | Organic / local search presence |
-| [ ] | Avg. Cost per Call |
-| [ ] | Creative / channel response |
-| [ ] | Cost per lead |
-| [ ] | Reviews by channel |
-| [ ] | Referral Network |
-| [ ] | Website / SEO contribution |
-| [ ] | Missed Opportunity |
-| [ ] | CRM follow-up discipline |
-| [ ] | Answered Calls |
-| [ ] | Speed to lead |
-| [ ] | Intake coverage / after-hours |
-| [ ] | Ops backlog / open tasks |
-| [ ] | Avg case fee |
+- No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
 
-## Value icons
+## Fee note
 
-| Show | Name |
-| ---- | ---- |
-| [ ] | Foundation |
-| [x] | Retainer |
-| [x] | Leads |
-| [x] | CRM |
-| [x] | HubSpot |
-| [ ] | SEO |
-| [x] | Referrals |
-| [ ] | Analytics |
-| [ ] | Finance |
-| [ ] | Intake |
-| [ ] | Creative |
-
----
-
-—— Unpublished below ——
-
-## Project plan
-
-Extra detail for Kate / ops only — brainstorms, vendor notes, quotes, timelines, and anything that should not publish to the Guide.
-
-- _Add:_
+Setup fee $0.
