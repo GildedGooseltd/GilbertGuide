@@ -48,7 +48,7 @@
 | PerfPay      | Performance Plan Payouts                | $1,200                   | **$1,500**           | +$300    | Approved                                                                               |
 | SwagPrint      | Design Printables, Swag & Apparel                  | $1,200                   | **$1,200**           | —        | Design/coordination · stationery product runs ~$400–$500 client · samples ordered 09/17/2026 |
 | NtguiltAd       | NTGUILT AdWords Campaign Launch         | $2,800                   | **$2,900**           | +$100    | Approved · Kate fee update                                                             |
-| AdExpan         | AdExpan                                 | $3,800                   | **$3,800**           | $0       | Revised 09/17/2026 · three new Google ad areas · ~$900/mo retainer add |
+| AdEnhance       | Ad Expansion                            | $3,800                   | **$3,800**           | $0       | Revised 09/17/2026 · three new Google ad areas · ~$900/mo retainer add |
 | WebContent       | Website Content Overhaul                | $2,000                   | **$2,500**           | +$500    | Approved                                                                               |
 | HsPipe       | HubSpot Pipeline Sprint                 | $1,600                   | **$1,800**           | +$200    | Approved                                                                               |
 | WebSpeed       | Website Speed and Navigation            | $3,800                   | **$4,200**           | +$400    | Approved                                                                               |

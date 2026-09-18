@@ -49,7 +49,7 @@ Meta table · Priority · Fee · Ongoing fee · Duration weeks · Invoice count 
 ```
 
 Do not use empty spacer rows in the meta table.
-Reference format: `[projects/AdEnhance.md](projects/AdEnhance.md)` · AdExpan. Template: `[_TEMPLATE.md](_TEMPLATE.md)`.
+Reference format: `[projects/AdEnhance.md](projects/AdEnhance.md)` · Ad Expansion. Template: `[_TEMPLATE.md](_TEMPLATE.md)`.
 
 - **Project Overview** — client-facing prose Andrew sees on the Guide. State the work plainly. Polish in place over Kate’s wording. Do not rewrite from agent memory.
 - **HubSpot Application** — CRM / Marketing / Service surfaces, or “No HubSpot build in scope”. Heading is HubSpot Application, not HubSpot parts.

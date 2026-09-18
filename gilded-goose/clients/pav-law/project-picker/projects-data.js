@@ -75,7 +75,7 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Paid Search",
       "id": "AdEnhance",
-      "title": "AdExpan",
+      "title": "Ad Expansion",
       "tldr": "Grow Google ads into three new case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
       "description": "Grow Google Ads into three new case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
       "valueAdded": [
@@ -89,17 +89,17 @@ window.PROJECT_DATA = {
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
-      "shortTitle": "AdExpan",
+      "shortTitle": "Ad Expansion",
       "status": "recommended",
       "estCostLabel": "$3,800 + $900/mo",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 3500,
+      "feeEstimate": 3200,
       "feeEstimateOngoing": null,
-      "feeEstimateLane": "sprint_general",
+      "feeEstimateLane": "ads_campaign",
       "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2900,
-      "feeEstimateNationalMid": 3900,
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3800,
       "feeEstimateScope": {
         "raw": 3.4,
         "parts": {
@@ -115,8 +115,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -300,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.05 (3.4 units) · complexity ×1"
+      "feeEstimateDelta": -600,
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.05 (3.4 units) · complexity ×1"
     },
     {
       "priority": 1,
@@ -2257,13 +2257,14 @@ window.PROJECT_DATA = {
       "category": "Analytics",
       "campaignType": "Platform / Data Ops",
       "monthlyOnly": true,
+      "startDate": "2026-10-01",
       "featuredImage": "assets/systems-admin-tile.svg",
       "id": "TsMgmt",
       "title": "Platform Management",
-      "tldr": "Monthly retainer for standard oversight and management of the Pav tech stack.",
-      "description": "Monthly retainer for standard oversight and management of the Pav tech stack.\n\nPlatforms covered: MyCase, Google Suite, and Ops Dashboard. New tools and platforms can be included in a short testing phase before or during a larger implementation.",
+      "tldr": "Monthly retainer for standard oversight and management of the Pav tech stack. Starts 10/01/2026.",
+      "description": "Monthly retainer for standard oversight and management of the Pav tech stack. Starts 10/01/2026.\n\nPlatforms covered: MyCase, Google Suite, and Ops Dashboard. New tools and platforms can be included in a short testing phase before or during a larger implementation.",
       "valueAdded": [
-        "Monthly retainer for standard oversight and management of the Pav tech stack.",
+        "Monthly retainer for standard oversight and management of the Pav tech stack. Starts 10/01/2026.",
         "Platforms covered: MyCase, Google Suite, and Ops Dashboard. New tools and platforms can be included in a short testing phase before or during a larger implementation."
       ],
       "hubSpotParts": [
@@ -2283,7 +2284,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2300,
       "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 2.63,
+        "raw": 2.68,
         "parts": {
           "valueAdd": 2,
           "tasks": 0,
@@ -2291,14 +2292,14 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.63
+          "descUnits": 0.68
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2400,
-      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.02 (2.63 units) · complexity ×1"
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.02 (2.68 units) · complexity ×1"
     }
   ]
 };
