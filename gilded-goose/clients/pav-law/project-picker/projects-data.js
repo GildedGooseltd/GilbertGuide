@@ -131,12 +131,13 @@ window.PROJECT_DATA = {
       "id": "Yelpv1",
       "title": "Yelp Ads",
       "tldr": "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.",
-      "description": "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.\n\n- Customer engagement: Message response rate is very good while managed from a personal phone. To scale, someone knowledgeable on the team should respond and enter data. Route Yelp to a HubSpot number that goes to Gabriel so leads land in HubSpot and more of its tools can be used without pushing too much volume to Gabriel right away.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews at sporadic times matter on Yelp so the page does not look like reviews are being incentivized in a batch. The campaign already sends across a two-month window. Add new clients regularly, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner responses that highlight Pav Law services and approach. Test the announcement feature, and refresh portfolio and FAQ content.",
+      "description": "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.\n\n- Customer engagement: Message response rate is very good while managed from a personal phone. To scale, someone knowledgeable on the team should respond and enter data. Route Yelp to a HubSpot number that goes to Gabriel so leads land in HubSpot and more of its tools can be used without pushing too much volume to Gabriel right away.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews at sporadic times matter on Yelp so the page does not look like reviews are being incentivized in a batch. The campaign already sends across a two-month window. Add new clients regularly, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner responses that highlight Pav Law services and approach. Test the announcement feature, and refresh portfolio and FAQ content.\n- Insurance Envelope & Handout: Create insert for insurance card holder asking for Yelp review and providing contact information. For Casey, Jack and Andrew to distribute.",
       "valueAdded": [
         "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.",
         "Customer engagement: Message response rate is very good while managed from a personal phone. To scale, someone knowledgeable on the team should respond and enter data. Route Yelp to a HubSpot number that goes to Gabriel so leads land in HubSpot and more of its tools can be used without pushing too much volume to Gabriel right away.",
         "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews at sporadic times matter on Yelp so the page does not look like reviews are being incentivized in a batch. The campaign already sends across a two-month window. Add new clients regularly, then improve content with A/B tests and light copy tweaks.",
-        "Yelp messaging and content: Some reviews still need owner responses that highlight Pav Law services and approach. Test the announcement feature, and refresh portfolio and FAQ content."
+        "Yelp messaging and content: Some reviews still need owner responses that highlight Pav Law services and approach. Test the announcement feature, and refresh portfolio and FAQ content.",
+        "Insurance Envelope & Handout: Create insert for insurance card holder asking for Yelp review and providing contact information. For Casey, Jack and Andrew to distribute."
       ],
       "hubSpotParts": [
         "CRM · The contact database where Yelp leads, messages, and call outcomes are stored so intake is not stuck in a personal inbox.",
@@ -149,31 +150,30 @@ window.PROJECT_DATA = {
       "shortTitle": "Yelp Ads",
       "status": "recommended",
       "estCostLabel": "$2,600 + $500/mo",
-      "paymentPlanLabel": "50%",
-      "depositPct": 0.5,
-      "feeEstimate": 2700,
+      "paymentPlanLabel": "—",
+      "feeEstimate": 2800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 6.71,
+        "raw": 8,
         "parts": {
-          "valueAdd": 4,
+          "valueAdd": 5,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.71
+          "descUnits": 3
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 100,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.15 (6.71 units) · complexity ×1.1"
+      "feeEstimateDelta": 200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (8 units) · complexity ×1.1"
     },
     {
       "priority": 2,
