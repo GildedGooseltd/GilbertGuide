@@ -332,6 +332,25 @@
       font-weight: 700;
       color: var(--gg-royal);
     }
+    .project-tile-cost-estimate,
+    .project-overview-cost-estimate {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--gg-negative, #b42318);
+    }
+    .project-tile-cost-estimate .project-tile-cost-amount,
+    .project-overview-cost-estimate .project-tile-cost-amount,
+    .calc-quote-estimate {
+      color: var(--gg-negative, #b42318);
+      font-weight: 800;
+    }
+    .project-tile-cost-pavi {
+      width: 1.55rem;
+      height: 1.55rem;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
     .project-tile-summary {
       margin: 0.15rem 0 0;
       font-size: 0.92rem;
@@ -1562,7 +1581,6 @@
       padding: 1.25rem;
       pointer-events: none;
     }
-    .help-popup:not([hidden]) { pointer-events: auto; }
     .help-popup[hidden],
     .help-popup-backdrop[hidden] { display: none !important; }
     .help-popup-card {
@@ -1581,13 +1599,26 @@
       position: absolute;
       top: 0.45rem;
       right: 0.55rem;
+      z-index: 3;
+      width: 2rem;
+      height: 2rem;
       border: none;
-      background: transparent;
-      color: #8a7a6a;
-      font-size: 1.35rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--gg-royal, #3a1a6e) 8%, #fffcf7);
+      color: var(--gg-royal-deep, #2d1454);
+      font-size: 1.45rem;
       line-height: 1;
       cursor: pointer;
       font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .help-popup-close:hover,
+    .help-popup-close:focus-visible {
+      background: color-mix(in srgb, var(--gg-royal, #3a1a6e) 16%, #fffcf7);
+      color: var(--gg-royal-deep, #2d1454);
+      outline: none;
     }
     .help-popup-title {
       margin: 0 1.5rem 0.55rem 0;
@@ -1661,6 +1692,9 @@
       font-size: 1.05rem;
       font-weight: 800;
     }
+    .project-overview-cost.project-overview-cost-estimate {
+      color: var(--gg-negative, #b42318);
+    }
     .project-overview-section {
       margin: 0.95rem 0 0;
     }
@@ -1687,6 +1721,33 @@
     }
     .project-overview-section li {
       margin: 0.25rem 0;
+    }
+    .hubspot-application-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .hubspot-application-list li {
+      margin: 0 0 0.85rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--gg-royal, #3a1a6e) 14%, transparent);
+    }
+    .hubspot-application-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .hubspot-feat-name {
+      display: block;
+      font-weight: 700;
+      color: var(--gg-royal-deep, #2d1454);
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.02em;
+    }
+    .hubspot-feat-detail {
+      display: block;
+      color: inherit;
+      line-height: 1.45;
     }
     .cockpit-tabs .view-tab:hover {
       border-color: var(--gg-royal-mid);
@@ -6159,7 +6220,7 @@
           <button class="btn btn-secondary" id="submit-selections" disabled>Submit selections &amp; SOW</button>
           <button type="button" class="btn btn-secondary" id="confirm-back">Back to projects</button>
         </div>
-        <p class="submit-note">Submit project request emails Kate the selected projects plus biweekly invoice terms to write in QuickBooks. Submit selections and SOW starts the full private signing flow for Andrew.</p>
+        <p class="submit-note">Submit project request emails Kate the selected projects plus monthly invoice terms for QuickBooks. Submit selections &amp; SOW starts the private signing flow for Andrew.</p>
       </div>
     </div>
   </div>
@@ -6384,6 +6445,6 @@
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
   <script src="kpi-report.js?v=20260917-no-referral-help"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260917-calc-subhead"></script>
+  <script src="app.js?v=20260917-swag-estimate"></script>
 </body>
 </html>

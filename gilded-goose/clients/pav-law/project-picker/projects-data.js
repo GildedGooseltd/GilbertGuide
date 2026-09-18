@@ -82,9 +82,9 @@ window.PROJECT_DATA = {
         "Grow Google ads into three new case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project."
       ],
       "hubSpotParts": [
-        "Marketing Hub · Google Ads / lead-source sync when campaigns are connected",
-        "CRM contacts · new call and form leads from pilots",
-        "Landing pages · dedicated pages for practice-area pilots when a front runner needs its own URL"
+        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source, and you can compare them next to DV, Military, and NTGUILT.",
+        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
+        "Landing pages · Optional HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
       ],
       "abQuestions": [],
       "kpiRefs": [],
@@ -130,15 +130,18 @@ window.PROJECT_DATA = {
       "parentId": "Ad Expansion",
       "id": "Yelpv1",
       "title": "Yelp Ads",
-      "tldr": "Yelp listing setup, message response, add more clients to email review nurture campaign, route calls to Gabriel via Huband ads testing so results can be judged next to Search and LSA.",
-      "description": "Yelp listing setup, message response, add more clients to email review nurture campaign, route calls to Gabriel via Huband ads testing so results can be judged next to Search and LSA.",
+      "tldr": "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.",
+      "description": "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.\n\n- Customer engagement: Message response rate is very good while managed from a personal phone. To scale, someone knowledgeable on the team should respond and enter data. Route Yelp to a HubSpot number that goes to Gabriel so leads land in HubSpot and more of its tools can be used without pushing too much volume to Gabriel right away.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews at sporadic times matter on Yelp so the page does not look like reviews are being incentivized in a batch. The campaign already sends across a two-month window. Add new clients regularly, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner responses that highlight Pav Law services and approach. Test the announcement feature, and refresh portfolio and FAQ content.",
       "valueAdded": [
-        "Yelp listing setup, message response, add more clients to email review nurture campaign, route calls to Gabriel via Huband ads testing so results can be judged next to Search and LSA."
+        "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.",
+        "Customer engagement: Message response rate is very good while managed from a personal phone. To scale, someone knowledgeable on the team should respond and enter data. Route Yelp to a HubSpot number that goes to Gabriel so leads land in HubSpot and more of its tools can be used without pushing too much volume to Gabriel right away.",
+        "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews at sporadic times matter on Yelp so the page does not look like reviews are being incentivized in a batch. The campaign already sends across a two-month window. Add new clients regularly, then improve content with A/B tests and light copy tweaks.",
+        "Yelp messaging and content: Some reviews still need owner responses that highlight Pav Law services and approach. Test the announcement feature, and refresh portfolio and FAQ content."
       ],
       "hubSpotParts": [
-        "CRM · lead source and ad engagement",
-        "Tasks / workflows · ticket creation, task assignments, and automated data input",
-        "Marketing Hub · channel source tracking vs Search and LSA"
+        "CRM · The contact database where Yelp leads, messages, and call outcomes are stored so intake is not stuck in a personal inbox.",
+        "Tasks and workflows · Auto-creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
+        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
       ],
       "abQuestions": [],
       "kpiRefs": [],
@@ -148,29 +151,29 @@ window.PROJECT_DATA = {
       "estCostLabel": "$2,600 + $500/mo",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 2100,
+      "feeEstimate": 2700,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 1.78,
+        "raw": 6.71,
         "parts": {
-          "valueAdd": 1,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.78
+          "descUnits": 2.71
         }
       },
-      "feeEstimateComplexity": 1,
+      "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -500,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×0.97 (1.78 units) · complexity ×1"
+      "feeEstimateDelta": 100,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.15 (6.71 units) · complexity ×1.1"
     },
     {
       "priority": 2,
@@ -222,6 +225,59 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 900,
       "feeEstimateNote": "lsa process lane · local mid $1,600 · national mid $2,500 · scope ×1.09 (4.35 units) · complexity ×1.1"
+    },
+    {
+      "priority": 3,
+      "fee": 1200,
+      "durationWeeks": 4,
+      "invoiceCount": 3,
+      "startDate": "2026-10-01",
+      "category": "Brand / Local Presence",
+      "campaignType": "Directories & Profiles",
+      "parentId": "DigProf",
+      "id": "LegalDirs",
+      "title": "Directories & Profile Channels",
+      "tldr": "Update legal directory profiles for Pav Law. Update ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add as values to lead source in Hubsot and MyCase.",
+      "description": "Update legal directory profiles for Pav Law. Update ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add as values to lead source in Hubsot and MyCase. \n\nDirectories: Justia, FindLaw, Avvo (select from brand audit Dada tab)",
+      "valueAdded": [
+        "Update legal directory profiles for Pav Law. Update ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add as values to lead source in Hubsot and MyCase.",
+        "Directories: Justia, FindLaw, Avvo (select from brand audit Dada tab)"
+      ],
+      "hubSpotParts": [
+        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
+        "Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Directories & Profiles",
+      "status": "recommended",
+      "estCostLabel": "$1,200",
+      "paymentPlanLabel": "40%",
+      "depositPct": 0.4,
+      "feeEstimate": 2300,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 3.68,
+        "parts": {
+          "valueAdd": 2,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.68
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1100,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.06 (3.68 units) · complexity ×1"
     },
     {
       "priority": 5,
@@ -316,59 +372,6 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1200,
       "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×0.98 (2.05 units) · complexity ×1.08"
-    },
-    {
-      "priority": 6,
-      "fee": 1200,
-      "durationWeeks": 4,
-      "invoiceCount": 3,
-      "startDate": "2026-10-01",
-      "category": "Brand / Local Presence",
-      "campaignType": "Directories & Profiles",
-      "parentId": "DigProf",
-      "id": "LegalDirs",
-      "title": "Directories & Profile Channels",
-      "tldr": "Pass across Justia, FindLaw, and Avvo: accurate profiles, clear CTAs, and tracked links, then keep, cut, or boost each channel. Four profiles are in scope. Some may be swapped if they are off target or not useful after the audit. Maximize Justia through December. FindLaw is keep or cut. Avvo is a light cleanup. Same pattern on every channel.",
-      "description": "Pass across Justia, FindLaw, and Avvo: accurate profiles, clear CTAs, and tracked links, then keep, cut, or boost each channel. Four profiles are in scope. Some may be swapped if they are off target or not useful after the audit. Maximize Justia through December. FindLaw is keep or cut. Avvo is a light cleanup. Same pattern on every channel.\n\nUpdate ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence.",
-      "valueAdded": [
-        "Pass across Justia, FindLaw, and Avvo: accurate profiles, clear CTAs, and tracked links, then keep, cut, or boost each channel. Four profiles are in scope. Some may be swapped if they are off target or not useful after the audit. Maximize Justia through December. FindLaw is keep or cut. Avvo is a light cleanup. Same pattern on every channel.",
-        "Update ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence."
-      ],
-      "hubSpotParts": [
-        "CRM · optional listing URLs on contact or company records",
-        "Lead source tracking and ROI calculation"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Directories & Profiles",
-      "status": "recommended",
-      "estCostLabel": "$1,200",
-      "paymentPlanLabel": "40%",
-      "depositPct": 0.4,
-      "feeEstimate": 2300,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "profiles_local",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1900,
-      "feeEstimateNationalMid": 2500,
-      "feeEstimateScope": {
-        "raw": 4.04,
-        "parts": {
-          "valueAdd": 2,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 2.04
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1100,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.08 (4.04 units) · complexity ×1"
     },
     {
       "priority": 7,
@@ -2200,28 +2203,29 @@ window.PROJECT_DATA = {
     },
     {
       "priority": null,
+      "feeUncertain": true,
       "fee": 1200,
       "category": "Brand / Merch",
       "campaignType": "Physical Print & Production",
       "id": "SwagPrint",
       "title": "Design Printables, Swag & Apparel",
       "tldr": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-      "description": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun. \n\nNot an urgent project however if you would like anything designed for the holidays for clients or the team its easier, faster and cheaper to do the designs at the same time then order as needed. \n\nHighlight the fee in red as an estimate that would fluctuate based on amount of products and organization needed. Add a question mark icon to this project tile with a confused pavi",
+      "description": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.\n\nNot urgent on its own. If you want anything designed for the holidays for clients or the team, it is easier, faster, and cheaper to do the designs at the same time, then order as needed.\n\nThe ~$1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost.",
       "valueAdded": [
         "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-        "Not an urgent project however if you would like anything designed for the holidays for clients or the team its easier, faster and cheaper to do the designs at the same time then order as needed.",
-        "Highlight the fee in red as an estimate that would fluctuate based on amount of products and organization needed. Add a question mark icon to this project tile with a confused pavi"
+        "Not urgent on its own. If you want anything designed for the holidays for clients or the team, it is easier, faster, and cheaper to do the designs at the same time, then order as needed.",
+        "The ~$1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost."
       ],
       "hubSpotParts": [
-        "Lead source · light word-of-mouth logging when a piece is tracked",
-        "Cost tracking · optional cost line for referral or review programs when measuring ROI"
+        "Lead source · Light word-of-mouth logging when a piece is tracked.",
+        "Cost tracking · Optional cost line for referral or review programs when measuring ROI."
       ],
       "abQuestions": [],
       "kpiRefs": [],
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "shortTitle": "Printables & Swag",
-      "status": "wip",
-      "estCostLabel": "$1,200",
+      "status": "recommended",
+      "estCostLabel": "~$1,200?",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
       "feeEstimate": 1700,
@@ -2231,7 +2235,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 5.68,
+        "raw": 5.78,
         "parts": {
           "valueAdd": 3,
           "tasks": 0,
@@ -2239,14 +2243,14 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.68
+          "descUnits": 2.78
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 500,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.13 (5.68 units) · complexity ×1"
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.13 (5.78 units) · complexity ×1"
     },
     {
       "fee": 500,
@@ -2261,6 +2265,9 @@ window.PROJECT_DATA = {
       "valueAdded": [
         "Monthly retainer for standard oversight and management of the Pav tech stack.",
         "Platforms covered: MyCase, Google Suite, and Ops Dashboard. New tools and platforms can be included in a short testing phase before or during a larger implementation."
+      ],
+      "hubSpotParts": [
+        "No HubSpot build · This retainer covers MyCase, Google Suite, and Ops Dashboard only. HubSpot CRM, Marketing Hub, and related builds stay on separate HubSpot projects."
       ],
       "abQuestions": [],
       "kpiRefs": [],
