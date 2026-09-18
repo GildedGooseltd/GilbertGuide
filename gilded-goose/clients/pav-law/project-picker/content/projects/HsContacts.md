@@ -6,7 +6,6 @@
 | Fee               | 0              |
 | Category          | CRM            |
 | Campaign type     | Contact Import |
-| Publish status    | published      |
 | Parent            | HsWebRebuild   |
 
 ---
@@ -15,7 +14,7 @@
 
 Unlocks holiday email, referral sends, and mailers. Deduped segments: past clients, referral, friends-and-family. Import guide for future CSV uploads. Enabler for SummerEmail, Referral, SealReeng, and mailers once contacts are marketable.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope
 

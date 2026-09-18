@@ -36,8 +36,8 @@
 | ID       | Project                                 | Current                  | Est. cost (Guide)    | Δ setup  | Action                                                                                 |
 | -------- | --------------------------------------- | ------------------------ | -------------------- | -------- | -------------------------------------------------------------------------------------- |
 | RETAINER | Digital Ads Maintenance Retainer        | $2,700/mo                | **$2,900/mo**        | +$200/mo | Approved                                                                               |
-| DataMgmt      | Data Management — Retainer              | $500/mo                  | **$500/mo**          | —        | Dashboard maintenance add-on after OpsDash                                                  |
-| OpsDash       | Operations Dashboard V1                 | $1,600                   | **$1,600**           | —        | not approved (kept current; market band still ~$2,200)                                 |
+| DataMgmt      | Data Management — Retainer              | $500/mo                  | **merged OpsDash**   | n/a      | Folded into Platform Management 09/17/2026                                              |
+| OpsDash       | Platform Management                     | $800/mo                  | **$500/mo**          | −$300/mo | Revised 09/17/2026 · light 3-system oversight · not full MSP · file id TsMgmt |
 | LsaCall      | LSA Call Process Update                 | $0                       | **$1,500**           | +$1,500  | Approved                                                                               |
 | MyCaseClr      | MyCase Data Cleanse                     | $0                       | **$1,500**           | +$1,500  | Approved                                                                               |
 | DigProf      | Digital Presence Refresh                | $1,400                   | **$1,800**           | +$400    | Approved                                                                               |
@@ -46,9 +46,9 @@
 | SealReeng      | Sealing & Probation Reengagement    | $1,500                   | **$1,500**           | —        | not approved (kept current)                                                            |
 | InsMailer       | Insurance Envelope Mailer               | $1,900                   | **$2,200**           | +$300    | Approved                                                                               |
 | PerfPay      | Performance Plan Payouts                | $1,200                   | **$1,500**           | +$300    | Approved                                                                               |
-| SwagPrint      | Design Printables, Swag & Apparel                  | $0                       | **$1,200**           | +$1,200  | Approved                                                                               |
+| SwagPrint      | Design Printables, Swag & Apparel                  | $1,200                   | **$1,200**           | —        | Design/coordination · stationery product runs ~$400–$500 client · samples ordered 09/17/2026 |
 | NtguiltAd       | NTGUILT AdWords Campaign Launch         | $2,800                   | **$2,900**           | +$100    | Approved · Kate fee update                                                             |
-| AdEnhance       | Digital Ad Expansion                    | $1,900                   | **$2,200**           | +$300    | Approved                                                                               |
+| AdExpan         | AdExpan                                 | $3,800                   | **$3,800**           | $0       | Revised 09/17/2026 · three new Google ad areas · ~$900/mo retainer add |
 | WebContent       | Website Content Overhaul                | $2,000                   | **$2,500**           | +$500    | Approved                                                                               |
 | HsPipe       | HubSpot Pipeline Sprint                 | $1,600                   | **$1,800**           | +$200    | Approved                                                                               |
 | WebSpeed       | Website Speed and Navigation            | $3,800                   | **$4,200**           | +$400    | Approved                                                                               |
@@ -80,7 +80,7 @@
 |                                                              | Current    | Guide (after Action) |
 | ------------------------------------------------------------ | ---------- | -------------------- |
 | One-time setups (non-archived; excl. merged + `incl. HsSetup`)   | ~$48k      | ~$49k                |
-| Monthly (RETAINER + DataMgmt + Referral ongoing; SocialAds ongoing → RETAINER) | ~$4,200/mo | ~$3,900/mo           |
+| Monthly (RETAINER + OpsDash Platform Management; Referral ongoing; SocialAds ongoing → RETAINER) | ~$4,200/mo | ~$4,200/mo           |
 
 
 ## How to use

@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260915-mycase-cash";
+  const RENDER_VER = "20260917-no-referral-help";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -224,7 +224,7 @@
     },
     "cash-pace": {
       title: "Revenue",
-      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity — sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (5). September* is $66,465 through Sep 15 from ledger (6). $80k remains the operating-expense assumption on Predictions, not this revenue goal.",
+      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity — sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (5). September* is $66,465 through Sep 15 from ledger (6). $85k is the operating-expense assumption on Predictions (June sample baseline), not this revenue goal.",
       formula: "Revenue = Trust account activity Credit sum by month. Goal = $100,000 client revenue collected."
     },
     "sales-cost-funnel": {
@@ -431,10 +431,23 @@
     updateLabel: "September 2026",
     updateScope: "MyCase Trust Credits Sep* through Sep 15 · trust balance snapshot 09/15 · cases still Contact_09-10",
     source: "ledger (6) Sep Credits · Trust_account_summary_09-15 · Contact_09-10 cases · Call details (5) · LSA inbox (18)",
+    /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
+    tileAsOf: {
+      "#01": "2026-09-10",
+      "#02": "2026-09-10",
+      "#03": "2026-08-12",
+      "cash-pace": "2026-09-15",
+      "yelp": "2026-08-12",
+      "answer-rate": "2026-09-10",
+      "ad-spend-by-channel": "2026-09-10",
+      "#19": "2026-09-10",
+      "#21": "2026-09-10",
+      "#28": "2026-09-01"
+    },
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false },
-      { id: "#02", label: "New Cases", value: "4", target: "≥ 24", mom: null, count: 4, verified: true, hit: false, alert: true, gauge: true, augUpdated: true },
+      { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false, updatedAsOf: "2026-09-10" },
+      { id: "#02", label: "New Cases", value: "4", target: "≥ 24", mom: null, count: 4, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-09-10" },
       /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Missed Opportunity */
       { id: "#19", label: "Missed Opportunity", value: "—", target: "$0", mom: null, verified: false, alert: false, lostTracker: true, augUpdated: false, archived: true },
       { id: "#21", label: "Answered Calls", value: "—", target: "≥ 90%", mom: null, verified: false, alert: false, gauge: true, goal: true, archived: true },
@@ -1463,6 +1476,7 @@
         leads.gauge = true;
         leads.augUpdated = isTileMonth;
         leads.verified = true;
+        leads.updatedAsOf = resolveTileAsOf("#01") || leads.updatedAsOf;
         if (key === "Sep") {
           leads.cashGoalNote = "Sep*";
         } else if (key === "Aug") {
@@ -1504,6 +1518,7 @@
         cases.alert = !!(cashBehind || fullMonthShort);
         cases.gauge = true;
         cases.augUpdated = isTileMonth;
+        cases.updatedAsOf = resolveTileAsOf("#02") || cases.updatedAsOf;
         cases.cashGoalNote = isPartial ? `${cls.month} Created through export` : `${key} Created`;
       }
     }
@@ -1637,6 +1652,7 @@
    * Data freshness corner marks — Monthly KPIs use these only.
    * Green check = period source on file and value filled (0 is valid).
    * Red check = period source missing or value is —.
+   * Optional MM/DD/YYYY as-of sits left of the check · never a section Pulled stamp.
    * Never show UPDATED / OUTDATED text badges on tiles.
    */
   function tileValuePresent(value) {
@@ -1648,40 +1664,57 @@
     return tileValuePresent(value) && !!(verified || updated);
   }
 
-  /** Green checkbox when period data is on file. Pass false to omit the mark. */
-  function statusCorner(ok) {
+  /** Resolve ISO as-of for a tile id · kpi.updatedAsOf · DATA.tileAsOf · optional override. */
+  function resolveTileAsOf(tileId, override) {
+    if (override) return String(override);
+    const id = String(tileId || "");
+    const kpi = (DATA.kpis || []).find(item => item.id === id);
+    if (kpi && kpi.updatedAsOf) return String(kpi.updatedAsOf);
+    const map = DATA.tileAsOf || {};
+    if (map[id]) return String(map[id]);
+    return "";
+  }
+
+  function tileAsOfHtml(asOfIso) {
+    const date = formatPulledMd(asOfIso);
+    if (!date) return "";
+    return `<span class="kpi-tile-asof" title="Source updated ${escapeHtml(date)}">${escapeHtml(date)}</span>`;
+  }
+
+  /** Green checkbox when period data is on file. Optional asOf date sits left of the mark. */
+  function statusCorner(ok, asOf) {
     if (!ok) return "";
-    return freshMark();
+    return freshMark(asOf);
   }
 
-  function freshMark() {
-    return `<span class="kpi-verified-mark" title="Period data on file" aria-label="Data on file"></span>`;
+  function freshMark(asOf) {
+    return `<span class="kpi-aug-updated-mark">${tileAsOfHtml(asOf)}<span class="kpi-verified-mark" title="Period data on file" aria-label="Data on file"></span></span>`;
   }
 
-  function staleMark() {
-    return `<span class="kpi-unverified-mark" title="Period data missing" aria-label="Data missing"></span>`;
+  function staleMark(asOf) {
+    return `<span class="kpi-outdated-mark">${tileAsOfHtml(asOf)}<span class="kpi-unverified-mark" title="Period data missing" aria-label="Data missing"></span></span>`;
   }
 
   /* Alias — same green checkbox, no text badge. */
-  function augUpdatedMark() {
-    return freshMark();
+  function augUpdatedMark(asOf) {
+    return freshMark(asOf);
   }
 
   /* Red check: method still open, or period source missing. Pair method issues with a written status line. */
-  function unverifiedMark() {
-    return staleMark();
+  function unverifiedMark(asOf) {
+    return staleMark(asOf);
   }
 
-  function outdatedMark() {
-    return staleMark();
+  function outdatedMark(asOf) {
+    return staleMark(asOf);
   }
 
   function periodFreshClass(updated, verified, value) {
     return tilePeriodFresh(updated, verified, value) ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
   }
 
-  function periodFreshMark(updated, verified, value) {
-    return tilePeriodFresh(updated, verified, value) ? freshMark() : staleMark();
+  function periodFreshMark(updated, verified, value, asOf) {
+    return tilePeriodFresh(updated, verified, value) ? freshMark(asOf) : staleMark(asOf);
   }
 
   function verifiedClass(verified) {
@@ -2502,7 +2535,7 @@
     const total = fmtAdSpend(pack.total);
     const fresh = tilePeriodFresh(true, true, total);
     return `<button type="button" class="kpi-goal-card${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="ad-spend-by-channel" aria-label="Ad spend ${total} · ${pack.meta.label}">
-      ${periodFreshMark(true, true, total)}
+      ${periodFreshMark(true, true, total, resolveTileAsOf("ad-spend-by-channel"))}
       ${kpiHelpBtn("ad-spend-by-channel")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Ad Spend")}
@@ -4077,9 +4110,10 @@
     });
     const paceCell = `${m.pacePct}% <span class="kpi-mom-change ${m.cls}" title="${escapeHtml(m.detail)}">${m.arrow} ${escapeHtml(m.label)}</span>`;
     const freshClass = cashFresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
-    const freshMark = cashFresh ? statusCorner(true) : outdatedMark();
+    const cashAsOf = resolveTileAsOf("cash-pace", cashLedgerAsOf());
+    const freshMarkHtml = cashFresh ? statusCorner(true, cashAsOf) : outdatedMark(cashAsOf);
     return `<button type="button" class="kpi-goal-card kpi-stat-gauge${freshClass}" data-kpi-focus="cash-pace" aria-label="Revenue ${fmtMoney(m.credit)} of ${fmtMoney(m.target)} · forecast ${fmtMoney(m.projected)} · ${m.label} · ${m.monthDisplay} · Trust activity ${cashLedgerAsOf() || "stale"}">
-      ${freshMark}
+      ${freshMarkHtml}
       ${kpiHelpBtn("cash-pace")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Revenue")}
@@ -4103,8 +4137,9 @@
     const pace = Math.round((total / (target || 1)) * 100);
     const sched = duiScheduleStatus(g, total);
     const paceCell = `${pace}% <span class="kpi-mom-change ${sched.cls}" title="${escapeHtml(sched.detail)}">${sched.arrow} ${escapeHtml(sched.label)}</span>`;
+    const autoAsOf = resolveTileAsOf("#03", (window.DUI_GOAL_DATA && window.DUI_GOAL_DATA.updatedAt) || g.updatedAt);
     return `<button type="button" class="kpi-goal-card kpi-stat-target-bar kpi-verified kpi-aug-updated" data-kpi-focus="#03">
-      ${statusCorner(true)}
+      ${statusCorner(true, autoAsOf)}
       ${kpiHelpBtn("#03")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle((g.title || "Auto Cases").replace(/^#\s*/, ""))}
@@ -4167,12 +4202,8 @@
   }
 
   function monthlyKpisAsOfHint() {
-    const pulled = formatPulledMd(DATA.lastUpdated || DATA.asOf);
-    const mycase = formatPulledMd(DATA.asOf);
-    if (pulled && mycase && pulled !== mycase) {
-      return `Recheck ${pulled} · MyCase ${mycase}`;
-    }
-    return pulled ? `Pulled ${pulled}` : "";
+    /* Per-tile dates sit next to each checkbox. No section-level Pulled stamp. */
+    return "";
   }
 
   function kpiSectionIntro(text) {
@@ -4589,7 +4620,7 @@
     const note = k.noteLine || "";
     const fresh = tilePeriodFresh(!!k.augUpdated, !!k.verified, k.value);
     return `<button type="button" class="kpi-stat-card${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="${k.id}">
-      ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
+      ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value, resolveTileAsOf(k.id, k.updatedAsOf))}
       ${kpiHelpBtn(k.id)}
       ${kpiCardTitle(k.label)}
       ${range ? `<span class="kpi-stat-subhead">${escapeHtml(range)}</span>` : ""}
@@ -4622,7 +4653,7 @@
     const periodFresh = completeMonthsIncludeTilePeriod(months);
     const fresh = tilePeriodFresh(periodFresh, periodFresh, value);
     return `<button type="button" class="kpi-stat-card${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="avg-case-value">
-      ${periodFreshMark(periodFresh, periodFresh, value)}
+      ${periodFreshMark(periodFresh, periodFresh, value, resolveTileAsOf("avg-case-value", (DATA.avgCaseValue && DATA.avgCaseValue.asOf) || "2026-09-10"))}
       ${kpiHelpBtn("avg-case-value")}
       ${kpiCardTitle("Avg Case Value")}
       ${range ? `<span class="kpi-stat-subhead">${escapeHtml(range)}</span>` : ""}
@@ -4718,7 +4749,7 @@
         : "";
       /* Monthly KPIs grid chrome = Revenue tile · always kpi-goal-card, never plain kpi-stat-card. */
       return `<button type="button" class="kpi-goal-card kpi-stat-gauge${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
-        ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
+        ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value, resolveTileAsOf(k.id, k.updatedAsOf))}
         ${kpiHelpBtn(k.id)}
         <div class="kpi-goal-visual">
           ${kicker}
@@ -4737,7 +4768,7 @@
       const targetNum = parseTargetNum(k.target);
       const hit = meetsTarget(parseMetricNum(k.value), targetNum, k.lowerIsBetter !== false);
       return `<button type="button" class="kpi-goal-card kpi-stat-target-bar${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
-        ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
+        ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value, resolveTileAsOf(k.id, k.updatedAsOf))}
         ${kpiHelpBtn(k.id)}
         <div class="kpi-goal-visual">
           ${icon}
@@ -4751,7 +4782,7 @@
       </button>`;
     }
     return `<button type="button" class="kpi-goal-card${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value)}" data-kpi-focus="${k.id}">
-      ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value)}
+      ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value, resolveTileAsOf(k.id, k.updatedAsOf))}
       ${kpiHelpBtn(k.id)}
       <div class="kpi-goal-visual">
         ${icon}
@@ -5028,8 +5059,9 @@
           deltaPp === 0 ? "0 pp" : `${deltaPp > 0 ? "↑" : "↓"} ${Math.abs(deltaPp)} pp`
         }</span>`;
     const fresh = ready;
+    const answerAsOf = resolveTileAsOf("answer-rate");
     return `<button type="button" class="kpi-goal-card kpi-stat-gauge${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}${!hit && ready ? " kpi-stat-attention" : ""}" data-kpi-focus="answer-rate" aria-label="Answer rate ${ready ? pct + "%" : "unavailable"} of ${target}% · year avg ${yearAvg != null ? yearAvg + "%" : "—"} · vs last month ${deltaPp == null ? "—" : deltaPp + " pp"}">
-      ${periodFreshMark(fresh, fresh, ready ? `${pct}%` : "—")}
+      ${periodFreshMark(fresh, fresh, ready ? `${pct}%` : "—", answerAsOf)}
       ${kpiHelpBtn("answer-rate")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Answer Rate")}
@@ -5069,8 +5101,9 @@
       celebrate: hit
     });
     const pacePct = Math.round(reviewPct * 100);
+    const yelpAsOf = resolveTileAsOf("yelp", y.reviewsAsOf || y.asOf);
     return `<button type="button" class="kpi-goal-card kpi-stat-gauge kpi-verified kpi-aug-updated" data-kpi-focus="yelp" aria-label="Yelp Reviews progress toward 20 reviews · pace ${pacePct}% · ${monthName} ${monthReviewsLabel} · total ${total}">
-      ${statusCorner(true)}
+      ${statusCorner(true, yelpAsOf)}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Yelp Reviews")}
         ${metricWithDeltaHtml(gauge, null)}
@@ -5381,7 +5414,7 @@
     );
     return chartBlock({
       focus: "#16",
-      helpId: "#16",
+      help: false,
       verified: anyVerified,
       title: "Legal Referral Sites",
       chart: donutChart(segs),
@@ -6153,16 +6186,17 @@
   }
 
   function expensePaceGraphHtml() {
+    const m = expensePaceMetrics();
     const periods = [
       {
         label: "Full-year forecast",
         forecast: true,
-        values: [1122987, 898390, 960000]
+        values: [m.quotedFullYear, m.collectibleFullYear, m.expenseFullYear]
       },
       {
         label: "Jan–Jun actual",
         forecast: false,
-        values: [648092, 518474, 480000]
+        values: [m.quotedH1, m.collectibleH1, m.expenseH1]
       }
     ];
     const series = [
@@ -6232,11 +6266,11 @@
     });
   }
 
-  /** Shared $80k/mo expense-pace math for Financials + Predictions. */
+  /** Shared $85k/mo expense-pace math for Financials + Predictions · June sample baseline. */
   function expensePaceMetrics() {
     const mean = 5662;
     const collectionRate = 0.8;
-    const monthlyExpense = 80000;
+    const monthlyExpense = 85000;
     const monthsElapsed = 6;
     const actualH1 = 116;
     const fullYearCases = 201;
@@ -6284,7 +6318,7 @@
     );
   }
 
-  /** $80k/mo expense pace vs 2026 quoted / collectible forecast. */
+  /** $85k/mo expense pace vs 2026 quoted / collectible forecast · June sample baseline. */
   function expensePaceRecommendationHtml() {
     const m = expensePaceMetrics();
     return `<div class="kpi-mini-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem;margin-bottom:0.85rem">
@@ -6293,14 +6327,14 @@
         <div class="kpi-mini-card"><h3>Full-year collectible after expenses</h3><p class="kpi-mini-value">−${fmtMoney(Math.abs(m.netCollectibleFullYear))}</p></div>
       </div>
       ${expensePaceGraphHtml()}
-      <p class="data-warning-note"><strong>Recommendation:</strong> Case/quoted volume is <strong>ahead of mid-year pace</strong> (+${m.quotedPacePct}%), but the full-year collectible forecast still does <strong>not cover</strong> an $80k/mo expense run-rate. Treat expense coverage as the tighter constraint — raise collectible value (higher-fee practice mix, Sex Crimes Defense, collection rate) or cut recurring spend before assuming the $1.1M quoted forecast means the year is safe.</p>
-      <p class="data-warning-note"><strong>Issue — do not treat H1 surplus as positive:</strong> H1 collectible after expenses shows +${fmtMoney(m.netCollectibleH1)}, but <strong>unknown business debt</strong> (loans, credit balances, and other liabilities outside the $80k/mo operating assumption) is not included. Flag this as a negative / unreliable indicator until WasteAud maps every liability.</p>
+      <p class="data-warning-note"><strong>Recommendation:</strong> Case/quoted volume is <strong>ahead of mid-year pace</strong> (+${m.quotedPacePct}%), but the full-year collectible forecast still does <strong>not cover</strong> an $85k/mo expense run-rate (June sample: 36 cases · $20k digital · $6k ops · ~$59k salaries/misc). Treat expense coverage as the tighter constraint — raise collectible value (higher-fee practice mix, Sex Crimes Defense, collection rate) or cut recurring spend before assuming the ~$1.14M quoted forecast means the year is safe. Add Jack full-time payroll on top of this floor when start date and rate lock.</p>
+      <p class="data-warning-note"><strong>Issue — do not treat H1 surplus as positive:</strong> H1 collectible after expenses shows +${fmtMoney(m.netCollectibleH1)}, but <strong>unknown business debt</strong> (loans, credit balances, and other liabilities outside the $85k/mo operating assumption) is not included. Flag this as a negative / unreliable indicator until WasteAud maps every liability.</p>
       <p class="data-inline-note"><strong>Mid-year quoted pace:</strong> Target ${fmtMoney(m.linearQuotedPace)} · actual ${fmtMoney(m.quotedH1)} · ahead ${fmtMoney(m.quotedPaceDelta)} (+${m.quotedPacePct}%).</p>
       <p class="data-inline-note"><strong>Mid-year collectible pace:</strong> Target ${fmtMoney(m.linearCollectiblePace)} · actual ${fmtMoney(m.collectibleH1)} · ahead ${fmtMoney(m.collectiblePaceDelta)}.</p>
       <p class="data-formula-line">H1 expenses = ${fmtMoney(m.monthlyExpense)} × 6 = ${fmtMoney(m.expenseH1)} · H1 collectible after expenses = ${fmtMoney(m.netCollectibleH1)} (unreliable — unknown debt)</p>
       <p class="data-formula-line">Full-year expenses = ${fmtMoney(m.expenseFullYear)} · collectible forecast ${fmtMoney(m.collectibleFullYear)} · shortfall ${fmtMoney(Math.abs(m.netCollectibleFullYear))}</p>
       ${expensePaceCheckpointTableHtml()}
-      <p class="data-inline-note"><strong>Next actions:</strong> Keep Sex Crimes Defense / high-mean practice focus in AdEnhance · cut known waste now without waiting on a full WasteAud audit · reforecast after July MyCase cases and QuickBooks collections land.</p>`;
+      <p class="data-inline-note"><strong>Next actions:</strong> Keep Sex Crimes Defense / high-mean practice focus in AdEnhance · cut known waste now without waiting on a full WasteAud audit · lock Jack FT start + salary into the expense floor · reforecast after September MyCase close.</p>`;
   }
 
   /** Intake-driven cash projection — historical case volume × practice-weighted fee × financed payment curve. */
@@ -6484,7 +6518,7 @@
     return `<header class="data-page-head">
       <div>
         <h2 class="data-page-title">Predictions</h2>
-        <p class="data-page-sub">Rest-of-year case forecast · $80k/mo expense pace · intake cash · known A/R payment cycles</p>
+        <p class="data-page-sub">Rest-of-year case forecast · $85k/mo expense pace · intake cash · known A/R payment cycles</p>
       </div>
     </header>
     <div class="data-grid">
@@ -6500,7 +6534,7 @@
       )}
       ${dataCardHtml(
         "Recommendation · expense pace vs 2026 forecast",
-        "Quoted volume is ahead of mid-year pace, but $80k/mo expenses still outrun the full-year collectible forecast.",
+        "Quoted volume is ahead of mid-year pace, but $85k/mo expenses still outrun the full-year collectible forecast.",
         expensePaceRecommendationHtml(),
         { full: true, id: "prediction-expense-pace" }
       )}

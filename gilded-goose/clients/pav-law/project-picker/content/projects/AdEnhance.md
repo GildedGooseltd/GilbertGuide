@@ -1,4 +1,4 @@
-# AdExpan
+# Ad Expansion
 
 
 | Field             | Value       |
@@ -11,14 +11,13 @@
 | Recommended start | 10/01/2026  |
 | Category          | Paid Media  |
 | Campaign type     | Paid Search |
-| Publish status    | unpublished |
 
 
 ---
 
 ## Project Overview
 
-Grow Google ads into three new case types the firm wants more of: criminal mischief and property damage, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.
+Grow Google ads into three new case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.
 
 ## Front runners · campaign and ad group map
 
@@ -40,21 +39,25 @@ Same build pattern as live HS and the ended Military / Core DV / NTGUILT shells:
 
 Proof baselines used:
 
-| Source | Window | What it shows |
-| ------ | ------ | ------------- |
-| Guide channelMonths | Jun / Jul 2026 | Search 138 / 131 calls · spend $8,296 / $7,262 · ~$60 per Search call when funded |
-| Campaign report | All time ended shells | Military 208 calls / $11,500 · Core DV 15 / $2,136 · NTGUILT 78 / $4,535 |
-| Campaign report | Sep 1–15 2026 live HS | Military 23 / $3,778 · DV 2 / $1,904 · NTGUILT 3 / $1,695 · 28 calls / $7,377 |
-| Ad group report | All time | Assault/Menacing Military AG 213 clicks / $3,200 · Tickets 195 / $3,062 · DUI 225 / $1,195 · DV Defense 254 / $2,136 |
+
+| Source              | Window                | What it shows                                                                                                        |
+| ------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Guide channelMonths | Jun / Jul 2026        | Search 138 / 131 calls · spend $8,296 / $7,262 · ~$60 per Search call when funded                                    |
+| Campaign report     | All time ended shells | Military 208 calls / $11,500 · Core DV 15 / $2,136 · NTGUILT 78 / $4,535                                             |
+| Campaign report     | Sep 1–15 2026 live HS | Military 23 / $3,778 · DV 2 / $1,904 · NTGUILT 3 / $1,695 · 28 calls / $7,377                                        |
+| Ad group report     | All time              | Assault/Menacing Military AG 213 clicks / $3,200 · Tickets 195 / $3,062 · DUI 225 / $1,195 · DV Defense 254 / $2,136 |
+
 
 Lane estimates if each front runner is funded like a current campaign / AG cluster:
 
-| Front runner | Analog from past | Learn months 1–2 | Steady after keepers | Learn media / mo | Steady media / mo |
-| ------------ | ---------------- | ---------------- | -------------------- | ---------------- | ----------------- |
-| Criminal Mischief | Narrower than DV · below Assault AG volume | 4–12 Search calls · ~80–250 clicks | 10–25 calls / mo | $900–1,500 | $1,200–2,500 |
-| College Towns | Geo + student / parent / DUI-adjacent · semester spikes | 8–20 calls · higher in move-in / party weeks | 18–40 calls / mo | $1,500–2,500 | $2,000–3,500 |
-| Weapons / Guns | Assault / Menacing AG share · fee ~$7,721 context | 8–18 calls | 20–40 calls / mo | $1,200–2,400 | $2,000–4,000 |
-| Three lanes combined | Incremental on top of live HS | ~20–50 Search calls / mo | ~50–100 Search calls / mo | ~$4,000–6,500 | ~$5,000–10,000 |
+
+| Front runner         | Analog from past                                        | Learn months 1–2                             | Steady after keepers      | Learn media / mo | Steady media / mo |
+| -------------------- | ------------------------------------------------------- | -------------------------------------------- | ------------------------- | ---------------- | ----------------- |
+| Criminal Mischief    | Narrower than DV · below Assault AG volume              | 4–12 Search calls · ~80–250 clicks           | 10–25 calls / mo          | $900–1,500       | $1,200–2,500      |
+| College Towns        | Geo + student / parent / DUI-adjacent · semester spikes | 8–20 calls · higher in move-in / party weeks | 18–40 calls / mo          | $1,500–2,500     | $2,000–3,500      |
+| Weapons / Guns       | Assault / Menacing AG share · fee ~$7,721 context       | 8–18 calls                                   | 20–40 calls / mo          | $1,200–2,400     | $2,000–4,000      |
+| Three lanes combined | Incremental on top of live HS                           | ~20–50 Search calls / mo                     | ~50–100 Search calls / mo | ~$4,000–6,500    | ~$5,000–10,000    |
+
 
 At ~7.3% lead→case: learn window about 1–4 incremental cases / mo · steady keepers about 4–7 incremental cases / mo when answer rate holds. College Towns swings with the school calendar. Weapons and CM stay closer to Assault / DV seasonality. Early weeks often look like Sep live HS: higher CPC while Smart Bidding learns and search volume is thin.
 
@@ -70,13 +73,13 @@ Starter package covers planning plus build for the three front runners as one ex
 | Geo / bid adj                 | Presence + college-town location set from service-area doc                 | Ski corridor / holiday geos stay on HolidayAds                              |
 | Learning window               | About 8 weeks low budget learn                                             | Faster ramp = higher media, not higher setup by default                     |
 | Creative                      | RSA text + reuse existing images                                           | New custom image set per lane · quote separately with AdCreative / pipeline |
-| Tracking                      | Practice tags and UTMs so CM · College · Weapons can be measured           | HubSpot landing pages if needed · see HubSpot parts                         |
+| Tracking                      | Practice tags and UTMs so CM · College · Weapons can be measured           | HubSpot landing pages if needed · see HubSpot Application                   |
 | After keepers                 | Fold winners into Digital Ads Maintenance Retainer                         | ~$900/mo add if all three stay · or ~$300/mo per live expansion lane        |
 
 
 Out of this card: concealed carry / hunting as lead · community-college-only geos · med-mal / PI Search · survivor-site ads · AdultAds.
 
-## HubSpot parts
+## HubSpot Application
 
 - Marketing Hub · Google Ads / lead-source sync when campaigns are connected
 - CRM contacts · new call and form leads from pilots

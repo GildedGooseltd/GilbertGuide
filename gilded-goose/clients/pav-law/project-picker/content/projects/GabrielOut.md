@@ -6,7 +6,6 @@
 | Fee               | 1200           |
 | Category          | Outbound       |
 | Campaign type     | Outbound Calls |
-| Publish status    | published      |
 
 ---
 
@@ -14,7 +13,7 @@
 
 Adds phone conversations from warm lists without increasing ad spend. Ready-to-dial list and Andrew-approved script. Every outcome logged in HubSpot for reporting. Complements Search when connect rates justify dial volume.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
 

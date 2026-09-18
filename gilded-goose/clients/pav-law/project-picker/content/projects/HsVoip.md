@@ -6,7 +6,6 @@
 | Fee               | 0                   |
 | Category          | Infrastructure      |
 | Campaign type     | Call Infrastructure |
-| Publish status    | published           |
 | Parent            | HsWebRebuild        |
 
 ---
@@ -15,7 +14,7 @@
 
 Create dedicated lines for call types (Spanish, current client etc.). Branding remains on (719) 888-7888 only. Automated Call logging, tracking and reporting. Start: transfer one phone into HubSpot · write setup docs · short onboarding deck. HubSpot forms → assign to Casey · same-day callback · Casey starts answering more auto calls.
 
-## HubSpot parts
+## HubSpot Application
 
 - Calling · logged calls and missed-call tasks
 - Workflows · same-day callback ownership

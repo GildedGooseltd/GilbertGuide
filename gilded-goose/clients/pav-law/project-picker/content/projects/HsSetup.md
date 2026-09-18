@@ -6,7 +6,6 @@
 | Fee               | 5500               |
 | Category          | CRM                |
 | Campaign type     | HubSpot Foundation |
-| Publish status    | published          |
 
 ---
 
@@ -14,7 +13,7 @@
 
 One HubSpot foundation so email, referrals, forms, and booking share the same contacts, stages, and reporting. Packages holiday email (SummerEmail), contact upload (HsContacts), pipeline (HsPipe), and LPs (HsLanding) under one CRM build. Stops duplicate fees looking like separate “email agencies”. Makes OpsDash dashboard HubSpot rows possible once contacts export cleanly.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope
 

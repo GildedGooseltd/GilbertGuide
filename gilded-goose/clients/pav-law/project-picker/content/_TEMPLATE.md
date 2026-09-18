@@ -1,6 +1,5 @@
 # Project Title
 
-
 | Field             | Value         |
 | ----------------- | ------------- |
 | Priority          | 99            |
@@ -11,22 +10,23 @@
 | Recommended start | MM/DD/YYYY    |
 | Category          | Category      |
 | Campaign type     | Campaign Type |
-| Publish status    | unpublished   |
 
 
 Omit blank optional rows entirely. Do not leave empty `| | |` spacer rows. They break the meta parser.
 
-Optional rows after Publish status when needed: Parent · Monthly only · Payment type `performance` or `flat` · Per campaign fee. Omit Priority for retainer / monthly-only. Add `| Monthly only | yes |` for monthly retainers.
+Dashboard Show is INDEX only. Do not add Publish status here.
 
-Do not add Status when INDEX already has Status. Do not add Estimated leads gained, Keywords, Value icons, KPI links, Client summary, Employees impacted, Summary, WIP, Tasks, Completed, or Project plan.
+Optional rows when needed: Parent · Monthly only · Payment type `performance` or `flat` · Per campaign fee. Omit Priority for retainer / monthly-only. Add `| Monthly only | yes |` for monthly retainers.
+
+Do not add Status or Publish status when INDEX already has Status / Show. Do not add Estimated leads gained, Keywords, Value icons, KPI links, Client summary, Employees impacted, Summary, WIP, Tasks, Completed, or Project plan.
 
 ---
 
 ## Project Overview
 
-Short prose. What the project does and why it matters. Shown on Guide project overviews.
+Short client-facing prose. What the firm gets and what work happens. Shown on Guide project overviews. Plain language for Andrew. Not a sales pitch and not internal ops notes.
 
-## HubSpot parts
+## HubSpot Application
 
 - HubSpot surfaces this project uses, or: No HubSpot build in scope
 

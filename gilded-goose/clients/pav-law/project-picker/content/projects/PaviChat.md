@@ -6,7 +6,6 @@
 | Fee               | 2200             |
 | Category          | Intake / AI      |
 | Campaign type     | After-Hours Chat |
-| Publish status    | published        |
 
 ---
 
@@ -14,7 +13,7 @@
 
 After-hours and weekend visitors get answers instead of a dead end. Firm-safe, ABA-aligned Q&A reviewed before go-live. HubSpot or site logging so morning intake sees overnight conversations. Captures contact details when the desk is offline.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope
 

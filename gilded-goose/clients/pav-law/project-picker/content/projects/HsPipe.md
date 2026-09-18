@@ -6,7 +6,6 @@
 | Fee               | 1800               |
 | Category          | CRM                |
 | Campaign type     | Prequote / Booking |
-| Publish status    | published          |
 | Parent            | HsWebRebuild       |
 
 ---
@@ -15,7 +14,7 @@
 
 Faster follow-up on web inquiries so qualified leads book consults instead of going cold. Proves form → HubSpot task → Romina booking without handoffs. Recovers leads that would have gone cold. Foundation before scaling paid spend further.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope
 

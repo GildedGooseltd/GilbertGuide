@@ -15,7 +15,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Short title              | Status               | Show | Project                                                                             |
 | ------------------------ | -------------------- | ---- | ----------------------------------------------------------------------------------- |
 | Digital Ads Retainer     | Required             | [ ]  | [Digital Ads Maintenance Retainer](retainer.md)                                     |
-| Platform Mgmt            | wip                  | [ ]  | [Platform Management](projects/OpsDash.md)                                           |
+| Platform Mgmt            | wip                  | [x]  | [Platform Management](projects/TsMgmt.md)                                            |
 | MyCase Data Cleanse      | available            | [ ]  | [MyCase Data Cleanse](projects/MyCaseClr.md)                                              |
 | Digital Profiles         | wip                  | [ ]  | [Digital Presence Refresh](projects/DigProf.md)                                         |
 | Directories & Profiles   | Recommended          | [x]  | [Directories & Profile Channels](projects/LegalDirs.md)                                   |
@@ -24,7 +24,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Sealing Reengagement     | Started              | [ ]  | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
 | Printables & Swag        | wip                  | [ ]  | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | NTGUILT Ads Launch       | Launched             | [ ]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
-| AdExpan                  | wip                  | [ ]  | [AdExpan](projects/AdEnhance.md)                                                           |
+| AdExpan                  | wip                  | [x]  | [AdExpan](projects/AdEnhance.md)                                                           |
 | Yelp Ads                 | Recommended          | [x]  | [Yelp Ads](projects/Yelpv1.md)                                                              |
 | Adult Site Ads           | On Hold              | [ ]  | [Adult Site(s) Ad Campaign](projects/AdultAds.md)                                        |
 | Holiday Ads              | On Hold              | [ ]  | [Holiday Digital Ad(s) Campaign Expansion](projects/HolidayAds.md)                         |
@@ -53,7 +53,6 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Case Wins & Testimonials | Planning             | [ ]  | [Case Win Log and Testimonials](projects/CaseWins.md)                                     |
 | Perf Plan Payouts        | Planning             | [ ]  | [Performance Plan Payouts](projects/PerfPay.md)                                         |
 | Twisted Wrench           | Planning             | [ ]  | [Twisted Wrench](projects/TwistWrnch.md)                                                   |
-| Data Mgmt Retainer       | ongoing              | [ ]  | [Data Management — Retainer](projects/DataMgmt.md)                                       |
 | HubSpot VoIP             | On Hold              | [ ]  | [Phone(s) & VoIP Setup](projects/HsVoip.md)                                             |
 | HubSpot Marketing        | canceled · moved HsWebRebuild | [ ]  | [HubSpot Marketing Setup](projects/HsSetup.md)                                          |
 | Marketing Stack Audit    | completed            | [ ]  | [Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone](projects/StackAudit.md) |
@@ -72,7 +71,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Est. cost                   | Payment plan | Project                                                                             |
 | --------------------------- | ------------ | ----------------------------------------------------------------------------------- |
 | $3,000/mo                   | monthly      | [Digital Ads Maintenance Retainer](retainer.md)                                     |
-| $800/mo                     | monthly      | [Platform Management](projects/OpsDash.md)                                           |
+| $500/mo                     | monthly      | [Platform Management](projects/TsMgmt.md)                                            |
 | $1,500                      | 50%          | [MyCase Data Cleanse](projects/MyCaseClr.md)                                              |
 | $2,200                      | 40%          | [Digital Presence Refresh](projects/DigProf.md)                                         |
 | $1,200                      | 40%          | [Directories & Profile Channels](projects/LegalDirs.md)                                   |
@@ -110,7 +109,6 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $2,000                      | 50%          | [Case Win Log and Testimonials](projects/CaseWins.md)                                     |
 | $1,500                      | 20%          | [Performance Plan Payouts](projects/PerfPay.md)                                         |
 | $1,000                      | —            | [Twisted Wrench](projects/TwistWrnch.md)                                                   |
-| $500/mo                     | monthly      | [Data Management — Retainer](projects/DataMgmt.md)                                       |
 | incl. HsWebRebuild              | —            | [Phone(s) & VoIP Setup](projects/HsVoip.md)                                             |
 | $5,500                      | 50%          | [HubSpot Marketing Setup](projects/HsSetup.md)                                          |
 | $1,500                      |              | [Marketing Stack Priorities Audit — Ads, CRM, Referral, and Phone](projects/StackAudit.md) |
@@ -259,7 +257,6 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - WebContent/WebSpeed/BlogRevamp/HsLanding — kept on INDEX for history · Show off while rebuild is the path
 - Referral — client / F/F Track 1 · **LawyerRef** attorney network · **SealReeng** Track 2 sealing/probation · see **PerfPay** for Phase 2 payout tiers
 - **HsPipe** — Prequote & Booking · chatbots can support · Show off until scoped with rebuild
-- **DataMgmt** — separate systems / platform retainer · Show off · unpublished · not inside HS setup fee
 - **PerfPay** — Planning · Phase 2 after core HubSpot
 - CaseWins sits in Marketing with review-request follow-ups · pairs with HsEmailSetup
 - EventAct — event activation archived · **TwistWrnch Twisted Wrench** — shop partnership (giveaway, Corvette trade, counter display); not event-tied
@@ -271,17 +268,17 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - MyCaseClr — available · MyCase cleanse · Spanish-speaking checkbox · Booked / closed by ↔ HubSpot `pl_booked_closed_by` · Lead Source / phone / dedupe before import
 - **HsVoip** — **On Hold** · Priority 2 phones · waiting on line transfer · public **888 only** · HubSpot DID internal
 - **DigProf** — wip · profile layer (Pav / Andrew / Casey); LegalDirs / Yelpv1 carry directory and Yelp sell lines
-- Priority 1 Recommended stack: Yelpv1 · LegalDirs · HolidayAds · AdExpan unpublished pending audience update · Required Digital Ads Retainer unpublished / Show off
-- **OpsDash** — wip · Publish status unpublished · Show off · $800/mo platform management · separate from DataMgmt
-- **AdExpan** — wip · Show off · three new Google ad areas · republish when ready · ~8 week setup $3,800 · then ~$900/mo into Digital Ads Maintenance Retainer if all three stay
+- Priority 1 Recommended stack: Yelpv1 · LegalDirs · AdExpan · HolidayAds · Required Digital Ads Retainer unpublished / Show off
+- **TsMgmt** — wip · Show on · $500/mo Platform Management · MyCase · Google Suite · Ops Dashboard · light new-tool testing · systems-admin tile image
+- **AdExpan** — wip · Show on · three Google lanes · criminal mischief · college towns · weapons · ~8 week setup $3,800 · then ~$900/mo into Digital Ads Maintenance Retainer if all three stay
 - **Yelpv1** — 2 months · start 10/01/2026 · max end 12/01/2026 · $2,600 setup max 5 × ~$520 equal biweekly · no deposit % · then $500/mo Yelp platform · not inside Google / LSA retainer
 - **Digital Ads Retainer** — Required status in INDEX · Publish status unpublished · Show off · not on Guide sell calculator until republished · base $3,000/mo before AdExpan add
 - **AdultAds** — On Hold · unpublished · Show off · deferred until buyable site shortlist is ready · never on survivor advocacy properties
 - **HolidayAds** — On Hold · Google Search / ad-group expansion · holiday and colder-weather themes · separate from WinterAds and SummerAds
 - **PerfPay** — Performance Plan payouts for cash-generating tasks; employee + contractor tiers
 - **CaseyBrand** — Casey rebrand (like DigProf): clothing, makeup, hair, presentation, speech, digital presence
-- **SwagPrint** — Design printables, swag & apparel · **includes all NTGUILT design work Kate already did** (flyers, QR cards, banners, prop plate, stickers, apparel art) · holiday & anniversary gifts for employee occasions · Printify portal still open
+- **SwagPrint** — Design printables, swag, apparel, stationery · lawyer computer cases · client folders / padfolios at court · samples ordered · design not begun · $1,200 design/coordination · product runs ~$400–$500 client cost
 - **WasteAud** — available · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste is the verified floor before subscription, phone, LSA-credit, and vendor leakage
-- **Bulk unpublish** · live Show only: Yelpv1 · LegalDirs · DataMgmt unpublished with the rest pending review
+- **Bulk unpublish** · live Show: Yelpv1 · LegalDirs · TsMgmt · AdEnhance · rest pending review
 - Fee market context: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)
 
