@@ -4,7 +4,7 @@ Short name IDs replace old A/B/C codes. Filename = ID.
 
 | Old | New | Project |
 |-----|-----|---------|
-| A1 | AdEnhance | Digital Ad Enhancements |
+| A1 | AdEnhance | Ad Expansion |
 | A2 | NtguiltAd | NTGUILT AdWords Campaign Launch |
 | A3 | SummerEmail | Summer Safety Email |
 | A4 | Referral | Client Referral Program |

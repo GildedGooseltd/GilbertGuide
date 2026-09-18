@@ -19,4 +19,4 @@ Ongoing oversight of Google Ads and Local Services Ads: monitoring spend, tuning
 
 ## Fee note
 
-$3,000/mo covers Google Ads, LSA, and ongoing NTGUILT Search. After AdExpan keepers land, rough starter add is about $900/mo on this base if all three expansion lanes stay Enabled · or about $300/mo per live expansion lane. Yelp keepers stay on the separate Yelp line. Media spend stays client budget.
+$3,000/mo covers Google Ads, LSA, and ongoing NTGUILT Search. After Ad Expansion keepers land, rough starter add is about $900/mo on this base if all three expansion lanes stay Enabled · or about $300/mo per live expansion lane. Yelp keepers stay on the separate Yelp line. Media spend stays client budget.

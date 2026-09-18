@@ -15,10 +15,10 @@ Good timing while the team is away: new channels need a few weeks to learn. Set 
 
 | Project | Value | Recommended price |
 | ------- | ----- | ----------------- |
-| [Digital Ad Enhancements](content/projects/AdEnhance.md) | About one month of Search enhancements and pilots on the live account, including Sex Crimes Defense. Test and select keepers for long-term performance, then fold them into Digital Ads Maintenance Retainer. | $2,200 setup · then ~$500/mo rough add to the digital ads retainer after keepers are locked · media separate |
+| [Ad Expansion](content/projects/AdEnhance.md) | Grow Google ads into criminal mischief, college towns and trade schools, and weapons or gun-related charges. Same style as ads already running. About eight weeks to build and test. Keep what works under the monthly ads care plan. | $3,800 setup · then ~$900/mo if all three stay · or ~$300/mo each · Google ad spend separate |
 | [Yelp Ads](content/projects/Yelpv1.md) | About two months of Yelp setup and ads testing. Lock who answers messages, CRM-tracked links, HubSpot intake, message-response marketing, and review nurture. Keepers stay on a Yelp platform line so Yelp can be judged next to Search and LSA. Standalone fee line, not a free DigProf add-on. | $2,600 setup + $500/mo · Oct start · max end +2 months · max 5 equal biweekly payments · no deposit % · media separate |
 | [Directories & Profile Channels](content/projects/LegalDirs.md) | About one month to update digital presence and profile accuracy. Some sites may still drive referral or organic traffic. Getting the organic structure right first shows where more time and money are worth spending. | $1,200 setup · ~1 month |
-| [Google Ad Campaign Expansion](content/projects/HolidayAds.md) | Brainstorm and launch additional Search / ad-group topics beyond the live Military, DV, and NTGUILT set. Plan for about one month of learning with low activity, then stronger volume in November and December. Seasonal holiday and colder-weather case themes included. Sex Crimes Defense Search pilot stays on the AdEnhance project card so it is not sold twice here. | $2,200 |
+| [Holiday Digital Ad(s) Campaign Expansion](content/projects/HolidayAds.md) | Seasonal ads for holidays and colder weather. Criminal mischief · college towns · weapons expansion lives on Ad Expansion so it is not sold twice here. | $2,200 |
 
 ---
 
@@ -32,7 +32,7 @@ Good timing while the team is away: new channels need a few weeks to learn. Set 
 
 ## Working notes
 
-- Retainer $3,000/mo covers Google Ads, LSA, and NTGUILT Search. Required, not a Priority 1 project row. After AdEnhance keepers land, rough starter add is about $500/mo on that base.
+- Retainer $3,000/mo covers Google Ads, LSA, and NTGUILT Search. Required, not a Priority 1 project row. After Ad Expansion keepers land, rough starter add is about $900/mo on that base if all three expansion lanes stay · or about $300/mo per live expansion lane.
 - Yelp is past free-test. Two months setup from October · max end two months out · max 5 equal biweekly payments on setup · no deposit %. Then $500/mo rough starter for the Yelp platform. Media and upgrades separate. Not inside the $3,000/mo Google / LSA retainer.
 - Do not treat high-intent clinic or shop sites as buyable ad placements unless a rate card exists.
 - Never advertise on survivor or victim-advocacy sites · TESSA and similar.

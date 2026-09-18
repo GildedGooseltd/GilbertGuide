@@ -75,31 +75,31 @@ window.PROJECT_DATA = {
       "category": "Paid Media",
       "campaignType": "Paid Search",
       "id": "AdEnhance",
-      "title": "AdExpan",
+      "title": "Ad Expansion",
       "tldr": "Grow Google ads into three new case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
       "description": "Grow Google Ads into three new case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
       "valueAdded": [
         "Grow Google ads into three new case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project."
       ],
       "hubSpotParts": [
-        "Marketing Hub · Google Ads / lead-source sync when campaigns are connected",
-        "CRM contacts · new call and form leads from pilots",
-        "Landing pages · dedicated pages for practice-area pilots when a front runner needs its own URL"
+        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source, and you can compare them next to DV, Military, and NTGUILT.",
+        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
+        "Landing pages · Optional HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
       ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
-      "shortTitle": "AdExpan",
+      "shortTitle": "Ad Expansion",
       "status": "recommended",
       "estCostLabel": "$3,800 + $900/mo",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 3500,
+      "feeEstimate": 3200,
       "feeEstimateOngoing": null,
-      "feeEstimateLane": "sprint_general",
+      "feeEstimateLane": "ads_campaign",
       "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2900,
-      "feeEstimateNationalMid": 3900,
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3800,
       "feeEstimateScope": {
         "raw": 3.4,
         "parts": {
@@ -115,8 +115,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -300,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.05 (3.4 units) · complexity ×1"
+      "feeEstimateDelta": -600,
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.05 (3.4 units) · complexity ×1"
     },
     {
       "priority": 1,

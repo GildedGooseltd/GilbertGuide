@@ -81,9 +81,9 @@ Out of this card: concealed carry / hunting as lead · community-college-only ge
 
 ## HubSpot Application
 
-- Marketing Hub · Google Ads / lead-source sync when campaigns are connected
-- CRM contacts · new call and form leads from pilots
-- Landing pages · dedicated pages for practice-area pilots when a front runner needs its own URL
+- Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source, and you can compare them next to DV, Military, and NTGUILT.
+- CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.
+- Landing pages · Optional HubSpot pages for a practice-area pilot when that lane needs its own tracked URL.
 
 
 
