@@ -90,7 +90,7 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "AdExpan",
-      "status": "wip",
+      "status": "recommended",
       "estCostLabel": "$3,800 + $900/mo",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -130,10 +130,10 @@ window.PROJECT_DATA = {
       "parentId": "Ad Expansion",
       "id": "Yelpv1",
       "title": "Yelp Ads",
-      "tldr": "Yelp listing setup, message response, review nurture, and ads testing so results can be judged next to Search and LSA. Recommended window: start 10/01/2026, end no later than 12/01/2026, two calendar months. Setup fee splits into equal biweekly payments with no deposit percent. Max five payments over that window, about $520 each on $2,600. After the setup window, keepers stay on a Yelp platform line. Rough starter: $500/mo. Revisit after traffic and maintenance load are clear. Expand budget after message response and lead intake are solid, including HubSpot intake when live. Lock who answers messages, CRM-tracked links, message-response marketing, and review nurture. Standalone fee line: $2,600 setup + $500/mo. Not inside the Google / LSA Digital Ads Maintenance Retainer. Media and Yelp upgrades are separate. As of 09/10/2026: listing live, ads near $25/day, $300 promo, 40% call answer, 4.6 stars / 9 reviews.",
-      "description": "Yelp listing setup, message response, review nurture, and ads testing so results can be judged next to Search and LSA. Recommended window: start 10/01/2026, end no later than 12/01/2026, two calendar months. Setup fee splits into equal biweekly payments with no deposit percent. Max five payments over that window, about $520 each on $2,600. After the setup window, keepers stay on a Yelp platform line. Rough starter: $500/mo. Revisit after traffic and maintenance load are clear. Expand budget after message response and lead intake are solid, including HubSpot intake when live. Lock who answers messages, CRM-tracked links, message-response marketing, and review nurture. Standalone fee line: $2,600 setup + $500/mo. Not inside the Google / LSA Digital Ads Maintenance Retainer. Media and Yelp upgrades are separate. As of 09/10/2026: listing live, ads near $25/day, $300 promo, 40% call answer, 4.6 stars / 9 reviews.",
+      "tldr": "Yelp listing setup, message response, add more clients to email review nurture campaign, route calls to Gabriel via Huband ads testing so results can be judged next to Search and LSA.",
+      "description": "Yelp listing setup, message response, add more clients to email review nurture campaign, route calls to Gabriel via Huband ads testing so results can be judged next to Search and LSA.",
       "valueAdded": [
-        "Yelp listing setup, message response, review nurture, and ads testing so results can be judged next to Search and LSA. Recommended window: start 10/01/2026, end no later than 12/01/2026, two calendar months. Setup fee splits into equal biweekly payments with no deposit percent. Max five payments over that window, about $520 each on $2,600. After the setup window, keepers stay on a Yelp platform line. Rough starter: $500/mo. Revisit after traffic and maintenance load are clear. Expand budget after message response and lead intake are solid, including HubSpot intake when live. Lock who answers messages, CRM-tracked links, message-response marketing, and review nurture. Standalone fee line: $2,600 setup + $500/mo. Not inside the Google / LSA Digital Ads Maintenance Retainer. Media and Yelp upgrades are separate. As of 09/10/2026: listing live, ads near $25/day, $300 promo, 40% call answer, 4.6 stars / 9 reviews."
+        "Yelp listing setup, message response, add more clients to email review nurture campaign, route calls to Gabriel via Huband ads testing so results can be judged next to Search and LSA."
       ],
       "hubSpotParts": [
         "CRM · lead source and ad engagement",
@@ -148,14 +148,14 @@ window.PROJECT_DATA = {
       "estCostLabel": "$2,600 + $500/mo",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 2500,
+      "feeEstimate": 2100,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 4,
+        "raw": 1.78,
         "parts": {
           "valueAdd": 1,
           "tasks": 0,
@@ -163,14 +163,14 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 3
+          "descUnits": 0.78
         }
       },
-      "feeEstimateComplexity": 1.1,
+      "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -100,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.07 (4 units) · complexity ×1.1"
+      "feeEstimateDelta": -500,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×0.97 (1.78 units) · complexity ×1"
     },
     {
       "priority": 2,
@@ -369,54 +369,6 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1100,
       "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.08 (4.04 units) · complexity ×1"
-    },
-    {
-      "priority": 6,
-      "fee": 1200,
-      "category": "Brand / Merch",
-      "campaignType": "Printables + Internal Store + Conversation Starters",
-      "id": "SwagPrint",
-      "title": "Design Printables, Swag & Apparel",
-      "tldr": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-      "description": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-      "valueAdded": [
-        "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun."
-      ],
-      "hubSpotParts": [
-        "Lead source · light word-of-mouth logging when a piece is tracked",
-        "Cost tracking · optional cost line for referral or review programs when measuring ROI"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "unpublished",
-      "shortTitle": "Printables & Swag",
-      "status": "wip",
-      "estCostLabel": "$1,200",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 1500,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "swag_consult",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1300,
-      "feeEstimateNationalMid": 1800,
-      "feeEstimateScope": {
-        "raw": 2.83,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.83
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 300,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.02 (2.83 units) · complexity ×1"
     },
     {
       "priority": 7,
@@ -2247,6 +2199,56 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×0.99 (2.25 units) · complexity ×1.1"
     },
     {
+      "priority": null,
+      "fee": 1200,
+      "category": "Brand / Merch",
+      "campaignType": "Physical Print & Production",
+      "id": "SwagPrint",
+      "title": "Design Printables, Swag & Apparel",
+      "tldr": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
+      "description": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun. \n\nNot an urgent project however if you would like anything designed for the holidays for clients or the team its easier, faster and cheaper to do the designs at the same time then order as needed. \n\nHighlight the fee in red as an estimate that would fluctuate based on amount of products and organization needed. Add a question mark icon to this project tile with a confused pavi",
+      "valueAdded": [
+        "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
+        "Not an urgent project however if you would like anything designed for the holidays for clients or the team its easier, faster and cheaper to do the designs at the same time then order as needed.",
+        "Highlight the fee in red as an estimate that would fluctuate based on amount of products and organization needed. Add a question mark icon to this project tile with a confused pavi"
+      ],
+      "hubSpotParts": [
+        "Lead source · light word-of-mouth logging when a piece is tracked",
+        "Cost tracking · optional cost line for referral or review programs when measuring ROI"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "unpublished",
+      "shortTitle": "Printables & Swag",
+      "status": "wip",
+      "estCostLabel": "$1,200",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 1700,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "swag_consult",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1300,
+      "feeEstimateNationalMid": 1800,
+      "feeEstimateScope": {
+        "raw": 5.68,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 2.68
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 500,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.13 (5.68 units) · complexity ×1"
+    },
+    {
       "fee": 500,
       "category": "Analytics",
       "campaignType": "Platform / Data Ops",
@@ -2264,7 +2266,7 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Platform Mgmt",
-      "status": "wip",
+      "status": "recommended",
       "estCostLabel": "$500/mo",
       "paymentPlanLabel": "monthly",
       "feeEstimate": 2900,

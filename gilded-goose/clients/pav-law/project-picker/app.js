@@ -130,6 +130,7 @@
     NtguiltAd: 1,
     HsMktExpand: 2,
     LsaCall: 2,
+    TsMgmt: 2,
     OpsDash: 2,
     HsVoip: 2,
     HsSvcExpand: 2,
@@ -536,6 +537,7 @@
   const TOC_ADHOC_IDS = new Set([
     "DigProf",
     "LsaCall",
+    "TsMgmt",
     "OpsDash",
     "HsVoip",
     "Referral",
@@ -904,16 +906,15 @@
   function maxInvoiceCountForItem(item) {
     if (!item || isMonthlyRetainerItem(item, !!item.isRetainer)) return 1;
     const dates = getProjectDateRange(item.id);
-    if (dates.start && dates.end) {
-      return Math.max(1, maxEqualBiweeklyPayments(item, dates.start, dates.end));
-    }
     const rec = recommendedProjectDates(item);
-    if (rec.start && rec.end) {
-      return Math.max(1, maxEqualBiweeklyPayments(item, rec.start, rec.end));
+    const start = dates.start || rec.start;
+    const end = dates.end || rec.end;
+    if (start) {
+      return Math.max(1, maxEqualMonthlyPayments(item, start, end));
     }
     const weeks = getProjectDurationWeeks(item);
     if (weeks != null && Number(weeks) <= 4) return 3;
-    if (weeks != null && Number(weeks) > 0) return Math.max(1, Math.floor(Number(weeks) / 2) + 1);
+    if (weeks != null && Number(weeks) > 0) return Math.min(6, Math.max(3, Math.ceil(Number(weeks) / 4) + 2));
     return 3;
   }
 
@@ -961,7 +962,7 @@
     if (!item) return !!isRetainer;
     if (isRetainer || item.isRetainer || item.id === "RETAINER" || item.id === "retainer") return true;
     if (item.monthlyOnly) return true;
-    if (item.id === "DataMgmt" || item.id === "OpsDash") return true;
+    if (item.id === "DataMgmt" || item.id === "OpsDash" || item.id === "TsMgmt") return true;
     if (String(item.category || "").toLowerCase() === "retainer") return true;
     return false;
   }
@@ -982,23 +983,20 @@
       const mo = projectMonthlyBill(item) || item.fee || 0;
       return mo ? `${fmt(mo)}/mo` : "Monthly";
     }
+    const fee = projectScheduleFee(item);
+    if (!fee) return "—";
+    if (isPayInFullProject(item)) return `1 × ${fmt(fee)}`;
     const plan = computeProjectBiweeklyPlan({ ...item, isRetainer: false });
-    if (plan.payInFull) {
-      return plan.ready ? `1 × ${fmt(plan.scheduleFee)}` : `1 × full setup`;
+    const n = plan.ready
+      ? plan.paymentCount
+      : Math.max(1, getProjectInvoiceCount(item) || 1);
+    const amounts = splitEvenCents(fee, n);
+    const each = amounts[0];
+    if (!plan.ready || !plan.start) {
+      return `${n} × ${fmt(each)}/mo`;
     }
-    const n = getProjectInvoiceCount(item) || plan.paymentCount;
-    if (!plan.ready) {
-      const fee = projectScheduleFee(item);
-      if (fee > 0 && n > 0) {
-        const each = Math.round(fee / n);
-        return `${n} × ~${fmt(each)}`;
-      }
-      return "set dates";
-    }
-    if (plan.paymentCount <= 1) {
-      return `1 × ${fmt(plan.dueNow || plan.scheduleFee)}`;
-    }
-    return `${plan.paymentCount} × ${fmt(plan.biweeklyEach)}`;
+    if (n <= 1) return `1 × ${fmt(fee)} · due ${americanDate(plan.start)}`;
+    return `${n} × ${fmt(each)}/mo · from ${americanDate(plan.start)}`;
   }
 
   function bestFitRankedListHtml(ranked) {
@@ -1045,7 +1043,7 @@
           <th class="col-project" scope="col">Project</th>
           <th class="col-quote" scope="col">Quote</th>
           <th class="col-start" scope="col">Start</th>
-          <th class="col-invoices" scope="col" title="Number of biweekly invoices (1–max for this project's dates). Set per project.">Invoices<span class="col-invoices-sub">bi-weekly</span></th>
+          <th class="col-invoices" scope="col" title="Number of monthly invoices (1–max for this project). Set per project.">Invoices<span class="col-invoices-sub">monthly</span></th>
           <th class="col-terms" scope="col">Payment terms</th>
         </tr>
       </thead>
@@ -1489,23 +1487,63 @@
   }
 
   /**
-   * Max equal biweekly payments for a start→end window. No deposit %.
-   * One-month windows still cap at 3.
+   * Max equal monthly payments from start through end. No deposit %.
+   * One-month windows still cap at 3. Catalog invoiceCount can raise the ceiling a little.
    */
-  function maxEqualBiweeklyPayments(item, startISO, endISO) {
-    if (!startISO || !endISO) return 0;
-    const dates = biweeklyInvoiceDates(startISO, endISO);
-    if (!dates.length) return 0;
-    if (isOneMonthProjectWindow(item, { start: startISO, end: endISO })) {
-      return Math.min(3, dates.length);
+  function maxEqualMonthlyPayments(item, startISO, endISO) {
+    if (!startISO) return 1;
+    let end = endISO;
+    if (!end) {
+      const weeks = getProjectDurationWeeks(item);
+      if (weeks != null && Number(weeks) > 0) {
+        end = addDaysIso(startISO, Math.round(Number(weeks) * 7));
+      }
     }
-    return dates.length;
+    let n = 1;
+    if (end) {
+      n = 0;
+      for (let i = 0; i < 12; i++) {
+        if (addMonthsIso(startISO, i) > end) break;
+        n++;
+      }
+      n = Math.max(1, n);
+    } else {
+      const weeks = getProjectDurationWeeks(item);
+      if (weeks != null && Number(weeks) > 0) {
+        n = Math.min(6, Math.max(1, Math.ceil(Number(weeks) / 4)));
+      } else {
+        n = 3;
+      }
+    }
+    if (isOneMonthProjectWindow(item, { start: startISO, end: end || startISO })) {
+      n = Math.min(3, n);
+    }
+    const catalog = item?.invoiceCount != null && Number(item.invoiceCount) > 0
+      ? Math.min(6, Number(item.invoiceCount))
+      : 0;
+    return Math.max(n, catalog || 0, 1);
+  }
+
+  /** Equal monthly payment dates: start, then each following month, for N invoices. */
+  function equalMonthlyPaymentDates(startISO, count) {
+    const n = Math.max(1, Number(count) || 1);
+    if (!startISO) return [];
+    const dates = [];
+    for (let i = 0; i < n; i++) dates.push(addMonthsIso(startISO, i));
+    return dates;
   }
 
   /**
-   * Equal biweekly payment dates for the full setup fee.
-   * Work window = start→end. Payment window may extend paymentGraceDays past close
-   * unless that would exceed an explicit recommended end with no grace.
+   * Max equal biweekly payments for a start→end window. Kept for older helpers.
+   * Quote calculator uses monthly payments instead.
+   */
+  function maxEqualBiweeklyPayments(item, startISO, endISO) {
+    return maxEqualMonthlyPayments(item, startISO, endISO);
+  }
+
+  /**
+   * Equal payment dates for the full setup fee.
+   * Work window = start→end. Payments are monthly from start for the requested invoice count.
    * One-month work windows: at most 3 equal payments.
    */
   function paymentEndISO(item, endISO) {
@@ -1515,13 +1553,11 @@
   }
 
   function equalBiweeklyPaymentDates(item, startISO, endISO) {
-    const payEnd = paymentEndISO(item, endISO) || endISO;
-    let dates = biweeklyInvoiceDates(startISO, payEnd);
-    if (!dates.length && startISO) return [startISO];
-    const maxN = maxEqualBiweeklyPayments(item, startISO, endISO);
+    if (!startISO) return [];
+    const maxN = maxEqualMonthlyPayments(item, startISO, endISO);
     const wanted = getProjectInvoiceCount(item);
     const n = Math.min(Math.max(1, wanted || maxN), Math.max(1, maxN));
-    return pickBoundedDates(dates, n);
+    return equalMonthlyPaymentDates(startISO, n);
   }
 
   function splitEvenCents(total, n) {
@@ -1543,7 +1579,7 @@
     return pct >= 0.999;
   }
 
-  /** Per-project biweekly plan: setup fee in equal biweekly parts. No deposit %. */
+  /** Per-project plan: setup fee in equal monthly parts from start. No deposit %. */
   function computeProjectBiweeklyPlan(item) {
     const scheduleFee = projectScheduleFee(item);
     const monthly = projectMonthlyBill(item);
@@ -1553,10 +1589,17 @@
     const payEnd = dates.end ? paymentEndISO(item, dates.end) : "";
 
     let invoiceDates = [];
-    if (dates.start && dates.end && scheduleFee > 0) {
-      invoiceDates = payInFull ? [dates.start] : equalBiweeklyPaymentDates(item, dates.start, dates.end);
+    if (dates.start && scheduleFee > 0) {
+      if (payInFull) {
+        invoiceDates = [dates.start];
+      } else {
+        const maxN = maxEqualMonthlyPayments(item, dates.start, dates.end || payEnd);
+        const wanted = getProjectInvoiceCount(item);
+        const n = Math.min(Math.max(1, wanted || maxN), Math.max(1, maxN));
+        invoiceDates = equalMonthlyPaymentDates(dates.start, n);
+      }
     }
-    const ready = !!(dates.start && dates.end && scheduleFee > 0 && invoiceDates.length);
+    const ready = !!(dates.start && scheduleFee > 0 && invoiceDates.length);
     const amounts = ready ? splitEvenCents(scheduleFee, invoiceDates.length) : [];
     const invoices = ready
       ? invoiceDates.map((iso, i) => ({ date: iso, amount: amounts[i], label: americanDate(iso) }))
@@ -1595,6 +1638,7 @@
       invoices: invoices.slice(1),
       allPayments: invoices,
       biweeklyEach,
+      monthlyEach: biweeklyEach,
       totalDue: scheduleFee,
       writeup: ready
         ? buildInvoiceWriteupLine(item.title, opt, dates, invoices, oneMonth, paymentCount)
@@ -1609,7 +1653,7 @@
       `Project: ${title}`,
       `Setup fee: ${fmt(opt.scheduleFee)}`,
       `Work window: ${americanDate(dates.start)} to ${americanDate(dates.end)}`,
-      `Equal biweekly payments: ${paymentCount} × about ${fmt(each)}`,
+      `Equal monthly payments: ${paymentCount} × about ${fmt(each)}`,
       `First payment due ${americanDate(dates.start)}: ${fmt(invoices[0]?.amount || 0)}`
     ];
     if (opt.graceDays > 0 && payThrough) {
@@ -1718,7 +1762,7 @@
   function buildPaymentOptionsHtml() {
     const rows = getCartPaymentOptions();
     if (!rows.length) {
-      return `<p class="payment-options-empty">Add projects to see equal biweekly payment amounts.</p>`;
+      return `<p class="payment-options-empty">Add projects to see equal monthly payment amounts.</p>`;
     }
     const totals = cartPaymentTotals(rows);
     const body = rows.map(r => {
@@ -1764,20 +1808,20 @@
     const plans = getCartBiweeklyPlans();
     if (!plans.length) {
       return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">
-        <p class="payment-calc-empty">Select one-time projects, then set each project start and end date to build biweekly invoice terms.</p>
+        <p class="payment-calc-empty">Select one-time projects, then set each project start date and invoice count to build monthly invoice terms.</p>
       </div>`;
     }
     const blocks = plans.map(plan => {
       if (!plan.ready) {
         return `<div class="biweekly-plan-card">
           <h5 class="biweekly-plan-title">${escapeHtml(plan.title)}</h5>
-          <p class="payment-calc-empty">Set start and end dates to split ${fmt(plan.scheduleFee)} into equal biweekly payments.</p>
+          <p class="payment-calc-empty">Set a start date to split ${fmt(plan.scheduleFee)} into equal monthly payments.</p>
         </div>`;
       }
       const paymentList = plan.allPayments && plan.allPayments.length ? plan.allPayments : plan.invoices;
       const rows = [
         ["Setup fee", fmt(plan.scheduleFee)],
-        ["Equal biweekly payments", `${plan.paymentCount} × about ${fmt(plan.biweeklyEach)}`],
+        ["equal monthly payments", `${plan.paymentCount} × about ${fmt(plan.biweeklyEach)}`],
         [`First payment due ${americanDate(plan.start)}`, fmt(plan.dueNow)],
         ["Total setup due", fmt(plan.totalDue)]
       ];
@@ -1795,7 +1839,7 @@
       return `<div class="biweekly-plan-card">
         <h5 class="biweekly-plan-title">${escapeHtml(plan.title)}</h5>
         <table class="payment-calc-table"><tbody>${tableRows}</tbody></table>
-        <p class="biweekly-schedule-label">Equal biweekly invoice dates</p>
+        <p class="biweekly-schedule-label">Equal monthly invoice dates</p>
         <ul class="biweekly-schedule-list">${schedule}</ul>
       </div>`;
     }).join("");
@@ -1971,7 +2015,7 @@
     let label = null;
     if (readyBiweekly.length) {
       label = readyBiweekly.map(p => {
-        return `${p.title}: ${p.paymentCount} equal biweekly payments of about ${fmt(p.biweeklyEach)} from ${americanDate(p.start)} to ${americanDate(p.end)} · first due ${americanDate(p.start)}`;
+        return `${p.title}: ${p.paymentCount} equal monthly payments of about ${fmt(p.biweeklyEach)} starting ${americanDate(p.start)} · first due ${americanDate(p.start)}`;
       }).join(" | ");
     } else if (months && monthlyAmount != null && plan.projectFees > 0) {
       const surchargeNote = plan.surchargeAmount
@@ -5686,12 +5730,12 @@
           lines.push(`  Window: ${americanDate(p.startDate)} to ${americanDate(p.endDate)}`);
         }
         if (p.biweeklyInvoiceCount) {
-          lines.push(`  Equal biweekly: ${p.biweeklyInvoiceCount} payments of about ${fmt(p.biweeklyAmount)}`);
+          lines.push(`  Equal monthly: ${p.biweeklyInvoiceCount} payments of about ${fmt(p.biweeklyAmount)}`);
         }
       }
     });
-    lines.push("", "Invoice terms to write up:", payload.invoiceWriteupForKate || payload.invoicePaymentTermsLabel || "(set project start and end dates for biweekly terms)");
-    lines.push("", "Setup fees use equal biweekly payments. One-month projects · max 3.", "Action: create QuickBooks invoices to match the biweekly schedule above.");
+    lines.push("", "Invoice terms to write up:", payload.invoiceWriteupForKate || payload.invoicePaymentTermsLabel || "(set project start date and invoice count for monthly terms)");
+    lines.push("", "Setup fees use equal monthly payments from the start date. One-month projects · max 3.", "Action: create QuickBooks invoices to match the monthly schedule above.");
     return lines.join("\n");
   }
 
