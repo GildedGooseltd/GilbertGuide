@@ -22,6 +22,8 @@ const META_KEYS = {
   "per campaign fee": "perCampaignFee",
   "deposit pct": "depositPct",
   "deposit amount": "depositAmount",
+  "fee uncertain": "feeUncertain",
+  "estimate only": "feeUncertain",
   icon: "guideIcon",
   "guide hero": "guideHero",
   seal: "guideSeal",
@@ -133,9 +135,10 @@ function parseMetaTable(text) {
     if (field === "priority") {
       if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank")
         meta.priority = parseInt(val, 10);
-    } else if (field === "fee" || field === "ongoingFee" || field === "perCampaignFee" || field === "depositAmount")
+    } else if (field === "fee" || field === "ongoingFee" || field === "perCampaignFee" || field === "depositAmount") {
+      if (field === "fee" && /[*~?]/.test(val)) meta.feeUncertain = true;
       meta[field] = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
-    else if (field === "durationWeeks" || field === "paymentGraceDays" || field === "invoiceCount") {
+    } else if (field === "durationWeeks" || field === "paymentGraceDays" || field === "invoiceCount") {
       const n = parseInt(String(val).replace(/[^0-9]/g, ""), 10);
       if (Number.isFinite(n) && n >= 0) meta[field] = n;
     }
@@ -147,7 +150,7 @@ function parseMetaTable(text) {
       const n = parseFloat(val.replace(/[^0-9.]/g, ""));
       if (Number.isFinite(n)) meta.depositPct = n > 1 ? n / 100 : n;
     }
-    else if (field === "enabler" || field === "monthlyOnly")
+    else if (field === "enabler" || field === "monthlyOnly" || field === "feeUncertain")
       meta[field] = /^(yes|true|1)$/i.test(val);
     else if (field === "paymentType") {
       const v = val.toLowerCase();
@@ -1459,6 +1462,7 @@ export function applyIndexOverrides(projects, retainer, existingText) {
         delete next.ongoingFee;
       }
     }
+    if (o.estCost && /[~?]/.test(String(o.estCost))) next.feeUncertain = true;
     const pp = o.paymentPlanParsed || (o.paymentPlan ? parseIndexPaymentPlan(o.paymentPlan) : null);
     if (pp) {
       if (o.paymentPlan) next.paymentPlanLabel = o.paymentPlan;

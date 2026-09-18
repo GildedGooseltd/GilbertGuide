@@ -967,6 +967,13 @@
     return false;
   }
 
+  function isFeeUncertain(item) {
+    if (!item) return false;
+    if (item.feeUncertain) return true;
+    const label = String(item.estCostLabel || "");
+    return /[~?]/.test(label) || /\*$/.test(label.trim());
+  }
+
   function projectQuoteLabel(item, isRetainer) {
     if (isMonthlyRetainerItem(item, isRetainer)) {
       const mo = projectMonthlyBill(item) || item.fee || 0;
@@ -974,8 +981,17 @@
     }
     /* Setup quote only. Ongoing / retainer after first-phase implementation is not in this column. */
     const fee = projectScheduleFee(item);
-    if (fee) return fmt(fee);
-    return "—";
+    if (!fee) return "—";
+    if (isFeeUncertain(item)) return `~${fmt(fee)}?`;
+    return fmt(fee);
+  }
+
+  function projectQuoteHtml(item, isRetainer) {
+    const quote = projectQuoteLabel(item, isRetainer);
+    if (isFeeUncertain(item)) {
+      return `<p class="project-tile-cost project-tile-cost-estimate" title="Estimate until product mix and organization questions are answered"><span class="project-tile-cost-amount">${escapeHtml(quote)}</span><img class="project-tile-cost-pavi" src="assets/pavi-think.png" alt="" width="28" height="28" loading="lazy"></p>`;
+    }
+    return `<p class="project-tile-cost">${escapeHtml(quote)}</p>`;
   }
 
   function projectPaymentTermsLabel(item, isRetainer) {
@@ -1014,6 +1030,9 @@
       const monthlyOnly = isMonthlyRetainerItem(item, isRetainer);
       if (!monthlyOnly) ensureRecommendedProjectDates(item);
       const quote = projectQuoteLabel(item, isRetainer);
+      const quoteCell = isFeeUncertain(item)
+        ? `<span class="calc-quote-estimate" title="Estimate until product mix and organization questions are answered">${escapeHtml(quote)}</span>`
+        : escapeHtml(quote);
       const terms = projectPaymentTermsLabel(item, isRetainer);
       const dates = monthlyOnly ? { start: "", end: "" } : getProjectDateRange(item.id);
       const invMax = monthlyOnly ? 1 : maxInvoiceCountForItem(item);
@@ -1029,7 +1048,7 @@
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled} ${selected ? "checked" : ""}>
         </td>
         <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</span></a></td>
-        <td class="col-quote">${escapeHtml(quote)}</td>
+        <td class="col-quote">${quoteCell}</td>
         ${dateCells}
         <td class="col-terms"><span class="calc-terms-text">${escapeHtml(terms)}</span></td>
       </tr>`;
@@ -3736,6 +3755,7 @@
     if (item.ongoingFee) return `${fmt(item.fee)} + ${fmt(item.ongoingFee)}`;
     if (item.perCampaignFee) return `${fmt(item.fee)} per campaign`;
     if (item.monthlyOnly || item.id === "RETAINER" || item.id === "DataMgmt") return `${fmt(item.fee)}/mo`;
+    if (isFeeUncertain(item) && item.fee) return `~${fmt(item.fee)}?`;
     return fmt(item.fee);
   }
 
@@ -4183,41 +4203,43 @@
     }
     const byId = {
       AdEnhance: [
-        "Marketing Hub · Google Ads / lead-source sync when campaigns are connected",
-        "CRM contacts · new call and form leads from pilots land for follow-up",
-        "Landing pages · Sex Crimes Defense and other pilots that need a dedicated page"
+        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source, and you can compare them next to DV, Military, and NTGUILT.",
+        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
+        "Landing pages · Optional HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
       ],
       Yelpv1: [
-        "CRM contacts · Yelp leads and messages logged when the channel number is live",
-        "Tasks / workflows · same-day callback tasks once intake routing is set",
-        "Marketing Hub · channel source tracking so Yelp can be judged next to Search and LSA"
+        "CRM · The contact database where Yelp leads, messages, and call outcomes are stored so intake is not stuck in a personal inbox.",
+        "Tasks and workflows · Auto-creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
+        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
       ],
       LegalDirs: [
-        "CRM · optional profile / listing URLs on contact or company records",
-        "No HubSpot CMS or Service Hub build in this project"
+        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
+        "Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project."
       ],
       DigProf: [
-        "CRM · profile and listing fields kept accurate for brand presence",
-        "Marketing Hub · source tracking where directory traffic converts"
+        "CRM · Keeps profile and listing fields accurate on contact and company records for brand presence.",
+        "Marketing Hub · Source tracking where directory or profile traffic converts into a lead."
+      ],
+      TsMgmt: [
+        "No HubSpot build in this retainer · Platform Management covers MyCase, Google Suite, and Ops Dashboard. HubSpot work stays on separate HubSpot projects."
       ],
       OpsDash: [
-        "Reporting · KPI and ops views that may pull HubSpot aggregates",
-        "CRM hygiene · fields and owners that keep dashboard numbers trustworthy"
+        "No HubSpot build in this retainer · Platform Management covers MyCase, Google Suite, and Ops Dashboard. HubSpot work stays on separate HubSpot projects."
       ],
       HsMktExpand: [
-        "Marketing Hub · ads connections, lead source, and quality properties",
-        "CRM · contacts, custom properties, and reporting data sources",
-        "Workflows · follow-up tasks tied to form submits and inbound leads"
+        "Marketing Hub · Ads connections, lead source, and quality properties.",
+        "CRM · Contacts, custom properties, and reporting data sources.",
+        "Workflows · Follow-up tasks tied to form submits and inbound leads."
       ],
       HsVoip: [
-        "Calling · logged calls and missed-call tasks",
-        "Service / CRM · tickets or tasks from unanswered lines",
-        "Workflows · same-day callback ownership"
+        "Calling · Logged calls and missed-call tasks.",
+        "Service / CRM · Tickets or tasks from unanswered lines.",
+        "Workflows · Same-day callback ownership."
       ],
       DataMgmt: [
-        "CRM · contact and property cleanup",
-        "Imports · contact and deal field mapping",
-        "Reporting · fields the team needs before MyCase can be retired"
+        "CRM · Contact and property cleanup.",
+        "Imports · Contact and deal field mapping.",
+        "Reporting · Fields the team needs before MyCase can be retired."
       ]
     };
     if (byId[item?.id]) return byId[item.id];
@@ -4226,26 +4248,45 @@
     const parts = [];
     const push = s => { if (s && !parts.includes(s)) parts.push(s); };
     if (/marketing hub|ads connection|google ads|lead.?source|utm|paid search|lsa|yelp/.test(blob)) {
-      push("Marketing Hub · ads / lead-source tracking");
+      push("Marketing Hub · Ads and lead-source tracking so paid and listing channels can be compared in HubSpot reports.");
     }
-    if (/service hub|ticket|queue/.test(blob)) push("Service Hub · tickets and queues");
+    if (/service hub|ticket|queue/.test(blob)) push("Service Hub · Tickets and queues for intake follow-up.");
     if (/cms|hubspot cms|landing page|website rebuild|website ux/.test(blob)) {
-      push("CMS / landing pages · HubSpot web pages");
+      push("CMS / landing pages · HubSpot web pages with tracked URLs.");
     }
-    if (/form|callback|intake/.test(blob)) push("Forms · submit capture and intake routing");
-    if (/workflow|task|same-day/.test(blob)) push("Workflows · tasks and ownership");
+    if (/form|callback|intake/.test(blob)) push("Forms · Submit capture and intake routing into CRM.");
+    if (/workflow|task|same-day/.test(blob)) push("Workflows · Tasks and ownership when a lead or form arrives.");
     if (/crm|contact|propert|pipeline|import|data hygien/.test(blob)) {
-      push("CRM · contacts, properties, and pipeline");
+      push("CRM · Contacts, properties, and pipeline where leads and follow-up live.");
     }
-    if (/report|dashboard|kpi|ops dash/.test(blob)) push("Reporting · HubSpot-backed metrics where wired");
-    if (/voip|call log|missed.?call|calling/.test(blob)) push("Calling · logged calls and missed-call follow-up");
+    if (/report|dashboard|kpi|ops dash/.test(blob)) push("Reporting · HubSpot-backed metrics where those fields are wired.");
+    if (/voip|call log|missed.?call|calling/.test(blob)) push("Calling · Logged calls and missed-call follow-up.");
     if (itemHasHubspotIcon(item) && !parts.length) {
-      push("HubSpot CRM touchpoints as needed for lead capture and follow-up");
+      push("HubSpot CRM · Lead capture and follow-up touchpoints as needed for this project.");
     }
     if (!parts.length) {
-      push("No HubSpot build in scope for this card · work stays on ads, listings, or ops outside a CRM package");
+      push("No HubSpot build in scope for this card · Work stays on ads, listings, or ops outside a CRM package.");
     }
     return parts;
+  }
+
+  /** Render HubSpot Application lines with a clear feature name + plain-language what it does. */
+  function hubSpotApplicationHtml(parts) {
+    const list = Array.isArray(parts) ? parts : [];
+    if (!list.length) {
+      return `<p>No HubSpot build in scope for this card.</p>`;
+    }
+    return `<ul class="hubspot-application-list">${list.map(line => {
+      const raw = String(line || "").trim();
+      if (!raw) return "";
+      const m = raw.match(/^([^·]+?)·\s*(.+)$/);
+      if (m) {
+        const name = m[1].trim();
+        const detail = m[2].trim();
+        return `<li><span class="hubspot-feat-name">${escapeHtml(name)}</span><span class="hubspot-feat-detail">${projectTextToHtml(detail)}</span></li>`;
+      }
+      return `<li>${projectTextToHtml(raw)}</li>`;
+    }).filter(Boolean).join("")}</ul>`;
   }
 
   /** Roles / people this project is likely to change day-to-day work for. */
@@ -4321,31 +4362,42 @@
     return roles;
   }
 
-  function projectOverviewSummaryHtml(item) {
-    const client = Array.isArray(item?.clientSummary)
-      ? item.clientSummary.map(b => String(b).trim()).filter(Boolean)
-      : [];
-    const bullets = client.length ? client : conciseDescriptionBullets(item);
-    if (!bullets.length) {
-      const tldr = itemTldr(item);
-      return tldr ? `<p>${escapeHtml(tldr)}</p>` : `<p>Summary pending.</p>`;
+  function projectOverviewBodyHtml(item) {
+    const raw = String(item?.description || item?.tldr || "").trim();
+    if (!raw) return `<p>Overview pending.</p>`;
+    const lines = raw.split(/\n/);
+    const parts = [];
+    let list = [];
+    let para = [];
+    const flushList = () => {
+      if (!list.length) return;
+      parts.push(`<ul>${list.map(b => `<li>${projectTextToHtml(b)}</li>`).join("")}</ul>`);
+      list = [];
+    };
+    const flushPara = () => {
+      if (!para.length) return;
+      parts.push(`<p>${projectTextToHtml(para.join(" "))}</p>`);
+      para = [];
+    };
+    for (const line of lines) {
+      const t = line.trim();
+      if (!t) {
+        flushPara();
+        flushList();
+        continue;
+      }
+      const bullet = t.match(/^[-*•]\s+(.+)$/);
+      if (bullet) {
+        flushPara();
+        list.push(bullet[1]);
+        continue;
+      }
+      flushList();
+      para.push(t);
     }
-    const long = bullets.slice(0, 8);
-    return `<ul>${long.map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`;
-  }
-
-  function projectOverviewValueHtml(item) {
-    const bullets = valueAddedBullets(item)
-      .map(b => String(b).replace(/^Deliverable:\s*/i, "").trim())
-      .filter(Boolean);
-    const icons = typeof getValueIcons === "function" ? getValueIcons(item) : [];
-    const iconLine = icons.length
-      ? `<p>Value themes: ${escapeHtml(icons.map(i => i.label || i.id).join(" · "))}</p>`
-      : "";
-    if (!bullets.length) {
-      return `${iconLine}<p>${escapeHtml(itemTldr(item) || "Value detail pending.")}</p>`;
-    }
-    return `${iconLine}<ul>${bullets.slice(0, 10).map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`;
+    flushPara();
+    flushList();
+    return parts.join("") || `<p>${projectTextToHtml(raw)}</p>`;
   }
 
   function closeProjectOverviewPopup() {
@@ -4376,26 +4428,25 @@
     if (focus && focus !== "—") metaParts.push(focus);
     titleEl.textContent = item.title || "Project";
     if (metaEl) metaEl.textContent = metaParts.join(" · ");
-    if (costEl) costEl.textContent = projectQuoteLabel(item, isRetainer);
+    if (costEl) {
+      if (isFeeUncertain(item)) {
+        costEl.classList.add("project-overview-cost-estimate");
+        costEl.innerHTML = `<span class="project-tile-cost-amount">${escapeHtml(projectQuoteLabel(item, isRetainer))}</span><img class="project-tile-cost-pavi" src="assets/pavi-think.png" alt="" width="28" height="28">`;
+      } else {
+        costEl.classList.remove("project-overview-cost-estimate");
+        costEl.textContent = projectQuoteLabel(item, isRetainer);
+      }
+    }
 
     const hub = projectHubSpotParts(item);
-    const people = projectEmployeesImpacted(item);
     bodyEl.innerHTML = `
       <div class="project-overview-section">
-        <h4>Project summary</h4>
-        ${projectOverviewSummaryHtml(item)}
-      </div>
-      <div class="project-overview-section">
-        <h4>Value for Pav Law</h4>
-        ${projectOverviewValueHtml(item)}
+        <h4>Project Overview</h4>
+        ${projectOverviewBodyHtml(item)}
       </div>
       <div class="project-overview-section">
         <h4>HubSpot Application</h4>
-        <ul>${hub.map(h => `<li>${escapeHtml(h)}</li>`).join("")}</ul>
-      </div>
-      <div class="project-overview-section">
-        <h4>Employees it may impact</h4>
-        <ul>${people.map(p => `<li>${escapeHtml(p)}</li>`).join("")}</ul>
+        ${hubSpotApplicationHtml(hub)}
       </div>`;
 
     closeHelpPopup();
@@ -4444,7 +4495,7 @@
     const groupTitle = priorityGroupTitle(item);
     const focus = projectFocusArea(item);
     const summary = itemTldr(item) || "—";
-    const quote = projectQuoteLabel(item, isRetainer);
+    const quoteHtml = projectQuoteHtml(item, isRetainer);
     const img = projectTileImageSrc(item);
     const brandLogo = projectTileBrandLogoSrc(item);
     const brandLogoHtml = brandLogo
@@ -4461,7 +4512,7 @@
         <div class="project-tile-body">
           <h3 class="project-tile-title">${escapeHtml(item.title)}</h3>
           <p class="project-tile-focus" title="${escapeHtml(groupTitle)}">${group && group !== "—" ? `P${escapeHtml(group)}` : ""}${group && group !== "—" && focus ? " · " : ""}${escapeHtml(focus)}</p>
-          <p class="project-tile-cost">${escapeHtml(quote)}</p>
+          ${quoteHtml}
           <p class="project-tile-summary">${escapeHtml(summary)}</p>
         </div>
       </article>`;
@@ -5713,29 +5764,80 @@
 
   function buildProjectRequestEmailBody(payload) {
     const projects = payload.projects || [];
+    const when = payload.submittedAt
+      ? americanDate(String(payload.submittedAt).slice(0, 10)) + " · " + String(payload.submittedAt).slice(11, 16) + " UTC"
+      : americanDate(toIsoDate(new Date()));
     const lines = [
-      "Gilbert Guide - project request for invoice terms",
+      "Pav Law · Gilbert Guide · Submit SOW",
       "",
-      "From: " + (payload.submitterEmail || "(no email)"),
-      "Submitted: " + (payload.submittedAt || new Date().toISOString()),
+      "A project plan is ready for kickoff and QuickBooks invoices.",
       "",
-      "Projects requested:"
+      "Submitted: " + when,
+      "Contact email: " + (payload.submitterEmail || "(not entered on confirm page)"),
+      ""
     ];
-    projects.forEach(p => {
-      if (p.monthlyOnly) {
-        lines.push(`- ${p.title}: ${p.fee} / mo`);
-      } else {
-        lines.push(`- ${p.title}: ${p.fee}`);
-        if (p.startDate || p.endDate) {
-          lines.push(`  Window: ${americanDate(p.startDate)} to ${americanDate(p.endDate)}`);
+    if (payload.goalText) {
+      lines.push("Client note: " + payload.goalText, "");
+    }
+
+    const setupProjects = projects.filter(p => !p.monthlyOnly);
+    const monthlyProjects = projects.filter(p => p.monthlyOnly);
+
+    if (setupProjects.length) {
+      lines.push("SETUP PROJECTS");
+      lines.push("--------------");
+      setupProjects.forEach(p => {
+        lines.push("");
+        lines.push(p.title);
+        lines.push("  Setup fee: " + (p.fee || fmt(p.feeNum) || "—"));
+        if (p.startDate) lines.push("  Start: " + americanDate(p.startDate));
+        if (p.endDate) lines.push("  Work through: " + americanDate(p.endDate));
+        const n = p.biweeklyInvoiceCount || (p.biweeklyInvoices || []).length;
+        if (n) {
+          lines.push("  Invoices: " + n + " × " + (p.biweeklyAmount != null ? fmt(p.biweeklyAmount) : "—") + "/mo");
         }
-        if (p.biweeklyInvoiceCount) {
-          lines.push(`  Equal monthly: ${p.biweeklyInvoiceCount} payments of about ${fmt(p.biweeklyAmount)}`);
+        const schedule = p.biweeklyInvoices || [];
+        if (schedule.length) {
+          lines.push("  Schedule:");
+          schedule.forEach(inv => {
+            const d = inv.date ? americanDate(inv.date) : (inv.label || "");
+            lines.push("    " + d + " · " + fmt(inv.amount));
+          });
         }
+      });
+      lines.push("");
+    }
+
+    if (monthlyProjects.length || payload.retainer) {
+      lines.push("MONTHLY CARE");
+      lines.push("------------");
+      if (payload.retainer) {
+        lines.push((payload.retainerTitle || "Digital Ads Maintenance Retainer") + ": " + (payload.retainerFee || "") + "/mo");
       }
-    });
-    lines.push("", "Invoice terms to write up:", payload.invoiceWriteupForKate || payload.invoicePaymentTermsLabel || "(set project start date and invoice count for monthly terms)");
-    lines.push("", "Setup fees use equal monthly payments from the start date. One-month projects · max 3.", "Action: create QuickBooks invoices to match the monthly schedule above.");
+      monthlyProjects.forEach(p => {
+        lines.push(p.title + ": " + (p.fee || "") + (String(p.fee || "").includes("/mo") ? "" : "/mo"));
+      });
+      if (payload.maintenanceMonthlyNum) {
+        lines.push("Combined monthly care: " + (payload.maintenanceMonthly || fmt(payload.maintenanceMonthlyNum)) + "/mo");
+      }
+      lines.push("");
+    }
+
+    if (payload.projectsSubtotal) {
+      lines.push("Setup subtotal: " + payload.projectsSubtotal);
+      lines.push("");
+    }
+
+    lines.push("QUICKBOOKS WRITE-UP");
+    lines.push("------------------");
+    lines.push(payload.invoiceWriteupForKate || payload.invoicePaymentTermsLabel || "(set start date and invoice count on each setup project)");
+    lines.push("");
+    lines.push("Next steps:");
+    lines.push("1. Create QuickBooks invoices to match the monthly schedule above.");
+    lines.push("2. Confirm kickoff dates with Andrew.");
+    lines.push("3. Use Submit selections & SOW on the confirm page when you are ready for the private signing link.");
+    lines.push("");
+    lines.push("— Gilded Goose Limited · Gilbert Guide");
     return lines.join("\n");
   }
 
@@ -5749,13 +5851,13 @@
     const plans = getCartBiweeklyPlans();
     const missingDates = plans.filter(p => !p.ready);
     if (missingDates.length) {
-      showToast("Set start and end dates for each one-time project before requesting invoice terms.", true);
+      showToast("Set a start date for each one-time project before submitting.", true);
       return;
     }
     const payload = {
       ...buildPayload(),
       type: "project_request",
-      submittedBy: "Pav Law Guide request"
+      submittedBy: "Pav Law Guide · Submit SOW"
     };
     const btn = document.getElementById("calc-send-plan-summary") || document.getElementById("submit-project-request");
     const btnIdle = btn?.id === "calc-send-plan-summary" ? "Submit SOW" : "Submit project request";
@@ -5764,9 +5866,10 @@
       btn.textContent = "Sending…";
     }
     const notify = CONFIG.notifyEmail || "support@gildedgooselimited.com";
+    const subjectLine = "Pav Law · Submit SOW · " + americanDate(toIsoDate(new Date()));
 
     if (!CONFIG.webhookUrl) {
-      const subject = encodeURIComponent("Gilbert Guide · plan summary for review and kickoff");
+      const subject = encodeURIComponent(subjectLine);
       const body = encodeURIComponent(buildProjectRequestEmailBody(payload));
       window.location.href = `mailto:${encodeURIComponent(notify)}?subject=${subject}&body=${body}`;
       showToast("Opened email draft to " + notify);
@@ -5780,9 +5883,9 @@
     try {
       await postToWebhook(CONFIG.webhookUrl, payload, true);
       saveSubmissionLocally(payload);
-      showToast("Plan summary emailed to " + notify);
+      showToast("Submit SOW emailed to " + notify);
     } catch (err) {
-      const subject = encodeURIComponent("Gilbert Guide · plan summary for review and kickoff");
+      const subject = encodeURIComponent(subjectLine);
       const body = encodeURIComponent(buildProjectRequestEmailBody(payload));
       window.location.href = `mailto:${encodeURIComponent(notify)}?subject=${subject}&body=${body}`;
       showToast("Webhook failed — opened email draft instead. " + err.message, true);
@@ -6000,10 +6103,14 @@
       openHelpPopup(helpFromTarget(help) || {});
       return;
     }
-    if (e.target.closest("#help-popup-close") || e.target.id === "help-popup-backdrop") {
+    if (e.target.closest("#help-popup-close") || e.target.id === "help-popup-backdrop" || e.target.id === "help-popup") {
       closeHelpPopup();
     }
-    if (e.target.closest("#project-overview-close") || e.target.id === "project-overview-backdrop") {
+    if (
+      e.target.closest("#project-overview-close") ||
+      e.target.id === "project-overview-backdrop" ||
+      e.target.id === "project-overview-popup"
+    ) {
       closeProjectOverviewPopup();
     }
   }, true);

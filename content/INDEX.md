@@ -22,7 +22,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | LSA Call Process         | wip                  | [ ]  | [LSA Call Process Update](projects/LsaCall.md)                                          |
 | Client Referral          | Started              | [ ]  | [Client Referral Program](projects/Referral.md)                                           |
 | Sealing Reengagement     | Started              | [ ]  | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
-| Printables & Swag        | wip                  | [ ]  | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
+| Printables & Swag        | Recommended          | [x]  | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | NTGUILT Ads Launch       | Launched             | [ ]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
 | AdExpan                  | Recommended          | [x]  | [AdExpan](projects/AdEnhance.md)                                                           |
 | Yelp Ads                 | Recommended          | [x]  | [Yelp Ads](projects/Yelpv1.md)                                                              |
@@ -78,7 +78,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $1,500                      | 50%          | [LSA Call Process Update](projects/LsaCall.md)                                          |
 | $1,700                      | 20%          | [Client Referral Program](projects/Referral.md)                                           |
 | $1,500                      | 20%          | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
-| $1,200                      | 20%          | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
+| ~$1,200?                    | 20%          | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | $2,900                      | 20%          | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
 | $3,800 + $900/mo            | 20%          | [AdExpan](projects/AdEnhance.md)                                                           |
 | $2,600 + $500/mo            | 50%          | [Yelp Ads](projects/Yelpv1.md)                                                              |
@@ -277,8 +277,8 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **HolidayAds** — On Hold · Google Search / ad-group expansion · holiday and colder-weather themes · separate from WinterAds and SummerAds
 - **PerfPay** — Performance Plan payouts for cash-generating tasks; employee + contractor tiers
 - **CaseyBrand** — Casey rebrand (like DigProf): clothing, makeup, hair, presentation, speech, digital presence
-- **SwagPrint** — Design printables, swag, apparel, stationery · lawyer computer cases · client folders / padfolios at court · samples ordered · design not begun · $1,200 design/coordination · product runs ~$400–$500 client cost
+- **SwagPrint** — Recommended · Show on · design printables, swag, apparel, stationery · lawyer computer cases · client folders / padfolios at court · samples ordered · design not begun · fee estimate ~$1,200? until product mix questions are answered · product runs ~$400–$500 client cost
 - **WasteAud** — available · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste is the verified floor before subscription, phone, LSA-credit, and vendor leakage
-- **Bulk unpublish** · live Show: Yelpv1 · LegalDirs · TsMgmt · AdEnhance · rest pending review
+- **Bulk unpublish** · live Show: Yelpv1 · LegalDirs · TsMgmt · AdEnhance · SwagPrint · rest pending review
 - Fee market context: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)
 

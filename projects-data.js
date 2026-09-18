@@ -371,54 +371,6 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.08 (4.04 units) · complexity ×1"
     },
     {
-      "priority": 6,
-      "fee": 1200,
-      "category": "Brand / Merch",
-      "campaignType": "Printables + Internal Store + Conversation Starters",
-      "id": "SwagPrint",
-      "title": "Design Printables, Swag & Apparel",
-      "tldr": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-      "description": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-      "valueAdded": [
-        "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun."
-      ],
-      "hubSpotParts": [
-        "Lead source · light word-of-mouth logging when a piece is tracked",
-        "Cost tracking · optional cost line for referral or review programs when measuring ROI"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "unpublished",
-      "shortTitle": "Printables & Swag",
-      "status": "wip",
-      "estCostLabel": "$1,200",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 1500,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "swag_consult",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1300,
-      "feeEstimateNationalMid": 1800,
-      "feeEstimateScope": {
-        "raw": 2.83,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.83
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 300,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.02 (2.83 units) · complexity ×1"
-    },
-    {
       "priority": 7,
       "fee": 2200,
       "category": "Brand / Local Presence",
@@ -2245,6 +2197,57 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2700,
       "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×0.99 (2.25 units) · complexity ×1.1"
+    },
+    {
+      "priority": null,
+      "feeUncertain": true,
+      "fee": 1200,
+      "category": "Brand / Merch",
+      "campaignType": "Physical Print & Production",
+      "id": "SwagPrint",
+      "title": "Design Printables, Swag & Apparel",
+      "tldr": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
+      "description": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.\n\nNot urgent on its own. If you want anything designed for the holidays for clients or the team, it is easier, faster, and cheaper to do the designs at the same time, then order as needed.\n\nThe ~$1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost.",
+      "valueAdded": [
+        "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
+        "Not urgent on its own. If you want anything designed for the holidays for clients or the team, it is easier, faster, and cheaper to do the designs at the same time, then order as needed.",
+        "The ~$1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost."
+      ],
+      "hubSpotParts": [
+        "Lead source · Light word-of-mouth logging when a piece is tracked.",
+        "Cost tracking · Optional cost line for referral or review programs when measuring ROI."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Printables & Swag",
+      "status": "recommended",
+      "estCostLabel": "~$1,200?",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 1700,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "swag_consult",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1300,
+      "feeEstimateNationalMid": 1800,
+      "feeEstimateScope": {
+        "raw": 5.78,
+        "parts": {
+          "valueAdd": 3,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 2.78
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 500,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.13 (5.78 units) · complexity ×1"
     },
     {
       "fee": 500,
