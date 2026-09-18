@@ -18,7 +18,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Platform Mgmt            | Recommended          | [x]  | [Platform Management](projects/TsMgmt.md)                                            |
 | MyCase Data Cleanse      | available            | [ ]  | [MyCase Data Cleanse](projects/MyCaseClr.md)                                              |
 | Digital Profiles         | wip                  | [ ]  | [Digital Presence Refresh](projects/DigProf.md)                                         |
-| Directories & Profiles   | Recommended          | [x]  | [Directories & Profile Channels](projects/LegalDirs.md)                                   |
+| Directories & Profiles   | Recommended          | [x]  | [Legal Directory Updates](projects/LegalDirs.md)                                   |
 | Client Referral          | Started              | [ ]  | [Client Referral Program](projects/Referral.md)                                           |
 | Sealing Reengagement     | archived · merged WinterSeason | [ ]  | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
 | Printables & Swag        | Recommended          | [x]  | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
@@ -70,7 +70,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $500/mo                     | monthly      | [Platform Management](projects/TsMgmt.md)                                            |
 | $1,500                      | 50%          | [MyCase Data Cleanse](projects/MyCaseClr.md)                                              |
 | $3,700                      | 40%          | [Digital Presence Refresh](projects/DigProf.md)                                         |
-| $1,200                      | 40%          | [Directories & Profile Channels](projects/LegalDirs.md)                                   |
+| $1,200                      | 40%          | [Legal Directory Updates](projects/LegalDirs.md)                                   |
 | $1,700                      | 20%          | [Client Referral Program](projects/Referral.md)                                           |
 | merged WinterSeason                | —            | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
 | ~$1,200?                    | 20%          | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |

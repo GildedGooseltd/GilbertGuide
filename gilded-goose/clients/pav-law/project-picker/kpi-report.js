@@ -15,7 +15,7 @@
   const KPI_SOURCES = {
     "#01": {
       file: "Call details (5) Sep 1–10 · leads-inbox (18) · HubSpot Sep forms 1 · Yelp Ads Leads Sep Messages 1 · recheck 2026-09-10",
-      fields: "Jun 228 · Jul 273 · Aug* 96 · Sep* 44 = Search 26 + LSA 15 + HubSpot 1 + Yelp 2"
+      fields: "Jun 228 · Jul 273 · Aug* 96 · Sep* 51 = Search 33 + LSA 15 + HubSpot 1 + Yelp 2"
     },
     "yelp": {
       file: "Yelp Ads Leads by type screenshots 2026-09-10 · Calls to your business answer rate 40% · Ad Analytics spend",
@@ -87,11 +87,11 @@
     },
     "cases-leads-spend": {
       file: "Contact_09-10 · leads-inbox (18) · Call details (5) · account_activities_202609 · HubSpot Sep forms 1 · Yelp Sep Messages 1 · recheck 2026-09-10",
-      fields: "May–Aug cases/leads/spend on file · Sep* cases 4 · leads 44 = Search 26 + LSA 15 + HubSpot 1 + Yelp 2 · spend $4,153.84 = Search $2,636.90 + LSA $1,516.94"
+      fields: "May–Aug cases/leads/spend on file · Sep* cases 4 · leads 51 = Search 33 + LSA 15 + HubSpot 1 + Yelp 2 · spend $11,394.94 = Search $9,878 + LSA $1,516.94"
     },
     "sales-cost-funnel": {
-      file: "Campaign report (35) Sep 1–8 · leads-inbox (18) · account_activities_202609 · Contact_09-10 · channelMonths + casesLeadsSpend",
-      fields: "Sep* Impr 1,012 · Interactions 47 · Search Call details 26 · LSA inbox 15 · HubSpot forms 1 · Yelp contacts 2 · cases 4 · Search $2,636.90 · LSA $1,516.94"
+      file: "Campaign report (37) Sep 1–18 · Call details (6) Sep 1–10 · leads-inbox (18) · account_activities_202609 · Contact_09-10 · channelMonths + casesLeadsSpend",
+      fields: "Sep* Impr 2,126 · Clicks 118 · Search Campaign Phone calls 33 · LSA inbox 15 · HubSpot forms 1 · Yelp contacts 2 · cases 4 · Search $9,878 · LSA $1,516.94"
     },
     "cash-collected": {
       file: "ledger_account_activity_report (6).csv · mycase/as-of-2026-09-15/cash-credits-by-month.csv · export 2026-09-15",
@@ -119,7 +119,7 @@
     "#01": {
       title: "#01 Lead Calls",
       desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid — that is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot forms + Yelp contacts + Pav.Law website. Yelp contacts = Messages + answered Calls at 40%. Track table breaks out each channel.",
-      formula: "Sep* 44 = Search 26 + LSA 15 + HubSpot 1 + Yelp 2 + Pav.Law website 0. Target = floor($100k ÷ revenue/lead) + 1 from complete months."
+      formula: "Sep* 51 = Search 33 + LSA 15 + HubSpot 1 + Yelp 2 + Pav.Law website 0. Target = floor($100k ÷ revenue/lead) + 1 from complete months."
     },
     "#02": {
       title: "#02 New Cases",
@@ -426,27 +426,27 @@
 
   const DATA = {
     period: "September 2026",
-    asOf: "2026-09-15",
-    lastUpdated: "2026-09-15",
+    asOf: "2026-09-18",
+    lastUpdated: "2026-09-18",
     updateLabel: "September 2026",
-    updateScope: "MyCase Trust Credits Sep* through Sep 15 · trust balance snapshot 09/15 · cases still Contact_09-10",
-    source: "ledger (6) Sep Credits · Trust_account_summary_09-15 · Contact_09-10 cases · Call details (5) · LSA inbox (18)",
+    updateScope: "Search Campaign Sep 1–18 Phone calls + spend · Call details answer rate still Sep 1–10 · LSA Sep* inbox (18) · cases Contact_09-10 · cash ledger Sep 15",
+    source: "Campaign report (37) Sep 1–18 · Call details (6) Sep 1–10 · account_activities_202609 · leads-inbox (18) · Contact_09-10 · ledger (6)",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
-      "#01": "2026-09-10",
+      "#01": "2026-09-18",
       "#02": "2026-09-10",
       "#03": "2026-08-12",
       "cash-pace": "2026-09-15",
       "yelp": "2026-08-12",
       "answer-rate": "2026-09-10",
-      "ad-spend-by-channel": "2026-09-10",
+      "ad-spend-by-channel": "2026-09-18",
       "#19": "2026-09-10",
       "#21": "2026-09-10",
       "#28": "2026-09-01"
     },
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false, updatedAsOf: "2026-09-10" },
+      { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false, updatedAsOf: "2026-09-18" },
       { id: "#02", label: "New Cases", value: "4", target: "≥ 24", mom: null, count: 4, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-09-10" },
       /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Missed Opportunity */
       { id: "#19", label: "Missed Opportunity", value: "—", target: "$0", mom: null, verified: false, alert: false, lostTracker: true, augUpdated: false, archived: true },
@@ -513,15 +513,15 @@
       },
       {
         month: "Sep*",
-        search: 26,
+        search: 33,
         lsa: 15,
         hubspot: 1,
         hubspotForms: 1,
         yelp: 2,
         yelpSpend: 33.37,
-        searchSpend: 2636.9,
+        searchSpend: 9878,
         lsaSpend: 1516.94,
-        note: "Search Call details (5) Sep 1–10 · 26/11/15 · LSA inbox (18) · HubSpot 1 · Yelp Ads Leads Sep · Messages 1 · Calls 2 · Website 2 · Total 5 · contacts 2 = 1 Message + round(2×40%) · Yelp answer rate 40% from Calls to your business · spend $33.37"
+        note: "Search Campaign report (37) Sep 1–18 Phone calls 33 · Cost $9,878 · Call details (6) Sep 1–10 answer 11/15 · LSA inbox (18) · HubSpot 1 · Yelp contacts 2"
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -548,11 +548,11 @@
         windowNote: "Search ads paused unpaid · no August Campaign calendar"
       },
       Sep: {
-        impressions: 1012,
-        clicks: 47,
-        phoneCalls: 26,
-        searchSpendLock: 2636.9,
-        windowNote: "Call details (5) Sep 1–10 Phone calls 26 · Campaign report (35) Sep 1–8 Impr/Interactions"
+        impressions: 2126,
+        clicks: 118,
+        phoneCalls: 33,
+        searchSpendLock: 9878,
+        windowNote: "Campaign report (37) Sep 1–18 · HS Military/DV/NTGUILT · Phone calls 33 · Call details answer rate still Sep 1–10"
       }
     },
     sourceMix: [
@@ -770,7 +770,7 @@
       { month: "Jun", cases: 36, leads: 228, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
       { month: "Jul", cases: 35, leads: 273, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 4 },
       { month: "Aug", cases: 20, leads: 96, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 },
-      { month: "Sep*", cases: 4, leads: 44, spend: 4153.84, lsaSpend: 1516.94, adsSpend: 2636.9, adsLeads: 26, websiteLeads: 1 }
+      { month: "Sep*", cases: 4, leads: 51, spend: 11394.94, lsaSpend: 1516.94, adsSpend: 9878, adsLeads: 33, websiteLeads: 1 }
     ],
     /**
      * Yelp Ads Leads by type screenshots 2026-09-10 + Calls to your business answer rate 40%.

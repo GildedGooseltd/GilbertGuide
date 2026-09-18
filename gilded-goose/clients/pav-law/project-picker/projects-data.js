@@ -95,6 +95,8 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "shortTitle": "Yelp Ads",
       "status": "recommended",
+      "estCostLabel": "$2,600 + $500/mo",
+      "paymentPlanLabel": "—",
       "feeEstimate": 2800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
@@ -180,10 +182,10 @@ window.PROJECT_DATA = {
       "campaignType": "Physical Print & Production",
       "id": "SwagPrint",
       "title": "Design Printables, Swag & Apparel",
-      "tldr": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-      "description": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\nThe $1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost.",
+      "tldr": "Updated stationary and images are needed. Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
+      "description": "Updated stationary and images are needed. Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\nThe $1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost.",
       "valueAdded": [
-        "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
+        "Updated stationary and images are needed. Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
         "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
         "The $1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost."
       ],
@@ -206,7 +208,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 5.74,
+        "raw": 5.89,
         "parts": {
           "valueAdd": 3,
           "tasks": 0,
@@ -214,14 +216,14 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.74
+          "descUnits": 2.89
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 500,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.13 (5.74 units) · complexity ×1"
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.13 (5.89 units) · complexity ×1"
     },
     {
       "priority": 4,
@@ -230,14 +232,17 @@ window.PROJECT_DATA = {
       "invoiceCount": 3,
       "startDate": "2026-10-01",
       "category": "Branding",
-      "campaignType": "Directories & Profiles",
+      "campaignType": "Referral Sites",
       "id": "LegalDirs",
-      "title": "Directories & Profile Channels",
-      "tldr": "Update legal directory profiles for Pav Law. Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
-      "description": "Update legal directory profiles for Pav Law. Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.\n\nDirectories: Justia, FindLaw, Avvo. Pick which to prioritize from the brand audit Data tab.",
+      "title": "Legal Directory Updates",
+      "tldr": "Update legal directory profiles for Pav Law to ensure accurate information, tracking and new ad copy.",
+      "description": "Update legal directory profiles for Pav Law to ensure accurate information, tracking and new ad copy. \n\nRefresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update and/or cancel contracts.\n\n Research similar sites and start organic or free testing for comparison and stronger brand presence. \n\nAdd matching lead-source values in HubSpot and MyCase. \n\nDirectories: Justia, FindLaw,  Avvo?",
       "valueAdded": [
-        "Update legal directory profiles for Pav Law. Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
-        "Directories: Justia, FindLaw, Avvo. Pick which to prioritize from the brand audit Data tab."
+        "Update legal directory profiles for Pav Law to ensure accurate information, tracking and new ad copy.",
+        "Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update and/or cancel contracts.",
+        "Research similar sites and start organic or free testing for comparison and stronger brand presence.",
+        "Add matching lead-source values in HubSpot and MyCase.",
+        "Directories: Justia, FindLaw,  Avvo?"
       ],
       "hubSpotParts": [
         "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
@@ -251,29 +256,29 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,200",
       "paymentPlanLabel": "40%",
       "depositPct": 0.4,
-      "feeEstimate": 2300,
+      "feeEstimate": 2400,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 3.68,
+        "raw": 6.18,
         "parts": {
-          "valueAdd": 2,
+          "valueAdd": 5,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.68
+          "descUnits": 1.18
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1100,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.06 (3.68 units) · complexity ×1"
+      "feeEstimateDelta": 1200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.14 (6.18 units) · complexity ×1"
     },
     {
       "priority": 5,
