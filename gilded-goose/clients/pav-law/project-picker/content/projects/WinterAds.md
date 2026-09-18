@@ -1,22 +1,25 @@
 # Winter Driving Images — NTGUILT Seasonal Ads
 
+
 | Field             | Value                              |
 | ----------------- | ---------------------------------- |
-| Priority          | 8                                  |
-| Fee               | 2200                               |
-| Category          |                                    |
+| Priority          | 98                                 |
+| Fee               | 0                                  |
+| Category          | Paid Media                         |
 | Campaign type     | Seasonal Search / Display creative |
+| Parent            | HolidayAds                         |
+
 
 ---
 
 ## Project Overview
 
-Winter driving image set and seasonal ad flight for NTGUILT: snow/ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic. Produce Search-safe winter stills for `HS: NTGUILT` and Display heroes that stay on-theme with plate/driver converters Separate from HolidayAds Oktoberfest/holiday windows and SummerAds college Bend & Snap Work Plan go-live at least 1 month before projected winter spend so creative is ready when ice hits Front Range corridors Pairs with live HS: NTGUILT Search; does not restart ended Campaign Total twins.
+Winter driving image set and seasonal ad flight for NTGUILT — merged into HolidayAds. Keep this file for history only. Snow and ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic.
 
 ## HubSpot Application
 
-- No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
+- No HubSpot build in scope
 
 ## Fee note
 
-Setup fee $2,200.
+Merged into Holiday & Winter Seasonal Ads · not a standalone sell.

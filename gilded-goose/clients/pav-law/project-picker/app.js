@@ -121,7 +121,7 @@
     RETAINER: 1,
     retainer: 1,
     AdEnhance: 1,
-    Yelpv1: 1,
+    Yelp: 1,
     AdultAds: 1,
     LegalDirs: 1,
     HolidayAds: 1,
@@ -129,7 +129,6 @@
     DigProf: 1,
     NtguiltAd: 1,
     HsMktExpand: 2,
-    LsaCall: 2,
     TsMgmt: 2,
     OpsDash: 2,
     HsVoip: 2,
@@ -139,9 +138,6 @@
     LawyerRef: 3,
     NetCoach: 3,
     HsWebRebuild: 4,
-    WebContent: 4,
-    WebSpeed: 4,
-    BlogRevamp: 4,
     HsLanding: 4,
     HsEmailSetup: 4,
     AffirmEmail: 4,
@@ -528,7 +524,7 @@
     "RETAINER",
     "retainer",
     "AdEnhance",
-    "Yelpv1",
+    "Yelp",
     "AdultAds",
     "LegalDirs",
     "HolidayAds",
@@ -536,7 +532,6 @@
   ]);
   const TOC_ADHOC_IDS = new Set([
     "DigProf",
-    "LsaCall",
     "TsMgmt",
     "OpsDash",
     "HsVoip",
@@ -550,7 +545,6 @@
     "SummerEmail",
     "PerfPay",
     "DataMgmt",
-    "PaviChat",
     "InsMailer",
     "WasteAud",
     "CaseWins",
@@ -810,14 +804,18 @@
     return { min: toIsoDate(now), max: toIsoDate(max) };
   }
 
-  /** Quote calculator start dates: 15th and 30th, September–December 2026. */
+  /** Quote calculator start dates: 1st, 15th, and 30th · September–December 2026. */
   const CALC_START_DATE_OPTIONS = [
+    "2026-09-01",
     "2026-09-15",
     "2026-09-30",
+    "2026-10-01",
     "2026-10-15",
     "2026-10-30",
+    "2026-11-01",
     "2026-11-15",
     "2026-11-30",
+    "2026-12-01",
     "2026-12-15",
     "2026-12-30"
   ];
@@ -844,11 +842,25 @@
   }
 
   function calcStartDateSelectHtml(projectId, title, selectedIso) {
+    /* Platform Management · locked start October 1 · not editable */
+    if (projectId === "TsMgmt") {
+      return `<span class="calc-start-static" title="Start date locked · 10/01/2026" aria-label="Start date for Platform Management: 10/01/2026">10/1</span>`;
+    }
     const selected = snapIsoToCalcStartOption(selectedIso || "");
     const opts = CALC_START_DATE_OPTIONS.map(iso =>
       `<option value="${iso}"${iso === selected ? " selected" : ""}>${americanDate(iso)}</option>`
     ).join("");
     return `<select class="calc-date-input" data-project-id="${escapeHtml(projectId)}" data-date-field="start" aria-label="Start date for ${escapeHtml(title)}">${opts}</select>`;
+  }
+
+  /** True when start is after the current calendar month · gray as next-month / deferred. */
+  function isCalcNextMonthStart(iso) {
+    const d = parseIsoDate(iso);
+    if (!d) return false;
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    return d.getFullYear() > now.getFullYear()
+      || (d.getFullYear() === now.getFullYear() && d.getMonth() > now.getMonth());
   }
 
   function addDaysIso(iso, days) {
@@ -989,7 +1001,7 @@
   function projectQuoteHtml(item, isRetainer) {
     const quote = projectQuoteLabel(item, isRetainer);
     if (isFeeUncertain(item)) {
-      return `<p class="project-tile-cost project-tile-cost-estimate" title="Estimate until product mix and organization questions are answered"><span class="project-tile-cost-amount">${escapeHtml(quote)}</span><img class="project-tile-cost-pavi" src="assets/pavi-think.png" alt="" width="28" height="28" loading="lazy"></p>`;
+      return `<p class="project-tile-cost project-tile-cost-estimate" title="Estimate until product mix and organization questions are answered"><span class="project-tile-cost-amount">${escapeHtml(quote)}</span></p>`;
     }
     return `<p class="project-tile-cost">${escapeHtml(quote)}</p>`;
   }
@@ -1008,11 +1020,8 @@
       : Math.max(1, getProjectInvoiceCount(item) || 1);
     const amounts = splitEvenCents(fee, n);
     const each = amounts[0];
-    if (!plan.ready || !plan.start) {
-      return `${n} × ${fmt(each)}/mo`;
-    }
-    if (n <= 1) return `1 × ${fmt(fee)} · due ${americanDate(plan.start)}`;
-    return `${n} × ${fmt(each)}/mo · from ${americanDate(plan.start)}`;
+    if (n <= 1) return `1 × ${fmt(fee)}`;
+    return `${n} × ${fmt(each)} · 2×/mo`;
   }
 
   function bestFitRankedListHtml(ranked) {
@@ -1028,28 +1037,33 @@
       const scoreLabel = priorityGroupLabel(item);
       const scoreTitle = priorityGroupTitle(item);
       const monthlyOnly = isMonthlyRetainerItem(item, isRetainer);
-      if (!monthlyOnly) ensureRecommendedProjectDates(item);
+      ensureRecommendedProjectDates(item);
       const quote = projectQuoteLabel(item, isRetainer);
       const quoteCell = isFeeUncertain(item)
         ? `<span class="calc-quote-estimate" title="Estimate until product mix and organization questions are answered">${escapeHtml(quote)}</span>`
         : escapeHtml(quote);
       const terms = projectPaymentTermsLabel(item, isRetainer);
-      const dates = monthlyOnly ? { start: "", end: "" } : getProjectDateRange(item.id);
+      const dates = getProjectDateRange(item.id);
       const invMax = monthlyOnly ? 1 : maxInvoiceCountForItem(item);
       const invCount = monthlyOnly ? null : getProjectInvoiceCount(item);
-      const dateCells = monthlyOnly
-        ? `<td class="col-start"><span class="payment-date-na">—</span></td>
-           <td class="col-invoices"><span class="payment-date-na">—</span></td>`
-        : `<td class="col-start">${calcStartDateSelectHtml(item.id, item.title, dates.start)}</td>
-           <td class="col-invoices"><input type="number" class="calc-invoice-count-input" data-project-id="${escapeHtml(item.id)}" min="1" max="${invMax}" step="1" value="${invCount != null ? escapeHtml(String(invCount)) : ""}" aria-label="Number of invoices for ${escapeHtml(item.title)}" title="Number of invoices (1–${invMax}). Set per project."></td>`;
-      return `<tr data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer || monthlyOnly}" data-required="${required}">
+      const nextMonthStart = monthlyOnly && isCalcNextMonthStart(dates.start);
+      const startCell = `<td class="col-start">${calcStartDateSelectHtml(item.id, item.title, dates.start)}</td>`;
+      const invoiceCell = monthlyOnly
+        ? `<td class="col-invoices"><span class="payment-date-na">—</span></td>`
+        : `<td class="col-invoices"><input type="number" class="calc-invoice-count-input" data-project-id="${escapeHtml(item.id)}" min="1" max="${invMax}" step="1" value="${invCount != null ? escapeHtml(String(invCount)) : ""}" aria-label="Number of invoices for ${escapeHtml(item.title)}" title="Number of invoices (1–${invMax}). Set per project."></td>`;
+      const rowClass = [
+        nextMonthStart ? "calc-row-next-month" : "",
+        required ? "calc-row-required" : ""
+      ].filter(Boolean).join(" ");
+      return `<tr class="${rowClass}" data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer || monthlyOnly}" data-required="${required}" data-next-month="${nextMonthStart ? "1" : "0"}">
         <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
         <td class="col-select">
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled} ${selected ? "checked" : ""}>
         </td>
-        <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</span></a></td>
+        <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(item.title)}</span></a></td>
         <td class="col-quote">${quoteCell}</td>
-        ${dateCells}
+        ${startCell}
+        ${invoiceCell}
         <td class="col-terms"><span class="calc-terms-text">${escapeHtml(terms)}</span></td>
       </tr>`;
     }).join("");
@@ -1057,13 +1071,13 @@
     return `<div class="pav-priorities-scroll calc-quote-scroll"><table class="pav-priorities-table pav-priorities-cart-only pav-priorities-best-fit calc-quote-table">
       <thead>
         <tr>
-          <th class="col-score" scope="col" title="Andrew Priority Groups 1-4">Priority Group</th>
+          <th class="col-score" scope="col" title="Andrew Priority Groups 1-4">Priority<span class="col-score-sub">group</span></th>
           <th class="col-select" scope="col" title="Add to plan"><span class="calc-cart-th" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.25"/><circle cx="18" cy="20" r="1.25"/><path d="M3 4h2l1.4 9.2a2 2 0 0 0 2 1.7h8.4a2 2 0 0 0 2-1.6L20 8H7"/></svg></span><span class="sr-only">Add</span></th>
           <th class="col-project" scope="col">Project</th>
           <th class="col-quote" scope="col">Quote</th>
           <th class="col-start" scope="col">Start</th>
-          <th class="col-invoices" scope="col" title="Number of monthly invoices (1–max for this project). Set per project.">Invoices<span class="col-invoices-sub">monthly</span></th>
-          <th class="col-terms" scope="col">Payment terms</th>
+          <th class="col-invoices" scope="col" title="Number of invoices at 2 payments per month (1–max for this project). Set per project.">Invoices<span class="col-invoices-sub">2×/mo</span></th>
+          <th class="col-terms" scope="col">Payment<span class="col-terms-sub">terms</span></th>
         </tr>
       </thead>
       <tbody>
@@ -1099,7 +1113,7 @@
     el.innerHTML = `${head}
       <div class="total-box" id="plan-summary">${body}</div>`;
     bindCalcQuoteInputs();
-    document.getElementById("calc-send-plan-summary")?.addEventListener("click", () => submitProjectRequest());
+    document.getElementById("calc-send-plan-summary")?.addEventListener("click", () => openSubmitSowNoteDialog());
   }
 
   function bindCalcQuoteInputs() {
@@ -1418,33 +1432,40 @@
 
   /** Seed calculator dates from project recommended start/end when empty. */
   function ensureRecommendedProjectDates(item) {
-    if (!item || isMonthlyRetainerItem(item, !!item.isRetainer)) return;
+    if (!item) return;
     const id = item.id;
     if (!state.projectDates[id]) state.projectDates[id] = { start: "", end: "", durationWeeks: "", invoiceCount: "" };
     const row = state.projectDates[id];
     const rec = recommendedProjectDates(item);
+    const monthlyOnly = isMonthlyRetainerItem(item, !!item.isRetainer);
     let changed = false;
-    if (!row.start && rec.start) {
+    /* Platform Management · locked bill start October 1 */
+    if (id === "TsMgmt" && row.start !== "2026-10-01") {
+      row.start = "2026-10-01";
+      changed = true;
+    } else if (!row.start && rec.start) {
       row.start = snapIsoToCalcStartOption(rec.start);
       changed = true;
     } else if (row.start && !CALC_START_DATE_OPTIONS.includes(row.start)) {
       row.start = snapIsoToCalcStartOption(row.start);
       changed = true;
     }
-    if (!row.end && rec.end) {
-      row.end = rec.end;
-      changed = true;
-    }
-    if (!row.durationWeeks && item.durationWeeks != null && Number(item.durationWeeks) > 0) {
-      row.durationWeeks = String(item.durationWeeks);
-      changed = true;
-    }
-    if (!row.invoiceCount && item.invoiceCount != null && Number(item.invoiceCount) > 0) {
-      row.invoiceCount = String(item.invoiceCount);
-      changed = true;
+    if (!monthlyOnly) {
+      if (!row.end && rec.end) {
+        row.end = rec.end;
+        changed = true;
+      }
+      if (!row.durationWeeks && item.durationWeeks != null && Number(item.durationWeeks) > 0) {
+        row.durationWeeks = String(item.durationWeeks);
+        changed = true;
+      }
+      if (!row.invoiceCount && item.invoiceCount != null && Number(item.invoiceCount) > 0) {
+        row.invoiceCount = String(item.invoiceCount);
+        changed = true;
+      }
     }
     if (changed) {
-      if (row.start && !row.end) backfillProjectDates(id, "start");
+      if (!monthlyOnly && row.start && !row.end) backfillProjectDates(id, "start");
       saveState();
     }
   }
@@ -1506,8 +1527,8 @@
   }
 
   /**
-   * Max equal monthly payments from start through end. No deposit %.
-   * One-month windows still cap at 3. Catalog invoiceCount can raise the ceiling a little.
+   * Max equal payments at 2 per month from start through end. No deposit %.
+   * Cadence is every 14 days. One-month windows still cap at 3. Catalog invoiceCount can raise the ceiling a little.
    */
   function maxEqualMonthlyPayments(item, startISO, endISO) {
     if (!startISO) return 1;
@@ -1520,41 +1541,36 @@
     }
     let n = 1;
     if (end) {
-      n = 0;
-      for (let i = 0; i < 12; i++) {
-        if (addMonthsIso(startISO, i) > end) break;
-        n++;
-      }
-      n = Math.max(1, n);
+      n = Math.max(1, biweeklyInvoiceDates(startISO, end).length || 1);
     } else {
       const weeks = getProjectDurationWeeks(item);
       if (weeks != null && Number(weeks) > 0) {
-        n = Math.min(6, Math.max(1, Math.ceil(Number(weeks) / 4)));
+        n = Math.min(12, Math.max(1, Math.ceil(Number(weeks) / 2)));
       } else {
-        n = 3;
+        n = 4;
       }
     }
     if (isOneMonthProjectWindow(item, { start: startISO, end: end || startISO })) {
       n = Math.min(3, n);
     }
     const catalog = item?.invoiceCount != null && Number(item.invoiceCount) > 0
-      ? Math.min(6, Number(item.invoiceCount))
+      ? Math.min(12, Number(item.invoiceCount))
       : 0;
     return Math.max(n, catalog || 0, 1);
   }
 
-  /** Equal monthly payment dates: start, then each following month, for N invoices. */
+  /** Equal payment dates at 2 per month: start, then every 14 days, for N invoices. */
   function equalMonthlyPaymentDates(startISO, count) {
     const n = Math.max(1, Number(count) || 1);
     if (!startISO) return [];
     const dates = [];
-    for (let i = 0; i < n; i++) dates.push(addMonthsIso(startISO, i));
+    for (let i = 0; i < n; i++) dates.push(addDaysIso(startISO, i * 14));
     return dates;
   }
 
   /**
-   * Max equal biweekly payments for a start→end window. Kept for older helpers.
-   * Quote calculator uses monthly payments instead.
+   * Max equal biweekly payments for a start→end window.
+   * Same as 2 payments per month.
    */
   function maxEqualBiweeklyPayments(item, startISO, endISO) {
     return maxEqualMonthlyPayments(item, startISO, endISO);
@@ -1562,7 +1578,7 @@
 
   /**
    * Equal payment dates for the full setup fee.
-   * Work window = start→end. Payments are monthly from start for the requested invoice count.
+   * Work window = start→end. Payments are 2 per month from start for the requested invoice count.
    * One-month work windows: at most 3 equal payments.
    */
   function paymentEndISO(item, endISO) {
@@ -1598,7 +1614,7 @@
     return pct >= 0.999;
   }
 
-  /** Per-project plan: setup fee in equal monthly parts from start. No deposit %. */
+  /** Per-project plan: setup fee in equal parts at 2 payments per month from start. No deposit %. */
   function computeProjectBiweeklyPlan(item) {
     const scheduleFee = projectScheduleFee(item);
     const monthly = projectMonthlyBill(item);
@@ -1672,7 +1688,7 @@
       `Project: ${title}`,
       `Setup fee: ${fmt(opt.scheduleFee)}`,
       `Work window: ${americanDate(dates.start)} to ${americanDate(dates.end)}`,
-      `Equal monthly payments: ${paymentCount} × about ${fmt(each)}`,
+      `Equal payments · 2 per month: ${paymentCount} × about ${fmt(each)}`,
       `First payment due ${americanDate(dates.start)}: ${fmt(invoices[0]?.amount || 0)}`
     ];
     if (opt.graceDays > 0 && payThrough) {
@@ -1781,7 +1797,7 @@
   function buildPaymentOptionsHtml() {
     const rows = getCartPaymentOptions();
     if (!rows.length) {
-      return `<p class="payment-options-empty">Add projects to see equal monthly payment amounts.</p>`;
+      return `<p class="payment-options-empty">Add projects to see equal payment amounts at 2 per month.</p>`;
     }
     const totals = cartPaymentTotals(rows);
     const body = rows.map(r => {
@@ -1827,20 +1843,20 @@
     const plans = getCartBiweeklyPlans();
     if (!plans.length) {
       return `<div class="payment-calc-breakdown" id="payment-calc-breakdown">
-        <p class="payment-calc-empty">Select one-time projects, then set each project start date and invoice count to build monthly invoice terms.</p>
+        <p class="payment-calc-empty">Select one-time projects, then set each project start date and invoice count to build 2×/mo invoice terms.</p>
       </div>`;
     }
     const blocks = plans.map(plan => {
       if (!plan.ready) {
         return `<div class="biweekly-plan-card">
           <h5 class="biweekly-plan-title">${escapeHtml(plan.title)}</h5>
-          <p class="payment-calc-empty">Set a start date to split ${fmt(plan.scheduleFee)} into equal monthly payments.</p>
+          <p class="payment-calc-empty">Set a start date to split ${fmt(plan.scheduleFee)} into equal payments at 2 per month.</p>
         </div>`;
       }
       const paymentList = plan.allPayments && plan.allPayments.length ? plan.allPayments : plan.invoices;
       const rows = [
         ["Setup fee", fmt(plan.scheduleFee)],
-        ["equal monthly payments", `${plan.paymentCount} × about ${fmt(plan.biweeklyEach)}`],
+        ["Equal payments · 2 per month", `${plan.paymentCount} × about ${fmt(plan.biweeklyEach)}`],
         [`First payment due ${americanDate(plan.start)}`, fmt(plan.dueNow)],
         ["Total setup due", fmt(plan.totalDue)]
       ];
@@ -1858,7 +1874,7 @@
       return `<div class="biweekly-plan-card">
         <h5 class="biweekly-plan-title">${escapeHtml(plan.title)}</h5>
         <table class="payment-calc-table"><tbody>${tableRows}</tbody></table>
-        <p class="biweekly-schedule-label">Equal monthly invoice dates</p>
+        <p class="biweekly-schedule-label">Invoice dates · 2 payments per month</p>
         <ul class="biweekly-schedule-list">${schedule}</ul>
       </div>`;
     }).join("");
@@ -2034,7 +2050,7 @@
     let label = null;
     if (readyBiweekly.length) {
       label = readyBiweekly.map(p => {
-        return `${p.title}: ${p.paymentCount} equal monthly payments of about ${fmt(p.biweeklyEach)} starting ${americanDate(p.start)} · first due ${americanDate(p.start)}`;
+        return `${p.title}: ${p.paymentCount} equal payments of about ${fmt(p.biweeklyEach)} · 2 per month starting ${americanDate(p.start)} · first due ${americanDate(p.start)}`;
       }).join(" | ");
     } else if (months && monthlyAmount != null && plan.projectFees > 0) {
       const surchargeNote = plan.surchargeAmount
@@ -2727,7 +2743,7 @@
 
   function estimateProjectLeadsGained(item) {
     if (!item) return { value: null, label: "—", isCalls: false };
-    const nonCampaignIds = new Set(["RETAINER", "GabrielOut", "OpsDash", "DataMgmt", "StackAudit", "HsPipe", "WebSpeed", "WasteAud", "DigProf"]);
+    const nonCampaignIds = new Set(["RETAINER", "GabrielOut", "OpsDash", "DataMgmt", "StackAudit", "HsPipe", "WasteAud", "DigProf"]);
     if (item.isRetainer || nonCampaignIds.has(item.id))
       return { value: null, label: "No direct leads", isCalls: false };
     if (item.id === "HsVoip") {
@@ -3284,7 +3300,9 @@
     const lines = [
       "Gilbert project guide — activity log",
       "",
+      "Client: Pav Law Andrew Brown",
       "Submitted: " + (payload.submittedAt || new Date().toISOString()),
+      "Submission IP: " + (payload.publicIp || "unavailable"),
       "Email: " + (payload.submitterEmail || "(not provided)"),
       "",
       "Gilbert chat:",
@@ -3302,8 +3320,22 @@
       lines.push("  (none)");
     }
     lines.push("", "Projects selected:");
-    (payload.projects || []).forEach(p => lines.push(`  • ${p.title} — ${p.fee}`));
-    if (payload.retainer) lines.unshift("Retainer: YES — " + (payload.retainerFee || ""));
+    (payload.projects || []).forEach(p => {
+      const start = p.startDate ? americanDate(p.startDate) : "—";
+      let terms = "—";
+      if (p.monthlyOnly) {
+        terms = p.fee ? `Monthly · ${p.fee}` : "Monthly · billed separately";
+      } else if (p.invoiceWriteup) {
+        terms = String(p.invoiceWriteup).replace(/\r?\n/g, "; ");
+      } else if (p.biweeklyInvoiceCount && p.biweeklyAmount != null) {
+        terms = `${p.biweeklyInvoiceCount} × ${fmt(p.biweeklyAmount)} · 2×/mo`;
+      }
+      lines.push(`  • ${p.title || p.id}`);
+      lines.push(`    Total invoice amount: ${p.fee || (p.feeNum != null ? fmt(p.feeNum) : "—")}`);
+      lines.push(`    Start date: ${start}`);
+      lines.push(`    Invoice terms requested: ${terms}`);
+    });
+    if (!(payload.projects || []).length) lines.push("  (none)");
     lines.push("", "Action items (from selections):");
     lines.push(formatActionItemsText(payload.actionItems));
     lines.push("", "Next steps:");
@@ -3723,7 +3755,7 @@
         <td class="toc-col-select">
           <input type="checkbox" class="${chkClass}" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled}${abTitle} ${selected ? "checked" : ""}>
         </td>
-        <td class="toc-col-project toc-title"><div class="toc-title-row"><a href="#project-${item.id}" title="${escapeHtml(item.title)}">${hubspotTitleMarkHtml(item)}${item.parentId ? "↳ " : ""}${escapeHtml(item.title)}</a></div></td>
+        <td class="toc-col-project toc-title"><div class="toc-title-row"><a href="#project-${item.id}" title="${escapeHtml(item.title)}">${hubspotTitleMarkHtml(item)}${escapeHtml(item.title)}</a></div></td>
       </tr>`;
     }).join("");
     const editBtn = document.getElementById("toc-priority-edit");
@@ -4207,7 +4239,7 @@
         "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
         "Landing pages · Optional HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
       ],
-      Yelpv1: [
+      Yelp: [
         "CRM · The contact database where Yelp leads, messages, and call outcomes are stored so intake is not stuck in a personal inbox.",
         "Tasks and workflows · Auto-creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
         "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
@@ -4300,7 +4332,7 @@
         "Casey · answer and route new Search / call volume from enhancements",
         "Gilded Goose · build, QA, and optimize campaigns and landing paths"
       ],
-      Yelpv1: [
+      Yelp: [
         "Casey · Yelp messages and calls once the channel line is live",
         "Andrew Brown · review responses and listing accuracy",
         "Romina · payment follow-up if Yelp leads convert to retained matters"
@@ -4431,7 +4463,7 @@
     if (costEl) {
       if (isFeeUncertain(item)) {
         costEl.classList.add("project-overview-cost-estimate");
-        costEl.innerHTML = `<span class="project-tile-cost-amount">${escapeHtml(projectQuoteLabel(item, isRetainer))}</span><img class="project-tile-cost-pavi" src="assets/pavi-think.png" alt="" width="28" height="28">`;
+        costEl.innerHTML = `<span class="project-tile-cost-amount">${escapeHtml(projectQuoteLabel(item, isRetainer))}</span>`;
       } else {
         costEl.classList.remove("project-overview-cost-estimate");
         costEl.textContent = projectQuoteLabel(item, isRetainer);
@@ -4461,7 +4493,7 @@
       RETAINER: "assets/gigi-thinking.png",
       retainer: "assets/gigi-thinking.png",
       AdEnhance: "assets/google-ads-tile.svg?v=logo-only",
-      Yelpv1: "assets/yelp-ads-tile.svg?v=logo-only",
+      Yelp: "assets/yelp-ads-tile.svg?v=logo-only",
       LegalDirs: "assets/network-internet.svg",
       HolidayAds: "assets/gigi-celebrating.png",
       WinterAds: "assets/gigi-celebrating.png",
@@ -4469,7 +4501,8 @@
       DataMgmt: "assets/gigi-lightbulb-idea.png",
       OpsDash: "assets/systems-admin-tile.svg",
       TsMgmt: "assets/systems-admin-tile.svg",
-      AdultAds: "assets/gigi-lightbulb-idea.png"
+      AdultAds: "assets/gigi-lightbulb-idea.png",
+      SwagPrint: "assets/swag-print-collage.jpg?v=samples-0917"
     };
     return byId[item?.id] || "assets/gg-shield-emblem.png";
   }
@@ -4597,7 +4630,9 @@
       }
       return;
     }
-    const working = calculatorWorkingProjects();
+    const working = calculatorWorkingProjects()
+      .slice()
+      .sort((a, b) => Number(a.id === "SwagPrint") - Number(b.id === "SwagPrint"));
     const controls = document.querySelector(".project-list-controls");
     if (controls) controls.hidden = true;
     let markedFirst = false;
@@ -4818,16 +4853,21 @@
       clientPriority: clientPriorityRank(p),
       parentId: p.parentId || null,
       monthlyOnly: true,
-      paymentType: getPaymentType(p, false)
+      paymentType: getPaymentType(p, false),
+      startDate: null,
+      endDate: null,
+      invoiceWriteup: null,
+      invoiceTermsRequested: projectPaymentTermsLabel(p, false)
     }));
     const projectRows = selected.map(p => {
       const dates = getProjectDateRange(p.id);
       const bi = computeProjectBiweeklyPlan({ ...p, isRetainer: false });
+      const scheduleTotal = bi.scheduleFee || itemSelectionCost(p);
       return {
         id: p.id,
         title: p.title,
-        fee: feeLabelFor(p),
-        feeNum: itemSelectionCost(p),
+        fee: scheduleTotal ? fmt(scheduleTotal) : feeLabelFor(p),
+        feeNum: scheduleTotal,
         timeline: p.timeline || "",
         priority: p.priority ?? null,
         clientPriority: clientPriorityRank(p),
@@ -4838,12 +4878,15 @@
         biweeklyInvoiceCount: bi.ready ? bi.paymentCount : null,
         biweeklyAmount: bi.ready ? bi.biweeklyEach : null,
         biweeklyInvoices: bi.ready ? (bi.allPayments || bi.invoices) : [],
-        invoiceWriteup: bi.writeup
+        invoiceWriteup: bi.writeup,
+        invoiceTermsRequested: bi.writeup
+          ? String(bi.writeup).replace(/\r?\n/g, "; ")
+          : projectPaymentTermsLabel(p, false)
       };
     });
     return {
       submittedAt: new Date().toISOString(),
-      submittedBy: "",
+      submittedBy: "Pav Law Andrew Brown",
       submitterEmail: submitterEmail.trim(),
       invoicePaymentTerms: paymentTerms.label || "",
       invoicePaymentTermsLabel: paymentTerms.label,
@@ -4856,6 +4899,7 @@
       goalText: document.getElementById("goal-input").value.trim(),
       filterConsultingBudget: null,
       filterMediaBudget: null,
+      publicIp: null,
       retainer: state.retainer,
       retainerFee: state.retainer ? fmt(RETAINER.fee) : null,
       retainerTitle: state.retainer ? RETAINER.title : null,
@@ -5625,7 +5669,7 @@
         <td class="col-select">
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(row.id)}" aria-label="Keep ${escapeHtml(row.title)} in cart"${chkDisabled} checked>
         </td>
-        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${row.parentId ? "↳ " : ""}${escapeHtml(row.title)}</span></a></td>
+        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
         <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
       </tr>`;
     }).join("");
@@ -5660,7 +5704,7 @@
         : (() => { const p = PROJECTS.find(x => x.id === row.id); return p ? requiredMarkerHtml(p, false) : ""; })();
       const item = row.id === "RETAINER" ? RETAINER : PROJECTS.find(x => x.id === row.id);
       return `<tr>
-        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${row.parentId ? "↳ " : ""}${escapeHtml(row.title)}</span></a></td>
+        <td class="col-project"><a href="${projectAnchor(row.id)}" class="priority-desc-link" data-project-id="${escapeHtml(row.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(row.title)}</span></a></td>
         <td class="col-fee">${item ? feeCellHtml(item) : escapeHtml(row.fee)}</td>
       </tr>`;
     }).join("");
@@ -5772,56 +5816,39 @@
       "",
       "A project plan is ready for kickoff and QuickBooks invoices.",
       "",
+      "Client: Pav Law Andrew Brown",
       "Submitted: " + when,
+      "Submission IP: " + (payload.publicIp || "unavailable"),
       "Contact email: " + (payload.submitterEmail || "(not entered on confirm page)"),
       ""
     ];
-    if (payload.goalText) {
-      lines.push("Client note: " + payload.goalText, "");
+    if (payload.sowNote) {
+      lines.push("Note from Submit SOW:", payload.sowNote, "");
     }
 
-    const setupProjects = projects.filter(p => !p.monthlyOnly);
-    const monthlyProjects = projects.filter(p => p.monthlyOnly);
-
-    if (setupProjects.length) {
-      lines.push("SETUP PROJECTS");
-      lines.push("--------------");
-      setupProjects.forEach(p => {
-        lines.push("");
-        lines.push(p.title);
-        lines.push("  Setup fee: " + (p.fee || fmt(p.feeNum) || "—"));
-        if (p.startDate) lines.push("  Start: " + americanDate(p.startDate));
-        if (p.endDate) lines.push("  Work through: " + americanDate(p.endDate));
-        const n = p.biweeklyInvoiceCount || (p.biweeklyInvoices || []).length;
-        if (n) {
-          lines.push("  Invoices: " + n + " × " + (p.biweeklyAmount != null ? fmt(p.biweeklyAmount) : "—") + "/mo");
+    lines.push("Projects selected:");
+    if (!(projects || []).length) {
+      lines.push("  (none)");
+    } else {
+      projects.forEach(p => {
+        const start = p.startDate ? americanDate(p.startDate) : "—";
+        let terms = p.invoiceTermsRequested || "—";
+        if (!p.invoiceTermsRequested) {
+          if (p.monthlyOnly) {
+            terms = p.fee ? `Monthly · ${p.fee}` : "Monthly · billed separately";
+          } else if (p.invoiceWriteup) {
+            terms = String(p.invoiceWriteup).replace(/\r?\n/g, "; ");
+          } else if (p.biweeklyInvoiceCount && p.biweeklyAmount != null) {
+            terms = `${p.biweeklyInvoiceCount} × ${fmt(p.biweeklyAmount)} · 2×/mo`;
+          }
         }
-        const schedule = p.biweeklyInvoices || [];
-        if (schedule.length) {
-          lines.push("  Schedule:");
-          schedule.forEach(inv => {
-            const d = inv.date ? americanDate(inv.date) : (inv.label || "");
-            lines.push("    " + d + " · " + fmt(inv.amount));
-          });
-        }
+        lines.push(`  • ${p.title || p.id}`);
+        lines.push(`    Total invoice amount: ${p.fee || (p.feeNum != null ? fmt(p.feeNum) : "—")}`);
+        lines.push(`    Start date: ${start}`);
+        lines.push(`    Invoice terms requested: ${terms}`);
       });
-      lines.push("");
     }
-
-    if (monthlyProjects.length || payload.retainer) {
-      lines.push("MONTHLY CARE");
-      lines.push("------------");
-      if (payload.retainer) {
-        lines.push((payload.retainerTitle || "Digital Ads Maintenance Retainer") + ": " + (payload.retainerFee || "") + "/mo");
-      }
-      monthlyProjects.forEach(p => {
-        lines.push(p.title + ": " + (p.fee || "") + (String(p.fee || "").includes("/mo") ? "" : "/mo"));
-      });
-      if (payload.maintenanceMonthlyNum) {
-        lines.push("Combined monthly care: " + (payload.maintenanceMonthly || fmt(payload.maintenanceMonthlyNum)) + "/mo");
-      }
-      lines.push("");
-    }
+    lines.push("");
 
     if (payload.projectsSubtotal) {
       lines.push("Setup subtotal: " + payload.projectsSubtotal);
@@ -5833,7 +5860,7 @@
     lines.push(payload.invoiceWriteupForKate || payload.invoicePaymentTermsLabel || "(set start date and invoice count on each setup project)");
     lines.push("");
     lines.push("Next steps:");
-    lines.push("1. Create QuickBooks invoices to match the monthly schedule above.");
+    lines.push("1. Create QuickBooks invoices to match the 2-per-month schedule above.");
     lines.push("2. Confirm kickoff dates with Andrew.");
     lines.push("3. Use Submit selections & SOW on the confirm page when you are ready for the private signing link.");
     lines.push("");
@@ -5841,42 +5868,89 @@
     return lines.join("\n");
   }
 
-  async function submitProjectRequest() {
-    CONFIG = getConfig();
+  function canSubmitProjectRequest() {
     const selected = getSelectedProjects();
     if (!selected.length && !state.retainer) {
       showToast("Select at least one project first.", true);
-      return;
+      return false;
     }
     const plans = getCartBiweeklyPlans();
     const missingDates = plans.filter(p => !p.ready);
     if (missingDates.length) {
       showToast("Set a start date for each one-time project before submitting.", true);
+      return false;
+    }
+    return true;
+  }
+
+  function closeSubmitSowNoteDialog() {
+    const popup = document.getElementById("sow-note-popup");
+    const backdrop = document.getElementById("sow-note-backdrop");
+    if (popup) popup.hidden = true;
+    if (backdrop) backdrop.hidden = true;
+  }
+
+  function openSubmitSowNoteDialog() {
+    if (!canSubmitProjectRequest()) return;
+    const popup = document.getElementById("sow-note-popup");
+    const backdrop = document.getElementById("sow-note-backdrop");
+    const input = document.getElementById("sow-note-input");
+    if (!popup) {
+      submitProjectRequest();
       return;
     }
+    if (input) input.value = "";
+    if (backdrop) backdrop.hidden = false;
+    popup.hidden = false;
+    setTimeout(() => input?.focus(), 0);
+  }
+
+  async function submitProjectRequest(opts) {
+    CONFIG = getConfig();
+    if (!canSubmitProjectRequest()) return;
+    const sowNote = opts && opts.sowNote != null
+      ? String(opts.sowNote).trim()
+      : String(document.getElementById("sow-note-input")?.value || "").trim();
+    const publicIp = await getPublicIp();
     const payload = {
       ...buildPayload(),
       type: "project_request",
-      submittedBy: "Pav Law Guide · Submit SOW"
+      submittedBy: "Pav Law Andrew Brown",
+      publicIp,
+      sowNote: sowNote || ""
     };
     const btn = document.getElementById("calc-send-plan-summary") || document.getElementById("submit-project-request");
+    const sendBtn = document.getElementById("sow-note-send");
     const btnIdle = btn?.id === "calc-send-plan-summary" ? "Submit SOW" : "Submit project request";
     if (btn) {
       btn.disabled = true;
       btn.textContent = "Sending…";
     }
+    if (sendBtn) {
+      sendBtn.disabled = true;
+      sendBtn.textContent = "Sending…";
+    }
     const notify = CONFIG.notifyEmail || "support@gildedgooselimited.com";
     const subjectLine = "Pav Law · Submit SOW · " + americanDate(toIsoDate(new Date()));
+
+    const resetBtns = () => {
+      if (btn) {
+        btn.textContent = btnIdle;
+        btn.disabled = false;
+      }
+      if (sendBtn) {
+        sendBtn.textContent = "Send SOW";
+        sendBtn.disabled = false;
+      }
+    };
 
     if (!CONFIG.webhookUrl) {
       const subject = encodeURIComponent(subjectLine);
       const body = encodeURIComponent(buildProjectRequestEmailBody(payload));
       window.location.href = `mailto:${encodeURIComponent(notify)}?subject=${subject}&body=${body}`;
       showToast("Opened email draft to " + notify);
-      if (btn) {
-        btn.textContent = btnIdle;
-        btn.disabled = false;
-      }
+      closeSubmitSowNoteDialog();
+      resetBtns();
       return;
     }
 
@@ -5884,22 +5958,22 @@
       await postToWebhook(CONFIG.webhookUrl, payload, true);
       saveSubmissionLocally(payload);
       showToast("Submit SOW emailed to " + notify);
+      closeSubmitSowNoteDialog();
     } catch (err) {
       const subject = encodeURIComponent(subjectLine);
       const body = encodeURIComponent(buildProjectRequestEmailBody(payload));
       window.location.href = `mailto:${encodeURIComponent(notify)}?subject=${subject}&body=${body}`;
       showToast("Webhook failed — opened email draft instead. " + err.message, true);
+      closeSubmitSowNoteDialog();
     }
-    if (btn) {
-      btn.textContent = btnIdle;
-      btn.disabled = false;
-    }
+    resetBtns();
   }
 
     async function submitSelections() {
     if (!canSubmit()) return;
     CONFIG = getConfig();
-    const payload = buildPayload();
+    const publicIp = await getPublicIp();
+    const payload = { ...buildPayload(), publicIp, submittedBy: "Pav Law Andrew Brown" };
     const btn = document.getElementById("submit-selections");
     btn.disabled = true;
     btn.textContent = "Submitting…";
@@ -5979,7 +6053,7 @@
     saveState();
   });
   document.getElementById("gilbert-chat-backdrop")?.setAttribute("hidden", "");
-  document.getElementById("expand-all-projects").addEventListener("change", e => {
+  document.getElementById("expand-all-projects")?.addEventListener("change", e => {
     e.target.setAttribute("aria-checked", e.target.checked ? "true" : "false");
     setExpandAll(e.target.checked);
   });
@@ -6113,12 +6187,26 @@
     ) {
       closeProjectOverviewPopup();
     }
+    if (
+      e.target.closest("#sow-note-close") ||
+      e.target.closest("#sow-note-cancel") ||
+      e.target.id === "sow-note-backdrop" ||
+      e.target.id === "sow-note-popup"
+    ) {
+      closeSubmitSowNoteDialog();
+    }
+    if (e.target.closest("#sow-note-send")) {
+      e.preventDefault();
+      const note = document.getElementById("sow-note-input")?.value || "";
+      submitProjectRequest({ sowNote: note });
+    }
   }, true);
 
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") {
       closeHelpPopup();
       closeProjectOverviewPopup();
+      closeSubmitSowNoteDialog();
     }
   });
 

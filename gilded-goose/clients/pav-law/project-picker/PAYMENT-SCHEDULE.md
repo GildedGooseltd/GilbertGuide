@@ -9,19 +9,19 @@
 
 | Step | Rule |
 |------|------|
-| **Equal biweekly** | Split the full setup `Fee` into **equal** payments every **14 days** from start through end. No deposit % |
-| **First payment** | Due on the project **start date**. Same dollar amount as later biweekly invoices |
-| **Max payments** | Count of biweekly dates from start through end, inclusive. **Weeks ≤ 4** or ≤ 31 days → at most **3**. Example: Yelp Oct 1 → Dec 1 → **5** payments |
+| **Equal · 2 per month** | Split the full setup `Fee` into **equal** payments every **14 days** from the project **start date**. About **2 payments per month**. No deposit % |
+| **First payment** | Due on the project **start date**. Same dollar amount as later invoices |
+| **Invoice count** | Set per project on the Quote Calculator. Max follows the start→end work window at 2×/mo · **Weeks ≤ 4** or ≤ 31 days → at most **3** |
 | **One-month cap** | If **Weeks ≤ 4** or the work start→end span is **≤ 31 days**, use **at most 3** equal payments |
-| **Pay past close** | Optional **Payment grace days** extends the payment window past work end when set. Otherwise payments stop at end |
+| **Pay past close** | Optional **Payment grace days** can extend the work end used for the max-count window. Invoice dates still run every 14 days from start for the chosen count |
 | **Pay in full** | INDEX `100%` / `pay in full` still means **1 payment** of the full setup fee on start |
-| **Per-project dates** | Each one-time project has its own start and end on the calculator / confirm page |
-| **Retainer / monthly** | Full monthly amount bills separately — **not** in the project biweekly pool |
-| **Ongoing fee** (e.g. `$1,700 + $500/mo`) | Equal biweekly on **setup fee only**; ongoing bills with monthly |
+| **Per-project dates** | Each one-time project has its own start on the calculator · end still used for duration and max invoice count |
+| **Retainer / monthly** | Full monthly amount bills separately — **not** in the project setup payment pool |
+| **Ongoing fee** (e.g. `$1,700 + $500/mo`) | Equal 2×/mo on **setup fee only**; ongoing bills with monthly |
 
-Primary calculator: `computeProjectBiweeklyPlan()` / `biweeklyPlansBreakdownHtml()` in `app.js`.
+Primary calculator: `computeProjectBiweeklyPlan()` / 14-day payment dates in `app.js`.
 
-INDEX **Payment plan** % values are legacy for older SOW wording. The Guide calculator schedule uses equal biweekly parts, not those percentages.
+INDEX **Payment plan** % values are legacy for older SOW wording. The Guide calculator schedule uses equal parts at 2 payments per month from start, not those percentages.
 
 ---
 
@@ -42,7 +42,7 @@ If project dates are not set, the confirm page still offers the older month-base
 
 - Selected projects and fees
 - Start / end dates
-- Biweekly invoice amounts and dates
+- Invoice amounts and dates at 2 payments per month
 - Plain-language invoice terms for Kate to write in QuickBooks
 
 Payload type: `project_request` → Apps Script `handleProjectRequest`.

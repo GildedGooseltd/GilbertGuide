@@ -66,13 +66,42 @@ function formatGilbertChat(chat) {
   }).join("\n");
 }
 
+function projectInvoiceTermsLine(p) {
+  if (!p) return "—";
+  if (p.invoiceTermsRequested) return String(p.invoiceTermsRequested);
+  if (p.monthlyOnly) {
+    var mo = p.fee || (p.feeNum != null ? money(p.feeNum) + "/mo" : "");
+    return mo ? "Monthly · " + mo : "Monthly · billed separately";
+  }
+  if (p.invoiceWriteup) {
+    return String(p.invoiceWriteup).replace(/\r?\n/g, "; ");
+  }
+  var n = p.biweeklyInvoiceCount || (p.biweeklyInvoices || []).length;
+  if (n && p.biweeklyAmount != null) {
+    return n + " × " + money(p.biweeklyAmount) + " · 2×/mo";
+  }
+  if (p.paymentType) return String(p.paymentType);
+  return "—";
+}
+
+function projectTotalAmount(p) {
+  if (!p) return "—";
+  if (p.fee) return String(p.fee);
+  if (p.feeNum != null && isFinite(Number(p.feeNum))) return money(Number(p.feeNum));
+  return "—";
+}
+
 function formatProjectsList(projects) {
-  if (!projects || !projects.length) return "  (none — notes only)";
+  if (!projects || !projects.length) return "  (none)";
   return projects.map(function(p) {
-    var line = "  • " + p.id + " — " + p.title + " — " + p.fee;
-    if (p.timeline) line += " — " + p.timeline;
-    if (p.parentId) line += " (related to " + p.parentId + ")";
-    return line;
+    var title = p.title || p.id || "Project";
+    var start = p.startDate ? americanDateIso(p.startDate) : "—";
+    return [
+      "  • " + title,
+      "    Total invoice amount: " + projectTotalAmount(p),
+      "    Start date: " + start,
+      "    Invoice terms requested: " + projectInvoiceTermsLine(p)
+    ].join("\n");
   }).join("\n");
 }
 
@@ -170,7 +199,7 @@ function buildCanonicalSow(data) {
     "Notice address: 102 S Tejon St, Colorado Springs, CO 80903",
     "Governing law / venue: Colorado · El Paso County",
     "If Pav Law dissolves or cannot pay, Andrew Brown remains personally liable",
-    "SOW prepared: " + new Date().toISOString(),
+    "SOW prepared: " + formatSowTimestamp(new Date().toISOString()),
     "Client contact email: " + (data.submitterEmail || "[email]"),
     "",
     "————————————————————————",
@@ -304,11 +333,14 @@ function createSowSigningRequest(data) {
     body: [
       "Andrew,",
       "",
-      "Use this private, single-use link to review and electronically sign the fixed Pav Law Statement of Work:",
+      "Sign the fixed Pav Law Statement of Work here (private, single-use):",
+      "",
       url,
       "",
-      "The link expires in " + SOW_LINK_DAYS + " days. Do not forward it.",
-      "After you sign, your PDF copy will download and arrive by email. Kate will receive a separate private countersign link.",
+      "This link expires in " + SOW_LINK_DAYS + " days. Do not forward it.",
+      "",
+      "On the page: review the agreement → check the signature boxes → Sign.",
+      "Your PDF downloads and emails after you sign. Kate receives a separate countersign link.",
       "",
       "— Gilded Goose Limited"
     ].join("\n"),
@@ -399,6 +431,24 @@ function sowPaymentRows(payload) {
     rows.push(["Retainer / maintenance", payload.maintenanceMonthly + "/mo (billed separately)"]);
   }
   return rows;
+}
+
+/** Display timestamps for Kate / Andrew emails · Mountain Time · American date. */
+function formatSowTimestamp(iso) {
+  if (!iso) return "";
+  try {
+    return Utilities.formatDate(new Date(iso), "America/Denver", "MM/dd/yyyy h:mm a z");
+  } catch (e) {
+    return String(iso);
+  }
+}
+
+function americanDateIso(iso) {
+  if (!iso) return "";
+  var s = String(iso).slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return String(iso);
+  var parts = s.split("-");
+  return parts[1] + "/" + parts[2] + "/" + parts[0];
 }
 
 var SOW_PAYOFF_NOTE =
@@ -515,10 +565,11 @@ function signSowRecord(data) {
 
       var clientPdf = makePdfBlob(signedText, requestId + " — Andrew signed");
       var counterUrl = signingUrl(consultantToken);
+      var recordedAt = formatSowTimestamp(serverTimestamp);
       var recordedText = [
         "Andrew,",
         "",
-        "Your electronic signature was recorded at " + serverTimestamp + ".",
+        "Your electronic signature was recorded at " + recordedAt + ".",
         "The signed PDF is attached. Gilded Goose will countersign from a separate private link.",
         "",
         sowPaymentText(payload),
@@ -528,7 +579,7 @@ function signSowRecord(data) {
       var recordedHtml = sowEmailHtml(
         "Signature recorded — thank you, Andrew",
         '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:14px;color:#3b2d1a;line-height:1.55;">' +
-          'Your electronic signature was recorded at <strong>' + htmlEscape(serverTimestamp) + '</strong>. ' +
+          'Your electronic signature was recorded at <strong>' + htmlEscape(recordedAt) + '</strong>. ' +
           'The signed PDF is attached, and Gilded Goose will countersign to finalize it.</p>',
         sowPaymentTableHtml(payload) +
         '<p style="margin:12px 0;font-family:Arial,sans-serif;font-size:13px;color:#3b2d1a;line-height:1.55;"><strong>Pay off anytime.</strong> ' +
@@ -548,15 +599,23 @@ function signSowRecord(data) {
         to: NOTIFY_EMAIL,
         subject: "Action required — countersign Pav Law SOW",
         body: [
-          "Andrew Brown signed the fixed Pav Law SOW.",
+          "Kate,",
           "",
-          "Use this private, single-use link to review and countersign:",
+          "Countersign the Pav Law SOW here (private, single-use):",
+          "",
           counterUrl,
           "",
-          "Do not forward this link. The Andrew-signed PDF is attached.",
-          "Request: " + requestId
+          "Do not forward this link.",
+          "",
+          "Andrew Brown already signed for Pav Law and individually (joint and several).",
+          "Request: " + requestId,
+          "Andrew-signed PDF attached.",
+          "",
+          "— Gilbert Guide"
         ].join("\n"),
-        attachments: [clientPdf]
+        attachments: [clientPdf],
+        name: "Gilded Goose Limited",
+        replyTo: NOTIFY_EMAIL
       });
       return {
         ok: true,
@@ -578,18 +637,21 @@ function signSowRecord(data) {
     record.sheet.getRange(record.rowNumber, 24).setValue(archive.pdfId);
     record.sheet.getRange(record.rowNumber, 25).setValue(signedHash);
 
+    var finalAt = formatSowTimestamp(serverTimestamp);
     var finalText = [
       "The Pav Law Statement of Work is fully executed.",
       "",
       "Andrew Brown signed for Pav Law and individually (joint and several).",
       "Kate Stannard countersigned for Gilded Goose Limited.",
-      "Final server timestamp: " + serverTimestamp,
+      "Final server timestamp: " + finalAt,
       "Final SHA-256: " + signedHash,
       "",
       sowPaymentText(payload),
       "",
       "The final PDF is attached. Gilded Goose’s private Drive archive contains the Google Doc and PDF.",
-      "Request: " + requestId
+      "Request: " + requestId,
+      "",
+      "— Gilded Goose Limited"
     ].join("\n");
     var finalHtml = sowEmailHtml(
       "Fully executed — thank you",
@@ -597,7 +659,7 @@ function signSowRecord(data) {
         'The Pav Law Statement of Work is fully executed. Andrew Brown signed for Pav Law and individually (joint and several liability); ' +
         'Kate Stannard countersigned for Gilded Goose Limited.</p>' +
       '<p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:12px;color:#6b6b6b;line-height:1.5;">' +
-        'Final timestamp ' + htmlEscape(serverTimestamp) + ' · SHA-256 ' + htmlEscape(signedHash) + ' · Request ' + htmlEscape(requestId) + '</p>',
+        'Final timestamp ' + htmlEscape(finalAt) + ' · SHA-256 ' + htmlEscape(signedHash) + ' · Request ' + htmlEscape(requestId) + '</p>',
       sowPaymentTableHtml(payload) +
       '<p style="margin:12px 0;font-family:Arial,sans-serif;font-size:13px;color:#3b2d1a;line-height:1.55;"><strong>Pay off anytime.</strong> ' +
         htmlEscape(SOW_PAYOFF_NOTE) + '</p>' +
@@ -632,23 +694,21 @@ function buildInternalEmail(data, projects, noteBlock) {
   var depositLine = data.depositAmount != null
     ? "$" + data.depositAmount + " (QuickBooks deposit link sent to client)"
     : "—";
+  var submittedAt = data.submittedAt
+    ? formatSowTimestamp(data.submittedAt)
+    : formatSowTimestamp(new Date().toISOString());
   return [
     "Gilbert — project picker (INTERNAL — create full invoice from this)",
     "",
-    "Client: " + (data.submittedBy || "(not provided)"),
+    "Client: Pav Law Andrew Brown",
     "Email: " + (data.submitterEmail || "(not provided)"),
-    "Submitted: " + (data.submittedAt || new Date().toISOString()),
-    "",
-    "Goal: " + (data.goalText || "—"),
-    "Consulting budget filter: " + (data.filterConsultingBudget != null ? "$" + data.filterConsultingBudget : "—"),
-    "Media budget filter: " + (data.filterMediaBudget != null ? "$" + data.filterMediaBudget : "—"),
+    "Submitted: " + submittedAt,
+    "Submission IP: " + (data.publicIp || "unavailable"),
     "",
     "Gilbert chat transcript:",
     formatGilbertChat(data.gilbertChat),
     "",
-    "Retainer: " + (data.retainer ? "YES — " + data.retainerFee + "/mo (" + (data.retainerTitle || "Digital Ads") + ")" : "NO"),
-    "",
-    "Projects selected (bill on full invoice):",
+    "Projects selected:",
     formatProjectsList(projects),
     "",
     "Action items (from selections):",
@@ -696,13 +756,13 @@ function buildClientEmail(data, projects, noteBlock) {
   }
 
   return [
-    "Hi " + (data.submittedBy || "there") + ",",
+    "Hi Andrew,",
     "",
     "We received your Pav Law project selections. Summary:",
     "",
-    "Retainer: " + (data.retainer ? "YES — " + data.retainerFee + "/mo" : "NO"),
+    "Client: Pav Law Andrew Brown",
     "",
-    "Projects:",
+    "Projects selected:",
     formatProjectsList(projects),
     "",
     "Action items (from your selections):",
@@ -913,11 +973,99 @@ function handleMetricsFeedback(data) {
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
+function handleProjectRequest(data) {
+  setup();
+  var ss = getPickerSpreadsheet();
+  var sh = ss.getSheetByName(SHEET_NAME);
+  var projects = data.projects || [];
+  sh.appendRow([
+    new Date(),
+    "Pav Law Andrew Brown",
+    data.submitterEmail || "",
+    "",
+    "",
+    "",
+    data.retainer ? "YES" : "NO",
+    data.retainerFee || "",
+    projects.map(function(p) { return p.id; }).join(", "),
+    projects.map(function(p) { return p.title; }).join(" | "),
+    projects.map(function(p) { return p.fee; }).join(", "),
+    data.projectsSubtotalNum != null ? data.projectsSubtotalNum : "",
+    "PROJECT_REQUEST",
+    data.depositAmount != null ? data.depositAmount : "",
+    data.invoicePaymentTermsLabel || data.invoiceWriteupForKate || "",
+    "",
+    JSON.stringify(data.biweeklyPlans || []),
+    JSON.stringify(data)
+  ]);
+
+  var submittedDay = data.submittedAt
+    ? americanDateIso(String(data.submittedAt).slice(0, 10))
+    : americanDateIso(Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd"));
+  var body = [
+    "Pav Law · Gilbert Guide · Submit SOW",
+    "",
+    "A project plan is ready for kickoff and QuickBooks invoices.",
+    "",
+    "Client: Pav Law Andrew Brown",
+    "Submitted: " + submittedDay,
+    "Submission IP: " + (data.publicIp || "unavailable"),
+    "Contact email: " + (data.submitterEmail || "(not entered on confirm page)"),
+    ""
+  ];
+  if (data.sowNote) {
+    body.push("Note from Submit SOW:");
+    body.push(data.sowNote);
+    body.push("");
+  }
+
+  body.push("Projects selected:");
+  body.push(formatProjectsList(projects));
+  body.push("");
+
+  if (data.projectsSubtotal) {
+    body.push("Setup subtotal: " + data.projectsSubtotal);
+    body.push("");
+  }
+
+  body.push("QUICKBOOKS WRITE-UP");
+  body.push("------------------");
+  body.push(data.invoiceWriteupForKate || data.invoicePaymentTermsLabel || "(set start date and invoice count on each setup project)");
+  body.push("");
+  body.push("Next steps:");
+  body.push("1. Create QuickBooks invoices to match the 2-per-month schedule above.");
+  body.push("2. Confirm kickoff dates with Andrew.");
+  body.push("3. Use Submit selections & SOW on the confirm page when ready for the private signing link.");
+  body.push("");
+  body.push("— Gilded Goose Limited · Gilbert Guide");
+
+  var emailsSent = { internal: false };
+  try {
+    MailApp.sendEmail(
+      NOTIFY_EMAIL,
+      "Pav Law · Submit SOW · " + submittedDay,
+      body.join("\n")
+    );
+    emailsSent.internal = true;
+  } catch (mailErr) {
+    emailsSent.error = String(mailErr);
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({
+    ok: true,
+    type: "project_request",
+    emailsSent: emailsSent
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     if (data.type === "metrics_feedback") {
       return handleMetricsFeedback(data);
+    }
+    if (data.type === "project_request") {
+      return handleProjectRequest(data);
     }
     if (data.type === "sow_sign") {
       return ContentService.createTextOutput(JSON.stringify(signSowRecord(data)))
@@ -932,11 +1080,11 @@ function doPost(e) {
 
     sh.appendRow([
       new Date(),
-      data.submittedBy || "",
+      "Pav Law Andrew Brown",
       data.submitterEmail || "",
-      data.goalText || "",
-      data.filterConsultingBudget != null ? data.filterConsultingBudget : "",
-      data.filterMediaBudget != null ? data.filterMediaBudget : "",
+      "",
+      "",
+      "",
       data.retainer ? "YES" : "NO",
       data.retainerFee || "",
       projects.map(function(p) { return p.id; }).join(", "),
@@ -952,8 +1100,7 @@ function doPost(e) {
     ]);
     var signing = createSowSigningRequest(data);
 
-    var clientName = data.submittedBy || "Client";
-    var internalSubject = "Gilbert — invoice from this — " + clientName;
+    var internalSubject = "Gilbert — invoice from this — Pav Law Andrew Brown";
     var clientSubject = "Gilbert — project selections received — Gilded Goose";
 
     var emailsSent = { internal: false, client: false };

@@ -8,7 +8,7 @@
 | Duration weeks    | 4                      |
 | Invoice count     | 3                      |
 | Recommended start | 10/01/2026             |
-| Category          | Brand / Local Presence |
+| Category          | Branding               |
 | Campaign type     | Directories & Profiles |
 
 

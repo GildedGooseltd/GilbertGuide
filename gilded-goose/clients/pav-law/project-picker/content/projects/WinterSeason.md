@@ -24,7 +24,7 @@ Winter safety email reaches past clients when DUI and ticket risk rises in cold 
 
 Outbound calling on warm lists without raising ad spend. Ready-to-dial list and Andrew-approved script. Outcomes logged in HubSpot. Includes sealing and probation reengagement formerly on SealReeng: past clients who finished deferred judgment or probation get a sealing or early-termination offer while MyCase data is cleaned. Scripts and pricing from the June Client Reengagement PDF.
 
-Separate from WinterAds NTGUILT winter driving creative and HolidayAds holiday Search windows.
+Separate from HolidayAds seasonal Search and NTGUILT winter driving creative.
 
 ## HubSpot Application
 
