@@ -1,107 +1,93 @@
-# Digital Ad Enhancements
+# AdExpan
 
-| Field | Value |
-| -------------------------- | --------------------------------------------------------------------------- |
-| Priority | 3 |
-| Fee | 2200|
-| Ongoing fee | 500 |
-| Duration weeks | 4 |
-| Invoice count | 3 |
-| Recommended start | 10/01/2026 |
-| Recommended end | 10/29/2026 |
-| Category | Paid Media                                                                  |
-| Campaign type | Paid Search                                                                 |
-| Status | Recommended |
-| Publish status | published|
+
+| Field             | Value       |
+| ----------------- | ----------- |
+| Priority          | 1           |
+| Fee               | 3800        |
+| Ongoing fee       | 900         |
+| Duration weeks    | 8           |
+| Invoice count     | 4           |
+| Recommended start | 10/01/2026  |
+| Category          | Paid Media  |
+| Campaign type     | Paid Search |
+| Publish status    | unpublished |
+
 
 ---
 
-## Summary
+## Project Overview
 
-- Focused Search enhancements and pilots on the live account. Add on targeted campaigns and ad groups to get leads for additional legal service areas.
-- Creative and account upgrades for ads already running, including a priority Sex Crimes Defense Search pilot
-- Test and select the best campaigns for long-term performance
-- After that month, keepers add onto the Digital Ads Maintenance Retainer. Rough starter add: about $500/mo on top of the base retainer. Revisit after winners are proven
-- Expands Search beyond the current account structure without inventing a new media channel
-- Keyword and ad copy: tighten so spend maps to stronger ad strength and tracked calls
-- Call-only troubleshooting and CDL / federal-masking creative angles already in WIP
-- Content beyond RSAs: customer review responses and listing / profile copy that support paid and organic referral paths
-- Short non-directory listing shortlist only · directories live on LegalDirs · LinkedIn firm + Andrew on Lawyer Referral
+Grow Google ads into three new case types the firm wants more of: criminal mischief and property damage, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.
+
+## Front runners · campaign and ad group map
+
+Build Exact / Phrase hire terms with Eligible RSAs. Prefer new ad groups under live HS: DV · Military · NTGUILT when intent fits. Stand up a dedicated campaign when budget, geo, or creative must stay separate. Pause Enabled Broad on live HS before pouring spend into new Exact/Phrase.
+
+
+| Front runner      | Campaign options                                                        | Example ad groups                                                                                                                                       | Geo                                                                                                                                                                                           | Remove                                                                                |
+| ----------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Criminal Mischief | New CM Search · or CM ad groups under live HS                           | Criminal mischief · mischief lawyer · vandalism / property damage defense · damage to vehicle · damage to dwelling                                      | Presence · Springs heavy · college and trade-school geos where demand shows                                                                                                                   | Reuse defense stills now · new property-damage images later                           |
+| College Towns     | College geo campaign · or campus / town ad groups with location bid adj | Student criminal defense · college DUI / DWAI · party / underage stop · parents of college students · force / false-charge after a stop                 | Boulder · Fort Collins · Greeley · Pueblo · Grand Junction · UCCS / Colorado College · high-income CO college towns · trade schools electrician / welding / mechanics · no community colleges | Flag / patriotic graphics can travel · campus / parent / trade images later           |
+| Weapons / Guns    | Weapons Search · or Weapons ad groups under Assault / DV / Military HS  | Assault with a weapon · menacing with a weapon · illegal discharge into dwelling / occupied vehicle · reckless discharge · DV + firearm / PO gun stakes | Presence · El Paso / Fountain / Security heavy · Front Range where demand clears                                                                                                              | Severity stills now · customized weapons images later · no CCW or hunting-ticket lead |
+
+
+
+
+## Traffic and volume · from past Search data
+
+Same build pattern as live HS and the ended Military / Core DV / NTGUILT shells: multi–ad-group Search, Exact / Phrase, Eligible RSA, Presence, Max Conversions. Estimates below are incremental Search calls and clicks beyond today’s three live HS campaigns. Media is client budget. Lead→case uses Guide ~7.3%.
+
+Proof baselines used:
+
+| Source | Window | What it shows |
+| ------ | ------ | ------------- |
+| Guide channelMonths | Jun / Jul 2026 | Search 138 / 131 calls · spend $8,296 / $7,262 · ~$60 per Search call when funded |
+| Campaign report | All time ended shells | Military 208 calls / $11,500 · Core DV 15 / $2,136 · NTGUILT 78 / $4,535 |
+| Campaign report | Sep 1–15 2026 live HS | Military 23 / $3,778 · DV 2 / $1,904 · NTGUILT 3 / $1,695 · 28 calls / $7,377 |
+| Ad group report | All time | Assault/Menacing Military AG 213 clicks / $3,200 · Tickets 195 / $3,062 · DUI 225 / $1,195 · DV Defense 254 / $2,136 |
+
+Lane estimates if each front runner is funded like a current campaign / AG cluster:
+
+| Front runner | Analog from past | Learn months 1–2 | Steady after keepers | Learn media / mo | Steady media / mo |
+| ------------ | ---------------- | ---------------- | -------------------- | ---------------- | ----------------- |
+| Criminal Mischief | Narrower than DV · below Assault AG volume | 4–12 Search calls · ~80–250 clicks | 10–25 calls / mo | $900–1,500 | $1,200–2,500 |
+| College Towns | Geo + student / parent / DUI-adjacent · semester spikes | 8–20 calls · higher in move-in / party weeks | 18–40 calls / mo | $1,500–2,500 | $2,000–3,500 |
+| Weapons / Guns | Assault / Menacing AG share · fee ~$7,721 context | 8–18 calls | 20–40 calls / mo | $1,200–2,400 | $2,000–4,000 |
+| Three lanes combined | Incremental on top of live HS | ~20–50 Search calls / mo | ~50–100 Search calls / mo | ~$4,000–6,500 | ~$5,000–10,000 |
+
+At ~7.3% lead→case: learn window about 1–4 incremental cases / mo · steady keepers about 4–7 incremental cases / mo when answer rate holds. College Towns swings with the school calendar. Weapons and CM stay closer to Assault / DV seasonality. Early weeks often look like Sep live HS: higher CPC while Smart Bidding learns and search volume is thin.
+
+## Scope for pricing · customize before quote
+
+Starter package covers planning plus build for the three front runners as one expansion project. Structure matches current campaigns / ad groups. Split or add lanes when Andrew wants separate cards.
+
+
+| Package piece                 | Included in $3,800 setup                                                   | Customize / add-on                                                          |
+| ----------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Keyword + RSA Editor packs    | Criminal Mischief · College Towns · Weapons / Guns Exact/Phrase            | Extra practice lanes priced separately                                      |
+| Campaign / ad group structure | New AGs under live HS and/or up to one dedicated campaign per front runner | Extra dedicated campaigns or geos                                           |
+| Geo / bid adj                 | Presence + college-town location set from service-area doc                 | Ski corridor / holiday geos stay on HolidayAds                              |
+| Learning window               | About 8 weeks low budget learn                                             | Faster ramp = higher media, not higher setup by default                     |
+| Creative                      | RSA text + reuse existing images                                           | New custom image set per lane · quote separately with AdCreative / pipeline |
+| Tracking                      | Practice tags and UTMs so CM · College · Weapons can be measured           | HubSpot landing pages if needed · see HubSpot parts                         |
+| After keepers                 | Fold winners into Digital Ads Maintenance Retainer                         | ~$900/mo add if all three stay · or ~$300/mo per live expansion lane        |
+
+
+Out of this card: concealed carry / hunting as lead · community-college-only geos · med-mal / PI Search · survivor-site ads · AdultAds.
+
+## HubSpot parts
+
+- Marketing Hub · Google Ads / lead-source sync when campaigns are connected
+- CRM contacts · new call and form leads from pilots
+- Landing pages · dedicated pages for practice-area pilots when a front runner needs its own URL
+
+
 
 ## Fee note
 
-Setup is $2,200 for about one month of enhancement and pilot work. Rough ongoing add after keepers are selected: $500/mo into Digital Ads Maintenance Retainer scope. Media spend stays client budget. Starter estimate only. Adjust after the first keepers are locked.
+GGL setup $3,800 for about eight weeks across three campaign-like front runners. Revised up from $2,200 because scope is three full Search structures, not one pilot lane.
 
-## KPI links
+Ongoing retainer add after keepers are selected: ~$900/mo on the $3,000/mo Digital Ads Maintenance base if all three stay Enabled. Or ~$300/mo per live expansion lane if only some keep. Replaces the old ~$500/mo single-pilot add.
 
-| Show | Name |
-| ---- | ---- |
-| [x] | Total leads |
-| [ ] | New cases |
-| [x] | Key Channel Activity |
-| [ ] | Pipeline / CRM completeness |
-| [ ] | Spend Waste |
-| [x] | Campaign cost efficiency |
-| [ ] | Intake conversion |
-| [ ] | Lead channel mix |
-| [ ] | Organic / local search presence |
-| [ ] | Avg. Cost per Call |
-| [x] | Creative / channel response |
-| [x] | Cost per lead |
-| [ ] | Reviews by channel |
-| [ ] | Referral Network |
-| [ ] | Website / SEO contribution |
-| [ ] | Missed Opportunity |
-| [ ] | CRM follow-up discipline |
-| [x] | Answered Calls |
-| [ ] | Speed to lead |
-| [ ] | Intake coverage / after-hours |
-| [ ] | Ops backlog / open tasks |
-| [ ] | Avg case fee |
-
-## Value icons
-
-| Show | Name |
-| ---- | ---- |
-| [ ] | Foundation |
-| [ ] | Retainer |
-| [x] | Leads |
-| [ ] | CRM |
-| [ ] | HubSpot |
-| [ ] | SEO |
-| [ ] | Referrals |
-| [x] | Analytics |
-| [ ] | Finance |
-| [x] | Intake |
-| [x] | Creative |
-
-## WIP
-
-- Call-only campaign troubleshooting
-- Ad creative for CDL-licensed drivers with personal tickets (federal masking can force court appearances)
-- Sex Crimes Defense Search pilot: exact/phrase high-intent keywords, discreet RSA copy, dedicated landing page, call tracking, and negative-keyword QA
-- Keep Sex Crimes Defense off Display and broad match; review sensitive-policy language before launch
-- Review-response content templates for Yelp and other live profiles
-- Shortlist 2–3 non-Google referral / listing platforms to test · add winners to the channel brainstorm proposal
-- After keepers are selected: quote the Digital Ads Maintenance Retainer add and move long-term care off this setup card
-
-## Sex Crimes Defense recommendation
-
-| Signal | Current data |
-| --- | --- |
-| Mean quoted fee | $9,500 — highest measured practice area; ~70% above firm mean ($5,587) |
-| 2025 YTD cases (Jan–Jun) | 13 |
-| 2026 YTD cases (Jan–Jun) | 5 |
-| YTD change | −62% · 8 fewer cases |
-| Directional value gap | $76,000 quoted fees · $60,800 at the 80% collection model |
-| Data caution | Fee sample is n=6; QuickBooks collections are needed before scaling past the pilot |
-
-Recommendation: move a controlled share of new Search testing toward Sex Crimes Defense. Build a dedicated, discreet landing page and exact/phrase campaign first; judge the pilot on qualified calls, signed cases, and collected revenue—not clicks alone.
-
-## Completed
-
-- Search campaign planning across practice areas
-- Keyword and description rewrite for ad strength
-- Paid search optimization and daily monitoring setup
-
----
+Client media during the learn window: plan about $4,000–6,500/mo across the three lanes at low daily budgets, or roughly $8,000–13,000 over eight weeks. Combined with GGL setup, first-window cash is about $12,000–17,000 before any steady-state raise. Media stays client budget. Adjust after Call details and SIS are steady, or if Andrew splits lanes into separate project cards.
