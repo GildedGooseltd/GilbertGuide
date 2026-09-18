@@ -1,24 +1,26 @@
-# Digital Presence Refresh
+# Digital Brand Refresh
 
-| Field             | Value                   |
-| ----------------- | ----------------------- |
-| Priority          | 15                      |
-| Fee               | 2200                    |
-| Category          | Brand / Local Presence  |
-| Campaign type     | Profile Audit & Refresh |
-| Publish status    | published               |
+
+| Field         | Value                   |
+| ------------- | ----------------------- |
+| Priority      | 7                       |
+| Fee           | 2200                    |
+| Category      | Brand / Local Presence  |
+| Campaign type | Profile Audit & Refresh |
+
 
 ---
 
 ## Project Overview
 
-Refreshed bios, practice areas, photos, and CTAs for firm and both attorneys (Yelp, Justia, etc.). Unique UTM-tagged website links per profile so GA4/HubSpot can rank which platforms earn traffic. Merge Andrew Brown and Pav Law profiles. Review FindLaw / Justia contracts, services, and contract terms. Delete Facebook and Instagram pages and remake a business account for ads. Yelp review ask — referral email sent to past clients for more Yelp reviews while promo runs. Double-check HubSpot setup and start getting the team to use the phone and app daily. After Casey is trained on answering calls, route Yelp leads more easily to a HubSpot number (gate on HsVoip).
+Refresh firm and attorney presence for Pav Law, Andrew, and Casey. Platforms in this project: Google Business Profile, Facebook, Instagram, firm and attorney bios, and the Yelp profile and review-ask layer.
 
-## HubSpot parts
+Google Business Profile: update hours, services, photos, and posts so they match intake. Merge the Andrew Brown and Pav Law listings and close duplicates. Facebook and Instagram: remove the old pages and set up a clean business account for ads. Bios: rewrite practice areas, photos, and CTAs for the firm and both attorneys, each with its own tracked website link so GA4 and HubSpot can show which profile drove the visit. Yelp: keep the listing current and run the past-client review ask. Yelp ad spend stays on the Yelp Ads project.
+
+After the profile work: confirm HubSpot listing fields and source tracking, push daily phone and app use, and move Yelp leads onto a HubSpot number once Casey is call-trained and phone setup is ready.
+
+## HubSpot Application
 
 - CRM · profile and listing fields kept accurate
-- Marketing Hub · source tracking where directory traffic converts
+- Marketing Hub · source tracking where profile traffic converts
 
-## Fee note
-
-Setup fee $2,200.

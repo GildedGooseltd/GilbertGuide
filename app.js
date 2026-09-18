@@ -808,6 +808,47 @@
     return { min: toIsoDate(now), max: toIsoDate(max) };
   }
 
+  /** Quote calculator start dates: 15th and 30th, September–December 2026. */
+  const CALC_START_DATE_OPTIONS = [
+    "2026-09-15",
+    "2026-09-30",
+    "2026-10-15",
+    "2026-10-30",
+    "2026-11-15",
+    "2026-11-30",
+    "2026-12-15",
+    "2026-12-30"
+  ];
+
+  function snapIsoToCalcStartOption(iso) {
+    if (iso && CALC_START_DATE_OPTIONS.includes(iso)) return iso;
+    const t = parseIsoDate(iso)?.getTime();
+    if (t == null) {
+      const today = toIsoDate(new Date());
+      return CALC_START_DATE_OPTIONS.find(o => o >= today) || CALC_START_DATE_OPTIONS[0];
+    }
+    let best = CALC_START_DATE_OPTIONS[0];
+    let bestDist = Infinity;
+    for (const opt of CALC_START_DATE_OPTIONS) {
+      const ot = parseIsoDate(opt)?.getTime();
+      if (ot == null) continue;
+      const dist = Math.abs(ot - t);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = opt;
+      }
+    }
+    return best;
+  }
+
+  function calcStartDateSelectHtml(projectId, title, selectedIso) {
+    const selected = snapIsoToCalcStartOption(selectedIso || "");
+    const opts = CALC_START_DATE_OPTIONS.map(iso =>
+      `<option value="${iso}"${iso === selected ? " selected" : ""}>${americanDate(iso)}</option>`
+    ).join("");
+    return `<select class="calc-date-input" data-project-id="${escapeHtml(projectId)}" data-date-field="start" aria-label="Start date for ${escapeHtml(title)}">${opts}</select>`;
+  }
+
   function addDaysIso(iso, days) {
     const d = parseIsoDate(iso);
     if (!d) return "";
@@ -906,12 +947,12 @@
     if (changedField === "start" && dates.start) {
       setProjectDateField(id, "end", clampIsoToCalcBounds(addDaysIso(dates.start, days)));
     } else if (changedField === "end" && dates.end) {
-      setProjectDateField(id, "start", clampIsoToCalcBounds(addDaysIso(dates.end, -days)));
+      setProjectDateField(id, "start", snapIsoToCalcStartOption(addDaysIso(dates.end, -days)));
     } else if (changedField === "duration") {
       if (dates.start) {
         setProjectDateField(id, "end", clampIsoToCalcBounds(addDaysIso(dates.start, days)));
       } else if (dates.end) {
-        setProjectDateField(id, "start", clampIsoToCalcBounds(addDaysIso(dates.end, -days)));
+        setProjectDateField(id, "start", snapIsoToCalcStartOption(addDaysIso(dates.end, -days)));
       }
     }
   }
@@ -964,8 +1005,6 @@
     if (!ranked.length) {
       return `<p class="kpi-dashboard-note">No projects in the plan yet. Check projects below or finish the survey.</p>`;
     }
-    const { min: dateMin, max: dateMax } = calcDateBounds();
-
     const bodyRows = ranked.map(({ item }) => {
       const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
       const required = isRequiredMaintenance(item, isRetainer);
@@ -983,10 +1022,8 @@
       const invCount = monthlyOnly ? null : getProjectInvoiceCount(item);
       const dateCells = monthlyOnly
         ? `<td class="col-start"><span class="payment-date-na">—</span></td>
-           <td class="col-end"><span class="payment-date-na">—</span></td>
            <td class="col-invoices"><span class="payment-date-na">—</span></td>`
-        : `<td class="col-start"><input type="date" class="calc-date-input" data-project-id="${escapeHtml(item.id)}" data-date-field="start" min="${dateMin}" max="${dateMax}" value="${escapeHtml(dates.start)}" aria-label="Start date for ${escapeHtml(item.title)}"></td>
-           <td class="col-end"><input type="date" class="calc-date-input" data-project-id="${escapeHtml(item.id)}" data-date-field="end" min="${dateMin}" max="${dateMax}" value="${escapeHtml(dates.end)}" aria-label="End date for ${escapeHtml(item.title)}"></td>
+        : `<td class="col-start">${calcStartDateSelectHtml(item.id, item.title, dates.start)}</td>
            <td class="col-invoices"><input type="number" class="calc-invoice-count-input" data-project-id="${escapeHtml(item.id)}" min="1" max="${invMax}" step="1" value="${invCount != null ? escapeHtml(String(invCount)) : ""}" aria-label="Number of invoices for ${escapeHtml(item.title)}" title="Number of invoices (1–${invMax}). Set per project."></td>`;
       return `<tr data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer || monthlyOnly}" data-required="${required}">
         <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
@@ -1004,12 +1041,11 @@
       <thead>
         <tr>
           <th class="col-score" scope="col" title="Andrew Priority Groups 1-4">Priority Group</th>
-          <th class="col-select" scope="col">Add</th>
+          <th class="col-select" scope="col" title="Add to plan"><span class="calc-cart-th" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.25"/><circle cx="18" cy="20" r="1.25"/><path d="M3 4h2l1.4 9.2a2 2 0 0 0 2 1.7h8.4a2 2 0 0 0 2-1.6L20 8H7"/></svg></span><span class="sr-only">Add</span></th>
           <th class="col-project" scope="col">Project</th>
           <th class="col-quote" scope="col">Quote</th>
           <th class="col-start" scope="col">Start</th>
-          <th class="col-end" scope="col">End</th>
-          <th class="col-invoices" scope="col" title="Number of biweekly invoices (1–max for this project's dates). Set per project.">Invoices (bi-weekly)</th>
+          <th class="col-invoices" scope="col" title="Number of biweekly invoices (1–max for this project's dates). Set per project.">Invoices<span class="col-invoices-sub">bi-weekly</span></th>
           <th class="col-terms" scope="col">Payment terms</th>
         </tr>
       </thead>
@@ -1026,7 +1062,7 @@
     const head = `<div class="do-next-head">
       <div class="do-next-head-copy">
         <h3>Project Quote Calculator</h3>
-        <p class="do-next-subhead">Select the project checkbox to kick off a project. Set the start date as well as the number of invoices the sum should be divided into. End date and payment terms options will vary based on size of the project.</p>
+        <p class="do-next-subhead">Select the checkbox to add a project to your cart. Then pick the project start date and how many invoices you would like to receive. Payment term length varies by project, based on how long that work takes to finish.</p>
       </div>
       <div class="do-next-head-actions">
         <button type="button" class="btn btn-primary" id="calc-send-plan-summary">Submit SOW</button>
@@ -1053,17 +1089,17 @@
     const panel = document.getElementById("do-next-panel");
     if (!panel) return;
     panel.querySelectorAll(".calc-date-input").forEach(input => {
-      const { min, max } = calcDateBounds();
-      input.min = min;
-      input.max = max;
-      if (input.value) input.value = clampIsoToCalcBounds(input.value);
       if (input.dataset.calcBound === "1") return;
       input.dataset.calcBound = "1";
       input.addEventListener("change", () => {
         const id = input.dataset.projectId;
         const field = input.dataset.dateField;
         if (!id || !field) return;
-        setProjectDateField(id, field, clampIsoToCalcBounds(input.value));
+        const next = field === "start"
+          ? snapIsoToCalcStartOption(input.value)
+          : clampIsoToCalcBounds(input.value);
+        if (field === "start" && input.value !== next) input.value = next;
+        setProjectDateField(id, field, next);
         backfillProjectDates(id, field);
         const dates = getProjectDateRange(id);
         if (dates.start && dates.end && dates.end < dates.start) {
@@ -1372,7 +1408,10 @@
     const rec = recommendedProjectDates(item);
     let changed = false;
     if (!row.start && rec.start) {
-      row.start = rec.start;
+      row.start = snapIsoToCalcStartOption(rec.start);
+      changed = true;
+    } else if (row.start && !CALC_START_DATE_OPTIONS.includes(row.start)) {
+      row.start = snapIsoToCalcStartOption(row.start);
       changed = true;
     }
     if (!row.end && rec.end) {
@@ -4068,7 +4107,256 @@
   }
 
   function projectFocusArea(item) {
-    return [item?.category, item?.campaignType].filter(Boolean).join(" · ") || "—";
+    const parts = [];
+    const cat = item?.category && String(item.category).trim();
+    if (cat) parts.push(cat);
+    const camp = item?.campaignType && String(item.campaignType).trim();
+    if (camp) {
+      const hay = `${item.title || ""} ${item.shortTitle || ""}`.toLowerCase();
+      const needle = camp.toLowerCase();
+      const alreadyInTitle = hay.includes(needle) || hay.includes(needle.replace(/ & /g, " and "));
+      if (!alreadyInTitle) parts.push(camp);
+    }
+    return parts.join(" · ") || "—";
+  }
+
+  function projectOverviewTextBlob(item) {
+    return [
+      item?.title,
+      item?.shortTitle,
+      item?.category,
+      item?.campaignType,
+      item?.tldr,
+      item?.description,
+      ...(Array.isArray(item?.valueAdded) ? item.valueAdded : [])
+    ].filter(Boolean).join(" ").toLowerCase();
+  }
+
+  /** HubSpot surfaces this project touches. Explicit item.hubSpotParts wins when present. */
+  function projectHubSpotParts(item) {
+    if (Array.isArray(item?.hubSpotParts) && item.hubSpotParts.length) {
+      return item.hubSpotParts.map(s => String(s).trim()).filter(Boolean);
+    }
+    const byId = {
+      AdEnhance: [
+        "Marketing Hub · Google Ads / lead-source sync when campaigns are connected",
+        "CRM contacts · new call and form leads from pilots land for follow-up",
+        "Landing pages · Sex Crimes Defense and other pilots that need a dedicated page"
+      ],
+      Yelpv1: [
+        "CRM contacts · Yelp leads and messages logged when the channel number is live",
+        "Tasks / workflows · same-day callback tasks once intake routing is set",
+        "Marketing Hub · channel source tracking so Yelp can be judged next to Search and LSA"
+      ],
+      LegalDirs: [
+        "CRM · optional profile / listing URLs on contact or company records",
+        "No HubSpot CMS or Service Hub build in this project"
+      ],
+      DigProf: [
+        "CRM · profile and listing fields kept accurate for brand presence",
+        "Marketing Hub · source tracking where directory traffic converts"
+      ],
+      OpsDash: [
+        "Reporting · KPI and ops views that may pull HubSpot aggregates",
+        "CRM hygiene · fields and owners that keep dashboard numbers trustworthy"
+      ],
+      HsMktExpand: [
+        "Marketing Hub · ads connections, lead source, and quality properties",
+        "CRM · contacts, custom properties, and reporting data sources",
+        "Workflows · follow-up tasks tied to form submits and inbound leads"
+      ],
+      HsVoip: [
+        "Calling · logged calls and missed-call tasks",
+        "Service / CRM · tickets or tasks from unanswered lines",
+        "Workflows · same-day callback ownership"
+      ],
+      DataMgmt: [
+        "CRM · contact and property cleanup",
+        "Imports · contact and deal field mapping",
+        "Reporting · fields the team needs before MyCase can be retired"
+      ]
+    };
+    if (byId[item?.id]) return byId[item.id];
+
+    const blob = projectOverviewTextBlob(item);
+    const parts = [];
+    const push = s => { if (s && !parts.includes(s)) parts.push(s); };
+    if (/marketing hub|ads connection|google ads|lead.?source|utm|paid search|lsa|yelp/.test(blob)) {
+      push("Marketing Hub · ads / lead-source tracking");
+    }
+    if (/service hub|ticket|queue/.test(blob)) push("Service Hub · tickets and queues");
+    if (/cms|hubspot cms|landing page|website rebuild|website ux/.test(blob)) {
+      push("CMS / landing pages · HubSpot web pages");
+    }
+    if (/form|callback|intake/.test(blob)) push("Forms · submit capture and intake routing");
+    if (/workflow|task|same-day/.test(blob)) push("Workflows · tasks and ownership");
+    if (/crm|contact|propert|pipeline|import|data hygien/.test(blob)) {
+      push("CRM · contacts, properties, and pipeline");
+    }
+    if (/report|dashboard|kpi|ops dash/.test(blob)) push("Reporting · HubSpot-backed metrics where wired");
+    if (/voip|call log|missed.?call|calling/.test(blob)) push("Calling · logged calls and missed-call follow-up");
+    if (itemHasHubspotIcon(item) && !parts.length) {
+      push("HubSpot CRM touchpoints as needed for lead capture and follow-up");
+    }
+    if (!parts.length) {
+      push("No HubSpot build in scope for this card · work stays on ads, listings, or ops outside a CRM package");
+    }
+    return parts;
+  }
+
+  /** Roles / people this project is likely to change day-to-day work for. */
+  function projectEmployeesImpacted(item) {
+    if (Array.isArray(item?.employeesImpacted) && item.employeesImpacted.length) {
+      return item.employeesImpacted.map(s => String(s).trim()).filter(Boolean);
+    }
+    const byId = {
+      AdEnhance: [
+        "Andrew Brown · approve practice-area pilots, creative tone, and budget shifts",
+        "Casey · answer and route new Search / call volume from enhancements",
+        "Gilded Goose · build, QA, and optimize campaigns and landing paths"
+      ],
+      Yelpv1: [
+        "Casey · Yelp messages and calls once the channel line is live",
+        "Andrew Brown · review responses and listing accuracy",
+        "Romina · payment follow-up if Yelp leads convert to retained matters"
+      ],
+      LegalDirs: [
+        "Andrew Brown · attorney profile accuracy and bio approvals",
+        "Casey · intake paths that still come from directory referrals",
+        "Gilded Goose · directory updates and keep / cut decisions"
+      ],
+      DigProf: [
+        "Andrew Brown · brand and profile sign-off",
+        "Casey · inbound from refreshed listings",
+        "Front desk / admin · consistent NAP and hours across profiles"
+      ],
+      OpsDash: [
+        "Andrew Brown · goals, cash, and channel decisions from the dash",
+        "America · ops QA and checklist ownership as management track grows",
+        "Romina · collections pace and AR views when surfaced",
+        "Casey · intake volume and answer-rate context"
+      ],
+      HsMktExpand: [
+        "Casey · form owner and same-day callback discipline",
+        "Andrew Brown · which fields and sources matter for hiring decisions",
+        "America · CRM hygiene and process spot-checks",
+        "Gilded Goose · property schema, ads sync, and reporting wiring"
+      ],
+      HsVoip: [
+        "Casey · primary answered-call coverage and app use",
+        "Romina · overflow / backup routing when assigned",
+        "America · phone cover checklists and escalation",
+        "Andrew Brown · line ownership and budget gates tied to answer rate"
+      ],
+      DataMgmt: [
+        "Casey · cleaner contact records for intake follow-up",
+        "Romina · payment and matter fields that collections needs",
+        "America · ops field ownership and cleanup checklists",
+        "Andrew Brown · which legacy MyCase fields must survive the move"
+      ]
+    };
+    if (byId[item?.id]) return byId[item.id];
+
+    const blob = projectOverviewTextBlob(item);
+    const roles = [];
+    const push = s => { if (s && !roles.includes(s)) roles.push(s); };
+    push("Andrew Brown · owner sign-off on scope, spend, and public-facing copy");
+    if (/intake|form|call|yelp|lsa|search|lead|voip|answer/.test(blob)) {
+      push("Casey · intake, callbacks, and first response");
+    }
+    if (/collect|payment|ar |trust|invoice|fee/.test(blob)) {
+      push("Romina · collections and payment follow-up");
+    }
+    if (/ops|dashboard|admin|process|checklist|hygien|crm|hubspot|data/.test(blob)) {
+      push("America · ops QA and process ownership");
+    }
+    if (/ads|search|display|creative|campaign|yelp|director|seo|website|landing/.test(blob)) {
+      push("Gilded Goose · campaign and channel execution");
+    }
+    if (roles.length < 2) push("Front desk / admin · schedule and client-facing consistency");
+    return roles;
+  }
+
+  function projectOverviewSummaryHtml(item) {
+    const client = Array.isArray(item?.clientSummary)
+      ? item.clientSummary.map(b => String(b).trim()).filter(Boolean)
+      : [];
+    const bullets = client.length ? client : conciseDescriptionBullets(item);
+    if (!bullets.length) {
+      const tldr = itemTldr(item);
+      return tldr ? `<p>${escapeHtml(tldr)}</p>` : `<p>Summary pending.</p>`;
+    }
+    const long = bullets.slice(0, 8);
+    return `<ul>${long.map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`;
+  }
+
+  function projectOverviewValueHtml(item) {
+    const bullets = valueAddedBullets(item)
+      .map(b => String(b).replace(/^Deliverable:\s*/i, "").trim())
+      .filter(Boolean);
+    const icons = typeof getValueIcons === "function" ? getValueIcons(item) : [];
+    const iconLine = icons.length
+      ? `<p>Value themes: ${escapeHtml(icons.map(i => i.label || i.id).join(" · "))}</p>`
+      : "";
+    if (!bullets.length) {
+      return `${iconLine}<p>${escapeHtml(itemTldr(item) || "Value detail pending.")}</p>`;
+    }
+    return `${iconLine}<ul>${bullets.slice(0, 10).map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`;
+  }
+
+  function closeProjectOverviewPopup() {
+    const popup = document.getElementById("project-overview-popup");
+    const backdrop = document.getElementById("project-overview-backdrop");
+    if (popup) popup.hidden = true;
+    if (backdrop) backdrop.hidden = true;
+  }
+
+  function openProjectOverviewPopup(id) {
+    const item = id === "RETAINER" || id === "retainer"
+      ? (typeof RETAINER !== "undefined" ? RETAINER : findProjectById(id))
+      : findProjectById(id);
+    if (!item) return;
+    const popup = document.getElementById("project-overview-popup");
+    const backdrop = document.getElementById("project-overview-backdrop");
+    const titleEl = document.getElementById("project-overview-title");
+    const metaEl = document.getElementById("project-overview-meta");
+    const costEl = document.getElementById("project-overview-cost");
+    const bodyEl = document.getElementById("project-overview-body");
+    if (!popup || !titleEl || !bodyEl) return;
+
+    const group = priorityGroupLabel(item);
+    const focus = projectFocusArea(item);
+    const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
+    const metaParts = [];
+    if (group && group !== "—") metaParts.push(`P${group}`);
+    if (focus && focus !== "—") metaParts.push(focus);
+    titleEl.textContent = item.title || "Project";
+    if (metaEl) metaEl.textContent = metaParts.join(" · ");
+    if (costEl) costEl.textContent = projectQuoteLabel(item, isRetainer);
+
+    const hub = projectHubSpotParts(item);
+    const people = projectEmployeesImpacted(item);
+    bodyEl.innerHTML = `
+      <div class="project-overview-section">
+        <h4>Project summary</h4>
+        ${projectOverviewSummaryHtml(item)}
+      </div>
+      <div class="project-overview-section">
+        <h4>Value for Pav Law</h4>
+        ${projectOverviewValueHtml(item)}
+      </div>
+      <div class="project-overview-section">
+        <h4>HubSpot Application</h4>
+        <ul>${hub.map(h => `<li>${escapeHtml(h)}</li>`).join("")}</ul>
+      </div>
+      <div class="project-overview-section">
+        <h4>Employees it may impact</h4>
+        <ul>${people.map(p => `<li>${escapeHtml(p)}</li>`).join("")}</ul>
+      </div>`;
+
+    closeHelpPopup();
+    if (backdrop) backdrop.hidden = false;
+    popup.hidden = false;
   }
 
   function projectTileImageSrc(item) {
@@ -4084,7 +4372,8 @@
       WinterAds: "assets/gigi-celebrating.png",
       DigProf: "assets/pav-law-shield.svg",
       DataMgmt: "assets/gigi-lightbulb-idea.png",
-      OpsDash: "assets/admin-dashboard.svg",
+      OpsDash: "assets/systems-admin-tile.svg",
+      TsMgmt: "assets/systems-admin-tile.svg",
       AdultAds: "assets/gigi-lightbulb-idea.png"
     };
     return byId[item?.id] || "assets/gg-shield-emblem.png";
@@ -4120,7 +4409,7 @@
     const selFirst = isFirstSelected ? " selected-first" : "";
     const reqClass = required ? " tile-required" : "";
     return `
-      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" role="listitem">
+      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" role="button" tabindex="0" aria-label="Open overview for ${escapeHtml(item.title)}">
         <div class="project-tile-media">
           <img class="project-tile-image" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="360">
           ${brandLogoHtml}
@@ -4296,7 +4585,7 @@
       });
     });
 
-    root.querySelectorAll(".card").forEach(card => {
+    root.querySelectorAll(".card:not(.project-tile)").forEach(card => {
       if (card.dataset.cardBound) return;
       card.dataset.cardBound = "1";
       card.addEventListener("click", e => {
@@ -4328,6 +4617,22 @@
           renderAllCards();
         });
       }
+    });
+
+    root.querySelectorAll(".project-tile").forEach(tile => {
+      if (tile.dataset.tileOverviewBound) return;
+      tile.dataset.tileOverviewBound = "1";
+      const open = () => openProjectOverviewPopup(tile.dataset.id);
+      tile.addEventListener("click", e => {
+        e.preventDefault();
+        open();
+      });
+      tile.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open();
+        }
+      });
     });
   }
 
@@ -5654,10 +5959,16 @@
     if (e.target.closest("#help-popup-close") || e.target.id === "help-popup-backdrop") {
       closeHelpPopup();
     }
+    if (e.target.closest("#project-overview-close") || e.target.id === "project-overview-backdrop") {
+      closeProjectOverviewPopup();
+    }
   }, true);
 
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeHelpPopup();
+    if (e.key === "Escape") {
+      closeHelpPopup();
+      closeProjectOverviewPopup();
+    }
   });
 
   document.getElementById("toc-expand-row")?.addEventListener("click", e => {

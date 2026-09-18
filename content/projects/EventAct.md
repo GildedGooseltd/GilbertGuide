@@ -6,7 +6,6 @@
 | Fee               | 2500             |
 | Category          | Events           |
 | Campaign type     | Event Activation |
-| Publish status    | published        |
 
 ---
 
@@ -14,7 +13,7 @@
 
 Turns paid PPIR/ASCEND access into lead capture — not just brand presence. Inventory, booth, QR, and follow-up inside the existing ~$20k monthly mix. Protects ~$20k PPIR sponsorship from awareness-only waste.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope
 

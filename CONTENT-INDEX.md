@@ -42,7 +42,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | Main headline           | `index.html` | `.cockpit-title span` — “Operations Dashboard”; Gold       |
 | Subtitle + how-to intro | `index.html` | `.cockpit-subtitle`, `.cockpit-intro`, `.cockpit-howto`                  |
 | Default tab on load     | `app.js`     | `activeViewTab: "kpis"` — KPIs panel visible first                       |
-| Tab: Guide              | `index.html` | `button[data-view="picker"]` — **Under construction** overlay on cart, outlines, Review Plan |
+| Tab: Project Picklist   | `index.html` | `button[data-view="picker"]` — cart, outlines, Review Plan |
 | Tab: KPIs               | `index.html` | `button[data-view="kpis"]` — default active; charts at bottom of panel   |
 | Tab: Data               | `index.html` | `button[data-view="data"]`                                               |
 | Tab: Results            | `index.html` | `button[data-view="impact"]` — **Under construction** + project-tied cards |
@@ -66,7 +66,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | “Project Outlines” zone title                      | `index.html`                                      | `h2.picker-zone-title` in `.picker-zone-outlines`                           |
 | “Project Outlines” table title                     | `index.html`                                      | `.project-outlines-title`                                                   |
 | Table hint (count / selected)                      | `app.js`                                          | `renderProjectToc()` → `#toc-summary-hint`                                  |
-| “Filter by value” icon key                         | `app.js`                                          | `VALUE_ICON_DEFS` + `renderValueIconKey()`                                  |
+| “Filter by value” icon key                         | retired                                           | Removed from Guide Project Outlines (`#value-icon-key`)                     |
 | Default package intro line                         | `app.js`                                          | `renderPackageIntro()` ← `content/settings.md` **Default package label**    |
 | Package project IDs                                | `content/settings.md`                             | **Default package projects**                                                |
 | Table headers: Priority, Project, Value add, Icons | `index.html`                                      | `.toc-table thead`                                                          |
@@ -226,7 +226,7 @@ After markdown edits: `npm run build` (or `npm run watch`).
 | [content/retainer.md](content/retainer.md)           | Retainer project card                                                       |
 | [content/projects/AdEnhance.md … AdultAds.md](content/projects/) | Campaign / project cards                                                    |
 | [content/projects/HsPipe.md … DigProf.md](content/projects/) | Infrastructure / marketing cards                                            |
-| [content/projects/DataMgmt.md](content/projects/DataMgmt.md)   | Monthly dashboard maintenance                                               |
+| [content/projects/OpsDash.md](content/projects/OpsDash.md)     | Platform Management · MyCase · Suite · Ops Dashboard · new-tool testing |
 | [content/_TEMPLATE.md](content/_TEMPLATE.md)         | Copy for new projects                                                       |
 
 

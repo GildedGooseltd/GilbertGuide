@@ -6,7 +6,6 @@
 | Fee               | 2200              |
 | Category          |                   |
 | Campaign type     | Networking Skills |
-| Publish status    | published         |
 | Parent            | LawyerRef         |
 
 ---
@@ -15,7 +14,7 @@
 
 Speech and communications coaching for individuals and for the team so networking conversations turn into referral relationships Supports the lawyer-to-lawyer network and account-based campaigns with sharper asks and follow-up Work Complements Attorney Network In And Out; not a substitute for HubSpot tracking or ABM outreach.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
 

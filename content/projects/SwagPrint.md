@@ -1,23 +1,24 @@
 # Design Printables, Swag & Apparel
 
-| Field             | Value                                               |
-| ----------------- | --------------------------------------------------- |
-| Priority          | 25                                                  |
-| Fee               | 1200                                                |
-| Category          | Brand / Merch                                       |
-| Campaign type     | Printables + Internal Store + Conversation Starters |
-| Publish status    | published                                           |
+
+| Field         | Value                                               |
+| ------------- | --------------------------------------------------- |
+| Priority      | 6                                                   |
+| Fee           | 1200                                                |
+| Category      | Brand / Merch                                       |
+| Campaign type | Printables + Internal Store + Conversation Starters |
+
 
 ---
 
 ## Project Overview
 
-NTGUILT printables, apparel, and conversation-starter merch. Conversation starters that carry Pav Law / NTGUILT brand into everyday settings. June print + booth design suite already built. Print-ready assets aligned with apparel/swag. Online 'store' — Team members could order shirts, business cards etc. directly. Also be used as part of a promo giveaway to cut down on physical costs and go with simplified drop shipping. Holiday and anniversary gift sets for employee occasions.
+Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.
 
-## HubSpot parts
+## HubSpot Application
 
-- No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
+- Lead source · light word-of-mouth logging when a piece is tracked
+- Cost tracking · optional cost line for referral or review programs when measuring ROI
 
-## Fee note
 
-Setup fee $1,200.
+

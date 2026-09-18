@@ -11,8 +11,8 @@ Short name IDs replace old A/B/C codes. Filename = ID.
 | A5 | HsLanding | HubSpot Landing Page / Module |
 | A6 | GabrielOut | Gabriel Outbound |
 | A7 | SocialAds | NTGUILT & Firm Social Campaigns |
-| A8 | OpsDash | Operations Dashboard V1 |
-| A8M | DataMgmt | Data Management — Retainer |
+| A8 | OpsDash | Platform Management · was Operations Dashboard V1 · absorbed DataMgmt |
+| A8M | DataMgmt | Merged into OpsDash 09/17/2026 |
 | A9 | CaseWins | Case Wins & Testimonials |
 | A10 | StackAudit | Marketing Stack Audit |
 | A11 | HolidayAds | Holiday Digital Ads |
@@ -25,7 +25,12 @@ Short name IDs replace old A/B/C codes. Filename = ID.
 | A18 | RedditAds | Reddit NTGUILT Ads |
 | A19 | SummerAds | Summer Seasonal Ads |
 | A20 | Yelpv1 | Yelp Ads |
-| B1 | HsPipe | HubSpot Pipeline Sprint |
+| — | HsMktExpand | HubSpot Marketing Hub Expansion |
+| — | HsSvcExpand | HubSpot Service Hub Expansion |
+| — | HsEmailSetup | HubSpot Email Nurture · Setup & Design |
+| — | LawyerRef | Lawyer Referral Program |
+| — | NetCoach | Networking Speech And Communications Coaching |
+| B1 | HsPipe | HubSpot Prequote & Booking |
 | B2 | HsVoip | Phone(s) & VoIP Setup |
 | B3 | WebSpeed | Website Speed and Navigation |
 | B4 | WebContent | Website Content Overhaul |
@@ -38,7 +43,8 @@ Short name IDs replace old A/B/C codes. Filename = ID.
 | B11 | LsaCall | LSA Call Process Update |
 | B12 | CaseyBrand | Casey Rebrand |
 | B13 | HsSetup | HubSpot Marketing Setup |
-| B14 | SwagPrint | Printables, Swag & Apparel |
+| — | HsWebRebuild | HubSpot Website Rebuild |
+| B14 | SwagPrint | Printables, Swag, Apparel & Stationery |
 | B15 | MyCaseClr | MyCase Data Cleanse |
 | C1 | AccessAud | Systems Access Audit |
 | C2 | EmailDns | Email Outage / DNS Runbook |

@@ -750,7 +750,10 @@ export function parseProjectMarkdown(text, fallbackId) {
     const list = parseListSection(clientSummaryBody);
     if (list.length) project.clientSummary = list;
   }
-  const hubSpotBody = findSectionBody(sections, "hubspot parts") || findSectionBody(sections, "hubspot");
+  const hubSpotBody =
+    findSectionBody(sections, "hubspot application") ||
+    findSectionBody(sections, "hubspot parts") ||
+    findSectionBody(sections, "hubspot");
   if (hubSpotBody) {
     const list = parseListSection(hubSpotBody);
     if (list.length) project.hubSpotParts = list;
@@ -858,7 +861,6 @@ function metaTableRows(p) {
     ["Category", p.category],
     ["Campaign type", p.campaignType],
     ["Status", p.status || "available"],
-    ["Publish status", normalizePublishStatus(p.publishStatus)],
     ...(p.parentId ? [["Parent", p.parentId]] : []),
     ...(p.enabler ? [["Enabler", "yes"]] : []),
     ...(p.monthlyOnly ? [["Monthly only", "yes"]] : []),
@@ -975,7 +977,12 @@ export function sanitizeProjectRecord(p) {
     };
   }
   p.kpiRefs = collectKpiRefs(p);
-  p.publishStatus = normalizePublishStatus(p.publishStatus);
+  /* Dashboard Show comes from INDEX.md. Outline Publish status is ignored when INDEX has Show. */
+  if (p.publishStatus != null && p.publishStatus !== "") {
+    p.publishStatus = normalizePublishStatus(p.publishStatus);
+  } else {
+    p.publishStatus = "unpublished";
+  }
   delete p.clientTouchpoints;
   delete p.planningPhases;
   delete p.timeline;
@@ -1418,7 +1425,7 @@ export function parseIndexMarkdown(text) {
   return result;
 }
 
-/** INDEX table titles, priority, status, visibility → picker data (INDEX wins over project .md). */
+/** INDEX table titles, priority, status, Show → picker data. Show alone sets publishStatus. */
 export function applyIndexOverrides(projects, retainer, existingText) {
   const { rowsById } = parseIndexMarkdown(existingText || "");
   const applyTo = item => {
@@ -1437,7 +1444,11 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     }
     const status = normalizeIndexStatus(o.status);
     if (status) next.status = status;
-    if (o.publishStatus) next.publishStatus = o.publishStatus;
+    if (o.visibility != null && String(o.visibility).trim() !== "") {
+      next.publishStatus = normalizeIndexVisibility(o.visibility);
+    } else if (o.publishStatus) {
+      next.publishStatus = o.publishStatus;
+    }
     if (o.estCost) next.estCostLabel = o.estCost;
     const ec = o.estCostParsed || (o.estCost ? parseIndexEstCost(o.estCost) : null);
     if (ec && ec.fee != null && !/^incl/i.test(String(ec.label || "")) && !/^merged/i.test(String(ec.label || ""))) {

@@ -6,7 +6,6 @@
 | Fee               | 1500                     |
 | Category          | Referral / Outbound      |
 | Campaign type     | Past-Client Reengagement |
-| Publish status    | published                |
 | Parent            | Referral                 |
 
 ---
@@ -15,7 +14,7 @@
 
 Past clients who finished deferred judgment or probation get a clear next offer — sealing or early termination — while cleaning MyCase data. Second track beside Referral referral asks (same MyCase hygiene). Uses cases Pav already owns — faster than new-firm shopping. Scripts and pricing drafted in June Client Reengagement PDF (~$900–$1,500 by offer).
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
 

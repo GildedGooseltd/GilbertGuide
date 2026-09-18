@@ -6,7 +6,6 @@
 | Fee               | 1700                    |
 | Category          |                         |
 | Campaign type     | Lawyer Referral Network |
-| Publish status    | published               |
 | Parent            | Referral                |
 
 ---
@@ -23,7 +22,7 @@ Topic ideas: how to not get a ticket · when you need a lawyer · how to stay sa
 
 Targets: student life · orientation / move-in · residence life · student government · campus safety or wellness series · criminal justice guest spots · Colorado College where it fits.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
 

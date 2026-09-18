@@ -6,7 +6,6 @@
 | Fee               | 0               |
 | Category          | Paid Social     |
 | Campaign type     | Reddit Ads Test |
-| Publish status    | published       |
 | Parent            | NtguiltAd       |
 
 ---
@@ -15,7 +14,7 @@
 
 Low-risk Reddit test ($500 + $500 promo credit) — merged into SocialAds; keep this file for history only. Uses platform credit to stretch budget. Supports event frequency without heavy Search CPC. UTM-ready for OpsDash if landing is NTGuilt.com / tagged pav.law.
 
-## HubSpot parts
+## HubSpot Application
 
 - No HubSpot build in scope
 
