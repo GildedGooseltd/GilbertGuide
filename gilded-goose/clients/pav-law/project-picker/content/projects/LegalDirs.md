@@ -3,26 +3,25 @@
 
 | Field             | Value                  |
 | ----------------- | ---------------------- |
-| Priority          | 6                      |
+| Priority          | 4                      |
 | Fee               | 1200                   |
 | Duration weeks    | 4                      |
 | Invoice count     | 3                      |
 | Recommended start | 10/01/2026             |
 | Category          | Brand / Local Presence |
 | Campaign type     | Directories & Profiles |
-| Parent            | DigProf                |
 
 
 ---
 
 ## Project Overview
 
-Pass across Justia, FindLaw, and Avvo: accurate profiles, clear CTAs, and tracked links, then keep, cut, or boost each channel. Four profiles are in scope. Some may be swapped if they are off target or not useful after the audit. Maximize Justia through December. FindLaw is keep or cut. Avvo is a light cleanup. Same pattern on every channel.
+Update legal directory profiles for Pav Law. Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.
 
-Update ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence.
+Directories: Justia, FindLaw, Avvo. Pick which to prioritize from the brand audit Data tab.
 
 ## HubSpot Application
 
-- CRM · optional listing URLs on contact or company records
-- Lead source tracking and ROI calculation
+- CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.
+- Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project.
 

@@ -3,7 +3,7 @@
 
 | Field             | Value       |
 | ----------------- | ----------- |
-| Priority          | 1           |
+| Priority          | 2           |
 | Fee               | 3800        |
 | Ongoing fee       | 900         |
 | Duration weeks    | 8           |
@@ -17,7 +17,7 @@
 
 ## Project Overview
 
-Grow Google ads into three new case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.
+Grow Google Ads into three case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.
 
 ## Front runners · campaign and ad group map
 
@@ -35,7 +35,7 @@ Build Exact / Phrase hire terms with Eligible RSAs. Prefer new ad groups under l
 
 ## Traffic and volume · from past Search data
 
-Same build pattern as live HS and the ended Military / Core DV / NTGUILT shells: multi–ad-group Search, Exact / Phrase, Eligible RSA, Presence, Max Conversions. Estimates below are incremental Search calls and clicks beyond today’s three live HS campaigns. Media is client budget. Lead→case uses Guide ~7.3%.
+Same build pattern as live HS and the ended Military / Core DV / NTGUILT shells: multi-ad-group Search, Exact / Phrase, Eligible RSA, Presence, Max Conversions. Estimates below are incremental Search calls and clicks beyond today’s three live HS campaigns. Media is client budget. Lead→case uses Guide about 7.3%.
 
 Proof baselines used:
 
@@ -59,7 +59,7 @@ Lane estimates if each front runner is funded like a current campaign / AG clust
 | Three lanes combined | Incremental on top of live HS                           | ~20–50 Search calls / mo                     | ~50–100 Search calls / mo | ~$4,000–6,500    | ~$5,000–10,000    |
 
 
-At ~7.3% lead→case: learn window about 1–4 incremental cases / mo · steady keepers about 4–7 incremental cases / mo when answer rate holds. College Towns swings with the school calendar. Weapons and CM stay closer to Assault / DV seasonality. Early weeks often look like Sep live HS: higher CPC while Smart Bidding learns and search volume is thin.
+At about 7.3% lead→case: learn window about 1–4 incremental cases / mo · steady keepers about 4–7 incremental cases / mo when answer rate holds. College Towns swings with the school calendar. Weapons and CM stay closer to Assault / DV seasonality. Early weeks often look like Sep live HS: higher CPC while Smart Bidding learns and search volume is thin.
 
 ## Scope for pricing · customize before quote
 
@@ -89,8 +89,8 @@ Out of this card: concealed carry / hunting as lead · community-college-only ge
 
 ## Fee note
 
-GGL setup $3,800 for about eight weeks across three campaign-like front runners. Revised up from $2,200 because scope is three full Search structures, not one pilot lane.
+GGL setup $3,800 for about eight weeks across three Search front runners. Revised up from $2,200 because scope is three full Search structures, not one pilot lane.
 
-Ongoing retainer add after keepers are selected: ~$900/mo on the $3,000/mo Digital Ads Maintenance base if all three stay Enabled. Or ~$300/mo per live expansion lane if only some keep. Replaces the old ~$500/mo single-pilot add.
+Ongoing retainer add after keepers are selected: about $900/mo on the $3,000/mo Digital Ads Maintenance base if all three stay Enabled. Or about $300/mo per live expansion lane if only some keep. Replaces the older about $500/mo single-pilot add.
 
 Client media during the learn window: plan about $4,000–6,500/mo across the three lanes at low daily budgets, or roughly $8,000–13,000 over eight weeks. Combined with GGL setup, first-window cash is about $12,000–17,000 before any steady-state raise. Media stays client budget. Adjust after Call details and SIS are steady, or if Andrew splits lanes into separate project cards.

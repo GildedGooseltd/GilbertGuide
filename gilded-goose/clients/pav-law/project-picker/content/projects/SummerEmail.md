@@ -1,18 +1,20 @@
 # Winter Safety Email Campaign
 
+
 | Field             | Value          |
 | ----------------- | -------------- |
-| Priority          | 22             |
+| Priority          | 98             |
 | Fee               | 0              |
 | Category          | Email          |
 | Campaign type     | Seasonal Email |
-| Parent            | HsWebRebuild   |
+| Parent            | WinterSeason   |
+
 
 ---
 
 ## Project Overview
 
-Reaches past clients when DUI and ticket volume spikes around July 4. Pre-holiday safety send plus post-holiday “what to do if charged” guide. Direct path to book with Romina in every message. Packaged under HsSetup HubSpot setup — not a standalone email fee.
+Past-client winter safety email — merged into WinterSeason; keep this file for history only. Safety send plus path to book with Romina.
 
 ## HubSpot Application
 
@@ -20,4 +22,4 @@ Reaches past clients when DUI and ticket volume spikes around July 4. Pre-holida
 
 ## Fee note
 
-Setup fee $0.
+Merged into Winter Seasonal Campaign · not a standalone sell.

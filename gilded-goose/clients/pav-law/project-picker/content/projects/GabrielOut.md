@@ -1,17 +1,20 @@
 # Gabriel Outbound Sales Calling
 
+
 | Field             | Value          |
 | ----------------- | -------------- |
-| Priority          | 27             |
-| Fee               | 1200           |
+| Priority          | 98             |
+| Fee               | 0              |
 | Category          | Outbound       |
 | Campaign type     | Outbound Calls |
+| Parent            | WinterSeason   |
+
 
 ---
 
 ## Project Overview
 
-Adds phone conversations from warm lists without increasing ad spend. Ready-to-dial list and Andrew-approved script. Every outcome logged in HubSpot for reporting. Complements Search when connect rates justify dial volume.
+Warm-list outbound calling plus sealing and probation reengagement — merged into WinterSeason; keep this file for history only.
 
 ## HubSpot Application
 
@@ -19,4 +22,4 @@ Adds phone conversations from warm lists without increasing ad spend. Ready-to-d
 
 ## Fee note
 
-Setup fee $1,200.
+Merged into Winter Seasonal Campaign · not a standalone sell.
