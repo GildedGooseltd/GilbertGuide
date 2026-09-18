@@ -130,15 +130,19 @@ window.PROJECT_DATA = {
       "parentId": "Ad Expansion",
       "id": "Yelpv1",
       "title": "Yelp Ads",
-      "tldr": "Yelp listing setup, message response, review nurture, and ads testing so results can be judged next to Search and LSA. Recommended window: start 10/01/2026, end no later than 12/01/2026, two calendar months. Setup fee splits into equal biweekly payments with no deposit percent. Max five payments over that window, about $520 each on $2,600. After the setup window, keepers stay on a Yelp platform line. Rough starter: $500/mo. Revisit after traffic and maintenance load are clear. Expand budget after message response and lead intake are solid, including HubSpot intake when live. Lock who answers messages, CRM-tracked links, message-response marketing, and review nurture. Standalone fee line: $2,600 setup + $500/mo. Not inside the Google / LSA Digital Ads Maintenance Retainer. Media and Yelp upgrades are separate. As of 09/10/2026: listing live, ads near $25/day, $300 promo, 40% call answer, 4.6 stars / 9 reviews.",
-      "description": "Yelp listing setup, message response, review nurture, and ads testing so results can be judged next to Search and LSA. Recommended window: start 10/01/2026, end no later than 12/01/2026, two calendar months. Setup fee splits into equal biweekly payments with no deposit percent. Max five payments over that window, about $520 each on $2,600. After the setup window, keepers stay on a Yelp platform line. Rough starter: $500/mo. Revisit after traffic and maintenance load are clear. Expand budget after message response and lead intake are solid, including HubSpot intake when live. Lock who answers messages, CRM-tracked links, message-response marketing, and review nurture. Standalone fee line: $2,600 setup + $500/mo. Not inside the Google / LSA Digital Ads Maintenance Retainer. Media and Yelp upgrades are separate. As of 09/10/2026: listing live, ads near $25/day, $300 promo, 40% call answer, 4.6 stars / 9 reviews.",
+      "tldr": "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.",
+      "description": "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.\n\n- Customer engagement: Message response rate is very good while managed from a personal phone. To scale, someone knowledgeable on the team should respond and enter data. Route Yelp to a HubSpot number that goes to Gabriel so leads land in HubSpot and more of its tools can be used without pushing too much volume to Gabriel right away.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews at sporadic times matter on Yelp so the page does not look like reviews are being incentivized in a batch. The campaign already sends across a two-month window. Add new clients regularly, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner responses that highlight Pav Law services and approach. Test the announcement feature, and refresh portfolio and FAQ content.\n- Insurance Envelope & Handout: Create insert for insurance card holder asking for Yelp review and providing contact information. For Casey, Jack and Andrew to distribute.",
       "valueAdded": [
-        "Yelp listing setup, message response, review nurture, and ads testing so results can be judged next to Search and LSA. Recommended window: start 10/01/2026, end no later than 12/01/2026, two calendar months. Setup fee splits into equal biweekly payments with no deposit percent. Max five payments over that window, about $520 each on $2,600. After the setup window, keepers stay on a Yelp platform line. Rough starter: $500/mo. Revisit after traffic and maintenance load are clear. Expand budget after message response and lead intake are solid, including HubSpot intake when live. Lock who answers messages, CRM-tracked links, message-response marketing, and review nurture. Standalone fee line: $2,600 setup + $500/mo. Not inside the Google / LSA Digital Ads Maintenance Retainer. Media and Yelp upgrades are separate. As of 09/10/2026: listing live, ads near $25/day, $300 promo, 40% call answer, 4.6 stars / 9 reviews."
+        "Yelp business page and ads were updated and tested over the last month with good results on a fairly low budget. Yelp is a solid lead intake channel and can perform better with a few improvements.",
+        "Customer engagement: Message response rate is very good while managed from a personal phone. To scale, someone knowledgeable on the team should respond and enter data. Route Yelp to a HubSpot number that goes to Gabriel so leads land in HubSpot and more of its tools can be used without pushing too much volume to Gabriel right away.",
+        "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews at sporadic times matter on Yelp so the page does not look like reviews are being incentivized in a batch. The campaign already sends across a two-month window. Add new clients regularly, then improve content with A/B tests and light copy tweaks.",
+        "Yelp messaging and content: Some reviews still need owner responses that highlight Pav Law services and approach. Test the announcement feature, and refresh portfolio and FAQ content.",
+        "Insurance Envelope & Handout: Create insert for insurance card holder asking for Yelp review and providing contact information. For Casey, Jack and Andrew to distribute."
       ],
       "hubSpotParts": [
-        "CRM · lead source and ad engagement",
-        "Tasks / workflows · ticket creation, task assignments, and automated data input",
-        "Marketing Hub · channel source tracking vs Search and LSA"
+        "CRM · The contact database where Yelp leads, messages, and call outcomes are stored so intake is not stuck in a personal inbox.",
+        "Tasks and workflows · Auto-creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
+        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
       ],
       "abQuestions": [],
       "kpiRefs": [],
@@ -146,18 +150,17 @@ window.PROJECT_DATA = {
       "shortTitle": "Yelp Ads",
       "status": "recommended",
       "estCostLabel": "$2,600 + $500/mo",
-      "paymentPlanLabel": "50%",
-      "depositPct": 0.5,
-      "feeEstimate": 2500,
+      "paymentPlanLabel": "—",
+      "feeEstimate": 2800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 4,
+        "raw": 8,
         "parts": {
-          "valueAdd": 1,
+          "valueAdd": 5,
           "tasks": 0,
           "completed": 0,
           "info": 0,
@@ -169,8 +172,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -100,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.07 (4 units) · complexity ×1.1"
+      "feeEstimateDelta": 200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (8 units) · complexity ×1.1"
     },
     {
       "priority": 2,

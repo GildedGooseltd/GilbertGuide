@@ -81,7 +81,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | ~$1,200?                    | 20%          | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | $2,900                      | 20%          | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
 | $3,800 + $900/mo            | 20%          | [Ad Expansion](projects/AdEnhance.md)                                                      |
-| $2,600 + $500/mo            | 50%          | [Yelp Ads](projects/Yelpv1.md)                                                              |
+| $2,600 + $500/mo            | —            | [Yelp Ads](projects/Yelpv1.md)                                                              |
 | $2,400                      | 30%          | [Adult Site(s) Ad Campaign](projects/AdultAds.md)                                        |
 | $2,200                      | 20%          | [Holiday Digital Ad(s) Campaign Expansion](projects/HolidayAds.md)                         |
 | $2,200                      | 20%          | [Winter Driving Images — NTGUILT Seasonal Ads](projects/WinterAds.md)                     |
@@ -271,7 +271,7 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - Priority 1 Recommended stack: Yelpv1 · LegalDirs · Ad Expansion · HolidayAds · Required Digital Ads Retainer unpublished / Show off
 - **TsMgmt** — Recommended · Show on · $500/mo Platform Management · MyCase · Google Suite · Ops Dashboard · light new-tool testing · systems-admin tile image
 - **Ad Expansion** — Recommended · Show on · three Google lanes · criminal mischief · college towns · weapons · ~8 week setup $3,800 · then ~$900/mo into Digital Ads Maintenance Retainer if all three stay
-- **Yelpv1** — 2 months · start 10/01/2026 · max end 12/01/2026 · $2,600 setup max 5 × ~$520 equal biweekly · no deposit % · then $500/mo Yelp platform · not inside Google / LSA retainer
+- **Yelpv1** — Recommended · Show on · page + ads tested on low budget · next: team/HubSpot message routing to Gabriel · review nurture · owner replies + listing content · insurance-card Yelp insert · 10/01–12/01 · $2,600 setup max 5 × ~$520 equal biweekly · no deposit % · then $500/mo Yelp platform · not inside Google / LSA retainer
 - **Digital Ads Retainer** — Required status in INDEX · Publish status unpublished · Show off · not on Guide sell calculator until republished · base $3,000/mo before Ad Expansion add
 - **AdultAds** — On Hold · unpublished · Show off · deferred until buyable site shortlist is ready · never on survivor advocacy properties
 - **HolidayAds** — On Hold · Google Search / ad-group expansion · holiday and colder-weather themes · separate from WinterAds and SummerAds
