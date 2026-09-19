@@ -4324,18 +4324,24 @@
     if (itemHasHubspotIcon(item) && !parts.length) {
       push("HubSpot CRM · Lead capture and follow-up touchpoints as needed for this project.");
     }
-    if (!parts.length) {
-      push("No HubSpot build in scope for this card · Work stays on ads, listings, or ops outside a CRM package.");
-    }
     return parts;
+  }
+
+  function hasHubSpotApplication(parts) {
+    const list = (Array.isArray(parts) ? parts : [])
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .filter(s => !/^no hubspot build/i.test(s));
+    return list.length > 0;
   }
 
   /** Render HubSpot Application lines with a clear feature name + plain-language what it does. */
   function hubSpotApplicationHtml(parts) {
-    const list = Array.isArray(parts) ? parts : [];
-    if (!list.length) {
-      return `<p>No HubSpot build in scope for this card.</p>`;
-    }
+    const list = (Array.isArray(parts) ? parts : [])
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .filter(s => !/^no hubspot build/i.test(s));
+    if (!list.length) return "";
     return `<ul class="hubspot-application-list">${list.map(line => {
       const raw = String(line || "").trim();
       if (!raw) return "";
@@ -4499,15 +4505,18 @@
     }
 
     const hub = projectHubSpotParts(item);
+    const hubSection = hasHubSpotApplication(hub)
+      ? `<div class="project-overview-section">
+        <h4>HubSpot Application</h4>
+        ${hubSpotApplicationHtml(hub)}
+      </div>`
+      : "";
     bodyEl.innerHTML = `
       <div class="project-overview-section">
         <h4>Project Overview</h4>
         ${projectOverviewBodyHtml(item)}
       </div>
-      <div class="project-overview-section">
-        <h4>HubSpot Application</h4>
-        ${hubSpotApplicationHtml(hub)}
-      </div>`;
+      ${hubSection}`;
 
     closeHelpPopup();
     if (backdrop) backdrop.hidden = false;
