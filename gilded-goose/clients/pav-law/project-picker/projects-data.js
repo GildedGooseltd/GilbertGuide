@@ -67,6 +67,62 @@ window.PROJECT_DATA = {
   "projects": [
     {
       "priority": 1,
+      "fee": 3800,
+      "ongoingFee": 900,
+      "durationWeeks": 8,
+      "invoiceCount": 4,
+      "startDate": "2026-10-01",
+      "category": "Paid Media",
+      "campaignType": "Paid Search",
+      "id": "AdEnhance",
+      "title": "Ad Expansion",
+      "tldr": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
+      "description": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.\n\nAdd new target audiences to currently active campaigns. \n\nCreate new graphic set for each audience. \n\nOptimize campaigns over learning period to filter down to top performers.\n\n|     |     |\n| --- | --- |\n|     |     |\n\n|     |     |     |\n| --- | --- | --- |\n|     |     |     |\n|     |     |     |",
+      "valueAdded": [
+        "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
+        "Add new target audiences to currently active campaigns.",
+        "Create new graphic set for each audience.",
+        "Optimize campaigns over learning period to filter down to top performers."
+      ],
+      "hubSpotParts": [
+        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source",
+        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
+        "Landing pages ·  HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Ad Expansion",
+      "status": "recommended",
+      "estCostLabel": "$3,800 + $900/mo",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 3400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "ads_campaign",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3800,
+      "feeEstimateScope": {
+        "raw": 5.1,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.1
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": -400,
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.11 (5.1 units) · complexity ×1"
+    },
+    {
+      "priority": 1,
       "fee": 2600,
       "ongoingFee": 500,
       "durationWeeks": 8,
@@ -122,59 +178,6 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.86 units) · complexity ×1.1"
     },
     {
-      "priority": 2,
-      "fee": 3800,
-      "ongoingFee": 900,
-      "durationWeeks": 8,
-      "invoiceCount": 4,
-      "startDate": "2026-10-01",
-      "category": "Paid Media",
-      "campaignType": "Paid Search",
-      "id": "AdEnhance",
-      "title": "Ad Expansion",
-      "tldr": "Add 3-5 campaigns for: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup is $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
-      "description": "Add 3-5 campaigns for: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup is $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
-      "valueAdded": [
-        "Add 3-5 campaigns for: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup is $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project."
-      ],
-      "hubSpotParts": [
-        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source, and you can compare them next to DV, Military, and NTGUILT.",
-        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
-        "Landing pages · Optional HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Ad Expansion",
-      "status": "recommended",
-      "estCostLabel": "$3,800 + $900/mo",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 3200,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "ads_campaign",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2500,
-      "feeEstimateNationalMid": 3800,
-      "feeEstimateScope": {
-        "raw": 3.2,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 2.2
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": -600,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.04 (3.2 units) · complexity ×1"
-    },
-    {
       "priority": 3,
       "feeUncertain": true,
       "fee": 1200,
@@ -203,7 +206,7 @@ window.PROJECT_DATA = {
       "publishStatus": "published",
       "shortTitle": "Printables & Swag",
       "status": "recommended",
-      "estCostLabel": "~$1,200?",
+      "estCostLabel": "$1,200–$1,700?",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
       "feeEstimate": 1800,
