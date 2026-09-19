@@ -2154,9 +2154,6 @@ window.PROJECT_DATA = {
       "valueAdded": [
         "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation."
       ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
-      ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",

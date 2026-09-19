@@ -4284,12 +4284,8 @@
         "CRM · Keeps profile and listing fields accurate on contact and company records for brand presence.",
         "Marketing Hub · Source tracking where directory or profile traffic converts into a lead."
       ],
-      TsMgmt: [
-        "No HubSpot build in scope"
-      ],
-      OpsDash: [
-        "No HubSpot build in scope"
-      ],
+      TsMgmt: [],
+      OpsDash: [],
       HsMktExpand: [
         "Marketing Hub · Ads connections, lead source, and quality properties.",
         "CRM · Contacts, custom properties, and reporting data sources.",
