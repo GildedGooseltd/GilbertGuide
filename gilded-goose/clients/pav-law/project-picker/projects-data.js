@@ -123,6 +123,55 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.10 (4.72 units) · complexity ×1"
     },
     {
+      "priority": 1,
+      "fee": 500,
+      "status": "recommended",
+      "category": "Analytics",
+      "campaignType": "Platform / Data Ops",
+      "monthlyOnly": true,
+      "startDate": "2026-10-01",
+      "featuredImage": "assets/systems-admin-tile.svg",
+      "id": "TsMgmt",
+      "title": "Platform Management",
+      "tldr": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
+      "description": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
+      "valueAdded": [
+        "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation."
+      ],
+      "hubSpotParts": [
+        "No HubSpot build in scope"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Platform Mgmt",
+      "estCostLabel": "$500/mo",
+      "paymentPlanLabel": "monthly",
+      "feeEstimate": 2800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "digital_bundle_mo",
+      "feeEstimateUnit": "mo",
+      "feeEstimateLocalMid": 2300,
+      "feeEstimateNationalMid": 3500,
+      "feeEstimateScope": {
+        "raw": 1.98,
+        "parts": {
+          "valueAdd": 1,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.98
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2300,
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×0.98 (1.98 units) · complexity ×1"
+    },
+    {
       "priority": 2,
       "fee": 2600,
       "status": "recommended",
@@ -297,13 +346,12 @@ window.PROJECT_DATA = {
       "campaignType": "Display / Brand",
       "id": "AdultAds",
       "title": "Adult Site(s) Ad Campaign",
-      "tldr": "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch.",
-      "description": "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch.",
+      "tldr": "NRA",
+      "description": "- NRA\n- Porn/forums\n- Reddit\n-",
       "valueAdded": [
-        "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
+        "NRA",
+        "Porn/forums",
+        "Reddit"
       ],
       "abQuestions": [],
       "kpiRefs": [],
@@ -319,22 +367,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 3100,
       "feeEstimateNationalMid": 4800,
       "feeEstimateScope": {
-        "raw": 1.7,
+        "raw": 3.1,
         "parts": {
-          "valueAdd": 1,
+          "valueAdd": 3,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.7
+          "descUnits": 0.1
         }
       },
-      "feeEstimateComplexity": 1.21,
+      "feeEstimateComplexity": 1.12,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2100,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×0.96 (1.7 units) · complexity ×1.21"
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.04 (3.1 units) · complexity ×1.12"
     },
     {
       "priority": 5,
@@ -2098,54 +2146,6 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2700,
       "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×0.99 (2.25 units) · complexity ×1.1"
-    },
-    {
-      "fee": 500,
-      "status": "recommended",
-      "category": "Analytics",
-      "campaignType": "Platform / Data Ops",
-      "monthlyOnly": true,
-      "startDate": "2026-10-01",
-      "featuredImage": "assets/systems-admin-tile.svg",
-      "id": "TsMgmt",
-      "title": "Platform Management",
-      "tldr": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
-      "description": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
-      "valueAdded": [
-        "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Platform Mgmt",
-      "estCostLabel": "$500/mo",
-      "paymentPlanLabel": "monthly",
-      "feeEstimate": 2800,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "digital_bundle_mo",
-      "feeEstimateUnit": "mo",
-      "feeEstimateLocalMid": 2300,
-      "feeEstimateNationalMid": 3500,
-      "feeEstimateScope": {
-        "raw": 1.98,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 0.98
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2300,
-      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×0.98 (1.98 units) · complexity ×1"
     }
   ]
 };

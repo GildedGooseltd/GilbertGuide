@@ -2,6 +2,7 @@
 
 | Field             | Value                         |
 | ----------------- | ----------------------------- |
+| Priority group    | 1                             |
 | Fee               | 500                           |
 | Status            | Recommended |
 | Category          | Analytics                     |
