@@ -29,6 +29,8 @@ const META_KEYS = {
   "deposit amount": "depositAmount",
   "fee uncertain": "feeUncertain",
   "estimate only": "feeUncertain",
+  "estimate note": "estimateNote",
+  "fee note estimate": "estimateNote",
   icon: "guideIcon",
   "guide hero": "guideHero",
   seal: "guideSeal",

@@ -4503,6 +4503,17 @@
         costEl.textContent = projectQuoteLabel(item, isRetainer);
       }
     }
+    const noteEl = document.getElementById("project-overview-estimate-note");
+    if (noteEl) {
+      const note = String(item.estimateNote || "").trim().replace(/^[*]+/, "").replace(/:$/, "").trim();
+      if (note) {
+        noteEl.hidden = false;
+        noteEl.innerHTML = `<em>*${escapeHtml(note)}</em>`;
+      } else {
+        noteEl.hidden = true;
+        noteEl.textContent = "";
+      }
+    }
 
     const hub = projectHubSpotParts(item);
     const hubSection = hasHubSpotApplication(hub)

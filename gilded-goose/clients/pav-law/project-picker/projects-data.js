@@ -2087,18 +2087,18 @@ window.PROJECT_DATA = {
       "feeUncertain": true,
       "fee": 1200,
       "feeMax": 1700,
+      "estimateNote": "The cost is hard to estimate without knowing how many products are needed",
       "status": "recommended",
       "category": "Brand / Merch",
       "campaignType": "Physical Print & Production",
       "id": "SwagPrint",
       "title": "Printables, Swag & Apparel",
       "tldr": "Updated stationery and images are needed as the team has expanded.",
-      "description": "Updated stationery and images are needed as the team has expanded.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\nThe cost is hard to estimate without knowing how many products are needed:\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Padfolios / envelopes\n- Apparel",
+      "description": "Updated stationery and images are needed as the team has expanded.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Padfolios / envelopes\n- Apparel",
       "valueAdded": [
         "Updated stationery and images are needed as the team has expanded.",
         "Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.",
         "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
-        "The cost is hard to estimate without knowing how many products are needed:",
         "Laptop cases · Pav Law with contact details",
         "Business cards · Jack Strong",
         "Padfolios / envelopes",
@@ -2122,22 +2122,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 9.38,
+        "raw": 8.21,
         "parts": {
-          "valueAdd": 8,
+          "valueAdd": 7,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.38
+          "descUnits": 1.21
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 600,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.21 (9.38 units) · complexity ×1"
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.18 (8.21 units) · complexity ×1"
     },
     {
       "fee": 500,
