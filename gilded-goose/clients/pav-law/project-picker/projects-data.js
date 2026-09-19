@@ -2143,7 +2143,7 @@ window.PROJECT_DATA = {
       "fee": 500,
       "status": "recommended",
       "category": "Analytics",
-      "campaignType": "Platform / Data Ops",
+      "campaignType": "KLO",
       "monthlyOnly": true,
       "startDate": "2026-10-01",
       "featuredImage": "assets/systems-admin-tile.svg",

@@ -5,7 +5,7 @@
 | Fee               | 500                           |
 | Status            | Recommended |
 | Category          | Analytics                     |
-| Campaign type     | Platform / Data Ops           |
+| Campaign type     | KLO                           |
 | Monthly only      | yes                           |
 | Recommended start | 10/01/2026                    |
 | Featured image    | assets/systems-admin-tile.svg |
