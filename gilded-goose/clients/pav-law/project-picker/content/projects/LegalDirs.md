@@ -2,7 +2,7 @@
 
 | Field             | Value          |
 | ----------------- | -------------- |
-| Priority          | 4              |
+| Priority group    | 1              |
 | Fee               | 1200           |
 | Status            | Recommended |
 | Duration weeks    | 4              |

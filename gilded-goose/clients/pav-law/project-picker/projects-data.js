@@ -124,6 +124,60 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 1,
+      "fee": 1200,
+      "status": "recommended",
+      "durationWeeks": 4,
+      "invoiceCount": 3,
+      "startDate": "2026-10-01",
+      "category": "Branding",
+      "campaignType": "Referral Sites",
+      "id": "LegalDirs",
+      "title": "Legal Directory Updates",
+      "tldr": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
+      "description": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.\n\nRefresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.\n\nResearch similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.\n\nDirectories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab.",
+      "valueAdded": [
+        "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
+        "Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.",
+        "Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
+        "Directories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab."
+      ],
+      "hubSpotParts": [
+        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
+        "Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Directories & Profiles",
+      "estCostLabel": "$1,200",
+      "paymentPlanLabel": "40%",
+      "depositPct": 0.4,
+      "feeEstimate": 2400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 5.34,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.34
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.12 (5.34 units) · complexity ×1"
+    },
+    {
+      "priority": 1,
       "fee": 500,
       "status": "recommended",
       "category": "Analytics",
@@ -283,60 +337,6 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 600,
       "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.21 (9.38 units) · complexity ×1"
-    },
-    {
-      "priority": 4,
-      "fee": 1200,
-      "status": "recommended",
-      "durationWeeks": 4,
-      "invoiceCount": 3,
-      "startDate": "2026-10-01",
-      "category": "Branding",
-      "campaignType": "Referral Sites",
-      "id": "LegalDirs",
-      "title": "Legal Directory Updates",
-      "tldr": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
-      "description": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.\n\nRefresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.\n\nResearch similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.\n\nDirectories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab.",
-      "valueAdded": [
-        "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
-        "Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.",
-        "Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
-        "Directories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab."
-      ],
-      "hubSpotParts": [
-        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
-        "Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Directories & Profiles",
-      "estCostLabel": "$1,200",
-      "paymentPlanLabel": "40%",
-      "depositPct": 0.4,
-      "feeEstimate": 2400,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "profiles_local",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1900,
-      "feeEstimateNationalMid": 2500,
-      "feeEstimateScope": {
-        "raw": 5.34,
-        "parts": {
-          "valueAdd": 4,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.34
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.12 (5.34 units) · complexity ×1"
     },
     {
       "priority": 5,
