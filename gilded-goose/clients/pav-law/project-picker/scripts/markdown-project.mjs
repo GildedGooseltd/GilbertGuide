@@ -138,8 +138,18 @@ function parseMetaTable(text) {
     const field = META_KEYS[key];
     if (!field) continue;
     if (field === "priority") {
-      if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank")
-        meta.priority = parseInt(val, 10);
+      if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank") {
+        if (/^ad[\s-]?hoc$/i.test(val)) {
+          meta.priorityGroup = "AdHoc";
+          delete meta.priority;
+        } else {
+          const n = parseInt(val, 10);
+          if (Number.isFinite(n)) {
+            meta.priority = n;
+            meta.priorityGroup = n;
+          }
+        }
+      }
     } else if (field === "tileSpace") {
       if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank") {
         const n = parseInt(String(val).replace(/[^0-9]/g, ""), 10);
@@ -888,7 +898,9 @@ function formatFeeMetaValue(p) {
 
 function metaTableRows(p) {
   const rows = [
-    ...(isRetainerPhase(p) || p.priority == null ? [] : [["Priority group", p.priority]]),
+    ...(isRetainerPhase(p) || (p.priorityGroup == null && p.priority == null)
+      ? []
+      : [["Priority group", p.priorityGroup != null ? p.priorityGroup : p.priority]]),
     ...(p.tileSpace != null ? [["Tile space #", p.tileSpace]] : []),
     ["Fee", formatFeeMetaValue(p)],
     ["Category", p.category],

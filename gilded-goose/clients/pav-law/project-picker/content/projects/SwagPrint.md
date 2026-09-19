@@ -2,7 +2,7 @@
 
 | Field         | Value                       |
 | ------------- | --------------------------- |
-| Priority      | 3                           |
+| Priority group | AdHoc                       |
 | Fee           | 1200-1700*                  |
 | Status            | Recommended |
 | Category      | Brand / Merch               |

@@ -146,8 +146,13 @@
 
   function priorityGroupOf(item) {
     if (!item) return null;
+    const labeled = item.priorityGroup != null ? String(item.priorityGroup).trim() : "";
+    if (labeled && /^ad[\s-]?hoc$/i.test(labeled)) return "AdHoc";
+    const labeledNum = labeled ? Number(labeled) : NaN;
+    if (Number.isFinite(labeledNum) && labeledNum >= 1 && labeledNum <= 4) return Math.trunc(labeledNum);
     const raw = item.priority != null ? Number(item.priority) : NaN;
     if (Number.isFinite(raw) && raw >= 1 && raw <= 4) return Math.trunc(raw);
+    if (typeof item.priority === "string" && /^ad[\s-]?hoc$/i.test(item.priority.trim())) return "AdHoc";
     const id = normalizeCatalogId(item);
     if (PRIORITY_GROUP_BY_ID[id] != null) return PRIORITY_GROUP_BY_ID[id];
     const parentId = item.parentId && String(item.parentId);
@@ -166,7 +171,8 @@
   function displayOrderKey(item) {
     const t = tileSpaceOf(item);
     if (t != null) return t;
-    return item.priority ?? 99;
+    const p = item.priority != null ? Number(item.priority) : NaN;
+    return Number.isFinite(p) ? p : 99;
   }
 
   /** Rank value for best-fit Priority weight: prefer Tile space # over Priority group. */
@@ -184,6 +190,7 @@
 
   function priorityGroupTitle(item) {
     const g = priorityGroupOf(item);
+    if (g === "AdHoc") return "AdHoc";
     if (g === 1) return "Priority Group 1 · Digital Ads";
     if (g === 2) return "Priority Group 2 · HubSpot setup";
     if (g === 3) return "Priority Group 3 · Lawyer referral";

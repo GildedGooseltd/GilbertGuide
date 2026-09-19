@@ -68,6 +68,7 @@ window.PROJECT_DATA = {
   "projects": [
     {
       "priority": 1,
+      "priorityGroup": 1,
       "fee": 3800,
       "status": "recommended",
       "ongoingFee": 900,
@@ -124,6 +125,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 1,
+      "priorityGroup": 1,
       "fee": 1200,
       "status": "recommended",
       "durationWeeks": 4,
@@ -178,6 +180,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 1,
+      "priorityGroup": 1,
       "fee": 500,
       "status": "recommended",
       "category": "Analytics",
@@ -227,6 +230,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 2,
+      "priorityGroup": 2,
       "fee": 2600,
       "status": "recommended",
       "ongoingFee": 500,
@@ -282,64 +286,8 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.86 units) · complexity ×1.1"
     },
     {
-      "priority": 3,
-      "feeUncertain": true,
-      "fee": 1200,
-      "feeMax": 1700,
-      "status": "recommended",
-      "category": "Brand / Merch",
-      "campaignType": "Physical Print & Production",
-      "id": "SwagPrint",
-      "title": "Printables, Swag & Apparel",
-      "tldr": "Updated stationery and images are needed as the team has expanded.",
-      "description": "Updated stationery and images are needed as the team has expanded.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\nThe cost is hard to estimate without knowing how many products are needed:\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Padfolios / envelopes\n- Apparel",
-      "valueAdded": [
-        "Updated stationery and images are needed as the team has expanded.",
-        "Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.",
-        "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
-        "The cost is hard to estimate without knowing how many products are needed:",
-        "Laptop cases · Pav Law with contact details",
-        "Business cards · Jack Strong",
-        "Padfolios / envelopes",
-        "Apparel"
-      ],
-      "hubSpotParts": [
-        "Lead source · Light word-of-mouth logging when a piece is tracked.",
-        "Cost tracking · Optional cost line for referral or review programs when measuring ROI."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Printables & Swag",
-      "estCostLabel": "$1,200–$1,700?",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 1800,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "swag_consult",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1300,
-      "feeEstimateNationalMid": 1800,
-      "feeEstimateScope": {
-        "raw": 9.38,
-        "parts": {
-          "valueAdd": 8,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.38
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 600,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.21 (9.38 units) · complexity ×1"
-    },
-    {
       "priority": 5,
+      "priorityGroup": 5,
       "fee": 2400,
       "status": "on hold",
       "category": "Paid Media",
@@ -386,6 +334,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 5,
+      "priorityGroup": 5,
       "fee": 2900,
       "status": "archived",
       "category": "Paid Media",
@@ -433,6 +382,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 7,
+      "priorityGroup": 7,
       "fee": 3700,
       "status": "wip",
       "category": "Brand / Local Presence",
@@ -488,6 +438,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 7,
+      "priorityGroup": 7,
       "fee": 4400,
       "status": "on hold",
       "startDate": "2026-10-01",
@@ -539,6 +490,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 10,
+      "priorityGroup": 10,
       "fee": 2200,
       "status": "available",
       "campaignType": "Marketing Hub Depth",
@@ -588,6 +540,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 10,
+      "priorityGroup": 10,
       "fee": 1700,
       "status": "available",
       "campaignType": "Lawyer Referral Network",
@@ -635,6 +588,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 11,
+      "priorityGroup": 11,
       "fee": 4200,
       "status": "wip",
       "campaignType": "Client Intake",
@@ -688,6 +642,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 11,
+      "priorityGroup": 11,
       "fee": 2200,
       "status": "available",
       "campaignType": "Networking Skills",
@@ -735,6 +690,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 12,
+      "priorityGroup": 12,
       "fee": 20700,
       "status": "available",
       "campaignType": "HubSpot CMS",
@@ -788,6 +744,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 13,
+      "priorityGroup": 13,
       "fee": 4900,
       "status": "wip",
       "durationWeeks": 12,
@@ -844,6 +801,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 14,
+      "priorityGroup": 14,
       "fee": 1500,
       "status": "available",
       "category": "Intake / CRM",
@@ -894,6 +852,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 20,
+      "priorityGroup": 20,
       "fee": 3500,
       "status": "available",
       "campaignType": "Nurture · Templates · Surveys",
@@ -941,6 +900,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 21,
+      "priorityGroup": 21,
       "fee": 0,
       "campaignType": "Search + Display creative",
       "id": "AdCreative",
@@ -982,6 +942,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 23,
+      "priorityGroup": 23,
       "fee": 1700,
       "status": "started",
       "category": "Referral",
@@ -1029,6 +990,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 24,
+      "priorityGroup": 24,
       "fee": 1500,
       "status": "archived · merged winterseason",
       "category": "Referral / Outbound",
@@ -1076,6 +1038,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 26,
+      "priorityGroup": 26,
       "fee": 500,
       "status": "archived",
       "category": "Finance / Operations",
@@ -1123,6 +1086,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 28,
+      "priorityGroup": 28,
       "fee": 2200,
       "status": "archived",
       "category": "Paid Media",
@@ -1170,6 +1134,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 30,
+      "priorityGroup": 30,
       "fee": 2000,
       "status": "archived",
       "category": "Paid Media",
@@ -1217,6 +1182,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 35,
+      "priorityGroup": 35,
       "fee": 1500,
       "status": "archived",
       "category": "Operations / Compensation",
@@ -1264,6 +1230,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 40,
+      "priorityGroup": 40,
       "fee": 1800,
       "status": "available",
       "category": "CRM",
@@ -1312,6 +1279,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 41,
+      "priorityGroup": 41,
       "fee": 1800,
       "status": "planning",
       "category": "CRM / Web",
@@ -1360,6 +1328,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 42,
+      "priorityGroup": 42,
       "fee": 0,
       "status": "available",
       "category": "CRM",
@@ -1407,6 +1376,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 46,
+      "priorityGroup": 46,
       "fee": 4500,
       "status": "archived",
       "category": "Creative / Social",
@@ -1454,6 +1424,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 47,
+      "priorityGroup": 47,
       "fee": 2000,
       "status": "available",
       "category": "Brand / Professional Development",
@@ -1501,6 +1472,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 51,
+      "priorityGroup": 51,
       "fee": 1500,
       "status": "completed",
       "category": "Strategy",
@@ -1546,6 +1518,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 52,
+      "priorityGroup": 52,
       "fee": 2500,
       "status": "archived",
       "category": "Events",
@@ -1592,6 +1565,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 53,
+      "priorityGroup": 53,
       "fee": 1000,
       "status": "planning",
       "category": "Partnerships",
@@ -1638,6 +1612,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 54,
+      "priorityGroup": 54,
       "fee": 2000,
       "status": "completed",
       "category": "Systems",
@@ -1683,6 +1658,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 55,
+      "priorityGroup": 55,
       "fee": 1500,
       "status": "completed",
       "category": "Systems",
@@ -1728,6 +1704,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
+      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged hssvcexpand",
       "campaignType": "Monthly Client Email",
@@ -1774,6 +1751,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
+      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged winterseason",
       "category": "Outbound",
@@ -1821,6 +1799,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
+      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged socialads",
       "category": "CRM / Social",
@@ -1867,6 +1846,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
+      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged hssvcexpand",
       "category": "Infrastructure",
@@ -1914,6 +1894,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
+      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged winterseason",
       "category": "Direct Mail",
@@ -1961,6 +1942,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
+      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged socialads",
       "category": "Paid Social",
@@ -2008,6 +1990,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
+      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged winterseason",
       "category": "Email",
@@ -2055,6 +2038,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
+      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged holidayads",
       "category": "Paid Media",
@@ -2102,6 +2086,7 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 99,
+      "priorityGroup": 99,
       "fee": 5500,
       "status": "canceled · moved hswebrebuild",
       "category": "CRM",
@@ -2146,6 +2131,63 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2700,
       "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×0.99 (2.25 units) · complexity ×1.1"
+    },
+    {
+      "priorityGroup": "AdHoc",
+      "feeUncertain": true,
+      "fee": 1200,
+      "feeMax": 1700,
+      "status": "recommended",
+      "category": "Brand / Merch",
+      "campaignType": "Physical Print & Production",
+      "id": "SwagPrint",
+      "title": "Printables, Swag & Apparel",
+      "tldr": "Updated stationery and images are needed as the team has expanded.",
+      "description": "Updated stationery and images are needed as the team has expanded.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\nThe cost is hard to estimate without knowing how many products are needed:\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Padfolios / envelopes\n- Apparel",
+      "valueAdded": [
+        "Updated stationery and images are needed as the team has expanded.",
+        "Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.",
+        "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
+        "The cost is hard to estimate without knowing how many products are needed:",
+        "Laptop cases · Pav Law with contact details",
+        "Business cards · Jack Strong",
+        "Padfolios / envelopes",
+        "Apparel"
+      ],
+      "hubSpotParts": [
+        "Lead source · Light word-of-mouth logging when a piece is tracked.",
+        "Cost tracking · Optional cost line for referral or review programs when measuring ROI."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Printables & Swag",
+      "estCostLabel": "$1,200–$1,700?",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 1800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "swag_consult",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1300,
+      "feeEstimateNationalMid": 1800,
+      "feeEstimateScope": {
+        "raw": 9.38,
+        "parts": {
+          "valueAdd": 8,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.38
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 600,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.21 (9.38 units) · complexity ×1"
     }
   ]
 };
