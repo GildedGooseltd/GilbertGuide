@@ -5,6 +5,7 @@
 | Priority group | AdHoc                       |
 | Fee           | 1200-1700*                  |
 | Estimate note | The cost is hard to estimate without knowing how many products are needed |
+| Invoice count | 3                           |
 | Status            | Recommended |
 | Category      | Brand / Merch               |
 | Campaign type | Physical Print & Production |

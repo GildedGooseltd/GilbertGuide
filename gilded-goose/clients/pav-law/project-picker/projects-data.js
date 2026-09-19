@@ -2088,6 +2088,7 @@ window.PROJECT_DATA = {
       "fee": 1200,
       "feeMax": 1700,
       "estimateNote": "The cost is hard to estimate without knowing how many products are needed",
+      "invoiceCount": 3,
       "status": "recommended",
       "category": "Brand / Merch",
       "campaignType": "Physical Print & Production",
