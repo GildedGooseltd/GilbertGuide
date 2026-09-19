@@ -21,7 +21,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Directories & Profiles   | Recommended          | [x]  | [Legal Directory Updates](projects/LegalDirs.md)                                   |
 | Client Referral          | Started              | [ ]  | [Client Referral Program](projects/Referral.md)                                           |
 | Sealing Reengagement     | archived · merged WinterSeason | [ ]  | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
-| Printables & Swag        | Recommended          | [x]  | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
+| Printables & Swag        | Recommended          | [x]  | [Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | NTGUILT Ads Launch       | Archived             | [ ]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
 | Ad Expansion             | Recommended          | [x]  | [Ad Expansion](projects/AdEnhance.md)                                                      |
 | Yelp Ads                 | Recommended          | [x]  | [Yelp Ads](projects/Yelp.md)                                                              |
@@ -73,7 +73,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $1,200                      | 40%          | [Legal Directory Updates](projects/LegalDirs.md)                                   |
 | $1,700                      | 20%          | [Client Referral Program](projects/Referral.md)                                           |
 | merged WinterSeason                | —            | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
-| ~$1,200?                    | 20%          | [Design Printables, Swag & Apparel](projects/SwagPrint.md)                                |
+| ~$1,200?                    | 20%          | [Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | $2,900                      | 20%          | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
 | $3,800 + $900/mo            | 20%          | [Ad Expansion](projects/AdEnhance.md)                                                      |
 | $2,600 + $500/mo            | —            | [Yelp Ads](projects/Yelp.md)                                                              |

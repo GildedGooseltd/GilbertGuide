@@ -17,7 +17,7 @@
 
 ## Project Overview
 
-Grow Google Ads into three case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.
+Add 3-5 campaigns for: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup is $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.
 
 ## Front runners · campaign and ad group map
 
@@ -35,7 +35,7 @@ Build Exact / Phrase hire terms with Eligible RSAs. Prefer new ad groups under l
 
 ## Traffic and volume · from past Search data
 
-Same build pattern as live HS and the ended Military / Core DV / NTGUILT shells: multi-ad-group Search, Exact / Phrase, Eligible RSA, Presence, Max Conversions. Estimates below are incremental Search calls and clicks beyond today’s three live HS campaigns. Media is client budget. Lead→case uses Guide about 7.3%.
+Same build pattern as live HS and the ended Military / Core DV / NTGUILT shells: multi-ad-group Search, Exact / Phrase, Eligible RSA, Presence, Max Conversions. Estimates below are incremental Search calls and clicks beyond today's three live HS campaigns. Media is client budget. Lead→case uses Guide about 7.3%.
 
 Proof baselines used:
 
@@ -69,7 +69,7 @@ Starter package covers planning plus build for the three front runners as one ex
 | Package piece                 | Included in $3,800 setup                                                   | Customize / add-on                                                          |
 | ----------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | Keyword + RSA Editor packs    | Criminal Mischief · College Towns · Weapons / Guns Exact/Phrase            | Extra practice lanes priced separately                                      |
-| Campaign / ad group structure | New AGs under live HS and/or up to one dedicated campaign per front runner | Extra dedicated campaigns or geos                                           |
+| Campaign / ad group structure | New AGs under live HS or up to one dedicated campaign per front runner | Extra dedicated campaigns or geos                                           |
 | Geo / bid adj                 | Presence + college-town location set from service-area doc                 | Ski corridor / holiday geos stay on HolidayAds                              |
 | Learning window               | About 8 weeks low budget learn                                             | Faster ramp = higher media, not higher setup by default                     |
 | Creative                      | RSA text + reuse existing images                                           | New custom image set per lane · quote separately with AdCreative / pipeline |

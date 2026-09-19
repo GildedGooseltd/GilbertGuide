@@ -77,12 +77,12 @@ window.PROJECT_DATA = {
       "id": "Yelp",
       "title": "Yelp Ads",
       "tldr": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-      "description": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.\n\n- Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements, and refresh portfolio and FAQ content.\n- Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out.",
+      "description": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.\n\n- Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.\n- Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out.",
       "valueAdded": [
         "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
         "Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.",
         "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.",
-        "Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements, and refresh portfolio and FAQ content.",
+        "Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.",
         "Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out."
       ],
       "hubSpotParts": [
@@ -132,10 +132,10 @@ window.PROJECT_DATA = {
       "campaignType": "Paid Search",
       "id": "AdEnhance",
       "title": "Ad Expansion",
-      "tldr": "Grow Google Ads into three case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
-      "description": "Grow Google Ads into three case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
+      "tldr": "Add 3-5 campaigns for: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup is $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
+      "description": "Add 3-5 campaigns for: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup is $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
       "valueAdded": [
-        "Grow Google Ads into three case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project."
+        "Add 3-5 campaigns for: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup is $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project."
       ],
       "hubSpotParts": [
         "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source, and you can compare them next to DV, Military, and NTGUILT.",
@@ -157,7 +157,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 3800,
       "feeEstimateScope": {
-        "raw": 3.38,
+        "raw": 3.2,
         "parts": {
           "valueAdd": 1,
           "tasks": 0,
@@ -165,14 +165,14 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.38
+          "descUnits": 2.2
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": -600,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.05 (3.38 units) · complexity ×1"
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.04 (3.2 units) · complexity ×1"
     },
     {
       "priority": 3,
@@ -181,13 +181,18 @@ window.PROJECT_DATA = {
       "category": "Brand / Merch",
       "campaignType": "Physical Print & Production",
       "id": "SwagPrint",
-      "title": "Design Printables, Swag & Apparel",
-      "tldr": "Updated stationary and images are needed. Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-      "description": "Updated stationary and images are needed. Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\nThe $1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost.",
+      "title": "Printables, Swag & Apparel",
+      "tldr": "Updated stationery and images are needed as the team has expanded.",
+      "description": "Updated stationery and images are needed as the team has expanded.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\nThe cost is hard to estimate without knowing how many products are needed:\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Padfolios / envelopes\n- Apparel",
       "valueAdded": [
-        "Updated stationary and images are needed. Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
+        "Updated stationery and images are needed as the team has expanded.",
+        "Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.",
         "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
-        "The $1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost."
+        "The cost is hard to estimate without knowing how many products are needed:",
+        "Laptop cases · Pav Law with contact details",
+        "Business cards · Jack Strong",
+        "Padfolios / envelopes",
+        "Apparel"
       ],
       "hubSpotParts": [
         "Lead source · Light word-of-mouth logging when a piece is tracked.",
@@ -201,29 +206,29 @@ window.PROJECT_DATA = {
       "estCostLabel": "~$1,200?",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 1700,
+      "feeEstimate": 1800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "swag_consult",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 5.89,
+        "raw": 9.38,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 8,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.89
+          "descUnits": 1.38
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 500,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.13 (5.89 units) · complexity ×1"
+      "feeEstimateDelta": 600,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.21 (9.38 units) · complexity ×1"
     },
     {
       "priority": 4,
@@ -235,14 +240,13 @@ window.PROJECT_DATA = {
       "campaignType": "Referral Sites",
       "id": "LegalDirs",
       "title": "Legal Directory Updates",
-      "tldr": "Update legal directory profiles for Pav Law to ensure accurate information, tracking and new ad copy.",
-      "description": "Update legal directory profiles for Pav Law to ensure accurate information, tracking and new ad copy. \n\nRefresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update and/or cancel contracts.\n\n Research similar sites and start organic or free testing for comparison and stronger brand presence. \n\nAdd matching lead-source values in HubSpot and MyCase. \n\nDirectories: Justia, FindLaw,  Avvo?",
+      "tldr": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
+      "description": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.\n\nRefresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.\n\nResearch similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.\n\nDirectories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab.",
       "valueAdded": [
-        "Update legal directory profiles for Pav Law to ensure accurate information, tracking and new ad copy.",
-        "Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update and/or cancel contracts.",
-        "Research similar sites and start organic or free testing for comparison and stronger brand presence.",
-        "Add matching lead-source values in HubSpot and MyCase.",
-        "Directories: Justia, FindLaw,  Avvo?"
+        "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
+        "Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.",
+        "Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
+        "Directories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab."
       ],
       "hubSpotParts": [
         "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
@@ -263,22 +267,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 6.18,
+        "raw": 5.34,
         "parts": {
-          "valueAdd": 5,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.18
+          "descUnits": 1.34
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.14 (6.18 units) · complexity ×1"
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.12 (5.34 units) · complexity ×1"
     },
     {
       "priority": 5,
@@ -2099,11 +2103,10 @@ window.PROJECT_DATA = {
       "featuredImage": "assets/systems-admin-tile.svg",
       "id": "TsMgmt",
       "title": "Platform Management",
-      "tldr": "Monthly retainer for standard platform management of MyCase, Google Suite, BlueHost and Ops Dashboard including KLO maintenance excluding outages, updates etc.",
-      "description": "Monthly retainer for standard platform management of MyCase, Google Suite, BlueHost and Ops Dashboard including KLO maintenance excluding outages, updates etc. \nNew tools covered for a short testing phase before/during a larger implementation.",
+      "tldr": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
+      "description": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
       "valueAdded": [
-        "Monthly retainer for standard platform management of MyCase, Google Suite, BlueHost and Ops Dashboard including KLO maintenance excluding outages, updates etc.",
-        "New tools covered for a short testing phase before/during a larger implementation."
+        "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation."
       ],
       "abQuestions": [],
       "kpiRefs": [],
@@ -2112,29 +2115,29 @@ window.PROJECT_DATA = {
       "status": "recommended",
       "estCostLabel": "$500/mo",
       "paymentPlanLabel": "monthly",
-      "feeEstimate": 2900,
+      "feeEstimate": 2800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "digital_bundle_mo",
       "feeEstimateUnit": "mo",
       "feeEstimateLocalMid": 2300,
       "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 2.68,
+        "raw": 1.98,
         "parts": {
-          "valueAdd": 2,
+          "valueAdd": 1,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.68
+          "descUnits": 0.98
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2400,
-      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.02 (2.68 units) · complexity ×1"
+      "feeEstimateDelta": 2300,
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×0.98 (1.98 units) · complexity ×1"
     }
   ]
 };
