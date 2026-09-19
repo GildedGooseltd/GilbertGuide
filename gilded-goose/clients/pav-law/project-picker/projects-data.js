@@ -179,56 +179,6 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.12 (5.34 units) · complexity ×1"
     },
     {
-      "priority": 1,
-      "priorityGroup": 1,
-      "fee": 500,
-      "status": "recommended",
-      "category": "Analytics",
-      "campaignType": "Platform / Data Ops",
-      "monthlyOnly": true,
-      "startDate": "2026-10-01",
-      "featuredImage": "assets/systems-admin-tile.svg",
-      "id": "TsMgmt",
-      "title": "Platform Management",
-      "tldr": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
-      "description": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
-      "valueAdded": [
-        "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Platform Mgmt",
-      "estCostLabel": "$500/mo",
-      "paymentPlanLabel": "monthly",
-      "feeEstimate": 2800,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "digital_bundle_mo",
-      "feeEstimateUnit": "mo",
-      "feeEstimateLocalMid": 2300,
-      "feeEstimateNationalMid": 3500,
-      "feeEstimateScope": {
-        "raw": 1.98,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 0.98
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2300,
-      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×0.98 (1.98 units) · complexity ×1"
-    },
-    {
       "priority": 2,
       "priorityGroup": 2,
       "fee": 2600,
@@ -2188,6 +2138,54 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 600,
       "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.21 (9.38 units) · complexity ×1"
+    },
+    {
+      "fee": 500,
+      "status": "recommended",
+      "category": "Analytics",
+      "campaignType": "Platform / Data Ops",
+      "monthlyOnly": true,
+      "startDate": "2026-10-01",
+      "featuredImage": "assets/systems-admin-tile.svg",
+      "id": "TsMgmt",
+      "title": "Platform Management",
+      "tldr": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
+      "description": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
+      "valueAdded": [
+        "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation."
+      ],
+      "hubSpotParts": [
+        "No HubSpot build in scope"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Platform Mgmt",
+      "estCostLabel": "$500/mo",
+      "paymentPlanLabel": "monthly",
+      "feeEstimate": 2800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "digital_bundle_mo",
+      "feeEstimateUnit": "mo",
+      "feeEstimateLocalMid": 2300,
+      "feeEstimateNationalMid": 3500,
+      "feeEstimateScope": {
+        "raw": 1.98,
+        "parts": {
+          "valueAdd": 1,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.98
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2300,
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×0.98 (1.98 units) · complexity ×1"
     }
   ]
 };

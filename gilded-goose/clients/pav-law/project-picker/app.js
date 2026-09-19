@@ -129,8 +129,6 @@
     DigProf: 1,
     NtguiltAd: 1,
     HsMktExpand: 2,
-    TsMgmt: 1,
-    OpsDash: 1,
     HsVoip: 2,
     HsSvcExpand: 2,
     MyCaseClr: 2,
