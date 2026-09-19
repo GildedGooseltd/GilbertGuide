@@ -67,177 +67,7 @@ window.PROJECT_DATA = {
   },
   "projects": [
     {
-      "priority": 1,
-      "priorityGroup": 1,
-      "fee": 3800,
-      "status": "recommended",
-      "ongoingFee": 900,
-      "durationWeeks": 8,
-      "invoiceCount": 4,
-      "startDate": "2026-10-01",
-      "category": "Paid Media",
-      "campaignType": "Paid Search",
-      "id": "AdEnhance",
-      "title": "Ad Expansion",
-      "tldr": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
-      "description": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.\n\nAdd new target audiences to currently active campaigns. \n\nCreate new graphic set for each audience. \n\nOptimize campaigns over learning period to filter down to top performers.",
-      "valueAdded": [
-        "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
-        "Add new target audiences to currently active campaigns.",
-        "Create new graphic set for each audience.",
-        "Optimize campaigns over learning period to filter down to top performers."
-      ],
-      "hubSpotParts": [
-        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source",
-        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
-        "Landing pages · HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Ad Expansion",
-      "estCostLabel": "$3,800 + $900/mo",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 3400,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "ads_campaign",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2500,
-      "feeEstimateNationalMid": 3800,
-      "feeEstimateScope": {
-        "raw": 4.72,
-        "parts": {
-          "valueAdd": 4,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 0.73
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": -400,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.10 (4.72 units) · complexity ×1"
-    },
-    {
-      "priority": 1,
-      "priorityGroup": 1,
-      "fee": 1200,
-      "status": "recommended",
-      "durationWeeks": 4,
-      "invoiceCount": 3,
-      "startDate": "2026-10-01",
-      "category": "Branding",
-      "campaignType": "Referral Sites",
-      "id": "LegalDirs",
-      "title": "Legal Directory Updates",
-      "tldr": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
-      "description": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.\n\nRefresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.\n\nResearch similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.\n\nDirectories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab.",
-      "valueAdded": [
-        "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
-        "Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.",
-        "Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
-        "Directories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab."
-      ],
-      "hubSpotParts": [
-        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
-        "Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Directories & Profiles",
-      "estCostLabel": "$1,200",
-      "paymentPlanLabel": "40%",
-      "depositPct": 0.4,
-      "feeEstimate": 2400,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "profiles_local",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1900,
-      "feeEstimateNationalMid": 2500,
-      "feeEstimateScope": {
-        "raw": 5.34,
-        "parts": {
-          "valueAdd": 4,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.34
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.12 (5.34 units) · complexity ×1"
-    },
-    {
-      "priority": 2,
-      "priorityGroup": 2,
-      "fee": 2600,
-      "status": "recommended",
-      "ongoingFee": 500,
-      "durationWeeks": 8,
-      "invoiceCount": 5,
-      "startDate": "2026-10-01",
-      "category": "Paid Media",
-      "campaignType": "Reviews",
-      "id": "Yelp",
-      "title": "Yelp Ads",
-      "tldr": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-      "description": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.\n\n- Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.\n- Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out.",
-      "valueAdded": [
-        "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-        "Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.",
-        "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.",
-        "Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.",
-        "Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out."
-      ],
-      "hubSpotParts": [
-        "CRM · Stores Yelp leads, messages, and call outcomes so intake is not stuck in a personal inbox.",
-        "Tasks and workflows · Creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
-        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Yelp Ads",
-      "estCostLabel": "$2,600 + $500/mo",
-      "paymentPlanLabel": "—",
-      "feeEstimate": 2800,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "profiles_local",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1900,
-      "feeEstimateNationalMid": 2500,
-      "feeEstimateScope": {
-        "raw": 7.86,
-        "parts": {
-          "valueAdd": 5,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 2.86
-        }
-      },
-      "feeEstimateComplexity": 1.1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.86 units) · complexity ×1.1"
-    },
-    {
       "priority": 5,
-      "priorityGroup": 5,
       "fee": 2400,
       "status": "on hold",
       "category": "Paid Media",
@@ -284,7 +114,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 5,
-      "priorityGroup": 5,
       "fee": 2900,
       "status": "archived",
       "category": "Paid Media",
@@ -332,7 +161,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 7,
-      "priorityGroup": 7,
       "fee": 3700,
       "status": "wip",
       "category": "Brand / Local Presence",
@@ -388,7 +216,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 7,
-      "priorityGroup": 7,
       "fee": 4400,
       "status": "on hold",
       "startDate": "2026-10-01",
@@ -440,7 +267,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 10,
-      "priorityGroup": 10,
       "fee": 2200,
       "status": "available",
       "campaignType": "Marketing Hub Depth",
@@ -490,7 +316,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 10,
-      "priorityGroup": 10,
       "fee": 1700,
       "status": "available",
       "campaignType": "Lawyer Referral Network",
@@ -538,7 +363,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 11,
-      "priorityGroup": 11,
       "fee": 4200,
       "status": "wip",
       "campaignType": "Client Intake",
@@ -592,7 +416,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 11,
-      "priorityGroup": 11,
       "fee": 2200,
       "status": "available",
       "campaignType": "Networking Skills",
@@ -640,7 +463,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 12,
-      "priorityGroup": 12,
       "fee": 20700,
       "status": "available",
       "campaignType": "HubSpot CMS",
@@ -694,7 +516,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 13,
-      "priorityGroup": 13,
       "fee": 4900,
       "status": "wip",
       "durationWeeks": 12,
@@ -751,7 +572,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 14,
-      "priorityGroup": 14,
       "fee": 1500,
       "status": "available",
       "category": "Intake / CRM",
@@ -802,7 +622,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 20,
-      "priorityGroup": 20,
       "fee": 3500,
       "status": "available",
       "campaignType": "Nurture · Templates · Surveys",
@@ -850,7 +669,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 21,
-      "priorityGroup": 21,
       "fee": 0,
       "campaignType": "Search + Display creative",
       "id": "AdCreative",
@@ -892,7 +710,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 23,
-      "priorityGroup": 23,
       "fee": 1700,
       "status": "started",
       "category": "Referral",
@@ -940,7 +757,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 24,
-      "priorityGroup": 24,
       "fee": 1500,
       "status": "archived · merged winterseason",
       "category": "Referral / Outbound",
@@ -988,7 +804,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 26,
-      "priorityGroup": 26,
       "fee": 500,
       "status": "archived",
       "category": "Finance / Operations",
@@ -1036,7 +851,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 28,
-      "priorityGroup": 28,
       "fee": 2200,
       "status": "archived",
       "category": "Paid Media",
@@ -1084,7 +898,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 30,
-      "priorityGroup": 30,
       "fee": 2000,
       "status": "archived",
       "category": "Paid Media",
@@ -1132,7 +945,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 35,
-      "priorityGroup": 35,
       "fee": 1500,
       "status": "archived",
       "category": "Operations / Compensation",
@@ -1180,7 +992,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 40,
-      "priorityGroup": 40,
       "fee": 1800,
       "status": "available",
       "category": "CRM",
@@ -1229,7 +1040,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 41,
-      "priorityGroup": 41,
       "fee": 1800,
       "status": "planning",
       "category": "CRM / Web",
@@ -1278,7 +1088,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 42,
-      "priorityGroup": 42,
       "fee": 0,
       "status": "available",
       "category": "CRM",
@@ -1326,7 +1135,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 46,
-      "priorityGroup": 46,
       "fee": 4500,
       "status": "archived",
       "category": "Creative / Social",
@@ -1374,7 +1182,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 47,
-      "priorityGroup": 47,
       "fee": 2000,
       "status": "available",
       "category": "Brand / Professional Development",
@@ -1422,7 +1229,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 51,
-      "priorityGroup": 51,
       "fee": 1500,
       "status": "completed",
       "category": "Strategy",
@@ -1468,7 +1274,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 52,
-      "priorityGroup": 52,
       "fee": 2500,
       "status": "archived",
       "category": "Events",
@@ -1515,7 +1320,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 53,
-      "priorityGroup": 53,
       "fee": 1000,
       "status": "planning",
       "category": "Partnerships",
@@ -1562,7 +1366,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 54,
-      "priorityGroup": 54,
       "fee": 2000,
       "status": "completed",
       "category": "Systems",
@@ -1608,7 +1411,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 55,
-      "priorityGroup": 55,
       "fee": 1500,
       "status": "completed",
       "category": "Systems",
@@ -1654,7 +1456,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
-      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged hssvcexpand",
       "campaignType": "Monthly Client Email",
@@ -1701,7 +1502,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
-      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged winterseason",
       "category": "Outbound",
@@ -1749,7 +1549,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
-      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged socialads",
       "category": "CRM / Social",
@@ -1796,7 +1595,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
-      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged hssvcexpand",
       "category": "Infrastructure",
@@ -1844,7 +1642,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
-      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged winterseason",
       "category": "Direct Mail",
@@ -1892,7 +1689,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
-      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged socialads",
       "category": "Paid Social",
@@ -1940,7 +1736,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
-      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged winterseason",
       "category": "Email",
@@ -1988,7 +1783,6 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 98,
-      "priorityGroup": 98,
       "fee": 0,
       "status": "archived · merged holidayads",
       "category": "Paid Media",
@@ -2035,8 +1829,63 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×0.97 (1.9 units) · complexity ×1.08"
     },
     {
+      "priorityGroup": 1,
+      "fee": 3800,
+      "status": "recommended",
+      "ongoingFee": 900,
+      "durationWeeks": 8,
+      "invoiceCount": 4,
+      "startDate": "2026-10-01",
+      "category": "Paid Media",
+      "campaignType": "Paid Search",
+      "id": "AdEnhance",
+      "title": "Ad Expansion",
+      "tldr": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
+      "description": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.\n\nAdd new target audiences to currently active campaigns. \n\nCreate new graphic set for each audience. \n\nOptimize campaigns over learning period to filter down to top performers.",
+      "valueAdded": [
+        "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
+        "Add new target audiences to currently active campaigns.",
+        "Create new graphic set for each audience.",
+        "Optimize campaigns over learning period to filter down to top performers."
+      ],
+      "hubSpotParts": [
+        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source",
+        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
+        "Landing pages · HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Ad Expansion",
+      "estCostLabel": "$3,800 + $900/mo",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 3400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "ads_campaign",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3800,
+      "feeEstimateScope": {
+        "raw": 4.72,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.73
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": -400,
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.10 (4.72 units) · complexity ×1"
+    },
+    {
       "priority": 99,
-      "priorityGroup": 99,
       "fee": 5500,
       "status": "canceled · moved hswebrebuild",
       "category": "CRM",
@@ -2083,6 +1932,60 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×0.99 (2.25 units) · complexity ×1.1"
     },
     {
+      "priorityGroup": 1,
+      "fee": 1200,
+      "status": "recommended",
+      "durationWeeks": 4,
+      "invoiceCount": 3,
+      "startDate": "2026-10-01",
+      "category": "Branding",
+      "campaignType": "Referral Sites",
+      "id": "LegalDirs",
+      "title": "Legal Directory Updates",
+      "tldr": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
+      "description": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.\n\nRefresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.\n\nResearch similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.\n\nDirectories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab.",
+      "valueAdded": [
+        "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
+        "Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.",
+        "Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
+        "Directories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab."
+      ],
+      "hubSpotParts": [
+        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
+        "Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Directories & Profiles",
+      "estCostLabel": "$1,200",
+      "paymentPlanLabel": "40%",
+      "depositPct": 0.4,
+      "feeEstimate": 2400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 5.34,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.34
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.12 (5.34 units) · complexity ×1"
+    },
+    {
       "priorityGroup": "AdHoc",
       "feeUncertain": true,
       "fee": 1200,
@@ -2090,8 +1993,7 @@ window.PROJECT_DATA = {
       "estimateNote": "The cost is hard to estimate without knowing how many products are needed",
       "invoiceCount": 3,
       "status": "recommended",
-      "category": "Brand / Merch",
-      "campaignType": "Physical Print & Production",
+      "campaignType": "Print & Production",
       "id": "SwagPrint",
       "title": "Printables, Swag & Apparel",
       "tldr": "Updated stationery and images are needed as the team has expanded.",
@@ -2141,6 +2043,7 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.18 (8.21 units) · complexity ×1"
     },
     {
+      "priorityGroup": "AdHoc",
       "fee": 500,
       "status": "recommended",
       "category": "Analytics",
@@ -2184,6 +2087,62 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2300,
       "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×0.98 (1.98 units) · complexity ×1"
+    },
+    {
+      "priorityGroup": 1,
+      "fee": 2600,
+      "status": "recommended",
+      "ongoingFee": 500,
+      "durationWeeks": 8,
+      "invoiceCount": 5,
+      "startDate": "2026-10-01",
+      "category": "Paid Media",
+      "campaignType": "Reviews",
+      "id": "Yelp",
+      "title": "Yelp Ads",
+      "tldr": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
+      "description": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.\n\n- Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.\n- Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out.",
+      "valueAdded": [
+        "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
+        "Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.",
+        "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.",
+        "Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.",
+        "Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out."
+      ],
+      "hubSpotParts": [
+        "CRM · Stores Yelp leads, messages, and call outcomes so intake is not stuck in a personal inbox.",
+        "Tasks and workflows · Creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
+        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Yelp Ads",
+      "estCostLabel": "$2,600 + $500/mo",
+      "paymentPlanLabel": "—",
+      "feeEstimate": 2800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 7.86,
+        "parts": {
+          "valueAdd": 5,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 2.86
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.86 units) · complexity ×1.1"
     }
   ]
 };

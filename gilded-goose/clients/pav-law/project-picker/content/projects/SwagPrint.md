@@ -7,8 +7,7 @@
 | Estimate note | The cost is hard to estimate without knowing how many products are needed |
 | Invoice count | 3                           |
 | Status            | Recommended |
-| Category      | Brand / Merch               |
-| Campaign type | Physical Print & Production |
+| Campaign type | Print & Production |
 
 ---
 

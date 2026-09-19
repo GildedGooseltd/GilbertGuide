@@ -3142,6 +3142,14 @@
       opacity: 0.4;
       filter: grayscale(0.35);
     }
+    .calc-quote-table tbody tr.calc-row-deselected {
+      opacity: 0.48;
+      filter: grayscale(0.5);
+    }
+    .calc-quote-table tbody tr.calc-row-deselected .cart-proj-chk {
+      opacity: 1;
+      filter: none;
+    }
     .calc-quote-table th.col-score,
     .calc-quote-table td.col-score {
       width: 2.85rem;
@@ -3196,7 +3204,8 @@
       background: var(--gg-paper);
       color: var(--input-text);
     }
-    select.calc-date-input {
+    select.calc-date-input,
+    select.calc-invoice-count-input {
       max-width: 6.35rem;
       cursor: pointer;
       appearance: auto;
@@ -3209,7 +3218,7 @@
       white-space: nowrap;
       line-height: 1.35;
     }
-    .calc-invoice-count-input {
+    select.calc-invoice-count-input {
       max-width: 3.5rem;
       text-align: center;
     }
@@ -6485,7 +6494,7 @@
       <button type="button" class="help-popup-close" id="sow-note-close" aria-label="Close Submit SOW note">×</button>
       <h3 id="sow-note-title" class="help-popup-title">Submit SOW</h3>
       <p class="sow-note-hint">Optional note for the email to support@gildedgooselimited.com. Leave blank to send the plan only.</p>
-      <textarea id="sow-note-input" rows="5" placeholder="Add a note for Kate…" aria-label="Optional note for the SOW email"></textarea>
+      <textarea id="sow-note-input" rows="5" placeholder="Add a note…" aria-label="Optional note for the SOW email"></textarea>
       <div class="sow-note-actions">
         <button type="button" class="btn btn-secondary" id="sow-note-cancel">Cancel</button>
         <button type="button" class="btn btn-primary" id="sow-note-send">Send SOW</button>
@@ -6497,11 +6506,11 @@
 
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20260917-tsmgmt-oct1"></script>
+  <script src="projects-data.js?v=20260918-swag-focus"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
   <script src="kpi-report.js?v=20260917-no-referral-help"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260918-overview-format"></script>
+  <script src="app.js?v=20260918-invoice-select"></script>
 </body>
 </html>

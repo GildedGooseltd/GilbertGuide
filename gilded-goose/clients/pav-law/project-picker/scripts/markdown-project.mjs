@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 const META_KEYS = {
   id: "id",
   priority: "priority",
-  "priority group": "priority",
+  "priority group": "priorityGroup",
   "tile space #": "tileSpace",
   "tile space": "tileSpace",
   "tile #": "tileSpace",
@@ -146,10 +146,16 @@ function parseMetaTable(text) {
           delete meta.priority;
         } else {
           const n = parseInt(val, 10);
-          if (Number.isFinite(n)) {
-            meta.priority = n;
-            meta.priorityGroup = n;
-          }
+          if (Number.isFinite(n)) meta.priority = n;
+        }
+      }
+    } else if (field === "priorityGroup") {
+      if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank") {
+        if (/^ad[\s-]?hoc$/i.test(val)) {
+          meta.priorityGroup = "AdHoc";
+        } else {
+          const n = parseInt(val, 10);
+          if (Number.isFinite(n)) meta.priorityGroup = n;
         }
       }
     } else if (field === "tileSpace") {

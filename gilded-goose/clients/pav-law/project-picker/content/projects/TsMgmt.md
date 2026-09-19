@@ -2,6 +2,7 @@
 
 | Field             | Value                         |
 | ----------------- | ----------------------------- |
+| Priority group    | AdHoc                         |
 | Fee               | 500                           |
 | Status            | Recommended |
 | Category          | Analytics                     |

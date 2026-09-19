@@ -148,9 +148,7 @@
     if (labeled && /^ad[\s-]?hoc$/i.test(labeled)) return "AdHoc";
     const labeledNum = labeled ? Number(labeled) : NaN;
     if (Number.isFinite(labeledNum) && labeledNum >= 1 && labeledNum <= 4) return Math.trunc(labeledNum);
-    const raw = item.priority != null ? Number(item.priority) : NaN;
-    if (Number.isFinite(raw) && raw >= 1 && raw <= 4) return Math.trunc(raw);
-    if (typeof item.priority === "string" && /^ad[\s-]?hoc$/i.test(item.priority.trim())) return "AdHoc";
+    /* Do not use item.priority here — that is tile/order, not Andrew Priority group. */
     const id = normalizeCatalogId(item);
     if (PRIORITY_GROUP_BY_ID[id] != null) return PRIORITY_GROUP_BY_ID[id];
     const parentId = item.parentId && String(item.parentId);
@@ -183,7 +181,9 @@
 
   function priorityGroupLabel(item) {
     const g = priorityGroupOf(item);
-    return g != null ? String(g) : "—";
+    if (g == null) return "—";
+    if (g === "AdHoc") return "AdHoc";
+    return `P${g}`;
   }
 
   function priorityGroupTitle(item) {
@@ -814,6 +814,22 @@
     return nestRankedList(ranked);
   }
 
+  /**
+   * Quote calculator table catalog: Required + Recommended (or Gilbert session picks),
+   * plus any cart-only adds. Unchecked rows stay visible and gray out; they are not removed.
+   */
+  function rankedCalculatorCatalog() {
+    let catalog = bestFitSessionActive && hasGilbertActivity()
+      ? nestRankedList(gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) })))
+      : nestRankedList(indexPlanBestFit());
+    if (!catalog.length) catalog = nestRankedList(indexPlanBestFit());
+    const byId = new Map(catalog.map(r => [r.item.id, r]));
+    rankedInvoiceForBestFit().forEach(r => {
+      if (!byId.has(r.item.id)) byId.set(r.item.id, r);
+    });
+    return nestRankedList([...byId.values()]);
+  }
+
   /** Session-only: Gilbert/survey may override Best Fit until refresh. Never persisted. */
   let bestFitSessionActive = false;
 
@@ -934,6 +950,16 @@
     saveState();
   }
 
+  function calcInvoiceCountSelectHtml(projectId, title, invMax, invCount) {
+    const maxN = Math.max(1, Number(invMax) || 1);
+    const cur = Math.min(maxN, Math.max(1, Number(invCount) || 1));
+    const opts = [];
+    for (let i = 1; i <= maxN; i++) {
+      opts.push(`<option value="${i}"${i === cur ? " selected" : ""}>${i}</option>`);
+    }
+    return `<select class="calc-invoice-count-input" data-project-id="${escapeHtml(projectId)}" aria-label="Number of invoices for ${escapeHtml(title)}" title="Number of invoices (1–${maxN}). Set per project.">${opts.join("")}</select>`;
+  }
+
   function maxInvoiceCountForItem(item) {
     if (!item || isMonthlyRetainerItem(item, !!item.isRetainer)) return 1;
     const dates = getProjectDateRange(item.id);
@@ -956,10 +982,7 @@
     if (saved != null && saved !== "" && Number(saved) > 0) {
       return Math.min(maxN, Math.max(1, Number(saved)));
     }
-    if (item.invoiceCount != null && Number(item.invoiceCount) > 0) {
-      return Math.min(maxN, Math.max(1, Number(item.invoiceCount)));
-    }
-    return maxN;
+    return Math.min(maxN, 1);
   }
 
   function setProjectInvoiceCount(id, count) {
@@ -1073,10 +1096,11 @@
       const startCell = `<td class="col-start">${calcStartDateSelectHtml(item.id, item.title, dates.start)}</td>`;
       const invoiceCell = monthlyOnly
         ? `<td class="col-invoices"><span class="payment-date-na">—</span></td>`
-        : `<td class="col-invoices"><input type="number" class="calc-invoice-count-input" data-project-id="${escapeHtml(item.id)}" min="1" max="${invMax}" step="1" value="${invCount != null ? escapeHtml(String(invCount)) : ""}" aria-label="Number of invoices for ${escapeHtml(item.title)}" title="Number of invoices (1–${invMax}). Set per project."></td>`;
+        : `<td class="col-invoices">${calcInvoiceCountSelectHtml(item.id, item.title, invMax, invCount)}</td>`;
       const rowClass = [
         nextMonthStart ? "calc-row-next-month" : "",
-        required ? "calc-row-required" : ""
+        required ? "calc-row-required" : "",
+        !selected ? "calc-row-deselected" : ""
       ].filter(Boolean).join(" ");
       return `<tr class="${rowClass}" data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer || monthlyOnly}" data-required="${required}" data-next-month="${nextMonthStart ? "1" : "0"}">
         <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
@@ -1123,14 +1147,8 @@
       </div>
     </div>`;
 
-    /* Calculator and invoice always show the same projects (cart line items).
-       Fresh load seeds cart to INDEX Required + Recommended. */
-    let ranked = rankedInvoiceForBestFit();
-    if (!ranked.length) {
-      ranked = bestFitSessionActive && hasGilbertActivity()
-        ? nestRankedList(gilbertRankedPicks(5).map(item => ({ item, score: computeProjectScore(item) })))
-        : nestRankedList(indexPlanBestFit());
-    }
+    /* Catalog stays on screen when unchecked (grayed). Invoice/SOW still use cart only. */
+    const ranked = rankedCalculatorCatalog();
     const body = bestFitRankedListHtml(ranked);
 
     el.innerHTML = `${head}
@@ -1182,7 +1200,6 @@
         if (n > maxN) n = maxN;
         setProjectInvoiceCount(id, n);
         input.value = String(n);
-        input.max = String(maxN);
         renderDoNextPanel();
         updateInvoiceScheduleAmount();
       });
@@ -1482,8 +1499,8 @@
         row.durationWeeks = String(item.durationWeeks);
         changed = true;
       }
-      if (!row.invoiceCount && item.invoiceCount != null && Number(item.invoiceCount) > 0) {
-        row.invoiceCount = String(item.invoiceCount);
+      if (!row.invoiceCount) {
+        row.invoiceCount = "1";
         changed = true;
       }
     }
@@ -3945,6 +3962,7 @@
       const raw = localStorage.getItem(CART_STORAGE_KEY);
       if (!raw) {
         applyIndexDefaultSelections();
+        state.invoiceCountStartOne = true;
         return;
       }
       const saved = JSON.parse(raw);
@@ -3952,6 +3970,16 @@
          Recommended so Best Fit and the invoice stay the same project set. */
       state.notes = saved.notes || {};
       state.projectDates = saved.projectDates && typeof saved.projectDates === "object" ? saved.projectDates : {};
+      /* Invoice dropdown defaults to 1 · one-time reset of catalog-seeded counts. */
+      if (!saved.invoiceCountStartOne) {
+        Object.keys(state.projectDates).forEach(id => {
+          const row = state.projectDates[id];
+          if (row) row.invoiceCount = "1";
+        });
+        state.invoiceCountStartOne = true;
+      } else {
+        state.invoiceCountStartOne = true;
+      }
       sanitizeCartForAbQ();
       state.submitterEmail = saved.submitterEmail || "";
       if (state.submitterEmail) document.getElementById("submitted-email").value = state.submitterEmail;
@@ -3993,6 +4021,7 @@
       state.retainer = false;
       state.projects = new Set();
       applyIndexDefaultSelections();
+      if (!saved.invoiceCountStartOne) saveState();
     } catch (e) {}
     ensureRequiredMaintenance();
   }
@@ -4008,6 +4037,7 @@
       expandAll: isExpandAll(),
       notes: state.notes,
       projectDates: state.projectDates || {},
+      invoiceCountStartOne: !!state.invoiceCountStartOne,
       submitterEmail: state.submitterEmail,
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,
@@ -4490,10 +4520,10 @@
     const focus = projectFocusArea(item);
     const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
     const metaParts = [];
-    if (group && group !== "—") metaParts.push(`P${group}`);
+    if (group && group !== "—") metaParts.push(group);
     if (focus && focus !== "—") metaParts.push(focus);
     titleEl.textContent = item.title || "Project";
-    if (metaEl) metaEl.textContent = metaParts.join(" · ");
+    if (metaEl) metaEl.textContent = metaParts.join(" - ");
     if (costEl) {
       if (isFeeUncertain(item)) {
         costEl.classList.add("project-overview-cost-estimate");
@@ -4559,11 +4589,9 @@
     return null;
   }
 
-  /** Projects currently on the Quote Calculator / invoice plan. */
+  /** Projects shown on the Quote Calculator / overview tiles (includes unchecked catalog rows). */
   function calculatorWorkingProjects() {
-    let ranked = rankedInvoiceForBestFit();
-    if (!ranked.length) ranked = nestRankedList(indexPlanBestFit());
-    return ranked.map(r => r.item).filter(Boolean);
+    return rankedCalculatorCatalog().map(r => r.item).filter(Boolean);
   }
 
   function projectTileHtml(item, isFirstSelected) {
@@ -4592,7 +4620,7 @@
         </div>
         <div class="project-tile-body">
           <h3 class="project-tile-title">${escapeHtml(item.title)}</h3>
-          <p class="project-tile-focus" title="${escapeHtml(groupTitle)}">${group && group !== "—" ? `P${escapeHtml(group)}` : ""}${group && group !== "—" && focus ? " · " : ""}${escapeHtml(focus)}</p>
+          <p class="project-tile-focus" title="${escapeHtml(groupTitle)}">${group && group !== "—" ? escapeHtml(group) : ""}${group && group !== "—" && focus ? " - " : ""}${escapeHtml(focus)}</p>
           ${quoteHtml}
           <p class="project-tile-summary">${escapeHtml(summary)}</p>
         </div>

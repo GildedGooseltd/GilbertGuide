@@ -2,7 +2,7 @@
 
 | Field             | Value      |
 | ----------------- | ---------- |
-| Priority          | 2          |
+| Priority group    | 1          |
 | Fee               | 2600       |
 | Status            | Recommended |
 | Ongoing fee       | 500        |
