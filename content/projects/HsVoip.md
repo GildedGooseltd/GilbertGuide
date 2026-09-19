@@ -1,14 +1,13 @@
 # Phone(s) & VoIP Setup
 
-
 | Field             | Value               |
 | ----------------- | ------------------- |
 | Priority          | 98                  |
 | Fee               | 0                   |
+| Status            | archived · merged HsSvcExpand |
 | Category          | Infrastructure      |
 | Campaign type     | Call Infrastructure |
 | Parent            | HsSvcExpand         |
-
 
 ---
 
@@ -19,7 +18,3 @@ Dedicated HubSpot phone lines · logging · same-day callback — merged into Hs
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Merged into HubSpot Client Intake · not a standalone sell.

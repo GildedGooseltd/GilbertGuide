@@ -4,6 +4,7 @@
 | ----------------- | ---------------------------------- |
 | Priority          | 28                                 |
 | Fee               | 2200                               |
+| Status            | Archived |
 | Category          | Paid Media                         |
 | Campaign type     | Seasonal Search / Display / Social |
 
@@ -16,7 +17,3 @@ Summer seasonal digital ads with a Bend & Snap social flight timed to college mo
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $2,200.

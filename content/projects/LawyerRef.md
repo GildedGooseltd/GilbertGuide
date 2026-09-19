@@ -4,6 +4,7 @@
 | ----------------- | ----------------------- |
 | Priority          | 10                      |
 | Fee               | 1700                    |
+| Status            | available |
 | Category          |                         |
 | Campaign type     | Lawyer Referral Network |
 | Parent            | Referral                |
@@ -25,7 +26,3 @@ Targets: student life · orientation / move-in · residence life · student gove
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $1,700.

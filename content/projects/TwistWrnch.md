@@ -4,6 +4,7 @@
 | ----------------- | -------------------------- |
 | Priority          | 53                         |
 | Fee               | 1500                       |
+| Status            | Planning |
 | Category          | Partnerships               |
 | Campaign type     | Twisted Wrench Partnership |
 
@@ -16,7 +17,3 @@
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Setup fee $1,500.

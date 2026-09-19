@@ -1,14 +1,13 @@
 # Gabriel Outbound Sales Calling
 
-
 | Field             | Value          |
 | ----------------- | -------------- |
 | Priority          | 98             |
 | Fee               | 0              |
+| Status            | archived · merged WinterSeason |
 | Category          | Outbound       |
 | Campaign type     | Outbound Calls |
 | Parent            | WinterSeason   |
-
 
 ---
 
@@ -19,7 +18,3 @@ Warm-list outbound calling plus sealing and probation reengagement — merged in
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Merged into Winter Seasonal Campaign · not a standalone sell.

@@ -4,6 +4,7 @@
 | ----------------- | ---------------- |
 | Priority          | 23               |
 | Fee               | 1700             |
+| Status            | Started |
 | Ongoing fee       | 500              |
 | Category          | Referral         |
 | Campaign type     | Referral Program |
@@ -17,7 +18,3 @@ Highest-trust lead channel for direct-hire traffic, plus responding to reviews s
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $1,700. Ongoing $500/mo.

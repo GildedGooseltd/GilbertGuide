@@ -6,10 +6,10 @@ Short name IDs replace old A/B/C codes. Filename = ID.
 |-----|-----|---------|
 | A1 | AdEnhance | Ad Expansion |
 | A2 | NtguiltAd | NTGUILT AdWords Campaign Launch |
-| A3 | SummerEmail | Summer Safety Email |
+| A3 | SummerEmail | Winter Safety Email · merged WinterSeason |
 | A4 | Referral | Client Referral Program |
 | A5 | HsLanding | HubSpot Landing Page / Module |
-| A6 | GabrielOut | Gabriel Outbound |
+| A6 | GabrielOut | Gabriel Outbound · merged WinterSeason |
 | A7 | SocialAds | NTGUILT & Firm Social Campaigns |
 | A8 | OpsDash | Platform Management · was Operations Dashboard V1 · absorbed DataMgmt |
 | A8M | DataMgmt | Merged into OpsDash 09/17/2026 |
@@ -21,7 +21,7 @@ Short name IDs replace old A/B/C codes. Filename = ID.
 | A14 | PerfPay | Performance Plan Payouts |
 | A15 | EventAct | Summer Event Activation |
 | A16 | TwistWrnch | Twisted Wrench |
-| A17 | SealReeng | Sealing Reengagement |
+| A17 | SealReeng | Sealing Reengagement · merged WinterSeason |
 | A18 | RedditAds | Reddit NTGUILT Ads |
 | A19 | SummerAds | Summer Seasonal Ads |
 | A20 | Yelpv1 | Yelp Ads |
@@ -34,7 +34,7 @@ Short name IDs replace old A/B/C codes. Filename = ID.
 | B2 | HsVoip | Phone(s) & VoIP Setup |
 | B3 | WebSpeed | Website Speed and Navigation |
 | B4 | WebContent | Website Content Overhaul |
-| B5 | InsMailer | Insurance Envelope Mailer |
+| B5 | InsMailer | Insurance Envelope Mailer · merged WinterSeason |
 | B6 | BlogRevamp | Blog Revamp |
 | B7 | HsContacts | HubSpot Marketing Contacts Upload |
 | B8 | HsSocial | HubSpot Social Media Marketing |
@@ -46,6 +46,7 @@ Short name IDs replace old A/B/C codes. Filename = ID.
 | — | HsWebRebuild | HubSpot Website Rebuild |
 | B14 | SwagPrint | Printables, Swag, Apparel & Stationery |
 | B15 | MyCaseClr | MyCase Data Cleanse |
+| — | WinterSeason | Winter Seasonal Campaign |
 | C1 | AccessAud | Systems Access Audit |
 | C2 | EmailDns | Email Outage / DNS Runbook |
 | retainer | RETAINER | Digital Ads Maintenance Retainer |

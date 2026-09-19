@@ -1,13 +1,12 @@
 # Affirm Financing Email Campaign
 
-
 | Field             | Value                |
 | ----------------- | -------------------- |
 | Priority          | 98                   |
 | Fee               | 0                    |
+| Status            | archived · merged HsSvcExpand |
 | Campaign type     | Monthly Client Email |
 | Parent            | HsSvcExpand          |
-
 
 ---
 
@@ -18,7 +17,3 @@ Monthly Affirm how-it-works email plus Nov–Dec financing and collections sends
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Merged into HubSpot Client Intake · not a standalone sell.

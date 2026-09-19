@@ -4,6 +4,7 @@
 | ----------------- | ---------------------- |
 | Priority          | 30                     |
 | Fee               | 2000                   |
+| Status            | Archived |
 | Category          | Paid Media             |
 | Campaign type     | Testimonials · Surveys |
 
@@ -16,7 +17,3 @@ Real outcomes become reusable ad copy the team approves once. Privacy-safe snipp
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $2,000.

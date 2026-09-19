@@ -4,6 +4,7 @@
 | ----------------- | --------------- |
 | Priority          | 98              |
 | Fee               | 0               |
+| Status            | archived · merged SocialAds |
 | Category          | Paid Social     |
 | Campaign type     | Reddit Ads Test |
 | Parent            | NtguiltAd       |
@@ -17,7 +18,3 @@ Low-risk Reddit test ($500 + $500 promo credit) — merged into SocialAds; keep 
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-$600 setup for a $500 media test is light vs Denver PPC project minimums — treat as NtguiltAd child, not a standalone agency engagement. Active work is under SocialAds (merged).

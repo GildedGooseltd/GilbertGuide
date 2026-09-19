@@ -24,6 +24,7 @@ window.PROJECT_DATA = {
   },
   "retainer": {
     "fee": 3000,
+    "status": "required",
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
     "monthlyOnly": true,
@@ -66,288 +67,24 @@ window.PROJECT_DATA = {
   },
   "projects": [
     {
-      "priority": 1,
-      "fee": 2600,
-      "ongoingFee": 500,
-      "durationWeeks": 8,
-      "invoiceCount": 5,
-      "startDate": "2026-10-01",
-      "category": "Paid Media",
-      "campaignType": "Reviews",
-      "id": "Yelpv1",
-      "title": "Yelp Ads",
-      "tldr": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-      "description": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.\n\n- Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements, and refresh portfolio and FAQ content.\n- Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out.",
-      "valueAdded": [
-        "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-        "Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.",
-        "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.",
-        "Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements, and refresh portfolio and FAQ content.",
-        "Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out."
-      ],
-      "hubSpotParts": [
-        "CRM · Stores Yelp leads, messages, and call outcomes so intake is not stuck in a personal inbox.",
-        "Tasks and workflows · Creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
-        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Yelp Ads",
-      "status": "recommended",
-      "estCostLabel": "$2,600 + $500/mo",
-      "paymentPlanLabel": "—",
-      "feeEstimate": 2800,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "profiles_local",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1900,
-      "feeEstimateNationalMid": 2500,
-      "feeEstimateScope": {
-        "raw": 7.86,
-        "parts": {
-          "valueAdd": 5,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 2.86
-        }
-      },
-      "feeEstimateComplexity": 1.1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.86 units) · complexity ×1.1"
-    },
-    {
-      "priority": 2,
-      "fee": 3800,
-      "ongoingFee": 900,
-      "durationWeeks": 8,
-      "invoiceCount": 4,
-      "startDate": "2026-10-01",
-      "category": "Paid Media",
-      "campaignType": "Paid Search",
-      "id": "AdEnhance",
-      "title": "Ad Expansion",
-      "tldr": "Grow Google Ads into three case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
-      "description": "Grow Google Ads into three case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project.",
-      "valueAdded": [
-        "Grow Google Ads into three case types the firm wants more of: criminal mischief, college towns and trade schools, and weapons or gun-related charges. Setup mirrors the ads already running for domestic violence, military, and traffic. About eight weeks to build and test on a smaller budget, then keep only what brings good calls. Setup $3,800. About $900 more per month on the ads care plan if all three stay on, or about $300 per month for each one that stays. Money spent inside Google is separate. Holiday and winter ads are a different project."
-      ],
-      "hubSpotParts": [
-        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source, and you can compare them next to DV, Military, and NTGUILT.",
-        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
-        "Landing pages · Optional HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Ad Expansion",
-      "status": "recommended",
-      "estCostLabel": "$3,800 + $900/mo",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 3200,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "ads_campaign",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2500,
-      "feeEstimateNationalMid": 3800,
-      "feeEstimateScope": {
-        "raw": 3.38,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 2.38
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": -600,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.05 (3.38 units) · complexity ×1"
-    },
-    {
-      "priority": 2,
-      "fee": 1500,
-      "category": "Intake / LSA",
-      "campaignType": "LSA Operations & Training",
-      "id": "LsaCall",
-      "title": "LSA Call Process Update",
-      "tldr": "Protects LSA spend — same-day updates + Rate this lead drive faster, larger refunds and better lead quality. Every LSA call gets name · notes · Missed/Q/NQ · status · Rate this lead · archive only when complete. Naming: `M:` returned missed · `NQ:` not qualified · notes use `;` between pieces · staff name who answered. Cannot afford → Very dissatisfied + Spam · Booked when good-fit consult is on the calendar. Team split: America = May and earlier · Casey = June · July done by Kate · overlap OK. Generic screenshot how-to in Drive pack · personal kickoff emails per person. HubSpot mirror · `pl_booked_closed_by` · mobile app for form speed-to-lead. Coverage ramp frees Romina for admin during Casey phone blocks · KPI #21 toward ≥90%.",
-      "description": "Protects LSA spend — same-day updates + Rate this lead drive faster, larger refunds and better lead quality. Every LSA call gets name · notes · Missed/Q/NQ · status · Rate this lead · archive only when complete. Naming: `M:` returned missed · `NQ:` not qualified · notes use `;` between pieces · staff name who answered. Cannot afford → Very dissatisfied + Spam · Booked when good-fit consult is on the calendar. Team split: America = May and earlier · Casey = June · July done by Kate · overlap OK. Generic screenshot how-to in Drive pack · personal kickoff emails per person. HubSpot mirror · `pl_booked_closed_by` · mobile app for form speed-to-lead. Coverage ramp frees Romina for admin during Casey phone blocks · KPI #21 toward ≥90%.",
-      "valueAdded": [
-        "Protects LSA spend — same-day updates + Rate this lead drive faster, larger refunds and better lead quality. Every LSA call gets name · notes · Missed/Q/NQ · status · Rate this lead · archive only when complete. Naming: `M:` returned missed · `NQ:` not qualified · notes use `;` between pieces · staff name who answered. Cannot afford → Very dissatisfied + Spam · Booked when good-fit consult is on the calendar. Team split: America = May and earlier · Casey = June · July done by Kate · overlap OK. Generic screenshot how-to in Drive pack · personal kickoff emails per person. HubSpot mirror · `pl_booked_closed_by` · mobile app for form speed-to-lead. Coverage ramp frees Romina for admin during Casey phone blocks · KPI #21 toward ≥90%."
-      ],
-      "hubSpotParts": [
-        "Service Hub · tickets and handoffs on new cases",
-        "CRM · lead source and quality on every inbound",
-        "Marketing Hub · Ads sync view for intake"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [
-        "#21"
-      ],
-      "publishStatus": "unpublished",
-      "shortTitle": "LSA Call Process",
-      "status": "wip",
-      "estCostLabel": "$1,500",
-      "paymentPlanLabel": "50%",
-      "depositPct": 0.5,
-      "feeEstimate": 2400,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "lsa_process",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1600,
-      "feeEstimateNationalMid": 2500,
-      "feeEstimateScope": {
-        "raw": 4.35,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 1,
-          "descUnits": 3
-        }
-      },
-      "feeEstimateComplexity": 1.1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 900,
-      "feeEstimateNote": "lsa process lane · local mid $1,600 · national mid $2,500 · scope ×1.09 (4.35 units) · complexity ×1.1"
-    },
-    {
-      "priority": 3,
-      "feeUncertain": true,
-      "fee": 1200,
-      "category": "Brand / Merch",
-      "campaignType": "Physical Print & Production",
-      "id": "SwagPrint",
-      "title": "Design Printables, Swag & Apparel",
-      "tldr": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-      "description": "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\nThe $1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost.",
-      "valueAdded": [
-        "Stationery is the next build. The team needs computer cases for at least the lawyers. The same design can print on folders or padfolios for clients at court so people stay more organized and calm, and so they are more likely to keep the materials for a future case. Case styles and quality levels vary. Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Design has not begun.",
-        "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
-        "The $1,200 design and coordination fee is an estimate. It will move with how many products you want and how much organization work is in scope. Answer those questions before locking a firm quote. Product production stays separate client cost."
-      ],
-      "hubSpotParts": [
-        "Lead source · Light word-of-mouth logging when a piece is tracked.",
-        "Cost tracking · Optional cost line for referral or review programs when measuring ROI."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Printables & Swag",
-      "status": "recommended",
-      "estCostLabel": "~$1,200?",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 1700,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "swag_consult",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1300,
-      "feeEstimateNationalMid": 1800,
-      "feeEstimateScope": {
-        "raw": 5.74,
-        "parts": {
-          "valueAdd": 3,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 2.74
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 500,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.13 (5.74 units) · complexity ×1"
-    },
-    {
-      "priority": 4,
-      "fee": 1200,
-      "durationWeeks": 4,
-      "invoiceCount": 3,
-      "startDate": "2026-10-01",
-      "category": "Brand / Local Presence",
-      "campaignType": "Directories & Profiles",
-      "id": "LegalDirs",
-      "title": "Directories & Profile Channels",
-      "tldr": "Update legal directory profiles for Pav Law. Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
-      "description": "Update legal directory profiles for Pav Law. Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.\n\nDirectories: Justia, FindLaw, Avvo. Pick which to prioritize from the brand audit Data tab.",
-      "valueAdded": [
-        "Update legal directory profiles for Pav Law. Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
-        "Directories: Justia, FindLaw, Avvo. Pick which to prioritize from the brand audit Data tab."
-      ],
-      "hubSpotParts": [
-        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
-        "Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project."
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "published",
-      "shortTitle": "Directories & Profiles",
-      "status": "recommended",
-      "estCostLabel": "$1,200",
-      "paymentPlanLabel": "40%",
-      "depositPct": 0.4,
-      "feeEstimate": 2300,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "profiles_local",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 1900,
-      "feeEstimateNationalMid": 2500,
-      "feeEstimateScope": {
-        "raw": 3.68,
-        "parts": {
-          "valueAdd": 2,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.68
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1100,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.06 (3.68 units) · complexity ×1"
-    },
-    {
       "priority": 5,
       "fee": 2400,
+      "status": "on hold",
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "id": "AdultAds",
       "title": "Adult Site(s) Ad Campaign",
-      "tldr": "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch. Does not pollute core Search performance.",
-      "description": "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch. Does not pollute core Search performance.",
+      "tldr": "NRA",
+      "description": "- NRA\n- Porn/forums\n- Reddit\n-",
       "valueAdded": [
-        "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch. Does not pollute core Search performance."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
+        "NRA",
+        "Porn/forums",
+        "Reddit"
       ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Adult Site Ads",
-      "status": "onhold",
       "estCostLabel": "$2,400",
       "paymentPlanLabel": "30%",
       "depositPct": 0.3,
@@ -358,26 +95,27 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 3100,
       "feeEstimateNationalMid": 4800,
       "feeEstimateScope": {
-        "raw": 1.85,
+        "raw": 3.1,
         "parts": {
-          "valueAdd": 1,
+          "valueAdd": 3,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.85
+          "descUnits": 0.1
         }
       },
-      "feeEstimateComplexity": 1.21,
+      "feeEstimateComplexity": 1.12,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2100,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×0.97 (1.85 units) · complexity ×1.21"
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.04 (3.1 units) · complexity ×1.12"
     },
     {
       "priority": 5,
       "fee": 2900,
+      "status": "archived",
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "id": "NtguiltAd",
@@ -394,7 +132,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "NTGUILT Ads Launch",
-      "status": "archived",
       "estCostLabel": "$2,900",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -424,151 +161,114 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 7,
-      "fee": 2200,
+      "fee": 3700,
+      "status": "wip",
       "category": "Brand / Local Presence",
-      "campaignType": "Profile Audit & Refresh",
+      "campaignType": "Profiles + LSA intake",
       "id": "DigProf",
       "title": "Digital Presence Refresh",
       "tldr": "Refresh firm and attorney presence for Pav Law, Andrew, and Casey. Platforms in this project: Google Business Profile, Facebook, Instagram, firm and attorney bios, and the Yelp profile and review-ask layer.",
-      "description": "Refresh firm and attorney presence for Pav Law, Andrew, and Casey. Platforms in this project: Google Business Profile, Facebook, Instagram, firm and attorney bios, and the Yelp profile and review-ask layer.\n\nGoogle Business Profile: update hours, services, photos, and posts so they match intake. Merge the Andrew Brown and Pav Law listings and close duplicates. Facebook and Instagram: remove the old pages and set up a clean business account for ads. Bios: rewrite practice areas, photos, and CTAs for the firm and both attorneys, each with its own tracked website link so GA4 and HubSpot can show which profile drove the visit. Yelp: keep the listing current and run the past-client review ask. Yelp ad spend stays on the Yelp Ads project.\n\nAfter the profile work: confirm HubSpot listing fields and source tracking, push daily phone and app use, and move Yelp leads onto a HubSpot number once Casey is call-trained and phone setup is ready.",
+      "description": "Refresh firm and attorney presence for Pav Law, Andrew, and Casey. Platforms in this project: Google Business Profile, Facebook, Instagram, firm and attorney bios, and the Yelp profile and review-ask layer.\n\nGoogle Business Profile: update hours, services, photos, and posts so they match intake. Merge the Andrew Brown and Pav Law listings and close duplicates. Facebook and Instagram: remove the old pages and set up a clean business account for ads. Bios: rewrite practice areas, photos, and CTAs for the firm and both attorneys, each with its own tracked website link so GA4 and HubSpot can show which profile drove the visit. Yelp: keep the listing current and run the past-client review ask. Yelp ad spend stays on the Yelp Ads project.\n\nAfter the profile work: confirm HubSpot listing fields and source tracking, push daily phone and app use, and move Yelp leads onto a HubSpot number once Casey is call-trained and phone setup is ready.\n\nLSA call process: same-day updates and Rate this lead so refunds and lead quality hold. Every LSA call gets name · notes · Missed/Q/NQ · status · Rate this lead · archive only when complete. Naming: `M:` returned missed · `NQ:` not qualified · notes use `;` between pieces · staff name who answered. Cannot afford → Very dissatisfied + Spam · Booked when good-fit consult is on the calendar. Team split: America = May and earlier · Casey = June · July done by Kate · overlap OK. Generic screenshot how-to in Drive pack · personal kickoff emails per person. HubSpot mirror · `pl_booked_closed_by` · mobile app for form speed-to-lead. Coverage ramp frees Romina for admin during Casey phone blocks · KPI #21 toward ≥90%. Ads sync view for intake stays on this card.\n\nFormer LSA Call Process Update card is merged here. Setup $3,700 combines prior Digital Presence $2,200 and LSA Call Process $1,500.",
       "valueAdded": [
         "Refresh firm and attorney presence for Pav Law, Andrew, and Casey. Platforms in this project: Google Business Profile, Facebook, Instagram, firm and attorney bios, and the Yelp profile and review-ask layer.",
         "Google Business Profile: update hours, services, photos, and posts so they match intake. Merge the Andrew Brown and Pav Law listings and close duplicates. Facebook and Instagram: remove the old pages and set up a clean business account for ads. Bios: rewrite practice areas, photos, and CTAs for the firm and both attorneys, each with its own tracked website link so GA4 and HubSpot can show which profile drove the visit. Yelp: keep the listing current and run the past-client review ask. Yelp ad spend stays on the Yelp Ads project.",
-        "After the profile work: confirm HubSpot listing fields and source tracking, push daily phone and app use, and move Yelp leads onto a HubSpot number once Casey is call-trained and phone setup is ready."
+        "After the profile work: confirm HubSpot listing fields and source tracking, push daily phone and app use, and move Yelp leads onto a HubSpot number once Casey is call-trained and phone setup is ready.",
+        "LSA call process: same-day updates and Rate this lead so refunds and lead quality hold. Every LSA call gets name · notes · Missed/Q/NQ · status · Rate this lead · archive only when complete. Naming: `M:` returned missed · `NQ:` not qualified · notes use `;` between pieces · staff name who answered. Cannot afford → Very dissatisfied + Spam · Booked when good-fit consult is on the calendar. Team split: America = May and earlier · Casey = June · July done by Kate · overlap OK. Generic screenshot how-to in Drive pack · personal kickoff emails per person. HubSpot mirror · `pl_booked_closed_by` · mobile app for form speed-to-lead. Coverage ramp frees Romina for admin during Casey phone blocks · KPI #21 toward ≥90%. Ads sync view for intake stays on this card.",
+        "Former LSA Call Process Update card is merged here. Setup $3,700 combines prior Digital Presence $2,200 and LSA Call Process $1,500."
       ],
       "hubSpotParts": [
-        "CRM · profile and listing fields kept accurate",
-        "Marketing Hub · source tracking where profile traffic converts"
+        "CRM · profile and listing fields kept accurate · lead source and quality on every inbound",
+        "Marketing Hub · source tracking where profile traffic converts · Ads sync view for intake",
+        "Service Hub · tickets and handoffs on new cases"
       ],
       "abQuestions": [],
-      "kpiRefs": [],
+      "kpiRefs": [
+        "#21"
+      ],
       "publishStatus": "unpublished",
       "shortTitle": "Digital Profiles",
-      "status": "wip",
-      "estCostLabel": "$2,200",
+      "estCostLabel": "$3,700",
       "paymentPlanLabel": "40%",
       "depositPct": 0.4,
-      "feeEstimate": 2600,
+      "feeEstimate": 2800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 5.34,
+        "raw": 8.35,
         "parts": {
-          "valueAdd": 3,
+          "valueAdd": 5,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
-          "kpis": 0,
-          "descUnits": 2.34
+          "kpis": 1,
+          "descUnits": 3
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 400,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.12 (5.34 units) · complexity ×1.1"
+      "feeEstimateDelta": -900,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.19 (8.35 units) · complexity ×1.1"
     },
     {
       "priority": 7,
-      "fee": 2200,
-      "startDate": "2026-08-11",
+      "fee": 4400,
+      "status": "on hold",
+      "startDate": "2026-10-01",
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display",
       "id": "HolidayAds",
-      "title": "Holiday Digital Ad(s) Campaign Expansion",
-      "tldr": "Expand Google Ads beyond the three live campaigns with new topics and ad groups that can learn in October and ramp in November-December. Next seasonal push: Thanksgiving and Christmas holidays. Research other audiences that may perform well on Search: possible sexual assault / Sex Crimes Defense alignment with AdEnhance, traffic issues, and accidents around colder weather. Review seasonal case-filing patterns for October-December and align campaigns to what files more often in that window. Mountain / ski-town corridor creatives can sit here with holiday DUI and colder-weather themes. Sex Crimes Defense Search pilot stays on the AdEnhance card so it is not sold twice here.",
-      "description": "Expand Google Ads beyond the three live campaigns with new topics and ad groups that can learn in October and ramp in November-December. Next seasonal push: Thanksgiving and Christmas holidays. Research other audiences that may perform well on Search: possible sexual assault / Sex Crimes Defense alignment with AdEnhance, traffic issues, and accidents around colder weather. Review seasonal case-filing patterns for October-December and align campaigns to what files more often in that window. Mountain / ski-town corridor creatives can sit here with holiday DUI and colder-weather themes. Sex Crimes Defense Search pilot stays on the AdEnhance card so it is not sold twice here.",
+      "title": "Holiday & Winter Seasonal Ads",
+      "tldr": "One seasonal Search and Display package for the freeze-to-holiday window: Thanksgiving and Christmas holiday expansion plus NTGUILT winter driving creative.",
+      "description": "One seasonal Search and Display package for the freeze-to-holiday window: Thanksgiving and Christmas holiday expansion plus NTGUILT winter driving creative.\n\nHoliday lane: expand Google Ads beyond the three live HS campaigns with new topics and ad groups that can learn in October and ramp in November-December. Research audiences that may perform well on Search in that window: traffic and accident themes around colder weather, mountain and ski-town corridors, and holiday DUI intent. Review seasonal case-filing patterns for October-December and align campaigns to what files more often then. Sex Crimes Defense Search pilot stays on the Ad Expansion card so it is not sold twice here.\n\nWinter driving lane: snow and ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic. Produce Search-safe winter stills for HS: NTGUILT and Display heroes that stay on-theme with plate and driver converters. Go live at least one month before projected winter spend so creative is ready when ice hits Front Range corridors. Pairs with live HS: NTGUILT Search. Does not restart ended Campaign Total twins.\n\nSeparate from WinterSeason mail, email, and outbound package and from archived SummerAds college Bend & Snap.",
       "valueAdded": [
-        "Expand Google Ads beyond the three live campaigns with new topics and ad groups that can learn in October and ramp in November-December. Next seasonal push: Thanksgiving and Christmas holidays. Research other audiences that may perform well on Search: possible sexual assault / Sex Crimes Defense alignment with AdEnhance, traffic issues, and accidents around colder weather. Review seasonal case-filing patterns for October-December and align campaigns to what files more often in that window. Mountain / ski-town corridor creatives can sit here with holiday DUI and colder-weather themes. Sex Crimes Defense Search pilot stays on the AdEnhance card so it is not sold twice here."
+        "One seasonal Search and Display package for the freeze-to-holiday window: Thanksgiving and Christmas holiday expansion plus NTGUILT winter driving creative.",
+        "Holiday lane: expand Google Ads beyond the three live HS campaigns with new topics and ad groups that can learn in October and ramp in November-December. Research audiences that may perform well on Search in that window: traffic and accident themes around colder weather, mountain and ski-town corridors, and holiday DUI intent. Review seasonal case-filing patterns for October-December and align campaigns to what files more often then. Sex Crimes Defense Search pilot stays on the Ad Expansion card so it is not sold twice here.",
+        "Winter driving lane: snow and ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic. Produce Search-safe winter stills for HS: NTGUILT and Display heroes that stay on-theme with plate and driver converters. Go live at least one month before projected winter spend so creative is ready when ice hits Front Range corridors. Pairs with live HS: NTGUILT Search. Does not restart ended Campaign Total twins.",
+        "Separate from WinterSeason mail, email, and outbound package and from archived SummerAds college Bend & Snap."
       ],
       "hubSpotParts": [
-        "No HubSpot build in scope"
+        "No HubSpot build in scope · channel tags stay on Ads and Call details until a HubSpot landing page is scoped separately"
       ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "unpublished",
-      "shortTitle": "Holiday Ads",
-      "status": "onhold",
-      "estCostLabel": "$2,200",
+      "shortTitle": "Holiday & Winter Ads",
+      "estCostLabel": "$4,400",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 4900,
+      "feeEstimate": 5400,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "display_search_launch",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 3100,
       "feeEstimateNationalMid": 4800,
       "feeEstimateScope": {
-        "raw": 3.6,
+        "raw": 6.64,
         "parts": {
-          "valueAdd": 1,
+          "valueAdd": 4,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.6
+          "descUnits": 2.64
         }
       },
       "feeEstimateComplexity": 1.21,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2700,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.06 (3.6 units) · complexity ×1.21"
-    },
-    {
-      "priority": 8,
-      "fee": 2200,
-      "campaignType": "Seasonal Search / Display creative",
-      "id": "WinterAds",
-      "title": "Winter Driving Images — NTGUILT Seasonal Ads",
-      "tldr": "Winter driving image set and seasonal ad flight for NTGUILT: snow/ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic. Produce Search-safe winter stills for `HS: NTGUILT` and Display heroes that stay on-theme with plate/driver converters Separate from HolidayAds Oktoberfest/holiday windows and SummerAds college Bend & Snap Work Plan go-live at least 1 month before projected winter spend so creative is ready when ice hits Front Range corridors Pairs with live HS: NTGUILT Search; does not restart ended Campaign Total twins.",
-      "description": "Winter driving image set and seasonal ad flight for NTGUILT: snow/ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic. Produce Search-safe winter stills for `HS: NTGUILT` and Display heroes that stay on-theme with plate/driver converters Separate from HolidayAds Oktoberfest/holiday windows and SummerAds college Bend & Snap Work Plan go-live at least 1 month before projected winter spend so creative is ready when ice hits Front Range corridors Pairs with live HS: NTGUILT Search; does not restart ended Campaign Total twins.",
-      "valueAdded": [
-        "Winter driving image set and seasonal ad flight for NTGUILT: snow/ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic. Produce Search-safe winter stills for `HS: NTGUILT` and Display heroes that stay on-theme with plate/driver converters Separate from HolidayAds Oktoberfest/holiday windows and SummerAds college Bend & Snap Work Plan go-live at least 1 month before projected winter spend so creative is ready when ice hits Front Range corridors Pairs with live HS: NTGUILT Search; does not restart ended Campaign Total twins."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "unpublished",
-      "shortTitle": "Winter Driving Ads",
-      "status": "onhold",
-      "estCostLabel": "$2,200",
-      "paymentPlanLabel": "20%",
-      "depositPct": 0.2,
-      "feeEstimate": 4300,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "display_search_launch",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 3100,
-      "feeEstimateNationalMid": 4800,
-      "feeEstimateScope": {
-        "raw": 3.13,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 2.13
-        }
-      },
-      "feeEstimateComplexity": 1.08,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2100,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.04 (3.13 units) · complexity ×1.08"
+      "feeEstimateDelta": 1000,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.15 (6.64 units) · complexity ×1.21"
     },
     {
       "priority": 10,
       "fee": 2200,
+      "status": "available",
       "campaignType": "Marketing Hub Depth",
       "parentId": "HsWebRebuild",
       "id": "HsMktExpand",
@@ -587,7 +287,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HS Marketing Expand",
-      "status": "available",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -618,6 +317,7 @@ window.PROJECT_DATA = {
     {
       "priority": 10,
       "fee": 1700,
+      "status": "available",
       "campaignType": "Lawyer Referral Network",
       "parentId": "Referral",
       "id": "LawyerRef",
@@ -634,7 +334,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Lawyer Referral",
-      "status": "available",
       "estCostLabel": "$1,700",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -665,15 +364,16 @@ window.PROJECT_DATA = {
     {
       "priority": 11,
       "fee": 4200,
+      "status": "wip",
       "campaignType": "Client Intake",
       "parentId": "HsWebRebuild",
       "id": "HsSvcExpand",
       "title": "HubSpot Client Intake",
       "tldr": "One HubSpot client-intake build so phones, Service Hub queues, and Affirm financing emails work together instead of three separate sells.",
-      "description": "One HubSpot client-intake build so phones, Service Hub queues, and Affirm financing emails work together instead of three separate sells.\n\nExpand Service Hub Pav already owns for shared inbox · knowledge base · SLAs · chatbot. Shared inbox / help desk for email · chat · social in one queue. Knowledge base FAQs that feed the chatbot and cut repeat questions. SLAs for speed-to-lead and callback timers. Customer agent / advanced chatbot for after-hours triage · pairs with PaviChat. Intake tickets for new cases and project assignments stay coordinated with LSA Call Process. CSAT / NPS stay on Email Nurture Setup.\n\nPhones and VoIP: dedicated lines for call types such as Spanish and current clients. Public branding stays on 719-888-7888 only. Automated call logging, tracking, and reporting. Start by transferring one line into HubSpot · setup docs · short onboarding deck. HubSpot forms assign to Casey with same-day callback so more auto calls get answered.\n\nAffirm financing email: monthly how-it-works send for open-balance and payment-plan clients without promising approval. CTA to Romina or intake for Affirm checkout when merchant is live. Extra Affirm sends in November and December for financing info and collections during the slower season.",
+      "description": "One HubSpot client-intake build so phones, Service Hub queues, and Affirm financing emails work together instead of three separate sells.\n\nExpand Service Hub Pav already owns for shared inbox · knowledge base · SLAs · chatbot. Shared inbox / help desk for email · chat · social in one queue. Knowledge base FAQs that feed the chatbot and cut repeat questions. SLAs for speed-to-lead and callback timers. Customer agent / advanced chatbot for after-hours triage · after-hours chat QA lives on HsWebRebuild. Intake tickets for new cases and project assignments stay coordinated with DigProf LSA call process. CSAT / NPS stay on Email Nurture Setup.\n\nPhones and VoIP: dedicated lines for call types such as Spanish and current clients. Public branding stays on 719-888-7888 only. Automated call logging, tracking, and reporting. Start by transferring one line into HubSpot · setup docs · short onboarding deck. HubSpot forms assign to Casey with same-day callback so more auto calls get answered.\n\nAffirm financing email: monthly how-it-works send for open-balance and payment-plan clients without promising approval. CTA to Romina or intake for Affirm checkout when merchant is live. Extra Affirm sends in November and December for financing info and collections during the slower season.",
       "valueAdded": [
         "One HubSpot client-intake build so phones, Service Hub queues, and Affirm financing emails work together instead of three separate sells.",
-        "Expand Service Hub Pav already owns for shared inbox · knowledge base · SLAs · chatbot. Shared inbox / help desk for email · chat · social in one queue. Knowledge base FAQs that feed the chatbot and cut repeat questions. SLAs for speed-to-lead and callback timers. Customer agent / advanced chatbot for after-hours triage · pairs with PaviChat. Intake tickets for new cases and project assignments stay coordinated with LSA Call Process. CSAT / NPS stay on Email Nurture Setup.",
+        "Expand Service Hub Pav already owns for shared inbox · knowledge base · SLAs · chatbot. Shared inbox / help desk for email · chat · social in one queue. Knowledge base FAQs that feed the chatbot and cut repeat questions. SLAs for speed-to-lead and callback timers. Customer agent / advanced chatbot for after-hours triage · after-hours chat QA lives on HsWebRebuild. Intake tickets for new cases and project assignments stay coordinated with DigProf LSA call process. CSAT / NPS stay on Email Nurture Setup.",
         "Phones and VoIP: dedicated lines for call types such as Spanish and current clients. Public branding stays on 719-888-7888 only. Automated call logging, tracking, and reporting. Start by transferring one line into HubSpot · setup docs · short onboarding deck. HubSpot forms assign to Casey with same-day callback so more auto calls get answered.",
         "Affirm financing email: monthly how-it-works send for open-balance and payment-plan clients without promising approval. CTA to Romina or intake for Affirm checkout when merchant is live. Extra Affirm sends in November and December for financing info and collections during the slower season."
       ],
@@ -687,7 +387,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HS Client Intake",
-      "status": "wip",
       "estCostLabel": "$4,200",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -698,7 +397,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 6.71,
+        "raw": 6.76,
         "parts": {
           "valueAdd": 4,
           "tasks": 0,
@@ -706,18 +405,19 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.71
+          "descUnits": 2.76
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 0,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.15 (6.71 units) · complexity ×1.1"
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.15 (6.76 units) · complexity ×1.1"
     },
     {
       "priority": 11,
       "fee": 2200,
+      "status": "available",
       "campaignType": "Networking Skills",
       "parentId": "LawyerRef",
       "id": "NetCoach",
@@ -734,7 +434,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Network Speech Coaching",
-      "status": "available",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -764,53 +463,61 @@ window.PROJECT_DATA = {
     },
     {
       "priority": 12,
-      "fee": 18500,
+      "fee": 20700,
+      "status": "available",
       "campaignType": "HubSpot CMS",
       "id": "HsWebRebuild",
       "title": "HubSpot Website Rebuild",
-      "tldr": "Rebuild pav.law on HubSpot CMS instead of transferring the WordPress / Divi pile Important for SEO and conversion, but phased: cut over HubSpot forms first so ads and intake land in CRM before a full site swap Absorbs canceled HsSetup site, forms, and contacts-enablement intent Replaces stacking Website Content · Site Speed · Blog Revamp · Landing Page Module as separate site fees Cut thin geo and stale pages · keep only pages that earn calls or paid traffic Native HubSpot forms and workflows so Contact and ads land in CRM, not a second stack Ongoing Marketing Hub SEO tools · recommendations and page monitoring as part of the website overhaul.",
-      "description": "Rebuild pav.law on HubSpot CMS instead of transferring the WordPress / Divi pile Important for SEO and conversion, but phased: cut over HubSpot forms first so ads and intake land in CRM before a full site swap Absorbs canceled HsSetup site, forms, and contacts-enablement intent Replaces stacking Website Content · Site Speed · Blog Revamp · Landing Page Module as separate site fees Cut thin geo and stale pages · keep only pages that earn calls or paid traffic Native HubSpot forms and workflows so Contact and ads land in CRM, not a second stack Ongoing Marketing Hub SEO tools · recommendations and page monitoring as part of the website overhaul.",
+      "tldr": "Rebuild pav.law on HubSpot CMS instead of transferring the WordPress / Divi pile. Important for SEO and conversion, but phased: cut over HubSpot forms first so ads and intake land in CRM before a full site swap. Absorbs canceled HsSetup site, forms, and contacts-enablement intent.",
+      "description": "Rebuild pav.law on HubSpot CMS instead of transferring the WordPress / Divi pile. Important for SEO and conversion, but phased: cut over HubSpot forms first so ads and intake land in CRM before a full site swap. Absorbs canceled HsSetup site, forms, and contacts-enablement intent.\n\nSite lanes now on this card instead of separate sells: Website Content Overhaul · Website Speed and Navigation · Blog Revamp · Pavi Chat QA for after-hours support. Also folds Landing Page Module intent when scoped. Cut thin geo and stale pages · keep only pages that earn calls or paid traffic. Native HubSpot forms and workflows so Contact and ads land in CRM, not a second stack. Ongoing Marketing Hub SEO tools · recommendations and page monitoring as part of the website overhaul.\n\nContent and SEO: local schema and NAP fixes · Spanish-first Google Translate · attorney attribution · organic consult paths from blog titles and meta rewritten for search intent · internal links to DUI, military, and traffic pages.\n\nSpeed and nav: phased nav, speed, and form-path fixes · bounce and form drop-off on paid landing URLs · header slot for language switcher during nav work.\n\nAfter-hours chat: firm-safe ABA-aligned Q&A · HubSpot or site logging so morning intake sees overnight conversations · contact capture when the desk is offline.",
       "valueAdded": [
-        "Rebuild pav.law on HubSpot CMS instead of transferring the WordPress / Divi pile Important for SEO and conversion, but phased: cut over HubSpot forms first so ads and intake land in CRM before a full site swap Absorbs canceled HsSetup site, forms, and contacts-enablement intent Replaces stacking Website Content · Site Speed · Blog Revamp · Landing Page Module as separate site fees Cut thin geo and stale pages · keep only pages that earn calls or paid traffic Native HubSpot forms and workflows so Contact and ads land in CRM, not a second stack Ongoing Marketing Hub SEO tools · recommendations and page monitoring as part of the website overhaul."
+        "Rebuild pav.law on HubSpot CMS instead of transferring the WordPress / Divi pile. Important for SEO and conversion, but phased: cut over HubSpot forms first so ads and intake land in CRM before a full site swap. Absorbs canceled HsSetup site, forms, and contacts-enablement intent.",
+        "Site lanes now on this card instead of separate sells: Website Content Overhaul · Website Speed and Navigation · Blog Revamp · Pavi Chat QA for after-hours support. Also folds Landing Page Module intent when scoped. Cut thin geo and stale pages · keep only pages that earn calls or paid traffic. Native HubSpot forms and workflows so Contact and ads land in CRM, not a second stack. Ongoing Marketing Hub SEO tools · recommendations and page monitoring as part of the website overhaul.",
+        "Content and SEO: local schema and NAP fixes · Spanish-first Google Translate · attorney attribution · organic consult paths from blog titles and meta rewritten for search intent · internal links to DUI, military, and traffic pages.",
+        "Speed and nav: phased nav, speed, and form-path fixes · bounce and form drop-off on paid landing URLs · header slot for language switcher during nav work.",
+        "After-hours chat: firm-safe ABA-aligned Q&A · HubSpot or site logging so morning intake sees overnight conversations · contact capture when the desk is offline."
       ],
       "hubSpotParts": [
-        "No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting"
+        "CMS · full rebuild of pav.law",
+        "CRM · forms and contact capture",
+        "Marketing Hub · SEO tools · chat logging when enabled",
+        "Service Hub · after-hours triage handoff to morning intake"
       ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HubSpot Site Rebuild",
-      "status": "available",
-      "estCostLabel": "$18,500",
+      "estCostLabel": "$20,700",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3900,
+      "feeEstimate": 4700,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "sprint_general",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 3.78,
+        "raw": 8,
         "parts": {
-          "valueAdd": 1,
+          "valueAdd": 5,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.78
+          "descUnits": 3
         }
       },
-      "feeEstimateComplexity": 1.1,
+      "feeEstimateComplexity": 1.188,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -14600,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.07 (3.78 units) · complexity ×1.1"
+      "feeEstimateDelta": -16000,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.18 (8 units) · complexity ×1.188"
     },
     {
       "priority": 13,
       "fee": 4900,
+      "status": "wip",
       "durationWeeks": 12,
       "invoiceCount": 4,
       "startDate": "2026-10-01",
@@ -819,13 +526,13 @@ window.PROJECT_DATA = {
       "id": "WinterSeason",
       "title": "Winter Seasonal Campaign",
       "tldr": "One winter package so glovebox mail, safety email, and outbound dials run on the same freeze-to-holiday calendar instead of three separate sells.",
-      "description": "One winter package so glovebox mail, safety email, and outbound dials run on the same freeze-to-holiday calendar instead of three separate sells.\n\nInsurance-sleeve / glovebox mailer puts Pav’s number in the car before first freeze. About $8.80 consulting cost per lead contacted on the cleaned list. Phone number in the glovebox at the moment of accident or ticket. Doubles as onboarding thank-you. Design print insert for insurance card holders with emergency contact details. Print and postage stay client vendor cost.\n\nWinter safety email reaches past clients when DUI and ticket risk rises in cold weather and holiday travel. Safety send plus a clear “what to do if charged” path to book with Romina. Uses HubSpot lists once contacts are marketable.\n\nOutbound calling on warm lists without raising ad spend. Ready-to-dial list and Andrew-approved script. Outcomes logged in HubSpot. Includes sealing and probation reengagement formerly on SealReeng: past clients who finished deferred judgment or probation get a sealing or early-termination offer while MyCase data is cleaned. Scripts and pricing from the June Client Reengagement PDF.\n\nSeparate from WinterAds NTGUILT winter driving creative and HolidayAds holiday Search windows.",
+      "description": "One winter package so glovebox mail, safety email, and outbound dials run on the same freeze-to-holiday calendar instead of three separate sells.\n\nInsurance-sleeve / glovebox mailer puts Pav’s number in the car before first freeze. About $8.80 consulting cost per lead contacted on the cleaned list. Phone number in the glovebox at the moment of accident or ticket. Doubles as onboarding thank-you. Design print insert for insurance card holders with emergency contact details. Print and postage stay client vendor cost.\n\nWinter safety email reaches past clients when DUI and ticket risk rises in cold weather and holiday travel. Safety send plus a clear “what to do if charged” path to book with Romina. Uses HubSpot lists once contacts are marketable.\n\nOutbound calling on warm lists without raising ad spend. Ready-to-dial list and Andrew-approved script. Outcomes logged in HubSpot. Includes sealing and probation reengagement formerly on SealReeng: past clients who finished deferred judgment or probation get a sealing or early-termination offer while MyCase data is cleaned. Scripts and pricing from the June Client Reengagement PDF.\n\nSeparate from HolidayAds seasonal Search and NTGUILT winter driving creative.",
       "valueAdded": [
         "One winter package so glovebox mail, safety email, and outbound dials run on the same freeze-to-holiday calendar instead of three separate sells.",
         "Insurance-sleeve / glovebox mailer puts Pav’s number in the car before first freeze. About $8.80 consulting cost per lead contacted on the cleaned list. Phone number in the glovebox at the moment of accident or ticket. Doubles as onboarding thank-you. Design print insert for insurance card holders with emergency contact details. Print and postage stay client vendor cost.",
         "Winter safety email reaches past clients when DUI and ticket risk rises in cold weather and holiday travel. Safety send plus a clear “what to do if charged” path to book with Romina. Uses HubSpot lists once contacts are marketable.",
         "Outbound calling on warm lists without raising ad spend. Ready-to-dial list and Andrew-approved script. Outcomes logged in HubSpot. Includes sealing and probation reengagement formerly on SealReeng: past clients who finished deferred judgment or probation get a sealing or early-termination offer while MyCase data is cleaned. Scripts and pricing from the June Client Reengagement PDF.",
-        "Separate from WinterAds NTGUILT winter driving creative and HolidayAds holiday Search windows."
+        "Separate from HolidayAds seasonal Search and NTGUILT winter driving creative."
       ],
       "hubSpotParts": [
         "CRM · Warm-list and past-client segments for mail, email, and dial outcomes",
@@ -836,7 +543,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Winter Seasonal",
-      "status": "wip",
       "estCostLabel": "$4,900",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -847,7 +553,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 7.6,
+        "raw": 7.58,
         "parts": {
           "valueAdd": 5,
           "tasks": 0,
@@ -855,18 +561,19 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.6
+          "descUnits": 2.58
         }
       },
       "feeEstimateComplexity": 1.166,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": -400,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.17 (7.6 units) · complexity ×1.166"
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.17 (7.58 units) · complexity ×1.166"
     },
     {
       "priority": 14,
       "fee": 1500,
+      "status": "available",
       "category": "Intake / CRM",
       "campaignType": "Data Hygiene & Fields",
       "id": "MyCaseClr",
@@ -886,7 +593,6 @@ window.PROJECT_DATA = {
       ],
       "publishStatus": "unpublished",
       "shortTitle": "MyCase Data Cleanse",
-      "status": "available",
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -917,6 +623,7 @@ window.PROJECT_DATA = {
     {
       "priority": 20,
       "fee": 3500,
+      "status": "available",
       "campaignType": "Nurture · Templates · Surveys",
       "parentId": "HsWebRebuild",
       "id": "HsEmailSetup",
@@ -933,7 +640,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HS Email Nurture Setup",
-      "status": "available",
       "estCostLabel": "$3,500 + design add-on",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1005,6 +711,7 @@ window.PROJECT_DATA = {
     {
       "priority": 23,
       "fee": 1700,
+      "status": "started",
       "category": "Referral",
       "campaignType": "Referral Program",
       "id": "Referral",
@@ -1021,7 +728,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Client Referral",
-      "status": "started",
       "estCostLabel": "$1,700",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1052,6 +758,7 @@ window.PROJECT_DATA = {
     {
       "priority": 24,
       "fee": 1500,
+      "status": "archived · merged winterseason",
       "category": "Referral / Outbound",
       "campaignType": "Past-Client Reengagement",
       "parentId": "WinterSeason",
@@ -1069,7 +776,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Sealing Reengagement",
-      "status": "archived",
       "estCostLabel": "merged WinterSeason",
       "paymentPlanLabel": "—",
       "feeEstimate": 2600,
@@ -1099,6 +805,7 @@ window.PROJECT_DATA = {
     {
       "priority": 26,
       "fee": 500,
+      "status": "archived",
       "category": "Finance / Operations",
       "campaignType": "Full Financial Audit",
       "id": "WasteAud",
@@ -1115,7 +822,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Financial Waste Audit",
-      "status": "archived",
       "estCostLabel": "$500 + 20% verified savings",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1146,6 +852,7 @@ window.PROJECT_DATA = {
     {
       "priority": 28,
       "fee": 2200,
+      "status": "archived",
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display / Social",
       "id": "SummerAds",
@@ -1162,7 +869,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Summer Seasonal Ads",
-      "status": "archived",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1193,6 +899,7 @@ window.PROJECT_DATA = {
     {
       "priority": 30,
       "fee": 2000,
+      "status": "archived",
       "category": "Paid Media",
       "campaignType": "Testimonials · Surveys",
       "id": "CaseWins",
@@ -1209,7 +916,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Case Wins & Testimonials",
-      "status": "archived",
       "estCostLabel": "$2,000",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1240,6 +946,7 @@ window.PROJECT_DATA = {
     {
       "priority": 35,
       "fee": 1500,
+      "status": "archived",
       "category": "Operations / Compensation",
       "campaignType": "Performance Incentives",
       "id": "PerfPay",
@@ -1256,7 +963,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Perf Plan Payouts",
-      "status": "archived",
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1287,6 +993,7 @@ window.PROJECT_DATA = {
     {
       "priority": 40,
       "fee": 1800,
+      "status": "available",
       "category": "CRM",
       "campaignType": "Prequote / Booking",
       "parentId": "HsWebRebuild",
@@ -1304,7 +1011,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Prequote & Booking",
-      "status": "available",
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1335,6 +1041,7 @@ window.PROJECT_DATA = {
     {
       "priority": 41,
       "fee": 1800,
+      "status": "planning",
       "category": "CRM / Web",
       "campaignType": "Landing Page",
       "parentId": "HsWebRebuild",
@@ -1352,7 +1059,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Landing Page Module",
-      "status": "planning",
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1383,6 +1089,7 @@ window.PROJECT_DATA = {
     {
       "priority": 42,
       "fee": 0,
+      "status": "available",
       "category": "CRM",
       "campaignType": "Contact Import",
       "parentId": "HsWebRebuild",
@@ -1400,7 +1107,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Marketing Contacts",
-      "status": "available",
       "estCostLabel": "incl. HsWebRebuild",
       "paymentPlanLabel": "—",
       "feeEstimate": 2800,
@@ -1428,149 +1134,9 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×0.96 (1.75 units) · complexity ×1.1"
     },
     {
-      "priority": 43,
-      "fee": 2500,
-      "category": "SEO",
-      "campaignType": "Local SEO",
-      "id": "WebContent",
-      "title": "Website Content Overhaul",
-      "tldr": "Organic consults compound — less reliance on paid ads over time. Local schema and NAP fixes from the May Semrush audit. Baseline avg position 45–58 in early 2025 Search Console data. Attorney attribution and local listings that earn free visibility. Sitewide Google Translate — Spanish-first language switcher on pav.law.",
-      "description": "Organic consults compound — less reliance on paid ads over time. Local schema and NAP fixes from the May Semrush audit. Baseline avg position 45–58 in early 2025 Search Console data. Attorney attribution and local listings that earn free visibility. Sitewide Google Translate — Spanish-first language switcher on pav.law.",
-      "valueAdded": [
-        "Organic consults compound — less reliance on paid ads over time. Local schema and NAP fixes from the May Semrush audit. Baseline avg position 45–58 in early 2025 Search Console data. Attorney attribution and local listings that earn free visibility. Sitewide Google Translate — Spanish-first language switcher on pav.law."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "unpublished",
-      "shortTitle": "Website Content",
-      "status": "available",
-      "estCostLabel": "$2,500",
-      "paymentPlanLabel": "50%",
-      "depositPct": 0.5,
-      "feeEstimate": 3300,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "website_content",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2700,
-      "feeEstimateNationalMid": 4300,
-      "feeEstimateScope": {
-        "raw": 2.23,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.23
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 800,
-      "feeEstimateNote": "website content lane · local mid $2,650 · national mid $4,250 · scope ×0.99 (2.23 units) · complexity ×1"
-    },
-    {
-      "priority": 44,
-      "fee": 4200,
-      "category": "Website",
-      "campaignType": "Website UX",
-      "id": "WebSpeed",
-      "title": "Website Speed and Navigation",
-      "tldr": "Converts more of the traffic you already pay for. Phased nav, speed, and form-path fixes — not a one-day patch. Prior work cut load times ~200%; this finishes conversion blockers. Targets bounce and form drop-off on paid landing URLs. Header slot for Google Translate language switcher — owned under WebContent; place during nav work.",
-      "description": "Converts more of the traffic you already pay for. Phased nav, speed, and form-path fixes — not a one-day patch. Prior work cut load times ~200%; this finishes conversion blockers. Targets bounce and form drop-off on paid landing URLs. Header slot for Google Translate language switcher — owned under WebContent; place during nav work.",
-      "valueAdded": [
-        "Converts more of the traffic you already pay for. Phased nav, speed, and form-path fixes — not a one-day patch. Prior work cut load times ~200%; this finishes conversion blockers. Targets bounce and form drop-off on paid landing URLs. Header slot for Google Translate language switcher — owned under WebContent; place during nav work."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "unpublished",
-      "shortTitle": "Site Speed & Nav",
-      "status": "available",
-      "estCostLabel": "$4,200",
-      "paymentPlanLabel": "40%",
-      "depositPct": 0.4,
-      "feeEstimate": 7300,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "website_ux",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 5500,
-      "feeEstimateNationalMid": 9500,
-      "feeEstimateScope": {
-        "raw": 2.35,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.35
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 3100,
-      "feeEstimateNote": "website ux lane · local mid $5,500 · national mid $9,500 · scope ×1.00 (2.35 units) · complexity ×1"
-    },
-    {
-      "priority": 45,
-      "fee": 2500,
-      "category": "SEO",
-      "campaignType": "Blog / Content SEO",
-      "id": "BlogRevamp",
-      "title": "Blog Revamp",
-      "tldr": "Long-tail questions become organic consult paths. Internal links from posts to DUI, military, and traffic pages. Results compound over 8–12 weeks. Titles and meta rewritten for search intent, not generic firm copy. Top 2026 landings already include protection orders, DUI/DWAI, and the Denver photo-radar post — the `/blog` hub itself is not the traffic source.",
-      "description": "Long-tail questions become organic consult paths. Internal links from posts to DUI, military, and traffic pages. Results compound over 8–12 weeks. Titles and meta rewritten for search intent, not generic firm copy. Top 2026 landings already include protection orders, DUI/DWAI, and the Denver photo-radar post — the `/blog` hub itself is not the traffic source.",
-      "valueAdded": [
-        "Long-tail questions become organic consult paths. Internal links from posts to DUI, military, and traffic pages. Results compound over 8–12 weeks. Titles and meta rewritten for search intent, not generic firm copy. Top 2026 landings already include protection orders, DUI/DWAI, and the Denver photo-radar post — the `/blog` hub itself is not the traffic source."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "unpublished",
-      "shortTitle": "Blog Revamp",
-      "status": "available",
-      "estCostLabel": "$2,500",
-      "paymentPlanLabel": "50%",
-      "depositPct": 0.5,
-      "feeEstimate": 3200,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "blog_seo",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2500,
-      "feeEstimateNationalMid": 4000,
-      "feeEstimateScope": {
-        "raw": 2.38,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 1.38
-        }
-      },
-      "feeEstimateComplexity": 1,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 700,
-      "feeEstimateNote": "blog seo lane · local mid $2,500 · national mid $4,000 · scope ×1.00 (2.38 units) · complexity ×1"
-    },
-    {
       "priority": 46,
       "fee": 4500,
+      "status": "archived",
       "category": "Creative / Social",
       "campaignType": "Social + paid social",
       "id": "SocialAds",
@@ -1587,7 +1153,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Social Campaigns",
-      "status": "archived",
       "estCostLabel": "$4,500",
       "paymentPlanLabel": "30%",
       "depositPct": 0.3,
@@ -1618,6 +1183,7 @@ window.PROJECT_DATA = {
     {
       "priority": 47,
       "fee": 2000,
+      "status": "available",
       "category": "Brand / Professional Development",
       "campaignType": "Attorney Presence",
       "id": "CaseyBrand",
@@ -1634,7 +1200,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Casey Rebrand",
-      "status": "available",
       "estCostLabel": "$2,000",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1663,55 +1228,9 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.00 (2.38 units) · complexity ×1.08"
     },
     {
-      "priority": 48,
-      "fee": 2200,
-      "category": "Intake / AI",
-      "campaignType": "After-Hours Chat",
-      "id": "PaviChat",
-      "title": "Enable Pavi Chat QA for After-Hours Support",
-      "tldr": "After-hours and weekend visitors get answers instead of a dead end. Firm-safe, ABA-aligned Q&A reviewed before go-live. HubSpot or site logging so morning intake sees overnight conversations. Captures contact details when the desk is offline.",
-      "description": "After-hours and weekend visitors get answers instead of a dead end. Firm-safe, ABA-aligned Q&A reviewed before go-live. HubSpot or site logging so morning intake sees overnight conversations. Captures contact details when the desk is offline.",
-      "valueAdded": [
-        "After-hours and weekend visitors get answers instead of a dead end. Firm-safe, ABA-aligned Q&A reviewed before go-live. HubSpot or site logging so morning intake sees overnight conversations. Captures contact details when the desk is offline."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build in scope"
-      ],
-      "abQuestions": [],
-      "kpiRefs": [],
-      "publishStatus": "unpublished",
-      "shortTitle": "Pavi Chat QA",
-      "status": "available",
-      "estCostLabel": "$2,200",
-      "paymentPlanLabel": "50%",
-      "depositPct": 0.5,
-      "feeEstimate": 2800,
-      "feeEstimateOngoing": null,
-      "feeEstimateLane": "chat_qa",
-      "feeEstimateUnit": "setup",
-      "feeEstimateLocalMid": 2300,
-      "feeEstimateNationalMid": 3300,
-      "feeEstimateScope": {
-        "raw": 1.88,
-        "parts": {
-          "valueAdd": 1,
-          "tasks": 0,
-          "completed": 0,
-          "info": 0,
-          "ab": 0,
-          "kpis": 0,
-          "descUnits": 0.88
-        }
-      },
-      "feeEstimateComplexity": 1.08,
-      "feeEstimateBlend": "55% local / 45% national",
-      "feeEstimatePackaged": false,
-      "feeEstimateDelta": 600,
-      "feeEstimateNote": "chat qa lane · local mid $2,250 · national mid $3,250 · scope ×0.97 (1.88 units) · complexity ×1.08"
-    },
-    {
       "priority": 51,
       "fee": 1500,
+      "status": "completed",
       "category": "Strategy",
       "campaignType": "Strategy Audit",
       "id": "StackAudit",
@@ -1728,7 +1247,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Marketing Stack Audit",
-      "status": "completed",
       "estCostLabel": "$1,500",
       "feeEstimate": 2200,
       "feeEstimateOngoing": null,
@@ -1757,6 +1275,7 @@ window.PROJECT_DATA = {
     {
       "priority": 52,
       "fee": 2500,
+      "status": "archived",
       "category": "Events",
       "campaignType": "Event Activation",
       "id": "EventAct",
@@ -1773,7 +1292,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Summer Event Activation",
-      "status": "archived",
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "—",
       "feeEstimate": 3200,
@@ -1803,6 +1321,7 @@ window.PROJECT_DATA = {
     {
       "priority": 53,
       "fee": 1000,
+      "status": "planning",
       "category": "Partnerships",
       "campaignType": "Twisted Wrench Partnership",
       "id": "TwistWrnch",
@@ -1819,7 +1338,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Twisted Wrench",
-      "status": "planning",
       "estCostLabel": "$1,000",
       "paymentPlanLabel": "—",
       "feeEstimate": 3900,
@@ -1849,6 +1367,7 @@ window.PROJECT_DATA = {
     {
       "priority": 54,
       "fee": 2000,
+      "status": "completed",
       "category": "Systems",
       "campaignType": "Access & Security",
       "id": "AccessAud",
@@ -1865,7 +1384,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Systems Access Audit",
-      "status": "completed",
       "estCostLabel": "$2,000",
       "feeEstimate": 2400,
       "feeEstimateOngoing": null,
@@ -1894,6 +1412,7 @@ window.PROJECT_DATA = {
     {
       "priority": 55,
       "fee": 1500,
+      "status": "completed",
       "category": "Systems",
       "campaignType": "Email / DNS Incident",
       "id": "EmailDns",
@@ -1910,7 +1429,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Email Outage Runbook",
-      "status": "completed",
       "estCostLabel": "$1,500",
       "feeEstimate": 1900,
       "feeEstimateOngoing": null,
@@ -1939,6 +1457,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged hssvcexpand",
       "campaignType": "Monthly Client Email",
       "parentId": "HsSvcExpand",
       "id": "AffirmEmail",
@@ -1955,7 +1474,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Affirm Email",
-      "status": "archived",
       "estCostLabel": "merged HsSvcExpand",
       "paymentPlanLabel": "—",
       "feeEstimate": 2700,
@@ -1985,6 +1503,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged winterseason",
       "category": "Outbound",
       "campaignType": "Outbound Calls",
       "parentId": "WinterSeason",
@@ -2002,7 +1521,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Gabriel Outbound",
-      "status": "archived",
       "estCostLabel": "merged WinterSeason",
       "paymentPlanLabel": "—",
       "feeEstimate": 1500,
@@ -2032,6 +1550,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged socialads",
       "category": "CRM / Social",
       "campaignType": "Social / HubSpot",
       "id": "HsSocial",
@@ -2048,7 +1567,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HubSpot Social",
-      "status": "archived",
       "estCostLabel": "merged SocialAds",
       "paymentPlanLabel": "—",
       "feeEstimate": 3600,
@@ -2078,6 +1596,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged hssvcexpand",
       "category": "Infrastructure",
       "campaignType": "Call Infrastructure",
       "parentId": "HsSvcExpand",
@@ -2095,7 +1614,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HubSpot VoIP",
-      "status": "archived",
       "estCostLabel": "merged HsSvcExpand",
       "paymentPlanLabel": "—",
       "feeEstimate": 3000,
@@ -2125,6 +1643,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged winterseason",
       "category": "Direct Mail",
       "campaignType": "Past Client Mailer",
       "parentId": "WinterSeason",
@@ -2142,7 +1661,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Insurance Mailer",
-      "status": "archived",
       "estCostLabel": "merged WinterSeason",
       "paymentPlanLabel": "—",
       "feeEstimate": 2400,
@@ -2172,6 +1690,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged socialads",
       "category": "Paid Social",
       "campaignType": "Reddit Ads Test",
       "parentId": "NtguiltAd",
@@ -2189,7 +1708,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Reddit NTGUILT Ads",
-      "status": "archived",
       "estCostLabel": "merged SocialAds",
       "paymentPlanLabel": "—",
       "feeEstimate": 3300,
@@ -2219,6 +1737,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged winterseason",
       "category": "Email",
       "campaignType": "Seasonal Email",
       "parentId": "WinterSeason",
@@ -2236,7 +1755,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Winter Safety Email",
-      "status": "archived",
       "estCostLabel": "merged WinterSeason",
       "paymentPlanLabel": "—",
       "feeEstimate": 2500,
@@ -2264,8 +1782,112 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "hubspot sprint lane · local mid $1,850 · national mid $3,500 · scope ×0.95 (1.55 units) · complexity ×1"
     },
     {
+      "priority": 98,
+      "fee": 0,
+      "status": "archived · merged holidayads",
+      "category": "Paid Media",
+      "campaignType": "Seasonal Search / Display creative",
+      "parentId": "HolidayAds",
+      "id": "WinterAds",
+      "title": "Winter Driving Images — NTGUILT Seasonal Ads",
+      "tldr": "Winter driving image set and seasonal ad flight for NTGUILT — merged into HolidayAds. Keep this file for history only. Snow and ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic.",
+      "description": "Winter driving image set and seasonal ad flight for NTGUILT — merged into HolidayAds. Keep this file for history only. Snow and ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic.",
+      "valueAdded": [
+        "Winter driving image set and seasonal ad flight for NTGUILT — merged into HolidayAds. Keep this file for history only. Snow and ice Colorado roads, tickets, and DUI intent timed to first freeze through holiday traffic."
+      ],
+      "hubSpotParts": [
+        "No HubSpot build in scope"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "unpublished",
+      "shortTitle": "Winter Driving Ads",
+      "estCostLabel": "merged HolidayAds",
+      "paymentPlanLabel": "—",
+      "feeEstimate": 4000,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "display_search_launch",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 3100,
+      "feeEstimateNationalMid": 4800,
+      "feeEstimateScope": {
+        "raw": 1.9,
+        "parts": {
+          "valueAdd": 1,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.9
+        }
+      },
+      "feeEstimateComplexity": 1.08,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": true,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×0.97 (1.9 units) · complexity ×1.08"
+    },
+    {
+      "priorityGroup": 1,
+      "fee": 3800,
+      "status": "recommended",
+      "ongoingFee": 900,
+      "durationWeeks": 8,
+      "invoiceCount": 4,
+      "startDate": "2026-10-01",
+      "category": "Paid Media",
+      "campaignType": "Paid Search",
+      "id": "AdEnhance",
+      "title": "Ad Expansion",
+      "tldr": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
+      "description": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.\n\nAdd new target audiences to currently active campaigns. \n\nCreate new graphic set for each audience. \n\nOptimize campaigns over learning period to filter down to top performers.",
+      "valueAdded": [
+        "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
+        "Add new target audiences to currently active campaigns.",
+        "Create new graphic set for each audience.",
+        "Optimize campaigns over learning period to filter down to top performers."
+      ],
+      "hubSpotParts": [
+        "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source",
+        "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
+        "Landing pages · HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Ad Expansion",
+      "estCostLabel": "$3,800 + $900/mo",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 3400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "ads_campaign",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2500,
+      "feeEstimateNationalMid": 3800,
+      "feeEstimateScope": {
+        "raw": 4.72,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0.73
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": -400,
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.10 (4.72 units) · complexity ×1"
+    },
+    {
       "priority": 99,
       "fee": 5500,
+      "status": "canceled · moved hswebrebuild",
       "category": "CRM",
       "campaignType": "HubSpot Foundation",
       "id": "HsSetup",
@@ -2282,7 +1904,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HubSpot Marketing",
-      "status": "canceled",
       "estCostLabel": "$5,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -2311,53 +1932,217 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×0.99 (2.25 units) · complexity ×1.1"
     },
     {
+      "priorityGroup": 1,
+      "fee": 1200,
+      "status": "recommended",
+      "durationWeeks": 4,
+      "invoiceCount": 3,
+      "startDate": "2026-10-01",
+      "category": "Branding",
+      "campaignType": "Referral Sites",
+      "id": "LegalDirs",
+      "title": "Legal Directory Updates",
+      "tldr": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
+      "description": "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.\n\nRefresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.\n\nResearch similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.\n\nDirectories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab.",
+      "valueAdded": [
+        "Update legal directory profiles for Pav Law to ensure accurate information, tracking, and new ad copy.",
+        "Refresh ad copy on Justia and FindLaw for placements already paid for. Add or revise URL and content tracking from these pages so leads and performance are easier to measure. Review, update, or cancel contracts as needed.",
+        "Research similar sites and start organic or free testing for comparison and stronger brand presence. Add matching lead-source values in HubSpot and MyCase.",
+        "Directories: Justia, FindLaw, and Avvo. Pick which to prioritize from the brand audit Data tab."
+      ],
+      "hubSpotParts": [
+        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot.",
+        "Lead source and ROI · Tracks which directory drove a lead and supports simple ROI views once tracking links are in place. No HubSpot CMS or Service Hub build in this project."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Directories & Profiles",
+      "estCostLabel": "$1,200",
+      "paymentPlanLabel": "40%",
+      "depositPct": 0.4,
+      "feeEstimate": 2400,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 5.34,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.34
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 1200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.12 (5.34 units) · complexity ×1"
+    },
+    {
+      "priorityGroup": "AdHoc",
+      "feeUncertain": true,
+      "fee": 1200,
+      "feeMax": 1700,
+      "estimateNote": "The cost is hard to estimate without knowing how many products are needed",
+      "invoiceCount": 3,
+      "status": "recommended",
+      "campaignType": "Print & Production",
+      "id": "SwagPrint",
+      "title": "Printables, Swag & Apparel",
+      "tldr": "Updated stationery and images are needed as the team has expanded.",
+      "description": "Updated stationery and images are needed as the team has expanded.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Padfolios / envelopes\n- Apparel",
+      "valueAdded": [
+        "Updated stationery and images are needed as the team has expanded.",
+        "Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.",
+        "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
+        "Laptop cases · Pav Law with contact details",
+        "Business cards · Jack Strong",
+        "Padfolios / envelopes",
+        "Apparel"
+      ],
+      "hubSpotParts": [
+        "Lead source · Light word-of-mouth logging when a piece is tracked.",
+        "Cost tracking · Optional cost line for referral or review programs when measuring ROI."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Printables & Swag",
+      "estCostLabel": "$1,200–$1,700?",
+      "paymentPlanLabel": "20%",
+      "depositPct": 0.2,
+      "feeEstimate": 1800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "swag_consult",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1300,
+      "feeEstimateNationalMid": 1800,
+      "feeEstimateScope": {
+        "raw": 8.21,
+        "parts": {
+          "valueAdd": 7,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.21
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 600,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.18 (8.21 units) · complexity ×1"
+    },
+    {
+      "priorityGroup": "AdHoc",
       "fee": 500,
+      "status": "recommended",
       "category": "Analytics",
-      "campaignType": "Platform / Data Ops",
+      "campaignType": "KLO",
       "monthlyOnly": true,
       "startDate": "2026-10-01",
       "featuredImage": "assets/systems-admin-tile.svg",
       "id": "TsMgmt",
       "title": "Platform Management",
-      "tldr": "Monthly retainer for standard oversight and management of the Pav tech stack. Starts 10/01/2026.",
-      "description": "Monthly retainer for standard oversight and management of the Pav tech stack. Starts 10/01/2026.\n\nPlatforms covered: MyCase, Google Suite, and Ops Dashboard. New tools can join for a short testing phase before or during a larger implementation.",
+      "tldr": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
+      "description": "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.",
       "valueAdded": [
-        "Monthly retainer for standard oversight and management of the Pav tech stack. Starts 10/01/2026.",
-        "Platforms covered: MyCase, Google Suite, and Ops Dashboard. New tools can join for a short testing phase before or during a larger implementation."
-      ],
-      "hubSpotParts": [
-        "No HubSpot build · This retainer covers MyCase, Google Suite, and Ops Dashboard only. HubSpot CRM, Marketing Hub, and related builds stay on separate HubSpot projects."
+        "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation."
       ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Platform Mgmt",
-      "status": "recommended",
       "estCostLabel": "$500/mo",
       "paymentPlanLabel": "monthly",
-      "feeEstimate": 2900,
+      "feeEstimate": 2800,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "digital_bundle_mo",
       "feeEstimateUnit": "mo",
       "feeEstimateLocalMid": 2300,
       "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 2.64,
+        "raw": 1.98,
         "parts": {
-          "valueAdd": 2,
+          "valueAdd": 1,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.64
+          "descUnits": 0.98
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2400,
-      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.02 (2.64 units) · complexity ×1"
+      "feeEstimateDelta": 2300,
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×0.98 (1.98 units) · complexity ×1"
+    },
+    {
+      "priorityGroup": 1,
+      "fee": 2600,
+      "status": "recommended",
+      "ongoingFee": 500,
+      "durationWeeks": 8,
+      "invoiceCount": 5,
+      "startDate": "2026-10-01",
+      "category": "Paid Media",
+      "campaignType": "Reviews",
+      "id": "Yelp",
+      "title": "Yelp Ads",
+      "tldr": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
+      "description": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.\n\n- Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.\n- Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out.",
+      "valueAdded": [
+        "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
+        "Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.",
+        "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.",
+        "Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.",
+        "Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out."
+      ],
+      "hubSpotParts": [
+        "CRM · Stores Yelp leads, messages, and call outcomes so intake is not stuck in a personal inbox.",
+        "Tasks and workflows · Creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
+        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Yelp Ads",
+      "estCostLabel": "$2,600 + $500/mo",
+      "paymentPlanLabel": "—",
+      "feeEstimate": 2800,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "profiles_local",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 1900,
+      "feeEstimateNationalMid": 2500,
+      "feeEstimateScope": {
+        "raw": 7.86,
+        "parts": {
+          "valueAdd": 5,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 2.86
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 200,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.86 units) · complexity ×1.1"
     }
   ]
 };

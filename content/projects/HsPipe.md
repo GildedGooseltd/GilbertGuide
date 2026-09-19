@@ -4,6 +4,7 @@
 | ----------------- | ------------------ |
 | Priority          | 40                 |
 | Fee               | 1800               |
+| Status            | available |
 | Category          | CRM                |
 | Campaign type     | Prequote / Booking |
 | Parent            | HsWebRebuild       |
@@ -17,7 +18,3 @@ Faster follow-up on web inquiries so qualified leads book consults instead of go
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Setup fee $1,800.

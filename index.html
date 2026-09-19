@@ -345,12 +345,6 @@
       color: var(--gg-negative, #b42318);
       font-weight: 800;
     }
-    .project-tile-cost-pavi {
-      width: 1.55rem;
-      height: 1.55rem;
-      object-fit: contain;
-      flex: 0 0 auto;
-    }
     .project-tile-summary {
       margin: 0.15rem 0 0;
       font-size: 0.92rem;
@@ -360,9 +354,6 @@
       -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
-    }
-    @media (max-width: 980px) {
-      .project-tile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 720px) {
       .project-tile-grid { grid-template-columns: 1fr; }
@@ -524,15 +515,6 @@
       box-shadow: var(--gg-box-shadow);
       padding: 0 1.25rem var(--space-lg);
       margin-top: var(--space-md);
-    }
-    .picker-zone-cards .project-list-controls {
-      position: sticky;
-      top: 3.75rem;
-      z-index: 25;
-      background: linear-gradient(180deg, var(--surface) 75%, rgba(255, 252, 247, 0.92));
-      border-bottom: 1px solid var(--border);
-      margin: 0 -1.25rem var(--space-md);
-      padding: var(--space-md) 1.25rem var(--space-sm);
     }
     .gilbert-chat-launcher {
       position: relative; bottom: auto; right: auto; left: auto; z-index: 5;
@@ -1363,10 +1345,6 @@
       color: var(--gg-royal); cursor: pointer;
     }
     .icon-filter-clear:hover { background: var(--gg-royal-dim); }
-    .project-list-controls {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start;
-      gap: 0.75rem 1rem; margin-bottom: var(--space-md);
-    }
     .project-continue-btn { width: auto; margin: 0; padding: 0.65rem 1.25rem; min-width: 12rem; }
     .key-filter-btn .value-icon { width: 2.35rem; height: 2.35rem; }
     .key-filter-btn .value-icon svg { width: 1.45rem; height: 1.45rem; }
@@ -1679,6 +1657,40 @@
       width: min(40rem, 100%);
       max-height: min(86vh, 42rem);
     }
+    .sow-note-popup .help-popup-card {
+      width: min(28rem, 100%);
+      max-height: min(80vh, 28rem);
+    }
+    .sow-note-hint {
+      margin: 0 1.5rem 0.75rem 0;
+      color: var(--gg-brown-muted, #8a7a6a);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+    .sow-note-popup textarea#sow-note-input {
+      display: block;
+      width: 100%;
+      min-height: 7rem;
+      margin: 0 0 1rem;
+      padding: 0.65rem 0.75rem;
+      resize: vertical;
+      border: 1px solid var(--border, #d4c4a8);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--gg-brown, #3d3028);
+      font: inherit;
+      line-height: 1.45;
+    }
+    .sow-note-popup textarea#sow-note-input:focus-visible {
+      outline: 2px solid var(--gg-royal, #3a1a6e);
+      outline-offset: 1px;
+    }
+    .sow-note-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      justify-content: flex-end;
+    }
     .project-overview-meta {
       margin: 0 1.5rem 0.75rem 0;
       color: var(--gg-brown-muted, #8a7a6a);
@@ -1695,6 +1707,14 @@
     .project-overview-cost.project-overview-cost-estimate {
       color: var(--gg-negative, #b42318);
     }
+    .project-overview-estimate-note {
+      margin: -0.45rem 0 0.85rem;
+      color: var(--gg-brown-muted, #8a7a6a);
+      font-size: 0.84rem;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.4;
+    }
     .project-overview-section {
       margin: 0.95rem 0 0;
     }
@@ -1707,30 +1727,34 @@
       font-weight: 800;
     }
     .project-overview-section p {
-      margin: 0;
+      margin: 0 0 1.15em;
       color: var(--gg-brown, #3d3028);
       font-size: 0.92rem;
       line-height: 1.5;
     }
+    .project-overview-section p:last-child {
+      margin-bottom: 0;
+    }
     .project-overview-section ul {
       margin: 0;
-      padding: 0 0 0 1.1rem;
+      padding: 0 0 0 1.25rem;
       color: var(--gg-brown, #3d3028);
       font-size: 0.9rem;
       line-height: 1.45;
+      list-style: disc;
     }
     .project-overview-section li {
-      margin: 0.25rem 0;
+      margin: 0.45rem 0;
     }
     .hubspot-application-list {
-      list-style: none;
-      padding-left: 0;
+      list-style: disc;
+      padding-left: 1.25rem;
       margin: 0;
     }
     .hubspot-application-list li {
-      margin: 0 0 0.85rem;
-      padding-bottom: 0.65rem;
-      border-bottom: 1px solid color-mix(in srgb, var(--gg-royal, #3a1a6e) 14%, transparent);
+      margin: 0.55rem 0;
+      padding-bottom: 0;
+      border-bottom: none;
     }
     .hubspot-application-list li:last-child {
       border-bottom: none;
@@ -1738,14 +1762,19 @@
       margin-bottom: 0;
     }
     .hubspot-feat-name {
-      display: block;
+      display: inline;
       font-weight: 700;
       color: var(--gg-royal-deep, #2d1454);
-      margin-bottom: 0.2rem;
+      margin-bottom: 0;
       letter-spacing: 0.02em;
     }
+    .hubspot-feat-name::after {
+      content: " · ";
+      font-weight: 600;
+      color: var(--gg-brown-muted, #5c4f45);
+    }
     .hubspot-feat-detail {
-      display: block;
+      display: inline;
       color: inherit;
       line-height: 1.45;
     }
@@ -2991,7 +3020,7 @@
     .pav-priorities-table.pav-priorities-cart-only td.col-project { width: auto; }
     .pav-priorities-table.pav-priorities-cart-only th.col-score,
     .pav-priorities-table.pav-priorities-cart-only td.col-score {
-      width: 7.25rem; text-align: center;
+      width: 2.85rem; max-width: 2.85rem; text-align: center;
       font-variant-numeric: tabular-nums; font-weight: 600; color: var(--gg-royal);
       font-size: var(--font-min-rem); letter-spacing: 0.02em; text-transform: none;
     }
@@ -3000,11 +3029,22 @@
     }
     .pav-priorities-table.pav-priorities-cart-only th.col-score {
       white-space: normal;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 1.1;
+      padding-left: 0.2rem;
+      padding-right: 0.2rem;
+    }
+    .pav-priorities-table th.col-score .col-score-sub {
+      display: block;
+      margin-top: 0.08rem;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1.05;
     }
     .pav-priorities-table.pav-priorities-best-fit th.col-rank,
     .pav-priorities-table.pav-priorities-best-fit td.col-rank {
@@ -3012,20 +3052,30 @@
       font-variant-numeric: tabular-nums; font-weight: 800; color: var(--gg-royal);
     }
     .calc-quote-table {
-      min-width: 52rem;
+      min-width: 0;
       table-layout: auto;
     }
     .calc-quote-table th {
       font-size: 0.68rem;
       line-height: 1.2;
-      white-space: normal;
-      overflow-wrap: anywhere;
-      hyphens: auto;
+      white-space: nowrap;
+      overflow-wrap: normal;
+      hyphens: none;
       vertical-align: bottom;
+    }
+    .calc-quote-table th.col-project,
+    .calc-quote-table td.col-project {
+      white-space: nowrap;
+      overflow-wrap: normal;
+      hyphens: none;
+    }
+    .calc-quote-table td.col-project .priority-desc-link,
+    .calc-quote-table td.col-project .priority-desc-title {
+      white-space: nowrap;
     }
     .calc-quote-table th.col-quote,
     .calc-quote-table td.col-quote {
-      width: 5.5rem; text-align: right; white-space: nowrap;
+      width: 4.1rem; text-align: right; white-space: nowrap;
       font-variant-numeric: tabular-nums;
     }
     .calc-quote-table td.col-quote {
@@ -3033,20 +3083,20 @@
       color: var(--gg-brown-muted);
     }
     .calc-quote-table th.col-quote {
-      white-space: normal;
+      white-space: nowrap;
       font-weight: 700;
       color: var(--gg-royal);
     }
     .calc-quote-table th.col-start,
     .calc-quote-table td.col-start {
-      width: 8.25rem; white-space: nowrap;
+      width: 6.35rem; white-space: nowrap;
     }
     .calc-quote-table th.col-start {
-      white-space: normal;
+      white-space: nowrap;
     }
     .calc-quote-table th.col-invoices,
     .calc-quote-table td.col-invoices {
-      width: 5.5rem; text-align: center; white-space: normal; line-height: 1.15;
+      width: 4.15rem; text-align: center; white-space: nowrap; line-height: 1.15;
     }
     .calc-quote-table th.col-invoices .col-invoices-sub {
       display: block;
@@ -3059,20 +3109,57 @@
       line-height: 1.1;
     }
     .calc-quote-table th.col-terms {
-      width: 12rem;
-      white-space: normal;
+      width: 5.35rem;
+      white-space: nowrap;
+    }
+    .calc-quote-table th.col-terms .col-terms-sub {
+      display: block;
+      margin-top: 0.08rem;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1.05;
     }
     .calc-quote-table td.col-terms {
-      width: 12rem; font-size: 0.72rem; line-height: 1.35; color: var(--gg-brown-muted);
-      white-space: normal; overflow: visible; text-overflow: clip;
+      width: 5.35rem;
+      max-width: 5.35rem;
+      font-size: 0.7rem;
+      line-height: 1.3;
+      color: var(--gg-brown-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .calc-quote-table .calc-terms-text {
+      display: block;
+      white-space: nowrap;
+    }
+    .calc-quote-scroll.pav-priorities-scroll {
+      overflow-x: hidden;
+    }
+    .calc-quote-table tr.calc-row-next-month .cart-proj-chk {
+      opacity: 0.4;
+      filter: grayscale(0.35);
+    }
+    .calc-quote-table tbody tr.calc-row-deselected {
+      opacity: 0.48;
+      filter: grayscale(0.5);
+    }
+    .calc-quote-table tbody tr.calc-row-deselected .cart-proj-chk {
+      opacity: 1;
+      filter: none;
     }
     .calc-quote-table th.col-score,
     .calc-quote-table td.col-score {
-      width: 5.5rem;
+      width: 2.85rem;
+      max-width: 2.85rem;
+      padding-left: 0.2rem;
+      padding-right: 0.2rem;
     }
     .calc-quote-table th.col-score {
       white-space: normal;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
@@ -3108,7 +3195,7 @@
     .calc-date-input,
     .calc-invoice-count-input {
       width: 100%;
-      max-width: 9.5rem;
+      max-width: 6.2rem;
       font: inherit;
       font-size: 0.78rem;
       padding: 0.3rem 0.35rem;
@@ -3117,12 +3204,21 @@
       background: var(--gg-paper);
       color: var(--input-text);
     }
-    select.calc-date-input {
-      max-width: 10.5rem;
+    select.calc-date-input,
+    select.calc-invoice-count-input {
+      max-width: 6.35rem;
       cursor: pointer;
       appearance: auto;
     }
-    .calc-invoice-count-input {
+    .calc-quote-table .calc-start-static {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gg-brown-muted, var(--gg-brown));
+      white-space: nowrap;
+      line-height: 1.35;
+    }
+    select.calc-invoice-count-input {
       max-width: 3.5rem;
       text-align: center;
     }
@@ -5396,40 +5492,6 @@
     .results-list, .completed-auto ul { margin: 0; padding-left: 1.15rem; font-size: 0.88rem; line-height: 1.5; color: var(--gg-brown-muted); }
     .filter-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; color: var(--secondary); }
     .filter-check input { accent-color: var(--gg-royal-mid); }
-    .expand-all-toggle {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      font-size: 0.88rem; color: var(--secondary); font-weight: 600;
-      cursor: pointer; user-select: none;
-    }
-    .expand-all-toggle input {
-      position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none;
-    }
-    .expand-all-switch {
-      position: relative; flex-shrink: 0;
-      width: 2.35rem; height: 1.3rem; border-radius: 999px;
-      background: rgba(61, 48, 40, 0.22);
-      border: 1.5px solid rgba(61, 48, 40, 0.2);
-      transition: background 0.18s ease, border-color 0.18s ease;
-    }
-    .expand-all-switch::after {
-      content: "";
-      position: absolute; top: 1px; left: 2px;
-      width: 1rem; height: 1rem; border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(45, 20, 84, 0.25);
-      transition: transform 0.18s ease;
-    }
-    .expand-all-toggle input:checked + .expand-all-switch {
-      background: var(--gg-royal);
-      border-color: var(--gg-royal-deep);
-    }
-    .expand-all-toggle input:checked + .expand-all-switch::after {
-      transform: translateX(1rem);
-    }
-    .expand-all-toggle input:focus-visible + .expand-all-switch {
-      outline: 2px solid var(--gg-royal-mid);
-      outline-offset: 2px;
-    }
     .card-corner-icons { display: flex; gap: 0.25rem; flex-shrink: 0; }
     .priority-table-wrap { margin-top: var(--space-md); }
     .priority-table-intro { font-size: 0.9rem; color: var(--secondary); margin-bottom: var(--space-sm); line-height: 1.55; }
@@ -5957,10 +6019,6 @@
     .deliverables-compact { margin-bottom: var(--space-md); font-size: 0.875rem; }
     .deliverables-compact h3 { font-size: var(--font-min-rem); text-transform: uppercase; letter-spacing: 0.05em; color: var(--gg-royal); margin: 0 0 0.4rem; }
     .projects-section-full { max-width: 1400px; margin: 0 auto; padding: 0 2rem var(--space-xl); }
-    .project-list-controls {
-      display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 0.75rem;
-      padding: var(--space-md) 0 var(--space-sm);
-    }
     .project-list-show-more { text-align: center; padding: var(--space-md) 0 var(--space-sm); }
     .project-list-show-more .btn { width: auto; margin: 0 auto; min-width: 14rem; }
     .maintenance-card { border-color: var(--border); opacity: 1; }
@@ -6220,7 +6278,7 @@
           <button class="btn btn-secondary" id="submit-selections" disabled>Submit selections &amp; SOW</button>
           <button type="button" class="btn btn-secondary" id="confirm-back">Back to projects</button>
         </div>
-        <p class="submit-note">Submit project request emails Kate the selected projects plus monthly invoice terms for QuickBooks. Submit selections &amp; SOW starts the private signing flow for Andrew.</p>
+        <p class="submit-note">Submit project request emails Kate the selected projects plus 2×/mo invoice terms for QuickBooks. Submit selections &amp; SOW starts the private signing flow for Andrew.</p>
       </div>
     </div>
   </div>
@@ -6349,13 +6407,6 @@
 
       <div class="picker-zone picker-zone-cards" data-feedback-id="guide-project-cards" data-feedback-label="Project selection cards">
         <div class="projects-section-full">
-          <div class="project-list-controls">
-            <label class="expand-all-toggle" for="expand-all-projects">
-              <input type="checkbox" id="expand-all-projects" role="switch" aria-checked="false">
-              <span class="expand-all-switch" aria-hidden="true"></span>
-              <span class="expand-all-toggle-label">Expand All</span>
-            </label>
-          </div>
           <div id="project-list"></div>
           <div id="research-section-wrap"></div>
         </div>
@@ -6432,7 +6483,22 @@
       <h3 id="project-overview-title" class="help-popup-title"></h3>
       <p id="project-overview-meta" class="project-overview-meta"></p>
       <p id="project-overview-cost" class="project-overview-cost"></p>
+      <p id="project-overview-estimate-note" class="project-overview-estimate-note" hidden></p>
       <div id="project-overview-body"></div>
+    </div>
+  </div>
+
+  <div id="sow-note-backdrop" class="help-popup-backdrop" hidden></div>
+  <div id="sow-note-popup" class="help-popup sow-note-popup" hidden role="dialog" aria-modal="true" aria-labelledby="sow-note-title">
+    <div class="help-popup-card">
+      <button type="button" class="help-popup-close" id="sow-note-close" aria-label="Close Submit SOW note">×</button>
+      <h3 id="sow-note-title" class="help-popup-title">Submit SOW</h3>
+      <p class="sow-note-hint">Optional note for the email to support@gildedgooselimited.com. Leave blank to send the plan only.</p>
+      <textarea id="sow-note-input" rows="5" placeholder="Add a note…" aria-label="Optional note for the SOW email"></textarea>
+      <div class="sow-note-actions">
+        <button type="button" class="btn btn-secondary" id="sow-note-cancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="sow-note-send">Send SOW</button>
+      </div>
     </div>
   </div>
 
@@ -6440,11 +6506,11 @@
 
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20260917-value-tldrs"></script>
+  <script src="projects-data.js?v=20260918-swag-focus"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
   <script src="kpi-report.js?v=20260917-no-referral-help"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260917-swag-estimate"></script>
+  <script src="app.js?v=20260918-invoice-select"></script>
 </body>
 </html>

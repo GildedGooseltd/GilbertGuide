@@ -4,6 +4,7 @@
 | ----------------- | -------------------- |
 | Priority          | 26                   |
 | Fee               | 500                  |
+| Status            | Archived |
 | Category          | Finance / Operations |
 | Campaign type     | Full Financial Audit |
 
@@ -16,7 +17,3 @@ Reconcile the firm’s full operating spend across QuickBooks, bank and credit-c
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $500.

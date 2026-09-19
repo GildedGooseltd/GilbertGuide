@@ -4,6 +4,7 @@
 | ----------------- | ---------------- |
 | Priority          | 98               |
 | Fee               | 0                |
+| Status            | archived · merged SocialAds |
 | Category          | CRM / Social     |
 | Campaign type     | Social / HubSpot |
 
@@ -16,7 +17,3 @@ Organic social between paid touches — merged into SocialAds; keep this file fo
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Setup fee $0.

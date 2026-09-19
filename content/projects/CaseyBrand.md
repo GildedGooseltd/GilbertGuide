@@ -4,6 +4,7 @@
 | ----------------- | -------------------------------- |
 | Priority          | 47                               |
 | Fee               | 2000                             |
+| Status            | available |
 | Category          | Brand / Professional Development |
 | Campaign type     | Attorney Presence                |
 
@@ -16,7 +17,3 @@ Elevate Casey as a visible Pav Law attorney — appearance, communication, and d
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Setup fee $2,000.

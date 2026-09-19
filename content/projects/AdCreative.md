@@ -16,7 +16,3 @@ Next design round for Google Ads creative, driven by what already ran, not a new
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Setup fee $0.

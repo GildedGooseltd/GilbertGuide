@@ -4,6 +4,7 @@
 | ----------------- | ------------------------ |
 | Priority          | 24                       |
 | Fee               | 1500                     |
+| Status            | archived · merged WinterSeason |
 | Category          | Referral / Outbound      |
 | Campaign type     | Past-Client Reengagement |
 | Parent            | WinterSeason             |
@@ -17,7 +18,3 @@ Past clients who finished deferred judgment or probation get a clear next offer 
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Past-client reengagement is usually an ops sprint ($1k–$2.5k) or folded into referral retainers. $1,500 aligns with Front Range sprint pricing; ongoing dials can hang on Referral $500/mo or GabrielOut.

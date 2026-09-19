@@ -4,6 +4,7 @@
 | ----------------- | -------------------- |
 | Priority          | 46                   |
 | Fee               | 4500                 |
+| Status            | Archived |
 | Category          | Creative / Social    |
 | Campaign type     | Social + paid social |
 
@@ -16,7 +17,3 @@ One social package: paid NTGUILT creative, HubSpot organic publish, and Reddit t
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Setup $4,500. Ongoing social production is managed under the Digital Ads Maintenance RETAINER — not a separate monthly on this card.

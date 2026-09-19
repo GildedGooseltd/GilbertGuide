@@ -42,23 +42,22 @@ ID = filename without `.md`. Use a short name from the project title — letters
 ## Project outline layout
 
 ```
-Meta table · Priority · Fee · Ongoing fee · Duration weeks · Invoice count · Recommended start · Category · Campaign type
+Meta table · Priority group · Tile space # · Fee · Ongoing fee · Duration weeks · Invoice count · Recommended start · Category · Campaign type
 ## Project Overview
 ## HubSpot Application
-## Fee note
 ```
 
 Do not use empty spacer rows in the meta table.
 Reference format: `[projects/AdEnhance.md](projects/AdEnhance.md)` · Ad Expansion. Template: `[_TEMPLATE.md](_TEMPLATE.md)`.
 
-- **Project Overview** — client-facing prose Andrew sees on the Guide. State the work plainly. Polish in place over Kate’s wording. Do not rewrite from agent memory.
-- **HubSpot Application** — CRM / Marketing / Service surfaces, or “No HubSpot build in scope”. Heading is HubSpot Application, not HubSpot parts.
-- **Fee note** — setup and ongoing in plain language. Media stay client budget when paid media.
-- **Tone — positive and direct.** State what the work does and when it is ready. Do not write against a missing ideal.
-- **No bold in project markdown** — meta field labels are plain (`| Priority |`).
-- **No project ID in meta** — ID comes from the filename.
-- **Show / dashboard visibility** — INDEX **Show** `[x]` / `[ ]` only. Do not put Publish status in project outlines.
-- **Retired from project outlines:** Publish status · Status row when INDEX has Status · Client summary · Employees impacted · Value icons · KPI links · Summary bullet lists · WIP · Tasks · Completed · Project plan · Estimated leads · Keywords.
+- Project Overview — client-facing prose Andrew sees on the Guide. State the work plainly. Polish in place over Kate’s wording. Do not rewrite from agent memory. Put a blank line between each paragraph so the popup shows empty line space.
+- HubSpot Application — CRM / Marketing / Service surfaces, or “No HubSpot build in scope”. Heading is HubSpot Application, not HubSpot parts. Write as markdown `-` bullets: `Feature name · what it does`. Guide renders a disc bullet list.
+- Tone: positive and direct. State what the work does and when it is ready. Do not write against a missing ideal.
+- No bold in project markdown. Meta field labels are plain (`| Priority group |`).
+- No project ID in meta. ID comes from the filename.
+- Show / dashboard visibility: INDEX Show `[x]` / `[ ]` only. Do not put Publish status in project outlines.
+- Retired from project outlines: Fee note · Publish status · Client summary · Employees impacted · Value icons · KPI links · Summary bullet lists · WIP · Tasks · Completed · Project plan · Estimated leads · Keywords.
+- Status lives on the project `.md` meta table. Show lives on INDEX only.
 - Optional meta rows: Parent · Monthly only · Payment type · Per campaign fee.
 - **`npm run build`** updates `projects-data.js` and `recommendations-data.js` only — it does **not** rewrite project markdown.
 

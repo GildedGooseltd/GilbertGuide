@@ -4,6 +4,7 @@
 | ----------------- | --------------------- |
 | Priority          | 14                    |
 | Fee               | 1500                  |
+| Status            | available |
 | Category          | Intake / CRM          |
 | Campaign type     | Data Hygiene & Fields |
 
@@ -16,7 +17,3 @@ Cleans MyCase client records so new-case KPIs and HubSpot imports are trustworth
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $1,500.

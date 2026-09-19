@@ -4,6 +4,7 @@
 | ----------------- | -------------- |
 | Priority          | 42             |
 | Fee               | 0              |
+| Status            | available |
 | Category          | CRM            |
 | Campaign type     | Contact Import |
 | Parent            | HsWebRebuild   |
@@ -17,7 +18,3 @@ Unlocks holiday email, referral sends, and mailers. Deduped segments: past clien
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Quoted as incl. HsSetup (HubSpot Marketing Setup) — part of HS setup, not a standalone agency fee.

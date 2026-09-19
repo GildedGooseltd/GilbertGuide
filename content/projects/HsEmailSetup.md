@@ -4,6 +4,7 @@
 | ----------------- | ----------------------------- |
 | Priority          | 20                            |
 | Fee               | 3500                          |
+| Status            | available |
 | Ongoing fee       | 0                             |
 | Category          |                               |
 | Campaign type     | Nurture · Templates · Surveys |
@@ -18,7 +19,3 @@ HubSpot email nurture setup and admin for Affirm · Winter Safety · Referral ·
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $3,500. Ongoing $0/mo.

@@ -4,6 +4,7 @@
 | ----------------- | ----------------- |
 | Priority          | 11                |
 | Fee               | 2200              |
+| Status            | available |
 | Category          |                   |
 | Campaign type     | Networking Skills |
 | Parent            | LawyerRef         |
@@ -17,7 +18,3 @@ Speech and communications coaching for individuals and for the team so networkin
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $2,200.

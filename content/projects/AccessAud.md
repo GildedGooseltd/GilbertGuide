@@ -4,6 +4,7 @@
 | ----------------- | ----------------- |
 | Priority          | 54                |
 | Fee               | 2000              |
+| Status            | completed |
 | Category          | Systems           |
 | Campaign type     | Access & Security |
 
@@ -16,7 +17,3 @@ Secured and documented admin access across Ads, LSA, GBP, Analytics, hosting, CM
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Invoice 1018 Consulting Services $2,000 Paid in Full covers this audit plus Email Outage Triage & DNS Runbook (and lite LSA / nurture lines on the same invoice). Guide Est. cost $2,000 for this card; do not re-bill separately from the paid package.

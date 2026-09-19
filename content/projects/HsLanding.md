@@ -4,6 +4,7 @@
 | ----------------- | ------------ |
 | Priority          | 41           |
 | Fee               | 1800         |
+| Status            | Planning |
 | Category          | CRM / Web    |
 | Campaign type     | Landing Page |
 | Parent            | HsWebRebuild |
@@ -17,7 +18,3 @@ Single-offer pages convert better than sending campaign traffic to the general h
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Setup fee $1,800.
