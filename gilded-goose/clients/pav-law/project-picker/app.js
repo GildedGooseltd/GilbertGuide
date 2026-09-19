@@ -4580,7 +4580,7 @@
       OpsDash: "assets/systems-admin-tile.svg",
       TsMgmt: "assets/systems-admin-tile.svg",
       AdultAds: "assets/gigi-lightbulb-idea.png",
-      SwagPrint: "assets/swag-print-collage.jpg?v=samples-0917"
+      SwagPrint: "assets/swag-print-collage.jpg?v=20260918"
     };
     return byId[item?.id] || "assets/gg-shield-emblem.png";
   }
