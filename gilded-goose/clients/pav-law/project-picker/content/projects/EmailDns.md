@@ -4,6 +4,7 @@
 | ----------------- | -------------------- |
 | Priority          | 55                   |
 | Fee               | 1500                 |
+| Status            | completed |
 | Category          | Systems              |
 | Campaign type     | Email / DNS Incident |
 
@@ -16,7 +17,3 @@ Documented the pav.law email/DNS outage — root cause, actions taken, current s
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Not billed as a standalone $1,500. Included in Invoice 1018 Consulting Services $2,000 Paid in Full with Systems Access Audit & Cleanse. Do not double-bill.

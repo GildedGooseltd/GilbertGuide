@@ -1,13 +1,12 @@
 # Printables, Swag & Apparel
 
-
 | Field         | Value                       |
 | ------------- | --------------------------- |
 | Priority      | 3                           |
 | Fee           | 1200-1700*                  |
+| Status            | Recommended |
 | Category      | Brand / Merch               |
 | Campaign type | Physical Print & Production |
-
 
 ---
 
@@ -30,4 +29,3 @@ The cost is hard to estimate without knowing how many products are needed:
 
 - Lead source · Light word-of-mouth logging when a piece is tracked.
 - Cost tracking · Optional cost line for referral or review programs when measuring ROI.
-

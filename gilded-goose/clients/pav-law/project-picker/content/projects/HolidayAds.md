@@ -1,14 +1,13 @@
 # Holiday & Winter Seasonal Ads
 
-
 | Field             | Value                     |
 | ----------------- | ------------------------- |
 | Priority          | 7                         |
 | Fee               | 4400                      |
+| Status            | On Hold |
 | Recommended start | 10/01/2026                |
 | Category          | Paid Media                |
 | Campaign type     | Seasonal Search / Display |
-
 
 ---
 
@@ -25,7 +24,3 @@ Separate from WinterSeason mail, email, and outbound package and from archived S
 ## HubSpot Application
 
 - No HubSpot build in scope · channel tags stay on Ads and Call details until a HubSpot landing page is scoped separately
-
-## Fee note
-
-Setup $4,400. Combines former HolidayAds $2,200 and WinterAds $2,200 into one seasonal sell. About one month of lower-activity learning before November-December volume. Media spend stays client budget.

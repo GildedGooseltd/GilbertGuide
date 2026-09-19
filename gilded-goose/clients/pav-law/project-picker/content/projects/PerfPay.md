@@ -4,6 +4,7 @@
 | ----------------- | ------------------------- |
 | Priority          | 35                        |
 | Fee               | 1500                      |
+| Status            | Archived |
 | Category          | Operations / Compensation |
 | Campaign type     | Performance Incentives    |
 
@@ -16,7 +17,3 @@ Clear performance-based bonus model with goals the team can work toward. Ties pa
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $1,500.

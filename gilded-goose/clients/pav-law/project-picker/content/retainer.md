@@ -3,6 +3,7 @@
 | Field             | Value           |
 | ----------------- | --------------- |
 | Fee               | 3000            |
+| Status            | Required |
 | Category          | Retainer        |
 | Campaign type     | Paid Media Mgmt |
 | Monthly only      | yes             |
@@ -16,7 +17,3 @@ Ongoing oversight of Google Ads and Local Services Ads: monitoring spend, tuning
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-$3,000/mo covers Google Ads, LSA, and ongoing NTGUILT Search. After Ad Expansion keepers land, rough starter add is about $900/mo on this base if all three expansion lanes stay Enabled · or about $300/mo per live expansion lane. Yelp keepers stay on the separate Yelp line. Media spend stays client budget.

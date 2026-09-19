@@ -1,14 +1,13 @@
 # Insurance Envelope Mailer
 
-
 | Field             | Value              |
 | ----------------- | ------------------ |
 | Priority          | 98                 |
 | Fee               | 0                  |
+| Status            | archived · merged WinterSeason |
 | Category          | Direct Mail        |
 | Campaign type     | Past Client Mailer |
 | Parent            | WinterSeason       |
-
 
 ---
 
@@ -19,7 +18,3 @@ Insurance-sleeve mailer and glovebox piece — merged into WinterSeason; keep th
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Merged into Winter Seasonal Campaign · not a standalone sell.

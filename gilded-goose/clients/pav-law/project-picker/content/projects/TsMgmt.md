@@ -1,15 +1,14 @@
 # Platform Management
 
-
 | Field             | Value                         |
 | ----------------- | ----------------------------- |
 | Fee               | 500                           |
+| Status            | Recommended |
 | Category          | Analytics                     |
 | Campaign type     | Platform / Data Ops           |
 | Monthly only      | yes                           |
 | Recommended start | 10/01/2026                    |
 | Featured image    | assets/systems-admin-tile.svg |
-
 
 ---
 
@@ -17,6 +16,6 @@
 
 Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation.
 
-## Fee note
+## HubSpot Application
 
-$500/mo starting 10/01/2026. Priced for light oversight on three systems: MyCase, Google Suite, and Ops Dashboard, plus occasional new-tool testing. Not full MSP or helpdesk coverage. Raise later if monthly load regularly runs past that band.
+- No HubSpot build in scope

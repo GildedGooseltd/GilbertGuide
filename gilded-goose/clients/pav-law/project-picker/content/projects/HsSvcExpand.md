@@ -1,13 +1,12 @@
 # HubSpot Client Intake
 
-
 | Field             | Value            |
 | ----------------- | ---------------- |
 | Priority          | 11               |
 | Fee               | 4200             |
+| Status            | wip |
 | Campaign type     | Client Intake    |
 | Parent            | HsWebRebuild     |
-
 
 ---
 
@@ -27,7 +26,3 @@ Affirm financing email: monthly how-it-works send for open-balance and payment-p
 - Calling · Logged calls · missed-call tasks · same-day callback ownership when lines are in HubSpot
 - Marketing Hub · Affirm how-it-works and Nov–Dec financing / collections sends to open-balance lists
 - CRM · Open-balance and payment-plan segments for Affirm · form-to-Casey routing
-
-## Fee note
-
-Setup $4,200. Absorbs AffirmEmail and HsVoip so financing email and phones sit on this intake card. Affirm and VoIP were previously packaged at $0 under HsWebRebuild. Media and carrier costs stay client budget.

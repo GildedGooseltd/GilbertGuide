@@ -1,14 +1,13 @@
 # Winter Safety Email Campaign
 
-
 | Field             | Value          |
 | ----------------- | -------------- |
 | Priority          | 98             |
 | Fee               | 0              |
+| Status            | archived · merged WinterSeason |
 | Category          | Email          |
 | Campaign type     | Seasonal Email |
 | Parent            | WinterSeason   |
-
 
 ---
 
@@ -19,7 +18,3 @@ Past-client winter safety email — merged into WinterSeason; keep this file for
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Merged into Winter Seasonal Campaign · not a standalone sell.

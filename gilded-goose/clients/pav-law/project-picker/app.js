@@ -146,11 +146,35 @@
 
   function priorityGroupOf(item) {
     if (!item) return null;
+    const raw = item.priority != null ? Number(item.priority) : NaN;
+    if (Number.isFinite(raw) && raw >= 1 && raw <= 4) return Math.trunc(raw);
     const id = normalizeCatalogId(item);
     if (PRIORITY_GROUP_BY_ID[id] != null) return PRIORITY_GROUP_BY_ID[id];
     const parentId = item.parentId && String(item.parentId);
     if (parentId && PRIORITY_GROUP_BY_ID[parentId] != null) return PRIORITY_GROUP_BY_ID[parentId];
     return null;
+  }
+
+  /** Tile space # controls Guide card / TOC order. Falls back to legacy Priority when unset. */
+  function tileSpaceOf(item) {
+    if (!item) return null;
+    const t = item.tileSpace != null ? Number(item.tileSpace) : NaN;
+    if (Number.isFinite(t)) return t;
+    return null;
+  }
+
+  function displayOrderKey(item) {
+    const t = tileSpaceOf(item);
+    if (t != null) return t;
+    return item.priority ?? 99;
+  }
+
+  /** Rank value for best-fit Priority weight: prefer Tile space # over Priority group. */
+  function scoreRankValue(item) {
+    const t = tileSpaceOf(item);
+    if (t != null) return t;
+    const p = item.priority != null ? Number(item.priority) : NaN;
+    return Number.isFinite(p) ? p : null;
   }
 
   function priorityGroupLabel(item) {
@@ -644,7 +668,7 @@
 
   function livePriorityBounds() {
     const pris = liveRankableProjects()
-      .map(p => p.priority)
+      .map(p => scoreRankValue(p))
       .filter(p => p != null && Number.isFinite(Number(p)))
       .map(Number);
     if (!pris.length) return { min: 1, max: 1 };
@@ -684,8 +708,8 @@
     let score = 0;
 
     const { min: pMin, max: pMax } = livePriorityBounds();
-    const pri = Number(item.priority);
-    const priSafe = Number.isFinite(pri) ? pri : pMax;
+    const pri = scoreRankValue(item);
+    const priSafe = Number.isFinite(Number(pri)) ? Number(pri) : pMax;
     if (pMax === pMin) score += W.priority;
     else score += W.priority * Math.max(0, Math.min(1, (pMax - priSafe) / (pMax - pMin)));
 
@@ -804,18 +828,14 @@
     return { min: toIsoDate(now), max: toIsoDate(max) };
   }
 
-  /** Quote calculator start dates: 1st, 15th, and 30th · September–December 2026. */
+  /** Quote calculator start dates: 15th and 30th · September–December 2026. */
   const CALC_START_DATE_OPTIONS = [
-    "2026-09-01",
     "2026-09-15",
     "2026-09-30",
-    "2026-10-01",
     "2026-10-15",
     "2026-10-30",
-    "2026-11-01",
     "2026-11-15",
     "2026-11-30",
-    "2026-12-01",
     "2026-12-15",
     "2026-12-30"
   ];
@@ -827,24 +847,18 @@
       const today = toIsoDate(new Date());
       return CALC_START_DATE_OPTIONS.find(o => o >= today) || CALC_START_DATE_OPTIONS[0];
     }
-    let best = CALC_START_DATE_OPTIONS[0];
-    let bestDist = Infinity;
-    for (const opt of CALC_START_DATE_OPTIONS) {
-      const ot = parseIsoDate(opt)?.getTime();
-      if (ot == null) continue;
-      const dist = Math.abs(ot - t);
-      if (dist < bestDist) {
-        bestDist = dist;
-        best = opt;
-      }
-    }
-    return best;
+    const onOrAfter = CALC_START_DATE_OPTIONS.find(o => {
+      const ot = parseIsoDate(o)?.getTime();
+      return ot != null && ot >= t;
+    });
+    if (onOrAfter) return onOrAfter;
+    return CALC_START_DATE_OPTIONS[CALC_START_DATE_OPTIONS.length - 1];
   }
 
   function calcStartDateSelectHtml(projectId, title, selectedIso) {
     /* Platform Management · locked start October 1 · not editable */
     if (projectId === "TsMgmt") {
-      return `<span class="calc-start-static" title="Start date locked · 10/01/2026" aria-label="Start date for Platform Management: 10/01/2026">10/1</span>`;
+      return `<span class="calc-start-static" title="Start date locked · 10/01/2026" aria-label="Start date for Platform Management: 10/01/2026">10/1/2026</span>`;
     }
     const selected = snapIsoToCalcStartOption(selectedIso || "");
     const opts = CALC_START_DATE_OPTIONS.map(iso =>
@@ -983,7 +997,7 @@
     if (!item) return false;
     if (item.feeUncertain) return true;
     const label = String(item.estCostLabel || "");
-    return /[~?]/.test(label) || /\*$/.test(label.trim());
+    return /[~?]/.test(label) || /\*/.test(label);
   }
 
   function projectQuoteLabel(item, isRetainer) {
@@ -994,7 +1008,12 @@
     /* Setup quote only. Ongoing / retainer after first-phase implementation is not in this column. */
     const fee = projectScheduleFee(item);
     if (!fee) return "—";
-    if (isFeeUncertain(item)) return `~${fmt(fee)}?`;
+    const max = item.feeMax != null ? Number(item.feeMax) : NaN;
+    if (isFeeUncertain(item)) {
+      if (Number.isFinite(max) && max > fee) return `${fmt(fee)}–${fmt(max)}*`;
+      return `${fmt(fee)}*`;
+    }
+    if (Number.isFinite(max) && max > fee) return `${fmt(fee)}–${fmt(max)}`;
     return fmt(fee);
   }
 
@@ -1013,15 +1032,14 @@
     }
     const fee = projectScheduleFee(item);
     if (!fee) return "—";
-    if (isPayInFullProject(item)) return `1 × ${fmt(fee)}`;
+    if (isPayInFullProject(item)) return fmt(fee);
     const plan = computeProjectBiweeklyPlan({ ...item, isRetainer: false });
     const n = plan.ready
       ? plan.paymentCount
       : Math.max(1, getProjectInvoiceCount(item) || 1);
     const amounts = splitEvenCents(fee, n);
     const each = amounts[0];
-    if (n <= 1) return `1 × ${fmt(fee)}`;
-    return `${n} × ${fmt(each)} · 2×/mo`;
+    return fmt(each);
   }
 
   function bestFitRankedListHtml(ranked) {
@@ -3328,7 +3346,7 @@
       } else if (p.invoiceWriteup) {
         terms = String(p.invoiceWriteup).replace(/\r?\n/g, "; ");
       } else if (p.biweeklyInvoiceCount && p.biweeklyAmount != null) {
-        terms = `${p.biweeklyInvoiceCount} × ${fmt(p.biweeklyAmount)} · 2×/mo`;
+        terms = fmt(p.biweeklyAmount);
       }
       lines.push(`  • ${p.title || p.id}`);
       lines.push(`    Total invoice amount: ${p.fee || (p.feeNum != null ? fmt(p.feeNum) : "—")}`);
@@ -3482,7 +3500,7 @@
   }
 
   function sortedProjects() {
-    return [...PROJECTS].sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
+    return [...PROJECTS].sort((a, b) => displayOrderKey(a) - displayOrderKey(b));
   }
 
   function orderedProjects() {
@@ -3608,7 +3626,7 @@
   function effectivePriority(item) {
     const clientRank = clientPriorityRank(item);
     if (clientRank != null) return clientRank;
-    return item.priority ?? 99;
+    return displayOrderKey(item);
   }
 
   function moveClientPriority(id, dir) {
@@ -3783,11 +3801,20 @@
 
   function feeLabelFor(item) {
     const label = String(item.estCostLabel || "").trim();
-    if (label && label !== "—" && label !== "-") return label;
+    if (label && label !== "—" && label !== "-") {
+      /* Prefer * for rough ranges on Guide surfaces. */
+      if (/[?]/.test(label) && /-|–|—/.test(label)) return label.replace(/\?+\s*$/, "*");
+      return label;
+    }
     if (item.ongoingFee) return `${fmt(item.fee)} + ${fmt(item.ongoingFee)}`;
     if (item.perCampaignFee) return `${fmt(item.fee)} per campaign`;
     if (item.monthlyOnly || item.id === "RETAINER" || item.id === "DataMgmt") return `${fmt(item.fee)}/mo`;
-    if (isFeeUncertain(item) && item.fee) return `~${fmt(item.fee)}?`;
+    const max = item.feeMax != null ? Number(item.feeMax) : NaN;
+    if (isFeeUncertain(item) && item.fee) {
+      if (Number.isFinite(max) && max > item.fee) return `${fmt(item.fee)}–${fmt(max)}*`;
+      return `${fmt(item.fee)}*`;
+    }
+    if (Number.isFinite(max) && max > item.fee) return `${fmt(item.fee)}–${fmt(max)}`;
     return fmt(item.fee);
   }
 
@@ -4253,10 +4280,10 @@
         "Marketing Hub · Source tracking where directory or profile traffic converts into a lead."
       ],
       TsMgmt: [
-        "No HubSpot build in this retainer · Platform Management covers MyCase, Google Suite, and Ops Dashboard. HubSpot work stays on separate HubSpot projects."
+        "No HubSpot build in scope"
       ],
       OpsDash: [
-        "No HubSpot build in this retainer · Platform Management covers MyCase, Google Suite, and Ops Dashboard. HubSpot work stays on separate HubSpot projects."
+        "No HubSpot build in scope"
       ],
       HsMktExpand: [
         "Marketing Hub · Ads connections, lead source, and quality properties.",
@@ -5839,7 +5866,7 @@
           } else if (p.invoiceWriteup) {
             terms = String(p.invoiceWriteup).replace(/\r?\n/g, "; ");
           } else if (p.biweeklyInvoiceCount && p.biweeklyAmount != null) {
-            terms = `${p.biweeklyInvoiceCount} × ${fmt(p.biweeklyAmount)} · 2×/mo`;
+            terms = fmt(p.biweeklyAmount);
           }
         }
         lines.push(`  • ${p.title || p.id}`);

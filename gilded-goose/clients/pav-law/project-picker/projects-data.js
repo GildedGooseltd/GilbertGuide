@@ -24,6 +24,7 @@ window.PROJECT_DATA = {
   },
   "retainer": {
     "fee": 3000,
+    "status": "required",
     "category": "Retainer",
     "campaignType": "Paid Media Mgmt",
     "monthlyOnly": true,
@@ -68,6 +69,7 @@ window.PROJECT_DATA = {
     {
       "priority": 1,
       "fee": 3800,
+      "status": "recommended",
       "ongoingFee": 900,
       "durationWeeks": 8,
       "invoiceCount": 4,
@@ -77,7 +79,7 @@ window.PROJECT_DATA = {
       "id": "AdEnhance",
       "title": "Ad Expansion",
       "tldr": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
-      "description": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.\n\nAdd new target audiences to currently active campaigns. \n\nCreate new graphic set for each audience. \n\nOptimize campaigns over learning period to filter down to top performers.\n\n|     |     |\n| --- | --- |\n|     |     |\n\n|     |     |     |\n| --- | --- | --- |\n|     |     |     |\n|     |     |     |",
+      "description": "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.\n\nAdd new target audiences to currently active campaigns. \n\nCreate new graphic set for each audience. \n\nOptimize campaigns over learning period to filter down to top performers.",
       "valueAdded": [
         "Add 3-5 campaign(s)/ad group(s) for: criminal mischief, college towns/ trade schools, and weapons or gun-related charges.",
         "Add new target audiences to currently active campaigns.",
@@ -87,13 +89,12 @@ window.PROJECT_DATA = {
       "hubSpotParts": [
         "Marketing Hub · Connects Google Ads so call and form leads from the new Search lanes get a clear source",
         "CRM · Creates or updates contact records when pilot calls and forms come in, so follow-up stays in one place.",
-        "Landing pages ·  HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
+        "Landing pages · HubSpot pages for a practice-area pilot when that lane needs its own tracked URL."
       ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Ad Expansion",
-      "status": "recommended",
       "estCostLabel": "$3,800 + $900/mo",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -104,7 +105,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 3800,
       "feeEstimateScope": {
-        "raw": 5.1,
+        "raw": 4.72,
         "parts": {
           "valueAdd": 4,
           "tasks": 0,
@@ -112,18 +113,19 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.1
+          "descUnits": 0.73
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": -400,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.11 (5.1 units) · complexity ×1"
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.10 (4.72 units) · complexity ×1"
     },
     {
-      "priority": 1,
+      "priority": 2,
       "fee": 2600,
+      "status": "recommended",
       "ongoingFee": 500,
       "durationWeeks": 8,
       "invoiceCount": 5,
@@ -150,7 +152,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Yelp Ads",
-      "status": "recommended",
       "estCostLabel": "$2,600 + $500/mo",
       "paymentPlanLabel": "—",
       "feeEstimate": 2800,
@@ -181,6 +182,8 @@ window.PROJECT_DATA = {
       "priority": 3,
       "feeUncertain": true,
       "fee": 1200,
+      "feeMax": 1700,
+      "status": "recommended",
       "category": "Brand / Merch",
       "campaignType": "Physical Print & Production",
       "id": "SwagPrint",
@@ -205,7 +208,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Printables & Swag",
-      "status": "recommended",
       "estCostLabel": "$1,200–$1,700?",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -236,6 +238,7 @@ window.PROJECT_DATA = {
     {
       "priority": 4,
       "fee": 1200,
+      "status": "recommended",
       "durationWeeks": 4,
       "invoiceCount": 3,
       "startDate": "2026-10-01",
@@ -259,7 +262,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Directories & Profiles",
-      "status": "recommended",
       "estCostLabel": "$1,200",
       "paymentPlanLabel": "40%",
       "depositPct": 0.4,
@@ -290,14 +292,15 @@ window.PROJECT_DATA = {
     {
       "priority": 5,
       "fee": 2400,
+      "status": "on hold",
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "id": "AdultAds",
       "title": "Adult Site(s) Ad Campaign",
-      "tldr": "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch. Does not pollute core Search performance.",
-      "description": "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch. Does not pollute core Search performance.",
+      "tldr": "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch.",
+      "description": "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch.",
       "valueAdded": [
-        "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch. Does not pollute core Search performance."
+        "Adds a testable awareness lane beyond Google Search and LSA. Isolates adult-site spend in its own campaign with clear UTMs. Policy-safe creative and landing paths reviewed before launch."
       ],
       "hubSpotParts": [
         "No HubSpot build in scope"
@@ -306,7 +309,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Adult Site Ads",
-      "status": "onhold",
       "estCostLabel": "$2,400",
       "paymentPlanLabel": "30%",
       "depositPct": 0.3,
@@ -317,7 +319,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 3100,
       "feeEstimateNationalMid": 4800,
       "feeEstimateScope": {
-        "raw": 1.85,
+        "raw": 1.7,
         "parts": {
           "valueAdd": 1,
           "tasks": 0,
@@ -325,18 +327,19 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 0.85
+          "descUnits": 0.7
         }
       },
       "feeEstimateComplexity": 1.21,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2100,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×0.97 (1.85 units) · complexity ×1.21"
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×0.96 (1.7 units) · complexity ×1.21"
     },
     {
       "priority": 5,
       "fee": 2900,
+      "status": "archived",
       "category": "Paid Media",
       "campaignType": "Display / Brand",
       "id": "NtguiltAd",
@@ -353,7 +356,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "NTGUILT Ads Launch",
-      "status": "archived",
       "estCostLabel": "$2,900",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -384,6 +386,7 @@ window.PROJECT_DATA = {
     {
       "priority": 7,
       "fee": 3700,
+      "status": "wip",
       "category": "Brand / Local Presence",
       "campaignType": "Profiles + LSA intake",
       "id": "DigProf",
@@ -408,7 +411,6 @@ window.PROJECT_DATA = {
       ],
       "publishStatus": "unpublished",
       "shortTitle": "Digital Profiles",
-      "status": "wip",
       "estCostLabel": "$3,700",
       "paymentPlanLabel": "40%",
       "depositPct": 0.4,
@@ -439,6 +441,7 @@ window.PROJECT_DATA = {
     {
       "priority": 7,
       "fee": 4400,
+      "status": "on hold",
       "startDate": "2026-10-01",
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display",
@@ -459,7 +462,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Holiday & Winter Ads",
-      "status": "onhold",
       "estCostLabel": "$4,400",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -490,6 +492,7 @@ window.PROJECT_DATA = {
     {
       "priority": 10,
       "fee": 2200,
+      "status": "available",
       "campaignType": "Marketing Hub Depth",
       "parentId": "HsWebRebuild",
       "id": "HsMktExpand",
@@ -508,7 +511,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HS Marketing Expand",
-      "status": "available",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -539,6 +541,7 @@ window.PROJECT_DATA = {
     {
       "priority": 10,
       "fee": 1700,
+      "status": "available",
       "campaignType": "Lawyer Referral Network",
       "parentId": "Referral",
       "id": "LawyerRef",
@@ -555,7 +558,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Lawyer Referral",
-      "status": "available",
       "estCostLabel": "$1,700",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -586,6 +588,7 @@ window.PROJECT_DATA = {
     {
       "priority": 11,
       "fee": 4200,
+      "status": "wip",
       "campaignType": "Client Intake",
       "parentId": "HsWebRebuild",
       "id": "HsSvcExpand",
@@ -608,7 +611,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HS Client Intake",
-      "status": "wip",
       "estCostLabel": "$4,200",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -639,6 +641,7 @@ window.PROJECT_DATA = {
     {
       "priority": 11,
       "fee": 2200,
+      "status": "available",
       "campaignType": "Networking Skills",
       "parentId": "LawyerRef",
       "id": "NetCoach",
@@ -655,7 +658,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Network Speech Coaching",
-      "status": "available",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -686,6 +688,7 @@ window.PROJECT_DATA = {
     {
       "priority": 12,
       "fee": 20700,
+      "status": "available",
       "campaignType": "HubSpot CMS",
       "id": "HsWebRebuild",
       "title": "HubSpot Website Rebuild",
@@ -708,7 +711,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HubSpot Site Rebuild",
-      "status": "available",
       "estCostLabel": "$20,700",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -739,6 +741,7 @@ window.PROJECT_DATA = {
     {
       "priority": 13,
       "fee": 4900,
+      "status": "wip",
       "durationWeeks": 12,
       "invoiceCount": 4,
       "startDate": "2026-10-01",
@@ -764,7 +767,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Winter Seasonal",
-      "status": "wip",
       "estCostLabel": "$4,900",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -795,6 +797,7 @@ window.PROJECT_DATA = {
     {
       "priority": 14,
       "fee": 1500,
+      "status": "available",
       "category": "Intake / CRM",
       "campaignType": "Data Hygiene & Fields",
       "id": "MyCaseClr",
@@ -814,7 +817,6 @@ window.PROJECT_DATA = {
       ],
       "publishStatus": "unpublished",
       "shortTitle": "MyCase Data Cleanse",
-      "status": "available",
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -845,6 +847,7 @@ window.PROJECT_DATA = {
     {
       "priority": 20,
       "fee": 3500,
+      "status": "available",
       "campaignType": "Nurture · Templates · Surveys",
       "parentId": "HsWebRebuild",
       "id": "HsEmailSetup",
@@ -861,7 +864,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HS Email Nurture Setup",
-      "status": "available",
       "estCostLabel": "$3,500 + design add-on",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -933,6 +935,7 @@ window.PROJECT_DATA = {
     {
       "priority": 23,
       "fee": 1700,
+      "status": "started",
       "category": "Referral",
       "campaignType": "Referral Program",
       "id": "Referral",
@@ -949,7 +952,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Client Referral",
-      "status": "started",
       "estCostLabel": "$1,700",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -980,6 +982,7 @@ window.PROJECT_DATA = {
     {
       "priority": 24,
       "fee": 1500,
+      "status": "archived · merged winterseason",
       "category": "Referral / Outbound",
       "campaignType": "Past-Client Reengagement",
       "parentId": "WinterSeason",
@@ -997,7 +1000,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Sealing Reengagement",
-      "status": "archived",
       "estCostLabel": "merged WinterSeason",
       "paymentPlanLabel": "—",
       "feeEstimate": 2600,
@@ -1027,6 +1029,7 @@ window.PROJECT_DATA = {
     {
       "priority": 26,
       "fee": 500,
+      "status": "archived",
       "category": "Finance / Operations",
       "campaignType": "Full Financial Audit",
       "id": "WasteAud",
@@ -1043,7 +1046,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Financial Waste Audit",
-      "status": "archived",
       "estCostLabel": "$500 + 20% verified savings",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1074,6 +1076,7 @@ window.PROJECT_DATA = {
     {
       "priority": 28,
       "fee": 2200,
+      "status": "archived",
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display / Social",
       "id": "SummerAds",
@@ -1090,7 +1093,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Summer Seasonal Ads",
-      "status": "archived",
       "estCostLabel": "$2,200",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1121,6 +1123,7 @@ window.PROJECT_DATA = {
     {
       "priority": 30,
       "fee": 2000,
+      "status": "archived",
       "category": "Paid Media",
       "campaignType": "Testimonials · Surveys",
       "id": "CaseWins",
@@ -1137,7 +1140,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Case Wins & Testimonials",
-      "status": "archived",
       "estCostLabel": "$2,000",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1168,6 +1170,7 @@ window.PROJECT_DATA = {
     {
       "priority": 35,
       "fee": 1500,
+      "status": "archived",
       "category": "Operations / Compensation",
       "campaignType": "Performance Incentives",
       "id": "PerfPay",
@@ -1184,7 +1187,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Perf Plan Payouts",
-      "status": "archived",
       "estCostLabel": "$1,500",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1215,6 +1217,7 @@ window.PROJECT_DATA = {
     {
       "priority": 40,
       "fee": 1800,
+      "status": "available",
       "category": "CRM",
       "campaignType": "Prequote / Booking",
       "parentId": "HsWebRebuild",
@@ -1232,7 +1235,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Prequote & Booking",
-      "status": "available",
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1263,6 +1265,7 @@ window.PROJECT_DATA = {
     {
       "priority": 41,
       "fee": 1800,
+      "status": "planning",
       "category": "CRM / Web",
       "campaignType": "Landing Page",
       "parentId": "HsWebRebuild",
@@ -1280,7 +1283,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Landing Page Module",
-      "status": "planning",
       "estCostLabel": "$1,800",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -1311,6 +1313,7 @@ window.PROJECT_DATA = {
     {
       "priority": 42,
       "fee": 0,
+      "status": "available",
       "category": "CRM",
       "campaignType": "Contact Import",
       "parentId": "HsWebRebuild",
@@ -1328,7 +1331,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Marketing Contacts",
-      "status": "available",
       "estCostLabel": "incl. HsWebRebuild",
       "paymentPlanLabel": "—",
       "feeEstimate": 2800,
@@ -1358,6 +1360,7 @@ window.PROJECT_DATA = {
     {
       "priority": 46,
       "fee": 4500,
+      "status": "archived",
       "category": "Creative / Social",
       "campaignType": "Social + paid social",
       "id": "SocialAds",
@@ -1374,7 +1377,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Social Campaigns",
-      "status": "archived",
       "estCostLabel": "$4,500",
       "paymentPlanLabel": "30%",
       "depositPct": 0.3,
@@ -1405,6 +1407,7 @@ window.PROJECT_DATA = {
     {
       "priority": 47,
       "fee": 2000,
+      "status": "available",
       "category": "Brand / Professional Development",
       "campaignType": "Attorney Presence",
       "id": "CaseyBrand",
@@ -1421,7 +1424,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Casey Rebrand",
-      "status": "available",
       "estCostLabel": "$2,000",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
@@ -1452,6 +1454,7 @@ window.PROJECT_DATA = {
     {
       "priority": 51,
       "fee": 1500,
+      "status": "completed",
       "category": "Strategy",
       "campaignType": "Strategy Audit",
       "id": "StackAudit",
@@ -1468,7 +1471,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Marketing Stack Audit",
-      "status": "completed",
       "estCostLabel": "$1,500",
       "feeEstimate": 2200,
       "feeEstimateOngoing": null,
@@ -1497,6 +1499,7 @@ window.PROJECT_DATA = {
     {
       "priority": 52,
       "fee": 2500,
+      "status": "archived",
       "category": "Events",
       "campaignType": "Event Activation",
       "id": "EventAct",
@@ -1513,7 +1516,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Summer Event Activation",
-      "status": "archived",
       "estCostLabel": "$2,500",
       "paymentPlanLabel": "—",
       "feeEstimate": 3200,
@@ -1543,6 +1545,7 @@ window.PROJECT_DATA = {
     {
       "priority": 53,
       "fee": 1000,
+      "status": "planning",
       "category": "Partnerships",
       "campaignType": "Twisted Wrench Partnership",
       "id": "TwistWrnch",
@@ -1559,7 +1562,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Twisted Wrench",
-      "status": "planning",
       "estCostLabel": "$1,000",
       "paymentPlanLabel": "—",
       "feeEstimate": 3900,
@@ -1589,6 +1591,7 @@ window.PROJECT_DATA = {
     {
       "priority": 54,
       "fee": 2000,
+      "status": "completed",
       "category": "Systems",
       "campaignType": "Access & Security",
       "id": "AccessAud",
@@ -1605,7 +1608,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Systems Access Audit",
-      "status": "completed",
       "estCostLabel": "$2,000",
       "feeEstimate": 2400,
       "feeEstimateOngoing": null,
@@ -1634,6 +1636,7 @@ window.PROJECT_DATA = {
     {
       "priority": 55,
       "fee": 1500,
+      "status": "completed",
       "category": "Systems",
       "campaignType": "Email / DNS Incident",
       "id": "EmailDns",
@@ -1650,7 +1653,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Email Outage Runbook",
-      "status": "completed",
       "estCostLabel": "$1,500",
       "feeEstimate": 1900,
       "feeEstimateOngoing": null,
@@ -1679,6 +1681,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged hssvcexpand",
       "campaignType": "Monthly Client Email",
       "parentId": "HsSvcExpand",
       "id": "AffirmEmail",
@@ -1695,7 +1698,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Affirm Email",
-      "status": "archived",
       "estCostLabel": "merged HsSvcExpand",
       "paymentPlanLabel": "—",
       "feeEstimate": 2700,
@@ -1725,6 +1727,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged winterseason",
       "category": "Outbound",
       "campaignType": "Outbound Calls",
       "parentId": "WinterSeason",
@@ -1742,7 +1745,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Gabriel Outbound",
-      "status": "archived",
       "estCostLabel": "merged WinterSeason",
       "paymentPlanLabel": "—",
       "feeEstimate": 1500,
@@ -1772,6 +1774,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged socialads",
       "category": "CRM / Social",
       "campaignType": "Social / HubSpot",
       "id": "HsSocial",
@@ -1788,7 +1791,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HubSpot Social",
-      "status": "archived",
       "estCostLabel": "merged SocialAds",
       "paymentPlanLabel": "—",
       "feeEstimate": 3600,
@@ -1818,6 +1820,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged hssvcexpand",
       "category": "Infrastructure",
       "campaignType": "Call Infrastructure",
       "parentId": "HsSvcExpand",
@@ -1835,7 +1838,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HubSpot VoIP",
-      "status": "archived",
       "estCostLabel": "merged HsSvcExpand",
       "paymentPlanLabel": "—",
       "feeEstimate": 3000,
@@ -1865,6 +1867,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged winterseason",
       "category": "Direct Mail",
       "campaignType": "Past Client Mailer",
       "parentId": "WinterSeason",
@@ -1882,7 +1885,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Insurance Mailer",
-      "status": "archived",
       "estCostLabel": "merged WinterSeason",
       "paymentPlanLabel": "—",
       "feeEstimate": 2400,
@@ -1912,6 +1914,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged socialads",
       "category": "Paid Social",
       "campaignType": "Reddit Ads Test",
       "parentId": "NtguiltAd",
@@ -1929,7 +1932,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Reddit NTGUILT Ads",
-      "status": "archived",
       "estCostLabel": "merged SocialAds",
       "paymentPlanLabel": "—",
       "feeEstimate": 3300,
@@ -1959,6 +1961,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged winterseason",
       "category": "Email",
       "campaignType": "Seasonal Email",
       "parentId": "WinterSeason",
@@ -1976,7 +1979,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Winter Safety Email",
-      "status": "archived",
       "estCostLabel": "merged WinterSeason",
       "paymentPlanLabel": "—",
       "feeEstimate": 2500,
@@ -2006,6 +2008,7 @@ window.PROJECT_DATA = {
     {
       "priority": 98,
       "fee": 0,
+      "status": "archived · merged holidayads",
       "category": "Paid Media",
       "campaignType": "Seasonal Search / Display creative",
       "parentId": "HolidayAds",
@@ -2023,7 +2026,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "Winter Driving Ads",
-      "status": "archived",
       "estCostLabel": "merged HolidayAds",
       "paymentPlanLabel": "—",
       "feeEstimate": 4000,
@@ -2053,6 +2055,7 @@ window.PROJECT_DATA = {
     {
       "priority": 99,
       "fee": 5500,
+      "status": "canceled · moved hswebrebuild",
       "category": "CRM",
       "campaignType": "HubSpot Foundation",
       "id": "HsSetup",
@@ -2069,7 +2072,6 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "unpublished",
       "shortTitle": "HubSpot Marketing",
-      "status": "canceled",
       "estCostLabel": "$5,500",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
@@ -2099,6 +2101,7 @@ window.PROJECT_DATA = {
     },
     {
       "fee": 500,
+      "status": "recommended",
       "category": "Analytics",
       "campaignType": "Platform / Data Ops",
       "monthlyOnly": true,
@@ -2111,11 +2114,13 @@ window.PROJECT_DATA = {
       "valueAdded": [
         "Monthly retainer for standard platform management of MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance, and excluding outages, updates, and similar. New tools are covered for a short testing phase before or during a larger implementation."
       ],
+      "hubSpotParts": [
+        "No HubSpot build in scope"
+      ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Platform Mgmt",
-      "status": "recommended",
       "estCostLabel": "$500/mo",
       "paymentPlanLabel": "monthly",
       "feeEstimate": 2800,

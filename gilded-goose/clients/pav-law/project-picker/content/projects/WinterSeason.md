@@ -1,16 +1,15 @@
 # Winter Seasonal Campaign
 
-
 | Field             | Value                    |
 | ----------------- | ------------------------ |
 | Priority          | 13                       |
 | Fee               | 4900                     |
+| Status            | wip |
 | Duration weeks    | 12                       |
 | Invoice count     | 4                        |
 | Recommended start | 10/01/2026               |
 | Category          | Seasonal / Multi-channel |
 | Campaign type     | Winter Seasonal Package  |
-
 
 ---
 
@@ -31,7 +30,3 @@ Separate from HolidayAds seasonal Search and NTGUILT winter driving creative.
 - CRM · Warm-list and past-client segments for mail, email, and dial outcomes
 - Marketing Hub · Winter safety sends and channel source tags vs Search and LSA
 - Calling · Logged outbound and sealing/probation dial results when HubSpot phone is live
-
-## Fee note
-
-Setup $4,900. Combines InsMailer $2,200 and GabrielOut $2,700. Winter safety email rides in this package at no separate email fee. Print, postage, and media stay client budget. Details: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md).

@@ -4,6 +4,7 @@
 | ----------------- | ----------- |
 | Priority          | 12          |
 | Fee               | 20700       |
+| Status            | available |
 | Category          |             |
 | Campaign type     | HubSpot CMS |
 
@@ -27,7 +28,3 @@ After-hours chat: firm-safe ABA-aligned Q&A · HubSpot or site logging so mornin
 - CRM · forms and contact capture
 - Marketing Hub · SEO tools · chat logging when enabled
 - Service Hub · after-hours triage handoff to morning intake
-
-## Fee note
-
-Setup $20,700. Base rebuild $18,500 plus former PaviChat $2,200. Website Content · Site Speed · Blog Revamp ride inside the rebuild package and are no longer separate fees.

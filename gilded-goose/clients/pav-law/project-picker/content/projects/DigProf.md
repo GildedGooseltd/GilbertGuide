@@ -1,13 +1,12 @@
 # Digital Brand Refresh
 
-
 | Field         | Value                   |
 | ------------- | ----------------------- |
 | Priority      | 7                       |
 | Fee           | 3700                    |
+| Status            | wip |
 | Category      | Brand / Local Presence  |
 | Campaign type | Profiles + LSA intake |
-
 
 ---
 
@@ -28,8 +27,3 @@ Former LSA Call Process Update card is merged here. Setup $3,700 combines prior 
 - CRM · profile and listing fields kept accurate · lead source and quality on every inbound
 - Marketing Hub · source tracking where profile traffic converts · Ads sync view for intake
 - Service Hub · tickets and handoffs on new cases
-
-## Fee note
-
-Setup $3,700. Combines former DigProf $2,200 and LsaCall $1,500.
-

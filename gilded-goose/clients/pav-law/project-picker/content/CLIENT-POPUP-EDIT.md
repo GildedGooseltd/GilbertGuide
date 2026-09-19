@@ -2,15 +2,15 @@
 
 Edit these sections in each project file for the Guide tile popup:
 
-- `## Project Overview` · shown as the main popup body. Prose and bullets both render.
-- `## HubSpot Application` · each line: Feature name · what it does in plain language for Andrew
-- `## Fee note` · setup and ongoing in plain language
+- `## Project Overview` · shown as the main popup body. Separate paragraphs with a blank line between each so the Guide shows empty line space. Prose and `-` bullets both render.
+- `## HubSpot Application` · one bullet per line: `Feature name · what it does` in plain language for Andrew. Guide shows these as a disc bullet list.
 
-The popup no longer shows Employees it may impact or a separate Value for Pav Law block.
+Do not add `## Fee note`. Fee and INDEX Est. cost are the price source. The popup no longer shows Employees it may impact or a separate Value for Pav Law block.
 
 After edits: `npm run build` in `project-picker`, then hard-refresh the Guide.
 
 - Live Show on: Yelpv1 · LegalDirs · TsMgmt · AdEnhance · SwagPrint. Toggle Show in [INDEX.md](INDEX.md). Do not use Publish status in project outlines.
+- Project Overviews tile grid: SwagPrint stays last among calculator tiles.
 
 ## Files
 

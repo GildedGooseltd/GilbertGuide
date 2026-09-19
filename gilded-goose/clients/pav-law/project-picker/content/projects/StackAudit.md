@@ -4,6 +4,7 @@
 | ----------------- | -------------- |
 | Priority          | 51             |
 | Fee               | 1500           |
+| Status            | completed |
 | Category          | Strategy       |
 | Campaign type     | Strategy Audit |
 
@@ -16,7 +17,3 @@ One agreed 30-day action list across all channels. Defer/cut list so consulting 
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Setup fee $1,500.

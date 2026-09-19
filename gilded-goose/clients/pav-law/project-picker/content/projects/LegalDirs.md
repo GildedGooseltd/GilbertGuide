@@ -1,16 +1,15 @@
 # Legal Directory Updates
 
-
 | Field             | Value          |
 | ----------------- | -------------- |
 | Priority          | 4              |
 | Fee               | 1200           |
+| Status            | Recommended |
 | Duration weeks    | 4              |
 | Invoice count     | 3              |
 | Recommended start | 10/01/2026     |
 | Category          | Branding       |
 | Campaign type     | Referral Sites |
-
 
 ---
 

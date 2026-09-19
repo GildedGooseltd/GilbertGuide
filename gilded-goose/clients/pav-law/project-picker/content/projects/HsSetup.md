@@ -4,6 +4,7 @@
 | ----------------- | ------------------ |
 | Priority          | 99                 |
 | Fee               | 5500               |
+| Status            | canceled · moved HsWebRebuild |
 | Category          | CRM                |
 | Campaign type     | HubSpot Foundation |
 
@@ -16,7 +17,3 @@ One HubSpot foundation so email, referrals, forms, and booking share the same co
 ## HubSpot Application
 
 - No HubSpot build in scope
-
-## Fee note
-
-Front Range HubSpot/email add-ons often $500–$1,500/mo. Packaging SummerEmail inside HsSetup matches that market pattern better than a lone $1,200 email project.

@@ -8,6 +8,11 @@ import { fileURLToPath } from "url";
 const META_KEYS = {
   id: "id",
   priority: "priority",
+  "priority group": "priority",
+  "tile space #": "tileSpace",
+  "tile space": "tileSpace",
+  "tile #": "tileSpace",
+  tilespace: "tileSpace",
   fee: "fee",
   category: "category",
   "campaign type": "campaignType",
@@ -135,9 +140,24 @@ function parseMetaTable(text) {
     if (field === "priority") {
       if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank")
         meta.priority = parseInt(val, 10);
+    } else if (field === "tileSpace") {
+      if (val && val !== "—" && val !== "-" && val.toLowerCase() !== "blank") {
+        const n = parseInt(String(val).replace(/[^0-9]/g, ""), 10);
+        if (Number.isFinite(n)) meta.tileSpace = n;
+      }
     } else if (field === "fee" || field === "ongoingFee" || field === "perCampaignFee" || field === "depositAmount") {
       if (field === "fee" && /[*~?]/.test(val)) meta.feeUncertain = true;
-      meta[field] = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
+      if (field === "fee") {
+        const range = val.match(/(\d[\d,]*(?:\.\d+)?)\s*[-–—]\s*\$?\s*(\d[\d,]*(?:\.\d+)?)/);
+        if (range) {
+          meta.fee = parseFloat(range[1].replace(/,/g, "")) || 0;
+          meta.feeMax = parseFloat(range[2].replace(/,/g, "")) || 0;
+        } else {
+          meta.fee = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
+        }
+      } else {
+        meta[field] = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
+      }
     } else if (field === "durationWeeks" || field === "paymentGraceDays" || field === "invoiceCount") {
       const n = parseInt(String(val).replace(/[^0-9]/g, ""), 10);
       if (Number.isFinite(n) && n >= 0) meta[field] = n;
@@ -857,10 +877,20 @@ function padMetaRow(label, value) {
   return `| ${l.padEnd(17)} | ${String(value).padEnd(58)} |`;
 }
 
+function formatFeeMetaValue(p) {
+  const fee = p.fee;
+  if (fee == null || fee === "") return "";
+  const max = p.feeMax != null && Number(p.feeMax) > Number(fee) ? Number(p.feeMax) : null;
+  let s = max != null ? `${fee}-${max}` : String(fee);
+  if (p.feeUncertain) s += "*";
+  return s;
+}
+
 function metaTableRows(p) {
   const rows = [
-    ...(isRetainerPhase(p) || p.priority == null ? [] : [["Priority", p.priority]]),
-    ["Fee", p.fee],
+    ...(isRetainerPhase(p) || p.priority == null ? [] : [["Priority group", p.priority]]),
+    ...(p.tileSpace != null ? [["Tile space #", p.tileSpace]] : []),
+    ["Fee", formatFeeMetaValue(p)],
     ["Category", p.category],
     ["Campaign type", p.campaignType],
     ["Status", p.status || "available"],
@@ -1285,11 +1315,24 @@ export function parseIndexPaymentPlan(raw) {
   return { label: s, depositPct: null, depositAmount: null, monthly: false };
 }
 
-/** Parse INDEX Est. cost cells like `$2,900/mo`, `$2,000 + $500/mo`, `$1,500`, `incl. HsSetup`. */
+/** Parse INDEX Est. cost cells like `$2,900/mo`, `$2,000 + $500/mo`, `$1,500`, `$1,200–$1,700*`, `incl. HsSetup`. */
 export function parseIndexEstCost(raw) {
   const s = String(raw || "").trim();
   if (!s || s === "—" || s === "-" || /^incl/i.test(s) || /^merged/i.test(s) || /^n\/?a$/i.test(s)) {
     return { label: s || "—", fee: null, ongoingFee: null };
+  }
+  const uncertain = /[*~?]/.test(s);
+  const range = s.match(/([\d,]+(?:\.\d+)?)\s*[-–—]\s*\$?\s*([\d,]+(?:\.\d+)?)/);
+  if (range && !/\+/.test(s) && !/\/\s*mo/i.test(s)) {
+    const fee = parseFloat(range[1].replace(/,/g, ""));
+    const feeMax = parseFloat(range[2].replace(/,/g, ""));
+    return {
+      label: s,
+      fee: Number.isFinite(fee) ? fee : null,
+      feeMax: Number.isFinite(feeMax) ? feeMax : null,
+      ongoingFee: null,
+      feeUncertain: uncertain || undefined
+    };
   }
   const nums = [...s.matchAll(/\$?\s*([\d,]+(?:\.\d+)?)/g)].map(m => parseFloat(m[1].replace(/,/g, "")));
   if (!nums.length) return { label: s, fee: null, ongoingFee: null };
@@ -1307,7 +1350,7 @@ export function parseIndexEstCost(raw) {
   if (/\/\s*mo/i.test(s) && nums.length >= 1) {
     return { label: s, fee: nums[0], ongoingFee: null, monthlyOnly: true };
   }
-  return { label: s, fee: nums[0], ongoingFee: null };
+  return { label: s, fee: nums[0], ongoingFee: null, feeUncertain: uncertain || undefined };
 }
 
 function normalizeIndexVisibility(raw) {
@@ -1456,13 +1499,16 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     const ec = o.estCostParsed || (o.estCost ? parseIndexEstCost(o.estCost) : null);
     if (ec && ec.fee != null && !/^incl/i.test(String(ec.label || "")) && !/^merged/i.test(String(ec.label || ""))) {
       next.fee = ec.fee;
+      if (ec.feeMax != null && Number(ec.feeMax) > Number(ec.fee)) next.feeMax = ec.feeMax;
+      else delete next.feeMax;
       if (ec.ongoingFee != null) next.ongoingFee = ec.ongoingFee;
       else if (!ec.monthlyOnly) {
         /* INDEX setup-only (no + $/mo) clears a prior Ongoing fee */
         delete next.ongoingFee;
       }
     }
-    if (o.estCost && /[~?]/.test(String(o.estCost))) next.feeUncertain = true;
+    if (o.estCost && /[*~?]/.test(String(o.estCost))) next.feeUncertain = true;
+    else if (ec && ec.feeUncertain) next.feeUncertain = true;
     const pp = o.paymentPlanParsed || (o.paymentPlan ? parseIndexPaymentPlan(o.paymentPlan) : null);
     if (pp) {
       if (o.paymentPlan) next.paymentPlanLabel = o.paymentPlan;
@@ -1483,14 +1529,14 @@ export function applyIndexOverrides(projects, retainer, existingText) {
     return next;
   };
   const merged = projects.map(applyTo);
-  merged.sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
+  merged.sort((a, b) => (a.tileSpace ?? a.priority ?? 99) - (b.tileSpace ?? b.priority ?? 99));
   return { retainer: applyTo(retainer), projects: merged };
 }
 
 export function buildIndex(projects, retainer, existingText) {
   const overrides = parseIndexMarkdown(existingText || "");
   const all = [{ ...retainer, id: retainer.id || "RETAINER" }, ...projects];
-  all.sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
+  all.sort((a, b) => (a.tileSpace ?? a.priority ?? 99) - (b.tileSpace ?? b.priority ?? 99));
 
   let md = overrides.intro || `# Project Index
 

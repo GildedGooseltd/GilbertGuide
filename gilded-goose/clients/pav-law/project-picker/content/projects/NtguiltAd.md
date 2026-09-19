@@ -4,6 +4,7 @@
 | ----------------- | --------------- |
 | Priority          | 5               |
 | Fee               | 2900            |
+| Status            | Archived |
 | Category          | Paid Media      |
 | Campaign type     | Display / Brand |
 
@@ -16,7 +17,3 @@ Launches NTGUILT Display and Search so upper-funnel creative feeds intake, retar
 ## HubSpot Application
 
 - No HubSpot build in scope · edit if this project uses CRM, forms, workflows, or reporting
-
-## Fee note
-
-Setup fee $2,900.

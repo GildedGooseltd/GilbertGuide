@@ -4,6 +4,7 @@
 | ----------------- | ------------------- |
 | Priority          | 10                  |
 | Fee               | 2200                |
+| Status            | available |
 | Category          |                     |
 | Campaign type     | Marketing Hub Depth |
 | Parent            | HsWebRebuild        |
@@ -19,7 +20,3 @@ Lead-source and quality tracking so the team knows where leads come from and whi
 - Marketing Hub · ads connections, lead source, and quality properties
 - CRM · contacts, custom properties, and reporting data sources
 - Workflows · follow-up tasks on form submits
-
-## Fee note
-
-Setup fee $2,200.
