@@ -189,7 +189,7 @@ Approved 2026-07-18. Keep the tile proportions and information hierarchy shown i
 4. Written semantic status badge
 5. Standard component border and surface, unchanged by status
 
-Team Goals tiles use exactly three tracking rows. Each row is `3.25rem` high with vertically centered cells so the three tiles align.
+Team Goals tiles use compact tracking rows. Each row is `1.65rem` high with vertically centered cells so multi-channel breakouts stay tight.
 
 **Equal-height tiles in a row (all pages):** In `.kpi-goals-grid` and `.kpi-stat-grid`, every tile in the same row shares one card-band height. Wrappers use CSS subgrid (`grid-row: span 2`) so the KPI card band aligns across the row and Solutions sit in a second shared band below — never let Solutions make one card taller than its neighbors. Apply the same rule on Guide (`index.html`) and Metrics (`metrics.css`). Direct grid children that are not wrapped must use `.kpi-tile-with-projects` so they participate in the card band.
 
@@ -197,7 +197,7 @@ Team Goals tiles use exactly three tracking rows. Each row is `3.25rem` high wit
 
 Section shape: each section opens with a tile row, then charts. KPIs holds Auto Cases, Cashflow, Lead Calls, New Cases, Yelp Reviews, Ad Spend, then Channel activity charts. Lead Calls track table breaks out Search · LSA · HubSpot · Yelp · Pav.Law website for the tile month. Data tab Financial Breakdown tiles are staged off Guide · see [DASHBOARD-STAGING.md](DASHBOARD-STAGING.md). Cost per Case #30, Missed Opportunity #19, and Avg Case Value live there until restored. Tiles run 4 per row. **KPIs / Recommendations:** charts run 2 per row in `.data-chart-table-grid` via `chartPairGridHtml()`, each with its detail table under the plot. **Data tab:** each chart card is full width in `.data-chart-table-stack`; inside the card, plot is left and the descriptive detail table is right via `.kpi-chart-split`. Charts never join the tile row. Do not restore Data-tab **Leads by channel**, **Cases by month**, **Cases created · YTD**, or **Cases · 2025 vs 2026 same months** unless Kate asks.
 
-KPIs section tile grid: goal cards and metric tiles share one grid, `.kpi-tiles-4`, at 4 tiles per row. Tiles keep source order — Auto Cases, Cashflow, then the metric tiles — and wrap into a second row of 4. Below 1000px the same 4-up grid trims side gutters, drops goal-track rows to label over value, and steps titles down to 0.95rem so narrow columns never clip a value or break a word. It falls back to 2 columns under 560px and 1 under 380px.
+KPIs section tile grid: goal cards and metric tiles share one grid, `.kpi-tiles-4`, at 4 tiles per row. Tiles keep source order — Auto Cases, Cashflow, then the metric tiles — and wrap into a second row of 4. Below 1000px the same 4-up grid trims side gutters, keeps goal-track rows as label | value on one line at `1.35rem`, and steps titles down to 0.95rem so narrow columns stay readable. It falls back to 2 columns under 560px and 1 under 380px.
 
 Do not redesign the tile layout; future changes are color, typography, border, or spacing refinements only.
 

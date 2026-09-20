@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260918-revenue-76715";
+  const RENDER_VER = "20260919-cpr-cost-call";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -83,7 +83,7 @@
     },
     "cash-pace": {
       file: "ledger_account_activity_report (7).csv export 09/18/2026 · Credits Sep* $76,715 through 09/18/2026 · Jan–Aug from ledger (5)/(7) · mycase/as-of-2026-09-18/cash-credits-by-month.csv",
-      fields: "Follows tile month · Sep* MTD through 09/18/2026 · $100k monthly goal"
+      fields: "Follows tile month · Sep* MTD through 09/18/2026 · W1–W4 running Trust Credit by calendar week · completed gray · future = pace × week-end day"
     },
     "cases-leads-spend": {
       file: "Contact_09-18 · leads-inbox (18) · Call details (8) · Campaign report (37) · account_activities_202609 · HubSpot Sep forms 1 · Yelp Sep Messages 2 Calls 2 Website 4 · Justia Mar–Aug Profile Stats · recheck 2026-09-18",
@@ -214,8 +214,8 @@
     },
     "cases-leads-spend": {
       title: "#05 Key Channel Activity",
-      desc: "Last 4 months: new cases and direct contacts on the left axis, Search + LSA media spend on the right. Jun/Jul full · Aug* cases through 2026-09-01 · LSA through 2026-08-24 · Search Call details through Aug 14 · cash ledger through 2026-08-24. Cost per response uses LSA + Search media only. LSA all answered is media ÷ charged plus uncharged inbox calls. Review and credited leads are not in that count. HubSpot forms fee is not a channel cost.",
-      formula: "Bars = new cases + leads. Line = Search + LSA media spend. LSA all answered = LSA media ÷ charged + uncharged. Table under each chart lists the plotted values."
+      desc: "Last 4 months: new cases and direct contacts on the left axis, Search + LSA media spend on the right. Jun/Jul full · Aug* cases through 2026-09-01 · LSA through 2026-08-24 · Search Call details through Aug 14 · cash ledger through 2026-08-24. Cost per response uses LSA inbox leads + Search media, plus Yelp and Justia when on file. Review and credited leads are not in that count. HubSpot forms fee is not a channel cost.",
+      formula: "Bars = new cases + leads. Line = Search + LSA media spend. LSA $/call = LSA media ÷ inbox leads. Table under each chart lists the plotted values."
     },
     "ad-spend-by-channel": {
       title: "Ad spend",
@@ -224,8 +224,8 @@
     },
     "cash-pace": {
       title: "Revenue",
-      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity. Sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (5)/(7). September* is $76,715 through 09/18/2026 from ledger (7). $85k is the operating-expense assumption on Predictions. June sample baseline, not this revenue goal.",
-      formula: "Revenue = Trust account activity Credit sum by month. Goal = $100,000 client revenue collected."
+      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity. Sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (5)/(7). September* is $76,715 through 09/18/2026 from ledger (7). W1–W4 under the dial are a running Trust Credit total by calendar week. Completed weeks are gray and show the cumulative collected through that week from the ledger. The live week shows only the end-of-week projected running total if the current daily Credit pace continues through that week’s last day — current collected stays on the dial. Later weeks project the running total if pace continues through the end of that week. W1 days 1–7 · W2 days 8–14 · W3 days 15–21 · W4 days 22–end. $85k is the operating-expense assumption on Predictions. June sample baseline, not this revenue goal.",
+      formula: "Running total = sum of Trust Credits from day 1 through that week. Completed = ledger actuals. Live/future week proj = MTD daily Credit pace × last day of that week. Current MTD stays on the dial."
     },
     "sales-cost-funnel": {
       title: "Sales Funnel",
@@ -939,6 +939,13 @@
       partialDaysInMonth: 30,
       cashGoalMonthly: 100000,
       rangeNote: "Jan–Aug Trust activity Credits · Sep* $76,715 MTD through 09/18/2026 ledger (7) · cases Contact_09-18 Sep* 9 · Aug cases 20"
+    },
+    /* Trust Credits by calendar week · aggregates only · Jun–Jul ledger (5) · Aug–Sep* ledger (7) through 09/18/2026. */
+    cashCreditsByWeek: {
+      Jun: { W1: 27400, W2: 19650, W3: 30625, W4: 25810 },
+      Jul: { W1: 14850, W2: 21600, W3: 34425, W4: 37475 },
+      Aug: { W1: 15070, W2: 31825, W3: 8800, W4: 48850 },
+      Sep: { W1: 28565, W2: 30900, W3: 17250, W4: 0 }
     },
     /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) · Sep* inbox (18) + account_activities_202609 */
     lsaEfficiency: [
@@ -2412,18 +2419,6 @@
     return null;
   }
 
-  function lsaChargedUnchargedForMonth(month) {
-    const key = String(month || "").replace(/\*$/, "");
-    const eff = (DATA.lsaEfficiency || []).find(r => String(r.month || "").replace(/\*$/, "") === key);
-    if (!eff) return null;
-    const charged = Number(eff.charged) || 0;
-    const notCharged = eff.notCharged != null
-      ? Number(eff.notCharged) || 0
-      : Math.max(0, (Number(eff.leads) || 0) - charged);
-    const n = charged + notCharged;
-    return n > 0 ? n : null;
-  }
-
   function costPerResponseChannelsForMonth(rows, month) {
     const row = findCasesLeadsSpendRow(month)
       || (rows || []).find(r => String(r.month || "").replace(/\*$/, "") === String(month || "").replace(/\*$/, ""));
@@ -2431,7 +2426,6 @@
     const key = String(month || "").replace(/\*$/, "");
     const channelRow = findChannelMonthRow(key) || {};
     const lsaResponses = lsaResponsesForMonth(month);
-    const lsaAllAnswered = lsaChargedUnchargedForMonth(month);
     const channels = [];
     if (lsaResponses && Number(row.lsaSpend) > 0) {
       channels.push({
@@ -2443,17 +2437,6 @@
         color: "#1e3a8a"
       });
     }
-    if (lsaAllAnswered && Number(row.lsaSpend) > 0) {
-      channels.push({
-        label: "LSA all answered",
-        chartLabel: "LSA answered",
-        unit: "$/call",
-        spend: row.lsaSpend,
-        responses: lsaAllAnswered,
-        value: row.lsaSpend / lsaAllAnswered,
-        color: "#3b82c4"
-      });
-    }
     if (Number(row.adsLeads) > 0 && Number(row.adsSpend) > 0) {
       channels.push({
         label: "Digital",
@@ -2462,27 +2445,6 @@
         responses: Number(row.adsLeads),
         value: row.adsSpend / Number(row.adsLeads),
         color: "#c45c26"
-      });
-    }
-    if (channelRow.hubspotForms != null || channelRow.hubspot != null || row.websiteLeads != null) {
-      const responses = Number(
-        channelRow.hubspotForms != null
-          ? channelRow.hubspotForms
-          : channelRow.hubspot != null
-          ? channelRow.hubspot
-          : row.websiteLeads
-      ) || 0;
-      const spend = /^(Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/.test(key)
-        ? Number(DATA.websiteHubspotMonthlyFromJun) || 0
-        : 0;
-      channels.push({
-        label: "Website forms",
-        chartLabel: "Forms",
-        unit: "$/form",
-        spend,
-        responses,
-        value: responses > 0 ? spend / responses : null,
-        color: "#b23a78"
       });
     }
     if (channelRow.yelp != null) {
@@ -2557,7 +2519,7 @@
     const pack = tileMonthCostPerResponsePack(rows);
     if (!pack.channels.length) return "";
     return kpiDetailTable(
-      ["Channel", "Responses", "Cost / response"],
+      ["Channel", "Calls", "Cost / call"],
       pack.channels.map(c => [
         escapeHtml(c.label),
         String(c.responses),
@@ -3686,28 +3648,18 @@
     const months = DATA.channelMonths ? chronological(DATA.channelMonths) : null;
     if (months && months.length >= 3) {
       const keys = [
-        { key: "search", name: "Search calls", color: "#3a1a6e", spendKey: "searchSpend" },
-        { key: "lsa", name: "LSA inbox", color: "#1e3a8a", spendKey: "lsaSpend" },
-        { key: "hubspot", name: "HubSpot forms", color: "#b23a78", spendKey: null },
-        { key: "yelp", name: "Yelp", color: "#64748b", spendKey: "yelpSpend" },
-        { key: "justia", name: "Justia", color: "#6a5acd", spendKey: "justiaSpend" }
+        { key: "search", name: "Search calls", color: "#3a1a6e" },
+        { key: "lsa", name: "LSA inbox", color: "#1e3a8a" },
+        { key: "hubspot", name: "HubSpot forms", color: "#b23a78" },
+        { key: "yelp", name: "Yelp", color: "#64748b" },
+        { key: "justia", name: "Justia", color: "#6a5acd" }
       ];
       const monthLabels = months.map(m => m.month);
-      const pctVsJun = (curr, jun) => {
-        if (!jun) return "—";
-        const pct = Math.round(((curr - jun) / jun) * 100);
-        return (pct >= 0 ? "+" : "") + pct + "%";
-      };
       const rows = keys.map(k => {
         const vals = months.map(m => Number(m[k.key]) || 0);
-        const jun = months.find(m => m.month === "Jun");
-        const junSpend = k.spendKey && jun ? jun[k.spendKey] : null;
-        const deltaPct = pctVsJun(vals[vals.length - 1], vals[vals.length - 2]);
         return [
           `<span class="kpi-stack-swatch" style="background:${k.color}" aria-hidden="true"></span> ${escapeHtml(k.name)}`,
-          ...vals.map(String),
-          momChangeHtml(deltaPct) || "—",
-          junSpend != null ? fmtMoney(junSpend) : "—"
+          ...vals.map(String)
         ];
       });
       const totals = months.map(m =>
@@ -3718,15 +3670,12 @@
         (Number(m.justia) || 0) +
         (Number(m.pavLawWebsite) || 0)
       );
-      const totalDeltaPct = pctVsJun(totals[totals.length - 1], totals[totals.length - 2]);
       rows.push([
         '<span class="kpi-table-total">Total</span>',
-        ...totals.map(t => `<span class="kpi-table-total">${t}</span>`),
-        `<span class="kpi-table-total">${momChangeHtml(totalDeltaPct) || "—"}</span>`,
-        "—"
+        ...totals.map(t => `<span class="kpi-table-total">${t}</span>`)
       ]);
       return kpiDetailTable(
-        ["Lead type", ...monthLabels, "% vs prior", "Jun spend"],
+        ["Lead type", ...monthLabels],
         rows
       );
     }
@@ -4314,12 +4263,102 @@
     };
   }
 
+  /**
+   * W1–W4 running Trust Credit total for the Revenue tile.
+   * Completed weeks = cumulative ledger actuals through that week, grayed in the UI.
+   * Live week = projected running total if MTD pace continues through that week’s last day
+   *   (current collected stays on the dial only).
+   * Future weeks = projected running total if MTD daily Credit pace continues through that week’s last day.
+   */
+  function cashWeekCollectionEstimates(m) {
+    if (!m) return [];
+    const daysInMonth = Math.max(1, Number(m.daysInMonth) || 30);
+    const day = m.isPartial
+      ? Math.max(1, Number(m.daysElapsed) || 1)
+      : daysInMonth;
+    const pace = (Number(m.credit) || 0) / Math.max(day, 1);
+    const actuals = (DATA.cashCreditsByWeek && DATA.cashCreditsByWeek[m.monthKey]) || {};
+    const weeks = [
+      { id: "W1", start: 1, end: 7 },
+      { id: "W2", start: 8, end: 14 },
+      { id: "W3", start: 15, end: 21 },
+      { id: "W4", start: 22, end: daysInMonth }
+    ];
+    let runActual = 0;
+    return weeks
+      .filter(w => w.start <= daysInMonth)
+      .map(w => {
+        const end = Math.min(w.end, daysInMonth);
+        const weekActual = Math.round(Number(actuals[w.id]) || 0);
+        const eowProj = Math.round(pace * end);
+        if (day >= end) {
+          runActual += weekActual;
+          return {
+            id: w.id,
+            start: w.start,
+            end,
+            kind: "done",
+            weekActual,
+            running: runActual,
+            eowProj: null
+          };
+        }
+        if (day >= w.start) {
+          runActual += weekActual;
+          return {
+            id: w.id,
+            start: w.start,
+            end,
+            kind: "live",
+            weekActual,
+            running: runActual,
+            eowProj
+          };
+        }
+        return {
+          id: w.id,
+          start: w.start,
+          end,
+          kind: "proj",
+          weekActual: 0,
+          running: eowProj,
+          eowProj
+        };
+      });
+  }
+
+  function cashWeekEstimatesTrackHtml(m) {
+    const weeks = cashWeekCollectionEstimates(m);
+    if (!weeks.length) return "";
+    const rows = weeks.map(w => {
+      const rowClass = w.kind === "done"
+        ? "kpi-week-done"
+        : w.kind === "live"
+          ? "kpi-week-live"
+          : "kpi-week-proj";
+      let tip;
+      let value;
+      if (w.kind === "done") {
+        tip = `Week collected ${fmtMoney(w.weekActual)} · running ${fmtMoney(w.running)}`;
+        value = fmtMoney(w.running);
+      } else if (w.kind === "live") {
+        tip = `End-of-week estimate if MTD pace continues through day ${w.end} · now ${fmtMoney(w.running)} on dial`;
+        value = `~${fmtMoney(w.eowProj)}`;
+      } else {
+        tip = `Estimated running total if MTD pace continues through day ${w.end}`;
+        value = `~${fmtMoney(w.running)}`;
+      }
+      return `<tr class="${rowClass}" title="${escapeHtml(tip)}"><th scope="row">${w.id}</th><td>${value}</td></tr>`;
+    }).join("");
+    return `<table class="kpi-goal-track kpi-cash-week-track"><tbody>${rows}</tbody></table>`;
+  }
+
   function cashCollectedPaceCardHtml() {
     const m = cashMonthPaceModel();
     if (!m) return "";
-    /* Same dial format as Lead Calls: fill = collected ÷ scale, celebrate only when collected hits goal. Pace/projected stay in the track rows, not as a shadow arc or early green celebrate. */
+    /* Dial scale $150k · goal mark stays at monthly $100k target. Celebrate only when collected hits goal. */
     const hit = m.credit >= m.target;
-    const scaleMax = Math.max(m.credit, m.target, 1);
+    const scaleMax = Math.max(m.credit, m.target, 150000);
     const cashFresh = cashLedgerIsCurrent();
     const gauge = halfMoonGauge(m.credit / scaleMax, "cash-pace", {
       valueLabel: fmtMoney(m.credit),
@@ -4332,7 +4371,14 @@
     const freshClass = cashFresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
     const cashAsOf = resolveTileAsOf("cash-pace", cashLedgerAsOf());
     const freshMarkHtml = cashFresh ? statusCorner(true, cashAsOf) : outdatedMark(cashAsOf);
-    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${freshClass}" data-kpi-focus="cash-pace" aria-label="Revenue ${fmtMoney(m.credit)} of ${fmtMoney(m.target)} · forecast ${fmtMoney(m.projected)} · ${m.label} · ${m.monthDisplay} · Trust activity ${cashLedgerAsOf() || "stale"}">
+    const weekAria = cashWeekCollectionEstimates(m)
+      .map(w => {
+        if (w.kind === "done") return `${w.id} ${fmtMoney(w.running)} done`;
+        if (w.kind === "live") return `${w.id} ~${fmtMoney(w.eowProj)}`;
+        return `${w.id} ~${fmtMoney(w.running)}`;
+      })
+      .join(" · ");
+    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${freshClass}" data-kpi-focus="cash-pace" aria-label="Revenue ${fmtMoney(m.credit)} of ${fmtMoney(m.target)} · forecast ${fmtMoney(m.projected)} · ${m.label} · ${m.monthDisplay} · weeks ${weekAria} · Trust activity ${cashLedgerAsOf() || "stale"}">
       ${freshMarkHtml}
       ${kpiHelpBtn("cash-pace")}
       <div class="kpi-goal-visual">
@@ -4343,6 +4389,7 @@
         ["Pace", paceCell],
         ["Projected", `${fmtMoney(m.projected)} / ${fmtMoney(m.target)}`]
       ])}
+      ${cashWeekEstimatesTrackHtml(m)}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
       ${kpiRefMark("#09")}
     </button>`;

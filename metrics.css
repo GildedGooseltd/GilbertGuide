@@ -402,21 +402,22 @@ body.feedback-mode-on .feedback-target:hover {
   .kpi-tiles-4 .kpi-stat-val,
   .kpi-tiles-4 .kpi-val-negative { font-size: 0.95rem !important; }
   .kpi-tiles-4 .kpi-goal-track { font-size: 0.7rem; }
-  /* Stack label over value so a narrow tile never breaks a word mid-way. */
+  /* Keep label | value on one line; shrink row height so multi-channel tracks stay tight. */
   .kpi-tiles-4 .kpi-goal-track tr {
-    display: block;
-    height: auto !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    display: table-row;
+    height: 1.35rem !important;
   }
   .kpi-tiles-4 .kpi-goal-track th,
   .kpi-tiles-4 .kpi-goal-track td {
-    display: block;
-    width: auto !important;
-    padding: 0.08rem 0 !important;
-    border-bottom: none;
-    white-space: normal;
-    overflow-wrap: normal;
-    word-break: keep-all;
+    display: table-cell;
+    padding: 0.06rem 0.15rem !important;
+    line-height: 1.15;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .kpi-tiles-4 .kpi-goal-track th {
+    width: 1%;
+    padding-right: 0.35rem !important;
   }
 }
 @media (max-width: 560px) {
@@ -759,7 +760,7 @@ body.feedback-mode-on .feedback-target:hover {
   .kpi-goals-grid { grid-template-columns: 1fr; max-width: 22rem; }
 }
 .kpi-goal-card {
-  display: flex; flex-direction: column; align-items: stretch; gap: 0.8rem;
+  display: flex; flex-direction: column; align-items: stretch; gap: 0.45rem;
   text-align: left; font: inherit; cursor: pointer;
   padding: 1.85rem 2rem 1.15rem 2rem; border-radius: 12px;
   border: 2px solid var(--gg-royal-border); background: linear-gradient(165deg, var(--gg-royal-dim) 0%, var(--gg-paper) 55%);
@@ -806,18 +807,33 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-goal-track {
   width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left;
   border-top: 1px solid var(--gg-royal-border); margin-top: 0.15rem;
+  flex: 0 0 auto;
+  height: auto;
 }
 .kpi-goal-track th,
 .kpi-goal-track td {
-  padding: 0.35rem 0.2rem; border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0.1rem 0.2rem; border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   vertical-align: top;
+  line-height: 1.2;
 }
 .kpi-goal-track th {
   width: 4.5rem; font-weight: 700; color: var(--gg-royal); text-transform: uppercase;
   letter-spacing: 0.03em; font-size: 0.68rem; padding-right: 0.5rem;
 }
 .kpi-goal-track td { color: var(--gg-brown); font-weight: 600; }
-.kpi-goals-grid .kpi-goal-track tr { height: 3.25rem; }
+.kpi-cash-week-track tr.kpi-week-done th,
+.kpi-cash-week-track tr.kpi-week-done td {
+  color: var(--gg-brown-muted, #5c4f45);
+  opacity: 0.55;
+}
+.kpi-cash-week-track tr.kpi-week-live th,
+.kpi-cash-week-track tr.kpi-week-live td,
+.kpi-cash-week-track tr.kpi-week-proj th,
+.kpi-cash-week-track tr.kpi-week-proj td {
+  color: #0f766e;
+  font-weight: 600;
+}
+.kpi-goals-grid .kpi-goal-track tr { height: 1.65rem; }
 .kpi-goals-grid .kpi-goal-track th,
 .kpi-goals-grid .kpi-goal-track td { vertical-align: middle; }
 .kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar .kpi-goal-track tr:not(:first-child) {
