@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260919-cpr-cost-call";
+  const RENDER_VER = "20260920-revenue-scale-marks";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -4046,12 +4046,16 @@
       ? `<path class="kpi-gauge-shadow" d="${arcD}" fill="none" stroke-width="${strokeW}" stroke-linecap="round" stroke-dasharray="${shadowDash.toFixed(2)} ${(arcLen + 1).toFixed(2)}"/>`
       : "";
     /* In-progress arcs use red→caution→positive gradient. Solid green only on celebrate / target hit. */
+    function gaugeTickLine(t) {
+      const p = Math.max(0, Math.min(1, Number(t)));
+      const inner = halfMoonPoint(cx, cy, r - strokeW / 2 - 2, p);
+      const outer = halfMoonPoint(cx, cy, r + strokeW / 2 + 6, p);
+      return `<line x1="${inner.x.toFixed(1)}" y1="${inner.y.toFixed(1)}" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}" class="kpi-gauge-goal-mark"/>`;
+    }
     let goalSvg = "";
     if (opts.goalMark != null && Number.isFinite(Number(opts.goalMark))) {
       const g = Math.max(0, Math.min(1, Number(opts.goalMark)));
-      const inner = halfMoonPoint(cx, cy, r - strokeW / 2 - 2, g);
-      const outer = halfMoonPoint(cx, cy, r + strokeW / 2 + 6, g);
-      goalSvg = `<line x1="${inner.x.toFixed(1)}" y1="${inner.y.toFixed(1)}" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}" class="kpi-gauge-goal-mark"/>`;
+      goalSvg = gaugeTickLine(g);
       /* Label the goal tick when it is not sitting on the end scale mark. */
       const goalLabel = opts.goalLabel != null ? String(opts.goalLabel).trim() : "";
       const atEnd = g >= 0.97 || g <= 0.03;
@@ -4061,6 +4065,10 @@
         const anchor = g < 0.4 ? "end" : g > 0.6 ? "start" : "middle";
         goalSvg += `<text x="${labelPt.x.toFixed(1)}" y="${labelPt.y.toFixed(1)}" class="kpi-gauge-goal-label" text-anchor="${anchor}" dominant-baseline="middle">${escapeHtml(goalLabel)}</text>`;
       }
+    }
+    /* Optional end-of-scale tick · same stroke as goal mark · sits on the 150k end. */
+    if (opts.endMark) {
+      goalSvg += gaugeTickLine(1);
     }
 
     return `<svg class="kpi-gauge-svg kpi-half-moon-gauge${celebrate ? " kpi-gauge-celebrate" : ""}" viewBox="0 0 188 136" role="img" aria-label="${aria}">
@@ -4364,6 +4372,8 @@
       valueLabel: fmtMoney(m.credit),
       endLabel: fmtMoney(scaleMax),
       goalMark: m.target / scaleMax,
+      goalLabel: "100k",
+      endMark: true,
       centerClass: "kpi-gauge-center-amt",
       celebrate: hit
     });
