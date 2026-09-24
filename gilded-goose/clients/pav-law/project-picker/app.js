@@ -4906,8 +4906,8 @@
     const byId = {
       RETAINER: "assets/gigi-thinking.png",
       retainer: "assets/gigi-thinking.png",
-      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs",
-      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs",
+      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-2",
+      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-2",
       LegalDirs: "assets/network-internet.svg",
       HolidayAds: "assets/gigi-celebrating.png",
       WinterAds: "assets/gigi-celebrating.png",
@@ -4948,7 +4948,7 @@
     return `
       <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" role="button" tabindex="0" aria-label="Open overview for ${escapeHtml(item.title)}">
         <div class="project-tile-media">
-          <img class="project-tile-image" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="360">
+          <img class="project-tile-image" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="400">
           ${brandLogoHtml}
         </div>
         <div class="project-tile-body">
