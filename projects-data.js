@@ -1830,7 +1830,7 @@ window.PROJECT_DATA = {
     },
     {
       "priorityGroup": 1,
-      "fee": 3800,
+      "fee": 4800,
       "status": "recommended",
       "ongoingFee": 900,
       "durationWeeks": 8,
@@ -1857,7 +1857,7 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Ad Expansion",
-      "estCostLabel": "$3,800 + $900/mo",
+      "estCostLabel": "$4,800 + $900/mo",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
       "feeEstimate": 3400,
@@ -1881,7 +1881,7 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -400,
+      "feeEstimateDelta": -1400,
       "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.10 (4.72 units) · complexity ×1"
     },
     {
@@ -1987,35 +1987,35 @@ window.PROJECT_DATA = {
     },
     {
       "priorityGroup": "AdHoc",
-      "feeUncertain": true,
-      "fee": 1200,
-      "feeMax": 1700,
-      "estimateNote": "The cost is hard to estimate without knowing how many products are needed",
+      "fee": 1600,
+      "estimateNote": "Includes Pav Law swag team store for direct item orders. Product cost stays with Pav.",
       "invoiceCount": 3,
       "status": "recommended",
       "campaignType": "Print & Production",
       "id": "SwagPrint",
       "title": "Printables, Swag & Apparel",
-      "tldr": "Updated stationery and images are needed as the team has expanded.",
-      "description": "Updated stationery and images are needed as the team has expanded.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Padfolios / envelopes\n- Apparel",
+      "tldr": "Updated stationery and images are needed as the team has expanded. Pav Law swag team store for direct order of onboard and team items. Designs can be finished now and ordered later when stock is needed. Store keeps reorders simple to manage and carries margin on each order.",
+      "description": "Updated stationery and images are needed as the team has expanded. Pav Law swag team store for direct order of onboard and team items. Designs can be finished now and ordered later when stock is needed. Store keeps reorders simple to manage and carries margin on each order.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Dress shirts · socks · ties\n- Mugs / tumblers\n- Pav Law swag team store · direct orders",
       "valueAdded": [
-        "Updated stationery and images are needed as the team has expanded.",
+        "Updated stationery and images are needed as the team has expanded. Pav Law swag team store for direct order of onboard and team items. Designs can be finished now and ordered later when stock is needed. Store keeps reorders simple to manage and carries margin on each order.",
         "Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.",
         "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
         "Laptop cases · Pav Law with contact details",
         "Business cards · Jack Strong",
-        "Padfolios / envelopes",
-        "Apparel"
+        "Dress shirts · socks · ties",
+        "Mugs / tumblers",
+        "Pav Law swag team store · direct orders"
       ],
       "hubSpotParts": [
         "Lead source · Light word-of-mouth logging when a piece is tracked.",
-        "Cost tracking · Optional cost line for referral or review programs when measuring ROI."
+        "Cost tracking · Optional cost line for referral or review programs when measuring ROI.",
+        "Commerce · Optional tags if Pav Law swag team store orders connect to HubSpot later."
       ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Printables & Swag",
-      "estCostLabel": "$1,200–$1,700?",
+      "estCostLabel": "$1,600",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
       "feeEstimate": 1800,
@@ -2025,22 +2025,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 8.21,
+        "raw": 10.31,
         "parts": {
-          "valueAdd": 7,
+          "valueAdd": 8,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.21
+          "descUnits": 2.31
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 600,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.18 (8.21 units) · complexity ×1"
+      "feeEstimateDelta": 200,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.22 (10.31 units) · complexity ×1"
     },
     {
       "priorityGroup": "AdHoc",

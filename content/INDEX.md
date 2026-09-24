@@ -22,6 +22,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Client Referral          | [ ]  | [Client Referral Program](projects/Referral.md) |
 | Sealing Reengagement     | [ ]  | [Sealing & Probation Client Reengagement](projects/SealReeng.md) |
 | Printables & Swag        | [x]  | [Printables, Swag & Apparel](projects/SwagPrint.md) |
+| Safety First Kit         | [ ]  | [Safety First Kit Campaign](projects/SafetyFirst.md) |
 | NTGUILT Ads Launch       | [ ]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md) |
 | Ad Expansion             | [x]  | [Ad Expansion](projects/AdEnhance.md) |
 | Yelp Ads                 | [x]  | [Yelp Ads](projects/Yelp.md) |
@@ -73,9 +74,10 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $1,200                      | 40%          | [Legal Directory Updates](projects/LegalDirs.md)                                   |
 | $1,700                      | 20%          | [Client Referral Program](projects/Referral.md)                                           |
 | merged WinterSeason                | —            | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
-| $1,200–$1,700?               | 20%          | [Printables, Swag & Apparel](projects/SwagPrint.md)                                |
+| $1,600                      | 20%          | [Printables, Swag & Apparel](projects/SwagPrint.md)                                |
+| $2,200                      | 30%          | [Safety First Kit Campaign](projects/SafetyFirst.md)                                  |
 | $2,900                      | 20%          | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
-| $3,800 + $900/mo            | 20%          | [Ad Expansion](projects/AdEnhance.md)                                                      |
+| $4,800 + $900/mo            | 20%          | [Ad Expansion](projects/AdEnhance.md)                                                      |
 | $2,600 + $500/mo            | —            | [Yelp Ads](projects/Yelp.md)                                                              |
 | $2,400                      | 30%          | [Adult Site(s) Ad Campaign](projects/AdultAds.md)                                        |
 | $4,400                      | 20%          | [Holiday & Winter Seasonal Ads](projects/HolidayAds.md)                         |
@@ -263,12 +265,13 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **DigProf** — wip · $3,700 · profiles + LSA call process · former LsaCall merged · LegalDirs / Yelp carry directory and Yelp sell lines
 - Priority 1 Recommended stack: Yelp · Ad Expansion · SwagPrint · LegalDirs · TsMgmt monthly · Required Digital Ads Retainer unpublished / Show off
 - **TsMgmt** — Recommended · Show on · $500/mo Platform Management · MyCase · Google Suite · Ops Dashboard · light new-tool testing · systems-admin tile image
-- **Ad Expansion** — Recommended · Show on · three Google lanes · criminal mischief · college towns · weapons · ~8 week setup $3,800 · then ~$900/mo into Digital Ads Maintenance Retainer if all three stay
-- **Yelp** — Recommended · Show on · page + ads tested on low budget · next: team/HubSpot message routing to Gabriel · review nurture · owner replies + listing content · insurance-card Yelp insert · 10/01–12/01 · $2,600 setup max 5 × ~$520 equal biweekly · no deposit % · then $500/mo Yelp platform · not inside Google / LSA retainer
+- **Ad Expansion** — Recommended · Show on · three Google lanes · criminal mischief · college towns · weapons · pav.law HubSpot forms for expansion traffic · ~8 week setup $4,800 · six invoices · then ~$900/mo into Digital Ads Maintenance Retainer if keepers stay
+- **Yelp** — Recommended · Show on · page + ads tested on low budget · next: team/HubSpot message routing · review nurture · owner replies + listing content · insurance-card Yelp insert · 10/01–12/01 · $2,600 setup max 5 × ~$520 equal biweekly · no deposit % · then $500/mo Yelp platform · not inside Google / LSA retainer
 - **Digital Ads Retainer** — Required status in INDEX · Publish status unpublished · Show off · not on Guide sell calculator until republished · base $3,000/mo before Ad Expansion add
 - **AdultAds** — On Hold · unpublished · Show off · deferred until buyable site shortlist is ready · never on survivor advocacy properties
 - **CaseyBrand** — Casey rebrand (like DigProf): clothing, makeup, hair, presentation, speech, digital presence
-- **SwagPrint** — Recommended · Show on · printables, swag, apparel, stationery · fee range $1,200–$1,700 until product mix locks · product runs ~$400–$500 client cost · samples ordered · design not begun
+- **SwagPrint** — Recommended · Show on · printables, swag, apparel, stationery · Pav Law swag team store · fee $1,600 · three invoices · product runs ~$400–$500 client cost · samples ordered
+- **SafetyFirst** — available · Show off · Safety First kit campaign · condoms · hand cleaner · wet wipes · car safety · backup lawyer card 719-888-7888 · $2,200 consulting · product separate · never on survivor advocacy properties
 - **WasteAud** — Archived · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste was the verified floor before subscription, phone, LSA-credit, and vendor leakage
 - **Bulk unpublish** · live Show: Yelp · LegalDirs · TsMgmt · AdEnhance · SwagPrint · rest pending review
 - Fee market context: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)
