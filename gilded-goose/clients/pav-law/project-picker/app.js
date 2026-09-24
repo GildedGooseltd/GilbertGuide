@@ -4914,8 +4914,8 @@
     const byId = {
       RETAINER: "assets/gigi-thinking.png",
       retainer: "assets/gigi-thinking.png",
-      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-4",
-      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-4",
+      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-5",
+      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-5",
       LegalDirs: "assets/network-internet.svg",
       HolidayAds: "assets/gigi-celebrating.png",
       WinterAds: "assets/gigi-celebrating.png",
