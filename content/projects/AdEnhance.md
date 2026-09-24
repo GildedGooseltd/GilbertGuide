@@ -1,18 +1,18 @@
 # Ad Expansion
 
 
-| Field             | Value                          |
-| ----------------- | ------------------------------ |
-| Priority group    | 1                              |
-| Fee               | 5600                           |
-| Status            | Recommended                    |
-| Ongoing fee       | 900                            |
-| Duration weeks    | 12                             |
-| Invoice count     | 7                              |
-| Recommended start | 10/01/2026                     |
-| Category          | Paid Media                     |
-| Campaign type     | Paid Search                    |
-| Image             | Google Ads logo + HubSpot logo |
+| Field             | Value                                                          |
+| ----------------- | -------------------------------------------------------------- |
+| Priority group    | 1                                                              |
+| Fee               | 5600                                                           |
+| Status            | Recommended                                                    |
+| Ongoing fee       | 900                                                            |
+| Duration weeks    | 12                                                             |
+| Invoice count     | 7                                                              |
+| Recommended start | 10/01/2026                                                     |
+| Category          |                                                                |
+| Campaign type     | Paid Search - Direct Mail - Site Traffic - Call Routing - Data |
+| Image             | Google Ads logo + HubSpot logo                                 |
 
 
 ---
@@ -27,7 +27,7 @@ Add 3–5 campaigns or ad groups for criminal mischief, college towns / trade sc
 
 - **New Campaigns / Ad Groups:** Criminal mischief · college towns / trade schools · weapons or gun-related charges · seasonal DUI.
 - **DUI Seasonal Lanes:** Holiday travel and cold-weather / ice driving · first-freeze Front Range corridors.
-- **College Calendar Spikes:** Move-in · homecoming · finals · spring break as bid or schedule bumps · not year-round equal spend.
+- **College Calendar Spikes:** Adjusted bidding for move-in/graduation etc. 
 - **Optimize:** Filter to top performers over the learning period · about three months
 
 **HubSpot**
@@ -66,3 +66,4 @@ not visible on the dashboard · helpful notes to execute on the project and crea
 - Comps: HsLanding-style modules ~$1,800 alone · InsMailer-class print ops ~$2,200 alone · AdEnhance FEE-BENCHMARK mid was $3,800 for three lanes only
 - Read: lift setup to $5,600 · seven invoices over ~12 weeks · keep $900/mo on retainer for keepers · media and print/postage separate
 - Hold at $5,600 unless Andrew wants full custom landing pages per lane instead of short modules · then requote toward $6,200–$6,400
+

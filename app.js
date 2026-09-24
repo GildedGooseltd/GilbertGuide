@@ -945,10 +945,8 @@
     const saved = state.projectDates[item.id]?.durationWeeks;
     if (saved != null && saved !== "" && Number(saved) > 0) {
       const n = Number(saved);
-  /* Prefer catalog default when saved looks like a stale 1-week placeholder,
-       or a shorter leftover from an older published duration. */
+      /* Prefer catalog default when saved looks like a stale 1-week placeholder. */
       if (catalog != null && n === 1 && catalog !== 1) return catalog;
-      if (catalog != null && n < catalog) return catalog;
       return n;
     }
     if (catalog != null) return catalog;
@@ -1005,7 +1003,8 @@
     if (saved != null && saved !== "" && Number(saved) > 0) {
       return Math.min(maxN, Math.max(1, Number(saved)));
     }
-    return null;
+    /* Fresh rows start at 3 invoices · capped by project max. */
+    return Math.min(maxN, 3);
   }
 
   function setProjectInvoiceCount(id, count) {
@@ -1863,7 +1862,7 @@
         changed = true;
       }
       if (!row.invoiceCount) {
-        row.invoiceCount = "1";
+        row.invoiceCount = "3";
         changed = true;
       }
     }
@@ -4335,6 +4334,7 @@
       if (!raw) {
         state.invoiceCountStartOne = true;
         state.invoiceCountBlankDefault = true;
+        state.invoiceCountDefaultThree = true;
         return;
       }
       const saved = JSON.parse(raw);
@@ -4360,6 +4360,16 @@
         state.invoiceCountBlankDefault = true;
       } else {
         state.invoiceCountBlankDefault = true;
+      }
+      /* Fresh default is 3 invoices per project · fill blanks once. */
+      if (!saved.invoiceCountDefaultThree) {
+        Object.keys(state.projectDates).forEach(id => {
+          const row = state.projectDates[id];
+          if (row && (!row.invoiceCount || row.invoiceCount === "")) row.invoiceCount = "3";
+        });
+        state.invoiceCountDefaultThree = true;
+      } else {
+        state.invoiceCountDefaultThree = true;
       }
       sanitizeCartForAbQ();
       state.submitterEmail = saved.submitterEmail || "";
@@ -4402,7 +4412,7 @@
       state.retainer = false;
       state.projects = new Set();
       state.recommended = new Set();
-      if (!saved.invoiceCountStartOne || !saved.invoiceCountBlankDefault) saveState();
+      if (!saved.invoiceCountStartOne || !saved.invoiceCountBlankDefault || !saved.invoiceCountDefaultThree) saveState();
     } catch (e) {}
     ensureRequiredMaintenance();
   }
@@ -4420,6 +4430,7 @@
       projectDates: state.projectDates || {},
       invoiceCountStartOne: !!state.invoiceCountStartOne,
       invoiceCountBlankDefault: !!state.invoiceCountBlankDefault,
+      invoiceCountDefaultThree: !!state.invoiceCountDefaultThree,
       submitterEmail: state.submitterEmail,
       invoicePaymentMonths: state.invoicePaymentMonths,
       invoicePaymentMonthlyAmount: state.invoicePaymentMonthlyAmount,

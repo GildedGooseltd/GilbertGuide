@@ -1836,18 +1836,17 @@ window.PROJECT_DATA = {
       "durationWeeks": 12,
       "invoiceCount": 7,
       "startDate": "2026-10-01",
-      "category": "Paid Media",
-      "campaignType": "Paid Search",
+      "campaignType": "Paid Search - Direct Mail - Site Traffic - Call Routing - Data",
       "id": "AdEnhance",
       "title": "Ad Expansion",
       "tldr": "Add 3–5 campaigns or ad groups for criminal mischief, college towns / trade schools, weapons or gun-related charges, and seasonal DUI.",
-      "description": "Add 3–5 campaigns or ad groups for criminal mischief, college towns / trade schools, weapons or gun-related charges, and seasonal DUI.\n\n**Search Expansion**\n\n- **New Campaigns / Ad Groups:** Criminal mischief · college towns / trade schools · weapons or gun-related charges · seasonal DUI.\n- **DUI Seasonal Lanes:** Holiday travel and cold-weather / ice driving · first-freeze Front Range corridors.\n- **College Calendar Spikes:** Move-in · homecoming · finals · spring break as bid or schedule bumps · not year-round equal spend.\n- **Optimize:** Filter to top performers over the learning period · about three months\n\n**HubSpot**\n\n- **Forms Cutover:** Embed or swap contact and practice-area forms on pav.law so paid clicks create CRM contacts with source and campaign tags.\n- **Landing Depth:** Short practice-area modules or dedicated URLs per lane so quality score and CRM tags stay clean · not only form swap.\n- **Phone Routing & Tracking:** Route leads to a Jack's HubSpot Number\n\n**Direct Outreach**\n\n- **Insurance Mailers:** Sleeve / glovebox mailers to prior car and ticket clients before first freeze.\n- **Semester Mailers:** New-semester drops for college / trade-school geos · move-in and spring-start lists · timed with calendar spikes · print and postage stay client vendor cost.",
+      "description": "Add 3–5 campaigns or ad groups for criminal mischief, college towns / trade schools, weapons or gun-related charges, and seasonal DUI.\n\n**Search Expansion**\n\n- **New Campaigns / Ad Groups:** Criminal mischief · college towns / trade schools · weapons or gun-related charges · seasonal DUI.\n- **DUI Seasonal Lanes:** Holiday travel and cold-weather / ice driving · first-freeze Front Range corridors.\n- **College Calendar Spikes:** Adjusted bidding for move-in/graduation etc. \n- **Optimize:** Filter to top performers over the learning period · about three months\n\n**HubSpot**\n\n- **Forms Cutover:** Embed or swap contact and practice-area forms on pav.law so paid clicks create CRM contacts with source and campaign tags.\n- **Landing Depth:** Short practice-area modules or dedicated URLs per lane so quality score and CRM tags stay clean · not only form swap.\n- **Phone Routing & Tracking:** Route leads to a Jack's HubSpot Number\n\n**Direct Outreach**\n\n- **Insurance Mailers:** Sleeve / glovebox mailers to prior car and ticket clients before first freeze.\n- **Semester Mailers:** New-semester drops for college / trade-school geos · move-in and spring-start lists · timed with calendar spikes · print and postage stay client vendor cost.",
       "valueAdded": [
         "Add 3–5 campaigns or ad groups for criminal mischief, college towns / trade schools, weapons or gun-related charges, and seasonal DUI.",
         "**Search Expansion**",
         "**New Campaigns / Ad Groups:** Criminal mischief · college towns / trade schools · weapons or gun-related charges · seasonal DUI.",
         "**DUI Seasonal Lanes:** Holiday travel and cold-weather / ice driving · first-freeze Front Range corridors.",
-        "**College Calendar Spikes:** Move-in · homecoming · finals · spring break as bid or schedule bumps · not year-round equal spend.",
+        "**College Calendar Spikes:** Adjusted bidding for move-in/graduation etc.",
         "**Optimize:** Filter to top performers over the learning period · about three months",
         "**HubSpot**",
         "**Forms Cutover:** Embed or swap contact and practice-area forms on pav.law so paid clicks create CRM contacts with source and campaign tags.",
@@ -1878,7 +1877,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 3800,
       "feeEstimateScope": {
-        "raw": 15.8,
+        "raw": 15.64,
         "parts": {
           "valueAdd": 13,
           "tasks": 0,
@@ -1886,14 +1885,14 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.8
+          "descUnits": 2.64
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": -1200,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.29 (15.8 units) · complexity ×1.1"
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.29 (15.64 units) · complexity ×1.1"
     },
     {
       "priority": 99,
