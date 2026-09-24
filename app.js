@@ -866,10 +866,8 @@
     return { min: toIsoDate(now), max: toIsoDate(max) };
   }
 
-  /** Quote calculator start dates: 1st · 15th · 30th · September–December 2026. */
+  /** Quote calculator start dates: 1st · 15th · 30th · from 9/30/2026 through December 2026. */
   const CALC_START_DATE_OPTIONS = [
-    "2026-09-01",
-    "2026-09-15",
     "2026-09-30",
     "2026-10-15",
     "2026-10-30",
