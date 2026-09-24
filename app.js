@@ -1391,15 +1391,10 @@
         `<p class="calc-monthly-total-detail calc-monthly-total-detail-note">* Program KLO Retainer ${escapeHtml(fmt(plan.retainerMonthly))}/mo baseline. Reassess after the related project closes. Amount may change with results and what is already on that stack.</p>`
       );
     }
-    if (!plan.hasSetup && plan.retainerMonthly > 0) {
-      lines.push(
-        `<p class="calc-monthly-total-detail">Retainer continues each month after the Start month shown.</p>`
-      );
-    }
     const monthRows = plan.months
       .map((row) => {
         return `<tr>
-          <td class="calc-month-plan-month">${escapeHtml(row.label)}${row.ongoing ? ` <span class="calc-month-plan-ongoing">ongoing</span>` : ""}</td>
+          <td class="calc-month-plan-month">${escapeHtml(row.label)}</td>
           <td class="calc-month-plan-num calc-month-plan-total">${escapeHtml(fmt(row.amount))}</td>
         </tr>`;
       })
@@ -1435,10 +1430,25 @@
       const scoreTitle = priorityGroupTitle(item);
       const monthlyOnly = isMonthlyRetainerItem(item, isRetainer);
       ensureRecommendedProjectDates(item);
-      const quote = projectQuoteLabel(item, isRetainer);
-      const quoteCell = isFeeUncertain(item)
-        ? `<span class="calc-quote-estimate" title="Estimate until product mix and organization questions are answered">${escapeHtml(quote)}</span>`
-        : escapeHtml(quote);
+      const quoteAmount = projectQuoteAmountLabel(item, isRetainer);
+      const quotePeriod = projectQuotePeriodLabel(item, isRetainer);
+      const quoteEstimate = isFeeUncertain(item);
+      const quoteAmountHtml = quoteEstimate
+        ? `<span class="calc-quote-estimate" title="Estimate until product mix and organization questions are answered">${escapeHtml(quoteAmount)}</span>`
+        : escapeHtml(quoteAmount);
+      let quoteCell;
+      if (monthlyOnly && quotePeriod) {
+        /* Keep $500/mo on one line for retainers */
+        const combined = `${quoteAmount}${quotePeriod}`;
+        quoteCell = quoteEstimate
+          ? `<span class="calc-quote-estimate" title="Estimate until product mix and organization questions are answered">${escapeHtml(combined)}</span>`
+          : escapeHtml(combined);
+      } else {
+        const quotePeriodHtml = quotePeriod
+          ? `<span class="calc-quote-period">${escapeHtml(quotePeriod)}</span>`
+          : "";
+        quoteCell = `<span class="calc-quote-stack">${quoteAmountHtml}${quotePeriodHtml}</span>`;
+      }
       const terms = projectPaymentTermsLabel(item, isRetainer);
       const dates = getProjectDateRange(item.id);
       const invMax = monthlyOnly ? 1 : maxInvoiceCountForItem(item);

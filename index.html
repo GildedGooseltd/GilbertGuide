@@ -3093,9 +3093,11 @@
       width: 2rem; text-align: center; white-space: nowrap;
       font-variant-numeric: tabular-nums; font-weight: 800; color: var(--gg-royal);
     }
-    .calc-quote-table {
-      min-width: 0;
-      table-layout: auto;
+    /* Must beat .pav-priorities-table { table-layout: fixed } declared later */
+    .pav-priorities-table.calc-quote-table {
+      table-layout: fixed;
+      width: 100%;
+      min-width: 52rem;
     }
     .calc-quote-table th {
       font-size: 0.68rem;
@@ -3107,7 +3109,10 @@
     }
     .calc-quote-table th.col-project,
     .calc-quote-table td.col-project {
+      width: auto;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       overflow-wrap: normal;
       hyphens: none;
     }
@@ -3117,16 +3122,18 @@
     }
     .calc-quote-table th.col-quote,
     .calc-quote-table td.col-quote {
-      width: 1%;
-      min-width: 8.75rem;
-      max-width: none;
-      padding-left: 0.55rem;
-      padding-right: 0.55rem;
+      width: 7.25rem;
+      min-width: 7.25rem;
+      max-width: 7.25rem;
+      padding-left: 0.65rem;
+      padding-right: 0.75rem;
       text-align: right;
       white-space: nowrap;
-      overflow: visible;
+      overflow: hidden;
       text-overflow: clip;
       font-variant-numeric: tabular-nums;
+      box-sizing: border-box;
+      vertical-align: middle;
     }
     .calc-quote-table td.col-quote {
       font-weight: 400;
@@ -3135,17 +3142,45 @@
     .calc-quote-table th.col-quote {
       font-weight: 700;
       color: var(--gg-royal);
+      vertical-align: bottom;
+    }
+    .calc-quote-table .calc-quote-stack {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.08rem;
+      line-height: 1.15;
+      max-width: 100%;
+    }
+    .calc-quote-table .calc-quote-period {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--gg-brown);
+      white-space: nowrap;
     }
     .calc-quote-table th.col-start,
     .calc-quote-table td.col-start {
-      width: 6.35rem; white-space: nowrap;
+      width: 7.25rem;
+      min-width: 7.25rem;
+      max-width: 7.25rem;
+      white-space: nowrap;
+      padding-left: 0.65rem;
+      padding-right: 0.45rem;
+      box-sizing: border-box;
+      border-left: 1px solid rgba(58, 26, 110, 0.12);
     }
     .calc-quote-table th.col-start {
       white-space: nowrap;
     }
     .calc-quote-table th.col-invoices,
     .calc-quote-table td.col-invoices {
-      width: 4.15rem; text-align: center; white-space: nowrap; line-height: 1.15;
+      width: 4.5rem;
+      min-width: 4.5rem;
+      max-width: 4.5rem;
+      text-align: center;
+      white-space: nowrap;
+      line-height: 1.15;
+      box-sizing: border-box;
     }
     .calc-quote-table th.col-invoices .col-invoices-sub {
       display: block;
@@ -3158,8 +3193,11 @@
       line-height: 1.1;
     }
     .calc-quote-table th.col-terms {
-      width: 5.35rem;
+      width: 6.25rem;
+      min-width: 6.25rem;
+      max-width: 6.25rem;
       white-space: nowrap;
+      box-sizing: border-box;
     }
     .calc-quote-table th.col-terms .col-terms-sub {
       display: block;
@@ -3171,14 +3209,16 @@
       line-height: 1.05;
     }
     .calc-quote-table td.col-terms {
-      width: 5.35rem;
-      max-width: 5.35rem;
+      width: 6.25rem;
+      min-width: 6.25rem;
+      max-width: 6.25rem;
       font-size: 0.7rem;
       line-height: 1.3;
       color: var(--gg-brown-muted);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      box-sizing: border-box;
     }
     .calc-quote-table .calc-terms-text {
       display: block;
@@ -3261,7 +3301,8 @@
       border-bottom: none;
     }
     .calc-quote-scroll.pav-priorities-scroll {
-      overflow-x: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .calc-quote-table tr.calc-row-next-month .cart-proj-chk {
       opacity: 0.4;
@@ -3269,10 +3310,15 @@
     }
     .calc-quote-table th.col-score,
     .calc-quote-table td.col-score {
-      width: 2.85rem;
-      max-width: 2.85rem;
-      padding-left: 0.2rem;
-      padding-right: 0.2rem;
+      width: 4.35rem;
+      min-width: 4.35rem;
+      max-width: 4.35rem;
+      padding-left: 0.25rem;
+      padding-right: 0.3rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-sizing: border-box;
     }
     .calc-quote-table th.col-score {
       white-space: normal;
@@ -3281,6 +3327,8 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--gg-royal);
+      text-overflow: clip;
+      overflow: visible;
     }
     .calc-quote-table th.col-select {
       width: 2.25rem;
@@ -6644,6 +6692,6 @@
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
   <script src="kpi-report.js?v=20260922-cpr-digital-calls"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260923-start-drop-sep-early"></script>
+  <script src="app.js?v=20260923-quote-col-stack"></script>
 </body>
 </html>
