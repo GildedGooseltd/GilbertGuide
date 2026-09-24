@@ -254,6 +254,10 @@
     const item = findProjectById(id);
     if (!item) return false;
     const isRetainer = !!item.isRetainer;
+    if (!add && isAlwaysSelectedCartItem(item)) {
+      if (!opts?.silent) showToast("Platform Management stays in the plan", true);
+      return false;
+    }
     if (add && !canSelectProject(item, isRetainer)) {
       if (!opts?.silent) {
         showToast("Blocked: answer Andrew's question before adding to cart", true);
@@ -273,6 +277,11 @@
   }
 
   function applyCartCheckboxChange(id, wantAdd, chk) {
+    const item = findProjectById(id);
+    if (item && isAlwaysSelectedCartItem(item) && !wantAdd) {
+      if (chk) chk.checked = true;
+      return false;
+    }
     if (!trySetProjectInCart(id, wantAdd)) {
       if (chk) chk.checked = !wantAdd;
       return false;
@@ -1417,6 +1426,10 @@
       const scoreTitle = priorityGroupTitle(item);
       const monthlyOnly = isMonthlyRetainerItem(item, isRetainer);
       ensureRecommendedProjectDates(item);
+      const quote = projectQuoteLabel(item, isRetainer);
+      const quoteCell = isFeeUncertain(item)
+        ? `<span class="calc-quote-estimate" title="Estimate until product mix and organization questions are answered">${escapeHtml(quote)}</span>`
+        : escapeHtml(quote);
       const terms = projectPaymentTermsLabel(item, isRetainer);
       const dates = getProjectDateRange(item.id);
       const invMax = monthlyOnly ? 1 : maxInvoiceCountForItem(item);
@@ -1436,6 +1449,7 @@
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan" ${selected ? "checked" : ""}>
         </td>
         <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(item.title)}</span></a></td>
+        <td class="col-quote">${quoteCell}</td>
         ${startCell}
         ${invoiceCell}
         <td class="col-terms"><span class="calc-terms-text">${escapeHtml(terms)}</span></td>
@@ -1448,6 +1462,7 @@
           <th class="col-score" scope="col" title="Andrew Priority Groups 1-4">Priority<span class="col-score-sub">group</span></th>
           <th class="col-select" scope="col" title="Add to plan"><span class="calc-cart-th" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.25"/><circle cx="18" cy="20" r="1.25"/><path d="M3 4h2l1.4 9.2a2 2 0 0 0 2 1.7h8.4a2 2 0 0 0 2-1.6L20 8H7"/></svg></span><span class="sr-only">Add</span></th>
           <th class="col-project" scope="col">Project</th>
+          <th class="col-quote" scope="col" title="Total quoted amount">Quote</th>
           <th class="col-start" scope="col">Start</th>
           <th class="col-invoices" scope="col" title="Number of invoices at 2 payments per month (1–max for this project). Set per project.">Invoices<span class="col-invoices-sub">2×/mo</span></th>
           <th class="col-terms" scope="col">Payment<span class="col-terms-sub">terms</span></th>
@@ -3805,12 +3820,26 @@
     return isRequiredProject(item, isRetainer);
   }
 
+  /** Platform Management stays in every plan · always checked. */
+  function isAlwaysSelectedCartItem(item) {
+    return !!item && (item.id === "TsMgmt" || item.id === "OpsDash");
+  }
+
+  function ensureAlwaysSelectedCartItems() {
+    getMaintenanceProjects().forEach(p => {
+      if (!isAlwaysSelectedCartItem(p)) return;
+      if (isCompletedStatus(p) || isPlanningPublish(p)) return;
+      trySetProjectInCart(p.id, true, { silent: true });
+      if (state.projects.has(p.id)) state.recommended.add(p.id);
+    });
+  }
+
   function ensureRequiredMaintenance() {
-    /* Required stays labeled in the table. Do not force-check or lock the cart. */
     if (isPlanningPublish(RETAINER)) {
       state.retainer = false;
       state.recommended.delete("RETAINER");
     }
+    ensureAlwaysSelectedCartItems();
   }
 
   function isInRecommendedPackage(item) {
@@ -4914,8 +4943,8 @@
     const byId = {
       RETAINER: "assets/gigi-thinking.png",
       retainer: "assets/gigi-thinking.png",
-      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-5",
-      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-5",
+      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-6",
+      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-6",
       LegalDirs: "assets/network-internet.svg",
       HolidayAds: "assets/gigi-celebrating.png",
       WinterAds: "assets/gigi-celebrating.png",
@@ -6080,11 +6109,12 @@
       const isRetainer = row.id === "RETAINER";
       const item = findProjectById(row.id);
       const required = item ? isRequiredMaintenance(item, isRetainer) : false;
+      const alwaysOn = item ? isAlwaysSelectedCartItem(item) : false;
       const req = item ? requiredMarkerHtml(item, isRetainer) : "";
-      const chkDisabled = required ? " disabled" : "";
+      const chkDisabled = required || alwaysOn ? " disabled" : "";
       const scoreLabel = item ? priorityGroupLabel(item) : "—";
       const scoreTitle = item ? priorityGroupTitle(item) : "Not in Andrew Priority Groups 1–4";
-      return `<tr data-id="${escapeHtml(row.id)}" data-retainer="${isRetainer}" data-required="${required}">
+      return `<tr data-id="${escapeHtml(row.id)}" data-retainer="${isRetainer}" data-required="${required || alwaysOn}">
         <td class="col-select">
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(row.id)}" aria-label="Keep ${escapeHtml(row.title)} in cart"${chkDisabled} checked>
         </td>
