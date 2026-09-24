@@ -760,18 +760,32 @@
     return items;
   }
 
-  /** Required (locked) + Recommended — the plan that should match the invoice on fresh load. */
+  /** Required + Recommended catalog for the quote table. Includes monthly Show rows like Platform Management. */
   function indexPlanBestFit() {
     const required = [];
+    const seen = new Set();
+    const pushRow = (item, score) => {
+      if (!item?.id || seen.has(item.id)) return;
+      if (isCompletedStatus(item) || isPlanningPublish(item)) return;
+      seen.add(item.id);
+      required.push({ item, score });
+    };
     if (isRequiredProject(RETAINER, true)) {
-      required.push({ item: { ...RETAINER, isRetainer: true }, score: -999 });
+      pushRow({ ...RETAINER, isRetainer: true }, -999);
     }
     activeOptionalProjects().forEach(item => {
       if (!isRequiredProject(item, false)) return;
-      if (isCompletedStatus(item) || isPlanningPublish(item)) return;
-      required.push({ item, score: -999 });
+      pushRow(item, -999);
     });
-    return required.concat(indexRecommendedBestFit());
+    /* monthlyOnly is excluded from activeOptionalProjects — still show Required / Recommended months */
+    getMaintenanceProjects().forEach(item => {
+      if (!isPicklistCatalogItem(item)) return;
+      if (isRequiredProject(item, false)) pushRow(item, -999);
+      else if (isIndexRecommendedStatus(item) || isIndexDefaultSelected(item, false)) {
+        pushRow(item, computeProjectScore(item));
+      }
+    });
+    return required.concat(indexRecommendedBestFit().filter(r => !seen.has(r.item.id)));
   }
 
   /** Nest {item,score} rows so HubSpot (and other) children stay under their parent. */
@@ -1403,10 +1417,6 @@
       const scoreTitle = priorityGroupTitle(item);
       const monthlyOnly = isMonthlyRetainerItem(item, isRetainer);
       ensureRecommendedProjectDates(item);
-      const quote = projectQuoteLabel(item, isRetainer);
-      const quoteCell = isFeeUncertain(item)
-        ? `<span class="calc-quote-estimate" title="Estimate until product mix and organization questions are answered">${escapeHtml(quote)}</span>`
-        : escapeHtml(quote);
       const terms = projectPaymentTermsLabel(item, isRetainer);
       const dates = getProjectDateRange(item.id);
       const invMax = monthlyOnly ? 1 : maxInvoiceCountForItem(item);
@@ -1426,7 +1436,6 @@
           <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan" ${selected ? "checked" : ""}>
         </td>
         <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(item.title)}</span></a></td>
-        <td class="col-quote">${quoteCell}</td>
         ${startCell}
         ${invoiceCell}
         <td class="col-terms"><span class="calc-terms-text">${escapeHtml(terms)}</span></td>
@@ -1439,7 +1448,6 @@
           <th class="col-score" scope="col" title="Andrew Priority Groups 1-4">Priority<span class="col-score-sub">group</span></th>
           <th class="col-select" scope="col" title="Add to plan"><span class="calc-cart-th" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.25"/><circle cx="18" cy="20" r="1.25"/><path d="M3 4h2l1.4 9.2a2 2 0 0 0 2 1.7h8.4a2 2 0 0 0 2-1.6L20 8H7"/></svg></span><span class="sr-only">Add</span></th>
           <th class="col-project" scope="col">Project</th>
-          <th class="col-quote" scope="col">Quote</th>
           <th class="col-start" scope="col">Start</th>
           <th class="col-invoices" scope="col" title="Number of invoices at 2 payments per month (1–max for this project). Set per project.">Invoices<span class="col-invoices-sub">2×/mo</span></th>
           <th class="col-terms" scope="col">Payment<span class="col-terms-sub">terms</span></th>
@@ -4906,8 +4914,8 @@
     const byId = {
       RETAINER: "assets/gigi-thinking.png",
       retainer: "assets/gigi-thinking.png",
-      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-2",
-      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-2",
+      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-3",
+      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-3",
       LegalDirs: "assets/network-internet.svg",
       HolidayAds: "assets/gigi-celebrating.png",
       WinterAds: "assets/gigi-celebrating.png",
@@ -4943,12 +4951,14 @@
     const brandLogoHtml = brandLogo
       ? `<img class="project-tile-brand-logo" src="${escapeHtml(brandLogo.src)}" alt="${escapeHtml(brandLogo.alt)}" width="48" height="48" loading="lazy">`
       : "";
+    const brandTile = id === "Yelp" || id === "AdEnhance";
+    const imgClass = brandTile ? "project-tile-image project-tile-image-brand" : "project-tile-image";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const reqClass = required ? " tile-required" : "";
     return `
       <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" role="button" tabindex="0" aria-label="Open overview for ${escapeHtml(item.title)}">
         <div class="project-tile-media">
-          <img class="project-tile-image" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="400">
+          <img class="${imgClass}" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="400">
           ${brandLogoHtml}
         </div>
         <div class="project-tile-body">
