@@ -2097,22 +2097,26 @@ window.PROJECT_DATA = {
       "invoiceCount": 5,
       "startDate": "2026-10-01",
       "category": "Paid Media",
-      "campaignType": "Reviews",
+      "campaignType": "Reviews & Leads",
       "id": "Yelp",
       "title": "Yelp Ads",
-      "tldr": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-      "description": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.\n\n- Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.\n- Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out.",
+      "tldr": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
+      "description": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.\n\n- **HubSpot:**\n  - **Phone Routing & Tracking:** Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.\n  - **Email Nurture Campaign:** Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.\n  - **Tracking & Dashboards:** Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.\n- **Yelp Messaging and Content:** Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes.\n- **Insurance Envelope and Handout:** Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.",
       "valueAdded": [
-        "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-        "Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.",
-        "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.",
-        "Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.",
-        "Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out."
+        "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
+        "**HubSpot:**",
+        "- **Phone Routing & Tracking:** Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.",
+        "- **Email Nurture Campaign:** Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.",
+        "- **Tracking & Dashboards:** Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.",
+        "**Yelp Messaging and Content:** Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes.",
+        "**Insurance Envelope and Handout:** Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out."
       ],
       "hubSpotParts": [
-        "CRM · Stores Yelp leads, messages, and call outcomes so intake is not stuck in a personal inbox.",
-        "Tasks and workflows · Creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
-        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
+        "CRM · Yelp lead, message, and call records in one place",
+        "Calling · CH-YELP inbound line rings Jack with mobile call logging",
+        "Tasks and workflows · automatic follow-up tasks and ownership",
+        "Marketing Hub · Yelp as a distinct lead source for channel ROI",
+        "Reporting · Yelp Messages, Calls, and volume on the shared phone inbound dashboard"
       ],
       "abQuestions": [],
       "kpiRefs": [],
@@ -2127,22 +2131,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 7.86,
+        "raw": 9.07,
         "parts": {
-          "valueAdd": 5,
+          "valueAdd": 7,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.86
+          "descUnits": 2.08
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.86 units) · complexity ×1.1"
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.20 (9.07 units) · complexity ×1.1"
     }
   ]
 };
