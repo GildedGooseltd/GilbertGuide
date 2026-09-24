@@ -3096,8 +3096,8 @@
     /* Must beat .pav-priorities-table { table-layout: fixed } declared later */
     .pav-priorities-table.calc-quote-table {
       table-layout: fixed;
-      width: 100%;
-      min-width: 52rem;
+      width: max(100%, 54rem);
+      min-width: 54rem;
     }
     .calc-quote-table th {
       font-size: 0.68rem;
@@ -3110,6 +3110,7 @@
     .calc-quote-table th.col-project,
     .calc-quote-table td.col-project {
       width: auto;
+      min-width: 9rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -3122,11 +3123,10 @@
     }
     .calc-quote-table th.col-quote,
     .calc-quote-table td.col-quote {
-      width: 7.25rem;
-      min-width: 7.25rem;
-      max-width: 7.25rem;
-      padding-left: 0.65rem;
-      padding-right: 0.75rem;
+      width: 6.5rem;
+      min-width: 6.5rem;
+      padding-left: 0.55rem;
+      padding-right: 0.55rem;
       text-align: right;
       white-space: nowrap;
       overflow: hidden;
@@ -3160,27 +3160,27 @@
     }
     .calc-quote-table th.col-start,
     .calc-quote-table td.col-start {
-      width: 7.25rem;
-      min-width: 7.25rem;
-      max-width: 7.25rem;
+      width: 7.75rem;
+      min-width: 7.75rem;
       white-space: nowrap;
-      padding-left: 0.65rem;
+      padding-left: 0.55rem;
       padding-right: 0.45rem;
       box-sizing: border-box;
-      border-left: 1px solid rgba(58, 26, 110, 0.12);
+      overflow: hidden;
+      border-left: 1px solid rgba(58, 26, 110, 0.14);
     }
     .calc-quote-table th.col-start {
       white-space: nowrap;
     }
     .calc-quote-table th.col-invoices,
     .calc-quote-table td.col-invoices {
-      width: 4.5rem;
-      min-width: 4.5rem;
-      max-width: 4.5rem;
+      width: 4.75rem;
+      min-width: 4.75rem;
       text-align: center;
       white-space: nowrap;
       line-height: 1.15;
       box-sizing: border-box;
+      overflow: hidden;
     }
     .calc-quote-table th.col-invoices .col-invoices-sub {
       display: block;
@@ -3360,7 +3360,8 @@
     .calc-date-input,
     .calc-invoice-count-input {
       width: 100%;
-      max-width: 6.2rem;
+      max-width: 100%;
+      box-sizing: border-box;
       font: inherit;
       font-size: 0.78rem;
       padding: 0.3rem 0.35rem;
@@ -3371,7 +3372,7 @@
     }
     select.calc-date-input,
     select.calc-invoice-count-input {
-      max-width: 6.35rem;
+      max-width: 100%;
       cursor: pointer;
       appearance: auto;
     }
@@ -6692,6 +6693,6 @@
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
   <script src="kpi-report.js?v=20260922-cpr-digital-calls"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260923-quote-col-stack"></script>
+  <script src="app.js?v=20260923-proposal-hash"></script>
 </body>
 </html>
