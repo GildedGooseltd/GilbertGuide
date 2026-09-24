@@ -503,17 +503,53 @@
       return "kpis";
     }
     if (
-      t === "kpis" ||
-      t === "data" ||
-      t === "picker"
+      t === "picker" ||
+      t === "projects" ||
+      t === "picklist" ||
+      t === "proposal" ||
+      t === "proposals" ||
+      t === "sow"
     ) {
+      return "picker";
+    }
+    if (t === "kpis" || t === "data") {
       return t;
     }
     return "kpis";
   }
 
+  /** Canonical hash for shareable tab links · e.g. #proposal → Project Picklist */
+  function viewTabHash(tab) {
+    const t = normalizeViewTab(tab);
+    if (t === "picker") return "proposal";
+    return t;
+  }
+
+  function syncViewTabHash(tab) {
+    const normalized = normalizeViewTab(tab);
+    const cur = String(location.hash || "").replace(/^#/, "").toLowerCase();
+    if (normalizeViewTab(cur || "kpis") === normalized) return;
+    const next = viewTabHash(normalized);
+    const hash = `#${next}`;
+    if (location.hash === hash) return;
+    try {
+      history.replaceState(null, "", `${location.pathname}${location.search}${hash}`);
+    } catch (_) {
+      location.hash = next;
+    }
+  }
+
   function setActiveViewTab(tab) {
     state.activeViewTab = normalizeViewTab(tab);
+    syncViewTabHash(state.activeViewTab);
+  }
+
+  function viewTabFromLocation() {
+    const hash = String(location.hash || "").replace(/^#/, "").toLowerCase();
+    if (hash) return normalizeViewTab(hash);
+    const q = new URLSearchParams(location.search).get("tab") || new URLSearchParams(location.search).get("view");
+    if (q) return normalizeViewTab(q);
+    return "kpis";
   }
 
   function normalizeStatus(item) {
@@ -6723,8 +6759,14 @@
   loadState();
   ensureRequiredMaintenance();
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  const hashTab = String(location.hash || "").replace(/^#/, "").toLowerCase();
-  setActiveViewTab(hashTab === "picker" || hashTab === "projects" ? "picker" : "kpis");
+  setActiveViewTab(viewTabFromLocation());
+  window.addEventListener("hashchange", () => {
+    const next = viewTabFromLocation();
+    if (normalizeViewTab(state.activeViewTab) === next) return;
+    state.activeViewTab = next;
+    renderAllCards();
+    renderSummary();
+  });
   initGilbertGuide();
   renderPackageIntro();
   renderOutlineFilters();
