@@ -329,11 +329,14 @@
   };
 
   function requiredMarkerHtml(item, isRetainer) {
-    if (!isRequiredProject(item, isRetainer)) return "";
+    const alwaysOn = isAlwaysSelectedCartItem(item);
+    if (!isRequiredProject(item, isRetainer) && !alwaysOn) return "";
     const isRet = isRetainer || item.id === "RETAINER" || item.category === "Retainer";
-    const tip = isRet
-      ? "Required retainer — ongoing digital ads management"
-      : "Required monthly maintenance";
+    const tip = alwaysOn
+      ? `Locked in plan: ${item.title || "Platform Management"}`
+      : isRet
+        ? "Required retainer: ongoing digital ads management"
+        : "Required monthly maintenance";
     return `<span class="required-icon" title="${escapeHtml(tip)}" aria-label="${escapeHtml(tip)}">${REQUIRED_ICON_SVG}</span>`;
   }
 
@@ -942,8 +945,10 @@
     const saved = state.projectDates[item.id]?.durationWeeks;
     if (saved != null && saved !== "" && Number(saved) > 0) {
       const n = Number(saved);
-      /* Prefer catalog default when saved looks like a stale 1-week placeholder. */
+  /* Prefer catalog default when saved looks like a stale 1-week placeholder,
+       or a shorter leftover from an older published duration. */
       if (catalog != null && n === 1 && catalog !== 1) return catalog;
+      if (catalog != null && n < catalog) return catalog;
       return n;
     }
     if (catalog != null) return catalog;
@@ -1067,7 +1072,11 @@
       const mo = projectMonthlyBill(item) || item.fee || 0;
       return mo ? "/mo" : "";
     }
-    const weeks = getProjectDurationWeeks(item);
+    /* Tile / Quote period always uses published catalog weeks, not localStorage overrides. */
+    const catalog = item?.durationWeeks != null && Number(item.durationWeeks) > 0
+      ? Number(item.durationWeeks)
+      : null;
+    const weeks = catalog != null ? catalog : getProjectDurationWeeks(item);
     if (weeks != null && weeks > 0) {
       const months = Math.max(1, Math.round(Number(weeks) / 4));
       return months === 1 ? "1 month" : `${months} months`;
@@ -1097,12 +1106,14 @@
   }
 
   function projectTileFocusHtml(item, isRetainer) {
-    if (isRequiredProject(item, isRetainer)) {
+    if (isRequiredProject(item, isRetainer) || isAlwaysSelectedCartItem(item)) {
       const camp = item?.campaignType && String(item.campaignType).trim();
       const label = camp ? `Required ${camp}` : "Required";
-      const tip = isRetainer || item.id === "RETAINER" || item.category === "Retainer"
-        ? "Required retainer — ongoing digital ads management"
-        : "Required monthly maintenance";
+      const tip = isAlwaysSelectedCartItem(item)
+        ? `Locked in plan: ${item.title || "Platform Management"}`
+        : isRetainer || item.id === "RETAINER" || item.category === "Retainer"
+          ? "Required retainer: ongoing digital ads management"
+          : "Required monthly maintenance";
       return `<p class="project-tile-focus project-tile-focus-required" title="${escapeHtml(tip)}">${requiredMarkerHtml(item, isRetainer)}<span>${escapeHtml(label)}</span></p>`;
     }
     const group = priorityGroupLabel(item);
@@ -1419,7 +1430,8 @@
     }
     const bodyRows = ranked.map(({ item }) => {
       const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
-      const required = isRequiredMaintenance(item, isRetainer);
+      const alwaysOn = isAlwaysSelectedCartItem(item);
+      const required = isRequiredMaintenance(item, isRetainer) || alwaysOn;
       const selected = isItemSelected(item);
       const req = requiredMarkerHtml(item, isRetainer);
       const scoreLabel = priorityGroupLabel(item);
@@ -1443,10 +1455,11 @@
         nextMonthStart ? "calc-row-next-month" : "",
         required ? "calc-row-required" : ""
       ].filter(Boolean).join(" ");
+      const chkDisabled = required ? " disabled" : "";
       return `<tr class="${rowClass}" data-id="${escapeHtml(item.id)}" data-retainer="${isRetainer || monthlyOnly}" data-required="${required}" data-next-month="${nextMonthStart ? "1" : "0"}">
         <td class="col-score" title="${escapeHtml(scoreTitle)}">${escapeHtml(scoreLabel)}</td>
         <td class="col-select">
-          <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan" ${selected ? "checked" : ""}>
+          <input type="checkbox" class="cart-proj-chk" data-id="${escapeHtml(item.id)}" aria-label="Add ${escapeHtml(item.title)} to plan"${chkDisabled} ${selected ? "checked" : ""}>
         </td>
         <td class="col-project"><a href="${projectAnchor(item.id)}" class="priority-desc-link" data-project-id="${escapeHtml(item.id)}"><span class="priority-req-slot" aria-hidden="${req ? "false" : "true"}">${req || ""}</span><span class="priority-desc-title">${escapeHtml(item.title)}</span></a></td>
         <td class="col-quote">${quoteCell}</td>
@@ -3324,7 +3337,8 @@
 
   function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending) {
     const id = item.id;
-    const reqMark = required ? requiredMarkerHtml(item, isRetainer) : "";
+    const showLock = required || isAlwaysSelectedCartItem(item);
+    const reqMark = showLock ? requiredMarkerHtml(item, isRetainer) : "";
     const abTitle = abPending ? ' title="Blocked: answer before cart"' : "";
     return `<div class="card-check-col">
       <input type="checkbox" class="${isRetainer ? "" : "proj-chk"}" data-id="${id}"${isRetainer ? ' id="chk-retainer"' : ""}${chkDisabled}${abTitle} ${sel ? "checked" : ""}>
@@ -4943,8 +4957,8 @@
     const byId = {
       RETAINER: "assets/gigi-thinking.png",
       retainer: "assets/gigi-thinking.png",
-      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-6",
-      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-6",
+      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-7",
+      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-7",
       LegalDirs: "assets/network-internet.svg",
       HolidayAds: "assets/gigi-celebrating.png",
       WinterAds: "assets/gigi-celebrating.png",
@@ -4970,7 +4984,7 @@
   function projectTileHtml(item, isFirstSelected) {
     const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
     const id = item.id;
-    const required = isRequiredMaintenance(item, isRetainer) || isRequiredProject(item, isRetainer);
+    const required = isRequiredMaintenance(item, isRetainer) || isRequiredProject(item, isRetainer) || isAlwaysSelectedCartItem(item);
     const sel = isItemSelected(item);
     const chkDisabled = required ? " disabled" : "";
     const summary = itemTldr(item) || "—";
@@ -5001,7 +5015,7 @@
 
   function cardHtml(item, isRetainer, isFirstSelected) {
     const id = item.id;
-    const required = isRequiredMaintenance(item, isRetainer);
+    const required = isRequiredMaintenance(item, isRetainer) || isAlwaysSelectedCartItem(item);
     const sel = isRetainer ? state.retainer : state.projects.has(id);
     const unpublished = isPlanningPublish(item);
     if (unpublished) state.expanded.delete(id);
