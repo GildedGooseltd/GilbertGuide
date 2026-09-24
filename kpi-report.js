@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260920-revenue-scale-marks";
+  const RENDER_VER = "20260923-dui-est-rev";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -14,16 +14,24 @@
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Campaign report (37) Sep 1–18 Phone calls 33 · Call details (8) answer · leads-inbox (18) · HubSpot Sep forms 1 · Yelp Ads Leads Sep Messages 2 · Justia Profile Stats Mar–Aug · recheck 2026-09-18",
-      fields: "Jun 234 · Jul 279 · Aug* 96 · Sep* 52 = Search 33 + LSA 15 + HubSpot 1 + Yelp 3 + Justia 0 · Justia contacts = calls + emails allocated"
+      file: "Campaign report (39) Sep 1–23 Phone calls 34 · Call details (9) answer · leads-inbox (19) · HubSpot Sep forms 1 · Yelp Ads Leads Sep Messages 2 · Justia Profile Stats Mar–Aug · recheck 2026-09-23",
+      fields: "Jun 234 · Jul 279 · Aug* 96 · Sep* 65 = Search 34 + LSA 27 + HubSpot 1 + Yelp 3 + Justia 0 · Justia contacts = calls + emails allocated"
     },
     "yelp": {
       file: "Yelp screenshots 2026-09-18 · Leads by type Aug 16 / Sep 8 · billing spend Sep 1–18 $219.57 · listing 4.5 · 8 reviews · last-30 ads 15 leads",
       fields: "Contacts = Messages + round(Calls × 40% answered) · Jun 2 · Jul 6 · Aug 10 · Sep* 3 · raw totals Jun 2 · Jul 10 · Aug 16 · Sep 8 · spend $219.57"
     },
     "#02": {
-      file: "Downloads/Contact_09-18-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-18/new-cases-by-month.csv · new-cases-by-practice-month.csv · export 2026-09-18",
-      fields: "Contact group=Client · Created date · practice mix fuzzy from Cases (practice area) · Jun 36 · Jul 35 · Aug 20 · Sep* 9 = DV 2 · Assault 1 · Sex offense 1 · Traffic/DUI 3 · Other 2"
+      file: "Downloads/Contact_09-23-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-23/new-cases-by-month.csv · new-cases-by-practice-month.csv · export 2026-09-23",
+      fields: "Contact group=Client · Created date · practice mix fuzzy from Cases (practice area) · Jun 36 · Jul 35 · Aug 20 · Sep* 14 = DV 3 · Assault 1 · Sex offense 1 · Traffic/DUI 2 · PPO 2 · Sealing 2 · Weapons 1 · Other 2"
+    },
+    "#03": {
+      file: "Downloads/Contact_09-23-2026 (1).csv · Ad Reports/exports/mycase/as-of-2026-09-23/auto-cases-ytd.csv · dui-goal-data.js · last updated 2026-09-23",
+      fields: "DUI YTD 20 · Jun 5 · Jul 2 · Aug 0 · Sep* 1 · Traffic tag no DUI 22 · Auto total 42 / goal 50 · pace 84%"
+    },
+    "#04": {
+      file: "Downloads/Contact_09-23-2026 (1).csv · casesMom newCases · last updated 2026-09-23",
+      fields: "New cases MoM · Apr 15 · May 22 · Jun 36 · Jul 35 · Aug 20 · Sep* 14 · Sep* vs Aug −30%. Closed and red accounts not on file."
     },
     "#07": {
       file: "account_activities_202609.csv · Home Services Ads activity · Sep 1–30 window on export mtime 2026-09-08 · recheck 2026-09-10",
@@ -50,7 +58,7 @@
       fields: "GBP 4.9 · 121 reviews · Yelp 4.5 · 8 reviews · FindLaw 0 (no firm reviews)"
     },
     "#19": {
-      file: "Staging — DASHBOARD-STAGING.md · Missed Opportunity · Call details (7) Sep 1–18 in phoneByMonth",
+      file: "Staging — DASHBOARD-STAGING.md · Missed Opportunity · Call details (9) Sep 1–23 in phoneByMonth",
       fields: "Sep* snapshot · weekday 19/33 missed · LSA uncharged 11/15 · × 7.3% × $5,662"
     },
     "#21": {
@@ -58,7 +66,7 @@
       fields: "Search answer · LSA % charged · Yelp call answer · Data tab Answer Rate chart"
     },
     "answer-rate": {
-      file: "phoneByMonth weekday Call details · lsaEfficiency Charged÷Leads · yelpBaseline.byMonth answeredCalls÷calls · recheck 09/18/2026",
+      file: "phoneByMonth weekday Call details (9) · lsaEfficiency Charged÷Leads · yelpBaseline.byMonth answeredCalls÷calls · recheck 09/23/2026",
       fields: "Search weekday May–Sep* · LSA May–Sep* · Yelp Jun–Sep* when calls > 0 · Search target ≥ 90% · weekends excluded from Search"
     },
     "#28": {
@@ -79,18 +87,18 @@
     },
     "#29": {
       file: "Ad Reports/exports/mycase/as-of-2026-09-01/fee-means-by-practice.csv · export 2026-09-01 · rechecked 2026-09-08",
-      fields: "Client + fee · Case Type / practice · n≥5 means · LOE pending feedback · last updated 2026-09-01"
+      fields: "Client + fee · Case Type / practice · n≥5 means · LOE 1–5 from Kate chart 09/23/2026 · biggest opportunity = mean ÷ LOE"
     },
     "cash-pace": {
-      file: "ledger_account_activity_report (7).csv export 09/18/2026 · Credits Sep* $76,715 through 09/18/2026 · Jan–Aug from ledger (5)/(7) · mycase/as-of-2026-09-18/cash-credits-by-month.csv",
-      fields: "Follows tile month · Sep* MTD through 09/18/2026 · W1–W4 running Trust Credit by calendar week · completed gray · future = pace × week-end day"
+      file: "ledger_account_activity_report (8).csv export 09/23/2026 · Credits Sep* $94,965 through 09/23/2026 · Jan–Aug from ledger (5)/(7) · Contact_09-23 cases",
+      fields: "Follows tile month · Sep* MTD through 09/23/2026 · W1–W4 running Trust Credit by calendar week · completed gray · future = pace × week-end day"
     },
     "cases-leads-spend": {
-      file: "Contact_09-18 · leads-inbox (18) · Call details (8) · Campaign report (37) · account_activities_202609 · HubSpot Sep forms 1 · Yelp Sep Messages 2 Calls 2 Website 4 · Justia Mar–Aug Profile Stats · recheck 2026-09-18",
-      fields: "May–Aug cases/leads/spend on file · May 118 · Jun 234 · Jul 279 · Aug* 96 · Sep* cases 9 · leads 52 = Search 33 + LSA 15 + HubSpot 1 + Yelp 3 + Justia 0 · spend $11,394.94 = Search $9,878 + LSA $1,516.94"
+      file: "Contact_09-23 · leads-inbox (19) · Call details (9) · Campaign report (39) · account_activities_202609 · HubSpot Sep forms 1 · Yelp Sep Messages 2 Calls 2 Website 4 · Justia Mar–Aug Profile Stats · recheck 2026-09-23",
+      fields: "May–Aug cases/leads/spend on file · May 118 · Jun 234 · Jul 279 · Aug* 96 · Sep* cases 14 · leads 65 = Search 34 + LSA 27 + HubSpot 1 + Yelp 3 + Justia 0 · spend $12,988.45 = Search $11,471.51 + LSA $1,516.94"
     },
     "sales-cost-funnel": {
-      file: "Campaign report (37) Sep 1–18 · Call details (8) · leads-inbox (18) · HubSpot · Yelp · Justia Mar–Aug · channelMonths · recheck 09/18/2026",
+      file: "Campaign report (39) Sep 1–23 · Call details (9) · leads-inbox (19) · HubSpot · Yelp · Justia Mar–Aug · channelMonths · recheck 09/23/2026",
       fields: "Direct contacts = Search + LSA + HubSpot + Yelp + Justia. May 118 · Jun 234 · Jul 279 · Aug 96 · Sep* 52 = 33 + 15 + 1 + 3 + 0"
     },
     "cash-collected": {
@@ -98,20 +106,20 @@
       fields: "Trust Credits · Aug $104,545 · Jul $108,350 · Sep* $76,715 through 09/18/2026"
     },
     "financial": {
-      file: "ledger_account_activity_report (7).csv · Contact_09-18-2026 · export 09/18/2026",
-      fields: "Trust Credits · $100k goal · Aug $104,545 · Sep* cases 9 · Sep* revenue $76,715"
+      file: "ledger_account_activity_report (7).csv · Contact_09-23-2026 · export 09/23/2026",
+      fields: "Trust Credits · $100k goal · Aug $104,545 · Sep* cases 14 · Sep* revenue $94,965 through 09/23/2026"
     },
     "cases-created": {
-      file: "mycase/as-of-2026-09-18/new-cases-by-month.csv · Contact_09-18-2026 aggregates · export 2026-09-18",
-      fields: "Cases created by month · 2026 Jun 36 · Jul 35 · Aug 20 full · Sep* 9 through 2026-09-18"
+      file: "mycase/as-of-2026-09-23/new-cases-by-month.csv · Contact_09-23-2026 aggregates · export 2026-09-23",
+      fields: "Cases created by month · 2026 Jun 36 · Jul 35 · Aug 20 full · Sep* 14 through 2026-09-23"
     },
     "cases-yoy": {
-      file: "Contact_09-18-2026 · cashCollected 2025 newCases + cashCollected2026Ytd · Jan–Aug complete only",
+      file: "Contact_09-23-2026 · cashCollected 2025 newCases + cashCollected2026Ytd · Jan–Aug complete only",
       fields: "YoY % = (2026 − 2025) ÷ 2025 for same calendar month · Sep* excluded until complete"
     },
     "roas-monthly": {
-      file: "Contact_09-18 cases × $4,346 collectible · Search + LSA from channelMonths / casesLeadsSpend · target 5×",
-      fields: "ROAS = est. collectible ÷ Search + LSA · paid-stack target 5× · watch below 4×"
+      file: "Contact_09-23 cases × $4,346 collectible · Search + LSA from channelMonths / casesLeadsSpend · target 10×",
+      fields: "ROAS = est. collectible ÷ Search + LSA · paid-stack target 10× · watch below 4×"
     },
   };
 
@@ -123,7 +131,7 @@
     },
     "#02": {
       title: "#02 New Cases",
-      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months. August 20 is full month from Contact_09-10-2026. September* is 9 through Created 2026-09-18. Track table is practice mix for that month from Cases (practice area) text. Fuzzy buckets only. Case target exists so monthly revenue can clear $100k. Gauge only — no On track or Behind label.",
+      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months. August 20 is full month from Contact_09-10-2026. September* is 14 through Created 2026-09-23. Track table is practice mix for that month from Cases (practice area) text. Fuzzy buckets only. Case target exists so monthly revenue can clear $100k. Gauge only — no On track or Behind label.",
       formula: "Count of Client contacts with Created date in month. Practice rows = same contacts bucketted from Cases (practice area). Target = floor($100k ÷ revenue/case) + 1 so monthly revenue clears $100k."
     },
     "#07": {
@@ -158,9 +166,14 @@
     },
     "#03": {
       title: "#03 Auto Cases",
-      desc: "YTD auto signed matters stacked by type (DUI + Traffic) from Contact_08-12-2026. DUI 17 · Jun 3 · Jul 2 · Aug* 0. Traffic (Traffic) tag no DUI = 19. Target line = annual auto goal of 50. Pace uses total auto signed ÷ 50 vs straight-line elapsed year.",
+      desc: "YTD auto signed matters stacked by type from Contact_09-23-2026 (1). DUI 20 · Jun 5 · Jul 2 · Aug 0 · Sep* 1. Traffic tag no DUI = 22. Auto total 42 / annual goal 50 · pace 84%. Est. revenue = auto cases × $3,600 mean DUI / DWAI / Traffic fee from #29. Last updated 09/23/2026.",
       formula:
-        "Stack = DUI practice-area rule + Traffic tag without DUI. Total = sum of stack. Schedule = total − (50 × days elapsed ÷ days in year)."
+        "Stack = DUI practice-area rule + Traffic tag without DUI. Total = sum of stack. Est. revenue = total × $3,600. Schedule = total − (50 × days elapsed ÷ days in year)."
+    },
+    "#04": {
+      title: "#04 Cases MoM",
+      desc: "New Client creates by month from Contact_09-23-2026 (1). Apr 15 · May 22 · Jun 36 · Jul 35 · Aug 20 · Sep* 14. Sep* vs Aug new cases −30%. Closed cases and red accounts not on this export. Last updated 09/23/2026.",
+      formula: "New cases = Contact group Client · Created date in month. MoM % = current ÷ prior − 1."
     },
     "#08": {
       title: "#08 Leads by campaign",
@@ -209,8 +222,8 @@
     },
     "#29": {
       title: "#29 Practice Area Average Fee",
-      desc: "Mean contracted / quoted fee by practice area (Client + fee · n ≥ 5) from Contact_09-01-2026 aggregates · last updated 2026-09-01. Not cash collected. LOE is level of effort for growing that practice — blank until feedback fills it. Biggest opportunity is not fee pool; it waits on LOE.",
-      formula: "Mean fee from contracted / quoted fees. Biggest opportunity = highest mean fee ÷ LOE once LOE is set. LOE blank = no opportunity mark."
+      desc: "Mean contracted / quoted fee by practice area (Client + fee · n ≥ 5) from Contact_09-01-2026 aggregates. LOE 1–5 from Kate rough LOE chart 09/23/2026. Biggest opportunity = highest mean fee ÷ LOE. Not cash collected.",
+      formula: "Mean fee from contracted / quoted fees. Biggest opportunity = mean fee ÷ LOE. LOE blank = no opportunity mark."
     },
     "cases-leads-spend": {
       title: "#05 Key Channel Activity",
@@ -229,8 +242,8 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel",
-      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Direct contacts add every lead channel on file: Search + LSA + HubSpot forms + Yelp + Justia. Breakdown table under the funnel shows each leg and the total. Not channel ROI. Volume and unit cost only.",
-      formula: "May 118 = 39 + 72 + 0 + 0 + 7. Jun 234 = 138 + 83 + 5 + 2 + 6. Jul 279 = 131 + 132 + 4 + 6 + 6. Aug 96 = 25 + 61 + 0 + 10 + 0. Sep* 52 = 33 + 15 + 1 + 3 + 0."
+      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Direct contacts add every lead channel on file: Search + LSA + HubSpot forms + Yelp + Justia. Breakdown table shows contacts and cost per conversion by channel. Cost per conversion = channel spend ÷ contacts. Not channel ROI.",
+      formula: "May 118 = 39 + 72 + 0 + 0 + 7. Jun 234 = 138 + 83 + 5 + 2 + 6. Jul 279 = 131 + 132 + 4 + 6 + 6. Aug 96 = 25 + 61 + 0 + 10 + 0. Sep* from channelMonths. Cost per conversion = spend ÷ contacts per leg."
     },
     "financial": {
       title: "#09 Financials",
@@ -239,7 +252,7 @@
     },
     "cases-created": {
       title: "Cases Created",
-      desc: "MyCase Client contacts by Created month — 2026 from Contact_09-18-2026 · Jun 36 · Jul 35 · Aug 20 full · Sep* 9 through 2026-09-18. Chart shows monthly bars plus a trend line per year. Table is year totals, average MoM change, and trend slope — not the same monthly counts.",
+      desc: "MyCase Client contacts by Created month — 2026 from Contact_09-23-2026 · Jun 36 · Jul 35 · Aug 20 full · Sep* 14 through 2026-09-23. Chart shows monthly bars plus a trend line per year. Table is year totals, average MoM change, and trend slope — not the same monthly counts.",
       formula: "Count of Client contacts with Created date in month. Trend = OLS on complete months. Avg MoM = mean of month-to-month percent change. Aug* MTD is not in trend or avg MoM."
     },
     "cases-yoy": {
@@ -249,8 +262,8 @@
     },
     "roas-monthly": {
       title: "Return on Marketing Spend",
-      desc: "Est. collectible from new cases ÷ Search + LSA media. Collectible = cases × $4,346 from Contact_09-01 mix fee × 80%. Industry criminal-defense mature ROAS often ~3.5×–7×. Firm May–Jul paid stack ran 5.6×–7.3×. Guide target 5× when both Search and LSA run. Watch below 4×. Feb–Apr inflate when Search is $0.",
-      formula: "ROAS = (new cases × $4,346) ÷ (Search media + LSA media). Target line = 5× on paid-stack months."
+      desc: "Est. collectible from new cases ÷ Search + LSA media. Collectible = cases × $4,346 from Contact_09-01 mix fee × 80%. Industry criminal-defense mature ROAS often ~3.5×–7×. Firm May–Jul paid stack ran 5.6×–7.3×. Guide target 10× when both Search and LSA run. Watch below 4×. Months with $0 Search spend are omitted from the chart — LSA-only media inflates ROAS. March 2026 would read ~80× on $921 LSA alone.",
+      formula: "ROAS = (new cases × $4,346) ÷ (Search media + LSA media). Target line = 10×. Null when Search ads spend is $0."
     },
     "cash-collected": {
       title: "Monthly Revenue",
@@ -429,35 +442,36 @@
 
   const DATA = {
     period: "September 2026",
-    asOf: "2026-09-18",
-    lastUpdated: "2026-09-18",
+    asOf: "2026-09-23",
+    lastUpdated: "2026-09-23",
     updateLabel: "September 2026",
-    updateScope: "Search Campaign Sep 1–18 Phone calls + spend · Call details (7)/(8) answer rate Sep 1–18 · LSA Sep* inbox (18) · cases Contact_09-18 · cash ledger (7) Sep 18 · trust snapshot Sep 18 · Justia Mar–Aug Profile Stats 09/18/2026",
-    source: "Campaign report (37) Sep 1–18 · Call details (8) Sep 1–18 · account_activities_202609 · leads-inbox (18) · Contact_09-18 · ledger (7) · Trust_09-18 · Justia Profile Stats 09/18/2026",
+    updateScope: "Search Campaign Sep 1–23 · Call details (9) · LSA inbox (19) · Contact_09-23 · #03 Auto 42/50 · #04 Cases MoM Sep* 14 · cash ledger (8) Sep 23 · trust Sep 23 · last updated 09/23/2026",
+    source: "Campaign report (39) · Call details (9) · leads-inbox (19) · Contact_09-23 · ledger (8) · Trust_09-23 · auto-cases-ytd.csv · last updated 09/23/2026",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
-      "#01": "2026-09-18",
-      "#02": "2026-09-18",
-      "#03": "2026-08-12",
-      "cash-pace": "2026-09-18",
+      "#01": "2026-09-23",
+      "#02": "2026-09-23",
+      "#03": "2026-09-23",
+      "#04": "2026-09-23",
+      "cash-pace": "2026-09-23",
       "yelp": "2026-09-18",
       "justia": "2026-09-18",
-      "answer-rate": "2026-09-18",
-      "ad-spend-by-channel": "2026-09-18",
-      "#19": "2026-09-18",
-      "#21": "2026-09-18",
-      "#28": "2026-09-01"
+      "answer-rate": "2026-09-23",
+      "ad-spend-by-channel": "2026-09-23",
+      "#19": "2026-09-23",
+      "#21": "2026-09-23",
+      "#28": "2026-09-23"
     },
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false, updatedAsOf: "2026-09-18" },
-      { id: "#02", label: "New Cases", value: "9", target: "≥ 24", mom: null, count: 9, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-09-18" },
+      { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false, updatedAsOf: "2026-09-23" },
+      { id: "#02", label: "New Cases", value: "14", target: "≥ 24", mom: null, count: 14, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-09-23" },
       /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Missed Opportunity */
       { id: "#19", label: "Missed Opportunity", value: "—", target: "$0", mom: null, verified: false, alert: false, lostTracker: true, augUpdated: false, archived: true },
       { id: "#21", label: "Answered Calls", value: "—", target: "≥ 90%", mom: null, verified: false, alert: false, gauge: true, goal: true, archived: true },
       /* archived for future iteration — restore by removing archived: true */
       { id: "#22", label: "Speed to lead", value: "8 min", target: "< 5 min", mom: null, verified: false, archived: true },
-      { id: "#28", label: "Avg case fee", value: "$5,662", target: "MyCase mean", mom: null, verified: true },
+      { id: "#28", label: "Avg case fee", value: "$5,694", target: "MyCase mean", mom: null, verified: true },
       /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Cost per Case */
       { id: "#30", label: "Cost per Case", value: "—", target: "", mom: null, verified: true, archived: true },
       /* staging — restore by removing archived: true · work doc parked/KPI-33-LEAD-TO-CASE.md */
@@ -466,7 +480,7 @@
     ],
     channels: [
       { name: "Search calls", count: null, prior: 25, mom: "—", spend: "—", color: "#3a1a6e", verified: false },
-      { name: "LSA inbox", count: null, prior: 61, mom: "—", spend: "—", color: "#1e3a8a", verified: false },
+      { name: "LSA calls", count: null, prior: 61, mom: "—", spend: "—", color: "#1e3a8a", verified: false },
       { name: "HubSpot forms", count: null, prior: 0, mom: "—", spend: "—", color: "#b23a78", verified: false },
       { name: "Yelp", count: null, prior: 10, mom: "—", spend: "—", color: "#64748b", verified: false },
       { name: "Justia", count: null, prior: 0, mom: "—", spend: "—", color: "#6a5acd", verified: false }
@@ -528,17 +542,17 @@
       },
       {
         month: "Sep*",
-        search: 33,
-        lsa: 15,
+        search: 34,
+        lsa: 27,
         hubspot: 1,
         hubspotForms: 1,
         yelp: 3,
         yelpSpend: 219.57,
         justia: 0,
         justiaSpend: null,
-        searchSpend: 9878,
+        searchSpend: 11471.51,
         lsaSpend: 1516.94,
-        note: "Search Campaign (37) 09/01–09/18/2026 · 33 Phone calls · $9,878. Call details (8) · 14 answered / 19 missed. LSA inbox (18) · HubSpot 1. Yelp · 2 Messages · 2 Calls · 3 contacts · spend $219.57. Justia Sep not on file as of 09/18/2026"
+        note: "Search Campaign (39) 09/01–09/23/2026 · 34 Phone calls · $11,471.51. Call details (9) · 14 answered / 20 missed. LSA inbox (19) through 09/18 · HubSpot 1. Yelp · 2 Messages · 2 Calls · 3 contacts · spend $219.57. Justia Sep not on file as of 09/18/2026. Cases Contact_09-23 · Sep* 14 · cash ledger (8) through 09/23/2026 · $94,965"
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -572,11 +586,11 @@
         windowNote: "Search ads paused unpaid · no August Campaign calendar"
       },
       Sep: {
-        impressions: 2126,
-        clicks: 118,
-        phoneCalls: 33,
-        searchSpendLock: 9878,
-        windowNote: "Campaign report (37) 09/01–09/18/2026 · Phone calls 33 · Call details answer 14/33"
+        impressions: 2412,
+        clicks: 128,
+        phoneCalls: 34,
+        searchSpendLock: 11471.51,
+        windowNote: "Campaign report (39) 09/01–09/23/2026 · Phone calls 34 · Call details (9) answer 14/34"
       }
     },
     sourceMix: [
@@ -615,8 +629,8 @@
         weekdayCalls: 20, weekdayMissed: 9, weekendCalls: 5, weekendMissed: 3
       },
       Sep: {
-        calls: 33, received: 14, missed: 19, answeredPct: 42,
-        weekdayCalls: 33, weekdayMissed: 19, weekendCalls: 0, weekendMissed: 0
+        calls: 34, received: 14, missed: 20, answeredPct: 41,
+        weekdayCalls: 34, weekdayMissed: 20, weekendCalls: 0, weekendMissed: 0
       }
     },
     phoneIntake: {
@@ -642,16 +656,22 @@
       collectionRate: 0.8,
       avgCaseFee: 5662
     },
-    /* KPI #29 support — Client + fee means · n≥5 · CLIENT-VALUE-BASELINE.md · as of 2026-09-01
-       loe = level of effort to grow that practice · null until feedback fills it · Low/Med/High or 1–5 */
+    /* KPI #29 support — Client + fee means · n≥5 · CLIENT-VALUE-BASELINE.md · fees as of 2026-09-01
+       loe = level of effort 1–5 from Kate rough LOE chart 2026-09-23 · biggest opportunity = mean fee ÷ LOE */
     feeByPractice: [
-      { name: "Theft / Property", n: 10, mean: 8000, loe: null },
-      { name: "Sex Assault / Sex Offense", n: 9, mean: 7778, loe: null },
-      { name: "Assault / Menacing", n: 17, mean: 7721, loe: null },
-      { name: "Domestic Violence / DV", n: 35, mean: 5693, loe: null },
-      { name: "Criminal Defense (other)", n: 21, mean: 4471, loe: null },
-      { name: "Probation Revocation", n: 9, mean: 4056, loe: null },
-      { name: "DUI / DWAI / Traffic", n: 20, mean: 3600, loe: null }
+      { name: "Theft / Property", n: 10, mean: 8000, loe: 4 },
+      { name: "Sex Assault / Sex Offense", n: 9, mean: 7778, loe: 5 },
+      { name: "Assault / Menacing", n: 17, mean: 7721, loe: 5 },
+      { name: "Domestic Violence / DV", n: 35, mean: 5693, loe: 5 },
+      { name: "Criminal Defense (other)", n: 21, mean: 4471, loe: 3 },
+      { name: "Probation Revocation", n: 9, mean: 4056, loe: 1 },
+      { name: "DUI / DWAI / Traffic", n: 20, mean: 3600, loe: 2 }
+    ],
+    /* Extra LOE weights from same chart · not on n≥5 fee table */
+    feeLoeExtra: [
+      { name: "SO Dereg", loe: 1 },
+      { name: "SA Prefile", loe: 1 },
+      { name: "PO Revo", loe: 1, mapsTo: "Probation Revocation" }
     ],
     costPerCall: [
       { channel: "Direct contact (blended)", cost: "$65" },
@@ -710,12 +730,12 @@
       { platform: "Bing Places / Apple", rating: "—", count: null, status: "not wired", verified: false }
     ],
     verticals: [
-      { name: "DUI/DWAI", jun: 3, ytd: 15 },
+      { name: "DUI/DWAI", jun: 5, ytd: 20 },
       { name: "Military", jun: 2, ytd: 8 },
-      { name: "Traffic", jun: 2, ytd: 6 },
+      { name: "Traffic", jun: 2, ytd: 22 },
       { name: "DV", jun: 1, ytd: 3 }
     ],
-    /* Client Created practice mix · Jun–Aug locked Contact_09-10 · Sep* Contact_09-18 · fuzzy Cases (practice area) · aggregates only */
+    /* Client Created practice mix · Jun–Aug locked Contact_09-10 · Sep* Contact_09-23 · fuzzy Cases (practice area) · aggregates only */
     newCasesByPractice: {
       Jun: [
         { name: "DV", n: 2 },
@@ -740,10 +760,13 @@
         { name: "Other", n: 1 }
       ],
       Sep: [
-        { name: "DV", n: 2 },
+        { name: "DV", n: 3 },
         { name: "Assault", n: 1 },
         { name: "Sex offense", n: 1 },
-        { name: "Traffic / DUI", n: 3 },
+        { name: "Traffic / DUI", n: 2 },
+        { name: "PPO", n: 2 },
+        { name: "Sealing", n: 2 },
+        { name: "Weapons", n: 1 },
         { name: "Other", n: 2 }
       ]
     },
@@ -774,13 +797,14 @@
       { name: "New cases", color: "#3a1a6e", verified: true },
       { name: "Red accounts", color: "#b23a78", verified: false }
     ],
+    /* #04 Cases MoM · newCases from Contact Client Created · Closed/red not on Contact export · last updated 2026-09-23 */
     casesMom: [
       { month: "Apr", closed: 6, newCases: 15, redAccounts: 3 },
       { month: "May", closed: 8, newCases: 22, redAccounts: 2 },
       { month: "Jun", closed: 11, newCases: 36, redAccounts: 4 },
       { month: "Jul", closed: null, newCases: 35, redAccounts: null },
       { month: "Aug", closed: null, newCases: 20, redAccounts: null },
-      { month: "Sep*", closed: null, newCases: 9, redAccounts: null }
+      { month: "Sep*", closed: null, newCases: 14, redAccounts: null }
     ],
     pipeline: [
       { month: "Jun", closed: 11, mom: "+38%" },
@@ -796,7 +820,7 @@
       { month: "Jun", cases: 36, leads: 234, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
       { month: "Jul", cases: 35, leads: 279, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 4 },
       { month: "Aug", cases: 20, leads: 96, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 },
-      { month: "Sep*", cases: 9, leads: 52, spend: 11394.94, lsaSpend: 1516.94, adsSpend: 9878, adsLeads: 33, websiteLeads: 1 }
+      { month: "Sep*", cases: 14, leads: 65, spend: 12988.45, lsaSpend: 1516.94, adsSpend: 11471.51, adsLeads: 34, websiteLeads: 1 }
     ],
     /**
      * Justia Profile Stats · Kate 09/18/2026.
@@ -915,7 +939,7 @@
       { month: "Nov", credit: 42775, newCases: 5 },
       { month: "Dec", credit: 64300, newCases: 9 }
     ],
-    /* 2026 YTD revenue — Jan–Aug Trust activity · Sep* MTD through 09/18/2026. */
+    /* 2026 YTD revenue — Jan–Aug Trust activity · Sep* MTD through 09/23/2026. */
     cashCollected2026Ytd: [
       { month: "Jan", credit: 57925, newCases: 12 },
       { month: "Feb", credit: 83950, newCases: 14 },
@@ -925,27 +949,27 @@
       { month: "Jun", credit: 103485, newCases: 36 },
       { month: "Jul", credit: 108350, newCases: 35 },
       { month: "Aug", credit: 104545, newCases: 20 },
-      { month: "Sep*", credit: 76715, newCases: 9 }
+      { month: "Sep*", credit: 94965, newCases: 14 }
     ],
     cashCollectedTotals: {
       total2025: 945436,
-      total2026ToDate: 777636,
-      allCredits: 1723072,
-      contractedMean: 5662,
+      total2026ToDate: 795886,
+      allCredits: 1741322,
+      contractedMean: 5694,
       yearLabel: "2025",
-      asOf: "2026-09-18",
+      asOf: "2026-09-23",
       partialMonthKey: "Sep",
-      partialDaysElapsed: 18,
+      partialDaysElapsed: 23,
       partialDaysInMonth: 30,
       cashGoalMonthly: 100000,
-      rangeNote: "Jan–Aug Trust activity Credits · Sep* $76,715 MTD through 09/18/2026 ledger (7) · cases Contact_09-18 Sep* 9 · Aug cases 20"
+      rangeNote: "Jan–Aug Trust activity Credits · Sep* $94,965 MTD through 09/23/2026 ledger (8) · cases Contact_09-23 Sep* 14 · Aug cases 20"
     },
-    /* Trust Credits by calendar week · aggregates only · Jun–Jul ledger (5) · Aug–Sep* ledger (7) through 09/18/2026. */
+    /* Trust Credits by calendar week · aggregates only · Jun–Jul ledger (5) · Aug ledger (7) · Sep* ledger (8) through 09/23/2026. */
     cashCreditsByWeek: {
       Jun: { W1: 27400, W2: 19650, W3: 30625, W4: 25810 },
       Jul: { W1: 14850, W2: 21600, W3: 34425, W4: 37475 },
       Aug: { W1: 15070, W2: 31825, W3: 8800, W4: 48850 },
-      Sep: { W1: 28565, W2: 30900, W3: 17250, W4: 0 }
+      Sep: { W1: 28565, W2: 30900, W3: 27000, W4: 8500 }
     },
     /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) · Sep* inbox (18) + account_activities_202609 */
     lsaEfficiency: [
@@ -953,7 +977,7 @@
       { month: "Jun", leads: 83, charged: 39, notCharged: 44, lsaSpend: 13206 },
       { month: "Jul", leads: 132, charged: 52, notCharged: 79, lsaSpend: 14556 },
       { month: "Aug", leads: 61, charged: 19, notCharged: 41, lsaSpend: 6286 },
-      { month: "Sep*", leads: 15, charged: 2, notCharged: 11, lsaSpend: 1516.94 }
+      { month: "Sep*", leads: 27, charged: 7, notCharged: 19, lsaSpend: 1516.94 }
     ],
     lsaChargeRateOverall: { charged: 137, leads: 348, pct: 39.4 },
     /* NEW-E — Payment Method = Trust applications (ledger) + Client trust balance snapshot */
@@ -985,11 +1009,11 @@
         { month: "Aug* 2026", applications: 0, rows: 0 }
       ],
       snapshot: {
-        asOf: "2026-09-18",
-        sourceFile: "mycase/as-of-2026-09-18/trust-balance-snapshot.csv",
-        clientsWithBalance: 359,
-        totalBalance: 1647214,
-        meanBalance: 4588
+        asOf: "2026-09-23",
+        sourceFile: "Downloads/Trust_account_summary_09-23-2026.csv",
+        clientsWithBalance: 366,
+        totalBalance: 1664464,
+        meanBalance: 4548
       },
       refundCredits2025Feb: 7000
     }
@@ -1718,7 +1742,7 @@
     if (key === "Jun") return "June 2026 complete stack · Justia 6 · verified";
     if (key === "Jul") return "July 2026 · Search + LSA + HubSpot 4 + Justia 6 · verified";
     if (key === "Aug") return "August 2026 full month · revenue $104,545 · 20 cases · Justia 0 · ads paused";
-    return "September 2026 MTD · revenue $76,715 through 09/18/2026 · cases Contact_09-18 · 9 cases · answered 42% · Justia Sep not on file";
+    return "September 2026 MTD · Search + LSA through 09/23/2026 · revenue $94,965 through 09/23/2026 · cases Contact_09-23 · 14 cases · answered 41% · Justia Sep not on file";
   }
 
   function reportPeriodPillsHtml() {
@@ -1941,7 +1965,7 @@
       };
       const labels = {
         search: "Search calls",
-        lsa: "LSA inbox",
+        lsa: "LSA calls",
         hubspot: "HubSpot forms",
         yelp: "Yelp",
         justia: "Justia"
@@ -2488,12 +2512,34 @@
     return { month: null, channels: [] };
   }
 
+  /** Sep* and other starred casesLeadsSpend rows are MTD — Cost per response uses last complete month. */
+  function isPartialCostPerResponseMonth(key) {
+    const k = String(key || "").replace(/\*$/, "");
+    const cls = findCasesLeadsSpendRow(k);
+    if (cls && String(cls.month || "").includes("*")) return true;
+    const partialKey = String((DATA.cashCollected2026Ytd || {}).partialMonthKey || "").replace(/\*$/, "");
+    return !!k && partialKey === k;
+  }
+
   function tileMonthCostPerResponsePack(rows) {
     const meta = tileMonthMeta();
+    if (isPartialCostPerResponseMonth(meta.key)) {
+      const full = latestFullCostPerResponseChannels(rows);
+      if (full.channels.length) {
+        const labels = { Jul: "July 2026", Jun: "June 2026", May: "May 2026" };
+        return {
+          month: full.month,
+          monthLabel: labels[full.month] || full.month,
+          channels: full.channels,
+          fromCompleteMonth: true
+        };
+      }
+    }
     return {
       month: meta.key,
       monthLabel: meta.label,
-      channels: costPerResponseChannelsForMonth(rows, meta.key)
+      channels: costPerResponseChannelsForMonth(rows, meta.key),
+      fromCompleteMonth: false
     };
   }
 
@@ -2744,31 +2790,6 @@
    * Search leg prefers funnelAds.phoneCalls when set, else channelMonths.search.
    * Brand colors only — no teal/cyan.
    */
-  function salesCostFunnelWindowNote() {
-    const meta = tileMonthMeta();
-    const parts = salesCostFunnelContactParts(meta);
-    const sumLine = parts
-      ? `Direct contacts ${parts.total} = Search ${parts.search} + LSA ${parts.lsa} + HubSpot ${parts.forms} + Yelp ${parts.yelp} + Justia ${parts.justia}`
-      : "Direct contacts pending";
-    if (meta.key === "May") {
-      return `${meta.full} · ${sumLine}`;
-    }
-    if (meta.key === "Jun") {
-      return `${meta.full} · Impr/clicks not on file · ${sumLine}`;
-    }
-    if (meta.key === "Jul") {
-      return `${meta.full} · Impr/clicks Jun 11–Jul 10 · ${sumLine}`;
-    }
-    if (meta.key === "Aug") {
-      return `${meta.full} · Search ads paused · Impr/clicks not on file · ${sumLine}`;
-    }
-    if (meta.key === "Sep") {
-      return `${meta.full} · Campaign 09/01–09/18/2026 · ${sumLine}`;
-    }
-    return `${meta.full} · ${sumLine}`;
-  }
-
-  /** Channel legs for the tile-month Sales Funnel · same stack as #01 Lead Calls. */
   function salesCostFunnelContactParts(meta) {
     const m = meta || tileMonthMeta();
     const ch = m.ch || {};
@@ -2889,24 +2910,65 @@
     ];
   }
 
+  function salesCostFunnelChannelSpend(meta) {
+    const m = meta || tileMonthMeta();
+    const ch = m.ch || {};
+    const parts = salesCostFunnelContactParts(m);
+    const ads = (DATA.funnelAds && DATA.funnelAds[m.key]) || {};
+    const adsSpend = ads.searchSpendLock != null ? Number(ads.searchSpendLock) : null;
+    const searchSpend = ch.searchSpend != null
+      ? Number(ch.searchSpend) || 0
+      : (adsSpend != null ? adsSpend : 0);
+    const lsaSpend = Number(ch.lsaSpend) || 0;
+    const yelpSpend = Number(ch.yelpSpend) || 0;
+    const formFee = parts.forms > 0 ? Number(DATA.websiteHubspotMonthlyFromJun) || 0 : 0;
+    const justiaSpend = parts.justia > 0
+      ? (ch.justiaSpend != null ? Number(ch.justiaSpend) || 0 : Number(DATA.referralSitesMonthly) || 0)
+      : 0;
+    return {
+      parts,
+      search: searchSpend,
+      lsa: lsaSpend,
+      forms: formFee,
+      yelp: yelpSpend,
+      justia: justiaSpend,
+      site: 0,
+      total: searchSpend + lsaSpend + formFee + yelpSpend + justiaSpend
+    };
+  }
+
+  function salesCostFunnelCostPerContact(spend, contacts) {
+    if (!contacts || spend == null || !Number.isFinite(Number(spend)) || Number(spend) <= 0) {
+      return "—";
+    }
+    return fmtMoney(Number(spend) / contacts);
+  }
+
   function salesCostFunnelChannelBreakdownTable() {
-    const parts = salesCostFunnelContactParts();
+    const pack = salesCostFunnelChannelSpend();
+    const parts = pack && pack.parts;
     if (!parts || !parts.known) return "";
+    const row = (label, contacts, spend) => [
+      label,
+      String(contacts),
+      salesCostFunnelCostPerContact(spend, contacts)
+    ];
     const rows = [
-      ["Search", String(parts.search)],
-      ["LSA", String(parts.lsa)],
-      ["HubSpot", String(parts.forms)],
-      ["Yelp", String(parts.yelp)],
-      ["Justia", String(parts.justia)]
+      row("Search", parts.search, pack.search),
+      row("LSA", parts.lsa, pack.lsa),
+      row("HubSpot", parts.forms, pack.forms),
+      row("Yelp", parts.yelp, pack.yelp),
+      row("Justia", parts.justia, pack.justia)
     ];
     if (parts.siteKnown || parts.site > 0) {
-      rows.push(["Pav.Law website", String(parts.site)]);
+      rows.push(row("Pav.Law website", parts.site, pack.site));
     }
     rows.push([
       '<span class="kpi-table-total">Total</span>',
-      `<span class="kpi-table-total">${parts.total}</span>`
+      `<span class="kpi-table-total">${parts.total}</span>`,
+      `<span class="kpi-table-total">${salesCostFunnelCostPerContact(pack.total, parts.total)}</span>`
     ]);
-    return kpiDetailTable(["Channel", "Contacts"], rows);
+    return kpiDetailTable(["Channel", "Contacts", "Cost per conversion"], rows);
   }
 
   function salesCostFunnelSvg(stages) {
@@ -2947,31 +3009,13 @@
     </svg>`;
   }
 
-  function salesCostFunnelTable(stages) {
-    const rows = stages.map(s => [
-      escapeHtml(s.label),
-      escapeHtml(s.volumeText),
-      escapeHtml(s.spendBasis),
-      escapeHtml(s.spend),
-      escapeHtml(s.unitCost),
-      escapeHtml(s.conversion)
-    ]);
-    return kpiDetailAccordion(
-      "Unit cost table",
-      salesCostFunnelWindowNote(),
-      ["Stage", "Volume", "Spend basis", "Spend", "Unit cost", "Step conversion"],
-      rows
-    );
-  }
-
-  /* Sits in Channel activity beside Leads by channel. */
   function salesCostFunnelChartBlockHtml() {
     const stages = salesCostFunnelStages();
     return chartBlock({
       helpId: "sales-cost-funnel",
       title: "Sales Funnel",
       chart: salesCostFunnelSvg(stages),
-      table: `${salesCostFunnelChannelBreakdownTable()}${salesCostFunnelTable(stages)}${sourceFootnote("sales-cost-funnel")}`
+      table: `${salesCostFunnelChannelBreakdownTable()}${sourceFootnote("sales-cost-funnel")}`
     });
   }
 
@@ -3649,7 +3693,7 @@
     if (months && months.length >= 3) {
       const keys = [
         { key: "search", name: "Search calls", color: "#3a1a6e" },
-        { key: "lsa", name: "LSA inbox", color: "#1e3a8a" },
+        { key: "lsa", name: "LSA calls", color: "#1e3a8a" },
         { key: "hubspot", name: "HubSpot forms", color: "#b23a78" },
         { key: "yelp", name: "Yelp", color: "#64748b" },
         { key: "justia", name: "Justia", color: "#6a5acd" }
@@ -4097,7 +4141,18 @@
     return autoCaseColumns(g).reduce((sum, col) => sum + (Number(col.current) || 0), 0);
   }
 
-  /** Fixed stack colors — DUI royal-blue, Traffic burnt (different families). */
+  /** Mean contracted fee for DUI / DWAI / Traffic from #29 feeByPractice. */
+  function autoCaseMeanFee() {
+    const row = (DATA.feeByPractice || []).find(r => /DUI|DWAI|Traffic/i.test(String(r.name || "")));
+    const mean = row && row.mean != null ? Number(row.mean) : NaN;
+    return Number.isFinite(mean) && mean > 0 ? mean : 3600;
+  }
+
+  function autoCaseEstRevenue(cases) {
+    return Math.round((Number(cases) || 0) * autoCaseMeanFee());
+  }
+
+  /** Fixed column colors — DUI royal-blue, Traffic burnt (different families). */
   const AUTO_CASE_STACK_COLORS = {
     DUI: "#1e3a8a",
     Traffic: "#c45c26"
@@ -4108,51 +4163,41 @@
     const columns = autoCaseColumns(g);
     const total = autoCaseTotal(g);
     const target = Number(g.target) || 50;
-    const maxVal = chartAxisMax([total, target]);
-    /* Fill the goal-card visual — less pad, taller plot, wider bar. */
+    const colMax = columns.reduce((m, col) => Math.max(m, Number(col.current) || 0), 0);
+    const maxVal = chartAxisMax([colMax, target]);
+    /* Fill the goal-card visual — less pad, taller plot, side-by-side columns. */
     const w = 320;
     const h = 210;
-    const pad = { l: 36, r: 10, t: 18, b: 28 };
+    const pad = { l: 36, r: 10, t: 22, b: 28 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
-    const barW = Math.min(88, plotW * 0.48);
-    const x = pad.l + (plotW - barW) / 2;
     const baselineY = pad.t + plotH;
     const targetY = baselineY - (plotH * target) / maxVal;
-    // Keep fills, but remove rect strokes so the stacked bar doesn't look outlined.
-    // (User request: "dont outline bar chart".)
+    const n = Math.max(columns.length, 1);
+    const slot = plotW / n;
+    const barW = Math.min(52, slot * 0.62);
 
-    let y = baselineY;
-    const segments = columns.map(col => {
+    const bars = columns.map((col, i) => {
       const count = Number(col.current) || 0;
-      const hh = Math.max(count ? 8 : 0, (plotH * count) / maxVal);
-      y -= hh;
-      if (!count) return "";
+      const hh = Math.max(count ? 6 : 0, (plotH * count) / maxVal);
+      const x = pad.l + i * slot + (slot - barW) / 2;
+      const y = baselineY - hh;
       const fill = AUTO_CASE_STACK_COLORS[col.label] || "#3a1a6e";
-      return `<g class="kpi-target-bar-stack-seg">
+      const labelY = Math.max(pad.t + 12, y - 6);
+      return `<g class="kpi-target-bar-group">
         <rect x="${x}" y="${y}" width="${barW}" height="${hh}" fill="${fill}">
           <title>${escapeHtml(col.label)}: ${count}</title>
         </rect>
+        <text x="${x + barW / 2}" y="${labelY}" text-anchor="middle" class="kpi-target-bar-val">${count}</text>
+        <text x="${x + barW / 2}" y="${h - 8}" text-anchor="middle" class="kpi-target-bar-cat">${escapeHtml(col.label)}</text>
       </g>`;
     }).join("");
 
-    const legend = columns.map((col, i) => {
-      const fill = AUTO_CASE_STACK_COLORS[col.label] || "#3a1a6e";
-      const count = Number(col.current) || 0;
-      const lx = pad.l + i * (plotW / Math.max(columns.length, 1));
-      return `<g>
-        <rect x="${lx}" y="${h - 14}" width="9" height="9" rx="1" fill="${fill}"/>
-        <text x="${lx + 13}" y="${h - 6}" class="kpi-target-bar-cat">${escapeHtml(col.label)} ${count}</text>
-      </g>`;
-    }).join("");
-
-    return `<svg class="kpi-chart-svg kpi-target-bar-chart kpi-target-bar-chart-compact kpi-target-bar-chart-stacked kpi-target-bar-chart-goal" viewBox="0 0 ${w} ${h}" role="img" aria-label="Auto cases stacked ${total} vs goal ${target}">
+    return `<svg class="kpi-chart-svg kpi-target-bar-chart kpi-target-bar-chart-compact kpi-target-bar-chart-goal" viewBox="0 0 ${w} ${h}" role="img" aria-label="Auto cases DUI and Traffic ${total} vs goal ${target}">
       <line x1="${pad.l}" y1="${baselineY}" x2="${w - pad.r}" y2="${baselineY}" class="kpi-target-baseline"/>
       <line x1="${pad.l}" y1="${targetY}" x2="${w - pad.r}" y2="${targetY}" class="kpi-target-line"/>
       <text x="${pad.l - 4}" y="${targetY + 4}" text-anchor="end" class="kpi-target-label">${target}</text>
-      ${segments}
-      <text x="${x + barW / 2}" y="${Math.min(y, targetY) - 6}" text-anchor="middle" class="kpi-target-bar-cat">${total}</text>
-      ${legend}
+      ${bars}
     </svg>`;
   }
 
@@ -4414,6 +4459,10 @@
     const pace = Math.round((total / (target || 1)) * 100);
     const sched = duiScheduleStatus(g, total);
     const paceCell = `${pace}% <span class="kpi-mom-change ${sched.cls}" title="${escapeHtml(sched.detail)}">${sched.arrow} ${escapeHtml(sched.label)}</span>`;
+    const estRev = autoCaseEstRevenue(total);
+    const estRevGoal = autoCaseEstRevenue(target);
+    const fee = autoCaseMeanFee();
+    const revenueTitle = `Est. contracted revenue · DUI + Traffic × $${fee.toLocaleString("en-US")} mean fee`;
     const autoAsOf = resolveTileAsOf("#03", (window.DUI_GOAL_DATA && window.DUI_GOAL_DATA.updatedAt) || g.updatedAt);
     return `<button type="button" class="kpi-goal-card kpi-stat-target-bar kpi-verified kpi-aug-updated" data-kpi-focus="#03">
       ${statusCorner(true, autoAsOf)}
@@ -4424,7 +4473,8 @@
       </div>
       ${goalTrackRows([
         ["Pace", paceCell],
-        ["Total", `${total}/${target}`]
+        ["Total", `${total}/${target}`],
+        ["Est. revenue", `<span title="${escapeHtml(revenueTitle)}">${fmtMoney(estRev)} / ${fmtMoney(estRevGoal)}</span>`]
       ])}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
       ${kpiRefMark("#03")}
@@ -5328,17 +5378,15 @@
     const deltaPp = pct != null && priorPct != null ? Math.round(pct - priorPct) : null;
     const ready = pct != null && Number.isFinite(pct);
     const hit = ready && pct >= target;
-    const gauge = ready
-      ? halfMoonGauge(Math.min(1, pct / Math.max(target, pct, 1)), "answer-rate-kpi", {
-          valueLabel: `${pct}%`,
-          endLabel: `${target}%`,
-          goalMark: target / Math.max(target, pct, 1),
-          celebrate: hit
-        })
-      : halfMoonGauge(0, "answer-rate-kpi", {
-          valueLabel: "—",
-          endLabel: `${target}%`
-        });
+    const missed = cur
+      ? (cur.weekdayMissed != null ? Number(cur.weekdayMissed) : Number(cur.missed))
+      : null;
+    const missedReady = missed != null && Number.isFinite(missed);
+    const valueHtml = ready
+      ? `<p class="kpi-answer-rate-value">${pct}%</p>
+         <p class="kpi-answer-rate-missed">${missedReady ? `${missed} missed` : "—"}</p>`
+      : `<p class="kpi-answer-rate-value">—</p>
+         <p class="kpi-answer-rate-missed">—</p>`;
     const momHtml = deltaPp == null
       ? "—"
       : `<span class="kpi-mom-change ${deltaPp >= 0 ? "kpi-mom-up" : "kpi-mom-down"}">${
@@ -5346,12 +5394,13 @@
         }</span>`;
     const fresh = ready;
     const answerAsOf = resolveTileAsOf("answer-rate");
-    return `<button type="button" class="kpi-goal-card kpi-stat-gauge${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}${!hit && ready ? " kpi-stat-attention" : ""}" data-kpi-focus="answer-rate" aria-label="Weekday answer rate ${ready ? pct + "%" : "unavailable"} of ${target}% · year avg ${yearAvg != null ? yearAvg + "%" : "—"} · vs last month ${deltaPp == null ? "—" : deltaPp + " pp"}">
+    const ariaMissed = missedReady ? `${missed} missed` : "missed unavailable";
+    return `<button type="button" class="kpi-goal-card kpi-stat-answer-rate${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}${!hit && ready ? " kpi-stat-attention" : ""}" data-kpi-focus="answer-rate" aria-label="Weekday answer rate ${ready ? pct + "%" : "unavailable"} · ${ariaMissed} · year avg ${yearAvg != null ? yearAvg + "%" : "—"} · vs last month ${deltaPp == null ? "—" : deltaPp + " pp"}">
       ${periodFreshMark(fresh, fresh, ready ? `${pct}%` : "—", answerAsOf)}
       ${kpiHelpBtn("answer-rate")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Answer Rate")}
-        ${metricWithDeltaHtml(gauge, null)}
+        ${valueHtml}
       </div>
       ${goalTrackRows([
         ["Year avg", yearAvg == null ? "—" : `${yearAvg}%`],
@@ -5954,7 +6003,7 @@
 
   /** Est. collectible / case for ROAS · Contact_09-01 mix × 80%. */
   const ROAS_COLLECTIBLE_PER_CASE = 4346;
-  const ROAS_TARGET_X = 5;
+  const ROAS_TARGET_X = 10;
 
   /** Tukey high fence · months above Q3 + 1.5×IQR. March excluded from callouts. */
   function roasHighOutlierMonths(rows) {
@@ -5995,7 +6044,9 @@
       const collectible =
         cases == null ? null : Math.round(cases * ROAS_COLLECTIBLE_PER_CASE);
       let roas = null;
-      if (collectible != null && media != null && media > 0) {
+      /* Skip Search $0 months — LSA-only media inflates ROAS. Mar 2026 = 17 × $4,346 ÷ $921 ≈ 80×. */
+      const searchOn = search != null && search > 0;
+      if (collectible != null && media != null && media > 0 && searchOn) {
         roas = Math.round((collectible / media) * 10) / 10;
       }
       return {
@@ -6037,7 +6088,7 @@
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
       const isOutlier = outliers.has(String(r.month));
-      const fill = v >= ROAS_TARGET_X ? "var(--gg-positive)" : v >= 4 ? "var(--gg-royal-mid, #5b2d91)" : "var(--gg-watch, #c9a227)";
+      const fill = "#64748b";
       const wash = isOutlier
         ? `<rect x="${x - 6}" y="${pad.t}" width="${barW + 12}" height="${plotH}" rx="6" fill="rgba(58,26,110,0.1)"/>`
         : "";
@@ -6092,19 +6143,10 @@
     const outlierNote = outliers.size
       ? `<p class="kpi-table-note">Outlier months sit above the Tukey high fence · ${[...outliers].map(m => escapeHtml(m)).join(", ")}. Often Search media near $0 inflates the ratio.</p>`
       : "";
-    const outlierLegend = outliers.size
-      ? `<li><span class="kpi-stack-swatch" style="background:#3a1a6e" aria-hidden="true"></span><span>Outlier month</span></li>`
-      : "";
     return chartBlock({
       helpId: "roas-monthly",
       title: "Return on Marketing Spend",
       chart: roasMonthlyChart(rows),
-      legend: `<ul class="kpi-stack-legend" aria-label="ROAS marks">
-        <li><span class="kpi-stack-swatch" style="background:var(--gg-positive)" aria-hidden="true"></span><span>At or above ${ROAS_TARGET_X}× target</span></li>
-        <li><span class="kpi-stack-swatch" style="background:var(--gg-royal-mid, #5b2d91)" aria-hidden="true"></span><span>4×–under target</span></li>
-        <li><span class="kpi-stack-swatch" style="background:var(--gg-watch, #c9a227)" aria-hidden="true"></span><span>Below 4× watch</span></li>
-        ${outlierLegend}
-      </ul>`,
       table: `${roasMonthlyTable(rows)}${outlierNote}${sourceFootnote("roas-monthly")}`
     });
   }
@@ -6132,6 +6174,8 @@
     const phone = DATA.phoneByMonth || {};
     const yelpBy = (DATA.yelpBaseline && DATA.yelpBaseline.byMonth) || {};
     const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
+    /* Yelp answer rate stays on file at 40% baseline · add into Avg % next month. */
+    const includeYelpInAvg = false;
     const order = ["May", "Jun", "Jul", "Aug", "Sep"];
     const partial = { Aug: true, Sep: true };
     return order.filter(k => phone[k] || findLsaEfficiencyMonth(k) || yelpBy[k] || yelpBy[String(k).toLowerCase()]).map(k => {
@@ -6157,7 +6201,9 @@
       const yelpPct = yelpCalls > 0
         ? Math.round((yelpAnswered / yelpCalls) * 100)
         : null;
-      const channelPcts = [searchPct, lsaPct, yelpPct].filter(v => v != null && Number.isFinite(v));
+      const channelPcts = includeYelpInAvg
+        ? [searchPct, lsaPct, yelpPct].filter(v => v != null && Number.isFinite(v))
+        : [searchPct, lsaPct].filter(v => v != null && Number.isFinite(v));
       const avgPct = channelPcts.length
         ? Math.round(channelPcts.reduce((sum, v) => sum + v, 0) / channelPcts.length)
         : null;
@@ -6212,11 +6258,10 @@
       const bh = Math.max(4, (plotH * v) / max);
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
-      const hit = v >= target;
-      const fill = hit ? "var(--gg-positive)" : "var(--gg-negative)";
+      const fill = "#64748b";
       return `<g>
         <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4" fill="${fill}"/>
-        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total" style="fill:${fill}">${v}%</text>
+        <text x="${x + barW / 2}" y="${y - 8}" text-anchor="middle" class="kpi-chart-total">${v}%</text>
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
@@ -6235,15 +6280,13 @@
         "Month",
         "Avg %",
         "Search %",
-        "LSA %",
-        "Yelp %"
+        "LSA %"
       ],
       newestFirst(rows || []).map(r => [
         escapeHtml(r.month),
         r.avgPct == null ? "—" : `${r.avgPct}%`,
         r.searchPct == null ? "—" : `${r.searchPct}%`,
-        r.lsaPct == null ? "—" : `${r.lsaPct}%`,
-        r.yelpPct == null ? "—" : `${r.yelpPct}%`
+        r.lsaPct == null ? "—" : `${r.lsaPct}%`
       ])
     );
   }
@@ -6251,18 +6294,12 @@
   function answerRatePanelHtml() {
     const rows = answerRateRows();
     if (!rows.length) return "";
-    const target = (DATA.phoneIntake && DATA.phoneIntake.targetPct) || 90;
-    const note = `<p class="kpi-table-note">Search % = weekday answered ÷ weekday calls from Call details. Weekends excluded. Avg % = mean of available channels that month. LSA = Charged ÷ Leads. Yelp = answered ÷ Yelp calls when calls &gt; 0. LSA and Yelp stay full-week until day-of-week splits exist. Target ${target}%.</p>`;
     return chartBlock({
       focus: "#21",
       help: false,
       title: "Answer Rate",
       chart: answerRateChart(rows),
-      legend: `<ul class="kpi-stack-legend" aria-label="Answer rate marks">
-        <li><span class="kpi-stack-swatch" style="background:var(--gg-positive)" aria-hidden="true"></span><span>At or above ${target}% target</span></li>
-        <li><span class="kpi-stack-swatch" style="background:var(--gg-negative)" aria-hidden="true"></span><span>Below ${target}% target</span></li>
-      </ul>`,
-      table: `${answerRateTable(rows)}${note}${sourceFootnote("answer-rate")}`
+      table: `${answerRateTable(rows)}${sourceFootnote("answer-rate")}`
     });
   }
 
@@ -6272,7 +6309,7 @@
     return `<section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-answer-rate" data-feedback-label="Answer rate">
       ${statusCorner(true)}
       ${kpiHelpBtn("answer-rate")}
-      ${kpiSectionStaticHead("Answer Rate", "Avg of Search · LSA · Yelp · target ≥ 90%")}
+      ${kpiSectionStaticHead("Answer Rate", "Avg of Search · LSA · target ≥ 90% · Yelp next month")}
       <div class="kpi-section-body">
         <div class="data-chart-table-stack">
           ${panel}
@@ -6403,7 +6440,6 @@
   /** Blended 2026 case forecast: prior-year H2 seasonality + current H1 run rate. */
   function caseForecastPanelHtml() {
     const forecast = [
-      { month: "Sep", cases: 14 },
       { month: "Oct", cases: 15 },
       { month: "Nov", cases: 12 },
       { month: "Dec", cases: 14 }
@@ -6415,7 +6451,8 @@
       { month: "May", cases: 22 },
       { month: "Jun", cases: 36 },
       { month: "Jul", cases: 35 },
-      { month: "Aug*", cases: 19 }
+      { month: "Aug", cases: 20 },
+      { month: "Sep*", cases: 14 }
     ];
     const rows = [
       ...actual.map(r => ({ ...r, forecast: false })),
@@ -6449,11 +6486,11 @@
     const dividerX = pad.l + actual.length * slot;
     const actualCenter = pad.l + (actual.length * slot) / 2;
     const forecastCenter = dividerX + (forecast.length * slot) / 2;
-    const chart = `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="2026 cases: February through July actual, then August through December forecast, oldest to newest">
+    const chart = `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="2026 cases: February through September actual, then October through December forecast, oldest to newest">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}
-      <text x="${actualCenter}" y="24" text-anchor="middle" class="kpi-chart-total">Completed · Feb → Jul</text>
-      <text x="${forecastCenter}" y="24" text-anchor="middle" class="kpi-chart-total">Forecast · Aug → year end</text>
+      <text x="${actualCenter}" y="24" text-anchor="middle" class="kpi-chart-total">Completed · Feb → Sep*</text>
+      <text x="${forecastCenter}" y="24" text-anchor="middle" class="kpi-chart-total">Forecast · Oct → year end</text>
       <line x1="${dividerX}" y1="32" x2="${dividerX}" y2="${h - pad.b + 8}" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="4 6"/>
       ${bars}
       <text x="15" y="${pad.t + plotH / 2}" text-anchor="middle" transform="rotate(-90 15 ${pad.t + plotH / 2})" class="kpi-chart-axis">Cases</text>
@@ -6476,7 +6513,7 @@
       <p class="data-formula-line">Seasonal H2 = 2025 H2 (57) × 2026/2025 H1 factor (116 ÷ 121) = 54 cases</p>
       <p class="data-formula-line">Run-rate H2 = 2026 H1 average (~19.3/mo) × 6 = 116 cases</p>
       <p class="data-formula-line">Blended H2 = (54 seasonal + 116 run-rate) ÷ 2 = 85 cases · full year = 116 actual H1 + 85 forecast H2 = 201</p>
-      <p class="data-warning-note">Jul 35 and Aug 20 are actuals from Contact_09-10-2026 Contact group=Client. Sep* 9 through 2026-09-18 from Contact_09-18-2026. Oct–Dec remain estimates until those months close.</p>`;
+      <p class="data-warning-note">Jul 35 and Aug 20 are actuals from Contact_09-10-2026 Contact group=Client. Sep* 14 through 2026-09-23 from Contact_09-23-2026. Oct–Dec remain estimates until those months close.</p>`;
   }
 
   function expensePaceGraphHtml() {
