@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260924-publish-loe-lsa-auto";
+  const RENDER_VER = "20260924-publish-funnel-cpc";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -242,8 +242,8 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel",
-      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Direct contacts add every lead channel on file: Search + LSA + HubSpot forms + Yelp + Justia. Breakdown table shows contacts by channel. Not channel ROI.",
-      formula: "May 118 = 39 + 72 + 0 + 0 + 7. Jun 234 = 138 + 83 + 5 + 2 + 6. Jul 279 = 131 + 132 + 4 + 6 + 6. Aug 96 = 25 + 61 + 0 + 10 + 0. Sep* from channelMonths."
+      desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Direct contacts add every lead channel on file: Search + LSA + HubSpot forms + Yelp + Justia. Breakdown table shows contacts and cost per conversion by channel. Cost per conversion = channel spend ÷ contacts. Not channel ROI.",
+      formula: "May 118 = 39 + 72 + 0 + 0 + 7. Jun 234 = 138 + 83 + 5 + 2 + 6. Jul 279 = 131 + 132 + 4 + 6 + 6. Aug 96 = 25 + 61 + 0 + 10 + 0. Sep* from channelMonths. Cost per conversion = spend ÷ contacts per leg."
     },
     "financial": {
       title: "#09 Financials",
@@ -2912,24 +2912,65 @@
     ];
   }
 
+  function salesCostFunnelChannelSpend(meta) {
+    const m = meta || tileMonthMeta();
+    const ch = m.ch || {};
+    const parts = salesCostFunnelContactParts(m);
+    const ads = (DATA.funnelAds && DATA.funnelAds[m.key]) || {};
+    const adsSpend = ads.searchSpendLock != null ? Number(ads.searchSpendLock) : null;
+    const searchSpend = ch.searchSpend != null
+      ? Number(ch.searchSpend) || 0
+      : (adsSpend != null ? adsSpend : 0);
+    const lsaSpend = Number(ch.lsaSpend) || 0;
+    const yelpSpend = Number(ch.yelpSpend) || 0;
+    const formFee = parts.forms > 0 ? Number(DATA.websiteHubspotMonthlyFromJun) || 0 : 0;
+    const justiaSpend = parts.justia > 0
+      ? (ch.justiaSpend != null ? Number(ch.justiaSpend) || 0 : Number(DATA.referralSitesMonthly) || 0)
+      : 0;
+    return {
+      parts,
+      search: searchSpend,
+      lsa: lsaSpend,
+      forms: formFee,
+      yelp: yelpSpend,
+      justia: justiaSpend,
+      site: 0,
+      total: searchSpend + lsaSpend + formFee + yelpSpend + justiaSpend
+    };
+  }
+
+  function salesCostFunnelCostPerContact(spend, contacts) {
+    if (!contacts || spend == null || !Number.isFinite(Number(spend)) || Number(spend) <= 0) {
+      return "—";
+    }
+    return fmtMoney(Number(spend) / contacts);
+  }
+
   function salesCostFunnelChannelBreakdownTable() {
-    const parts = salesCostFunnelContactParts();
+    const pack = salesCostFunnelChannelSpend();
+    const parts = pack && pack.parts;
     if (!parts || !parts.known) return "";
+    const row = (label, contacts, spend) => [
+      label,
+      String(contacts),
+      salesCostFunnelCostPerContact(spend, contacts)
+    ];
     const rows = [
-      ["Search", String(parts.search)],
-      ["LSA", String(parts.lsa)],
-      ["HubSpot", String(parts.forms)],
-      ["Yelp", String(parts.yelp)],
-      ["Justia", String(parts.justia)]
+      row("Search", parts.search, pack.search),
+      row("LSA", parts.lsa, pack.lsa),
+      row("HubSpot", parts.forms, pack.forms),
+      row("Yelp", parts.yelp, pack.yelp),
+      row("Justia", parts.justia, pack.justia)
     ];
     if (parts.siteKnown || parts.site > 0) {
-      rows.push(["Pav.Law website", String(parts.site)]);
+      rows.push(row("Pav.Law website", parts.site, pack.site));
     }
     rows.push([
       '<span class="kpi-table-total">Total</span>',
-      `<span class="kpi-table-total">${parts.total}</span>`
+      `<span class="kpi-table-total">${parts.total}</span>`,
+      `<span class="kpi-table-total">${salesCostFunnelCostPerContact(pack.total, parts.total)}</span>`
     ]);
-    return kpiDetailTable(["Channel", "Contacts"], rows);
+    return kpiDetailTable(["Channel", "Contacts", "Cost per conversion"], rows);
   }
 
   function salesCostFunnelSvg(stages) {
