@@ -2063,7 +2063,6 @@ window.PROJECT_DATA = {
     {
       "priorityGroup": "AdHoc",
       "fee": 1600,
-      "estimateNote": "Includes Pav Law swag team store for direct item orders. Product cost stays with Pav.",
       "invoiceCount": 3,
       "status": "recommended",
       "campaignType": "Print & Production",
@@ -2080,11 +2079,6 @@ window.PROJECT_DATA = {
         "Dress shirts · socks · ties",
         "Mugs / tumblers",
         "Pav Law swag team store · direct orders"
-      ],
-      "hubSpotParts": [
-        "Lead source · Light word-of-mouth logging when a piece is tracked.",
-        "Cost tracking · Optional cost line for referral or review programs when measuring ROI.",
-        "Commerce · Optional tags if Pav Law swag team store orders connect to HubSpot later."
       ],
       "abQuestions": [],
       "kpiRefs": [],

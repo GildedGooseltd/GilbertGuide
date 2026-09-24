@@ -5,7 +5,6 @@
 | -------------- | ------------------------------------------------------------------------- |
 | Priority group | AdHoc                                                                     |
 | Fee            | 1600                                                                      |
-| Estimate note  | Includes Pav Law swag team store for direct item orders. Product cost stays with Pav. |
 | Invoice count  | 3                                                                         |
 | Status         | Recommended                                                               |
 | Campaign type  | Print & Production                                                        |
@@ -28,14 +27,6 @@ Not urgent on its own. If you want holiday designs for clients or the team, it i
 - Dress shirts · socks · ties
 - Mugs / tumblers
 - Pav Law swag team store · direct orders
-
-
-
-## HubSpot Application
-
-- Lead source · Light word-of-mouth logging when a piece is tracked.
-- Cost tracking · Optional cost line for referral or review programs when measuring ROI.
-- Commerce · Optional tags if Pav Law swag team store orders connect to HubSpot later.
 
 
 
