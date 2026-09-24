@@ -326,16 +326,51 @@
       color: var(--gg-brown);
       line-height: 1.3;
     }
+    .project-tile-focus-required {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .project-tile-focus-required .required-icon {
+      width: 1.15rem;
+      height: 1.15rem;
+      background: rgba(180, 35, 24, 0.12);
+      border-color: #b42318;
+      color: #b42318;
+    }
+    .project-tile-focus-required .required-icon svg {
+      width: 0.62rem;
+      height: 0.62rem;
+    }
     .project-tile-cost {
       margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 400;
       color: var(--gg-royal);
+      width: 100%;
+    }
+    .project-tile-cost-amount {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--gg-royal);
+    }
+    .project-tile-cost-period {
+      font-style: normal;
+      font-weight: 400;
+      text-align: right;
+      margin-left: auto;
+      color: var(--gg-brown);
+      white-space: nowrap;
     }
     .project-tile-cost-estimate,
     .project-overview-cost-estimate {
-      display: inline-flex;
-      align-items: center;
+      display: flex;
+      align-items: baseline;
       gap: 0.35rem;
       color: var(--gg-negative, #b42318);
     }
@@ -343,7 +378,8 @@
     .project-overview-cost-estimate .project-tile-cost-amount,
     .calc-quote-estimate {
       color: var(--gg-negative, #b42318);
-      font-weight: 800;
+      font-weight: 400;
+      font-style: italic;
     }
     .project-tile-summary {
       margin: 0.15rem 0 0;
@@ -3135,20 +3171,88 @@
       display: block;
       white-space: nowrap;
     }
+    .calc-monthly-total {
+      margin-top: 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius, 8px);
+      border: 1px solid var(--gg-royal-border, var(--border));
+      background: var(--gg-royal-dim, rgba(58, 26, 110, 0.06));
+    }
+    .calc-monthly-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+    .calc-monthly-total-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gg-royal-deep, var(--gg-royal));
+    }
+    .calc-monthly-total-amount {
+      font-size: 1.15rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--gg-royal-deep, var(--gg-royal));
+      white-space: nowrap;
+    }
+    .calc-monthly-total-detail,
+    .calc-monthly-total-empty {
+      margin: 0.4rem 0 0;
+      font-size: var(--font-min-rem);
+      line-height: 1.4;
+      color: var(--gg-brown);
+    }
+    .calc-monthly-total-detail + .calc-monthly-total-detail {
+      margin-top: 0.35rem;
+    }
+    .calc-monthly-total-detail-note {
+      font-style: italic;
+    }
+    .calc-month-plan {
+      width: 100%;
+      margin: 0.65rem 0 0.15rem;
+      border-collapse: collapse;
+      font-size: var(--font-min-rem);
+      font-variant-numeric: tabular-nums;
+    }
+    .calc-month-plan th,
+    .calc-month-plan td {
+      padding: 0.35rem 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gg-royal-border, rgba(58, 26, 110, 0.18));
+      color: var(--gg-brown);
+    }
+    .calc-month-plan th {
+      font-weight: 700;
+      color: var(--gg-royal-deep, var(--gg-royal));
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .calc-month-plan td.calc-month-plan-num,
+    .calc-month-plan th:not(:first-child) {
+      text-align: right;
+    }
+    .calc-month-plan td.calc-month-plan-total {
+      font-weight: 700;
+      color: var(--gg-royal-deep, var(--gg-royal));
+    }
+    .calc-month-plan-ongoing {
+      font-weight: 500;
+      font-size: 0.85em;
+      color: var(--gg-brown);
+      opacity: 0.85;
+    }
+    .calc-month-plan tbody tr:last-child td {
+      border-bottom: none;
+    }
     .calc-quote-scroll.pav-priorities-scroll {
       overflow-x: hidden;
     }
     .calc-quote-table tr.calc-row-next-month .cart-proj-chk {
       opacity: 0.4;
       filter: grayscale(0.35);
-    }
-    .calc-quote-table tbody tr.calc-row-deselected {
-      opacity: 0.48;
-      filter: grayscale(0.5);
-    }
-    .calc-quote-table tbody tr.calc-row-deselected .cart-proj-chk {
-      opacity: 1;
-      filter: none;
     }
     .calc-quote-table th.col-score,
     .calc-quote-table td.col-score {
@@ -6522,11 +6626,11 @@
 
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20260918-swag-focus"></script>
+  <script src="projects-data.js?v=20260923-swag-1600"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20260812-auto-traffic19"></script>
-  <script src="kpi-report.js?v=20260920-revenue-scale-marks"></script>
+  <script src="kpi-report.js?v=20260922-cpr-digital-calls"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20260918-invoice-select"></script>
+  <script src="app.js?v=20260923-payment-schedule"></script>
 </body>
 </html>
