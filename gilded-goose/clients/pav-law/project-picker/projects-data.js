@@ -1830,7 +1830,7 @@ window.PROJECT_DATA = {
     },
     {
       "priorityGroup": 1,
-      "fee": 3800,
+      "fee": 4800,
       "status": "recommended",
       "ongoingFee": 900,
       "durationWeeks": 8,
@@ -1857,7 +1857,7 @@ window.PROJECT_DATA = {
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Ad Expansion",
-      "estCostLabel": "$3,800 + $900/mo",
+      "estCostLabel": "$4,800 + $900/mo",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
       "feeEstimate": 3400,
@@ -1881,7 +1881,7 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -400,
+      "feeEstimateDelta": -1400,
       "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.10 (4.72 units) · complexity ×1"
     },
     {
@@ -1987,35 +1987,99 @@ window.PROJECT_DATA = {
     },
     {
       "priorityGroup": "AdHoc",
-      "feeUncertain": true,
-      "fee": 1200,
-      "feeMax": 1700,
-      "estimateNote": "The cost is hard to estimate without knowing how many products are needed",
+      "fee": 2200,
+      "status": "available",
+      "durationWeeks": 6,
+      "invoiceCount": 3,
+      "category": "Brand / Physical",
+      "campaignType": "Preparedness Kit · Print",
+      "id": "SafetyFirst",
+      "title": "Safety First Kit Campaign",
+      "tldr": "Safety First is a Pav Law brand campaign built around a small “just in case” kit. The pitch is practical: people forget the boring essentials until they need them. The kit puts useful items and Pav Law backup-lawyer info in one place so the firm shows up as prepared help, not only as a crisis Google search.",
+      "description": "Safety First is a Pav Law brand campaign built around a small “just in case” kit. The pitch is practical: people forget the boring essentials until they need them. The kit puts useful items and Pav Law backup-lawyer info in one place so the firm shows up as prepared help, not only as a crisis Google search.\n\nKit contents to design and source. Final SKU mix locks with Andrew after samples.\n\n- Condoms · discreet quantity · adult personal preparedness\n- Hand cleaner · travel size\n- Wet wipes · travel pack\n- Car safety basics · examples: seat-belt reminder card, tire-pressure / spare-tire checklist card, emergency flashlight sticker or mini light if budget allows\n- Backup lawyer card · Pav Law phone 719-888-7888 · short “if you are charged or stopped” next steps · QR to a HubSpot landing or pav.law form when live\n\nDistribution ideas. Pick one primary path for the first run.\n\n- Glovebox or insurance-sleeve companion beside the winter mailer\n- Event / partner leave-behind where buyable or relationship channels allow\n- New-client onboarding thank-you insert\n- College or nightlife adjacent placements only when AdultAds or LawyerRef paths are cleared · never on survivor or victim-advocacy properties\n\nConsulting fee covers concept, copy, card design, vendor shortlist, sample kit, and a one-page distribution plan. Product, packaging, and fulfillment stay client vendor cost on top of the fee.\n\nSeparate from Winter Seasonal glovebox mail and winter safety email. Can share print vendors and list timing with those projects when useful.",
+      "valueAdded": [
+        "Safety First is a Pav Law brand campaign built around a small “just in case” kit. The pitch is practical: people forget the boring essentials until they need them. The kit puts useful items and Pav Law backup-lawyer info in one place so the firm shows up as prepared help, not only as a crisis Google search.",
+        "Kit contents to design and source. Final SKU mix locks with Andrew after samples.",
+        "Condoms · discreet quantity · adult personal preparedness",
+        "Hand cleaner · travel size",
+        "Wet wipes · travel pack",
+        "Car safety basics · examples: seat-belt reminder card, tire-pressure / spare-tire checklist card, emergency flashlight sticker or mini light if budget allows",
+        "Backup lawyer card · Pav Law phone 719-888-7888 · short “if you are charged or stopped” next steps · QR to a HubSpot landing or pav.law form when live",
+        "Distribution ideas. Pick one primary path for the first run.",
+        "Glovebox or insurance-sleeve companion beside the winter mailer",
+        "Event / partner leave-behind where buyable or relationship channels allow",
+        "New-client onboarding thank-you insert",
+        "College or nightlife adjacent placements only when AdultAds or LawyerRef paths are cleared · never on survivor or victim-advocacy properties",
+        "Consulting fee covers concept, copy, card design, vendor shortlist, sample kit, and a one-page distribution plan. Product, packaging, and fulfillment stay client vendor cost on top of the fee.",
+        "Separate from Winter Seasonal glovebox mail and winter safety email. Can share print vendors and list timing with those projects when useful."
+      ],
+      "hubSpotParts": [
+        "Marketing Hub · Landing or form for QR · `pl_lead_source` value such as Safety First kit or Event when used",
+        "CRM · Optional tag when a contact mentions the kit or card",
+        "No HubSpot Calling build required for the kit itself"
+      ],
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "unpublished",
+      "shortTitle": "Safety First Kit",
+      "estCostLabel": "$2,200",
+      "paymentPlanLabel": "30%",
+      "depositPct": 0.3,
+      "feeEstimate": 4200,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "creative_brand",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2100,
+      "feeEstimateNationalMid": 3300,
+      "feeEstimateScope": {
+        "raw": 17,
+        "parts": {
+          "valueAdd": 14,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 3
+        }
+      },
+      "feeEstimateComplexity": 1.232,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": 2000,
+      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.31 (17 units) · complexity ×1.232"
+    },
+    {
+      "priorityGroup": "AdHoc",
+      "fee": 1600,
+      "estimateNote": "Includes Pav Law swag team store for direct item orders. Product cost stays with Pav.",
       "invoiceCount": 3,
       "status": "recommended",
       "campaignType": "Print & Production",
       "id": "SwagPrint",
       "title": "Printables, Swag & Apparel",
-      "tldr": "Updated stationery and images are needed as the team has expanded.",
-      "description": "Updated stationery and images are needed as the team has expanded.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Padfolios / envelopes\n- Apparel",
+      "tldr": "Updated stationery and images are needed as the team has expanded. Pav Law swag team store for direct order of onboard and team items. Designs can be finished now and ordered later when stock is needed. Store keeps reorders simple to manage and carries margin on each order.",
+      "description": "Updated stationery and images are needed as the team has expanded. Pav Law swag team store for direct order of onboard and team items. Designs can be finished now and ordered later when stock is needed. Store keeps reorders simple to manage and carries margin on each order.\n\nProduct orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.\n\nNot urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.\n\n- Laptop cases · Pav Law with contact details\n- Business cards · Jack Strong\n- Dress shirts · socks · ties\n- Mugs / tumblers\n- Pav Law swag team store · direct orders",
       "valueAdded": [
-        "Updated stationery and images are needed as the team has expanded.",
+        "Updated stationery and images are needed as the team has expanded. Pav Law swag team store for direct order of onboard and team items. Designs can be finished now and ordered later when stock is needed. Store keeps reorders simple to manage and carries margin on each order.",
         "Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.",
         "Not urgent on its own. If you want holiday designs for clients or the team, it is easier, faster, and cheaper to do those designs at the same time, then order as needed.",
         "Laptop cases · Pav Law with contact details",
         "Business cards · Jack Strong",
-        "Padfolios / envelopes",
-        "Apparel"
+        "Dress shirts · socks · ties",
+        "Mugs / tumblers",
+        "Pav Law swag team store · direct orders"
       ],
       "hubSpotParts": [
         "Lead source · Light word-of-mouth logging when a piece is tracked.",
-        "Cost tracking · Optional cost line for referral or review programs when measuring ROI."
+        "Cost tracking · Optional cost line for referral or review programs when measuring ROI.",
+        "Commerce · Optional tags if Pav Law swag team store orders connect to HubSpot later."
       ],
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Printables & Swag",
-      "estCostLabel": "$1,200–$1,700?",
+      "estCostLabel": "$1,600",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
       "feeEstimate": 1800,
@@ -2025,22 +2089,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 8.21,
+        "raw": 10.31,
         "parts": {
-          "valueAdd": 7,
+          "valueAdd": 8,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.21
+          "descUnits": 2.31
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 600,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.18 (8.21 units) · complexity ×1"
+      "feeEstimateDelta": 200,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.22 (10.31 units) · complexity ×1"
     },
     {
       "priorityGroup": "AdHoc",
@@ -2097,22 +2161,26 @@ window.PROJECT_DATA = {
       "invoiceCount": 5,
       "startDate": "2026-10-01",
       "category": "Paid Media",
-      "campaignType": "Reviews",
+      "campaignType": "Reviews & Leads",
       "id": "Yelp",
       "title": "Yelp Ads",
-      "tldr": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-      "description": "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.\n\n- Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.\n- Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.\n- Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.\n- Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out.",
+      "tldr": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
+      "description": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.\n\n- **HubSpot:**\n  - **Phone Routing & Tracking:** Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.\n  - **Email Nurture Campaign:** Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.\n  - **Tracking & Dashboards:** Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.\n- **Yelp Messaging and Content:** Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes.\n- **Insurance Envelope and Handout:** Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.",
       "valueAdded": [
-        "Yelp page and ads were updated and tested over the last month with solid results on a fairly low budget. Yelp is a strong lead channel and can do better with a few upgrades.",
-        "Customer engagement: Message response is strong when managed from a personal phone. To scale, a team member who knows the firm should respond and log data. Route Yelp to a HubSpot number that rings Gabriel so leads land in HubSpot and more HubSpot tools can run without flooding Gabriel at once.",
-        "Email nurture for reviews: Add more past clients to the current nurture campaign. Steady reviews over time matter on Yelp so the page does not look like a batch push. The campaign already sends across a two-month window. Keep adding new clients, then improve content with A/B tests and light copy tweaks.",
-        "Yelp messaging and content: Some reviews still need owner replies that highlight Pav Law services and approach. Test announcements and refresh portfolio and FAQ content.",
-        "Insurance envelope and handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew can hand these out."
+        "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
+        "**HubSpot:**",
+        "- **Phone Routing & Tracking:** Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.",
+        "- **Email Nurture Campaign:** Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.",
+        "- **Tracking & Dashboards:** Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.",
+        "**Yelp Messaging and Content:** Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes.",
+        "**Insurance Envelope and Handout:** Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out."
       ],
       "hubSpotParts": [
-        "CRM · Stores Yelp leads, messages, and call outcomes so intake is not stuck in a personal inbox.",
-        "Tasks and workflows · Creates follow-up tasks and ownership when a Yelp lead arrives, including routing to Gabriel when the HubSpot number is live.",
-        "Marketing Hub · Tags Yelp as its own channel so spend and leads can be compared to Search and LSA in reporting."
+        "CRM · Yelp lead, message, and call records in one place",
+        "Calling · CH-YELP inbound line rings Jack with mobile call logging",
+        "Tasks and workflows · automatic follow-up tasks and ownership",
+        "Marketing Hub · Yelp as a distinct lead source for channel ROI",
+        "Reporting · Yelp Messages, Calls, and volume on the shared phone inbound dashboard"
       ],
       "abQuestions": [],
       "kpiRefs": [],
@@ -2127,22 +2195,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 7.86,
+        "raw": 9.07,
         "parts": {
-          "valueAdd": 5,
+          "valueAdd": 7,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.86
+          "descUnits": 2.08
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 200,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.18 (7.86 units) · complexity ×1.1"
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.20 (9.07 units) · complexity ×1.1"
     }
   ]
 };
