@@ -4914,8 +4914,8 @@
     const byId = {
       RETAINER: "assets/gigi-thinking.png",
       retainer: "assets/gigi-thinking.png",
-      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-3",
-      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-3",
+      AdEnhance: "assets/google-ads-tile.svg?v=gads-plus-hs-4",
+      Yelp: "assets/yelp-ads-tile.svg?v=yelp-plus-hs-4",
       LegalDirs: "assets/network-internet.svg",
       HolidayAds: "assets/gigi-celebrating.png",
       WinterAds: "assets/gigi-celebrating.png",
@@ -4924,7 +4924,7 @@
       OpsDash: "assets/systems-admin-tile.svg",
       TsMgmt: "assets/systems-admin-tile.svg",
       AdultAds: "assets/gigi-lightbulb-idea.png",
-      SwagPrint: "assets/swag-print-collage.jpg?v=20260920"
+      SwagPrint: "assets/swag-print-collage.jpg?v=20260923-collage2"
     };
     return byId[item?.id] || "assets/gg-shield-emblem.png";
   }
