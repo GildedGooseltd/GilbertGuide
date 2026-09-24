@@ -1,19 +1,23 @@
 # Printables, Swag & Apparel
 
-| Field         | Value                       |
-| ------------- | --------------------------- |
-| Priority group | AdHoc                       |
-| Fee           | 1200-1700*                  |
-| Estimate note | The cost is hard to estimate without knowing how many products are needed |
-| Invoice count | 3                           |
-| Status            | Recommended |
-| Campaign type | Print & Production |
+
+| Field          | Value                                                                     |
+| -------------- | ------------------------------------------------------------------------- |
+| Priority group | AdHoc                                                                     |
+| Fee            | 1600                                                                      |
+| Estimate note  | Includes Pav Law swag team store for direct item orders. Product cost stays with Pav. |
+| Invoice count  | 3                                                                         |
+| Status         | Recommended                                                               |
+| Campaign type  | Print & Production                                                        |
+
 
 ---
 
+
+
 ## Project Overview
 
-Updated stationery and images are needed as the team has expanded.
+Updated stationery and images are needed as the team has expanded. Pav Law swag team store for direct order of onboard and team items. Designs can be finished now and ordered later when stock is needed. Store keeps reorders simple to manage and carries margin on each order.
 
 Product orders generally run $400–$500 with vendor set minimums. Samples are ordered for review. Apparel can be designed and ordered individually.
 
@@ -21,10 +25,28 @@ Not urgent on its own. If you want holiday designs for clients or the team, it i
 
 - Laptop cases · Pav Law with contact details
 - Business cards · Jack Strong
-- Padfolios / envelopes
-- Apparel
+- Dress shirts · socks · ties
+- Mugs / tumblers
+- Pav Law swag team store · direct orders
+
+
 
 ## HubSpot Application
 
 - Lead source · Light word-of-mouth logging when a piece is tracked.
 - Cost tracking · Optional cost line for referral or review programs when measuring ROI.
+- Commerce · Optional tags if Pav Law swag team store orders connect to HubSpot later.
+
+
+
+---
+
+—— Unpublished below ——
+
+## Project Plan
+
+Scope add 09/23/2026: owner onboard merch set + Pav Law swag team store. Design now · order later is fine.
+
+### Fee lock
+
+Final Guide fee: $1,600. Includes design for the onboard kit and Pav Law swag team store for direct item orders. Product and print stay Pav cost. Order margin covers ongoing store ops · do not raise the upfront fee for ecommerce-build comps.
