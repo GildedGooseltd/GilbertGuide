@@ -25,5 +25,19 @@ window.DUI_GOAL_DATA = {
   autoColumns: [
     { label: "DUI", current: 20, vsTarget: true },
     { label: "Traffic", current: 22, vsTarget: false }
-  ]
+  ],
+  /* Est. revenue · case-num cross-ref Contact_09-23 auto stack × Case_balance/list/revenue · 09/24/2026
+     19/42 matched · fill unknowns with kind median DUI $5,500 · Traffic $1,500. Aggregates only. */
+  estRevenue: {
+    ytd: 150300,
+    goal: 170200,
+    duiYtd: 110500,
+    trafficYtd: 39800,
+    matchedN: 19,
+    totalN: 42,
+    duiMedian: 5500,
+    trafficMedian: 1500,
+    asOf: "2026-09-24",
+    note: "19/42 case-number fee matches + median fill · not Contact fee fields"
+  }
 };

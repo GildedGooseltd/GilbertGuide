@@ -2,89 +2,73 @@
 
 Simple name list for LSA + Search staging. Aggregates only. Do not file Contact, Call details caller rows, or LSA inbox Customer names into the repo.
 
-Last Downloads scan: September 18, 2026 evening.
+Last Downloads scan: September 28, 2026 midday.
 
-MyCase fill: ledger_account_activity_report (6) Sep Credits · Trust_account_summary_09-15-2026. Cases still Contact_09-10-2026. Aggregates: [Ad Reports/exports/mycase/as-of-2026-09-15/](../../../Ad Reports/exports/mycase/as-of-2026-09-15/README.md).
+## Sep* snapshot from 09/28 pull
 
-Sep* cases 4 · Credits $66,465 through Sep 15. Aug Client Created recount 20.
+| Source | Newest file | Window / note |
+|---|---|---|
+| Search Campaign | Campaign report (40).csv | Sep 1–28 · live HS cost $12,956 · Phone calls 38 · Clicks 152 · Impr 3,164 |
+| Search Call details | Call details (11).csv | Sep 1–28 · 39 calls · Received 17 · Missed 22 · answer 43.6% · ≥60s 10 · Thu busiest |
+| LSA activities | account_activities_202609 (3).csv | Home Services Ads activity $4,882.56 · line says 18 leads · Sep 1–30 rows |
+| LSA inbox | leads-inbox (22).csv | Sep 1–27 · 44 leads · Charged 15 · Not charged 26 · In review 2 · Credited 1 |
+| Yelp spend | Yelp Ad Analytics for Sep 1, 2026 - Sep 27, 2026.csv | Ad spend $432.67 · 62 clicks · no leads-by-type breakout in this CSV |
+| Contact | Contact_09-23-2026 | Still through 09/23 · no newer Created pull today |
+| Ledger / Trust | ledger (8) · Trust_09-23 | Still through 09/23 · no newer cash pull today |
+| HubSpot forms | — | No form-submit export in today’s Downloads |
 
-Search Sep MTD from Campaign report (37).csv · September 1–18, 2026 · Phone calls 33 · Cost $9,878 · Impr 2,126 · Clicks 118 · live HS Military / DV / NTGUILT.
+Live HS Campaign (40) detail · Sep 1–28:
 
-Call details (6).csv · September 1–10, 2026 · 26 calls · 11 Received · 15 Missed · answered 42%. Answer-rate tiles still use Call details. Lead stack Search count uses Campaign Phone calls for the longer calendar window.
+| Campaign | Cost | Phone calls | Status |
+|---|---|---|---|
+| HS: Military | $5,606.83 | 30 | Eligible · Limited by search volume · learning · some ads policy |
+| HS: DV | $4,043.64 | 2 | Eligible · Limited by search volume · some ads policy |
+| HS: NTGUILT | $3,305.65 | 6 | Eligible · Limited by search volume · learning |
 
-LSA Sep fill from leads-inbox (18) + account_activities_202609: Sep* 15 leads · 2 charged · Home Services Ads activity $1,516.94. No newer LSA inbox since Sep 8.
+LSA note: inbox Sep lead count 44 vs activities rollup “18 leads.” Tile lead stack uses inbox count. LSA spend uses Home Services Ads activity $4,882.56. Sep 27 threshold charge declined once · insufficient funds · then charged on alternate card.
 
-HubSpot Sep forms = 1. No newer form-submit export in Downloads.
-
-Yelp Ads Leads by type screenshots 09/10/2026 + Calls to your business answer rate 40%.
-
-Yelp contacts on the stack = Messages + round(Calls × 40%). Website / Directions stay in raw totals only.
-
-| Month | Messages | Calls | Website | Directions | Raw total | Answered calls | Contacts |
-|---|---|---|---|---|---|---|---|
-| Jun | 2 | 0 | 0 | 0 | 2 | 0 | 2 |
-| Jul | 5 | 2 | 2 | 1 | 10 | 1 | 6 |
-| Aug | 8 | 4 | 4 | 0 | 16 | 2 | 10 |
-| Sep* | 1 | 2 | 2 | 0 | 5 | 1 | 2 |
-
-Ad Analytics spend: Sep 1–9 $33.37 · Aug 11–31 $72.58.
-
-Dash Sep* leads tile = Search 33 + LSA 15 + HubSpot 1 + Yelp 2 = 51.
-
-Refresh later as the month continues: newer Call details through month-end, LSA inbox, Contact Created, HubSpot forms, ledger Credits past Sep 15.
+Also pulled 09/28 for Editor / account work · not tile blockers: Ad group (33) · Ad (19) · Search keyword (53) · Location (10) · Asset association (9) · Ad schedule (7) · Targeted content (4).
 
 ---
 
-## On disk · use these
+## On disk · use these for Sep*
 
 LSA activities
 
-- account_activities_202605 (6).csv
-- account_activities_202606 (1).csv
-- account_activities_202607(2).csv
-- account_activities_202608(3).csv
-- account_activities_202609.csv · Sep* Home Services Ads activity $1,516.94
+- account_activities_202609 (3).csv · newest · Home Services Ads activity $4,882.56
+- older twins (2)/(1)/base kept for history only
 
 LSA inbox
 
-- leads-inbox (12).csv · May + Jun lock
-- leads-inbox(3).csv · Jul full + Aug* through Aug 21
-- leads-inbox (18).csv · Sep calendar through Sep 8 · also carries Jul 11–Aug full · do not overwrite Jul/Aug* locks from this file
+- leads-inbox (22).csv · Sep calendar through Sep 27
+- prior locks: (12) May+Jun · (3) Jul+Aug* · do not overwrite Jul/Aug from newer multi-month files without checking
 
 Search Call details
 
-- Call details.csv · June lock
-- Call details (1).csv · Jul + early Aug*
-- Call details (4).csv · Aug* through Aug 14
-- Call details (5).csv · Sep 1–10
-- Call details (6).csv · Sep 1–10 · newest answer-rate pull · same window as (5)
+- Call details (11).csv · Sep 1–28 · newest answer-rate / ≥60s pull
+- Call details (10).csv · same window twin
 
-Search Campaign / creative
+Search Campaign
 
-- Campaign report (37).csv · September 1–18, 2026 · Impr + Clicks + Phone calls + Cost · live HS Military / DV / NTGUILT
-- Time_series_chart(2026.09.01-2026.09.18).csv · daily Impr/Cost cross-check · sum ≈ $9,878
-- Campaign report (35).csv · September 1–8 · superseded for Sep* tiles by (37)
-- Campaign report (32).csv · All time · lifetime diagnostic only · not Sep month tiles
+- Campaign report (40).csv · September 1–28, 2026 · live HS Military / DV / NTGUILT
 
 Yelp
 
-- Yelp Ad Analytics for Aug 11, 2026 - Sep 9, 2026.csv · spend
-- Desktop / chat screenshot 09/10/2026 · Sep Leads by type tooltip · Messages 1 · Total 5
+- Yelp Ad Analytics for Sep 1, 2026 - Sep 27, 2026.csv · spend only
+- Leads-by-type still needs a screenshot or Leads export · Sep* contacts not refreshed from this spend CSV alone
 
-MyCase aggregates as of September 10, 2026
+MyCase
 
-- new-cases-by-month.csv
-- cash-credits-by-month.csv
-- trust-balance-snapshot.csv
-
-Fee means still from September 1, 2026 folder until a fee recompute is asked.
+- Contact_09-23-2026 · cases through 09/23
+- ledger_account_activity_report (8).csv · Credits through 09/23
+- Trust_account_summary_09-23-2026.csv
 
 ---
 
-## Later refreshes · not blockers tonight
+## Later refreshes · not blockers for a Sep* tile refresh from today
 
-- Call details through Sep 18+ for answered/missed on the full MTD
-- Newer LSA inbox after Sep 8
-- Contact Created after Sep 10
-- HubSpot form-submit export for September
-- ledger Credits after Sep 15
+- Contact Created after 09/23
+- ledger Credits after 09/23
+- HubSpot September form-submit export
+- Yelp Leads by type for Sep 1–27
+- Call details / Campaign through Sep 30 when the month closes
