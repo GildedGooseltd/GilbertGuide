@@ -894,24 +894,26 @@
     bestFitSessionActive = false;
   }
 
-  function calcDateBounds() {
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    const y = now.getFullYear();
-    const max = new Date(y, 11, 31);
-    return { min: toIsoDate(now), max: toIsoDate(max) };
-  }
-
-  /** Quote calculator start dates: 1st · 15th · 30th · from 9/30/2026 through December 2026. */
+  /** Quote calculator start dates: 1st · 15th · 30th · 9/30/2026 through 12/1/2026, then Jan 2027. */
   const CALC_START_DATE_OPTIONS = [
     "2026-09-30",
     "2026-10-15",
     "2026-10-30",
     "2026-11-15",
     "2026-11-30",
-    "2026-12-15",
-    "2026-12-30"
+    "2026-12-01",
+    "2027-01-01",
+    "2027-01-15",
+    "2027-01-30"
   ];
+
+  function calcDateBounds() {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const last = CALC_START_DATE_OPTIONS[CALC_START_DATE_OPTIONS.length - 1];
+    const max = parseIsoDate(last) || new Date(2027, 0, 30);
+    return { min: toIsoDate(now), max: toIsoDate(max) };
+  }
 
   function snapIsoToCalcStartOption(iso) {
     if (iso && CALC_START_DATE_OPTIONS.includes(iso)) return iso;
