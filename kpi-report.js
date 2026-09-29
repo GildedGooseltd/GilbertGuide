@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260928-sep-tiles";
+  const RENDER_VER = "20260928-camp41";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -95,7 +95,7 @@
     },
     "cases-leads-spend": {
       file: "Contact_09-23 · leads-inbox (19) · Call details (9) · Campaign report (39) · account_activities_202609 · HubSpot Sep forms 1 · Yelp Sep Messages 2 Calls 2 Website 4 · Justia Mar–Aug Profile Stats · recheck 2026-09-23",
-      fields: "May–Aug cases/leads/spend on file · May 118 · Jun 234 · Jul 279 · Aug* 96 · Sep* cases 14 · leads 87 = Search 39 + LSA 44 + HubSpot 1 + Yelp 3 + Justia 0 · spend $17,838.68 = Search $12,956.12 + LSA $4,882.56"
+      fields: "May–Aug cases/leads/spend on file · May 118 · Jun 234 · Jul 279 · Aug* 96 · Sep* cases 14 · leads 87 = Search 39 + LSA 44 + HubSpot 1 + Yelp 3 + Justia 0 · spend $18,596.19 = Search $13,713.63 + LSA $4,882.56"
     },
     "sales-cost-funnel": {
       file: "Campaign report (39) Sep 1–23 · Call details (9) · leads-inbox (19) · HubSpot · Yelp · Justia Mar–Aug · channelMonths · recheck 09/23/2026",
@@ -445,8 +445,8 @@
     asOf: "2026-09-28",
     lastUpdated: "2026-09-28",
     updateLabel: "September 2026",
-    updateScope: "Search Campaign (40) Sep 1–28 · Call details (11) · LSA inbox (22) · LSA activities (3) · Yelp spend Sep 1–27 · Contact/ledger/HubSpot/Justia/Yelp leads still 09/23 or earlier · last updated 09/28/2026",
-    source: "Campaign report (40) · Call details (11) · leads-inbox (22) · account_activities_202609 (3) · Yelp Ad Analytics Sep 1–27 · Contact_09-23 · ledger (8) · last updated 09/28/2026",
+    updateScope: "Search Campaign (41) Sep 1–28 · Call details (11) · LSA inbox (22) · LSA activities (3) · Yelp spend Sep 1–27 · MyCase evening PDFs are Trust Summary / wrong Contact report · not Trust activity Credits or Client Created CSV · Contact/ledger still 09/23 · last updated 09/28/2026",
+    source: "Campaign report (41) · Call details (11) · leads-inbox (22) · account_activities_202609 (3) · Yelp Ad Analytics Sep 1–27 · Contact_09-23 · ledger (8) · last updated 09/28/2026",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
       "#01": "2026-09-28",
@@ -550,9 +550,9 @@
         yelpSpend: 432.67,
         justia: 0,
         justiaSpend: null,
-        searchSpend: 12956.12,
+        searchSpend: 13713.63,
         lsaSpend: 4882.56,
-        note: "Search Call details (11) 09/01–09/28/2026 · 39 calls · 17 received / 22 missed · ≥60s 10. Campaign (40) live HS $12,956.12 · Phone 38 · Impr 3,164 · Clicks 152. LSA inbox (22) Sep 1–27 · 44 leads · 15 charged. LSA Home Services Ads $4,882.56 from account_activities_202609 (3). Yelp spend $432.67 Sep 1–27 · contacts still 3 from 09/18 leads-by-type. HubSpot 1 · Justia 0 prior. Cases Contact_09-23 · Sep* 14 · cash ledger (8) through 09/23 · $94,965"
+        note: "Search Call details (11) 09/01–09/28/2026 · 39 calls · 17 received / 22 missed · ≥60s 10. Campaign (41) live HS $13,713.63 · Phone 39 · Impr 3,224 · Interactions 157. LSA inbox (22) Sep 1–27 · 44 leads · 15 charged. LSA Home Services Ads $4,882.56 from account_activities_202609 (3). Yelp spend $432.67 Sep 1–27 · contacts still 3 from 09/18 leads-by-type. HubSpot 1 · Justia 0 prior. Cases Contact_09-23 · Sep* 14 · cash ledger (8) through 09/23 · $94,965. Evening MyCase PDFs 09/28 are Trust Account Summary snapshot + Nurture/Contact report · not Trust activity Credits CSV."
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -586,11 +586,11 @@
         windowNote: "Search ads paused unpaid · no August Campaign calendar"
       },
       Sep: {
-        impressions: 3164,
-        clicks: 152,
+        impressions: 3224,
+        clicks: 157,
         phoneCalls: 39,
-        searchSpendLock: 12956.12,
-        windowNote: "Campaign report (40) 09/01–09/28/2026 · live HS cost $12,956.12 · Phone 38 · Call details (11) 39 calls · answer 17/39"
+        searchSpendLock: 13713.63,
+        windowNote: "Campaign report (41) 09/01–09/28/2026 · live HS cost $13,713.63 · Phone 39 · Interactions 157 · Call details (11) 39 calls · answer 17/39"
       }
     },
     sourceMix: [
@@ -822,7 +822,7 @@
       { month: "Jun", cases: 36, leads: 234, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
       { month: "Jul", cases: 35, leads: 279, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 4 },
       { month: "Aug", cases: 20, leads: 96, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 },
-      { month: "Sep*", cases: 14, leads: 87, spend: 17838.68, lsaSpend: 4882.56, adsSpend: 12956.12, adsLeads: 39, websiteLeads: 1 }
+      { month: "Sep*", cases: 14, leads: 87, spend: 18596.19, lsaSpend: 4882.56, adsSpend: 13713.63, adsLeads: 39, websiteLeads: 1 }
     ],
     /**
      * Justia Profile Stats · Kate 09/18/2026.
