@@ -2,7 +2,7 @@
 
 Simple name list for LSA + Search staging. Aggregates only. Do not file Contact, Call details caller rows, or LSA inbox Customer names into the repo.
 
-Last Downloads scan: September 28, 2026 evening.
+Last Downloads scan: September 28, 2026 · ~6:37 PM.
 
 ## Sep* snapshot from 09/28 pull
 
@@ -13,18 +13,11 @@ Last Downloads scan: September 28, 2026 evening.
 | LSA activities | account_activities_202609 (3).csv | Home Services Ads activity $4,882.56 · line says 18 leads · Sep 1–30 rows |
 | LSA inbox | leads-inbox (22).csv | Sep 1–27 · 44 leads · Charged 15 · Not charged 26 · In review 2 · Credited 1 |
 | Yelp spend | Yelp Ad Analytics for Sep 1, 2026 - Sep 27, 2026.csv | Ad spend $432.67 · 62 clicks · no leads-by-type breakout in this CSV |
-| Contact | Contact_09-23-2026 | Still through 09/23. Evening PDF Contact Report is Nurture Emails last run 06/12 · not Client Created |
-| Ledger / Trust | ledger (8) · Trust_09-23 | Still through 09/23. Evening Trust Account Summary PDF is balance snapshot · not Trust activity Credits by month |
+| Contact | Contact_09-28-2026.csv · 6:35 PM | Client Created Sep* 14 through 09/23 · no new Client creates 09/24–09/28 · on dash |
+| Ledger / Trust | ledger_account_activity_report (9).csv · 6:37 PM | Sep* Credits $100,010 through 09/25 · on dash · W4 week $13,545 |
 | HubSpot forms | — | No form-submit export in today’s Downloads |
 
-Evening MyCase PDFs 09/28 ~6:03 PM · wrong report types for tiles:
-
-- Trust Account Summary · lifetime-style totals · not monthly Credits
-- Contact Report · Nurture Emails / Unfiled · last run Jun 12
-- Case Balance Summary · last run Aug 12
-- Lead Referral Source · last run Aug 12
-
-Need instead: Trust account activity CSV + Contact group=Client Created CSV.
+Case List / Trust Summary still on disk from earlier tonight · not used for #02 or Revenue.
 
 Live HS Campaign (41) detail · Sep 1–28:
 
@@ -68,16 +61,15 @@ Yelp
 
 MyCase
 
-- Contact_09-23-2026 · cases through 09/23
-- ledger_account_activity_report (8).csv · Credits through 09/23
-- Trust_account_summary_09-23-2026.csv
+- Contact_09-28-2026.csv · Client Created · Sep* 14 through 09/23 · #02 source
+- ledger_account_activity_report (9).csv · Credits Sep* $100,010 through 09/25
+- Trust_account_summary_09-28-2026.csv · balance snapshot only · not Revenue tile
+- case_list_report (10).csv · Open Date · not #02
 
 ---
 
-## Later refreshes · not blockers for a Sep* tile refresh from today
+## Later refreshes · not blockers for tonight’s Contact + ledger update
 
-- Contact Created after 09/23
-- ledger Credits after 09/23
 - HubSpot September form-submit export
 - Yelp Leads by type for Sep 1–27
-- Call details / Campaign through Sep 30 when the month closes
+- Call details / Campaign / Contact / ledger through Sep 30 when the month closes
