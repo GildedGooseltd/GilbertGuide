@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20260928-mycase";
+  const RENDER_VER = "20260928-leadavg";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -127,7 +127,7 @@
     "#01": {
       title: "#01 Lead Calls",
       desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid. That is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot forms + Yelp contacts + Justia contacts + Pav.Law website. Yelp contacts = Messages + answered Calls at 40%. Justia contacts = calls + emails allocated across Mar–Aug. Track table breaks out each channel.",
-      formula: "Sep* 87 = Search 39 + LSA 44 + HubSpot 1 + Yelp 3 + Justia 0 + Pav.Law website 0. May–Jul Justia adds calls + emails. Target = floor($100k ÷ revenue/lead) + 1 from complete months."
+      formula: "Sep* 87 = Search 39 + LSA 44 + HubSpot 1 + Yelp 3 + Justia 0 + Pav.Law website 0. May–Jul Justia adds calls + emails. Target = round(average Lead Calls over the last 3 complete months). Not reverse from $100k cash · Trust income is not only new leads."
     },
     "#02": {
       title: "#02 New Cases",
@@ -412,8 +412,8 @@
     }
     if (id === "#01" && DATA.leadsCashGoal) {
       const g = DATA.leadsCashGoal;
-      const months = (g.sampleMonths || []).map(m => `${m.month} ${m.leads} leads / $${m.cash.toLocaleString("en-US")}`).join(" · ") || "—";
-      formula = `${formula} Over-$100k months with leads: ${months}. Cash/lead $${g.cashPerLead.toLocaleString("en-US")}. Need ≥ ${g.needed} leads/mo. ${g.note || ""}`;
+      const months = (g.sampleMonths || []).map(m => `${m.month} ${m.leads}`).join(" · ") || "—";
+      formula = `${formula} Last 3 complete months: ${months}. Average ≥ ${g.needed}. ${g.note || ""}`;
     }
     if (id === "#12" && DATA.directContactCost) {
       const d = DATA.directContactCost;
@@ -464,7 +464,7 @@
     },
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Lead Calls", value: "—", target: "≥ 219", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false, updatedAsOf: "2026-09-28" },
+      { id: "#01", label: "Lead Calls", value: "—", target: "≥ 203", mom: null, count: null, verified: false, hit: false, alert: true, gauge: true, augUpdated: false, updatedAsOf: "2026-09-28" },
       { id: "#02", label: "New Cases", value: "14", target: "≥ 24", mom: null, count: 14, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-09-28" },
       /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Missed Opportunity */
       { id: "#19", label: "Missed Opportunity", value: "—", target: "$0", mom: null, verified: false, alert: false, lostTracker: true, augUpdated: false, archived: true },
@@ -1219,113 +1219,57 @@
   }
 
   /**
-   * #01 target = leads needed so monthly cash clears $100k.
-   * Uses full 2026 months with cash > $100k and a known lead stack (Search+LSA+HubSpot/other).
-   * 2025 May–Jul cleared $100k but have no 2025 lead stack in Guide — noted in help, not in ratio.
+   * #01 target = average incoming leads over the last 3 complete months.
+   * Same stack as the Lead Calls tile · Search + LSA + HubSpot + Yelp + Justia + site.
+   * Not reverse-engineered from $100k Trust Credits · cash is not only new leads.
    */
   function applyLeadsCashGoalTarget() {
-    const GOAL_CASH = 100000;
-    const leadByMonth = {};
-    (DATA.channelMonths || []).forEach(m => {
-      if (!m || /\*/.test(String(m.month || ""))) return;
-      const key = String(m.month).replace(/\*$/, "");
-      leadByMonth[key] = (Number(m.search) || 0) + (Number(m.lsa) || 0) + (Number(m.hubspot) || 0);
-    });
-    (DATA.casesLeadsSpend || []).forEach(r => {
-      if (!r || /\*/.test(String(r.month || ""))) return;
-      const key = String(r.month).replace(/\*$/, "");
-      if (leadByMonth[key] != null) return;
-      const parts = [r.leads, r.adsLeads, r.websiteLeads];
-      if (parts.every(v => v == null)) return;
-      leadByMonth[key] = parts.reduce((s, v) => s + (Number(v) || 0), 0);
-    });
-    /* Lead stacks in Guide are 2026 only — do not join onto 2025 cash months. */
-    const cashRows = (DATA.cashCollected2026Ytd || [])
-      .filter(r => r && !/\*/.test(String(r.month || "")))
-      .map(r => ({ ...r, year: 2026 }));
-    const over = [];
-    cashRows.forEach(r => {
-      const cash = Number(r.credit) || 0;
-      if (cash <= GOAL_CASH) return;
-      const key = String(r.month).replace(/\*$/, "");
-      const leads = leadByMonth[key];
-      if (leads == null || leads <= 0) return;
-      over.push({ month: `${key} ${r.year}`, cash, leads });
-    });
-    const cashOnlyOver = [
-      ...(DATA.cashCollected || []).filter(r => (Number(r.credit) || 0) > GOAL_CASH).map(r => `${r.month} 2025`),
-      ...cashRows.filter(r => (Number(r.credit) || 0) > GOAL_CASH && leadByMonth[String(r.month).replace(/\*$/, "")] == null)
-        .map(r => `${String(r.month).replace(/\*$/, "")} 2026`)
-    ];
-    let cashPerLead = 0;
-    let sampleCash = 0;
-    let sampleLeads = 0;
-    let basis = "";
-    let note = "";
-    if (over.length) {
-      sampleCash = over.reduce((s, m) => s + m.cash, 0);
-      sampleLeads = over.reduce((s, m) => s + m.leads, 0);
-      cashPerLead = sampleCash / sampleLeads;
-      basis = `2026 months with cash >$100k + known leads (${over.map(m => m.month).join(", ")})`;
-    } else {
-      const both = cashRows.map(r => {
-        const key = String(r.month).replace(/\*$/, "");
-        const leads = leadByMonth[key];
-        if (leads == null || leads <= 0) return null;
-        return { month: `${key} 2026`, cash: Number(r.credit) || 0, leads };
-      }).filter(Boolean);
-      if (both.length) {
-        sampleCash = both.reduce((s, m) => s + m.cash, 0);
-        sampleLeads = both.reduce((s, m) => s + m.leads, 0);
-        cashPerLead = sampleCash / sampleLeads;
-        basis = "fallback: 2026 months with cash + known leads";
-      }
-    }
-    if (cashOnlyOver.length) {
-      note = `Cash >$100k without matching 2026 lead stack (excluded): ${cashOnlyOver.join(", ")}.`;
-    }
-    if (!cashPerLead || cashPerLead < 50) {
-      const casesNeeded = (DATA.newCasesCashGoal && DATA.newCasesCashGoal.needed) || 24;
-      const junLeads = leadByMonth.Jun || 226;
-      const junCases = 36;
-      const leadsPerCase = junCases ? junLeads / junCases : 6;
-      const needed = Math.ceil(casesNeeded * leadsPerCase);
-      const kpi = (DATA.kpis || []).find(item => item.id === "#01");
+    const complete = (DATA.channelMonths || [])
+      .filter(m => m && !/\*/.test(String(m.month || "")))
+      .map(m => {
+        const month = String(m.month).replace(/\*$/, "");
+        const leads = channelLeadTotal(m);
+        return leads == null ? null : { month, leads: Number(leads) };
+      })
+      .filter(Boolean);
+    const last3 = complete.slice(-3);
+    const kpi = (DATA.kpis || []).find(item => item.id === "#01");
+    if (!last3.length) {
       if (kpi) {
-        const current = Number(kpi.count != null ? kpi.count : parseFloat(String(kpi.value).replace(/[^0-9.]/g, ""))) || 0;
-        kpi.target = `≥ ${needed}`;
-        kpi.hit = current >= needed;
-        kpi.cashGoalNote = `>$${Math.round(GOAL_CASH / 1000)}k cash/mo`;
+        kpi.target = "—";
+        kpi.hit = false;
+        kpi.cashGoalNote = "need 3 complete months";
       }
       DATA.leadsCashGoal = {
-        goalCash: GOAL_CASH,
+        goalCash: null,
         cashPerLead: 0,
-        needed,
-        basis: "fallback: cases-for-$100k × Jun leads/case",
+        needed: null,
+        basis: "last 3 complete months · no rows yet",
         sampleCash: 0,
         sampleLeads: 0,
         sampleMonths: [],
-        note
+        note: ""
       };
       return;
     }
-    const needed = Math.floor(GOAL_CASH / cashPerLead) + 1;
-    const kpi = (DATA.kpis || []).find(item => item.id === "#01");
+    const sampleLeads = last3.reduce((s, m) => s + m.leads, 0);
+    const needed = Math.round(sampleLeads / last3.length);
+    const basis = `last ${last3.length} complete months · Lead Calls stack`;
     if (kpi) {
       const current = Number(kpi.count != null ? kpi.count : parseFloat(String(kpi.value).replace(/[^0-9.]/g, ""))) || 0;
       kpi.target = `≥ ${needed}`;
       kpi.hit = current >= needed;
-      kpi.cashGoalNote = `>$${Math.round(GOAL_CASH / 1000)}k cash/mo`;
+      kpi.cashGoalNote = "3-mo avg leads";
     }
     DATA.leadsCashGoal = {
-      goalCash: GOAL_CASH,
-      cashPerLead: Math.round(cashPerLead),
+      goalCash: null,
+      cashPerLead: 0,
       needed,
       basis,
-      sampleCash: Math.round(sampleCash),
-      sampleLeads: sampleLeads,
-      sampleMonths: over.length ? over : [],
-      note
+      sampleCash: 0,
+      sampleLeads,
+      sampleMonths: last3.map(m => ({ month: m.month, leads: m.leads, cash: 0 })),
+      note: ""
     };
   }
 
