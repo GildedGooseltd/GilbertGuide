@@ -31,19 +31,21 @@ Monthly KPI tiles show **only** a green or red corner checkbox. No UPDATED / OUT
 
 | Mark | When |
 |---|---|
-| Green `.kpi-verified-mark` | Period source is on file **and** the tile value is filled. `0` is valid data. |
-| Red `.kpi-unverified-mark` | Period source is missing **or** value is `—`. |
+| Green `.kpi-verified-mark` | Tile value is filled. `0` is valid data. |
+| Red `.kpi-unverified-mark` | Value is `—` only. |
+
+Kate 10/02/2026: do **not** gray out filled tiles with a red X. Multi-month averages such as Avg Case Value stay green when the number is shown, even if the tile month is outside the average window. Method caveats stay in the note text.
 
 Agent steps every month update:
 
 1. Confirm the export for that tile + month exists and was opened this turn.
-2. Write the real number or `0` into the tile. Set `verified: true` and `augUpdated: true` only when that export backs the value.
+2. Write the real number or `0` into the tile. Set `verified: true` and `augUpdated: true` when that export backs the value.
 3. If the export is missing: set `value: "—"`, `verified: false`, `augUpdated: false`. The UI must show **red**.
 4. Never set `augUpdated: true` or `verified: true` when value is `—`.
-5. Render path: `periodFreshMark(augUpdated, verified, value)` / `tilePeriodFresh` in `kpi-report.js` — green only if `tileValuePresent(value) && (verified || augUpdated)`.
+5. Render path: `periodFreshMark` / `tilePeriodFresh` — green when `tileValuePresent(value)`.
 
-Examples: Sep Leads with no Call details / LSA / HubSpot → `—` + red. Sep New Cases `0` from Contact_09-01 → green.
+Examples: Sep Leads with no Call details / LSA / HubSpot → `—` + red. Sep New Cases `0` from Contact_09-01 → green. Avg Case Value May–Aug average on the September tab → green when the average is filled.
 
-Financial Breakdown on Data uses the same rule. Multi-month averages such as Avg Case Value and Cost per Case are green only when the current tile month is inside that complete-month stack. A May–Aug average while the dash period is September stays red. Method caveats stay in the note text. They do not force a red mark by themselves. Missed Opportunity #19 is staged in DASHBOARD-STAGING.md.
+Missed Opportunity #19 is staged in DASHBOARD-STAGING.md.
 
 See [`validate-before-claim.mdc`](validate-before-claim.mdc).
