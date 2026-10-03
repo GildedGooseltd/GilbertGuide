@@ -3,10 +3,10 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261002-hubspotforms";
-  /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
+  const RENDER_VER = "20261002-octtab";
+  /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
   /* Newest first — every month with a tile stack. */
-  const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
+  const PERIOD_OPTIONS = ["October 2026", "September 2026", "August 2026", "July 2026", "June 2026"];
   /** Cash collected chart year: 2026 default · 2025 via toggle. */
   let cashCollectedViewYear = 2026;
   /** Cases created chart year: 2026 default · 2025 via toggle. */
@@ -14,8 +14,8 @@
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Campaign report (41) · Call details (11) · leads-inbox (22) · HubSpot form submits report 10/02/2026 · Yelp lead inbox + call dates 10/02/2026 · Justia Profile Stats Mar–Aug · recheck 2026-10-02",
-      fields: "Jun 238 · Jul 281 · Aug 96 · Sep* 98 = Search 39 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 · HubSpot forms May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4 · Justia contacts = calls + emails allocated"
+      file: "Call details (13) All-time · Campaign report (41) Sep 1–28 · leads-inbox (22) · HubSpot form submits 10/02 · Yelp 10/02 · Justia Mar–Aug · ledger (10) · recheck 2026-10-02",
+      fields: "Jun 226 · Jul 281 · Aug 101 · Sep* 100 = Search 41 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 · HubSpot forms May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4 · Search from Call details (13)"
     },
     "yelp": {
       file: "Yelp lead inbox screenshots 2026-10-02 · dated call log Jun–Sep · Case_balance_09-23 + Trust_10-02 for signed fees · Ads by type 09/18 for Aug raw mix · spend Sep 1–27 $432.67 · listing 4.5 · 8 reviews",
@@ -66,7 +66,7 @@
       fields: "Search answer · LSA % charged · Yelp call answer · Data tab Answer Rate chart"
     },
     "answer-rate": {
-      file: "phoneByMonth weekday Call details (11) · lsaEfficiency Charged÷Leads · yelpBaseline.byMonth answeredCalls÷calls · recheck 09/28/2026",
+      file: "phoneByMonth weekday Call details (13) All-time · lsaEfficiency Charged÷Leads · yelpBaseline.byMonth answeredCalls÷calls · recheck 10/02/2026",
       fields: "Search weekday May–Sep* · LSA May–Sep* · Yelp Jun–Sep* when calls > 0 · Search target ≥ 90% · weekends excluded from Search"
     },
     "#28": {
@@ -90,24 +90,24 @@
       fields: "Client + fee · Case Type / practice · n≥5 means · LOE 1–5 from Kate chart 09/23/2026 · biggest opportunity = mean ÷ LOE"
     },
     "cash-pace": {
-      file: "ledger_account_activity_report (9).csv export 09/28/2026 · Credits Sep* $100,010 through 09/25/2026 · Jan–Aug from ledger (5)/(7) · Contact_09-28 cases",
-      fields: "Follows tile month · Sep* MTD through 09/25/2026 · W1–W4 running Trust Credit by calendar week · completed gray · future = pace × week-end day"
+      file: "ledger_account_activity_report (10).csv export 10/02/2026 · Credits Sep $113,985 through 09/30/2026 · Jan–Aug locked · Contact_09-28 cases",
+      fields: "Follows tile month · Sep Credits through 09/30/2026 · W1–W4 running Trust Credit by calendar week · completed gray · future = pace × week-end day"
     },
     "cases-leads-spend": {
-      file: "Contact_09-28 · leads-inbox (22) · Call details (11) · Campaign report (41) · account_activities_202609 (3) · HubSpot form submits report 10/02 · May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4 · Yelp lead inbox 10/02 Sep contacts 11 · Justia Mar–Aug · recheck 2026-10-02",
-      fields: "May–Aug cases/leads/spend on file · May 125 · Jun 238 · Jul 281 · Aug 96 · Sep* cases 14 · leads 98 = Search 39 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 · spend $18,596.19 = Search $13,713.63 + LSA $4,882.56"
+      file: "Contact_09-28 · leads-inbox (22) · Call details (13) · Campaign report (41) · account_activities_202609 (3) · HubSpot forms 10/02 · Yelp 10/02 · ledger (10) · recheck 2026-10-02",
+      fields: "May 125 · Jun 226 · Jul 281 · Aug 101 · Sep* cases 14 · leads 100 = Search 41 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 · spend $18,596.19 = Search $13,713.63 + LSA $4,882.56"
     },
     "sales-cost-funnel": {
-      file: "Campaign report (41) · Call details (11) · leads-inbox (22) · HubSpot · Yelp lead inbox 10/02 · Justia Mar–Aug · channelMonths · recheck 10/02/2026",
-      fields: "Direct contacts = Search + LSA + HubSpot + Yelp + Justia. May 125 · Jun 238 · Jul 281 · Aug 96 · Sep* 98 = 39 + 44 + 4 + 11 + 0"
+      file: "Campaign report (41) · Call details (13) · leads-inbox (22) · HubSpot · Yelp 10/02 · Justia Mar–Aug · channelMonths · recheck 10/02/2026",
+      fields: "Direct contacts = Search + LSA + HubSpot + Yelp + Justia. May 125 · Jun 226 · Jul 281 · Aug 101 · Sep* 100 = 41 + 44 + 4 + 11 + 0"
     },
     "cash-collected": {
-      file: "ledger_account_activity_report (9).csv · export 09/28/2026 · Jan–Aug locked · Sep* MTD",
-      fields: "Trust Credits · Aug $104,545 · Jul $108,350 · Sep* $100,010 through 09/25/2026"
+      file: "ledger_account_activity_report (10).csv · export 10/02/2026 · Jan–Aug locked · Sep through 09/30",
+      fields: "Trust Credits · Aug $104,545 · Jul $108,350 · Sep $113,985 through 09/30/2026"
     },
     "financial": {
-      file: "ledger_account_activity_report (9).csv · Contact_09-28-2026 · export 09/28/2026",
-      fields: "Trust Credits · $100k goal · Aug $104,545 · Sep* cases 14 · Sep* revenue $100,010 through 09/25/2026"
+      file: "ledger_account_activity_report (10).csv · Contact_09-28-2026 · export 10/02/2026",
+      fields: "Trust Credits · $100k goal · Aug $104,545 · Sep* cases 14 · Sep revenue $113,985 through 09/30/2026"
     },
     "cases-created": {
       file: "Contact_09-28-2026 aggregates · export 2026-09-28",
@@ -127,7 +127,7 @@
     "#01": {
       title: "#01 Lead Calls",
       desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid. That is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot forms + Yelp contacts + Justia contacts + Pav.Law website. Yelp contacts = Messages + answered Calls at 40%. Justia contacts = calls + emails allocated across Mar–Aug. Track table breaks out each channel.",
-      formula: "Sep* 98 = Search 39 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 + Pav.Law website 0. HubSpot form submits report 10/02/2026 · May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4. May–Jul Justia adds calls + emails. Target = round(average Lead Calls over the last 3 complete months). Not reverse from $100k cash · Trust income is not only new leads."
+      formula: "Sep* 100 = Search 41 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 + Pav.Law website 0. Search from Call details (13) All-time. HubSpot form submits report 10/02/2026 · May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4. May–Jul Justia adds calls + emails. Target = round(average Lead Calls over the last 3 complete months). Not reverse from $100k cash · Trust income is not only new leads."
     },
     "#02": {
       title: "#02 New Cases",
@@ -237,17 +237,17 @@
     },
     "cash-pace": {
       title: "Revenue",
-      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity. Sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (5)/(7). September* is $100,010 through 09/25/2026 from ledger (9). W1–W4 under the dial are a running Trust Credit total by calendar week. Completed weeks are gray and show the cumulative collected through that week from the ledger. The live week shows only the end-of-week projected running total if the current daily Credit pace continues through that week’s last day — current collected stays on the dial. Later weeks project the running total if pace continues through the end of that week. W1 days 1–7 · W2 days 8–14 · W3 days 15–21 · W4 days 22–end. $85k is the operating-expense assumption on Predictions. June sample baseline, not this revenue goal.",
+      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity. Sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545 from ledger (5)/(7). September is $113,985 through 09/30/2026 from ledger (10). W1–W4 under the dial are a running Trust Credit total by calendar week. Completed weeks are gray and show the cumulative collected through that week from the ledger. The live week shows only the end-of-week projected running total if the current daily Credit pace continues through that week’s last day. Later weeks project the running total if pace continues through the end of that week. W1 days 1–7 · W2 days 8–14 · W3 days 15–21 · W4 days 22–end. $85k is the operating-expense assumption on Predictions. June sample baseline, not this revenue goal.",
       formula: "Running total = sum of Trust Credits from day 1 through that week. Completed = ledger actuals. Live/future week proj = MTD daily Credit pace × last day of that week. Current MTD stays on the dial."
     },
     "sales-cost-funnel": {
       title: "Sales Funnel",
       desc: "Follows the KPI tile month. Impressions → clicks → direct contacts → signed cases. Direct contacts add every lead channel on file: Search + LSA + HubSpot forms + Yelp + Justia. Breakdown table shows contacts and cost per conversion by channel. Cost per conversion = channel spend ÷ contacts. Not channel ROI.",
-      formula: "May 118 = 39 + 72 + 0 + 0 + 7. Jun 235 = 138 + 83 + 5 + 3 + 6. Jul 279 = 131 + 132 + 4 + 6 + 6. Aug 96 = 25 + 61 + 0 + 10 + 0. Sep* from channelMonths. Cost per conversion = spend ÷ contacts per leg."
+      formula: "May 125 = 39 + 72 + 7 + 0 + 7. Jun 226 = 126 + 83 + 8 + 3 + 6. Jul 281 = 131 + 132 + 6 + 6 + 6. Aug 101 = 30 + 61 + 0 + 10 + 0. Sep* 100 = 41 + 44 + 4 + 11 + 0. Cost per conversion = spend ÷ contacts per leg."
     },
     "financial": {
       title: "#09 Financials",
-      desc: "Monthly client revenue from MyCase Trust account activity export. Credit column. Jan–Jul from ledger_account_activity_report (5). Aug $104,545 from ledger (5)/(7). Sep* $100,010 through 09/25/2026 from ledger (9). Not operating cash flow. Not accrual billed revenue. 2026 chart goal line = $150k.",
+      desc: "Monthly client revenue from MyCase Trust account activity export. Credit column. Jan–Jul from ledger_account_activity_report (5). Aug $104,545 from ledger (5)/(7). Sep $113,985 through 09/30/2026 from ledger (10). Not operating cash flow. Not accrual billed revenue. 2026 chart goal line = $150k.",
       formula: "Revenue = Credit sum by calendar month. Monthly goal = $100,000."
     },
     "cases-created": {
@@ -267,7 +267,7 @@
     },
     "cash-collected": {
       title: "Monthly Revenue",
-      desc: "MyCase Trust account activity. Client revenue collected by month. Default chart is 2026 YTD. Aug $104,545 full month. Jan–Jul from ledger (5). Sep* $100,010 through 09/25/2026 from ledger (9). 2026 royal dashed line = $150k monthly revenue goal.",
+      desc: "MyCase Trust account activity. Client revenue collected by month. Default chart is 2026 YTD. Aug $104,545 full month. Jan–Jul from ledger (5). Sep $113,985 through 09/30/2026 from ledger (10). 2026 royal dashed line = $150k monthly revenue goal.",
       formula: "Sum Credit column by month from Trust account activity CSV."
     }
   };
@@ -441,25 +441,25 @@
   }
 
   const DATA = {
-    period: "September 2026",
-    asOf: "2026-09-28",
+    period: "October 2026",
+    asOf: "2026-10-02",
     lastUpdated: "2026-10-02",
-    updateLabel: "September 2026",
-    updateScope: "Search Campaign (41) Sep 1–28 · Call details (11) · LSA inbox (22) · LSA activities (3) · Contact_09-28 Sep* cases 14 through 09/23 · ledger (9) Sep* Credits $100,010 through 09/25 · HubSpot form submits report 10/02 · May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4 · Yelp lead inbox + call dates 10/02 · last updated 10/02/2026",
-    source: "Campaign report (41) · Call details (11) · leads-inbox (22) · account_activities_202609 (3) · HubSpot form submits 10/02 · Yelp lead inbox 10/02 · Yelp Ad Analytics Sep 1–27 · Contact_09-28 · ledger (9) · last updated 10/02/2026",
+    updateLabel: "October 2026",
+    updateScope: "Oct* MTD · Call details (15) Search 1 through 10/02 · ledger (10) Oct Credits $6,075 · LSA/HubSpot/Yelp/Contact Oct not on file · Sep stack locked · last updated 10/02/2026",
+    source: "Call details (15) · Call details (13) · Campaign report (41) · leads-inbox (22) · account_activities_202609 (3) · HubSpot forms 10/02 · Yelp 10/02 · Contact_09-28 · ledger (10) · last updated 10/02/2026",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
       "#01": "2026-10-02",
       "#02": "2026-09-28",
       "#03": "2026-09-28",
       "#04": "2026-09-28",
-      "cash-pace": "2026-09-28",
+      "cash-pace": "2026-10-02",
       "yelp": "2026-10-02",
       "justia": "2026-09-18",
-      "answer-rate": "2026-09-28",
-      "ad-spend-by-channel": "2026-09-28",
-      "#19": "2026-09-28",
-      "#21": "2026-09-28",
+      "answer-rate": "2026-10-02",
+      "ad-spend-by-channel": "2026-10-02",
+      "#19": "2026-10-02",
+      "#21": "2026-10-02",
       "#28": "2026-10-02"
     },
     kpis: [
@@ -479,10 +479,10 @@
       { id: "#BHI", label: "Business health index", value: "71", target: "100", mom: "−3%", verified: false, alert: true, letterGrade: true, archived: true }
     ],
     channels: [
-      { name: "Search calls", count: null, prior: 25, mom: "—", spend: "—", color: "#3a1a6e", verified: false },
-      { name: "LSA calls", count: null, prior: 61, mom: "—", spend: "—", color: "#1e3a8a", verified: false },
-      { name: "HubSpot forms", count: null, prior: 0, mom: "—", spend: "—", color: "#b23a78", verified: false },
-      { name: "Yelp", count: null, prior: 10, mom: "—", spend: "—", color: "#64748b", verified: false },
+      { name: "Search calls", count: null, prior: 41, mom: "—", spend: "—", color: "#3a1a6e", verified: false },
+      { name: "LSA calls", count: null, prior: 44, mom: "—", spend: "—", color: "#1e3a8a", verified: false },
+      { name: "HubSpot forms", count: null, prior: 4, mom: "—", spend: "—", color: "#b23a78", verified: false },
+      { name: "Yelp", count: null, prior: 11, mom: "—", spend: "—", color: "#64748b", verified: false },
       { name: "Justia", count: null, prior: 0, mom: "—", spend: "—", color: "#6a5acd", verified: false }
     ],
     /* Lead Channel Stack — Jun Search locked from Call details.csv Jul 11; Jul/Aug* from Call details (1) */
@@ -501,7 +501,7 @@
       },
       {
         month: "Jun",
-        search: 138,
+        search: 126,
         lsa: 83,
         hubspot: 8,
         hubspotForms: 8,
@@ -511,7 +511,7 @@
         justiaSpend: 1500,
         searchSpend: 8296,
         lsaSpend: 13206,
-        note: "HubSpot form submits report 10/02/2026 · 8. Yelp · 2 Messages · 2 Calls from dated call log 10/02/2026 · 3 contacts. Justia 09/18/2026 · 4 calls + 2 emails = 6 contacts · 3 website clicks"
+        note: "Search Call details (13) All-time · 126 calls · 90 received / 36 missed · ≥60s 27. HubSpot form submits report 10/02/2026 · 8. Yelp · 2 Messages · 2 Calls · 3 contacts. Justia 09/18/2026 · 4 calls + 2 emails = 6 contacts"
       },
       {
         month: "Jul",
@@ -529,7 +529,7 @@
       },
       {
         month: "Aug",
-        search: 25,
+        search: 30,
         lsa: 61,
         hubspot: 0,
         hubspotForms: 0,
@@ -539,11 +539,11 @@
         justiaSpend: 1500,
         searchSpend: 400,
         lsaSpend: 6286,
-        note: "Search Call details (4) through 08/14/2026 · LSA inbox(3) through 08/21/2026 · HubSpot form submits report 10/02/2026 · Aug row absent = 0. Yelp · 8 Messages · 4 Calls · 10 contacts · spend $72.58 · Ads by type 09/18 kept · 10/02 inbox shows 5 Aug-dated leads as partial scroll. Justia 09/18/2026 · 0 calls · 0 emails · 2 website clicks. Search ads paused unpaid"
+        note: "Search Call details (13) All-time · 30 calls · 16 received / 14 missed · ≥60s 4. LSA inbox(3) through 08/21/2026 · HubSpot form submits 10/02 · Aug = 0. Yelp · 8 Messages · 4 Calls · 10 contacts · spend $72.58. Justia 0 contacts · 2 website clicks. Search ads paused unpaid"
       },
       {
         month: "Sep*",
-        search: 39,
+        search: 41,
         lsa: 44,
         hubspot: 4,
         hubspotForms: 4,
@@ -553,7 +553,21 @@
         justiaSpend: null,
         searchSpend: 13713.63,
         lsaSpend: 4882.56,
-        note: "Search Call details (11) 09/01–09/28/2026 · 39 calls · 17 received / 22 missed · ≥60s 10. Campaign (41) live HS $13,713.63 · Phone 39 · Impr 3,224 · Interactions 157. LSA inbox (22) Sep 1–27 · 44 leads · 15 charged. LSA Home Services Ads $4,882.56 from account_activities_202609 (3). Yelp 10/02 lead inbox · 9 Sep Messages/Direct Requests + 5 dated Calls · contacts 11 = 9 + round(5×40%). Spend $432.67 Sep 1–27. HubSpot form submits report 10/02/2026 · 4 · Justia 0 prior. Cases Contact_09-28 · Sep* 14 through 09/23 · cash ledger (9) Sep* $100,010 through 09/25."
+        note: "Search Call details (13) All-time · Sep 41 calls · 19 received / 22 missed · ≥60s 12. Campaign (41) Sep 1–28 live HS $13,713.63 · Impr 3,224 · Interactions 157. LSA inbox (22) Sep 1–27 · 44 leads · 15 charged. LSA Home Services Ads $4,882.56 from account_activities_202609 (3). Yelp 10/02 · contacts 11. HubSpot forms 10/02 · 4. Cases Contact_09-28 · Sep* 14 through 09/23. Cash ledger (10) Sep $113,985 through 09/30."
+      },
+      {
+        month: "Oct*",
+        search: 1,
+        lsa: 0,
+        hubspot: 0,
+        hubspotForms: 0,
+        yelp: 0,
+        yelpSpend: 0,
+        justia: 0,
+        justiaSpend: null,
+        searchSpend: null,
+        lsaSpend: null,
+        note: "Oct* MTD through 10/02/2026. Search Call details (15) Jul 5–Oct 2 · 1 call · Received · HS: Military · 14s. LSA inbox · HubSpot forms · Yelp · Justia Oct not on file = 0. Search/LSA media Oct not on account_activities_202610 yet. Cases Contact_09-28 ends 09/28 · Oct Created not on file."
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -589,15 +603,24 @@
       Sep: {
         impressions: 3224,
         clicks: 157,
-        phoneCalls: 39,
+        phoneCalls: 41,
         searchSpendLock: 13713.63,
-        windowNote: "Campaign report (41) 09/01–09/28/2026 · live HS cost $13,713.63 · Phone 39 · Interactions 157 · Call details (11) 39 calls · answer 17/39"
+        windowNote: "Campaign report (41) 09/01–09/28/2026 · live HS cost $13,713.63 · Impr 3,224 · Interactions 157 · Call details (13) Sep 41 calls · answer 19/41"
+      },
+      Oct: {
+        impressions: null,
+        clicks: null,
+        phoneCalls: 1,
+        searchSpendLock: null,
+        windowNote: "Call details (15) through 10/02/2026 · 1 Search phone · HS: Military · Oct calendar Campaign spend not on file"
       }
     },
     sourceMix: [
-      { name: "Paid Search", pct: 61, color: "#3a1a6e", count: 138, prior: 39, mom: "+254%" },
-      { name: "LSA", pct: 37, color: "#1e3a8a", count: 83, prior: 72, mom: "+15%" },
-      { name: "HubSpot / other", pct: 2, color: "#b23a78", count: 5, prior: 0, mom: "—" }
+      { name: "Paid Search", pct: 100, color: "#3a1a6e", count: 1, prior: 41, mom: "−98%" },
+      { name: "LSA", pct: 0, color: "#1e3a8a", count: 0, prior: 44, mom: "—" },
+      { name: "HubSpot", pct: 0, color: "#b23a78", count: 0, prior: 4, mom: "—" },
+      { name: "Yelp", pct: 0, color: "#64748b", count: 0, prior: 11, mom: "—" },
+      { name: "Justia", pct: 0, color: "#6a5acd", count: 0, prior: 0, mom: "—" }
     ],
     /* Campaign brand: Military royal · Core DV burnt orange · NTGUILT rose (GGL — no teal/gold categories) */
     searchCallsByCampaign: [
@@ -618,20 +641,24 @@
         weekdayCalls: 39, weekdayMissed: 13, weekendCalls: 0, weekendMissed: 0
       },
       Jun: {
-        calls: 138, received: 100, missed: 38, answeredPct: 72,
-        weekdayCalls: 129, weekdayMissed: 33, weekendCalls: 9, weekendMissed: 5
+        calls: 126, received: 90, missed: 36, answeredPct: 71,
+        weekdayCalls: 118, weekdayMissed: 32, weekendCalls: 8, weekendMissed: 4
       },
       Jul: {
         calls: 131, received: 73, missed: 58, answeredPct: 56,
         weekdayCalls: 125, weekdayMissed: 56, weekendCalls: 6, weekendMissed: 2
       },
       Aug: {
-        calls: 25, received: 13, missed: 12, answeredPct: 52,
-        weekdayCalls: 20, weekdayMissed: 9, weekendCalls: 5, weekendMissed: 3
+        calls: 30, received: 16, missed: 14, answeredPct: 53,
+        weekdayCalls: 22, weekdayMissed: 9, weekendCalls: 8, weekendMissed: 5
       },
       Sep: {
-        calls: 39, received: 17, missed: 22, answeredPct: 44,
-        weekdayCalls: 39, weekdayMissed: 22, weekendCalls: 0, weekendMissed: 0
+        calls: 41, received: 19, missed: 22, answeredPct: 46,
+        weekdayCalls: 41, weekdayMissed: 22, weekendCalls: 0, weekendMissed: 0
+      },
+      Oct: {
+        calls: 1, received: 1, missed: 0, answeredPct: 100,
+        weekdayCalls: 1, weekdayMissed: 0, weekendCalls: 0, weekendMissed: 0
       }
     },
     phoneIntake: {
@@ -769,7 +796,8 @@
         { name: "Sealing", n: 2 },
         { name: "Weapons", n: 1 },
         { name: "Other", n: 2 }
-      ]
+      ],
+      Oct: []
     },
     bhi: { value: 71, target: 100, mom: "−3%" },
     avgDeposit: { current: 400, target: 700 },
@@ -807,7 +835,8 @@
       { month: "Jun", closed: 11, newCases: 36, redAccounts: 4 },
       { month: "Jul", closed: null, newCases: 35, redAccounts: null },
       { month: "Aug", closed: null, newCases: 20, redAccounts: null },
-      { month: "Sep*", closed: null, newCases: 14, redAccounts: null }
+      { month: "Sep*", closed: null, newCases: 14, redAccounts: null },
+      { month: "Oct*", closed: null, newCases: null, redAccounts: null }
     ],
     pipeline: [
       { month: "Jun", closed: 11, mom: "+38%" },
@@ -820,10 +849,11 @@
       { month: "Mar", cases: 17, leads: null, spend: 921, lsaSpend: 921, adsSpend: 0, adsLeads: null, websiteLeads: null },
       { month: "Apr", cases: 15, leads: null, spend: 3449, lsaSpend: 3449, adsSpend: 0, adsLeads: null, websiteLeads: null },
       { month: "May", cases: 22, leads: 125, spend: 17011, lsaSpend: 11006, adsSpend: 6005, adsLeads: 39, websiteLeads: 7 },
-      { month: "Jun", cases: 36, leads: 238, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 8 },
+      { month: "Jun", cases: 36, leads: 226, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 126, websiteLeads: 8 },
       { month: "Jul", cases: 35, leads: 281, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 6 },
-      { month: "Aug", cases: 20, leads: 96, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 },
-      { month: "Sep*", cases: 14, leads: 98, spend: 18596.19, lsaSpend: 4882.56, adsSpend: 13713.63, adsLeads: 39, websiteLeads: 4 }
+      { month: "Aug", cases: 20, leads: 101, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 30, websiteLeads: 0 },
+      { month: "Sep*", cases: 14, leads: 100, spend: 18596.19, lsaSpend: 4882.56, adsSpend: 13713.63, adsLeads: 41, websiteLeads: 4 },
+      { month: "Oct*", cases: null, leads: 1, spend: 0, lsaSpend: 0, adsSpend: 0, adsLeads: 1, websiteLeads: 0 }
     ],
     /**
      * Justia Profile Stats · Kate 09/18/2026.
@@ -961,7 +991,7 @@
       { month: "Nov", credit: 42775, newCases: 5 },
       { month: "Dec", credit: 64300, newCases: 9 }
     ],
-    /* 2026 YTD revenue — Jan–Aug Trust activity · Sep* MTD through 09/25/2026 ledger (9). */
+    /* 2026 YTD revenue — Jan–Sep locked · Oct* MTD through 10/02/2026 ledger (10). */
     cashCollected2026Ytd: [
       { month: "Jan", credit: 57925, newCases: 12 },
       { month: "Feb", credit: 83950, newCases: 14 },
@@ -971,35 +1001,38 @@
       { month: "Jun", credit: 103485, newCases: 36 },
       { month: "Jul", credit: 108350, newCases: 35 },
       { month: "Aug", credit: 104545, newCases: 20 },
-      { month: "Sep*", credit: 100010, newCases: 14 }
+      { month: "Sep", credit: 113985, newCases: 14 },
+      { month: "Oct*", credit: 6075, newCases: null }
     ],
     cashCollectedTotals: {
       total2025: 945436,
-      total2026ToDate: 800931,
-      allCredits: 1746367,
+      total2026ToDate: 820981,
+      allCredits: 1766417,
       contractedMean: 5661,
       yearLabel: "2025",
-      asOf: "2026-09-28",
-      partialMonthKey: "Sep",
-      partialDaysElapsed: 25,
-      partialDaysInMonth: 30,
+      asOf: "2026-10-02",
+      partialMonthKey: "Oct",
+      partialDaysElapsed: 2,
+      partialDaysInMonth: 31,
       cashGoalMonthly: 100000,
-      rangeNote: "Jan–Aug Trust activity Credits · Sep* $100,010 MTD through 09/25/2026 ledger (9) · cases Contact_09-28 Sep* 14 · Aug cases 20"
+      rangeNote: "Jan–Sep Trust activity Credits · Oct* $6,075 MTD through 10/02/2026 ledger (10) · cases Contact_09-28 Sep* 14 · Oct Created not on file"
     },
-    /* Trust Credits by calendar week · aggregates only · Jun–Jul ledger (5) · Aug ledger (7) · Sep* ledger (9) through 09/25/2026. */
+    /* Trust Credits by calendar week · aggregates only · Jun–Jul ledger (5) · Aug ledger (7) · Sep–Oct ledger (10). */
     cashCreditsByWeek: {
       Jun: { W1: 27400, W2: 19650, W3: 30625, W4: 25810 },
       Jul: { W1: 14850, W2: 21600, W3: 34425, W4: 37475 },
       Aug: { W1: 15070, W2: 31825, W3: 8800, W4: 48850 },
-      Sep: { W1: 28565, W2: 30900, W3: 27000, W4: 13545 }
+      Sep: { W1: 28565, W2: 30900, W3: 27000, W4: 27520 },
+      Oct: { W1: 6075, W2: 0, W3: 0, W4: 0 }
     },
-    /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) · Sep* inbox (18) + account_activities_202609 */
+    /* NEW-C / NEW-D — LSA efficiency · May/Jun locked · Jul from inbox(3) · Aug* inbox(3) + account_activities_202608(3) · Sep* inbox (22) · Oct* no inbox */
     lsaEfficiency: [
       { month: "May", leads: 72, charged: 27, notCharged: 45, lsaSpend: 11006 },
       { month: "Jun", leads: 83, charged: 39, notCharged: 44, lsaSpend: 13206 },
       { month: "Jul", leads: 132, charged: 52, notCharged: 79, lsaSpend: 14556 },
       { month: "Aug", leads: 61, charged: 19, notCharged: 41, lsaSpend: 6286 },
-      { month: "Sep*", leads: 44, charged: 15, notCharged: 26, lsaSpend: 4882.56 }
+      { month: "Sep*", leads: 44, charged: 15, notCharged: 26, lsaSpend: 4882.56 },
+      { month: "Oct*", leads: 0, charged: 0, notCharged: 0, lsaSpend: 0 }
     ],
     lsaChargeRateOverall: { charged: 152, leads: 392, pct: 38.8 },
     /* NEW-E — Payment Method = Trust applications (ledger) + Client trust balance snapshot */
@@ -1112,7 +1145,7 @@
     const cls = findCasesLeadsSpendRow(key);
     const partial = !!(ch && /\*/.test(String(ch.month || "")))
       || !!(cls && /\*/.test(String(cls.month || "")));
-    const names = { Jun: "June", Jul: "July", Aug: "August", Sep: "September", May: "May" };
+    const names = { May: "May", Jun: "June", Jul: "July", Aug: "August", Sep: "September", Oct: "October" };
     const short = names[key] || key || "";
     const label = `${short}${partial ? "*" : ""}`;
     return { key, ch, cls, partial, short, label, full: `${label} 2026` };
@@ -1466,7 +1499,7 @@
    * Jun/Jul = proof months. Aug MTD with Search ads paused unpaid — not a positive quiet read.
    */
   function applyTileMonth(period) {
-    const label = PERIOD_OPTIONS.includes(period) ? period : "September 2026";
+    const label = PERIOD_OPTIONS.includes(period) ? period : "October 2026";
     DATA.period = label;
     DATA.updateLabel = label;
     const key = periodToChannelMonth(label);
@@ -1509,9 +1542,8 @@
       const k19 = (DATA.kpis || []).find(item => item.id === "#19");
       if (k19) {
         k19.value = `$${monthlyLost.toLocaleString("en-US")}/mo`;
-        const phoneFresh = key === "Sep" ? tileSourceIsCurrent("#19") : true;
-        k19.verified = phoneFresh;
-        k19.augUpdated = isTileMonth && phoneFresh;
+        k19.verified = true;
+        k19.augUpdated = isTileMonth;
         k19.alert = phone.missed > 0;
       }
       const k21 = (DATA.kpis || []).find(item => item.id === "#21");
@@ -1520,9 +1552,8 @@
         k21.mom = priorWeekdayAnsweredPct != null && weekdayAnsweredPct != null
           ? momPct(weekdayAnsweredPct, priorWeekdayAnsweredPct)
           : null;
-        const ansFresh = key === "Sep" ? tileSourceIsCurrent("answer-rate") : weekdayAnsweredPct != null;
-        k21.verified = weekdayAnsweredPct != null && ansFresh;
-        k21.augUpdated = isTileMonth && weekdayAnsweredPct != null && ansFresh;
+        k21.verified = weekdayAnsweredPct != null;
+        k21.augUpdated = isTileMonth && weekdayAnsweredPct != null;
         k21.hit = weekdayAnsweredPct != null && weekdayAnsweredPct >= (pi.targetPct || 90);
         k21.alert = !k21.hit;
       }
@@ -1554,7 +1585,7 @@
         leads.verified = false;
         leads.hit = false;
         leads.alert = true;
-        leads.cashGoalNote = key === "Sep" ? "Sep* · stack pending" : "stack missing";
+        leads.cashGoalNote = key === "Oct" || key === "Sep" ? `${key}* · stack pending` : "stack missing";
         /* Missing value → red freshness only. Never mark Updated when value is —. */
         leads.augUpdated = false;
       } else {
@@ -1565,12 +1596,13 @@
         leads.hit = Number.isFinite(leadTarget) ? leadsTotal >= leadTarget : false;
         leads.alert = !leads.hit;
         leads.gauge = true;
-        /* Sep* green only when Search/LSA pack as-of matches lastUpdated. Prior months stay green when filled. */
-        const leadsFresh = key === "Sep" ? tileSourceIsCurrent("#01") : true;
-        leads.augUpdated = isTileMonth && leadsFresh;
-        leads.verified = leads.augUpdated;
+        /* Kate 10/02/2026: filled lead stack = green on every month tab. */
+        leads.augUpdated = isTileMonth;
+        leads.verified = true;
         leads.updatedAsOf = resolveTileAsOf("#01") || leads.updatedAsOf;
-        if (key === "Sep") {
+        if (key === "Oct") {
+          leads.cashGoalNote = "Oct* · Search only · LSA/HubSpot/Yelp pending";
+        } else if (key === "Sep") {
           leads.cashGoalNote = "Sep*";
         } else if (key === "Aug") {
           leads.cashGoalNote = "Aug full month";
@@ -1595,7 +1627,7 @@
         cases.alert = isPartial ? false : true;
         cases.gauge = false;
         cases.augUpdated = false;
-        cases.cashGoalNote = key === "Sep" ? "Sep Created through export" : "cases missing";
+        cases.cashGoalNote = key === "Oct" ? "Oct Created · pull Contact" : key === "Sep" ? "Sep Created through export" : "cases missing";
       } else {
         cases.value = String(casesVal);
         cases.count = casesVal;
@@ -1607,12 +1639,11 @@
         cases.hit = Number.isFinite(caseTarget) ? casesVal >= caseTarget : false;
         cases.trackLabel = "";
         cases.trackOn = false;
-        /* Sep* green only when Contact as-of matches lastUpdated. */
-        const casesFresh = key === "Sep" ? tileSourceIsCurrent("#02") : true;
-        cases.verified = isTileMonth && casesFresh;
+        /* Kate 10/02/2026: filled case count = green on every month tab. */
+        cases.verified = true;
         cases.alert = !!(cashBehind || fullMonthShort);
         cases.gauge = true;
-        cases.augUpdated = isTileMonth && casesFresh;
+        cases.augUpdated = isTileMonth;
         cases.updatedAsOf = resolveTileAsOf("#02") || cases.updatedAsOf;
         cases.cashGoalNote = isPartial ? `${cls.month} Created through export` : `${key} Created`;
       }
@@ -1714,11 +1745,12 @@
     if (key === "Jun") return "June 2026 complete stack · Justia 6 · verified";
     if (key === "Jul") return "July 2026 · Search + LSA + HubSpot 4 + Justia 6 · verified";
     if (key === "Aug") return "August 2026 full month · revenue $104,545 · 20 cases · Justia 0 · ads paused";
-    return "September 2026 MTD · Search + LSA through 09/28/2026 · revenue $100,010 through 09/25/2026 · cases Contact_09-28 · 14 cases · answered 44% · Justia Sep not on file";
+    if (key === "Sep") return "September 2026 · Search 41 Call details (13) · LSA 44 · revenue $113,985 through 09/30 · cases Contact_09-28 · 14 cases · weekday answer 46% · Justia Sep not on file";
+    return "October 2026 MTD · Search 1 Call details (15) · revenue $6,075 through 10/02 · LSA/HubSpot/Yelp/Contact Oct not on file · weekday answer 100%";
   }
 
   function reportPeriodPillsHtml() {
-    const active = DATA.period || "September 2026";
+    const active = DATA.period || "October 2026";
     const buttons = PERIOD_OPTIONS.map(label => {
       const on = label === active;
       const ready = periodTileReady(label);
@@ -1769,7 +1801,8 @@
   }
 
   function tilePeriodFresh(updated, verified, value) {
-    return tileValuePresent(value) && !!(verified || updated);
+    /* Kate 10/02/2026: filled tiles stay green on every month tab. Red X only when value is —. */
+    return tileValuePresent(value);
   }
 
   /** True when this tile's source as-of matches the KPI pack lastUpdated stamp. */
@@ -2649,10 +2682,9 @@
     const pack = currentAdSpendPack();
     if (!pack.channels.length) return "";
     const total = fmtAdSpend(pack.total);
-    const spendFresh = tileSourceIsCurrent("ad-spend-by-channel");
-    const fresh = tilePeriodFresh(spendFresh, spendFresh, total);
+    const fresh = tilePeriodFresh(true, true, total);
     return `<button type="button" class="kpi-goal-card${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}" data-kpi-focus="ad-spend-by-channel" aria-label="Ad spend ${total} · ${pack.meta.label}">
-      ${periodFreshMark(spendFresh, spendFresh, total, resolveTileAsOf("ad-spend-by-channel"))}
+      ${periodFreshMark(true, true, total, resolveTileAsOf("ad-spend-by-channel"))}
       ${kpiHelpBtn("ad-spend-by-channel")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Ad Spend")}
@@ -2677,11 +2709,11 @@
   function casesLeadsSpendSectionHtml() {
     const rows = DATA.casesLeadsSpend || [];
     if (!rows.length) return "";
-    const channelFresh = tileSourceIsCurrent("#01");
-    const freshClass = channelFresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
+    const stackReady = channelLeadTotal(findChannelMonthRow(periodToChannelMonth(DATA.period))) != null;
+    const freshClass = stackReady ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
     /* One freshness mark on the panel — never also on nested chart cards. */
     return `<article class="kpi-split-panel data-chart-table-panel${freshClass}" data-feedback-id="section-cases-leads-spend" data-feedback-label="#05 Key Channel Activity">
-      ${periodFreshMark(channelFresh, channelFresh, "ok", resolveTileAsOf("#01"))}
+      ${periodFreshMark(stackReady, stackReady, stackReady ? "ok" : "—", resolveTileAsOf("#01"))}
       ${kpiHelpBtn("cases-leads-spend")}
       <div class="kpi-split-panel-body">
         ${chartPairGridHtml(
@@ -4261,11 +4293,10 @@
     return String((DATA.cashCollectedTotals && DATA.cashCollectedTotals.asOf) || "");
   }
 
-  /** Cash tiles stay Outdated when the ledger pull is older than the KPI refresh stamp. */
+  /** Kate 10/02/2026: cash tile green when a credit value is on the dial. Red only for —. */
   function cashLedgerIsCurrent() {
-    const cashAsOf = cashLedgerAsOf();
-    const pulled = String(DATA.lastUpdated || DATA.asOf || "");
-    return !!(cashAsOf && pulled && cashAsOf >= pulled);
+    const m = cashMonthPaceModel();
+    return !!(m && tileValuePresent(String(m.credit)));
   }
 
   function cashMonthPaceModel() {
@@ -4414,9 +4445,10 @@
     /* Dial scale $150k · goal mark stays at monthly $100k target. Celebrate only when collected hits goal. */
     const hit = m.credit >= m.target;
     const scaleMax = Math.max(m.credit, m.target, 150000);
-    const cashFresh = cashLedgerIsCurrent();
+    const cashValue = fmtMoney(m.credit);
+    const cashFresh = tilePeriodFresh(true, true, cashValue);
     const gauge = halfMoonGauge(m.credit / scaleMax, "cash-pace", {
-      valueLabel: fmtMoney(m.credit),
+      valueLabel: cashValue,
       endLabel: fmtMoney(scaleMax),
       goalMark: m.target / scaleMax,
       goalLabel: "100k",
@@ -4427,7 +4459,7 @@
     const paceCell = `${m.pacePct}% <span class="kpi-mom-change ${m.cls}" title="${escapeHtml(m.detail)}">${m.arrow} ${escapeHtml(m.label)}</span>`;
     const freshClass = cashFresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
     const cashAsOf = resolveTileAsOf("cash-pace", cashLedgerAsOf());
-    const freshMarkHtml = cashFresh ? statusCorner(true, cashAsOf) : outdatedMark(cashAsOf);
+    const freshMarkHtml = periodFreshMark(true, true, cashValue, cashAsOf);
     const weekAria = cashWeekCollectionEstimates(m)
       .map(w => {
         if (w.kind === "done") return `${w.id} ${fmtMoney(w.running)} done`;
@@ -4464,10 +4496,10 @@
     const rev = autoCaseEstRevenuePack(g);
     const revenueTitle = rev.title;
     const autoAsOf = resolveTileAsOf("#03", (window.DUI_GOAL_DATA && window.DUI_GOAL_DATA.updatedAt) || g.updatedAt);
-    const autoFresh = tileSourceIsCurrent("#03", autoAsOf);
+    const autoFresh = tilePeriodFresh(true, true, String(total));
     const freshClass = autoFresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
     return `<button type="button" class="kpi-goal-card kpi-stat-target-bar${freshClass}" data-kpi-focus="#03">
-      ${periodFreshMark(autoFresh, autoFresh, String(total), autoAsOf)}
+      ${periodFreshMark(true, true, String(total), autoAsOf)}
       ${kpiHelpBtn("#03")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle((g.title || "Auto Cases").replace(/^#\s*/, ""))}
@@ -4998,7 +5030,7 @@
     const p = DATA.phoneIntake;
     if (!p) return "";
     const key = periodToChannelMonth(DATA.period);
-    const monthNames = { May: "May", Jun: "June", Jul: "July", Aug: "August", Sep: "September" };
+    const monthNames = { May: "May", Jun: "June", Jul: "July", Aug: "August", Sep: "September", Oct: "October" };
     const monthName = monthNames[key] || key || "—";
     const phoneReady = !!(DATA.phoneByMonth && DATA.phoneByMonth[key]);
     const model = phoneReady ? missedRevenueModel(p) : null;
@@ -5403,11 +5435,12 @@
       : `<span class="kpi-mom-change ${deltaPp >= 0 ? "kpi-mom-up" : "kpi-mom-down"}">${
           deltaPp === 0 ? "0 pp" : `${deltaPp > 0 ? "↑" : "↓"} ${Math.abs(deltaPp)} pp`
         }</span>`;
-    const fresh = ready && tileSourceIsCurrent("answer-rate");
+    const answerValue = ready ? `${pct}%` : "—";
+    const fresh = tilePeriodFresh(true, true, answerValue);
     const answerAsOf = resolveTileAsOf("answer-rate");
     const ariaMissed = missedReady ? `${missed} missed` : "missed unavailable";
     return `<button type="button" class="kpi-goal-card kpi-stat-answer-rate${fresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated"}${!hit && ready ? " kpi-stat-attention" : ""}" data-kpi-focus="answer-rate" aria-label="Weekday answer rate ${ready ? pct + "%" : "unavailable"} · ${ariaMissed} · year avg ${yearAvg != null ? yearAvg + "%" : "—"} · vs last month ${deltaPp == null ? "—" : deltaPp + " pp"}">
-      ${periodFreshMark(fresh, fresh, ready ? `${pct}%` : "—", answerAsOf)}
+      ${periodFreshMark(true, true, answerValue, answerAsOf)}
       ${kpiHelpBtn("answer-rate")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Answer Rate")}
@@ -5427,7 +5460,7 @@
     const y = yelpBaselineData();
     const total = y.reviewsTotal || y.reviews;
     const key = periodToChannelMonth(DATA.period);
-    const monthNames = { Jun: "June", Jul: "July", Aug: "August", Sep: "September" };
+    const monthNames = { Jun: "June", Jul: "July", Aug: "August", Sep: "September", Oct: "October" };
     const monthName = monthNames[key] || key || "Month";
     let monthReviews = null;
     if (key === "Sep") {
@@ -5436,6 +5469,8 @@
       monthReviews = Math.max(0, (Number(y.reviewsTotal || y.reviews) || 0) - (Number(y.reviewsPrior) || 0) - (Number(y.reviewsSeptember) || 0));
     } else if (key === "Jul") {
       monthReviews = Number(y.reviewsJuly) || 0;
+    } else if (key === "Oct") {
+      monthReviews = 0;
     }
     const monthReviewsLabel = monthReviews == null ? "—" : String(monthReviews);
     const reviewPct = total / reviewTarget;
@@ -5448,7 +5483,7 @@
     });
     const pacePct = Math.round(reviewPct * 100);
     const yelpAsOf = resolveTileAsOf("yelp", y.caseValue.asOf || y.reviewsAsOf || y.asOf);
-    const yelpFresh = tileSourceIsCurrent("yelp", yelpAsOf);
+    const yelpFresh = tilePeriodFresh(true, true, String(total));
     const freshClass = yelpFresh ? " kpi-verified kpi-aug-updated" : " kpi-outdated";
     const cvMonth = (y.caseValue.byMonth && y.caseValue.byMonth[key]) || null;
     const monthFee = cvMonth && cvMonth.contractedTotal != null ? Number(cvMonth.contractedTotal) : null;
@@ -5457,7 +5492,7 @@
       ? fmtMoney(y.caseValue.contractedTotal)
       : "—";
     return `<button type="button" class="kpi-goal-card kpi-stat-gauge${freshClass}" data-kpi-focus="yelp" aria-label="Yelp Reviews progress toward 20 reviews · pace ${pacePct}% · ${monthName} ${monthReviewsLabel} · total ${total} · signed case value ${signedTotalLabel}">
-      ${periodFreshMark(yelpFresh, yelpFresh, String(total), yelpAsOf)}
+      ${periodFreshMark(true, true, String(total), yelpAsOf)}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Yelp Reviews")}
         ${metricWithDeltaHtml(gauge, null)}
