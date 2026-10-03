@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261002-yelpvalue";
+  const RENDER_VER = "20261002-hubspotforms";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Sep MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["September 2026", "August 2026", "July 2026", "June 2026"];
@@ -14,8 +14,8 @@
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Campaign report (41) · Call details (11) · leads-inbox (22) · HubSpot Sep forms 1 · Yelp lead inbox + call dates 10/02/2026 · Justia Profile Stats Mar–Aug · recheck 2026-10-02",
-      fields: "Jun 235 · Jul 279 · Aug* 96 · Sep* 95 = Search 39 + LSA 44 + HubSpot 1 + Yelp 11 + Justia 0 · Justia contacts = calls + emails allocated"
+      file: "Campaign report (41) · Call details (11) · leads-inbox (22) · HubSpot form submits report 10/02/2026 · Yelp lead inbox + call dates 10/02/2026 · Justia Profile Stats Mar–Aug · recheck 2026-10-02",
+      fields: "Jun 238 · Jul 281 · Aug 96 · Sep* 98 = Search 39 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 · HubSpot forms May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4 · Justia contacts = calls + emails allocated"
     },
     "yelp": {
       file: "Yelp lead inbox screenshots 2026-10-02 · dated call log Jun–Sep · Case_balance_09-23 + Trust_10-02 for signed fees · Ads by type 09/18 for Aug raw mix · spend Sep 1–27 $432.67 · listing 4.5 · 8 reviews",
@@ -94,12 +94,12 @@
       fields: "Follows tile month · Sep* MTD through 09/25/2026 · W1–W4 running Trust Credit by calendar week · completed gray · future = pace × week-end day"
     },
     "cases-leads-spend": {
-      file: "Contact_09-28 · leads-inbox (22) · Call details (11) · Campaign report (41) · account_activities_202609 (3) · HubSpot Sep forms 1 · Yelp lead inbox 10/02 Sep contacts 11 · Justia Mar–Aug · recheck 2026-10-02",
-      fields: "May–Aug cases/leads/spend on file · May 118 · Jun 235 · Jul 279 · Aug* 96 · Sep* cases 14 · leads 95 = Search 39 + LSA 44 + HubSpot 1 + Yelp 11 + Justia 0 · spend $18,596.19 = Search $13,713.63 + LSA $4,882.56"
+      file: "Contact_09-28 · leads-inbox (22) · Call details (11) · Campaign report (41) · account_activities_202609 (3) · HubSpot form submits report 10/02 · May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4 · Yelp lead inbox 10/02 Sep contacts 11 · Justia Mar–Aug · recheck 2026-10-02",
+      fields: "May–Aug cases/leads/spend on file · May 125 · Jun 238 · Jul 281 · Aug 96 · Sep* cases 14 · leads 98 = Search 39 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 · spend $18,596.19 = Search $13,713.63 + LSA $4,882.56"
     },
     "sales-cost-funnel": {
       file: "Campaign report (41) · Call details (11) · leads-inbox (22) · HubSpot · Yelp lead inbox 10/02 · Justia Mar–Aug · channelMonths · recheck 10/02/2026",
-      fields: "Direct contacts = Search + LSA + HubSpot + Yelp + Justia. May 118 · Jun 235 · Jul 279 · Aug 96 · Sep* 95 = 39 + 44 + 1 + 11 + 0"
+      fields: "Direct contacts = Search + LSA + HubSpot + Yelp + Justia. May 125 · Jun 238 · Jul 281 · Aug 96 · Sep* 98 = 39 + 44 + 4 + 11 + 0"
     },
     "cash-collected": {
       file: "ledger_account_activity_report (9).csv · export 09/28/2026 · Jan–Aug locked · Sep* MTD",
@@ -127,7 +127,7 @@
     "#01": {
       title: "#01 Lead Calls",
       desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid. That is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot forms + Yelp contacts + Justia contacts + Pav.Law website. Yelp contacts = Messages + answered Calls at 40%. Justia contacts = calls + emails allocated across Mar–Aug. Track table breaks out each channel.",
-      formula: "Sep* 95 = Search 39 + LSA 44 + HubSpot 1 + Yelp 11 + Justia 0 + Pav.Law website 0. May–Jul Justia adds calls + emails. Target = round(average Lead Calls over the last 3 complete months). Not reverse from $100k cash · Trust income is not only new leads."
+      formula: "Sep* 98 = Search 39 + LSA 44 + HubSpot 4 + Yelp 11 + Justia 0 + Pav.Law website 0. HubSpot form submits report 10/02/2026 · May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4. May–Jul Justia adds calls + emails. Target = round(average Lead Calls over the last 3 complete months). Not reverse from $100k cash · Trust income is not only new leads."
     },
     "#02": {
       title: "#02 New Cases",
@@ -443,10 +443,10 @@
   const DATA = {
     period: "September 2026",
     asOf: "2026-09-28",
-    lastUpdated: "2026-09-28",
+    lastUpdated: "2026-10-02",
     updateLabel: "September 2026",
-    updateScope: "Search Campaign (41) Sep 1–28 · Call details (11) · LSA inbox (22) · LSA activities (3) · Contact_09-28 Sep* cases 14 through 09/23 · ledger (9) Sep* Credits $100,010 through 09/25 · Yelp lead inbox + call dates 10/02 · last updated 10/02/2026",
-    source: "Campaign report (41) · Call details (11) · leads-inbox (22) · account_activities_202609 (3) · Yelp lead inbox 10/02 · Yelp Ad Analytics Sep 1–27 · Contact_09-28 · ledger (9) · last updated 10/02/2026",
+    updateScope: "Search Campaign (41) Sep 1–28 · Call details (11) · LSA inbox (22) · LSA activities (3) · Contact_09-28 Sep* cases 14 through 09/23 · ledger (9) Sep* Credits $100,010 through 09/25 · HubSpot form submits report 10/02 · May 7 · Jun 8 · Jul 6 · Aug 0 · Sep 4 · Yelp lead inbox + call dates 10/02 · last updated 10/02/2026",
+    source: "Campaign report (41) · Call details (11) · leads-inbox (22) · account_activities_202609 (3) · HubSpot form submits 10/02 · Yelp lead inbox 10/02 · Yelp Ad Analytics Sep 1–27 · Contact_09-28 · ledger (9) · last updated 10/02/2026",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
       "#01": "2026-10-02",
@@ -491,40 +491,41 @@
         month: "May",
         search: 39,
         lsa: 72,
-        hubspot: 0,
+        hubspot: 7,
+        hubspotForms: 7,
         justia: 7,
         justiaSpend: 1500,
         searchSpend: 6005,
         lsaSpend: 11006,
-        note: "Justia 09/18/2026 · 5 calls + 2 emails = 7 contacts · 2 website clicks"
+        note: "HubSpot form submits report 10/02/2026 · 7. Justia 09/18/2026 · 5 calls + 2 emails = 7 contacts · 2 website clicks"
       },
       {
         month: "Jun",
         search: 138,
         lsa: 83,
-        hubspot: 5,
-        hubspotForms: 5,
+        hubspot: 8,
+        hubspotForms: 8,
         yelp: 3,
         yelpSpend: 0,
         justia: 6,
         justiaSpend: 1500,
         searchSpend: 8296,
         lsaSpend: 13206,
-        note: "Yelp · 2 Messages · 2 Calls from dated call log 10/02/2026 · 3 contacts. Justia 09/18/2026 · 4 calls + 2 emails = 6 contacts · 3 website clicks"
+        note: "HubSpot form submits report 10/02/2026 · 8. Yelp · 2 Messages · 2 Calls from dated call log 10/02/2026 · 3 contacts. Justia 09/18/2026 · 4 calls + 2 emails = 6 contacts · 3 website clicks"
       },
       {
         month: "Jul",
         search: 131,
         lsa: 132,
-        hubspot: 4,
-        hubspotForms: 4,
+        hubspot: 6,
+        hubspotForms: 6,
         yelp: 6,
         yelpSpend: 0,
         justia: 6,
         justiaSpend: 1500,
         searchSpend: 7262,
         lsaSpend: 14556,
-        note: "Search Call details (1) Jul 1–31 · LSA inbox(3) Jul full · HubSpot forms 4. Yelp · 5 Messages · 2 Calls · 6 contacts · Carlos lead dated ~3 mo on 10/02 inbox. Justia 09/18/2026 · 4 calls + 2 emails = 6 contacts · 4 website clicks"
+        note: "Search Call details (1) Jul 1–31 · LSA inbox(3) Jul full · HubSpot form submits report 10/02/2026 · 6. Yelp · 5 Messages · 2 Calls · 6 contacts · Carlos lead dated ~3 mo on 10/02 inbox. Justia 09/18/2026 · 4 calls + 2 emails = 6 contacts · 4 website clicks"
       },
       {
         month: "Aug",
@@ -538,21 +539,21 @@
         justiaSpend: 1500,
         searchSpend: 400,
         lsaSpend: 6286,
-        note: "Search Call details (4) through 08/14/2026 · LSA inbox(3) through 08/21/2026 · HubSpot 0. Yelp · 8 Messages · 4 Calls · 10 contacts · spend $72.58 · Ads by type 09/18 kept · 10/02 inbox shows 5 Aug-dated leads as partial scroll. Justia 09/18/2026 · 0 calls · 0 emails · 2 website clicks. Search ads paused unpaid"
+        note: "Search Call details (4) through 08/14/2026 · LSA inbox(3) through 08/21/2026 · HubSpot form submits report 10/02/2026 · Aug row absent = 0. Yelp · 8 Messages · 4 Calls · 10 contacts · spend $72.58 · Ads by type 09/18 kept · 10/02 inbox shows 5 Aug-dated leads as partial scroll. Justia 09/18/2026 · 0 calls · 0 emails · 2 website clicks. Search ads paused unpaid"
       },
       {
         month: "Sep*",
         search: 39,
         lsa: 44,
-        hubspot: 1,
-        hubspotForms: 1,
+        hubspot: 4,
+        hubspotForms: 4,
         yelp: 11,
         yelpSpend: 432.67,
         justia: 0,
         justiaSpend: null,
         searchSpend: 13713.63,
         lsaSpend: 4882.56,
-        note: "Search Call details (11) 09/01–09/28/2026 · 39 calls · 17 received / 22 missed · ≥60s 10. Campaign (41) live HS $13,713.63 · Phone 39 · Impr 3,224 · Interactions 157. LSA inbox (22) Sep 1–27 · 44 leads · 15 charged. LSA Home Services Ads $4,882.56 from account_activities_202609 (3). Yelp 10/02 lead inbox · 9 Sep Messages/Direct Requests + 5 dated Calls · contacts 11 = 9 + round(5×40%). Spend $432.67 Sep 1–27. HubSpot 1 · Justia 0 prior. Cases Contact_09-28 · Sep* 14 through 09/23 · cash ledger (9) Sep* $100,010 through 09/25."
+        note: "Search Call details (11) 09/01–09/28/2026 · 39 calls · 17 received / 22 missed · ≥60s 10. Campaign (41) live HS $13,713.63 · Phone 39 · Impr 3,224 · Interactions 157. LSA inbox (22) Sep 1–27 · 44 leads · 15 charged. LSA Home Services Ads $4,882.56 from account_activities_202609 (3). Yelp 10/02 lead inbox · 9 Sep Messages/Direct Requests + 5 dated Calls · contacts 11 = 9 + round(5×40%). Spend $432.67 Sep 1–27. HubSpot form submits report 10/02/2026 · 4 · Justia 0 prior. Cases Contact_09-28 · Sep* 14 through 09/23 · cash ledger (9) Sep* $100,010 through 09/25."
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -818,11 +819,11 @@
       { month: "Feb", cases: 14, leads: null, spend: 3197, lsaSpend: 3197, adsSpend: 0, adsLeads: null, websiteLeads: null },
       { month: "Mar", cases: 17, leads: null, spend: 921, lsaSpend: 921, adsSpend: 0, adsLeads: null, websiteLeads: null },
       { month: "Apr", cases: 15, leads: null, spend: 3449, lsaSpend: 3449, adsSpend: 0, adsLeads: null, websiteLeads: null },
-      { month: "May", cases: 22, leads: 118, spend: 17011, lsaSpend: 11006, adsSpend: 6005, adsLeads: 39, websiteLeads: null },
-      { month: "Jun", cases: 36, leads: 235, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 5 },
-      { month: "Jul", cases: 35, leads: 279, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 4 },
+      { month: "May", cases: 22, leads: 125, spend: 17011, lsaSpend: 11006, adsSpend: 6005, adsLeads: 39, websiteLeads: 7 },
+      { month: "Jun", cases: 36, leads: 238, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 138, websiteLeads: 8 },
+      { month: "Jul", cases: 35, leads: 281, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 6 },
       { month: "Aug", cases: 20, leads: 96, spend: 6686, lsaSpend: 6286, adsSpend: 400, adsLeads: 25, websiteLeads: 0 },
-      { month: "Sep*", cases: 14, leads: 95, spend: 18596.19, lsaSpend: 4882.56, adsSpend: 13713.63, adsLeads: 39, websiteLeads: 1 }
+      { month: "Sep*", cases: 14, leads: 98, spend: 18596.19, lsaSpend: 4882.56, adsSpend: 13713.63, adsLeads: 39, websiteLeads: 4 }
     ],
     /**
      * Justia Profile Stats · Kate 09/18/2026.
@@ -1574,7 +1575,7 @@
         } else if (key === "Aug") {
           leads.cashGoalNote = "Aug full month";
         } else if (key === "Jul") {
-          leads.cashGoalNote = "Jul stack · HubSpot through Jul 16";
+          leads.cashGoalNote = "Jul complete stack · HubSpot forms report 10/02";
         } else {
           leads.cashGoalNote = `${key} complete stack`;
         }
