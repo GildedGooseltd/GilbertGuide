@@ -3737,12 +3737,43 @@
       font-size: 1rem;
       width: 100%;
     }
+    .ls-canvas .kpi-chart-detail-stacked {
+      overflow-x: visible;
+      max-width: 100%;
+    }
+    .ls-canvas .kpi-chart-table-stacked {
+      table-layout: fixed;
+      width: 100%;
+      max-width: 100%;
+    }
     .ls-canvas .kpi-table th,
     .ls-canvas .kpi-chart-table th {
       font-size: 1rem;
       font-weight: 800;
       padding: 0.55rem 0.6rem;
       color: var(--gg-royal-deep, #2d1454);
+    }
+    .ls-canvas .kpi-chart-table-stacked th,
+    .ls-canvas .kpi-chart-table th.kpi-th-stacked {
+      white-space: normal;
+      line-height: 1.15;
+      vertical-align: bottom;
+      text-align: center;
+      padding: 0.4rem 0.28rem;
+      font-size: 0.88rem;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+    .ls-canvas .kpi-chart-table-stacked td {
+      text-align: center;
+      padding: 0.45rem 0.28rem;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+    .ls-canvas .kpi-chart-table-stacked th:first-child,
+    .ls-canvas .kpi-chart-table-stacked td:first-child {
+      text-align: left;
     }
     .ls-canvas .kpi-table td,
     .ls-canvas .kpi-chart-table td {
@@ -3827,8 +3858,8 @@
       box-shadow: none;
     }
     .ls-canvas .kpi-goals-grid .kpi-goal-card.ls-stat-tile .kpi-goal-visual {
-      background: #e8e8ea;
-      border: 1px solid #d0d0d4;
+      background: #eaf3fc;
+      border: 1px solid #c5d6eb;
       border-radius: 10px;
       padding: 1rem 0.75rem 0.95rem;
       box-sizing: border-box;
@@ -4462,6 +4493,20 @@
       margin-bottom: 0.9rem;
       max-width: none;
     }
+    .kpi-goals-grid.kpi-tiles-2,
+    .kpi-stat-grid.kpi-tiles-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 1rem;
+      margin-bottom: 0.9rem;
+      max-width: none;
+    }
+    .kpi-goals-grid.kpi-tiles-1,
+    .kpi-stat-grid.kpi-tiles-1 {
+      grid-template-columns: minmax(0, 16rem);
+      column-gap: 1rem;
+      margin-bottom: 0.9rem;
+      max-width: none;
+    }
     /* 4-up in a narrow pane: trim side gutters only. Chrome stays in the top band. */
     @media (max-width: 1000px) {
       .kpi-tiles-4 .kpi-stat-card,
@@ -4496,13 +4541,17 @@
       .kpi-goals-grid.kpi-tiles-4,
       .kpi-stat-grid.kpi-tiles-4,
       .kpi-goals-grid.kpi-tiles-3,
-      .kpi-stat-grid.kpi-tiles-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kpi-stat-grid.kpi-tiles-3,
+      .kpi-goals-grid.kpi-tiles-2,
+      .kpi-stat-grid.kpi-tiles-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 380px) {
       .kpi-goals-grid.kpi-tiles-4,
       .kpi-stat-grid.kpi-tiles-4,
       .kpi-goals-grid.kpi-tiles-3,
-      .kpi-stat-grid.kpi-tiles-3 { grid-template-columns: 1fr; max-width: 22rem; }
+      .kpi-stat-grid.kpi-tiles-3,
+      .kpi-goals-grid.kpi-tiles-2,
+      .kpi-stat-grid.kpi-tiles-2 { grid-template-columns: 1fr; max-width: 22rem; }
     }
     .kpi-stat-card .kpi-metric-icon {
       display: inline-flex;
@@ -4949,10 +4998,10 @@
       width: 100%;
       text-align: center;
     }
-    /* Monthly KPI graph panel · solid light gray behind gauges / bars · not purple */
+    /* Monthly KPI graph panel · solid light light blue behind gauges / bars · not purple */
     .kpi-goals-grid .kpi-goal-card > .kpi-goal-visual {
-      background: #e8e8ea;
-      border: 1px solid #d0d0d4;
+      background: #eaf3fc;
+      border: 1px solid #c5d6eb;
       border-radius: 10px;
       box-sizing: border-box;
       padding: 0.55rem 0.45rem 0.65rem;
@@ -7247,8 +7296,8 @@
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20260923-adenhance-ctype"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
-  <script src="dui-goal-data.js?v=20260924-est-rev"></script>
-  <script src="kpi-report.js?v=20261008-ls-totals"></script>
+  <script src="dui-goal-data.js?v=20261008-auto-types"></script>
+  <script src="kpi-report.js?v=20261008-use-ls-tags"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20261008-leadsource-canvas"></script>
 </body>
