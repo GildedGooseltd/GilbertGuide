@@ -154,7 +154,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
 | KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
-| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid |
+| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid. Inner `.kpi-goal-visual` plot panel is solid light gray `#e8e8ea` with `#d0d0d4` border — not purple wash |
 | Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
 | KPI tile grid     | `.kpi-tiles-4`                         | Goal cards and metric tiles in one flow, 4 per row; narrow-pane trim ≤1000px, 2-col ≤560px, 1-col ≤380px |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
@@ -176,6 +176,8 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 **Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 
 **Value labels:** `.kpi-target-bar-val` and other plotted counts use `--gg-brown` (`#3d3028`). Gauge scale ticks stay `#111`. Never white text on bars, goal tiles, or light plots. Counts sit above or beside the fill, not inside it. Combo charts: counts and spend labels sit above the series — never on the line.
+
+**Plot density (locked · 10/08/2026):** Bar and combo charts must fill the plot field. Single-series bars use about **75–80%** of each category slot. Paired practice-area bars use about **85–90%** of the slot for the pair. Do not ship thin bars with large empty yellow gutters between groups. Data / stacked-plot value labels target **15–16px**, category labels **15px**, axis ticks **13px**. Opportunity callout labels **12px**. Prefer taller plot boxes (~340–380 viewBox height) over sparse short charts. Do not override value labels with inline `font-size:9px`.
 
 **Locked triad** (unique, high-contrast — no two similar purples adjacent):
 

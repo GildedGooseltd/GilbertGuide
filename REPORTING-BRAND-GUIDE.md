@@ -209,7 +209,8 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 
 ### Layout rules
 
-- **Bar chart:** direct value labels; baseline visible; periods run oldest → newest, left to right.
+- **Bar chart:** direct value labels; baseline visible; periods run oldest → newest, left to right. Bars fill the plot: ~75–80% of each month/category slot for single series; paired practice bars ~85–90% of the slot. Avoid thin bars with large empty gutters.
+- **Plot typography density:** on Data and KPIs stacked plot|table cards, value labels ~15–16px, category labels ~15px, axis ticks ~13px, opportunity tags ~12px. Do not shrink value labels with inline 9px overrides. Prefer viewBox height ~340–380 so bars and labels read large in the split column.
 - **Line chart:** use for spend/cash trends; cash = green, spend = plum; label both lines.
 - **Combo chart:** bars for volumes, line for money; separate left/right units.
 - **Donut:** maximum 4–5 segments; legend always present; exact share in the detail table.
