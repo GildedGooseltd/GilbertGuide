@@ -512,6 +512,9 @@
     ) {
       return "picker";
     }
+    if (t === "leadsource" || t === "lead-source" || t === "leadsources") {
+      return "leadsource";
+    }
     if (t === "kpis" || t === "data") {
       return t;
     }
@@ -1747,7 +1750,7 @@
     const doneCount = completedProjects().length;
     document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
       const view = btn.dataset.view;
-      if (view === "kpis" || view === "data" || view === "recommendations") {
+      if (view === "kpis" || view === "data" || view === "leadsource" || view === "recommendations") {
         const badge = btn.querySelector(".tab-count");
         if (badge) badge.remove();
         return;
@@ -1767,16 +1770,19 @@
     state.activeViewTab = normalizeViewTab(state.activeViewTab);
     const isKpis = state.activeViewTab === "kpis";
     const isData = state.activeViewTab === "data";
+    const isLeadSource = state.activeViewTab === "leadsource";
     const isRecs = state.activeViewTab === "recommendations";
     const isPicker = state.activeViewTab === "picker";
     const isImpact = state.activeViewTab === "impact";
     const kpisPanel = document.getElementById("cockpit-panel-kpis");
     const dataPanel = document.getElementById("cockpit-panel-data");
+    const leadSourcePanel = document.getElementById("cockpit-panel-leadsource");
     const recsPanel = document.getElementById("cockpit-panel-recommendations");
     const pickerPanel = document.getElementById("cockpit-panel-picker");
     const impactPanel = document.getElementById("cockpit-panel-impact");
     if (kpisPanel) kpisPanel.hidden = !isKpis;
     if (dataPanel) dataPanel.hidden = !isData;
+    if (leadSourcePanel) leadSourcePanel.hidden = !isLeadSource;
     if (recsPanel) recsPanel.hidden = !isRecs;
     if (pickerPanel) pickerPanel.hidden = !isPicker;
     if (impactPanel) impactPanel.hidden = !isImpact;
@@ -1786,6 +1792,10 @@
     if (isData && window.KPI_REPORT) {
       const dataEl = document.getElementById("kpi-report-data");
       if (dataEl) KPI_REPORT.renderData(dataEl);
+    }
+    if (isLeadSource && window.KPI_REPORT && typeof KPI_REPORT.renderLeadSource === "function") {
+      const leadEl = document.getElementById("kpi-report-leadsource");
+      if (leadEl) KPI_REPORT.renderLeadSource(leadEl);
     }
     if (isRecs && window.KPI_REPORT) {
       const recsEl = document.getElementById("kpi-report-recommendations");
