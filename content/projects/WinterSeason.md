@@ -4,7 +4,7 @@
 | ----------------- | ------------------------ |
 | Priority          | 13                       |
 | Fee               | 4900                     |
-| Status            | wip |
+| Status            | archived |
 | Duration weeks    | 12                       |
 | Invoice count     | 4                        |
 | Recommended start | 10/01/2026               |
@@ -15,15 +15,11 @@
 
 ## Project Overview
 
-One winter package so glovebox mail, safety email, and outbound dials run on the same freeze-to-holiday calendar instead of three separate sells.
+Removed as an active channel · Kate 10/02/2026. Do not sell or schedule WinterSeason as a package.
 
-Insurance-sleeve / glovebox mailer puts Pav’s number in the car before first freeze. About $8.80 consulting cost per lead contacted on the cleaned list. Phone number in the glovebox at the moment of accident or ticket. Doubles as onboarding thank-you. Design print insert for insurance card holders with emergency contact details. Print and postage stay client vendor cost.
+Glovebox / insurance sleeve work runs on its own mailer kit, not under this card. Holiday Search creative stays on HolidayAds when that card is live. Sealing and probation outbound is not tied to this channel anymore.
 
-Winter safety email reaches past clients when DUI and ticket risk rises in cold weather and holiday travel. Safety send plus a clear “what to do if charged” path to book with Romina. Uses HubSpot lists once contacts are marketable.
-
-Outbound calling on warm lists without raising ad spend. Ready-to-dial list and Andrew-approved script. Outcomes logged in HubSpot. Includes sealing and probation reengagement formerly on SealReeng: past clients who finished deferred judgment or probation get a sealing or early-termination offer while MyCase data is cleaned. Scripts and pricing from the June Client Reengagement PDF.
-
-Separate from HolidayAds seasonal Search and NTGUILT winter driving creative.
+Keep this file for history only.
 
 ## HubSpot Application
 

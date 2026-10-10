@@ -57,7 +57,11 @@ const META_KEYS = {
   invoices: "invoiceCount",
   "payment count": "invoiceCount",
   "payment grace days": "paymentGraceDays",
-  "pay through days past close": "paymentGraceDays"
+  "pay through days past close": "paymentGraceDays",
+  progress: "progressPct",
+  "% complete": "progressPct",
+  "percent complete": "progressPct",
+  "pct complete": "progressPct"
 };
 
 /** Accept ISO YYYY-MM-DD or American MM/DD/YYYY → ISO for calculator date inputs. */
@@ -176,9 +180,12 @@ function parseMetaTable(text) {
       } else {
         meta[field] = parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
       }
-    } else if (field === "durationWeeks" || field === "paymentGraceDays" || field === "invoiceCount") {
+    }     else if (field === "durationWeeks" || field === "paymentGraceDays" || field === "invoiceCount") {
       const n = parseInt(String(val).replace(/[^0-9]/g, ""), 10);
       if (Number.isFinite(n) && n >= 0) meta[field] = n;
+    } else if (field === "progressPct") {
+      const n = parseInt(String(val).replace(/[^0-9]/g, ""), 10);
+      if (Number.isFinite(n)) meta.progressPct = Math.max(0, Math.min(100, n));
     }
     else if (field === "startDate" || field === "endDate") {
       const iso = normalizeMetaDateToIso(val);
@@ -610,6 +617,117 @@ function findSectionBody(sections, baseName) {
   return key ? sections[key] : "";
 }
 
+/** Checklist progress from `- [x]` / `- [ ]` across published + unpublished project markdown. */
+function parseCheckboxProgress(text) {
+  const src = String(text || "");
+  const done = [];
+  const open = [];
+  for (const m of src.matchAll(/^\s*-\s*\[x\]\s+(.+)$/gim)) {
+    const line = String(m[1] || "").replace(/\s+/g, " ").trim();
+    if (line) done.push(line);
+  }
+  for (const m of src.matchAll(/^\s*-\s*\[\s\]\s+(.+)$/gim)) {
+    const line = String(m[1] || "").replace(/\s+/g, " ").trim();
+    if (line) open.push(line);
+  }
+  const total = done.length + open.length;
+  return {
+    progressDoneItems: done,
+    progressOpenItems: open,
+    progressDoneCount: done.length,
+    progressOpenCount: open.length,
+    progressPct: total ? Math.round((done.length / total) * 100) : null
+  };
+}
+
+/** Parse `| Bullet | Emoji | Status | Pct |` rows from a markdown table body. */
+function parseOverviewBulletStatusTable(body) {
+  const rows = [];
+  for (const line of String(body || "").split("\n")) {
+    const t = line.trim();
+    if (!t.startsWith("|")) continue;
+    if (/^\|\s*-+/.test(t) || /\bBullet\b/i.test(t)) continue;
+    const cells = t
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
+      .map(c => c.trim());
+    if (cells.length < 4) continue;
+    const [bullet, emoji, status, pctRaw] = cells;
+    if (!bullet) continue;
+    const pct = Math.round(Number(String(pctRaw || "").replace(/%/g, "")));
+    rows.push({
+      bullet: bullet.replace(/\*\*/g, "").trim(),
+      /* Empty emoji = keep disc bullet in Overview · Kate 10/10/2026 */
+      emoji: String(emoji || "").trim(),
+      status: status || "",
+      pct: Number.isFinite(pct) ? Math.max(0, Math.min(100, pct)) : null
+    });
+  }
+  return rows;
+}
+
+/** Overview bullet chips · `### Overview bullet status` in Project Plan unpublished. */
+function parseOverviewBulletStatus(sections, fullText) {
+  const fromPublished =
+    findSectionBody(sections, "overview bullet status") ||
+    findSectionBody(sections, "overview status") ||
+    "";
+  if (fromPublished) {
+    const rows = parseOverviewBulletStatusTable(fromPublished);
+    if (rows.length) return rows;
+  }
+  const m = String(fullText || "").match(
+    /###\s*Overview bullet status\b([^\n]*)\n([\s\S]*?)(?=\n###\s|\n##\s|$)/i
+  );
+  if (m) return parseOverviewBulletStatusTable(m[2]);
+  return [];
+}
+
+function attachProjectProgress(project, fullText, sections) {
+  const fromChecks = parseCheckboxProgress(fullText);
+  const metaPct =
+    project.progressPct != null && Number.isFinite(Number(project.progressPct))
+      ? Math.max(0, Math.min(100, Math.round(Number(project.progressPct))))
+      : null;
+  const listDone = (project.completedItems || []).map(s => String(s || "").trim()).filter(Boolean);
+  const listOpen = (project.inProgressItems || []).map(s => String(s || "").trim()).filter(Boolean);
+  const doneItems = fromChecks.progressDoneItems.length ? fromChecks.progressDoneItems : listDone;
+  const openItems = fromChecks.progressOpenItems.length ? fromChecks.progressOpenItems : listOpen;
+  const total = doneItems.length + openItems.length;
+  let pct = metaPct;
+  if (pct == null && total) pct = Math.round((doneItems.length / total) * 100);
+  project.progressDoneItems = doneItems;
+  project.progressOpenItems = openItems;
+  project.progressDoneCount = doneItems.length;
+  project.progressOpenCount = openItems.length;
+  if (pct != null) project.progressPct = pct;
+  const overviewBullets = parseOverviewBulletStatus(sections, fullText);
+  if (overviewBullets.length) {
+    project.overviewBulletStatus = overviewBullets;
+    /* Tile % from overview Status/Pct table when present · Kate 10/10/2026 */
+    const withPct = overviewBullets.filter(
+      row => row.pct != null && Number.isFinite(Number(row.pct))
+    );
+    if (withPct.length) {
+      const avg = Math.round(
+        withPct.reduce((sum, row) => sum + Number(row.pct), 0) / withPct.length
+      );
+      project.progressPct = Math.max(0, Math.min(100, avg));
+    }
+  } else delete project.overviewBulletStatus;
+  const statusBody =
+    findSectionBody(sections, "status update") ||
+    findSectionBody(sections, "work update") ||
+    findSectionBody(sections, "progress update");
+  if (statusBody) {
+    const bullets = parseListSection(statusBody);
+    project.statusUpdate = bullets.length
+      ? bullets
+      : [applyProperCase(statusBody.trim())].filter(Boolean);
+  }
+}
+
 function projectStatusBucket(status) {
   const s = String(status || "available").toLowerCase();
   if (s.includes("completed")) return "completed";
@@ -845,6 +963,7 @@ export function parseProjectMarkdown(text, fallbackId) {
     /* Tasks also count as in-progress scope when WIP is empty */
     if (!project.inProgressItems?.length) project.inProgressItems = [...project.taskItems];
   }
+  attachProjectProgress(project, text, sections);
   if (sections.results)
     project.resultsItems = parseListSection(sections.results);
   if (sections.goal) project.goal = applyProperCase(sections.goal.trim());
@@ -1016,9 +1135,31 @@ export function sanitizeProjectRecord(p) {
     "completedItems",
     "inProgressItems",
     "taskItems",
-    "deliverables"
+    "deliverables",
+    "progressDoneItems",
+    "progressOpenItems",
+    "statusUpdate"
   ]) {
     if (Array.isArray(p[key])) p[key] = p[key].map(sanitizeProjectText).filter(Boolean);
+  }
+  if (Array.isArray(p.overviewBulletStatus)) {
+    p.overviewBulletStatus = p.overviewBulletStatus
+      .map(row => ({
+        bullet: sanitizeProjectText(row?.bullet || ""),
+        emoji: String(row?.emoji || "").trim(),
+        status: sanitizeProjectText(row?.status || ""),
+        pct:
+          row?.pct != null && Number.isFinite(Number(row.pct))
+            ? Math.max(0, Math.min(100, Math.round(Number(row.pct))))
+            : null
+      }))
+      .filter(row => row.bullet);
+    if (!p.overviewBulletStatus.length) delete p.overviewBulletStatus;
+  }
+  if (p.progressPct != null) {
+    const n = Math.round(Number(p.progressPct));
+    p.progressPct = Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : null;
+    if (p.progressPct == null) delete p.progressPct;
   }
   if (p.referenceLink) delete p.referenceLink;
   delete p.learningsLinks;

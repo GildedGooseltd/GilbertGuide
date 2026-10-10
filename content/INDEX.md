@@ -21,11 +21,11 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Directories & Profiles   | [x]  | [Legal Directory Updates](projects/LegalDirs.md) |
 | Client Referral          | [ ]  | [Client Referral Program](projects/Referral.md) |
 | Sealing Reengagement     | [ ]  | [Sealing & Probation Client Reengagement](projects/SealReeng.md) |
-| Printables & Swag        | [x]  | [Printables, Swag & Apparel](projects/SwagPrint.md) |
 | Safety First Kit         | [ ]  | [Safety First Kit Campaign](projects/SafetyFirst.md) |
 | NTGUILT Ads Launch       | [ ]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md) |
 | Ad Expansion             | [x]  | [Ad Expansion](projects/AdEnhance.md) |
 | Yelp Ads                 | [x]  | [Yelp Ads](projects/Yelp.md) |
+| Printables & Swag        | [x]  | [Printables, Swag & Apparel](projects/SwagPrint.md) |
 | Adult Site Ads           | [ ]  | [Adult Site(s) Ad Campaign](projects/AdultAds.md) |
 | Holiday & Winter Ads     | [ ]  | [Holiday & Winter Seasonal Ads](projects/HolidayAds.md) |
 | Winter Driving Ads       | [ ]  | [Winter Driving Images — NTGUILT Seasonal Ads](projects/WinterAds.md) |
@@ -74,11 +74,11 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $1,200                      | 40%          | [Legal Directory Updates](projects/LegalDirs.md)                                   |
 | $1,700                      | 20%          | [Client Referral Program](projects/Referral.md)                                           |
 | merged WinterSeason                | —            | [Sealing & Probation Client Reengagement](projects/SealReeng.md)                          |
-| $1,600                      | 20%          | [Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | $2,200                      | 30%          | [Safety First Kit Campaign](projects/SafetyFirst.md)                                  |
 | $2,900                      | 20%          | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md)                                   |
 | $5,600 + $900/mo            | 20%          | [Ad Expansion](projects/AdEnhance.md)                                                      |
 | $2,600 + $500/mo            | —            | [Yelp Ads](projects/Yelp.md)                                                              |
+| $1,600                      | 20%          | [Printables, Swag & Apparel](projects/SwagPrint.md)                                |
 | $2,400                      | 30%          | [Adult Site(s) Ad Campaign](projects/AdultAds.md)                                        |
 | $4,400                      | 20%          | [Holiday & Winter Seasonal Ads](projects/HolidayAds.md)                         |
 | merged HolidayAds                  | —            | [Winter Driving Images — NTGUILT Seasonal Ads](projects/WinterAds.md)                     |
@@ -86,7 +86,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $4,200                      | 50%          | [HubSpot Client Intake](projects/HsSvcExpand.md)                                          |
 | $1,700                      | 20%          | [Lawyer Referral Program](projects/LawyerRef.md)                                          |
 | $2,200                      | 20%          | [Networking Speech And Communications Coaching](projects/NetCoach.md)                       |
-| $20,700                     | 50%          | [HubSpot Website Rebuild](projects/HsWebRebuild.md)                                       |
+| $27,600                     | 50%          | [HubSpot Website Rebuild](projects/HsWebRebuild.md)                                       |
 | merged WinterSeason             | —            | [Insurance Envelope Mailer](projects/InsMailer.md)                                         |
 | $500 + 20% verified savings | 50%          | [Full Financial Waste Audit](projects/WasteAud.md)                                        |
 | $3,500 + design add-on      | 50%          | [HubSpot Email Nurture · Setup & Design](projects/HsEmailSetup.md)                          |
@@ -206,14 +206,14 @@ Blank or missing → Guide default **50%** for one-time fees.
 - One-time: `Fee` only
 - Setup + monthly: `Fee` + `Ongoing fee`
 - Package children HsContacts under HsWebRebuild: Est. cost `incl. HsWebRebuild`. AffirmEmail and HsVoip now ride in HsSvcExpand HubSpot Client Intake. Winter Safety email rides in WinterSeason.
-- **HsWebRebuild** — HubSpot CMS rebuild of pav.law · $20,700 · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs canceled HsSetup
+- **HsWebRebuild** — HubSpot CMS rebuild of pav.law · dual-track WP cleanse + HubSpot page rebuild · $27,600 · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs canceled HsSetup
 - **SocialAds** setup only — ongoing social production under **RETAINER**, not a separate monthly
 
 
 
 ### Gilbert best-fit score (Pav Priorities shortlist)
 
-Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **140** with WIP + season urgency + Recommended). **Required** items are never scored (Fit shows —). Completed / archived / monthly-only → excluded (`−999`). **No status or Visibility penalties** — use INDEX **Visibility = Unpublished** to gray drafts for Andrew (backend), not ranking.
+Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **140** with WIP + season urgency + Recommended). **Required** items are never scored (Fit shows —). Completed / archived / monthly-only → excluded (`−999`). **WIP / Started / Launched** → not eligible for the quote picklist or best-fit shortlist · Kate 10/09/2026. **No status or Visibility penalties** on scored rows — use INDEX **Visibility = Unpublished** to gray drafts for Andrew (backend), not ranking.
 
 **TOC / Best Fit Priority** = rank by final score (highest → Priority 1). INDEX Priority column still feeds the Priority weight below; display Priority is the score rank.
 
@@ -248,10 +248,10 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - HsSetup — canceled · background only · open work moved to HsWebRebuild and live HS cards
 - **HsMktExpand** · available · Publish status unpublished · Show off · attribution + behavioral workflows · Ads sync on DigProf · SEO on HsWebRebuild · email A/B + CSAT on HsEmailSetup
 - **HsEmailSetup** · nurture setup · A/B · CSAT/NPS · templates · e-sign · design add-on / freelancer when special
-- **HsWebRebuild** — available · HubSpot CMS rebuild · SEO tools in overhaul · $20,700 · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs HsSetup · child project files removed
-- Referral — client / F/F Track 1 · LawyerRef attorney network · sealing/probation dials live on WinterSeason · see PerfPay for Phase 2 payout tiers
-- WinterSeason — wip · $4,900 · glovebox mailer · winter safety email · Gabriel outbound plus sealing/probation · InsMailer · SummerEmail · GabrielOut archived as merged
-- SealReeng — archived · merged WinterSeason
+- **HsWebRebuild** — available · HubSpot CMS rebuild · audit · SEO updates on Ads-aligned port-candidate pages · measure · then port · monthly SEO bucket proposal · $27,600 · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs HsSetup
+- Referral — client / F/F Track 1 · LawyerRef attorney network · see PerfPay for Phase 2 payout tiers
+- WinterSeason — archived · removed as active channel · Kate 10/02/2026 · glovebox mailer is separate · InsMailer · SummerEmail · GabrielOut stay history-only children
+- SealReeng — archived · was merged WinterSeason · not a live channel
 - **HsPipe** — Prequote & Booking · chatbots can support · Show off until scoped with rebuild
 - **PerfPay** — Archived · Performance Plan payouts for cash-generating tasks; employee + contractor tiers · Phase 2 after core HubSpot
 - CaseWins — Archived · Show off · case win log / testimonials · not on Guide sell surface
@@ -262,15 +262,16 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - StackAudit — completed (audit done)
 - AccessAud / EmailDns — Apr triage completed (access audit · email outage runbook)
 - MyCaseClr — available · MyCase cleanse · Spanish-speaking checkbox · Booked / closed by ↔ HubSpot `pl_booked_closed_by` · Lead Source / phone / dedupe before import
-- **DigProf** — wip · $3,700 · profiles + LSA call process · former LsaCall merged · LegalDirs / Yelp carry directory and Yelp sell lines
-- Priority 1 Recommended stack: Yelp · Ad Expansion · SwagPrint · LegalDirs · TsMgmt monthly · Required Digital Ads Retainer unpublished / Show off
-- **TsMgmt** — Recommended · Show on · $500/mo Platform Management · MyCase · Google Suite · Ops Dashboard · light new-tool testing · systems-admin tile image
-- **Ad Expansion** — Recommended · Show on · four Google lanes · criminal mischief · college towns · weapons · seasonal DUI · landing depth · college calendar spikes · insurance + semester mailers · ~12 week setup $5,600 · seven invoices · then ~$900/mo into Digital Ads Maintenance Retainer if keepers stay
-- **Yelp** — Recommended · Show on · page + ads tested on low budget · next: team/HubSpot message routing · review nurture · owner replies + listing content · insurance-card Yelp insert · 10/01–12/01 · $2,600 setup max 5 × ~$520 equal biweekly · no deposit % · then $500/mo Yelp platform · not inside Google / LSA retainer
+- **DigProf** — wip · $3,700 · profiles + LSA call process · LinkedIn write/update guide · team graphics + improved headshots · LegalDirs / Yelp carry directory and Yelp sell lines
+- Priority 1 live / WIP stack: Yelp Launched · Ad Expansion wip · SwagPrint · LegalDirs · TsMgmt monthly · Required Digital Ads Retainer unpublished / Show off
+- **TsMgmt** — Recommended · Show on · $500/mo Platform Management · MyCase · Google Suite · Bluehost · Ops Dashboard · light IT · cell plan · Dropbox look · working file [`PLATFORM-MANAGEMENT-CHECKLIST.md`](../../PLATFORM-MANAGEMENT-CHECKLIST.md)
+- **Ad Expansion** — wip · Show on · two Search lanes only · criminal mischief + college towns · wait until late October when core Search is stable · semester mailer for freshman residencies with Ad 2 · no weapons · no seasonal DUI · no WinterSeason · no glovebox · fee may need down-quote from $5,600 · keepers ~$300/mo per live lane
+- **LegalDirs** — wip · Show on · Justia · FindLaw · Avvo · CH-DIRS held until team trained · `pl_lead_source` = Directories when live · site/ads stay 719-888-7888
+- **Yelp** — Launched · Show on · ads ~$50/day · raise if performing · CH-YELP hold released · not on quote picklist while Launched · SEO-improve pav.law pages then publish DV/PPO/Assault Projects with deep links · nurture + workflow On · $2,600 setup · then $500/mo Yelp platform · not inside Google / LSA retainer
 - **Digital Ads Retainer** — Required status in INDEX · Publish status unpublished · Show off · not on Guide sell calculator until republished · base $3,000/mo before Ad Expansion add
 - **AdultAds** — On Hold · unpublished · Show off · deferred until buyable site shortlist is ready · never on survivor advocacy properties
 - **CaseyBrand** — Casey rebrand (like DigProf): clothing, makeup, hair, presentation, speech, digital presence
-- **SwagPrint** — Recommended · Show on · printables, swag, apparel, stationery · Pav Law swag team store · fee $1,600 · three invoices · product runs ~$400–$500 client cost · samples ordered
+- **SwagPrint** — Recommended · Show on · low priority · binders with Jack for Andrew to sample · other samples waiting · revised logo + mockups then designer suite · fee $1,600 · product runs ~$400–$500 client cost
 - **SafetyFirst** — available · Show off · Safety First kit campaign · condoms · hand cleaner · wet wipes · car safety · backup lawyer card 719-888-7888 · $2,200 consulting · product separate · never on survivor advocacy properties
 - **WasteAud** — Archived · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste was the verified floor before subscription, phone, LSA-credit, and vendor leakage
 - **Bulk unpublish** · live Show: Yelp · LegalDirs · TsMgmt · AdEnhance · SwagPrint · rest pending review

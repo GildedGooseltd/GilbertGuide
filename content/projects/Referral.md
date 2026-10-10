@@ -13,7 +13,7 @@
 
 ## Project Overview
 
-Highest-trust lead channel for direct-hire traffic, plus responding to reviews so reputation keeps compounding. Highest-trust leads, often also the best high-dollar matters. Track 1 referral asks. Sealing and probation reengagement dials live on WinterSeason. HS Playbooks · call tracks · text tracks.
+Highest-trust lead channel for direct-hire traffic, plus responding to reviews so reputation keeps compounding. Highest-trust leads, often also the best high-dollar matters. Track 1 referral asks. HS Playbooks · call tracks · text tracks.
 
 ## HubSpot Application
 
