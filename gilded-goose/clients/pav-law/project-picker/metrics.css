@@ -731,11 +731,10 @@ body.feedback-mode-on .feedback-target:hover {
   align-items: center;
   text-align: center;
   gap: 0.15rem;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .kpi-goal-card.kpi-stat-target-bar .kpi-goal-visual .kpi-stat-id {
-  margin-bottom: 0;
-  font-size: 1.25rem;
+  margin-bottom: 0.35rem;
 }
 .kpi-goal-card.kpi-stat-target-bar .kpi-target-bar-chart-compact,
 .kpi-goal-card.kpi-stat-target-bar .kpi-target-bar-chart-goal {
@@ -744,7 +743,7 @@ body.feedback-mode-on .feedback-target:hover {
   max-width: none;
   min-height: 0;
   height: auto;
-  max-height: 14.5rem;
+  max-height: 9.25rem;
   margin: 0;
   overflow: visible;
 }
@@ -801,46 +800,39 @@ body.feedback-mode-on .feedback-target:hover {
   width: 100%;
   text-align: center;
 }
-/* Monthly KPI graph panel · same size on every tile · light gray */
-.kpi-goals-grid .kpi-goal-card > .kpi-goal-visual {
+/* Monthly KPI graph panel · same size on every tile · solid light gray · Kate 10/10/2026 tighten */
+.kpi-goals-grid .kpi-goal-card > .kpi-goal-visual,
+.kpi-goals-grid .kpi-goal-card.kpi-stat-gauge > .kpi-goal-visual,
+.kpi-goals-grid .kpi-goal-card.kpi-stat-answer-rate > .kpi-goal-visual,
+.kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar > .kpi-goal-visual {
   background: #e8e8e8;
+  background-color: #e8e8e8;
+  background-image: none;
   border: 1px solid #c8c8c8;
   border-radius: 10px;
   box-sizing: border-box;
-  padding: 0.55rem 0.45rem 0.65rem;
-  height: 17.75rem;
-  min-height: 17.75rem;
-  max-height: 17.75rem;
-  flex: 0 0 17.75rem;
-  justify-content: center;
+  padding: 0.4rem 0.4rem 0.45rem;
+  height: 12rem;
+  min-height: 12rem;
+  max-height: 12rem;
+  flex: 0 0 12rem;
+  justify-content: flex-start;
   overflow: hidden;
 }
 .kpi-goal-card.kpi-stat-gauge .kpi-goal-visual {
   align-items: center;
   text-align: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
-.kpi-yelp-dual {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  width: 100%;
-  align-items: center;
-  justify-items: center;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-.kpi-yelp-dual-col {
+.kpi-yelp-single {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
+  gap: 0.35rem;
   width: 100%;
-  padding: 0.35rem 0.25rem;
-}
-.kpi-yelp-dual-col + .kpi-yelp-dual-col {
-  border-left: 1px solid #c8c8c8;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 .kpi-yelp-dual-n {
   font-family: var(--gg-serif, "Libre Baskerville", Georgia, serif);
@@ -857,7 +849,27 @@ body.feedback-mode-on .feedback-target:hover {
   color: var(--gg-brown, #5c4a3a);
 }
 .kpi-goal-card .kpi-goal-visual .kpi-stat-id {
-  font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem;
+  flex: 0 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 0.4rem;
+  padding: 0 0.15rem;
+  font-family: var(--gg-serif, "Libre Baskerville", Georgia, serif);
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gg-royal, #3a1a6e);
+}
+.kpi-goal-card .kpi-metric-with-delta,
+.kpi-stat-card.kpi-stat-gauge .kpi-metric-with-delta {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .kpi-goal-card .kpi-gauge-val {
   font-size: 1.75rem; font-weight: 800; margin-top: 0.2rem;
