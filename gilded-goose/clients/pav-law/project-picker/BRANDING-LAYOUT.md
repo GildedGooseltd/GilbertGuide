@@ -134,15 +134,16 @@ To switch cockpit body to sans: change only `body { font-family }` in `index.htm
 
 ```
 ┌─ cockpit-header ───────────── title + subtitle
-├─ cockpit-tabs ─────────────── KPIs | Data | Guide
+├─ cockpit-tabs ─────────────── KPIs | Data | Lead Source | Project Picklist
 │
 ├─ [KPIs] ───────────────────── kpi-report.js → #kpi-report-kpis
 │     collapsible .kpi-section (<details>)
 │     .kpi-stat-card / .kpi-goal-card tiles
 │     .kpi-split-grid → .kpi-split-panel (side-by-side; stack ≤900px)
 ├─ [Impact] ─────────────────── #completed-list + #revenue-calculator
-└─ [Project Guide]
+└─ [Project Picklist]
    ├─ .picker-zone-priorities ── selection + Pav Priorities
+   ├─ WIP on project tiles + overview popup · not a separate cockpit tab
    ├─ .picker-zone-outlines ──── value filters + priority table
    └─ .picker-zone-cards ─────── project cards → submit
 
@@ -154,13 +155,13 @@ Overlays: Gilbert chat · confirm · thank-you
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
 | KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
-| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid. Inner `.kpi-goal-visual` plot panel is solid light gray `#e8e8ea` with `#d0d0d4` border — not purple wash |
+| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid. Inner `.kpi-goal-visual` plot panel is fixed height `17.75rem` on every tile, solid light gray `#e8e8e8` with `#c8c8c8` border — not purple wash, not white |
 | Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
 | KPI tile grid     | `.kpi-tiles-4`                         | Goal cards and metric tiles in one flow, 4 per row; narrow-pane trim ≤1000px, 2-col ≤560px, 1-col ≤380px |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
 | Project cards     | `.card`, `.card.selected`              | Box border/shadow; selected = royal wash        |
 | Zone labels       | `.picker-zone` + `.picker-zone-label`  | Royal/burnt accent heads; scan breaks between areas |
-| Charts            | `chartBlock()` + `.data-chart-table-grid` | **Locked:** 2 columns side by side on every tab · each card = required `.kpi-chart-head` title · plot · legend · **detail table below the graph** · never a lone full-width chart · never hide the breakdown behind “Show table” |
+| Charts            | `chartBlock()` + `.data-chart-table-grid` | **Locked:** 2 columns side by side on every tab · each card = required `.kpi-chart-head` title · plot · **detail table with series swatches** · never a color key under the plot · never a lone full-width chart · never hide the breakdown behind “Show table” |
 
 
 Confirm flow: payment options → submit → fixed SOW emailed by private link → Andrew checkbox signature → Kate private countersign link → final PDF email + Drive archive. Andrew can continue to the QuickBooks deposit after his signature. Action items appear on thank-you / email — not on the picker browse zones.
@@ -171,11 +172,11 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 ## 6. KPI chart colors
 
-**Structure:** every graph card uses `chartBlock({ title, chart, table, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + legend (2+ series) + detail table. **KPIs / Recommendations:** wrap pairs in `chartPairGridHtml()` / `.data-chart-table-grid` — two columns side by side; detail table under each plot. **Data tab:** stack full-width cards in `.data-chart-table-stack`; inside each card `.kpi-chart-split` puts plot left and descriptive table right. Odd leftovers on paired tabs sit in the left cell of the next row. Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7). Financial Breakdown is locked to 300 contacts and $40k spend while current data remains below those tops.
+**Structure:** every graph card uses `chartBlock({ title, chart, table, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + detail table. **No color key under the plot** — series identity lives in table swatches only (`chartBlock` does not inject `.kpi-stack-legend` into `.kpi-chart-plot`). **KPIs / Recommendations:** wrap pairs in `chartPairGridHtml()` / `.data-chart-table-grid` — two columns side by side; detail table under each plot. **Data tab / Key Channel stack:** stack full-width cards in `.data-chart-table-stack` with a royal top border between cards; inside each card `.kpi-chart-split` puts plot left and descriptive table right. Odd leftovers on paired tabs sit in the left cell of the next row. Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). Stacked lead charts use the same pad as Lead Cost bars. **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7). Financial Breakdown is locked to 300 contacts and $40k spend while current data remains below those tops. **Lead Source tab:** no lateral scroll. Wide month detail splits into paired condensed tables under the directory chart. Justia + FindLaw cards share `.ls-card-pair`. See REPORTING-BRAND-GUIDE §9.
 
 **Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 
-**Value labels:** `.kpi-target-bar-val` and other plotted counts use `--gg-brown` (`#3d3028`). Gauge scale ticks stay `#111`. Never white text on bars, goal tiles, or light plots. Counts sit above or beside the fill, not inside it. Combo charts: counts and spend labels sit above the series — never on the line.
+**Value labels:** `.kpi-target-bar-val` and other plotted counts use `--gg-brown` (`#3d3028`). Gauge scale ticks stay `#111`. Never white text on bars, goal tiles, or light plots. Counts sit above or beside the fill, not inside it. Combo charts: counts and spend labels sit above the series — never on the line. **Monthly Revenue:** bar totals ≥ $100k are green (`#1f8a65`) via `cashBarLabelFill()` — not red for missing the $150k goal.
 
 **Plot density (locked · 10/08/2026):** Bar and combo charts must fill the plot field. Single-series bars use about **75–80%** of each category slot. Paired practice-area bars use about **85–90%** of the slot for the pair. Do not ship thin bars with large empty yellow gutters between groups. Data / stacked-plot value labels target **15–16px**, category labels **15px**, axis ticks **13px**. Opportunity callout labels **12px**. Prefer taller plot boxes (~340–380 viewBox height) over sparse short charts. Do not override value labels with inline `font-size:9px`.
 
@@ -247,6 +248,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 - Keep cream + brown + **deep royal** as the light-UI voice; reserve gold for rare critical highlights.
 - Keep Georgia body on the cockpit for memo/brief tone.
 - Keep chart series distinguishable (royal / blue / burnt / rose / plum / slate).
+- Keep chart text clear of bars and other labels. Reference captions live in the top pad. Bar totals use `barLabelY()`.
 - Shared box chrome: `--gg-box-border`, `--gg-box-shadow`, `--gg-head-accent` on section heads.
 - Use red only for negatives and unverified **✕** badges. Verified tiles and panels use **one** green check corner mark — never stack a second check on a nested chart card inside an already-verified panel or Data `.kpi-section`. One `?` help control per owner: section help or chart help, not both on the same single-chart section.
 - Keep every KPI tile on its standard component surface. Status may change the written label, value color, or corner mark, never the tile border, left rule, background, or wash.
@@ -256,6 +258,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 
 ### Don’t
 
+- Overlapping chart text: bar totals on top of Avg/target captions, category labels crushed together, or white numbers inside bar fills. Use `barLabelY()` / `chartTopAnnoY()` and top-pad annotations.
 - Generic AI look: purple-on-white marketing gradients, Inter/Roboto stacks as “brand,” glow blobs, pill spam, card walls with heavy shadows.
 - Gradient text on `.cockpit-title`; use solid `--gg-royal-deep` with the standard burnt rule.
 - Gold on ranks, scores, table chrome, ordinary badges, category series, target-hit gauges, or selected rows.
@@ -263,6 +266,7 @@ Agent rule: `[.cursor/rules/pav-law-value-icons.mdc](../../../../.cursor/rules/p
 - Light-on-light or `--pav-text` on cream panels.
 - White or `#fff` number labels on chart bars, goal tiles, or light plots.
 - Swap chart series to two near-identical purples.
+- Gilded Goose purple `#3a1a6e` on Pav client print. Letters, glovebox inserts, and mailers use Pav blue `#1e3a8a`. Guide dashboard ranks stay `--gg-royal`.
 - Recolor value icons on one surface only.
 - Put branding hex in project markdown or `projects-data.js`.
 

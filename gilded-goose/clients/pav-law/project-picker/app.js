@@ -512,6 +512,20 @@
     ) {
       return "picker";
     }
+    if (t === "leadsource" || t === "lead-source" || t === "leadsources") {
+      return "leadsource";
+    }
+    if (
+      t === "wipstatus" ||
+      t === "wip-status" ||
+      t === "wip" ||
+      t === "project-status" ||
+      t === "projectstatus" ||
+      t === "status"
+    ) {
+      /* WIP progress lives on Project Picklist project overviews — not a separate tab. */
+      return "picker";
+    }
     if (t === "kpis" || t === "data") {
       return t;
     }
@@ -683,10 +697,45 @@
     return s === "research" || s === "draft";
   }
 
+  /** Live / in-progress work — not eligible for quote picklist or best-fit shortlist. */
+  function isActiveWorkStatus(item) {
+    const s = normalizeStatus(item);
+    return s === "wip" || s === "launched";
+  }
+
+  /** Overview tiles for WIP / Launched · light green In Progress style. */
+  function inProgressOverviewProjects() {
+    return orderedProjects().filter(p => {
+      if (!isPicklistCatalogItem(p)) return false;
+      if (p.monthlyOnly || isCompletedStatus(p) || isPlanningPublish(p)) return false;
+      return isActiveWorkStatus(p);
+    });
+  }
+
+  function projectTileStartIso(item) {
+    const fromMeta = String(item?.startDate || "").trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(fromMeta)) return fromMeta;
+    const fromDates = getProjectDateRange(item.id).start || "";
+    if (/^\d{4}-\d{2}-\d{2}$/.test(fromDates)) return fromDates;
+    return "";
+  }
+
+  function projectTileProgressMetaHtml(item) {
+    const pack = projectProgressPack(item);
+    const pctLabel = pack.pct != null ? `${pack.pct}% complete` : "In progress";
+    const startIso = projectTileStartIso(item);
+    const startLabel = startIso ? americanDate(startIso) : "—";
+    return `<p class="project-tile-cost project-tile-progress-meta">
+      <span class="project-tile-cost-amount">${escapeHtml(pctLabel)}</span>
+      <span class="project-tile-cost-period">Started ${escapeHtml(startLabel)}</span>
+    </p>`;
+  }
+
   function activeOptionalProjects() {
     return orderedProjects().filter(p => {
       if (!isPicklistCatalogItem(p)) return false;
       if (p.monthlyOnly || isCompletedStatus(p)) return false;
+      if (isActiveWorkStatus(p)) return false;
       if (isResearchStatus(p) && !isPlanningPublish(p)) return false;
       return true;
     });
@@ -696,6 +745,128 @@
     return sortByPriority(orderedProjects().filter(p =>
       isPicklistCatalogItem(p) && !p.monthlyOnly && isResearchStatus(p) && !isPlanningPublish(p)
     ));
+  }
+
+  function wipStatusProjects() {
+    return getAllItems()
+      .filter(p => !p.isRetainer && normalizeStatus(p) === "wip")
+      .sort((a, b) => {
+        const ap = a.progressPct != null ? Number(a.progressPct) : -1;
+        const bp = b.progressPct != null ? Number(b.progressPct) : -1;
+        if (bp !== ap) return bp - ap;
+        return String(a.title || a.id).localeCompare(String(b.title || b.id));
+      });
+  }
+
+  function projectProgressPack(item) {
+    const doneItems = item.progressDoneItems || item.completedItems || [];
+    const openItems = item.progressOpenItems || item.inProgressItems || [];
+    const doneCount =
+      item.progressDoneCount != null ? Number(item.progressDoneCount) : doneItems.length;
+    const openCount =
+      item.progressOpenCount != null ? Number(item.progressOpenCount) : openItems.length;
+    const total = doneCount + openCount;
+    let pct =
+      item.progressPct != null && Number.isFinite(Number(item.progressPct))
+        ? Math.max(0, Math.min(100, Math.round(Number(item.progressPct))))
+        : total
+          ? Math.round((doneCount / total) * 100)
+          : null;
+    const remaining = pct == null ? null : Math.max(0, 100 - pct);
+    return { doneItems, openItems, doneCount, openCount, total, pct, remaining };
+  }
+
+  function wipProgressRingHtml(pct, remaining) {
+    const known = pct != null;
+    const fill = known ? pct : 0;
+    const r = 42;
+    const c = 2 * Math.PI * r;
+    const dash = known ? (fill / 100) * c : 0;
+    const tone =
+      !known ? "unknown" : fill >= 100 ? "done" : fill >= 50 ? "mid" : "early";
+    const main = known ? `${fill}%` : "—";
+    const sub = known ? `${remaining}% left` : "No checklist yet";
+    return `<div class="wip-progress-ring wip-progress-${tone}" role="img" aria-label="${
+      known ? `${fill} percent complete, ${remaining} percent remaining` : "Percent complete not set"
+    }">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="wip-progress-track" cx="50" cy="50" r="${r}"></circle>
+        <circle class="wip-progress-fill" cx="50" cy="50" r="${r}"
+          stroke-dasharray="${dash} ${c}" transform="rotate(-90 50 50)"></circle>
+      </svg>
+      <div class="wip-progress-copy">
+        <span class="wip-progress-pct">${escapeHtml(main)}</span>
+        <span class="wip-progress-left">${escapeHtml(sub)}</span>
+      </div>
+    </div>`;
+  }
+
+  function wipStatusCardHtml(item) {
+    const pack = projectProgressPack(item);
+    const statusLabel = normalizeStatus(item) === "wip" ? "WIP" : String(item.status || "");
+    const fee =
+      item.fee != null && Number(item.fee) > 0
+        ? `$${Number(item.fee).toLocaleString("en-US")}`
+        : "";
+    const meta = [statusLabel, item.campaignType || item.category, fee].filter(Boolean).join(" · ");
+    const updates = Array.isArray(item.statusUpdate) ? item.statusUpdate.filter(Boolean) : [];
+    const doneShow = pack.doneItems.slice(0, 8);
+    const openShow = pack.openItems.slice(0, 8);
+    const countsNote =
+      pack.total > 0
+        ? `${pack.doneCount} done · ${pack.openCount} open`
+        : pack.pct != null
+          ? "Progress set on project card"
+          : "Add checklist items or a Progress field on the project file";
+    return `<article class="wip-status-card" data-project-id="${escapeHtml(item.id)}">
+      <div class="wip-status-card-top">
+        ${wipProgressRingHtml(pack.pct, pack.remaining)}
+        <div class="wip-status-card-head">
+          <h3 class="wip-status-title">${escapeHtml(item.title || item.id)}</h3>
+          <p class="wip-status-meta">${escapeHtml(meta)}</p>
+          <p class="wip-status-counts">${escapeHtml(countsNote)}</p>
+        </div>
+      </div>
+      ${
+        updates.length
+          ? `<div class="wip-status-block">
+          <h4>Status update</h4>
+          <ul>${updates.map(u => `<li>${escapeHtml(u)}</li>`).join("")}</ul>
+        </div>`
+          : ""
+      }
+      <div class="wip-status-cols">
+        <div class="wip-status-block">
+          <h4>Work done so far</h4>
+          ${
+            doneShow.length
+              ? `<ul>${doneShow.map(u => `<li>${escapeHtml(u)}</li>`).join("")}</ul>
+              ${pack.doneItems.length > doneShow.length ? `<p class="wip-status-more">+${pack.doneItems.length - doneShow.length} more</p>` : ""}`
+              : `<p class="wip-status-empty">No completed checklist items logged yet.</p>`
+          }
+        </div>
+        <div class="wip-status-block">
+          <h4>Still open</h4>
+          ${
+            openShow.length
+              ? `<ul>${openShow.map(u => `<li>${escapeHtml(u)}</li>`).join("")}</ul>
+              ${pack.openItems.length > openShow.length ? `<p class="wip-status-more">+${pack.openItems.length - openShow.length} more</p>` : ""}`
+              : `<p class="wip-status-empty">No open checklist items logged yet.</p>`
+          }
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function renderWipStatusPanel() {
+    const el = document.getElementById("wip-status-list");
+    if (!el) return;
+    const items = wipStatusProjects();
+    if (!items.length) {
+      el.innerHTML = `<p class="wip-status-empty-panel">No WIP or Started projects right now. Set Status to wip or Started on a project file to show it here.</p>`;
+      return;
+    }
+    el.innerHTML = items.map(wipStatusCardHtml).join("");
   }
 
   function completedProjects() {
@@ -828,6 +999,7 @@
     /* monthlyOnly is excluded from activeOptionalProjects — still show Required / Recommended months */
     getMaintenanceProjects().forEach(item => {
       if (!isPicklistCatalogItem(item)) return;
+      if (isActiveWorkStatus(item)) return;
       if (isRequiredProject(item, false)) pushRow(item, -999);
       else if (isIndexRecommendedStatus(item) || isIndexDefaultSelected(item, false)) {
         pushRow(item, computeProjectScore(item));
@@ -878,6 +1050,7 @@
     if (!catalog.length) catalog = nestRankedList(indexPlanBestFit());
     const byId = new Map(catalog.map(r => [r.item.id, r]));
     rankedInvoiceForBestFit().forEach(r => {
+      if (isActiveWorkStatus(r.item) && !isRequiredProject(r.item, !!r.item.isRetainer)) return;
       if (!byId.has(r.item.id)) byId.set(r.item.id, r);
     });
     return nestRankedList([...byId.values()]);
@@ -1389,12 +1562,24 @@
     };
   }
 
-  /** Payment Schedule table shows only after projects are selected and setup invoices are set. */
+  /** Optional cart checks only · Platform Management alone does not expand Payment Schedule. */
+  function calcHasUserCartSelection() {
+    let any = false;
+    rankedCalculatorCatalog().forEach(({ item }) => {
+      if (!item || !isItemSelected(item)) return;
+      if (isAlwaysSelectedCartItem(item)) return;
+      any = true;
+    });
+    return any;
+  }
+
+  /** Payment Schedule table shows only after optional cart projects are checked and setup invoices are set. */
   function calcPaymentScheduleReady() {
     let any = false;
     let allReady = true;
     rankedCalculatorCatalog().forEach(({ item }) => {
       if (!item || !isItemSelected(item)) return;
+      if (isAlwaysSelectedCartItem(item)) return;
       any = true;
       const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
       if (isMonthlyRetainerItem(item, isRetainer)) return;
@@ -1405,15 +1590,17 @@
   }
 
   function calcMonthlyTotalHtml() {
-    const plan = calcPaymentPlanByMonth();
-    if (!plan.selectedCount) {
-      return `<div class="calc-monthly-total" id="calc-monthly-total">
-        <p class="calc-monthly-total-empty">Select projects above to see the monthly payment total.</p>
-      </div>`;
+    const label = "Payment Schedule";
+    if (!calcHasUserCartSelection()) {
+      return `<div class="calc-monthly-total calc-monthly-total-condensed" id="calc-monthly-total">
+      <div class="calc-monthly-total-row">
+        <span class="calc-monthly-total-label">${escapeHtml(label)}</span>
+      </div>
+    </div>`;
     }
+    const plan = calcPaymentPlanByMonth();
     const ready = calcPaymentScheduleReady();
     const headline = plan.peakMonthly;
-    const label = "Payment Schedule";
     if (!ready) {
       return `<div class="calc-monthly-total" id="calc-monthly-total">
       <div class="calc-monthly-total-row">
@@ -1747,7 +1934,13 @@
     const doneCount = completedProjects().length;
     document.querySelectorAll(".cockpit-tabs .view-tab").forEach(btn => {
       const view = btn.dataset.view;
-      if (view === "kpis" || view === "data" || view === "recommendations") {
+      if (
+        view === "kpis" ||
+        view === "data" ||
+        view === "leadsource" ||
+        view === "recommendations" ||
+        view === "wipstatus"
+      ) {
         const badge = btn.querySelector(".tab-count");
         if (badge) badge.remove();
         return;
@@ -1767,16 +1960,22 @@
     state.activeViewTab = normalizeViewTab(state.activeViewTab);
     const isKpis = state.activeViewTab === "kpis";
     const isData = state.activeViewTab === "data";
+    const isLeadSource = state.activeViewTab === "leadsource";
+    const isWipStatus = state.activeViewTab === "wipstatus";
     const isRecs = state.activeViewTab === "recommendations";
     const isPicker = state.activeViewTab === "picker";
     const isImpact = state.activeViewTab === "impact";
     const kpisPanel = document.getElementById("cockpit-panel-kpis");
     const dataPanel = document.getElementById("cockpit-panel-data");
+    const leadSourcePanel = document.getElementById("cockpit-panel-leadsource");
+    const wipStatusPanel = document.getElementById("cockpit-panel-wipstatus");
     const recsPanel = document.getElementById("cockpit-panel-recommendations");
     const pickerPanel = document.getElementById("cockpit-panel-picker");
     const impactPanel = document.getElementById("cockpit-panel-impact");
     if (kpisPanel) kpisPanel.hidden = !isKpis;
     if (dataPanel) dataPanel.hidden = !isData;
+    if (leadSourcePanel) leadSourcePanel.hidden = !isLeadSource;
+    if (wipStatusPanel) wipStatusPanel.hidden = !isWipStatus;
     if (recsPanel) recsPanel.hidden = !isRecs;
     if (pickerPanel) pickerPanel.hidden = !isPicker;
     if (impactPanel) impactPanel.hidden = !isImpact;
@@ -1787,6 +1986,11 @@
       const dataEl = document.getElementById("kpi-report-data");
       if (dataEl) KPI_REPORT.renderData(dataEl);
     }
+    if (isLeadSource && window.KPI_REPORT && typeof KPI_REPORT.renderLeadSource === "function") {
+      const leadEl = document.getElementById("kpi-report-leadsource");
+      if (leadEl) KPI_REPORT.renderLeadSource(leadEl);
+    }
+    if (isWipStatus) renderWipStatusPanel();
     if (isRecs && window.KPI_REPORT) {
       const recsEl = document.getElementById("kpi-report-recommendations");
       if (recsEl) KPI_REPORT.renderRecommendations(recsEl);
@@ -3373,11 +3577,58 @@
   }
 
   function wipBadgeHtml(item) {
-    if (item.status === "completed") return "";
-    if (item.status === "wip" || hasPartialProgress(item)) {
+    if (item.status === "completed" || isCompletedStatus(item)) return "";
+    if (normalizeStatus(item) === "wip" || hasPartialProgress(item)) {
       return `<span class="badge badge-wip card-wip-badge" title="Work already started on this project">WIP</span>`;
     }
     return "";
+  }
+
+  /** WIP ring + checklist for Project Picklist overview popup. */
+  function projectWipOverviewHtml(item) {
+    if (!item || isCompletedStatus(item) || normalizeStatus(item) !== "wip") return "";
+    const pack = projectProgressPack(item);
+    const fee =
+      item.fee != null && Number(item.fee) > 0
+        ? `$${Number(item.fee).toLocaleString("en-US")}`
+        : "";
+    const meta = ["WIP", item.campaignType || item.category, fee].filter(Boolean).join(" · ");
+    const countsNote =
+      pack.total > 0
+        ? `${pack.doneCount} done · ${pack.openCount} open`
+        : pack.pct != null
+          ? "Progress set on project card"
+          : "Add checklist items or a Progress field on the project file";
+    const doneShow = pack.doneItems.slice(0, 8);
+    const openShow = pack.openItems.slice(0, 8);
+    return `<div class="project-overview-section project-overview-wip">
+      <h4>WIP status</h4>
+      <div class="project-overview-wip-top">
+        ${wipProgressRingHtml(pack.pct, pack.remaining)}
+        <div>
+          <p class="project-overview-wip-meta">${escapeHtml(meta)}</p>
+          <p class="project-overview-wip-counts">${escapeHtml(countsNote)}</p>
+        </div>
+      </div>
+      <div class="project-overview-wip-cols">
+        <div>
+          <h5>Work done so far</h5>
+          ${
+            doneShow.length
+              ? `<ul>${doneShow.map(u => `<li>${escapeHtml(u)}</li>`).join("")}</ul>`
+              : `<p class="wip-status-empty">No completed checklist items logged yet.</p>`
+          }
+        </div>
+        <div>
+          <h5>Still open</h5>
+          ${
+            openShow.length
+              ? `<ul>${openShow.map(u => `<li>${escapeHtml(u)}</li>`).join("")}</ul>`
+              : `<p class="wip-status-empty">No open checklist items logged yet.</p>`
+          }
+        </div>
+      </div>
+    </div>`;
   }
 
   function cardCheckColHtml(item, isRetainer, required, sel, chkDisabled, abPending) {
@@ -4997,6 +5248,7 @@
       </div>`
       : "";
     bodyEl.innerHTML = `
+      ${projectWipOverviewHtml(item)}
       <div class="project-overview-section">
         <h4>Project Overview</h4>
         ${projectOverviewBodyHtml(item)}
@@ -5033,9 +5285,16 @@
     return null;
   }
 
-  /** Projects shown on the Quote Calculator / overview tiles (includes unchecked catalog rows). */
+  /** Quote catalog rows plus In Progress overview tiles · active work is overview-only. */
   function calculatorWorkingProjects() {
-    return rankedCalculatorCatalog().map(r => r.item).filter(Boolean);
+    const byId = new Map();
+    inProgressOverviewProjects().forEach(item => {
+      if (item) byId.set(item.id, item);
+    });
+    rankedCalculatorCatalog().forEach(r => {
+      if (r?.item && !byId.has(r.item.id)) byId.set(r.item.id, r.item);
+    });
+    return [...byId.values()];
   }
 
   function projectTileHtml(item, isFirstSelected) {
@@ -5043,9 +5302,11 @@
     const id = item.id;
     const required = isRequiredMaintenance(item, isRetainer) || isRequiredProject(item, isRetainer) || isAlwaysSelectedCartItem(item);
     const sel = isItemSelected(item);
-    const chkDisabled = required ? " disabled" : "";
     const summary = itemTldr(item) || "—";
-    const quoteHtml = projectQuoteHtml(item, isRetainer);
+    const inProgress = !isRetainer && isActiveWorkStatus(item);
+    const metaHtml = inProgress
+      ? projectTileProgressMetaHtml(item)
+      : projectQuoteHtml(item, isRetainer);
     const img = projectTileImageSrc(item);
     const brandLogo = projectTileBrandLogoSrc(item);
     const brandLogoHtml = brandLogo
@@ -5055,16 +5316,24 @@
     const imgClass = brandTile ? "project-tile-image project-tile-image-brand" : "project-tile-image";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const reqClass = required ? " tile-required" : "";
+    const pack = projectProgressPack(item);
+    const progressChip = inProgress
+      ? `<span class="project-tile-wip-chip project-tile-in-progress-chip" title="In Progress">${
+          pack.pct != null ? `${pack.pct}%` : "In Progress"
+        }</span>`
+      : "";
+    const inProgressClass = inProgress ? " project-tile-in-progress card-status-in-progress" : "";
     return `
-      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" role="button" tabindex="0" aria-label="Open overview for ${escapeHtml(item.title)}">
+      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}${inProgressClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" data-status="${escapeHtml(normalizeStatus(item))}" role="button" tabindex="0" aria-label="Open overview for ${escapeHtml(item.title)}">
         <div class="project-tile-media">
           <img class="${imgClass}" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="400">
           ${brandLogoHtml}
+          ${progressChip}
         </div>
         <div class="project-tile-body">
           <h3 class="project-tile-title">${escapeHtml(item.title)}</h3>
           ${projectTileFocusHtml(item, isRetainer)}
-          ${quoteHtml}
+          ${metaHtml}
           <p class="project-tile-summary">${escapeHtml(summary)}</p>
         </div>
       </article>`;
@@ -5096,8 +5365,8 @@
     const statusHighlightClass =
       statusNorm === "recommended"
         ? " card-status-recommended"
-        : statusNorm === "wip"
-          ? " card-status-wip"
+        : statusNorm === "wip" || statusNorm === "launched"
+          ? " card-status-in-progress"
           : "";
 
     if (unpublished) {
@@ -5151,7 +5420,12 @@
     }
     const working = calculatorWorkingProjects()
       .slice()
-      .sort((a, b) => Number(a.id === "TsMgmt") - Number(b.id === "TsMgmt"));
+      .sort((a, b) => {
+        const aProg = isActiveWorkStatus(a) ? 0 : 1;
+        const bProg = isActiveWorkStatus(b) ? 0 : 1;
+        if (aProg !== bProg) return aProg - bProg;
+        return Number(a.id === "TsMgmt") - Number(b.id === "TsMgmt");
+      });
     const controls = document.querySelector(".project-list-controls");
     if (controls) controls.hidden = true;
     let markedFirst = false;

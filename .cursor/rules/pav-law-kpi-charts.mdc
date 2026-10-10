@@ -17,7 +17,7 @@ When adding or editing charts in Gilbert Guide (`kpi-report.js`) on **any** tab:
 3. **Each card** uses `chartBlock()`:
    - required title only in `.kpi-chart-head` — no subtitle, no period/source subhead
    - plot
-   - color legend when there are 2+ series
+   - **no color key under the plot** — series identity lives in the detail table swatches only
    - **detail / breakdown table always visible** — never hide behind “Show table”
 4. KPI goal tiles and Financial Breakdown text tiles are not chart cards — this lock is for `chartBlock` graphs only.
 
@@ -38,8 +38,11 @@ Unique, high-contrast series colors. **No teal/cyan.** Locked palette:
 - Labeled axes/ticks, plot background (`--gg-chart-plot`), baseline, totals above columns, month labels under bars.
 - **Month ordering:** charts oldest → newest left to right. Detail-table month rows current → oldest.
 - **Y-scale headroom:** top of scale ≥ one integer above highest data point. Use `chartAxisMax()` / `axisMaxAboveData()` / `niceAxisMax()`.
-- **Value labels:** `--gg-brown` or `#111` only. Never white on bars.
-- Positive counts never red. Red only for negative MoM / negative values.
+- **Value labels:** `--gg-brown` or `#111` by default. Never white on bars.
+- **Monthly Revenue cash labels:** ≥ $100k = green `#1f8a65` via `cashBarLabelFill()`. Below $100k and under the month target = red. Do not force red on $100k+ months only because they miss the $150k goal line.
+- **No overlap:** use `barLabelY()` for totals above bars and `chartTopAnnoY()` for Avg / target captions in the top pad. Never put a reference-line label on the dashed line where it collides with a bar total. Skip the on-bar total when the same amount is already in the top annotation.
+- Positive counts never red. Red only for negative MoM / negative values, except Monthly Revenue under-target cash under $100k.
+- **Plot density:** bars fill the field. Single series ~75–80% of slot width; paired practice bars ~85–90%. Data / stacked plots: value labels 15–16px, category 15px, axis 13px. No inline 9px value labels. Prefer taller plots (~340–380) over sparse short charts. See BRANDING-LAYOUT §6 and REPORTING-BRAND-GUIDE §7.
 
 ## Detail tables
 
