@@ -213,9 +213,9 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Plot typography density:** on Data and KPIs stacked plot|table cards, value labels ~15–16px, category labels ~15px, axis ticks ~13px, opportunity tags ~12px. Do not shrink value labels with inline 9px overrides. Prefer viewBox height ~340–380 so bars and labels read large in the split column.
 - **Line chart:** use for spend/cash trends; cash = green, spend = plum; label both lines.
 - **Combo chart:** bars for volumes, line for money; separate left/right units.
-- **Donut:** maximum 4–5 segments; legend always present; exact share in the detail table.
+- **Donut:** maximum 4–5 segments; series identity in the detail table swatches; exact share in the detail table.
 - **Practice-area bars:** one fixed color per practice area; never recolor by rank.
-- **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title })` — one clear title, no subtitle or period/source subhead. Section/panel titles are not a substitute. Then plot + detail table. Add a legend only for 2+ distinct series that are not directly labeled; opacity-only forecast states belong in the table or ? help.
+- **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title })` — one clear title, no subtitle or period/source subhead. Section/panel titles are not a substitute. Then plot + detail table. **Never put a color key under the plot** — series swatches live in the detail table only. Opacity-only forecast states belong in the table or ? help.
 - **2-column lock · KPIs / Recommendations:** graph rows use `.data-chart-table-grid` / `chartPairGridHtml()` — two chart cards side by side, each with its breakdown table under the graph. Do not leave orphan full-width charts when a pair belongs in the section.
 - **Data tab split:** full-width cards in `.data-chart-table-stack`. Inside each card, `.kpi-chart-split` places the graph on the left and the descriptive detail table on the right. Graph SVGs must stay inside the plot column (`max-width: 100%`; long cash charts do not use the 70rem override here). Table column has its own paper background and left rule so nothing paints over it. Stacks to one column under 480px.
 - **Plot area:** light yellow `--gg-chart-plot` (`#fff5ca`) behind every graph for series contrast; stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
@@ -225,10 +225,12 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Axis labels:** include metric and unit; never rely on color alone.
 - **Y-scale headroom:** the top of the numeric scale must always be **at least one integer above** the highest plotted data point. Bars and lines must not touch or clip the top tick. Use `axisMaxAboveData()` / `niceAxisMax()` in `kpi-report.js`. Financial Breakdown is the explicit exception: 300 contacts and $40k spend while every plotted value remains below those tops.
 - **Y-axis title clearance:** leave clear space between the rotated axis title and the numeric tick labels. Use left plot pad ≥ **84** when the title is a multi-word phrase (e.g. “Cost per response ($)”). Title sits near the outer edge (~18px); tick labels sit just left of the plot (~pad.l − 10). Do not let the title overlap `$` ticks.
+- **No overlapping text or marks:** value labels, category labels, reference-line captions, target ticks, and legend text must never sit on top of each other or on bar fills. Put dashed-line / target captions in the top pad via `chartTopAnnoY()`. Never place that caption on the line next to a bar top. Clamp bar totals with `barLabelY()`. If a bar already equals a reference line such as Avg $/client, show the amount once in the top annotation and skip the duplicate on that bar.
 - **Channel lock:** LSA = blue; Digital/Search = burnt orange; Website/HubSpot = rose; Spend = plum.
 - **Unavailable data:** slate/gray with a written “No data” label — never red.
 - **Target lines:** every plotted number below its applicable target or minimum line is red (`--gg-negative`); values on or above the line use ink `--gg-brown` (`#3d3028`) unless a series color is already required for a line. Keep the number visible so color is not the only signal.
-- **Chart number labels:** ink `--gg-brown` (`#3d3028`) or `#111` only. Never white, `#fff`, or `#ffffff`. Place counts outside the bar fill, above or beside the bar, on the plot field. Short goal-tile bars must not put the count inside the fill. Combo charts: sit count and spend labels above the series — never on the line.
+- **Monthly Revenue cash labels (locked · 10/09/2026):** bar totals use `cashBarLabelFill()`. Any collected amount **≥ $100k** is green (`--gg-positive` / `#1f8a65`), even when still under the $150k goal line. Below $100k and under the month target stays red. On or above the month target and under $100k uses brown ink. Do not paint $100k+ months red solely because they miss $150k.
+- **Chart number labels:** ink `--gg-brown` (`#3d3028`) or `#111` by default. Never white, `#fff`, or `#ffffff`. Monthly Revenue cash totals may use green or red per the cash-label rule above. Place counts outside the bar fill, above or beside the bar, on the plot field. Short goal-tile bars must not put the count inside the fill. Combo charts: sit count and spend labels above the series — never on the line.
 - **Goal-tile chart box:** every target-bar chart inside a `.kpi-goal-card` uses the same drawing box so tiles in one row read at the same scale — viewBox `320 × 210`, pad `l 36 · r 10 · t 18 · b 28`, bar width up to `88`. Auto Cases is the reference and any new goal tile matches it. Pass `width` / `height` / `pad` / `barWidth` to `barWithTargetChart()` rather than letting the compact defaults shrink one tile.
 - **Unverified method notes:** when a formula is directional only, say so in the tile note. Do not force a red freshness mark solely for method caveats if the export numbers are on file.
 - **Period freshness on Monthly KPIs and Data Financial Breakdown:** green check = period source on file and value filled (`0` counts). Red check = value is `—` or source missing. Do not use UPDATED / OUTDATED text badges. Never mark green when the value is `—`. Avg Case Value turns green only when the current tile month is inside its complete-month stack. A May–Aug average during September stays red. Cost per Case #30 and Missed Opportunity #19 are staged off the Data tab.
@@ -264,6 +266,12 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 | Source mix | Source · Leads · Share · Est. potential revenue |
 | Source mix — month comparison | Source · Prior · Current · Δ leads · Change |
 | Search calls by campaign | Campaign · Calls · Share |
+| Lead Source · Channel rollup | Channel · Window · Contacts · Matches · Spend · Cost/Contact · Trust $ · Return % |
+| Lead Source · Month detail LSA | Month · LSA leads · Matches · Clients · Trust $ · LSA spend · Return % |
+| Lead Source · Month detail PPC + directories | Month · PPC calls · PPC spend · Yelp · Justia · FindLaw |
+| Lead Source · Yelp | Month · Matched MyCase · Signed · Contracted fee · Trust credits |
+| Lead Source · Justia | Month · Calls · Emails · Contacts · Matched MyCase · Spend |
+| Lead Source · FindLaw | Month · Leads · Matched MyCase · Spend · Cost / lead |
 
 ### Spend efficiency
 
@@ -299,7 +307,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 
 ## 9. Table styling rules
 
-- **Structure:** every chart card uses `chartBlock()` — plot + legend (2+ series) + detail table always visible below (not hidden behind "Show table").
+- **Structure:** every chart card uses `chartBlock()` — plot + detail table always visible (not hidden behind "Show table"). No legend under the plot.
 - **Zebra:** `.kpi-chart-table tbody tr:nth-child(even)` soft royal wash `rgba(45,20,84,0.035)`.
 - **Biggest opportunity row:** `.kpi-row-opportunity` stronger royal wash + 3px royal inset rule + written `Biggest opportunity` mark. Mark only after LOE is set · score = mean fee ÷ LOE · never fee pool alone. Never gold; never color alone.
 - **Headers:** `.kpi-table th` royal (`--gg-royal`), left‑aligned; numeric columns right‑aligned.
@@ -308,6 +316,7 @@ Every table rendered by `kpiDetailTable()` / section in `kpi-report.js`, with it
 - **Categorical cells:** royal, blue, burnt orange, rose, plum, or slate only. Gold is reserved for critical highlights, never an ordinary category.
 - **Fees and totals:** plum or royal; do not use green unless the value explicitly means cash received or a positive result.
 - **Missing/unavailable:** slate/gray; red is reserved for an actual error, gap, loss, or below-target state.
+- **Lead Source · no lateral scroll (locked · 10/09/2026):** tables and charts on the Lead Source tab must fit the canvas width with no horizontal scrollbar. Prefer `table-layout: fixed`, stacked heads, and split wide month detail into paired tables (`.ls-card-pair.ls-month-detail-tables`) instead of one 10+ column row. Do not ship `overflow-x: auto` as the fix for too many columns.
 
 ---
 
