@@ -58,12 +58,12 @@ Kate 10/10/2026. Icons replace list bullets when set. Empty emoji = keep a norma
 
 | Bullet                                 | Emoji | Status  | Pct |
 | -------------------------------------- | ----- | ------- | --- |
-| Justia refresh                         | 📌    | active  | 80  |
-| FindLaw refresh                        | 📌    | active  | 70  |
-| Lawyer questionnaire                   | 📌    | active  | 40  |
-| URL and content tracking               | 🚧    | wip     | 30  |
+| Justia refresh                         | 🏁    | done    | 100 |
+| FindLaw refresh                        | 🏁    | done    | 100 |
+| URL and content tracking               | 🚀    | launched | 85 |
+| Lawyer questionnaire                   | 📌    | active  | 75  |
+| Directory Profile(s)                   | 📌    | active  | 70  |
 | Dedicated HubSpot DID                  |       | waiting | 10  |
-| Directory Profile(s)                   |       | waiting | 5   |
 | Jr Attorney Digital Brand Update Guide |       | waiting | 0   |
 
 
@@ -87,11 +87,11 @@ CH-DIRS = HubSpot Calling DID for Justia · FindLaw · Avvo profile phone / call
 - [x] Scope locked · Justia · FindLaw · Avvo · CH-DIRS · pav.law UTMs · site stays 719-888-7888
 - [x] Update checklist + UTM paste pack written
 - [x] Justia FAQ paste from PAV-PRACTICE-FAQS · DUI then Criminal then DV
-- [ ] Justia Platinum / profile website URLs → pav.law UTMs
+- [x] Justia Platinum / profile website URLs → pav.law UTMs
 - [x] FindLaw Profile Update · login · claim · 10/05/2026
-- [ ] FindLaw Edit · Publish · paste from [FINDLAW-PROFILE-PASTE.md](../../FINDLAW-PROFILE-PASTE.md)
-- [ ] FindLaw website URL → pav.law UTMs
-- [ ] HubSpot Analytics check · source justia / findlaw · medium directory
+- [x] FindLaw Edit · Publish · paste from [FINDLAW-PROFILE-PASTE.md](../../FINDLAW-PROFILE-PASTE.md)
+- [x] FindLaw website URL → pav.law UTMs
+- [x] HubSpot Analytics check · source justia / findlaw · medium directory
 - [ ] Optional CRM fields for directory profile URLs
 - [x] Contract cut · FindLaw · Justia - review contacts and terminate renewal
 
@@ -109,7 +109,7 @@ Stay on relevant directories. Claim free profiles. Keep working the Justia and F
 
 - [x] Questionnaire draft · [ATTORNEY-PROFILE-QUESTIONNAIRE.md](../../ATTORNEY-PROFILE-QUESTIONNAIRE.md)
 - [x] Google Forms CSV · [enablement/NEW-HIRE-PROFILE-QUESTIONNAIRE-GOOGLE-FORMS.csv](../../enablement/NEW-HIRE-PROFILE-QUESTIONNAIRE-GOOGLE-FORMS.csv)
-- [ ] Draft Casey bio + FAQ set from answers
+- [x] Draft Casey bio + FAQ set from answers
 - [ ] Draft Jack bio + FAQ set from answers · hold publish until admission
 
 

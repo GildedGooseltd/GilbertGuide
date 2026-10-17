@@ -831,11 +831,8 @@
   function wipStatusCardHtml(item) {
     const pack = projectProgressPack(item);
     const statusLabel = normalizeStatus(item) === "wip" ? "WIP" : String(item.status || "");
-    const fee =
-      item.fee != null && Number(item.fee) > 0
-        ? `$${Number(item.fee).toLocaleString("en-US")}`
-        : "";
-    const meta = [statusLabel, item.campaignType || item.category, fee].filter(Boolean).join(" · ");
+    /* Fees hidden on Project Status Updates / proposal tiles · Kate 10/17/2026 */
+    const meta = [statusLabel, item.campaignType || item.category].filter(Boolean).join(" · ");
     const updates = Array.isArray(item.statusUpdate) ? item.statusUpdate.filter(Boolean) : [];
     const doneShow = pack.doneItems.slice(0, 8);
     const openShow = pack.openItems.slice(0, 8);
@@ -4561,7 +4558,8 @@
   }
 
   function feeQuoteLineHtml(item) {
-    return `<div class="card-fee-quote">${escapeHtml(feeLabelFor(item))}</div>`;
+    /* Fees off Project Status Updates / proposal surface · Kate 10/17/2026 */
+    return "";
   }
 
   function itemSelectionCost(item) {
@@ -5410,34 +5408,15 @@
     titleEl.textContent = item.title || "Project";
     if (metaEl) metaEl.textContent = metaParts.join(" - ");
     if (costEl) {
-      const hideFee = !isRetainer && isActiveWorkStatus(item);
-      if (hideFee) {
-        costEl.hidden = true;
-        costEl.innerHTML = "";
-        costEl.className = "project-overview-cost project-tile-cost";
-      } else {
-        costEl.hidden = false;
-        const estimateFee = isFeeUncertain(item) || isInactiveProject(item);
-        if (estimateFee) {
-          costEl.classList.add("project-overview-cost-estimate");
-        } else {
-          costEl.classList.remove("project-overview-cost-estimate");
-        }
-        costEl.innerHTML = projectQuoteHtml(item, isRetainer).replace(/^<p[^>]*>/, "").replace(/<\/p>$/, "");
-        costEl.className =
-          "project-overview-cost project-tile-cost" + (estimateFee ? " project-tile-cost-estimate" : "");
-      }
+      /* No proposal / overview fee on this tab · Kate 10/17/2026 */
+      costEl.hidden = true;
+      costEl.innerHTML = "";
+      costEl.className = "project-overview-cost project-tile-cost";
     }
     const noteEl = document.getElementById("project-overview-estimate-note");
     if (noteEl) {
-      const note = String(item.estimateNote || "").trim().replace(/^[*]+/, "").replace(/:$/, "").trim();
-      if (note) {
-        noteEl.hidden = false;
-        noteEl.innerHTML = `<em>*${escapeHtml(note)}</em>`;
-      } else {
-        noteEl.hidden = true;
-        noteEl.textContent = "";
-      }
+      noteEl.hidden = true;
+      noteEl.textContent = "";
     }
 
     const hub = projectHubSpotParts(item);
@@ -5518,9 +5497,8 @@
     const summary = itemTldr(item) || "—";
     const inactive = !isRetainer && isInactiveProject(item);
     const inProgress = !isRetainer && !inactive && isActiveWorkStatus(item);
-    const metaHtml = inProgress
-      ? projectTileProgressMetaHtml(item)
-      : projectQuoteHtml(item, isRetainer);
+    /* Progress only · no fee / quote amounts on proposal tiles · Kate 10/17/2026 */
+    const metaHtml = inProgress ? projectTileProgressMetaHtml(item) : "";
     const img = projectTileImageSrc(item);
     const brandLogo = projectTileBrandLogoSrc(item);
     const brandLogoHtml = brandLogo
