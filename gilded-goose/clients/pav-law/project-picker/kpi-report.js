@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261010-funnel-money-stages";
+  const RENDER_VER = "20261017-dl-oct-refresh";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["October 2026", "September 2026", "August 2026", "July 2026", "June 2026", "May 2026"];
@@ -14,8 +14,8 @@
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Call details (17) through 10/09 · leads-inbox (24) LSA through 10/07 · HubSpot forms 10/02 · Yelp Ads 10/08 · Justia Mar–Aug · Billing (1) through 10/02 · ledger (11) · recheck 2026-10-09",
-      fields: "Jun 226 · Jul 281 · Aug 101 · Sep* 97 = Search 41 + LSA 44 + HubSpot 4 + Yelp 8 · Oct* 42 = Search 8 + LSA 18 + HubSpot 0 + Yelp 15 + Website 1 · Search from Call details (17)"
+      file: "Call details (19) through 10/17 · leads-inbox (26) LSA Oct received · HubSpot forms 10/02 · Yelp Ads 10/08 · Justia Mar–Aug · account_activities_202610 (2) · Time_series Oct Impr · ledger (11) · recheck 2026-10-17",
+      fields: "Jun 226 · Jul 281 · Aug 101 · Sep* 97 = Search 41 + LSA 44 + HubSpot 4 + Yelp 8 · Oct* 49 = Search 14 + LSA 19 + HubSpot 0 + Yelp 15 + Website 1 · Search from Call details (19)"
     },
     "yelp": {
       file: "Yelp Reviews PDF 10/01 · listing 4.5 · 8 · yelpBaseline reviews · recheck 10/10/2026",
@@ -70,7 +70,7 @@
       fields: "Search weekday answer · LSA % charged · Yelp answeredCalls÷calls · Data tab Answer Rate chart"
     },
     "answer-rate": {
-      file: "phoneByMonth weekday Call details (17) Oct · Call details (13) prior months · lsaEfficiency Charged÷Leads inbox (24) · yelpBaseline.byMonth call log 10/08 · recheck 10/09/2026",
+      file: "phoneByMonth weekday Call details (19) Oct · Call details (13) prior months · lsaEfficiency Charged÷Leads inbox (26) · yelpBaseline.byMonth call log 10/08 · recheck 10/17/2026",
       fields: "Search weekday May–Sep* · LSA May–Sep* · Yelp Jun–Sep* answeredCalls÷calls · overall Yelp answer 46% · Avg % = mean of channels on file · target ≥ 90%"
     },
     "#28": {
@@ -98,27 +98,27 @@
       fields: "Follows tile month · Sep Credits through 09/30/2026 · Oct* through day 5 · W1–W4 running Trust Credit by calendar week · completed gray · future = pace × week-end day · no newer ledger on 10/09"
     },
     "cases-leads-spend": {
-      file: "Contact_10-09 · Billing activity (1) · Call details (17) · leads-inbox (24) · HubSpot forms 10/02 · Yelp Ads 10/08 · ledger (11) · recheck 2026-10-09",
-      fields: "May 126 · Jun 226 · Jul 281 · Aug 101 · Sep* cases 16 · leads 97 · Search+LSA spend $19,083.93 · Oct* cases 7 · leads 42 · Search+LSA $1,914.03 · Yelp Oct $399.90 on channelMonths"
+      file: "Contact_10-09 · account_activities_202610 (2) · Call details (19) · leads-inbox (26) · HubSpot forms 10/02 · Yelp Ads 10/08 · ledger (11) · recheck 2026-10-17",
+      fields: "May 126 · Jun 226 · Jul 281 · Aug 101 · Sep* cases 16 · leads 97 · Search+LSA spend $19,083.93 · Oct* cases 7 · leads 49 · Search+LSA $7,873.02 · Yelp Oct $399.90 on channelMonths"
     },
     "sales-cost-funnel": {
-      file: "Campaign report (45) Oct Impr · Call details (17) · leads-inbox (24) · HubSpot · Yelp · Justia · FindLaw · channelMonths · recheck 10/09/2026",
-      fields: "Direct contacts = Search + LSA + HubSpot + Yelp + Justia + FindLaw + Website. Vertical slices = lead channels with counts on each slice. May 126 · Jun 226 · Jul 281 · Aug 101 · Sep* 97 · Oct* 42 = Search 8 + LSA 18 + Yelp 15 + Website 1 · Impr 707 from Campaign (45) through 10/05 · Campaign (47) All-time not used for Oct Impr"
+      file: "Time_series_chart Oct Impr · Call details (19) · leads-inbox (26) · HubSpot · Yelp · Justia · FindLaw · channelMonths · recheck 10/17/2026",
+      fields: "Direct contacts = Search + LSA + HubSpot + Yelp + Justia + FindLaw + Website. Vertical slices = lead channels with counts on each slice. May 126 · Jun 226 · Jul 281 · Aug 101 · Sep* 97 · Oct* 49 = Search 14 + LSA 19 + Yelp 15 + Website 1 · Impr 7,023 from Time_series Oct 2026 · Campaign (48) All-time not used for Oct Impr"
     },
     "dg-ctr": {
       file: "funnelAds impressions + clicks · Campaign report when on file · recheck 10/02/2026",
       fields: "CTR = clicks ÷ impressions · October digital goal ≥ 4%"
     },
     "dg-click-call": {
-      file: "funnelAds clicks + phoneCalls · Call details (17) phones · Billing clicks · recheck 10/10/2026",
+      file: "funnelAds clicks + phoneCalls · Call details (19) phones · account_activities_202610 (2) clicks · recheck 10/17/2026",
       fields: "Click → call = Search phones ÷ clicks · October digital goal ≥ 20% · hidden phone est = max(0, clicks × baseline − tracked phones)"
     },
     "click-call-monitor": {
-      file: "funnelAds + Call details (17) · Campaign (45) by live HS · baseline digitalGoals.clickToCall 20% · recheck 10/10/2026",
+      file: "funnelAds + Call details (19) · account_activities_202610 (2) by live HS · baseline digitalGoals.clickToCall 20% · recheck 10/17/2026",
       fields: "Month clicks · tracked phones · click→call % · est phones at baseline · possible hidden phones · live HS campaign rows when windows align"
     },
     "dg-phone-cost": {
-      file: "funnelAds searchSpendLock + phoneCalls · Billing Search $ ÷ Call details (17) phones · recheck 10/09/2026",
+      file: "funnelAds searchSpendLock + phoneCalls · account_activities_202610 (2) Search $ ÷ Call details (19) phones · recheck 10/17/2026",
       fields: "Search $/phone · October digital goal ≤ $175 · Kate acceptable band ~$173"
     },
     "dg-case-cost": {
@@ -155,7 +155,7 @@
     "#01": {
       title: "#01 Lead Calls",
       desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid. That is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + Websites + Yelp contacts + Justia contacts. Websites = HubSpot forms + pav.law site + ntguilt.com site. Yelp contacts = Messages + round(Calls × 46% answer from call log). Justia contacts = calls + emails allocated across Mar–Aug. Track table breaks out each channel.",
-      formula: "Oct* 42 = Search 8 + LSA 18 + Websites 1 + Yelp 15. Websites = HubSpot forms + pav.law site + ntguilt.com site · Kate 10/10/2026. Sep* 97 = Search 41 + LSA 44 + Websites 4 + Yelp 8. Yelp contacts = Messages + round(Calls × 46% answer). Search from Call details (17) through 10/09/2026. LSA October from leads-inbox (24) 10/02–10/07. Target = round(average Lead Calls over the last 3 complete months)."
+      formula: "Oct* 49 = Search 14 + LSA 19 + Websites 1 + Yelp 15. Websites = HubSpot forms + pav.law site + ntguilt.com site · Kate 10/10/2026. Sep* 97 = Search 41 + LSA 44 + Websites 4 + Yelp 8. Yelp contacts = Messages + round(Calls × 46% answer). Search from Call details (19) through 10/17/2026. LSA October from leads-inbox (26) Oct received dates. Target = round(average Lead Calls over the last 3 complete months)."
     },
     "#02": {
       title: "#02 New Cases",
@@ -266,7 +266,7 @@
     "ad-spend-by-channel": {
       title: "Ad spend",
       desc: "Tile-month paid media only: Search Campaign / account activities, LSA Home Services, Yelp Ads, and Justia Referral Sites fee when on file. HubSpot forms fee and digital management retainer are not included. Hero total is Search + LSA + Yelp + Justia; table breaks out each channel.",
-      formula: "Total = Search + LSA + Yelp + Justia + FindLaw. Oct* Search $1,382.94 + LSA $531.09 + Yelp $399.90 + Justia $1,500 + FindLaw $924.38. Justia $1,500/mo Referral Sites fee through contract end Dec 2026 · Kate 10/10/2026."
+      formula: "Total = Search + LSA + Yelp + Justia + FindLaw. Oct* Search $6,533.46 + LSA $1,339.56 + Yelp $399.90 + Justia $1,500 + FindLaw $924.38. Justia $1,500/mo Referral Sites fee through contract end Dec 2026 · Kate 10/10/2026."
     },
     "cash-pace": {
       title: "Revenue",
@@ -500,28 +500,28 @@
 
   const DATA = {
     period: "October 2026",
-    asOf: "2026-10-09",
-    lastUpdated: "2026-10-09",
+    asOf: "2026-10-17",
+    lastUpdated: "2026-10-17",
     updateLabel: "October 2026",
-    updateScope: "Oct* MTD · Call details (17) Search 8 through 10/09 · leads-inbox (24) LSA 18 through 10/07 · Yelp Ads screenshots 10/08 spend Oct 1–7 $399.90 · Contact_10-09 Oct cases 7 · Sep cases 16 · Billing activity (1) Search/LSA still through 10/02 · Campaign (45) Impr through 10/05 · Campaign (47) All-time not used for Oct · ledger (11) Oct* $13,650 through 10/05 · last updated 10/09/2026",
-    source: "Billing activity report (1) · Call details (17) · Campaign report (45) · leads-inbox (24) · Contact_10-09 · HubSpot forms 10/02 · Yelp Ads 10/08 · ledger (11) · last updated 10/09/2026",
+    updateScope: "Oct* MTD · Call details (19) Search 14 through 10/17 · leads-inbox (26) LSA 19 Oct received · account_activities_202610 (2) Search $6,533.46 · LSA $1,339.56 · Time_series Oct Impr 7,023 · Yelp Ads 10/08 spend Oct 1–7 $399.90 · Contact_10-09 Oct cases 7 · Campaign (48) All-time skipped for Oct · ledger (11) Oct* $13,650 through 10/05 · last updated 10/17/2026",
+    source: "account_activities_202610 (2) · Call details (19) · Time_series_chart Oct · leads-inbox (26) · Contact_10-09 · HubSpot forms 10/02 · Yelp Ads 10/08 · ledger (11) · last updated 10/17/2026",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
-      "#01": "2026-10-10",
+      "#01": "2026-10-17",
       "#02": "2026-10-09",
       "#03": "2026-10-08",
-      "#04": "2026-10-09",
+      "#04": "2026-10-17",
       "cash-pace": "2026-10-05",
       "yelp": "2026-10-10",
       "yelp-leads": "2026-10-08",
       "justia": "2026-09-18",
-      "answer-rate": "2026-10-09",
-      "ad-spend-by-channel": "2026-10-02",
-      "dg-ctr": "2026-10-02",
-      "dg-click-call": "2026-10-10",
-      "dg-phone-cost": "2026-10-09",
-      "dg-case-cost": "2026-10-09",
-      "click-call-monitor": "2026-10-10",
+      "answer-rate": "2026-10-17",
+      "ad-spend-by-channel": "2026-10-17",
+      "dg-ctr": "2026-10-17",
+      "dg-click-call": "2026-10-17",
+      "dg-phone-cost": "2026-10-17",
+      "dg-case-cost": "2026-10-17",
+      "click-call-monitor": "2026-10-17",
       "#19": "2026-10-02",
       "#21": "2026-10-02",
       "#28": "2026-10-02"
@@ -546,34 +546,34 @@
       {
         month: "Oct*",
         name: "HS: Military",
-        clicks: 10,
-        phones: 5,
-        spend: 1168.38,
+        clicks: 39,
+        phones: 6,
+        spend: 3209.40,
         color: "#3a1a6e",
-        windowNote: "Campaign (45) clicks/spend Oct 1–5 · Call details (17) phones Oct 1–9"
+        windowNote: "account_activities_202610 (2) clicks/spend · Call details (19) phones Oct 1–17"
       },
       {
         month: "Oct*",
         name: "HS: DUI pav.law",
-        clicks: 13,
+        clicks: 420,
         phones: 2,
-        spend: 610.92,
+        spend: 1658.28,
         color: "#1e3a8a",
-        windowNote: "Campaign (45) clicks/spend Oct 1–5 · Call details (17) phones Oct 1–9"
+        windowNote: "account_activities_202610 (2) clicks/spend · Call details (19) phones Oct 1–17"
       },
       {
         month: "Oct*",
         name: "HS: NTGUILT",
-        clicks: 5,
-        phones: 1,
-        spend: 379.93,
+        clicks: 66,
+        phones: 6,
+        spend: 1538.56,
         color: "#b23a78",
-        windowNote: "Campaign (45) clicks/spend Oct 1–5 · Call details (17) phones Oct 1–9 · Auto = NTGUILT"
+        windowNote: "account_activities_202610 (2) clicks/spend · Call details (19) phones Oct 1–17 · Auto = NTGUILT"
       }
     ],
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Lead Calls", value: "42", target: "≥ 203", mom: null, count: 42, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-10-10" },
+      { id: "#01", label: "Lead Calls", value: "49", target: "≥ 203", mom: null, count: 49, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-10-17" },
       { id: "#02", label: "New Cases", value: "7", target: "≥ 24", mom: null, count: 7, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-10-09" },
       /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Missed Opportunity */
       { id: "#19", label: "Missed Opportunity", value: "—", target: "$0", mom: null, verified: false, alert: false, lostTracker: true, augUpdated: false, archived: true },
@@ -677,8 +677,8 @@
       },
       {
         month: "Oct*",
-        search: 8,
-        lsa: 18,
+        search: 14,
+        lsa: 19,
         hubspot: 0,
         hubspotForms: 0,
         yelp: 15,
@@ -688,9 +688,9 @@
         findlaw: 0,
         findlawSpend: 924.38,
         pavLawWebsite: 1,
-        searchSpend: 1382.94,
-        lsaSpend: 531.09,
-        note: "Oct* through 10/10/2026. Search Call details (17) · 8 calls · 7 received / 1 missed. LSA leads-inbox (24) · 18 leads 10/02–10/07, 4 charged. Yelp contacts 15 · Website 1 · Kate 10/10/2026 · Yelp spend Oct 1–7 $399.90. Justia fee $1,500 through contract end Dec 2026 · Kate 10/10. Billing (1) Search/LSA still through 10/02 · Search $1,382.94 · LSA $531.09. Campaign (45) Impr 707 through 10/05 · Campaign (47) All-time skipped for Oct. Cases Contact_10-09 · 7 Client created through 10/08. Cash ledger (11) $13,650 through 10/05."
+        searchSpend: 6533.46,
+        lsaSpend: 1339.56,
+        note: "Oct* through 10/17/2026. Search Call details (19) · 14 calls · 9 received / 5 missed. LSA leads-inbox (26) · 19 Oct received · 5 charged / 14 not charged. Yelp contacts 15 · Website 1 · Kate 10/10 · Yelp spend Oct 1–7 $399.90. Justia fee $1,500 through Dec 2026. account_activities_202610 (2) Search $6,533.46 · LSA Home Services $1,339.56 / 5 leads. Time_series Oct Impr 7,023 · Campaign (48) All-time skipped for Oct. Cases Contact_10-09 · 7 through 10/08. Cash ledger (11) $13,650 through 10/05."
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -731,18 +731,18 @@
         windowNote: "Billing activity (1) Sep Search $13,651.22 · Campaign (41) Impr 3,224 · Call details (13) 41 phones · answer 19/41"
       },
       Oct: {
-        impressions: 707,
-        clicks: 18,
-        phoneCalls: 8,
-        searchSpendLock: 1382.94,
-        windowNote: "Call details (17) Oct 1–9 · 8 phones · 7 received / 1 missed. Billing activity (1) Oct 1–2 Search $1,382.94 / 18 clicks. Campaign (45) Impr 707 through 10/05. Spend/Impr windows shorter than the call window. leads-inbox (24) LSA 18 through 10/07."
+        impressions: 7023,
+        clicks: 526,
+        phoneCalls: 14,
+        searchSpendLock: 6533.46,
+        windowNote: "Call details (19) Oct 1–17 · 14 phones · 9 received / 5 missed. account_activities_202610 (2) Search $6,533.46 / 526 clicks · Time_series Oct Impr 7,023. leads-inbox (26) LSA 19 Oct received."
       }
     },
     sourceMix: [
-      { name: "Paid Search", pct: 19, color: "#3a1a6e", count: 8, prior: 41, mom: "−80%" },
-      { name: "LSA", pct: 43, color: "#1e3a8a", count: 18, prior: 44, mom: "−59%" },
+      { name: "Paid Search", pct: 29, color: "#3a1a6e", count: 14, prior: 41, mom: "−66%" },
+      { name: "LSA", pct: 39, color: "#1e3a8a", count: 19, prior: 44, mom: "−57%" },
       { name: "Websites", pct: 2, color: "#b23a78", count: 1, prior: 4, mom: "−75%" },
-      { name: "Yelp", pct: 36, color: "#64748b", count: 15, prior: 8, mom: "+88%" },
+      { name: "Yelp", pct: 31, color: "#64748b", count: 15, prior: 8, mom: "+88%" },
       { name: "Justia", pct: 0, color: "#6a5acd", count: 0, prior: 0, mom: "—" }
     ],
     /* Campaign brand: Military royal · Core DV burnt orange · NTGUILT rose (GGL — no teal/gold categories) */
@@ -780,8 +780,8 @@
         weekdayCalls: 41, weekdayMissed: 22, weekendCalls: 0, weekendMissed: 0
       },
       Oct: {
-        calls: 8, received: 7, missed: 1, answeredPct: 88,
-        weekdayCalls: 8, weekdayMissed: 1, weekendCalls: 0, weekendMissed: 0
+        calls: 14, received: 9, missed: 5, answeredPct: 64,
+        weekdayCalls: 14, weekdayMissed: 5, weekendCalls: 0, weekendMissed: 0
       }
     },
     phoneIntake: {
@@ -1002,7 +1002,7 @@
       { month: "Jul", cases: 35, leads: 281, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 6 },
       { month: "Aug", cases: 20, leads: 101, spend: 10292.10, lsaSpend: 8516.70, adsSpend: 1775.40, adsLeads: 30, websiteLeads: 0 },
       { month: "Sep*", cases: 16, leads: 97, spend: 19083.93, lsaSpend: 5432.71, adsSpend: 13651.22, adsLeads: 41, websiteLeads: 4 },
-      { month: "Oct*", cases: 7, leads: 42, spend: 1914.03, lsaSpend: 531.09, adsSpend: 1382.94, adsLeads: 8, websiteLeads: 0 }
+      { month: "Oct*", cases: 7, leads: 49, spend: 7873.02, lsaSpend: 1339.56, adsSpend: 6533.46, adsLeads: 14, websiteLeads: 0 }
     ],
     /**
      * Justia Profile Stats · Kate 09/18/2026.
@@ -1254,9 +1254,9 @@
       { month: "Jul", leads: 132, charged: 52, notCharged: 79, lsaSpend: 14556 },
       { month: "Aug", leads: 61, charged: 27, notCharged: 34, lsaSpend: 8516.70 },
       { month: "Sep*", leads: 44, charged: 20, notCharged: 24, lsaSpend: 5432.71 },
-      { month: "Oct*", leads: 18, charged: 4, notCharged: 14, lsaSpend: 531.09 }
+      { month: "Oct*", leads: 19, charged: 5, notCharged: 14, lsaSpend: 1339.56 }
     ],
-    lsaChargeRateOverall: { charged: 166, leads: 393, pct: 42.2 },
+    lsaChargeRateOverall: { charged: 167, leads: 394, pct: 42.4 },
     /* LSA inbox phones and names matched to Contact_09-28 / Lead-Source-10-07. Kate 10/08: Trust = client signal. No person fields. */
     lsaMatchedCases: {
       asOf: "2026-10-08",
@@ -2047,7 +2047,7 @@
     if (key === "Jul") return "July 2026 · Search + LSA + HubSpot 6 + Justia 6 + FindLaw 1 · verified";
     if (key === "Aug") return "August 2026 full month · revenue $104,545 · 20 cases · Justia 0 · ads paused";
     if (key === "Sep") return "September 2026 · Search 41 · LSA 44 · Billing Search $13,651 · LSA $5,433 · revenue $113,985 · cases Contact_10-02 · 16 cases · weekday answer 46%";
-    return "October 2026 MTD · Search 1 · LSA billed 1 · Billing Search $1,383 · LSA $531 · revenue $13,650 through 10/05 · cases Contact_10-02 · 0 · weekday answer 100%";
+    return "October 2026 MTD · Search 14 · LSA 19 · Search $6,533 · LSA $1,340 · revenue $13,650 through 10/05 · cases Contact_10-09 · 7 · weekday answer 64%";
   }
 
   function reportPeriodPillsHtml() {

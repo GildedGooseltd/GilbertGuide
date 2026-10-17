@@ -24,7 +24,7 @@ Rule: [`.cursor/rules/guide-data-refresh-audit.mdc`](../../../.cursor/rules/guid
 | Ledger Credits | `ledger_account_activity_report*.csv` | Revenue · cash pace · Trust Credits charts · cashCollected2026Ytd |
 | Trust summary | `Trust_account_summary_*.csv` | Trust snapshot · Lead Source Trust $ · trust Clients signal |
 | Case balance | `Case_balance_summary_*.csv` | Fee / Clients w/$ · Yelp and LSA fee packs · avg case value inputs |
-| Call details | `Call details (N).csv` | Search phones · Answer Rate Search · Sales Funnel Search · digital click→call · phoneByMonth · channelMonths.search |
+| Call details | `Call details (N).csv` | Search phones · Answer Rate Search · Sales Funnel Search · digital click→call · Click → call monitor / hidden-phone est · phoneByMonth · channelMonths.search · clickCallByCampaign phones |
 | LSA inbox | `leads-inbox (N).csv` | LSA leads · charge rate · Answer Rate LSA · Sales Funnel LSA · lsaEfficiency · channelMonths.lsa |
 | LSA activities | `account_activities_YYYYMM*.csv` | LSA media spend · LSA Cost tiles · casesLeadsSpend.lsaSpend · Lead Cost LSA |
 | Search / Billing | Campaign report · Billing activity | Search spend · CTR · impressions · funnelAds · digital $/phone · channelMonths.searchSpend |
@@ -46,7 +46,8 @@ When an aggregate moves, update every reader of that aggregate across tabs. Exam
 
 | Aggregate changes | Also refresh |
 |---|---|
-| Search phones from Call details | phoneByMonth · Answer Rate · Sales Funnel Search · digital click→call · Lead Cost Digital when phones are the unit · channelMonths.search |
+| Search phones from Call details | phoneByMonth · Answer Rate · Sales Funnel Search · digital click→call · Click → call monitor · Lead Cost Digital when phones are the unit · channelMonths.search · clickCallByCampaign |
+| Search clicks / Impr from Campaign | funnelAds · digital CTR · click→call · Click → call monitor · clickCallByCampaign clicks |
 | LSA leads or spend | lsaEfficiency · channelMonths · casesLeadsSpend · Lead Cost LSA · LSA charge rate · Sales Funnel LSA |
 | New Client creates | New cases tile · practice mix · cases MoM · casesLeadsSpend.cases · media $/Client · cash pace case leg |
 | Ledger Credits | Revenue tile · cash pace · cashCollected charts · ROAS numerator when Trust Credits |
@@ -80,5 +81,6 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 10/17/2026 | DL refresh · Call details (19) Oct Search 14 · leads-inbox (26) LSA 19 · account_activities_202610 (2) Search $6,533.46 · LSA $1,339.56 · Time_series Oct Impr 7,023 · Lead Calls 49 · Campaign (48) All-time skipped · Contact / ledger / HubSpot / Yelp unchanged. |
 | 10/09/2026 | DL refresh · Call details (17) Oct Search 8 · Contact_10-09 Oct cases 7 · Lead Calls 26. LSA inbox / Billing / ledger / Campaign calendar Impr unchanged. Campaign (47) All-time skipped for Oct Impr. |
 | 10/08/2026 | Process locked Guide-wide. Lead Source Confirmed pack partial. Full Can update / Blocked list in that day’s chat audit. |

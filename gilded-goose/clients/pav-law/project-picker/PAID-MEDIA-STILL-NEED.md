@@ -2,21 +2,19 @@
 
 Simple name list for LSA + Search staging. Aggregates only. Do not file Contact, Call details caller rows, or LSA inbox Customer names into the repo.
 
-Last Downloads scan: 10/09/2026 · ~11:59 PM · Call details (17) + Contact_10-09 wired on Guide. Gaps below.
+Last Downloads scan: 10/17/2026 · Call details · LSA inbox · account_activities · Time_series wired. Gaps below still block full Oct MTD.
 
-## Oct* · wired 10/09 · still need for full MTD
+## Oct* · wired 10/17 · still need for full MTD
 
 | Source | Newest file | Status |
 |---|---|---|
-| Search Call details | Call details (17).csv | Wired · Oct 1–9 · 8 phones · 7 received / 1 missed |
-| Contact | Contact_10-09-2026 (1).csv | Wired · Oct Client Created 7 through 10/08 |
-| Search Campaign calendar | Campaign report (45).csv | Still Oct 1–5 Impr 707 / clicks 18 · Campaign (47) is All-time · need Oct 1–9 calendar Campaign for Impr/CTR |
-| Billing Search/LSA | Billing activity report (1).csv | Still through 10/02 · Search $1,382.94 · LSA $531.09 |
-| LSA inbox | leads-inbox (24).csv | Still through 10/07 · 18 leads · 4 charged · no newer inbox |
-| LSA Home Services spend | account_activities_202610*.csv | No Home Services media rows · taxes/Workspace only |
+| Search Call details | Call details (19).csv | Wired · Oct 1–17 · 14 phones · 9 received / 5 missed |
+| Contact | Contact_10-09-2026 (1).csv | Still · Oct Client Created 7 through 10/08 · need newer Contact |
+| Search Impr / spend | Time_series_chart · account_activities_202610 (2).csv | Wired · Oct Impr 7,023 · Search $6,533.46 · LSA $1,339.56 · Campaign (48) All-time skipped |
+| LSA inbox | leads-inbox (26).csv | Wired · 19 Oct received · 5 charged / 14 not charged |
 | Ledger Credits | ledger_account_activity_report (11).csv | Still Oct* $13,650 through 10/05 · no newer ledger |
 | HubSpot forms | — | No newer form-submit after 10/02 |
-| Yelp contacts | Ads screenshots 10/08 | Spend Oct 1–7 $399.90 · contacts still 0 Messages/Calls |
+| Yelp contacts | Ads screenshots 10/08 | Spend Oct 1–7 $399.90 · no newer Yelp Ads pull |
 | Contact Lead Source column | Contact_10-09 | Export has no Lead Source field · Channel Confirmed stays on Contact_10-08 + joins |
 
 ## Sep* snapshot from 09/28 pull

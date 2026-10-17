@@ -2324,12 +2324,17 @@ window.PROJECT_DATA = {
         "Scope locked · Justia · FindLaw · Avvo · CH-DIRS · pav.law UTMs · site stays 719-888-7888",
         "Update checklist + UTM paste pack written",
         "Justia FAQ paste from PAV-PRACTICE-FAQS · DUI then Criminal then DV",
+        "Justia Platinum / profile website URLs → pav.law UTMs",
         "FindLaw Profile Update · login · claim · 10/05/2026",
+        "FindLaw Edit · Publish · paste from FINDLAW-PROFILE-PASTE.md",
+        "FindLaw website URL → pav.law UTMs",
+        "HubSpot Analytics check · source justia / findlaw · medium directory",
         "Contract cut · FindLaw · Justia - review contacts and terminate renewal",
         "Justia free Lawyer Directory · Andrew completeness check vs Platinum",
         "FindLaw free attorney claim fields aligned with paid package paste",
         "Questionnaire draft · ATTORNEY-PROFILE-QUESTIONNAIRE.md",
-        "Google Forms CSV · enablement/NEW-HIRE-PROFILE-QUESTIONNAIRE-GOOGLE-FORMS.csv"
+        "Google Forms CSV · enablement/NEW-HIRE-PROFILE-QUESTIONNAIRE-GOOGLE-FORMS.csv",
+        "Draft Casey bio + FAQ set from answers"
       ],
       "progressOpenItems": [
         "Later · after team trained · Check HubSpot Calling phone-number limit",
@@ -2338,13 +2343,8 @@ window.PROJECT_DATA = {
         "Later · Directories inbound workflow On · pl_lead_source = Directories",
         "Later · Test dial CH-DIRS from a cell",
         "Later · Paste CH-DIRS on Justia · FindLaw · Avvo after test",
-        "Justia Platinum / profile website URLs → pav.law UTMs",
-        "FindLaw Edit · Publish · paste from FINDLAW-PROFILE-PASTE.md",
-        "FindLaw website URL → pav.law UTMs",
-        "HubSpot Analytics check · source justia / findlaw · medium directory",
         "Optional CRM fields for directory profile URLs",
         "Audit directories and identify best most impactful to add/ update listings to. Can have Casey and Jack create profiles on other sites to test out as well.",
-        "Draft Casey bio + FAQ set from answers",
         "Draft Jack bio + FAQ set from answers · hold publish until admission",
         "Questionnaire complete before admission",
         "Draft announcement · Jack hired / joining Pav Law",
@@ -2356,45 +2356,45 @@ window.PROJECT_DATA = {
         "When `/team/casey-dinaro/` and `/team/jack-strong/` go live · deep-link bios",
         "Re-verify UTMs and CH-DIRS after any directory UI change"
       ],
-      "progressDoneCount": 9,
-      "progressOpenCount": 23,
-      "progressPct": 34,
+      "progressDoneCount": 14,
+      "progressOpenCount": 18,
+      "progressPct": 63,
       "overviewBulletStatus": [
         {
           "bullet": "Justia refresh",
-          "emoji": "📌",
-          "status": "active",
-          "pct": 80
+          "emoji": "🏁",
+          "status": "done",
+          "pct": 100
         },
         {
           "bullet": "FindLaw refresh",
-          "emoji": "📌",
-          "status": "active",
-          "pct": 70
+          "emoji": "🏁",
+          "status": "done",
+          "pct": 100
+        },
+        {
+          "bullet": "URL and content tracking",
+          "emoji": "🚀",
+          "status": "launched",
+          "pct": 85
         },
         {
           "bullet": "Lawyer questionnaire",
           "emoji": "📌",
           "status": "active",
-          "pct": 40
+          "pct": 75
         },
         {
-          "bullet": "URL and content tracking",
-          "emoji": "🚧",
-          "status": "wip",
-          "pct": 30
+          "bullet": "Directory Profile(s)",
+          "emoji": "📌",
+          "status": "active",
+          "pct": 70
         },
         {
           "bullet": "Dedicated HubSpot DID",
           "emoji": "",
           "status": "waiting",
           "pct": 10
-        },
-        {
-          "bullet": "Directory Profile(s)",
-          "emoji": "",
-          "status": "waiting",
-          "pct": 5
         },
         {
           "bullet": "Jr Attorney Digital Brand Update Guide",
