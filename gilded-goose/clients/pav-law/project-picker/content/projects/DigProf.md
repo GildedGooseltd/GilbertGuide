@@ -50,7 +50,9 @@
 Status · 10/02/2026
 
 - [x] New Pav Law LinkedIn banner finished
-- [ ] Business cards for wider team wait on headshots · see SwagPrint · low to medium priority
+- [x] Business card design · see SwagPrint
+- [x] Update Pav Law logos · see SwagPrint
+- [x] Edit images of the team
 
 LinkedIn + brand assets
 
@@ -113,7 +115,7 @@ Current DigProf outline includes
 - GBP merge Andrew + Pav Law
 - LinkedIn writing and update guide · company + attorney profiles · UTMs
 - Team pages · links to [PavSiteUpdateP2.md](PavSiteUpdateP2.md) Andrew · Casey · Jack URLs
-- Team graphics · headshots coordination · cards wait on SwagPrint
+- Team graphics · headshots · card design · logos · team image edits on SwagPrint
 - Firm and attorney bios rewrite with tracked website links
 - HubSpot listing fields · LSA call process ops
 - Yelp listing review-ask layer · ads stay on Yelp project
@@ -134,5 +136,5 @@ Overlap locks
 - [PavSiteUpdateP2.md](PavSiteUpdateP2.md) owns marijuana · criminal mischief HubSpot practice pages
 - DigProf links profiles to those team URLs when live
 - LegalDirs owns CH-DIRS · directory UTMs · FAQ paste
-- SwagPrint owns business cards after headshots
+- SwagPrint owns business card design · logos · team image edits · storefront ordering still open
 
