@@ -13,14 +13,14 @@ window.DUI_GOAL_DATA = {
   title: "# Auto Cases",
   label: "DUI",
   definition:
-    "Client contacts with Created date in 2026 in the Auto stack: DUI practice-area rule, or Traffic tag with no DUI/DWAI matter. Chart = two buckets. DUI/DWAI = practice DUI rule. Traffic = all other Auto-stack rows. Source export as of 10/08/2026.",
+    "Client contacts with Created date in 2026 in the Auto stack: DUI practice-area rule, or Traffic tag with no DUI/DWAI matter. Chart = two buckets. DUI/DWAI = practice DUI rule. Traffic = all other Auto-stack rows. Source export as of 10/17/2026.",
   sourceFile:
-    "Downloads/Contact_10-08-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-23/auto-cases-ytd.csv",
+    "Downloads/Contact_10-17-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-23/auto-cases-ytd.csv",
   exportStrictCount: 20,
   exportNote:
-    "Recount 10/08/2026 from Contact_10-08-2026.csv = DUI/DWAI 20 · Traffic 22 · Auto total 42 / 50 · pace 84%. Traffic bucket rolls Speeding 5 · Careless 2 · Reckless 1 · Other 14. Same DUI practice + Traffic-tag stack as prior lock.",
-  updatedAt: "2026-10-08",
-  notes: "Verified from Cases practice area + Case Type on Contact_10-08-2026.csv. Chart = DUI/DWAI + Traffic; total = sum; target line is annual auto goal. Last updated 10/08/2026.",
+    "Recheck 10/17/2026 from Contact_10-17-2026.csv = DUI/DWAI 20 · Traffic 22 · Auto total 42 / 50 · pace 84%. Unchanged vs Contact_10-08. Traffic = practice-area (Traffic) tag without DUI/DWAI. No new Auto YTD through Created 10/13.",
+  updatedAt: "2026-10-17",
+  notes: "Verified from Cases practice area (Traffic) tag + DUI/DWAI practice rule on Contact_10-17-2026.csv. Chart = DUI/DWAI + Traffic; total = sum; target line is annual auto goal. Last updated 10/17/2026.",
   /* Auto chart #03 · two buckets. Traffic = Speeding + Careless + Reckless + Other. */
   autoColumns: [
     { label: "DUI/DWAI", current: 20, vsTarget: true },

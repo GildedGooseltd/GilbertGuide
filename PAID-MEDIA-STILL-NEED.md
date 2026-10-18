@@ -13,10 +13,11 @@ Last Downloads scan: 10/17/2026 evening · Contact · Trust · Case balance wire
 | Trust snapshot | Trust_account_summary_10-17-2026.csv | Wired · 375 with balance · $1,742,034 |
 | Case balance | Case_balance_summary_10-17-2026.csv | Wired · Oct contracted 8 of 9 · Yelp fee pack rechecked |
 | Search Impr / spend | Time_series_chart · account_activities_202610 (2).csv | Wired · Oct Impr 7,023 · Search $6,533.46 · LSA $1,339.56 · Campaign (48) All-time skipped |
-| LSA inbox | leads-inbox (26).csv | Wired · 19 Oct received · 5 charged / 14 not charged |
-| Ledger Credits | ledger_account_activity_report (11).csv | Still Oct* $13,650 through 10/05 · no newer ledger |
+| LSA inbox | leads-inbox (26).csv | Wired · 19 Oct received Oct 2–9 · 5 charged / 14 not charged |
+| LSA spend | account_activities_202610 (2).csv | Home Services $1,339.56 on 5 billed leads · Lead Cost uses charged · Lead Calls uses inbox 19 |
+| Ledger Credits | ledger_account_activity_report (12).csv | Wired · Oct* $58,050 through 10/17 · Jul restated $112,350 |
 | HubSpot forms | — | No newer form-submit after 10/02 |
-| Yelp contacts | Ads screenshots 10/08 | Spend Oct 1–7 $399.90 · no newer Yelp Ads pull |
+| Yelp contacts | Ads screenshots 10/08 · Kate 10/17 | Oct calendar contacts 0 · last-30 panel 15 not used on Lead Calls · spend Oct 1–7 $399.90 on Ad Spend only |
 
 ## Sep* snapshot from 09/28 pull
 

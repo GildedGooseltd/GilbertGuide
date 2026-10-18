@@ -2109,53 +2109,37 @@ window.PROJECT_DATA = {
       "campaignType": "Traffic",
       "id": "AdEnhance",
       "title": "Ad Expansion",
-      "tldr": "Ad Expansion gives Pav Law two new Google Search lanes: Ad 1 Criminal mischief and Ad 2 College towns. These lanes start late October 2026, after core Search quality is stable.",
-      "description": "Ad Expansion gives Pav Law two new Google Search lanes: Ad 1 Criminal mischief and Ad 2 College towns. These lanes start late October 2026, after core Search quality is stable.\n\n- **Forms & landings:** A person who clicks Ad 1 or Ad 2 reaches a Pav Law page and becomes a contact the firm can tie to that lane.\n- **Ad 1 graphics:** Criminal mischief ads show images that match a hire search, so the click looks like the case the person was looking for.\n- **Ad 2 graphics:** College-town ads show campus and parent-friendly images, so students and parents see a defense firm that fits dorm and residency season.\n- **Ad 1 · Criminal mischief:** Pav Law shows up for people already searching for a criminal mischief defense lawyer, and those calls and contacts stay with this lane.\n- **Ad 2 · College towns / trade schools:** Parents and students who need a defense lawyer can find Pav Law in college and trade-school markets, with more presence at semester start, freshman residencies, and move-in.\n- **New-lane calls:** Calls from Ad 1 and Ad 2 land on the firm’s shared inbound dashboard, labeled by lane, so reception can see which new practice area is calling.\n- **Semester mailer:** Freshman residencies can get a print piece at the start of the semester that matches the college-town ads. Print and postage stay a Pav cost.\n- **Glovebox insurance mailer · separate project · not sold under WinterSeason:** The glovebox insurance mailer stays its own project, so it is not sold on this card or under WinterSeason.\n- **Learning review:** About three months after a lane is live, Pav keeps it when it earns tracked phones and signed cases. Keepers move into the Digital Ads Retainer at about $300 per live lane per month.\n- **Video inventory review:** Pav reviews video it already has before paying for new clips.\n- **Clips after Search live:** After the lanes are live, criminal mischief clips support Ad 1, and campus and parent clips support Ad 2.",
+      "tldr": "Ad Expansion gives Pav Law two new Google Search lanes: Criminal mischief and College towns. These lanes start late October 2026, after core Search quality is stabilized from the pause and relearning.",
+      "description": "Ad Expansion gives Pav Law two new Google Search lanes: Criminal mischief and College towns. These lanes start late October 2026, after core Search quality is stabilized from the pause and relearning.\n\n- Forms & landings: HubSpot forms and landings for the new Search lanes\n- Criminal mischief: New Google Search lane for criminal mischief defense\n- College: College-town students and parent target audiences\n- HubSpot phone line: Calls from Google PPC for better tracking\n- Semester mailer: Freshman residencies can get a print piece at the start of the semester that matches the college-town ads. Print and postage stay a Pav cost.\n- Learning review: About three months after a lane is live, Pav keeps it when it earns tracked phones and signed cases. Keepers move into the Digital Ads Retainer at about $300 per live lane per month.\n- Video inventory review: Review videos already created and align them with current campaign pages\n- Graphic set: Ad creative for the new lanes",
       "valueAdded": [
-        "Ad Expansion gives Pav Law two new Google Search lanes: Ad 1 Criminal mischief and Ad 2 College towns. These lanes start late October 2026, after core Search quality is stable.",
-        "**Forms & landings:** A person who clicks Ad 1 or Ad 2 reaches a Pav Law page and becomes a contact the firm can tie to that lane.",
-        "**Ad 1 graphics:** Criminal mischief ads show images that match a hire search, so the click looks like the case the person was looking for.",
-        "**Ad 2 graphics:** College-town ads show campus and parent-friendly images, so students and parents see a defense firm that fits dorm and residency season.",
-        "**Ad 1 · Criminal mischief:** Pav Law shows up for people already searching for a criminal mischief defense lawyer, and those calls and contacts stay with this lane.",
-        "**Ad 2 · College towns / trade schools:** Parents and students who need a defense lawyer can find Pav Law in college and trade-school markets, with more presence at semester start, freshman residencies, and move-in.",
-        "**New-lane calls:** Calls from Ad 1 and Ad 2 land on the firm’s shared inbound dashboard, labeled by lane, so reception can see which new practice area is calling.",
-        "**Semester mailer:** Freshman residencies can get a print piece at the start of the semester that matches the college-town ads. Print and postage stay a Pav cost.",
-        "**Glovebox insurance mailer · separate project · not sold under WinterSeason:** The glovebox insurance mailer stays its own project, so it is not sold on this card or under WinterSeason.",
-        "**Learning review:** About three months after a lane is live, Pav keeps it when it earns tracked phones and signed cases. Keepers move into the Digital Ads Retainer at about $300 per live lane per month.",
-        "**Video inventory review:** Pav reviews video it already has before paying for new clips.",
-        "**Clips after Search live:** After the lanes are live, criminal mischief clips support Ad 1, and campus and parent clips support Ad 2."
-      ],
-      "hubSpotParts": [
-        "Marketing Hub · Google Ads connection and campaign source tags",
-        "Forms · HubSpot forms on pav.law for paid landing and contact paths",
-        "CRM · Contact create and update from calls and forms",
-        "Calling · Ad 1 and Ad 2 calls on the shared phone inbound dashboard",
-        "Landing pages · HubSpot-tracked URLs for the two practice-area pilots"
+        "Ad Expansion gives Pav Law two new Google Search lanes: Criminal mischief and College towns. These lanes start late October 2026, after core Search quality is stabilized from the pause and relearning.",
+        "Forms & landings: HubSpot forms and landings for the new Search lanes",
+        "Criminal mischief: New Google Search lane for criminal mischief defense",
+        "College: College-town students and parent target audiences",
+        "HubSpot phone line: Calls from Google PPC for better tracking",
+        "Semester mailer: Freshman residencies can get a print piece at the start of the semester that matches the college-town ads. Print and postage stay a Pav cost.",
+        "Learning review: About three months after a lane is live, Pav keeps it when it earns tracked phones and signed cases. Keepers move into the Digital Ads Retainer at about $300 per live lane per month.",
+        "Video inventory review: Review videos already created and align them with current campaign pages",
+        "Graphic set: Ad creative for the new lanes"
       ],
       "progressDoneItems": [
-        "Scope locked · Ad 1 Criminal mischief + Ad 2 College towns only",
-        "Hold weapons · seasonal DUI · WinterSeason · glovebox off this card",
-        "Timing lock · wait until safe · target end of October 2026",
-        "Ad 2 / mailer focus · beginning of semester · freshman residencies"
+        "Scope and project plan locked",
+        "Drafted new campaigns ready to launch after prices stabilize"
       ],
       "progressOpenItems": [
-        "Confirm two-lane fee with Andrew if down-quote from $5,600 needed",
-        "HubSpot forms live on criminal mischief landing",
-        "HubSpot forms live on college / parent landing",
-        "Landing depth / practice modules for Ad 1 and Ad 2",
-        "Safe-to-build gate cleared · core HS Military / quality gates stable",
-        "Criminal mischief graphics · Search-safe stills for Ad 1 · see AdCreative.md",
-        "Campus / student-life graphics for Ad 2 college areas · see AdCreative.md",
-        "Build Ad 1 Search · Exact/Phrase · Eligible RSA · HS tracking",
-        "Build Ad 2 Search · Exact/Phrase · Eligible RSA · college geos · semester bid plan",
-        "Phone routing / source tags for new-lane calls on inbound dashboard",
+        "Transfer previous top-performing campaigns to daily budgets and retrain ads so we can get back to the $60/call target",
+        "Insurance mailer at the beginning of the semester",
+        "Criminal mischief graphics · AdCreative.md",
+        "College · AdCreative.md",
+        "Build Ad 1 Search with HubSpot forms live on the criminal mischief landing",
+        "Build Ad 2 Search with HubSpot forms live on the college / parent landing",
+        "Phone routing / source tags for new-lane calls on the inbound dashboard",
         "Semester mailer list + creative · freshman residencies · timed with Ad 2",
-        "Learning period review · keepers into Digital Ads Retainer ~$300/mo per live lane",
-        "Later phase · video clips after review · Ad 1 criminal mischief · Ad 2 campus / parent"
+        "Learning period review · keepers into Digital Ads Retainer ~$300/mo per live lane"
       ],
-      "progressDoneCount": 4,
-      "progressOpenCount": 13,
-      "progressPct": 11,
+      "progressDoneCount": 2,
+      "progressOpenCount": 9,
+      "progressPct": 10,
       "overviewBulletStatus": [
         {
           "bullet": "Forms & landings",
@@ -2164,19 +2148,13 @@ window.PROJECT_DATA = {
           "pct": 30
         },
         {
-          "bullet": "Ad 1 · Criminal mischief",
+          "bullet": "Criminal mischief",
           "emoji": "",
           "status": "waiting",
           "pct": 10
         },
         {
-          "bullet": "Ad 2 graphics",
-          "emoji": "",
-          "status": "waiting",
-          "pct": 10
-        },
-        {
-          "bullet": "Ad 2 · College towns / trade schools",
+          "bullet": "College",
           "emoji": "",
           "status": "waiting",
           "pct": 10
@@ -2191,16 +2169,10 @@ window.PROJECT_DATA = {
           "bullet": "Video inventory review",
           "emoji": "",
           "status": "waiting",
-          "pct": 10
+          "pct": 0
         },
         {
-          "bullet": "Ad 1 graphics",
-          "emoji": "",
-          "status": "waiting",
-          "pct": 5
-        },
-        {
-          "bullet": "Clips after Search live",
+          "bullet": "Graphic set",
           "emoji": "",
           "status": "waiting",
           "pct": 0
@@ -2213,29 +2185,29 @@ window.PROJECT_DATA = {
       "estCostLabel": "$5,600 + $900/mo",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 3900,
+      "feeEstimate": 4200,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "ads_campaign",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2500,
       "feeEstimateNationalMid": 3800,
       "feeEstimateScope": {
-        "raw": 15,
+        "raw": 11.45,
         "parts": {
-          "valueAdd": 12,
+          "valueAdd": 9,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 3
+          "descUnits": 2.45
         }
       },
-      "feeEstimateComplexity": 1,
+      "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -1700,
-      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.29 (15 units) · complexity ×1"
+      "feeEstimateDelta": -1400,
+      "feeEstimateNote": "ads campaign lane · local mid $2,500 · national mid $3,750 · scope ×1.24 (11.45 units) · complexity ×1.1"
     },
     {
       "priority": 99,
@@ -2299,68 +2271,46 @@ window.PROJECT_DATA = {
       "campaignType": "Referral Sites",
       "id": "LegalDirs",
       "title": "Legal Directory Updates",
-      "tldr": "Update legal directory profiles for Pav Law for accurate information, tracking, and new ad copy. Directories in scope: Justia, FindLaw, and Avvo, plus free claim surfaces.",
-      "description": "Update legal directory profiles for Pav Law for accurate information, tracking, and new ad copy. Directories in scope: Justia, FindLaw, and Avvo, plus free claim surfaces.\n\n- Paid directories\n  - Justia refresh: Ad copy · FAQ paste from practice FAQs · Platinum website URLs → pav.law UTMs\n  - FindLaw refresh: Profile claimed 10/05/2026 · Edit Publish paste · website URL → pav.law UTMs\n  - Avvo refresh: Firm / Andrew profile phone + website UTM when ready\n- Tracking\n  - URL and content tracking: Measure leads from directory pages · HubSpot source justia / findlaw · medium directory\n- CH-DIRS phone · later\n  - Dedicated HubSpot DID: Hold until the team is trained · then Justia FindLaw Avvo ring HubSpot · pl_lead_source = Directories · site and Ads stay 719-888-7888\n- Free presence\n  - **Directory Profile(s):** Claim and complete free profiles that already matter for Colorado Springs criminal defense search. Justia free Lawyer Directory for Andrew completeness vs Platinum · FindLaw free attorney fields aligned with the paid package paste · Avvo firm and attorney claims when that track opens. Martindale / Lawyers.com · Colorado Bar / CBA lawyer finder · Super Lawyers only if a listing already exists. Correct NAP · pav.law UTMs · no new paid directory SKUs this round. Audit directories for highest-impact adds and updates · Casey and Jack can test profiles on other sites. Cross-link DigProf LinkedIn · GBP · Yelp · team URLs when those are live.\n- Profiles & announcements\n  - Lawyer questionnaire: Kate writes and manages · send to Casey · Jack before 10/23 · Andrew FindLaw blanks\n  - Jr Attorney Digital Brand Update Guide: Casey free Justia · FindLaw · Avvo mirror when ready",
+      "tldr": "Update legal directory profiles for Pav Law for accurate information, tracking, and new ad copy. Directories in scope: Justia, FindLaw, and Avvo, plus TBD platforms.",
+      "description": "Update legal directory profiles for Pav Law for accurate information, tracking, and new ad copy. Directories in scope: Justia, FindLaw, and Avvo, plus TBD platforms.\n\n- Paid directories: Revise each profile for updated content, expanded practice areas, improved tracking, additional images, and FAQs\n  - Justia refresh\n  - FindLaw refresh\n  - Avvo refresh\n  - TBD refresh\n- Tracking\n  - URL and content tracking: Measure leads from directory pages\n  - Dedicated HubSpot phone number: Track directory channels in HubSpot\n- Profiles & announcements\n  - Lawyer questionnaire: Gather more detail from new lawyers to build stronger brand profiles\n  - Directory Profile(s)\n  - Jr Attorney Digital Brand Update Guide",
       "valueAdded": [
-        "Update legal directory profiles for Pav Law for accurate information, tracking, and new ad copy. Directories in scope: Justia, FindLaw, and Avvo, plus free claim surfaces.",
-        "Paid directories",
-        "- Justia refresh: Ad copy · FAQ paste from practice FAQs · Platinum website URLs → pav.law UTMs",
-        "- FindLaw refresh: Profile claimed 10/05/2026 · Edit Publish paste · website URL → pav.law UTMs",
-        "- Avvo refresh: Firm / Andrew profile phone + website UTM when ready",
+        "Update legal directory profiles for Pav Law for accurate information, tracking, and new ad copy. Directories in scope: Justia, FindLaw, and Avvo, plus TBD platforms.",
+        "Paid directories: Revise each profile for updated content, expanded practice areas, improved tracking, additional images, and FAQs",
+        "- Justia refresh",
+        "- FindLaw refresh",
+        "- Avvo refresh",
+        "- TBD refresh",
         "Tracking",
-        "- URL and content tracking: Measure leads from directory pages · HubSpot source justia / findlaw · medium directory",
-        "CH-DIRS phone · later",
-        "- Dedicated HubSpot DID: Hold until the team is trained · then Justia FindLaw Avvo ring HubSpot · pl_lead_source = Directories · site and Ads stay 719-888-7888",
-        "Free presence",
-        "- **Directory Profile(s):** Claim and complete free profiles that already matter for Colorado Springs criminal defense search. Justia free Lawyer Directory for Andrew completeness vs Platinum · FindLaw free attorney fields aligned with the paid package paste · Avvo firm and attorney claims when that track opens. Martindale / Lawyers.com · Colorado Bar / CBA lawyer finder · Super Lawyers only if a listing already exists. Correct NAP · pav.law UTMs · no new paid directory SKUs this round. Audit directories for highest-impact adds and updates · Casey and Jack can test profiles on other sites. Cross-link DigProf LinkedIn · GBP · Yelp · team URLs when those are live.",
+        "- URL and content tracking: Measure leads from directory pages",
+        "- Dedicated HubSpot phone number: Track directory channels in HubSpot",
         "Profiles & announcements",
-        "- Lawyer questionnaire: Kate writes and manages · send to Casey · Jack before 10/23 · Andrew FindLaw blanks",
-        "- Jr Attorney Digital Brand Update Guide: Casey free Justia · FindLaw · Avvo mirror when ready"
-      ],
-      "hubSpotParts": [
-        "Calling · CH-DIRS later · after team training · then directory profiles · Romina then Jack then voicemail · workflow sets `pl_lead_source` = Directories",
-        "CRM · Optional fields on contact or company records for Justia, FindLaw, and Avvo profile URLs so the team can open the live listing from HubSpot",
-        "Lead source and ROI · Directory form and UTM paths now · call attribution once CH-DIRS is live"
+        "- Lawyer questionnaire: Gather more detail from new lawyers to build stronger brand profiles",
+        "- Directory Profile(s)",
+        "- Jr Attorney Digital Brand Update Guide"
       ],
       "progressDoneItems": [
-        "Scope locked · Justia · FindLaw · Avvo · CH-DIRS · pav.law UTMs · site stays 719-888-7888",
-        "Update checklist + UTM paste pack written",
-        "Justia FAQ paste from PAV-PRACTICE-FAQS · DUI then Criminal then DV",
-        "Justia Platinum / profile website URLs → pav.law UTMs",
-        "FindLaw Profile Update · login · claim · 10/05/2026",
-        "FindLaw Edit · Publish · paste from FINDLAW-PROFILE-PASTE.md",
-        "FindLaw website URL → pav.law UTMs",
-        "HubSpot Analytics check · source justia / findlaw · medium directory",
-        "Contract cut · FindLaw · Justia - review contacts and terminate renewal",
-        "Justia free Lawyer Directory · Andrew completeness check vs Platinum",
-        "FindLaw free attorney claim fields aligned with paid package paste",
+        "Check HubSpot Calling phone-number limit",
+        "Added custom phone tracking number for directories",
+        "Gather FAQs to use across profiles",
+        "Justia Platinum · sync with customer rep for additional recommendations",
+        "FindLaw profile updated",
+        "HubSpot record updates · Justia/FindLaw lead sources must be updated manually · limited visibility into lead information from both channels",
+        "Contract cut · FindLaw · Justia · review contacts and terminate renewal",
         "Questionnaire draft · ATTORNEY-PROFILE-QUESTIONNAIRE.md",
         "Google Forms CSV · enablement/NEW-HIRE-PROFILE-QUESTIONNAIRE-GOOGLE-FORMS.csv",
-        "Draft Casey bio + FAQ set from answers"
+        "Draft Casey bio + FAQ set from answers",
+        "Email signature title update"
       ],
       "progressOpenItems": [
-        "Later · after team trained · Check HubSpot Calling phone-number limit",
-        "Later · Add CH-DIRS 719 DID · name CH-DIRS · Directories",
-        "Later · Call routing Romina → Jack → voicemail",
-        "Later · Directories inbound workflow On · pl_lead_source = Directories",
-        "Later · Test dial CH-DIRS from a cell",
-        "Later · Paste CH-DIRS on Justia · FindLaw · Avvo after test",
-        "Optional CRM fields for directory profile URLs",
-        "Audit directories and identify best most impactful to add/ update listings to. Can have Casey and Jack create profiles on other sites to test out as well.",
-        "Draft Jack bio + FAQ set from answers · hold publish until admission",
-        "Questionnaire complete before admission",
+        "Audit directories and identify the most impactful listings to add or update",
+        "Draft Jack bio + FAQ set from answers",
         "Draft announcement · Jack hired / joining Pav Law",
-        "Draft announcement · Jack sworn in / Colorado bar admission",
-        "GBP announcement post",
-        "Yelp announcement / update when product allows",
-        "Email signature title update",
         "HubSpot / pav.law team page · PavSiteUpdateP2 · then deep-link directories",
-        "When `/team/casey-dinaro/` and `/team/jack-strong/` go live · deep-link bios",
-        "Re-verify UTMs and CH-DIRS after any directory UI change"
+        "When `/team/casey-dinaro/` and `/team/jack-strong/` go live · deep-link bios"
       ],
-      "progressDoneCount": 14,
-      "progressOpenCount": 18,
-      "progressPct": 63,
+      "progressDoneCount": 11,
+      "progressOpenCount": 5,
+      "progressPct": 69,
       "overviewBulletStatus": [
         {
           "bullet": "Justia refresh",
@@ -2384,19 +2334,19 @@ window.PROJECT_DATA = {
           "bullet": "Lawyer questionnaire",
           "emoji": "📌",
           "status": "active",
-          "pct": 75
+          "pct": 50
         },
         {
           "bullet": "Directory Profile(s)",
           "emoji": "📌",
           "status": "active",
-          "pct": 70
+          "pct": 50
         },
         {
-          "bullet": "Dedicated HubSpot DID",
-          "emoji": "",
-          "status": "waiting",
-          "pct": 10
+          "bullet": "Dedicated HubSpot phone number",
+          "emoji": "🏁",
+          "status": "done",
+          "pct": 100
         },
         {
           "bullet": "Jr Attorney Digital Brand Update Guide",
@@ -2412,29 +2362,29 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,200",
       "paymentPlanLabel": "40%",
       "depositPct": 0.4,
-      "feeEstimate": 3100,
+      "feeEstimate": 3000,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "profiles_local",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1900,
       "feeEstimateNationalMid": 2500,
       "feeEstimateScope": {
-        "raw": 17,
+        "raw": 14.63,
         "parts": {
-          "valueAdd": 14,
+          "valueAdd": 13,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 3
+          "descUnits": 1.63
         }
       },
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 1900,
-      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.31 (17 units) · complexity ×1.1"
+      "feeEstimateDelta": 1800,
+      "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.28 (14.63 units) · complexity ×1.1"
     },
     {
       "priorityGroup": "AdHoc",
@@ -2444,65 +2394,42 @@ window.PROJECT_DATA = {
       "campaignType": "Print & Production",
       "id": "SwagPrint",
       "title": "Printables, Swag & Apparel",
-      "tldr": "Updated stationery and images as the team has expanded",
-      "description": "- Updated stationery and images as the team has expanded\n  - Pav Law swag team store for onboard and team items\n  - Design now · open ordering later from the firm storefront\n  - Store keeps reorders simple and carries margin on each order\n- Logo and branding\n  - Pav Law logos updated\n  - Team images edited\n  - Make a few mockups on key SKUs\n  - Send the direction to a real designer for a full suite\n- Business cards\n  - Business card design done for the wider team\n  - Ordering stays open later from the firm storefront\n- Product\n  - Orders generally run $400–$500 with vendor minimums\n  - Samples ordered for review\n  - Apparel can be designed and ordered individually\n- Status Kate 10/02/2026\n  - Binders with Jack for Andrew to sample\n  - Other vendor samples ordered and waiting\n  - Holiday designs can ride in the same design pass if needed\n- SKU list\n  - Laptop cases · Pav Law with contact details\n  - Business cards · Jack Strong · wider team · design done\n  - Dress shirts · socks · ties\n  - Mugs / tumblers\n  - Pav Law swag team store · direct orders",
+      "tldr": "Online storefront so team members can easily order refills",
+      "description": "- Online storefront so team members can easily order refills\n- Updated stationery and images\n  - Logo and branding\n    - Pav Law logos updated\n    - Team images edited\n    - Make a few mockups on key SKUs\n  - Business cards\n    - Business card design and print\n  - SKU list\n    - Laptop cases\n    - Dress shirts · socks · ties\n    - Mugs / tumblers\n    - Insurance card envelopes\n- Set up employee incentives and gifting to help achieve monthly goals",
       "valueAdded": [
-        "Updated stationery and images as the team has expanded",
-        "- Pav Law swag team store for onboard and team items",
-        "- Design now · open ordering later from the firm storefront",
-        "- Store keeps reorders simple and carries margin on each order",
-        "Logo and branding",
+        "Online storefront so team members can easily order refills",
+        "Updated stationery and images",
+        "- Logo and branding",
         "- Pav Law logos updated",
         "- Team images edited",
         "- Make a few mockups on key SKUs",
-        "- Send the direction to a real designer for a full suite",
-        "Business cards",
-        "- Business card design done for the wider team",
-        "- Ordering stays open later from the firm storefront",
-        "Product",
-        "- Orders generally run $400–$500 with vendor minimums",
-        "- Samples ordered for review",
-        "- Apparel can be designed and ordered individually",
-        "Status Kate 10/02/2026",
-        "- Binders with Jack for Andrew to sample",
-        "- Other vendor samples ordered and waiting",
-        "- Holiday designs can ride in the same design pass if needed",
-        "SKU list",
-        "- Laptop cases · Pav Law with contact details",
-        "- Business cards · Jack Strong · wider team · design done",
+        "- Business cards",
+        "- Business card design and print",
+        "- SKU list",
+        "- Laptop cases",
         "- Dress shirts · socks · ties",
         "- Mugs / tumblers",
-        "- Pav Law swag team store · direct orders"
+        "- Insurance card envelopes",
+        "Set up employee incentives and gifting to help achieve monthly goals"
       ],
       "progressDoneItems": [
-        "Guide fee locked · $1,600 · three invoices",
         "Scope · onboard kit + Pav Law swag team store · product cost separate",
-        "Binders given to Jack for Andrew to sample",
+        "Binders given to Jack for Andrew to approve samples",
         "Other vendor samples ordered · waiting on delivery",
-        "Cards for wider team · design after / with headshots · order from storefront later",
-        "Business card design · wider-team templates",
-        "Leave name / title / phone slots for open storefront ordering",
+        "Business cards for Jack",
+        "Generic business cards for Pav Law",
         "Update Pav Law logos",
-        "Edit images of the team"
+        "Edit images of the team",
+        "Make a few SKU mockups with the revised logo · binders · cards · one apparel or drinkware"
       ],
       "progressOpenItems": [
-        "Andrew reviews binder sample",
         "Receive and review remaining vendor samples",
-        "Jack Strong card can ship earlier if his headshot is ready first",
-        "Lock SKU list · laptop cases · cards · shirts / socks / ties · mugs / tumblers",
-        "Make a few SKU mockups with the revised logo · binders · cards · one apparel or drinkware",
-        "Send logo + mockup pack to a real designer for a full suite",
-        "Review designer suite · approve for production",
-        "Finish production-ready files for approved SKUs",
-        "Stand up Pav Law team store for direct / open reorders",
-        "Define employee incentivizing gift rules · who qualifies · which SKUs · how often",
-        "Define monthly sales goal targeting · goal source · reward SKU or store credit · monthly cadence",
-        "Place first production order when Andrew approves",
-        "Optional holiday designs in same design pass if needed"
+        "Define employee incentive gift rules and targets for team members",
+        "Order and ship items"
       ],
-      "progressDoneCount": 9,
-      "progressOpenCount": 13,
-      "progressPct": 41,
+      "progressDoneCount": 8,
+      "progressOpenCount": 3,
+      "progressPct": 73,
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
@@ -2510,29 +2437,29 @@ window.PROJECT_DATA = {
       "estCostLabel": "$1,600",
       "paymentPlanLabel": "20%",
       "depositPct": 0.2,
-      "feeEstimate": 2100,
+      "feeEstimate": 1900,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "swag_consult",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 28.55,
+        "raw": 15.09,
         "parts": {
-          "valueAdd": 26,
+          "valueAdd": 14,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.55
+          "descUnits": 1.09
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 500,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.40 (28.55 units) · complexity ×1"
+      "feeEstimateDelta": 300,
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.29 (15.09 units) · complexity ×1"
     },
     {
       "priorityGroup": "AdHoc",
@@ -2552,24 +2479,21 @@ window.PROJECT_DATA = {
       ],
       "progressDoneItems": [
         "Guide card live · $500/mo · Recommended · Show on",
-        "Scope written · MyCase · Google Suite · Bluehost · Ops Dashboard · light IT · cell plan · short Dropbox look",
-        "Out-of-scope locked · full outage · phone migration · file-system move",
-        "Working checklist file opened · 10/02/2026"
+        "Scoped· MyCase · Google Suite · Bluehost · Ops Dashboard · light IT · cell plan · storage audit",
+        "Confirm invoice / billing cadence with Andrew",
+        "MyCase KLO pass",
+        "Google Workspace admin pass"
       ],
       "progressOpenItems": [
-        "Finish month-1 cadence in PLATFORM-MANAGEMENT-CHECKLIST.md",
-        "Confirm invoice / billing cadence with Andrew",
-        "MyCase KLO pass for current month",
-        "Google Workspace admin pass for current month",
-        "Bluehost / site hosting health check for current month",
         "Ops Dashboard / KPI source touch for current month",
-        "Cell phone plan admin check when due",
-        "Dropbox / shared-drive short look when requested",
-        "Log completed month work for invoice support"
+        "Cell phone plan admin check when due - Unable to complete until AB adds me to the account",
+        "Dropbox / shared-drive - audit storage plan",
+        "Log completed month work for invoice support",
+        "Create computer plan for Gabrial's update"
       ],
-      "progressDoneCount": 4,
-      "progressOpenCount": 9,
-      "progressPct": 31,
+      "progressDoneCount": 5,
+      "progressOpenCount": 5,
+      "progressPct": 50,
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
@@ -2613,17 +2537,17 @@ window.PROJECT_DATA = {
       "id": "Yelp",
       "title": "Yelp Ads",
       "tldr": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
-      "description": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.\n\n- **HubSpot:**\n  - **Phone Routing & Tracking:** Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.\n  - **Email Nurture Campaign:** Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.\n  - **Tracking & Dashboards:** Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.\n- **Yelp Messaging and Content:** Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.\n\n- **Yelp Projects portfolio:** Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Keep Military · DUI/DWAI · License live. CH-YELP hold released. Ads currently about $50/day · raise if the channel keeps performing.\n- **Yelp ↔ website tracking:** Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.\n- **Insurance Envelope and Handout:** Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.",
+      "description": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.\n\n- HubSpot:\n  - Phone Routing & Tracking: Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.\n  - Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.\n  - Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.\n- Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.\n- Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads currently about $50/day · raise if the channel keeps performing.\n- Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.\n- Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.",
       "valueAdded": [
         "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
-        "**HubSpot:**",
-        "- **Phone Routing & Tracking:** Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.",
-        "- **Email Nurture Campaign:** Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.",
-        "- **Tracking & Dashboards:** Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.",
-        "**Yelp Messaging and Content:** Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.",
-        "**Yelp Projects portfolio:** Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Keep Military · DUI/DWAI · License live. CH-YELP hold released. Ads currently about $50/day · raise if the channel keeps performing.",
-        "**Yelp ↔ website tracking:** Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.",
-        "**Insurance Envelope and Handout:** Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out."
+        "HubSpot:",
+        "- Phone Routing & Tracking: Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.",
+        "- Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.",
+        "- Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.",
+        "Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.",
+        "Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads currently about $50/day · raise if the channel keeps performing.",
+        "Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.",
+        "Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out."
       ],
       "hubSpotParts": [
         "CRM · Yelp lead, message, and call records in one place",
@@ -2634,12 +2558,12 @@ window.PROJECT_DATA = {
       ],
       "progressDoneItems": [
         "Low-budget Yelp ads test · solid lead flow",
-        "Review nurture import + enroll · 10/01/2026",
+        "Enrolled 7 more past clients into the Yelp drip campaign for reviews",
         "HubSpot MyCase Yelp process doc written",
-        "Invite Jack HubSpot View-Only · 10/02/2026",
+        "Setup Jack on HubSpot",
         "Yelp call workflow On · Call routing set · 10/02/2026",
-        "CH-YELP hold released · 719-530-7464 OK on listing when seat + test ready",
-        "Ads pace ~$50/day · raise if performing",
+        "719-530-7464 OK on listing when seat + test ready",
+        "Ads pace ~$50/day",
         "Live Yelp Projects · Military · DUI/DWAI · License",
         "Invite Jack as HubSpot user · View-Only for now · 10/02/2026",
         "Yelp call workflow On · Call routing set · 10/02/2026"
@@ -2690,49 +2614,49 @@ window.PROJECT_DATA = {
       ],
       "progressDoneCount": 10,
       "progressOpenCount": 42,
-      "progressPct": 52,
+      "progressPct": 76,
       "overviewBulletStatus": [
         {
           "bullet": "Tracking & Dashboards",
           "emoji": "📌",
           "status": "active",
-          "pct": 90
+          "pct": 70
         },
         {
           "bullet": "Insurance Envelope and Handout",
           "emoji": "🚀",
           "status": "launched",
-          "pct": 80
+          "pct": 90
         },
         {
           "bullet": "Yelp Messaging and Content",
           "emoji": "📌",
           "status": "active",
-          "pct": 80
+          "pct": 95
         },
         {
           "bullet": "Email Nurture Campaign",
           "emoji": "📌",
           "status": "active",
-          "pct": 60
+          "pct": 100
         },
         {
           "bullet": "Yelp ↔ website tracking",
           "emoji": "🚧",
           "status": "wip",
-          "pct": 25
+          "pct": 80
         },
         {
           "bullet": "Phone Routing & Tracking",
           "emoji": "🚧",
           "status": "wip",
-          "pct": 20
+          "pct": 70
         },
         {
           "bullet": "Yelp Projects portfolio",
           "emoji": "🚧",
           "status": "wip",
-          "pct": 10
+          "pct": 30
         }
       ],
       "abQuestions": [],
