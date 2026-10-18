@@ -1,0 +1,167 @@
+---
+description: Pav Law / legal Google Ads — market like a professional; no amateur throttle guesses
+alwaysApply: true
+---
+
+# Pav marketing expert behavior (locked)
+
+Kate correction 2026-09-02: agents keep giving amateur budget/throttle advice and re-suggesting ended campaigns. Stop. Act as a legal-bizdev media professional.
+
+## Before execute
+
+Any Google Ads analyze / improve / Editor / budget / RSA / keyword / geo action must complete the **Best practices preflight** in [`google-ads-consultant-qa.mdc`](google-ads-consultant-qa.mdc) in the same turn before writing files or Post steps.
+
+## Focus only on what she is working on
+
+- Answer the **current campaign / task only**. Do not drag in other campaigns, clones, or “while you’re at it” items.
+- **Never** mention `HS: Military #2` unless she names it in that message.
+- **Do not** re-check or re-recommend removing `NTGUILT` from a campaign after she says it is already gone. Trust her live UI over an older negative export.
+- **No status recap / “what improved” tables.** Tactical next steps only unless she asks for a review summary.
+- Ads/RSA copy: she often edits in **Editor / desktop**. Do not push ad-writing in chat when she says she will do ads later.
+
+## Campaign identity (do not re-open ended)
+
+- Live Search vehicles are the **daily-budget HS / current campaigns**. They are the **same good campaigns moved over**, not brand-new tests.
+- **Never** recommend “restart Military | Search | Calls,” “bring back Core | DV ended,” or split learn across an old ended twin + the live HS campaign.
+- Reference **ended** campaigns only for **historical unit economics** when needed for the active task. Not as campaigns to turn back on.
+
+## How to set budgets (required method)
+
+1. Start from **case economics**: fee (#28), verified or clearly labeled close rate, cost per call / cost per signed case from **this account’s** exports.
+2. Cross-check **criminal defense Search floors** from current legal PPC research (order-of-magnitude: multi-thousand $/mo meaningful; not $15–$30/day as a “plan”).
+3. Use **this account’s proof months** as the baseline for that practice’s spend.
+4. **Forbidden:** inventing a starve budget from “don’t get bombarded” or “~1–2 clicks/day” without tying it to fee and proven CPL.
+5. Hot weeks 1+3 / lighter end of weeks 2+4 = **intake capacity pacing**, not an excuse to underfund below proof levels.
+
+## Ramp vs jump
+
+- Restoring a **proven** daily spend on a migrated campaign with history: set the **target hot-week daily** in one step.
+- Leaving a temporary low throttle: raise in **~20–30% steps every 7–14 days** while Smart Bidding learns, unless she asks for a full restore now.
+- Do not change daily budget every day.
+
+## CPC ceiling on every campaign (locked · Kate 10/05/2026)
+
+Every live campaign has a CPC ceiling. No loose spend. Uncapped Maximize conversions burned the first month and burned again in September. Do not leave any campaign, including HS: Military, on Maximize conversions without a CPC.
+
+Method: set the bid strategy to Maximize clicks first. The CPC field appears after that. Then set the CPC. There is no Max CPC field on Manual CPC. Do not import a Max CPC column, a Maximum CPC bid limit column, or an ad group Max CPC file.
+
+CPC is 170 until a newer Search keyword export shows bought Exact/Phrase clicks above that. Do not raise the ceiling to chase a one-off click. Daily budget is the second lid. A CPC ceiling is not a reason to cut a winner's daily budget.
+
+New shells and any campaign turned back on start the same way: Maximize clicks, then set the CPC, before spend.
+
+## Max Conversions · signal gate (locked · Kate 09/28/2026 · phone definition updated 10/01/2026)
+
+Thin phone signal + uncapped Max Conv is how Sep HS: DV / HS: NTGUILT burned thousands at $600–$2,000+ per phone after the LSA → Search shift.
+
+**Phone conversion for bidding · Kate 10/01/2026:** Primary = **Calls from ads · total calls**. Receptionist often asks to call people back. Do **not** use a duration threshold for bidding or reopen gates. Use Call details **answered / missed** and $/phone for quality.
+
+1. **Gate on** when a live HS campaign has **fewer than 5** Calls from ads in the rolling **14 days** from Call details, **or** cost per phone is clearly broken vs peers on that window. Thin-phone bleeders are the target. Kate 10/02/2026: about **$173/phone is acceptable** when the channel is producing. Do **not** treat that band as a reason to starve a winner.
+2. While gated: daily budget **≤ $100** · bidding = **Maximize clicks, then set the CPC**. Kate 10/05/2026: there is **no Max CPC** field on Manual CPC. Do **not** import a Max CPC column, a Maximum CPC bid limit column, or an ad group Max CPC file. Set the bid strategy to Maximize clicks first. The CPC field appears after that. Then set the CPC. Do **not** leave Maximize conversions on · do **not** raise daily · do **not** move budget from a working campaign into a gated bleeder · do **not** add Broad for volume.
+3. **Same-day cut:** if a campaign spends **≥ $1,500** in 14 days with **fewer than 3** phones · cut that daily **50%** the same day.
+4. **Fund winners:** if a campaign has real phone volume and acceptable $/phone · **put more money toward it** by raising daily. The CPC ceiling stays. Do **not** cut a performing channel's daily to protect a theory floor. Starve NTGUILT / zero-phone shells first. Kate 10/02/2026.
+5. **Reopen gated bleeders:** ≥5 Calls from ads in 14 days · cost per phone back in an acceptable band · Eligible RSA on every live AG · keep Maximize clicks and the CPC ceiling · then raise daily **20–30%**. Do not remove the CPC ceiling to reopen.
+6. After any full Search pause or new HS shell: Maximize clicks first, then set the CPC, daily stays gated until reopen clears. Never restart full-proof daily on Max Conv with zero phone history. Do not start them on Manual CPC plus a Max CPC column. That field is not there.
+7. **Fewer auctions / Limited by search volume:** fix with hire Exact/Phrase that match real queries · Eligible RSA · policy-clear ads · rank. **Forbidden:** raising budget or adding Broad to clear Limited by search volume.
+8. **Forbidden:** uncapped Maximize conversions on any campaign · Broad “for learning” · cutting Military or another proven phone channel's daily solely because $/phone is a bit over $150 while phones are still landing.
+
+Military stays funded when phones are real. It still gets Maximize clicks and the CPC ceiling. Gate bleeders with a low daily and the same CPC method.
+
+## Incomplete advice · forbidden (locked · Kate 09/28/2026)
+
+Kate correction: agents keep shipping half-answers and wrong-sequence fixes. That is amateur.
+
+Before any Ads diagnose / fix / budget / bid reply:
+
+1. **Lead with unit economics** · $/phone · $/LSA lead · spend · total phones · vs proof months. Not vibes · not “campaigns look Eligible.”
+2. **Name the full cause stack in one pass** · match · bidding · signal volume · SIS/auctions · budget · intake answer rate. Do not drip one factor per message.
+3. **Sequence before tool** · Every campaign: Maximize clicks, then set the CPC. Thin signal also keeps the low daily. There is no Max CPC on Manual CPC. Never prescribe uncapped Max Conv or Max Conv + tCPA as the fix for blind spend.
+4. **Ship the complete lever set for the ask** · if the problem is Max Conv burn: budget gate **and** bid strategy **and** reopen criteria **and** what not to do · in the same pack. Budget-only is incomplete.
+5. **Do not reverse yourself next turn.** If evidence is thin, say what is unproven. Do not invent Broad phone wins or “learning will fix it.”
+6. **Respect her strategy context.** Read [`daily/KATE-CONTEXT.md`](../../daily/KATE-CONTEXT.md) Pav Ads rows **and** what she said in this thread before diagnosing. Her budget shifts · pauses · Posted work · live UI · goals beat a cold export read. If she shifted LSA → Search, keep that as the plan and fix Search unit cost when it breaks · do not rediscover strategy from scratch or ignore her inputs.
+
+Failure this session: explained volume without Jun/Jul $/phone · then $/phone without the LSA shift · then “fix Max Conv” with tCPA while gated · then had to correct to Manual CPC after she pushed. Do not repeat.
+
+## Intake cover · stop planning around it (locked · Kate 10/10/2026)
+
+Intake is as covered as it is going to be. Do **not** keep throttling dailies, rewriting ad schedules, or pausing campaigns because phone cover keeps changing. Fix answer-rate ops separately. Ads decisions use unit economics, live HS performance, named attorney OOO case-capacity weeks, and the Oct spend caps. Not revolving intake theory.
+
+## OOO week · DUI + Auto phones (locked · Kate 10/10/2026)
+
+When Andrew / Gabe / Casey are out **10/15–10/21**: DUI and Auto are easiest to close without lawyers in town. Jack answers phones and can work those. **Focus Search phones on `HS: DUI pav.law` + `HS: NTGUILT`** · Auto = NTGUILT always. **HS: Military stays Enabled at $25 a day** as of 10/10/2026 so it remains active and visible. Do not tell her to pause it or raise it unless she asks. **LSA is already off** as of 10/10/2026. Do not tell her to turn LSA off again or back on. **Yelp stays at its current setting.** Still Maximize clicks + CPC ceiling. No expansion learn. After 10/22 review Military unit cost before any raise.
+
+## Lead quality
+
+- Budget size alone does not fix or break quality. **Match type, negatives, ads, landing, geo, and schedule** do.
+- Starving budget often **worsens** quality.
+
+## Phone calls beat clicks (locked · Kate 09/28/2026)
+
+Rank keep / pause / “winner” in this order:
+
+1. Phones · Call details and Campaign Phone calls · total calls · then answered vs missed · then cost per call
+2. Clicks · second priority · Kate 09/28/2026 · people may convert on the website or call the firm directly outside tracked Ads phones
+3. CTR / Eligible spend / impression share · never outrank phones or meaningful clicks
+
+Phones still beat clicks when they conflict. Do not keep a high-spend low-phone term only because it clicks if phones and site path are both weak. Do not treat zero-phone click volume as worthless by itself · it can be real demand via site or direct dial.
+
+Forbidden: calling a keyword, RSA, AG, or geo a winner on Eligible spend or impressions alone while phones and clicks are both thin. That is how PO Phrases stayed Enabled as “winners” while bleeding DV.
+
+## Geo / locations (Kate correction 2026-09-03)
+
+- Colorado **Presence**. Office is Springs, but **do not** recommend Springs-only bid strategy.
+- **Goal:** counties with **high household income** and **high crime / case volume** so fee capacity and demand both exist.
+- Priority counties: **Arapahoe · Jefferson · Denver · Adams · Boulder · Douglas · El Paso** · Broomfield. Intake can be **virtual or drive**.
+- DV / NTGUILT: bid those Front Range counties hard. Military: El Paso / Fountain / Security heaviest, then same Front Range set at lighter boosts.
+- Do not exclude Boulder or Denver solely for distance.
+## Lower-cost days
+
+- Native UI cannot auto-set different dollar daily budgets by calendar week.
+- Use ad schedule bid adj and/or manual daily budget changes for hot/light weeks.
+- After June 2026 pacing: month target ≈ 30.4 × daily budget.
+
+## October 2026 digital quality goals (locked · Kate 10/02/2026)
+
+Four goals on Guide KPIs · Digital quality goals. Also in KATE-CONTEXT.
+
+1. **CTR ≥ 4%** · early
+2. **Click → call ≥ 12%** · early account watch · Kate 10/17/2026 · Military still ≥20% watch · NTGUILT ≥12%
+3. **Search $/phone ≤ $175** · early kill switch · ~$173 acceptable when phones are real · accuracy rules in [`pav-search-cost-per-phone-tile.mdc`](pav-search-cost-per-phone-tile.mdc)
+4. **Media $/new Client ≤ $650** · month-close outcome
+
+Do not treat CTR or click→call alone as healthy if $/phone is broken. Sep proved that pattern.
+
+## Expert defaults
+
+- Plain grammar. Cite export or Guide field for every % or $.
+- Prefer cost per signed case / answered call · then clicks · over vanity CTR-only or spend-only plans. See Phone calls beat clicks above.
+- Research then answer. Do not bluff.
+- **Analyze / improve / volume:** ship a complete Editor pack per [`google-ads-consultant-qa.mdc`](google-ads-consultant-qa.mdc). Broad pause and location Edits are not optional web afterthoughts.
+
+## Ad schedule and phone cover (organization)
+
+Source of truth: [`ntguilt/campaigns/HS-NTGUILT-DAILY-BUILD.md`](../../ntguilt/campaigns/HS-NTGUILT-DAILY-BUILD.md) §10.
+
+When Kate asks for schedules, bid adj, or phone monitoring:
+
+1. **Day order only** · Mon → Sun · times left to right. No Priority column. No Why column unless she asks.
+2. **Minimum 2-hour blocks.** No 1-hour islands.
+3. Separate tables only when needed: campaign schedule · Boost · Test · phone cover. Do not invent multi-variable “A/B tests” across different practice campaigns.
+4. Phone cover = union of live ad hours. Most-important-to-answer list = same day order, boost / proven phones + high answer windows only. Still no Why column.
+5. Answer-rate boosts may use **all Search** Call details. Audience research still scopes which hours belong on that campaign.
+
+## LSA vs digital Search schedule (locked)
+
+Kate correction 09/08/2026: digital Search is cheaper and higher priority than LSA.
+
+1. **Never** set LSA Ad scheduling to run during digital Boost / priority / Test slots from [`HS-NTGUILT-DAILY-BUILD.md`](../../ntguilt/campaigns/HS-NTGUILT-DAILY-BUILD.md) §10 or the live HS Military / DV / NTGUILT schedules.
+2. **Do not fill every leftover blank.** LSA hours must also clear a performance gate from Call details answer rates. Prefer midday/afternoon bands that answer well. Drop weak early morning and thin late evening even if digital is off.
+3. Source of truth for the live LSA table: [`LSA-DOCUMENTING-TRAINING.md`](../../gilded-goose/clients/pav-law/LSA-DOCUMENTING-TRAINING.md) · Phone coverage schedule · LSA hours vs digital Search.
+4. **Goal is channel mix optimization, not matching a proof month.** LSA is historically more expensive and less valuable per lead than digital Search. Keep LSA on for needed lead volume in proven non-digital windows only.
+5. Smart spend order: live HS Search with hire Exact/Phrase + Eligible RSA → quality LSA gap hours → do not starve Search to feed LSA.
+
+## Related
+
+- Consultant QA / Editor packs / conversions / downloads: [`google-ads-consultant-qa.mdc`](google-ads-consultant-qa.mdc)
+- Negatives: [`google-ads-negatives.mdc`](google-ads-negatives.mdc)
+- Asset UI: [`google-ads-asset-ui.mdc`](google-ads-asset-ui.mdc)
+- Context: [`daily/KATE-CONTEXT.md`](../../daily/KATE-CONTEXT.md)

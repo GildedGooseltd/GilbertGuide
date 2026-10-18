@@ -21,15 +21,14 @@
 
 Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.
 
-- **HubSpot:**
-  - **Phone Routing & Tracking:** Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.
-  - **Email Nurture Campaign:** Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.
-  - **Tracking & Dashboards:** Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.
-- **Yelp Messaging and Content:** Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.
-
-- **Yelp Projects portfolio:** Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Keep Military · DUI/DWAI · License live. CH-YELP hold released. Ads currently about $50/day · raise if the channel keeps performing.
-- **Yelp ↔ website tracking:** Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.
-- **Insurance Envelope and Handout:** Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.
+- HubSpot:
+  - Phone Routing & Tracking: Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.
+  - Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.
+  - Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.
+- Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.
+- Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads currently about $50/day · raise if the channel keeps performing.
+- Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.
+- Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.
 
 ## HubSpot Application
 
@@ -45,31 +44,31 @@ Yelp page and ads were tested over the last month on a low budget with solid lea
 
 ## Project Plan
 
-not visible on the dashboard · helpful notes to execute on the project and create the above summary
-
 ### Overview bullet status
 
-Kate 10/10/2026. Icons replace list bullets when set. Empty emoji = keep a normal disc bullet. Locked set: 🚧 wip · 📌 active · 🚀 launched · 💰 LeadGen · 🏁 done · Remove clears chip. Launched = live but not finished.
+Locked set: 🚧 wip · 📌 active · 🚀 launched · 💰 LeadGen · 🏁 done · Remove clears chip. Launched = live but not finished.
 
-| Bullet | Emoji | Status | Pct |
-| --- | --- | --- | --- |
-| Tracking & Dashboards | 📌 | active | 90 |
-| Insurance Envelope and Handout | 🚀 | launched | 80 |
-| Yelp Messaging and Content | 📌 | active | 80 |
-| Email Nurture Campaign | 📌 | active | 60 |
-| Yelp ↔ website tracking | 🚧 | wip | 25 |
-| Phone Routing & Tracking | 🚧 | wip | 20 |
-| Yelp Projects portfolio | 🚧 | wip | 10 |
+
+| Bullet                         | Emoji | Status   | Pct |
+| ------------------------------ | ----- | -------- | --- |
+| Tracking & Dashboards          | 📌    | active   | 70  |
+| Insurance Envelope and Handout | 🚀    | launched | 90  |
+| Yelp Messaging and Content     | 📌    | active   | 95  |
+| Email Nurture Campaign         | 📌    | active   | 100 |
+| Yelp ↔ website tracking        | 🚧    | wip      | 80  |
+| Phone Routing & Tracking       | 🚧    | wip      | 70  |
+| Yelp Projects portfolio        | 🚧    | wip      | 30  |
+
 
 ### Completion checklist
 
 - [x] Low-budget Yelp ads test · solid lead flow
-- [x] Review nurture import + enroll · 10/01/2026
+- [x] Enrolled 7 more past clients into the Yelp drip campaign for reviews
 - [x] HubSpot MyCase Yelp process doc written
-- [x] Invite Jack HubSpot View-Only · 10/02/2026
+- [x] Setup Jack on HubSpot
 - [x] Yelp call workflow On · Call routing set · 10/02/2026
-- [x] CH-YELP hold released · 719-530-7464 OK on listing when seat + test ready
-- [x] Ads pace ~$50/day · raise if performing
+- [x] 719-530-7464 OK on listing when seat + test ready
+- [x] Ads pace ~$50/day 
 - [x] Live Yelp Projects · Military · DUI/DWAI · License
 - [ ] Upgrade Jack to Sales/Service seat for Calling
 - [ ] Test Yelp P1 desktop + mobile · then put CH-YELP on listing
@@ -95,7 +94,6 @@ Later phase · video clips and recordings
   - [ ] Caption · practice lane · free confidential case evaluation · 719-888-7888
   - [ ] Log source file · Yelp upload date · practice lane
 
-
 ### Done from notes · 09/23/2026
 
 HubSpot expansion highlights · live on HubSpot Application above as capability lines only. Not process steps.
@@ -108,7 +106,7 @@ HubSpot expansion highlights · live on HubSpot Application above as capability 
 - Andrew notified to bonus America for matched review win  
 - America email sent · ask for more quality Referrer Request adds from closed cases  
 - HubSpot day-to-day + MyCase Booked/hired process written: [HUBSPOT-MYCASE-YELP-PROCESS.md](../../../enablement/yelp-training/HUBSPOT-MYCASE-YELP-PROCESS.md)  
-- B2 phone-gate item dropped from this Yelp next-steps list  
+- B2 phone-gate item dropped from this Yelp next-steps list
 
 Price evaluation · internal only · do not publish on dashboard
 
@@ -126,17 +124,19 @@ Estimated duration · internal only · do not publish on dashboard
 
 - CH-YELP hold released · listing can use 719-530-7464 when Jack seat + test call are ready  
 - Ads currently ~$50/day · raise if Yelp keeps performing · do not starve a winner  
-- Publish new Yelp Projects only after the matching pav.law pages get an SEO pass · then link out with UTMs  
+- Publish new Yelp Projects only after the matching pav.law pages get an SEO pass · then link out with UTMs
 
 ### Tasks · Yelp Projects to publish · SEO first then Projects
 
 Live already: Military · DUI & DWAI · License. Do not add another DUI/license Project until the lanes below are live.
 
-| Order | Yelp Project | Deep link on pav.law | Why |
-| --- | --- | --- | --- |
-| 1 | Domestic Violence Defense | `/areas-of-practice/domestic-violence/` | Top non-home organic landing · ~15k sessions in 10/01 GA4 export |
-| 2 | Protection Orders | `/areas-of-practice/protection-orders/` · supporting `/understanding-protection-orders-in-colorado-types-process-and-how-pav-law-can-help/` | Next lane after DV · strong organic |
-| 3 | Assault / Menacing | `/areas-of-practice/assault/` · link menacing / harassment pages when used | Yelp boost lane · site pages exist |
+
+| Order | Yelp Project              | Deep link on pav.law                                                                                                                        | Why                                                              |
+| ----- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| 1     | Domestic Violence Defense | `/areas-of-practice/domestic-violence/`                                                                                                     | Top non-home organic landing · ~15k sessions in 10/01 GA4 export |
+| 2     | Protection Orders         | `/areas-of-practice/protection-orders/` · supporting `/understanding-protection-orders-in-colorado-types-process-and-how-pav-law-can-help/` | Next lane after DV · strong organic                              |
+| 3     | Assault / Menacing        | `/areas-of-practice/assault/` · link menacing / harassment pages when used                                                                  | Yelp boost lane · site pages exist                               |
+
 
 For each lane · do in this order:
 
@@ -165,12 +165,14 @@ Locked UTM pack for every Yelp → site link:
 
 `utm_source=yelp` · `utm_medium=profile` · `utm_campaign={practice}` · `utm_content={surface}`
 
-| Surface | utm_campaign examples | utm_content |
-| --- | --- | --- |
-| Project card website link | `domestic-violence` · `protection-orders` · `assault` · `military` · `dui-dwai` · `license` | `project` |
-| Connect / Update link | same practice slug | `update` |
-| Specialties / History / Owner CTA if link allowed | `general` or practice slug | `about` |
-| Review-request email Yelp link is separate | keep existing review UTM · do not reuse profile pack | `review-ask` |
+
+| Surface                                           | utm_campaign examples                                                                       | utm_content  |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------ |
+| Project card website link                         | `domestic-violence` · `protection-orders` · `assault` · `military` · `dui-dwai` · `license` | `project`    |
+| Connect / Update link                             | same practice slug                                                                          | `update`     |
+| Specialties / History / Owner CTA if link allowed | `general` or practice slug                                                                  | `about`      |
+| Review-request email Yelp link is separate        | keep existing review UTM · do not reuse profile pack                                        | `review-ask` |
+
 
 Execute:
 
@@ -185,8 +187,8 @@ Execute:
 
 ### Tasks · listing fields · contact path
 
-- [ ] Specialties / History / Owner copy: talk-direct CTA · ask for phone · preferred method · preferred time · info@pav.law + 719-888-7888 if Yelp allows  
-- [ ] If Yelp strips email/phone on save · keep the ask for phone/time · put info@pav.law in Connect Update and message auto-reply  
+- [ ] Specialties / History / Owner copy: talk-direct CTA · ask for phone · preferred method · preferred time · [info@pav.law](mailto:info@pav.law) + 719-888-7888 if Yelp allows  
+- [ ] If Yelp strips email/phone on save · keep the ask for phone/time · put [info@pav.law](mailto:info@pav.law) in Connect Update and message auto-reply  
 - [ ] Jack photo + announcements · CH-YELP listing swap OK · see enablement guide  
 
 ### Tasks · HubSpot · Zapier · handoff
@@ -197,5 +199,6 @@ Execute:
 - [ ] Ready-to-sign path: Jack tasks Romina · Romina MyCase + Fee Agreement  
 - [ ] Zapier connect: Yelp Leads → HubSpot for messages · Lead source = Yelp · task to `admin@pav.law`  
 - [ ] Test Yelp P1 desktop + mobile before listing phone swap  
-- Later fields: `pl_lead_quality_score` · see [HS-LEAD-TRACK.md](../../HS-LEAD-TRACK.md) §1C  
+
+- Later fields: `pl_lead_quality_score` · see [HS-LEAD-TRACK.md](../../HS-LEAD-TRACK.md) §1C
 

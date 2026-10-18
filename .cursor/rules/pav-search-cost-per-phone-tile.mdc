@@ -1,0 +1,63 @@
+---
+description: Search $/phone tile · accurate kill-switch rules
+alwaysApply: true
+---
+
+# Search $/phone tile · accuracy rules (locked)
+
+Kate 10/17/2026. Guide tile **Search $/phone** · digital goal · corner tile num on Digital quality goals · id `dg-phone-cost`.
+
+Goal ≤ **$175**. Kate acceptable band ~**$173** when Search calls are real. Proof months ~$55–$66. Early kill switch: if this breaks, cut bleeders now. Do not wait for month-end cases. CTR and click→call looking fine is not enough.
+
+## Definition
+
+| Side | Source | Rule |
+|---|---|---|
+| Denominator | Newest Call details calendar export for the tile month | **Search calls = Search leads.** Count every Call details row in the month window with Call source Ad / campaign on live Search. Received + Missed both count. |
+| Numerator | Newest `account_activities_YYYYMM*.csv` for that month | Sum **Search campaign click/spend lines only** · live `HS:*` Search rows. |
+
+**Formula:** Search media $ ÷ Search Call details calls.
+
+## Must match windows
+
+1. Spend month and Call details date range must be the **same calendar window** stated on both files.
+2. Partial month = both sides MTD through the same end day. Label Oct* etc.
+3. **Never** use Campaign **All-time** Cost or Phone calls for this tile.
+4. **Never** use Time_series alone for spend when activities has HS Search lines.
+5. **Never** put LSA Home Services $ in the Search numerator.
+6. **Never** use clicks, impressions, or Lead Calls total as the denominator.
+7. Drop `Invalid activity` / prior-month credit lines from the Search spend sum.
+8. Paused shells with a stray activities click line may stay in the sum only if they are real that-month Search charges. Prefer live HS only when the pause is clear on Campaign status.
+
+## Mid-month pause / “ads are off”
+
+1. **LSA off ≠ Search off.** Do not treat an LSA pause as a Search pause.
+2. Before saying Search is off, open in the same turn: newest Campaign status for live HS · Call details last phone day · activities threshold/spend lines through that day. Kate’s live UI wins when she names a pause after the export.
+3. While Search was spending, then paused: tile stays **MTD through the shared export end day**. That number is the month burn, not “this week while off.”
+4. Always state in `funnelAds.[Month].windowNote` and chat when refreshing: spend window · phone window · last Search phone day · pause date if she locked one.
+5. Do **not** present MTD $/phone as a live daily rate after Search is paused.
+6. Do **not** blank the tile to missing-only because Search is currently paused. Keep the MTD figure with the pause note unless she asks to hide it.
+7. Do **not** invent $0 Search spend while activities or threshold charges still show Search media in-window.
+
+## Live HS scope
+
+Default live Search vehicles: `HS: Military` · `HS: NTGUILT` · `HS: DUI pav.law` unless she names a change. Ended twins stay out of the numerator. Expansion shells stay out until she enables them.
+
+## Sibling updates when this tile moves
+
+Same turn: `funnelAds` searchSpendLock + phoneCalls · `channelMonths.search` + searchSpend · `casesLeadsSpend` adsSpend + adsLeads · click→call digital goal · Click → call monitor · Lead Cost PPC · `tileAsOf["dg-phone-cost"]` · bump `RENDER_VER` + cache-bust.
+
+## Forbidden
+
+- Dividing Search $ by Lead Calls stack or LSA+Yelp mix
+- Dividing Search $ by charged LSA leads or inbox LSA
+- Calling the tile wrong because ads are off this week without checking MTD exports
+- Softening a broken $/phone because CTR is healthy
+- Restoring Broad or uncapped Max Conv to “fix” this tile
+
+## Related
+
+- Calls = leads · [`daily/KATE-CONTEXT.md`](../../daily/KATE-CONTEXT.md)
+- Digital goals · [`pav-marketing-expert.mdc`](pav-marketing-expert.mdc)
+- Refresh matrix · [`GUIDE-DATA-REFRESH.md`](../../gilded-goose/clients/pav-law/project-picker/GUIDE-DATA-REFRESH.md)
+- Month tiles · [`pav-kpi-month-update.mdc`](pav-kpi-month-update.mdc)

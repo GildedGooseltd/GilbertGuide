@@ -24,10 +24,11 @@ Rule: [`.cursor/rules/guide-data-refresh-audit.mdc`](../../../.cursor/rules/guid
 | Ledger Credits | `ledger_account_activity_report*.csv` | Revenue · cash pace · Trust Credits charts · cashCollected2026Ytd |
 | Trust summary | `Trust_account_summary_*.csv` | Trust snapshot · Lead Source Trust $ · trust Clients signal |
 | Case balance | `Case_balance_summary_*.csv` | Fee / Clients w/$ · Yelp and LSA fee packs · avg case value inputs |
-| Call details | `Call details (N).csv` | Search phones · Answer Rate Search · Sales Funnel Search · digital click→call · Click → call monitor / hidden-phone est · phoneByMonth · channelMonths.search · clickCallByCampaign phones |
-| LSA inbox | `leads-inbox (N).csv` | LSA leads · charge rate · Answer Rate LSA · Sales Funnel LSA · lsaEfficiency · channelMonths.lsa |
-| LSA activities | `account_activities_YYYYMM*.csv` | LSA media spend · LSA Cost tiles · casesLeadsSpend.lsaSpend · Lead Cost LSA |
-| Search / Billing | Campaign report · Billing activity | Search spend · CTR · impressions · funnelAds · digital $/phone · channelMonths.searchSpend |
+| Call details | `Call details (N).csv` | Search phones = Search leads · Search $/phone denominator · Answer Rate Search · Sales Funnel Search · digital click→call · Click → call monitor · phoneByMonth · channelMonths.search · clickCallByCampaign phones |
+| LSA inbox | `leads-inbox (N).csv` | LSA leads · charge rate · Answer Rate LSA · Sales Funnel LSA · lsaEfficiency · channelMonths.lsa · Lead Cost LSA uses charged when on file |
+| LSA activities | `account_activities_YYYYMM*.csv` | LSA Home Services media · casesLeadsSpend.lsaSpend · Lead Cost LSA numerator only · never Search $/phone |
+| Search activities | `account_activities_YYYYMM*.csv` HS Search lines | Search $/phone numerator · funnelAds.searchSpendLock · channelMonths.searchSpend · same window as Call details |
+| Search / Billing | Campaign calendar report · Billing activity | CTR · impressions · funnelAds clicks/Impr · not All-time for Search $/phone |
 | Search keyword / Ad / AG | keyword · Ad · Ad group reports | Editor packs · quality diagnosis · not always tile numbers |
 | HubSpot forms | form-submit exports | HubSpot tile · funnel forms · channelMonths.hubspot · not CRM Contacts export |
 | Yelp ads / inbox | `Yelp Ad Analytics*.csv` · screenshots | yelpBaseline · Reviews · Lead Cost Yelp · directory Yelp card |
@@ -46,7 +47,7 @@ When an aggregate moves, update every reader of that aggregate across tabs. Exam
 
 | Aggregate changes | Also refresh |
 |---|---|
-| Search phones from Call details | phoneByMonth · Answer Rate · Sales Funnel Search · digital click→call · Click → call monitor · Lead Cost Digital when phones are the unit · channelMonths.search · clickCallByCampaign |
+| Search phones from Call details | Search $/phone · phoneByMonth · Answer Rate · Sales Funnel Search · digital click→call · Click → call monitor · Lead Cost PPC · channelMonths.search · clickCallByCampaign · see `.cursor/rules/pav-search-cost-per-phone-tile.mdc` |
 | Search clicks / Impr from Campaign | funnelAds · digital CTR · click→call · Click → call monitor · clickCallByCampaign clicks |
 | LSA leads or spend | lsaEfficiency · channelMonths · casesLeadsSpend · Lead Cost LSA · LSA charge rate · Sales Funnel LSA |
 | New Client creates | New cases tile · practice mix · cases MoM · casesLeadsSpend.cases · media $/Client · cash pace case leg |
@@ -81,7 +82,7 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
-| 10/17/2026 | Evening DL · Contact_10-17 Oct cases 7→9 · Trust snapshot 10/17 · Case_balance Oct contracted 8 · SwagPrint progress rebuild · Call details / LSA / spend unchanged · ledger / HubSpot forms / Yelp Ads still stale. |
+| 10/17/2026 | Evening DL · Contact_10-17 Oct cases 7→9 · Trust snapshot 10/17 · Case_balance · Swag 41% · ledger (12) Oct* $58,050 · then Yelp Oct contacts 0 · Lead Calls 34 · LSA Lead Cost ÷ charged 5 not inbox 19. |
 | 10/17/2026 | Morning DL · Call details (19) Oct Search 14 · leads-inbox (26) LSA 19 · account_activities_202610 (2) Search $6,533.46 · LSA $1,339.56 · Time_series Oct Impr 7,023 · Lead Calls 49 · Campaign (48) All-time skipped. |
 | 10/09/2026 | DL refresh · Call details (17) Oct Search 8 · Contact_10-09 Oct cases 7 · Lead Calls 26. LSA inbox / Billing / ledger / Campaign calendar Impr unchanged. Campaign (47) All-time skipped for Oct Impr. |
 | 10/08/2026 | Process locked Guide-wide. Lead Source Confirmed pack partial. Full Can update / Blocked list in that day’s chat audit. |

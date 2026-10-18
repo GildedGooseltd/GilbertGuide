@@ -1016,6 +1016,40 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-verified-mark::after { content: "✓"; }
 .kpi-verified-mark::before { content: none; display: none; }
 .kpi-verified-mark-inline { margin-right: 0.15rem; }
+.kpi-aug-updated .kpi-help,
+.kpi-outdated .kpi-help,
+.kpi-verified .kpi-help {
+  right: 7.25rem;
+}
+.kpi-aug-updated-mark,
+.kpi-outdated-mark {
+  position: absolute;
+  top: 0.28rem;
+  right: 0.4rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  pointer-events: none;
+}
+.kpi-tile-num {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--gg-royal, #3a1a6e);
+  line-height: 1;
+  min-width: 0.85rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+.kpi-tile-asof {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--gg-brown-muted, #6b5d50);
+  white-space: nowrap;
+  line-height: 1;
+}
 /* WIP / under construction — yellow + black hazard stripes */
 .kpi-wip-mark {
   display: inline-flex;
