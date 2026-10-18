@@ -182,12 +182,14 @@ window.PROJECT_DATA = {
       "valueAdded": [],
       "progressDoneItems": [
         "New Pav Law LinkedIn banner finished",
+        "Business card design · see SwagPrint",
+        "Update Pav Law logos · see SwagPrint",
+        "Edit images of the team",
         "Company banner · new Pav Law LinkedIn banner done 10/02/2026",
         "Banner · Pav Law LinkedIn banner done",
         "Yelp listing current · review-ask layer · ads stay on Yelp project"
       ],
       "progressOpenItems": [
-        "Business cards for wider team wait on headshots · see SwagPrint · low to medium priority",
         "Write LinkedIn guide",
         "What to write · how often · voice · do-nots · hire CTA",
         "How to update company page · about · featured · services",
@@ -222,9 +224,9 @@ window.PROJECT_DATA = {
         "Google Business Profile posts or profile media where allowed",
         "Firm and attorney bio pages when those pages are updated"
       ],
-      "progressDoneCount": 4,
-      "progressOpenCount": 34,
-      "progressPct": 11,
+      "progressDoneCount": 7,
+      "progressOpenCount": 33,
+      "progressPct": 18,
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "unpublished",
@@ -2443,20 +2445,19 @@ window.PROJECT_DATA = {
       "id": "SwagPrint",
       "title": "Printables, Swag & Apparel",
       "tldr": "Updated stationery and images as the team has expanded",
-      "description": "- Updated stationery and images as the team has expanded\n  - Pav Law swag team store for onboard and team items\n  - Design now · open ordering later from the firm storefront\n  - Store keeps reorders simple and carries margin on each order\n- Logo and branding\n  - Revise the logo for updated branding\n  - Make a few mockups on key SKUs\n  - Send the direction to a real designer for a full suite\n- Business cards\n  - Needed for the wider team after headshots are ready\n  - Low to medium priority\n  - Design can start now\n  - Ordering stays open later from the firm storefront\n- Product\n  - Orders generally run $400–$500 with vendor minimums\n  - Samples ordered for review\n  - Apparel can be designed and ordered individually\n- Status Kate 10/02/2026\n  - Binders with Jack for Andrew to sample\n  - Other vendor samples ordered and waiting\n  - Holiday designs can ride in the same design pass if needed\n- SKU list\n  - Laptop cases · Pav Law with contact details\n  - Business cards · Jack Strong · wider team after headshots\n  - Dress shirts · socks · ties\n  - Mugs / tumblers\n  - Pav Law swag team store · direct orders",
+      "description": "- Updated stationery and images as the team has expanded\n  - Pav Law swag team store for onboard and team items\n  - Design now · open ordering later from the firm storefront\n  - Store keeps reorders simple and carries margin on each order\n- Logo and branding\n  - Pav Law logos updated\n  - Team images edited\n  - Make a few mockups on key SKUs\n  - Send the direction to a real designer for a full suite\n- Business cards\n  - Business card design done for the wider team\n  - Ordering stays open later from the firm storefront\n- Product\n  - Orders generally run $400–$500 with vendor minimums\n  - Samples ordered for review\n  - Apparel can be designed and ordered individually\n- Status Kate 10/02/2026\n  - Binders with Jack for Andrew to sample\n  - Other vendor samples ordered and waiting\n  - Holiday designs can ride in the same design pass if needed\n- SKU list\n  - Laptop cases · Pav Law with contact details\n  - Business cards · Jack Strong · wider team · design done\n  - Dress shirts · socks · ties\n  - Mugs / tumblers\n  - Pav Law swag team store · direct orders",
       "valueAdded": [
         "Updated stationery and images as the team has expanded",
         "- Pav Law swag team store for onboard and team items",
         "- Design now · open ordering later from the firm storefront",
         "- Store keeps reorders simple and carries margin on each order",
         "Logo and branding",
-        "- Revise the logo for updated branding",
+        "- Pav Law logos updated",
+        "- Team images edited",
         "- Make a few mockups on key SKUs",
         "- Send the direction to a real designer for a full suite",
         "Business cards",
-        "- Needed for the wider team after headshots are ready",
-        "- Low to medium priority",
-        "- Design can start now",
+        "- Business card design done for the wider team",
         "- Ordering stays open later from the firm storefront",
         "Product",
         "- Orders generally run $400–$500 with vendor minimums",
@@ -2468,7 +2469,7 @@ window.PROJECT_DATA = {
         "- Holiday designs can ride in the same design pass if needed",
         "SKU list",
         "- Laptop cases · Pav Law with contact details",
-        "- Business cards · Jack Strong · wider team after headshots",
+        "- Business cards · Jack Strong · wider team · design done",
         "- Dress shirts · socks · ties",
         "- Mugs / tumblers",
         "- Pav Law swag team store · direct orders"
@@ -2478,17 +2479,17 @@ window.PROJECT_DATA = {
         "Scope · onboard kit + Pav Law swag team store · product cost separate",
         "Binders given to Jack for Andrew to sample",
         "Other vendor samples ordered · waiting on delivery",
-        "Cards for wider team · design after / with headshots · order from storefront later"
+        "Cards for wider team · design after / with headshots · order from storefront later",
+        "Business card design · wider-team templates",
+        "Leave name / title / phone slots for open storefront ordering",
+        "Update Pav Law logos",
+        "Edit images of the team"
       ],
       "progressOpenItems": [
         "Andrew reviews binder sample",
         "Receive and review remaining vendor samples",
-        "Finish headshots · DigProf · then lock card photo crops",
-        "Design wider-team business card templates",
-        "Leave name / title / phone slots for open storefront ordering",
         "Jack Strong card can ship earlier if his headshot is ready first",
         "Lock SKU list · laptop cases · cards · shirts / socks / ties · mugs / tumblers",
-        "Update logo for revised branding · draft directions and constraints",
         "Make a few SKU mockups with the revised logo · binders · cards · one apparel or drinkware",
         "Send logo + mockup pack to a real designer for a full suite",
         "Review designer suite · approve for production",
@@ -2499,9 +2500,9 @@ window.PROJECT_DATA = {
         "Place first production order when Andrew approves",
         "Optional holiday designs in same design pass if needed"
       ],
-      "progressDoneCount": 5,
-      "progressOpenCount": 17,
-      "progressPct": 23,
+      "progressDoneCount": 9,
+      "progressOpenCount": 13,
+      "progressPct": 41,
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
@@ -2516,22 +2517,22 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 1300,
       "feeEstimateNationalMid": 1800,
       "feeEstimateScope": {
-        "raw": 29.65,
+        "raw": 28.55,
         "parts": {
-          "valueAdd": 27,
+          "valueAdd": 26,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.65
+          "descUnits": 2.55
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 500,
-      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.40 (29.65 units) · complexity ×1"
+      "feeEstimateNote": "swag consult lane · local mid $1,300 · national mid $1,750 · scope ×1.40 (28.55 units) · complexity ×1"
     },
     {
       "priorityGroup": "AdHoc",

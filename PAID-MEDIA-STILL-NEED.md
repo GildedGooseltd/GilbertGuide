@@ -2,20 +2,21 @@
 
 Simple name list for LSA + Search staging. Aggregates only. Do not file Contact, Call details caller rows, or LSA inbox Customer names into the repo.
 
-Last Downloads scan: 10/17/2026 · Call details · LSA inbox · account_activities · Time_series wired. Gaps below still block full Oct MTD.
+Last Downloads scan: 10/17/2026 evening · Contact · Trust · Case balance wired. Gaps below still block full Oct MTD.
 
 ## Oct* · wired 10/17 · still need for full MTD
 
 | Source | Newest file | Status |
 |---|---|---|
 | Search Call details | Call details (19).csv | Wired · Oct 1–17 · 14 phones · 9 received / 5 missed |
-| Contact | Contact_10-09-2026 (1).csv | Still · Oct Client Created 7 through 10/08 · need newer Contact |
+| Contact | Contact_10-17-2026.csv | Wired · Oct Client Created 9 through 10/13 · Lead Source tags rechecked |
+| Trust snapshot | Trust_account_summary_10-17-2026.csv | Wired · 375 with balance · $1,742,034 |
+| Case balance | Case_balance_summary_10-17-2026.csv | Wired · Oct contracted 8 of 9 · Yelp fee pack rechecked |
 | Search Impr / spend | Time_series_chart · account_activities_202610 (2).csv | Wired · Oct Impr 7,023 · Search $6,533.46 · LSA $1,339.56 · Campaign (48) All-time skipped |
 | LSA inbox | leads-inbox (26).csv | Wired · 19 Oct received · 5 charged / 14 not charged |
 | Ledger Credits | ledger_account_activity_report (11).csv | Still Oct* $13,650 through 10/05 · no newer ledger |
 | HubSpot forms | — | No newer form-submit after 10/02 |
 | Yelp contacts | Ads screenshots 10/08 | Spend Oct 1–7 $399.90 · no newer Yelp Ads pull |
-| Contact Lead Source column | Contact_10-09 | Export has no Lead Source field · Channel Confirmed stays on Contact_10-08 + joins |
 
 ## Sep* snapshot from 09/28 pull
 

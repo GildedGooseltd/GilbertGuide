@@ -81,6 +81,7 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
-| 10/17/2026 | DL refresh · Call details (19) Oct Search 14 · leads-inbox (26) LSA 19 · account_activities_202610 (2) Search $6,533.46 · LSA $1,339.56 · Time_series Oct Impr 7,023 · Lead Calls 49 · Campaign (48) All-time skipped · Contact / ledger / HubSpot / Yelp unchanged. |
+| 10/17/2026 | Evening DL · Contact_10-17 Oct cases 7→9 · Trust snapshot 10/17 · Case_balance Oct contracted 8 · SwagPrint progress rebuild · Call details / LSA / spend unchanged · ledger / HubSpot forms / Yelp Ads still stale. |
+| 10/17/2026 | Morning DL · Call details (19) Oct Search 14 · leads-inbox (26) LSA 19 · account_activities_202610 (2) Search $6,533.46 · LSA $1,339.56 · Time_series Oct Impr 7,023 · Lead Calls 49 · Campaign (48) All-time skipped. |
 | 10/09/2026 | DL refresh · Call details (17) Oct Search 8 · Contact_10-09 Oct cases 7 · Lead Calls 26. LSA inbox / Billing / ledger / Campaign calendar Impr unchanged. Campaign (47) All-time skipped for Oct Impr. |
 | 10/08/2026 | Process locked Guide-wide. Lead Source Confirmed pack partial. Full Can update / Blocked list in that day’s chat audit. |

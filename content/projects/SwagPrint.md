@@ -21,13 +21,12 @@
   - Design now · open ordering later from the firm storefront
   - Store keeps reorders simple and carries margin on each order
 - Logo and branding
-  - Revise the logo for updated branding
+  - Pav Law logos updated
+  - Team images edited
   - Make a few mockups on key SKUs
   - Send the direction to a real designer for a full suite
 - Business cards
-  - Needed for the wider team after headshots are ready
-  - Low to medium priority
-  - Design can start now
+  - Business card design done for the wider team
   - Ordering stays open later from the firm storefront
 - Product
   - Orders generally run $400–$500 with vendor minimums
@@ -39,7 +38,7 @@
   - Holiday designs can ride in the same design pass if needed
 - SKU list
   - Laptop cases · Pav Law with contact details
-  - Business cards · Jack Strong · wider team after headshots
+  - Business cards · Jack Strong · wider team · design done
   - Dress shirts · socks · ties
   - Mugs / tumblers
   - Pav Law swag team store · direct orders
@@ -59,8 +58,7 @@ Scope add 10/10/2026: employee incentivizing gifting + monthly sales goal target
 - Status · Kate 10/02/2026
   - Binders given to Jack for Andrew to sample
   - Other samples ordered from the vendor · currently waiting
-  - Wider-team cards · low to medium priority · after headshots
-  - Design now · open ordering later from firm storefront
+  - Wider-team cards · design done · open ordering later from firm storefront
 - Campaign uses · Kate 10/10/2026
   - Employee incentivizing gifting · swag as recognition / reward for the team
   - Monthly sales goal targeting · tie gift drops or store credits to hitting monthly sales goals
@@ -70,14 +68,14 @@ Scope add 10/10/2026: employee incentivizing gifting + monthly sales goal target
   - [x] Binders given to Jack for Andrew to sample
   - [x] Other vendor samples ordered · waiting on delivery
   - [x] Cards for wider team · design after / with headshots · order from storefront later
+  - [x] Business card design · wider-team templates
+    - [x] Leave name / title / phone slots for open storefront ordering
+  - [x] Update Pav Law logos
+  - [x] Edit images of the team
   - [ ] Andrew reviews binder sample
   - [ ] Receive and review remaining vendor samples
-  - [ ] Finish headshots · DigProf · then lock card photo crops
-  - [ ] Design wider-team business card templates
-    - [ ] Leave name / title / phone slots for open storefront ordering
-    - [ ] Jack Strong card can ship earlier if his headshot is ready first
+  - [ ] Jack Strong card can ship earlier if his headshot is ready first
   - [ ] Lock SKU list · laptop cases · cards · shirts / socks / ties · mugs / tumblers
-  - [ ] Update logo for revised branding · draft directions and constraints
   - [ ] Make a few SKU mockups with the revised logo · binders · cards · one apparel or drinkware
   - [ ] Send logo + mockup pack to a real designer for a full suite
   - [ ] Review designer suite · approve for production
