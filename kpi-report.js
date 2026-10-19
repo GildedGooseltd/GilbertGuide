@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261018-yelp1018";
+  const RENDER_VER = "20261018-dqg-no-hint";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["October 2026", "September 2026", "August 2026", "July 2026", "June 2026", "May 2026"];
@@ -18,8 +18,8 @@
       fields: "Jun 226 · Jul 281 · Aug 101 · Sep* 97 · Oct* 40 = Search 14 + LSA 19 + HubSpot Forms 3 + Yelp 4 · Search from Call details (19) · Oct forms from the first conversion chart · Yelp contacts from Ads by-type 10/18"
     },
     "yelp": {
-      file: "Yelp Reviews PDF 10/01 · listing 4.5 · 8 · yelpBaseline reviews · not updated for Oct MTD · recheck 10/18/2026",
-      fields: "Listing review count toward 20 · Oct month new 0 hardcoded · Total 8/20 · pace 40% · need fresh Reviews pull"
+      file: "Yelp Reviews PDF 10/01 · listing 4.5 · 8 · Kate confirmed still 8 on 10/18/2026",
+      fields: "Listing review count toward 20 · Oct month new 0 · Total 8/20 · pace 40%"
     },
     "yelp-leads": {
       file: "Desktop Yelp Ads screenshots 10/18 6:19–6:21 PM · Yelp Ad Analytics Oct 1–17 CSV · Contact_10-17 Lead Source=Yelp",
@@ -106,12 +106,12 @@
       fields: "Direct contacts = Search + LSA + HubSpot + Yelp + Justia + FindLaw + Website. Oct* 40 = Search 14 + LSA 19 + HubSpot Forms 3 + Yelp 4 · Impr 7,113 live HS from Campaign (50) · Call details (20) Military-only All-time skipped"
     },
     "dg-ctr": {
-      file: "Campaign report (50) Oct 1–17 live HS Impr + clicks · recheck 10/18/2026",
-      fields: "CTR = 539 ÷ 7,113 = 7.58% · October digital goal ≥ 4%"
+      file: "Campaign (50) live HS Impr + clicks · Yelp Ad Analytics Oct/Sep · leads-inbox (26) · recheck 10/18/2026",
+      fields: "Bar goal Search 539 ÷ 7,113 = 7.58% · track also Yelp 70 ÷ 8,170 = 0.9% · goal ≥ 4%"
     },
     "dg-click-call": {
-      file: "funnelAds clicks Campaign (50) · Call details (19) phones · recheck 10/18/2026",
-      fields: "Click → call = 14 ÷ 539 = 2.6% · October digital goal ≥ 12% · hidden phone est = max(0, clicks × baseline − tracked phones)"
+      file: "Campaign (50) · Call details (19) · Yelp Ad Analytics Oct/Sep · yelpBaseline.byMonth · leads-inbox (26) · recheck 10/18/2026",
+      fields: "Gauge Search only 14 ÷ 539 = 2.6% · track also Yelp 70 clicks · 3 calls · LSA 19 leads · 5 charged · goal ≥ 12%"
     },
     "click-call-monitor": {
       file: "Campaign report (50) + Call details (19) by live HS · baseline 12% · recheck 10/18/2026",
@@ -280,13 +280,13 @@
     },
     "dg-ctr": {
       title: "Digital Goal · CTR",
-      desc: "One of four October digital quality goals. Early creative and query-fit signal from Campaign impressions and clicks. Available mid-month before cases land. Watch ≥ 4%. Sep held at 4.9% while $/phone burned, so CTR alone is not enough.",
-      formula: "CTR % = Search clicks ÷ Search impressions × 100. Goal ≥ 4%."
+      desc: "One of four October digital quality goals. Bar and tile % are Search Campaign live HS clicks ÷ impressions. Track also shows Yelp Ads CTR when Ad Analytics is on file. Watch ≥ 4%. Sep held at 4.9% while $/phone burned, so CTR alone is not enough.",
+      formula: "Search CTR % = Search clicks ÷ Search impressions × 100. Yelp CTR % = Yelp Ad clicks ÷ Ad impressions × 100 when on file. Goal ≥ 4% on Search."
     },
     "dg-click-call": {
       title: "Digital Goal · Click → call",
-      desc: "One of four October digital quality goals. Share of Search clicks that become tracked Calls from ads. Available from Call details + clicks as soon as both land. Account watch ≥ 12%. Kate 10/17/2026 from Campaign report click-to-call bands. Sep held near 26% while $/phone burned. People can still dial the main line after a click without a tracked phone. Data tab Click → Call Monitor estimates possible hidden phones from the baseline rate.",
-      formula: "Click → call % = Search phones ÷ Search clicks × 100. Goal ≥ 12%. Possible hidden = max(0, round(clicks × baseline% − tracked phones)). Baseline defaults to the 12% goal."
+      desc: "One of four October digital quality goals. Gauge is Search only: Share of Search clicks that become tracked Calls from ads. Account watch ≥ 12%. Track rows also show Yelp Ads clicks → calls when Ad Analytics is on file, and LSA inbox leads · charged. LSA has no click path. Kate 10/17/2026 from Campaign report click-to-call bands. Sep Search held near 26% while $/phone burned. Data tab Click → Call Monitor estimates possible hidden Search phones from the baseline rate.",
+      formula: "Gauge % = Search phones ÷ Search clicks × 100. Goal ≥ 12%. Track: Search Campaign clicks · Search Call details phones · Yelp Ad Analytics clicks + by-type calls · LSA inbox leads + charged."
     },
     "click-call-monitor": {
       title: "Click → Call Monitor",
@@ -512,7 +512,7 @@
       "#03": "2026-10-18",
       "#04": "2026-10-17",
       "cash-pace": "2026-10-18",
-      "yelp": "2026-10-01",
+      "yelp": "2026-10-18",
       "yelp-leads": "2026-10-18",
       "justia": "2026-09-18",
       "answer-rate": "2026-10-18",
@@ -536,7 +536,7 @@
       "#02": "fresh",
       "#03": "fresh",
       "cash-pace": "fresh",
-      "yelp": "stale",
+      "yelp": "fresh",
       "yelp-leads": "fresh",
       "answer-rate": "fresh",
       "ad-spend-by-channel": "fresh",
@@ -867,7 +867,7 @@
         platform: "Google Business Profile",
         rating: "4.9",
         count: 121,
-        status: "active",
+        status: "revised",
         verified: true,
         url: "https://www.google.com/maps/search/?api=1&query=Pav+Law+102+S+Tejon+St+Suite+1100+Colorado+Springs+CO"
       },
@@ -875,7 +875,7 @@
         platform: "Yelp",
         rating: "4.5",
         count: 8,
-        status: "active",
+        status: "revised",
         verified: true,
         url: "https://biz.yelp.com/home/A1V6e8n5rG3QQ3HMiK_q2g"
       },
@@ -892,7 +892,7 @@
         platform: "Justia",
         rating: "1838",
         count: 27,
-        status: "active",
+        status: "revised",
         verified: true,
         url: "https://www.justia.lawyer/1676451/co-colorado-springs-dui.html"
       },
@@ -900,7 +900,7 @@
         platform: "FindLaw",
         rating: "—",
         count: 0,
-        status: "wip",
+        status: "revised",
         verified: true,
         url: "https://lawyers.findlaw.com/colorado/colorado-springs/pav-law-NTM4NzA2MF8x/"
       },
@@ -1071,7 +1071,7 @@
      */
     yelpBaseline: {
       asOf: "2026-10-18",
-      reviewsAsOf: "2026-10-01",
+      reviewsAsOf: "2026-10-18",
       messagesAsOf: "2026-10-18",
       spendAsOf: "2026-10-18",
       window: "Yelp Ads Desktop screenshots 10/18 · by-type Oct Messages 3 · Calls 3 · Website 3 · Directions 2 · total 11 · Ads 10 / Organic 1 · billing Oct 1–18 spend $927.48 · CPC $13.25 · CPL $92.75 · last-30 clicks 100 · impr 13.4k · Ad Analytics Oct 1–17 CSV · Sep Ad Analytics $432.67 · Aug $72.58 · answer rate 46% from prior call log",
@@ -1113,6 +1113,23 @@
         clicks: 70,
         avgCpc: 13.25,
         spend: 927.48
+      },
+      sepAdAnalytics: {
+        window: "2026-09-01 to 2026-09-27",
+        impressions: 7253,
+        clicks: 62,
+        avgCpc: 6.98,
+        spend: 432.67
+      },
+      /* Calendar-month Ad Analytics for Click → call and CTR tracks · not the Search gauge. */
+      adClicksByMonth: {
+        Aug: 27,
+        Sep: 62,
+        Oct: 70
+      },
+      adImpressionsByMonth: {
+        Sep: 7253,
+        Oct: 8170
       },
       sepBillingSpend: 432.67,
       sepBillingSpendWindow: "2026-09-01 to 2026-09-27",
@@ -3432,7 +3449,7 @@
       ${kpiHelpBtn("ad-spend-by-channel")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Ad Spend")}
-        <span class="kpi-stat-val">${total}</span>
+        ${metricWithDeltaHtml(`<span class="kpi-stat-val">${total}</span>`, null)}
       </div>
       ${goalTrackRows(pack.channels.map(c => [escapeHtml(c.label), fmtAdSpend(c.spend)]))}
     </button>`;
@@ -5953,8 +5970,8 @@
 
   function metricWithDeltaHtml(mainHtml, mom) {
     const delta = momChangeHtml(mom);
-    if (!delta) return mainHtml;
-    return `<div class="kpi-metric-with-delta">${mainHtml}${delta}</div>`;
+    /* Always wrap so Monthly KPI plot panels can center the value under a pinned title. */
+    return `<div class="kpi-metric-with-delta">${mainHtml}${delta || ""}</div>`;
   }
 
   function metricWithPaceHtml(mainHtml, k) {
@@ -5968,6 +5985,7 @@
       active: "Listed",
       building: "Listed",
       wip: "WIP",
+      revised: "Revised",
       updated: "Updated",
       outdated: "Outdated",
       "not wired": "Unlisted",
@@ -5976,15 +5994,16 @@
     return map[status] || status || "—";
   }
 
-  /** WIP · Listed · Updated · Unlisted · Outdated. Stable within each bucket. */
+  /** WIP · Listed · Revised · Updated · Unlisted · Outdated. Stable within each bucket. */
   function presenceStatusSortRank(status) {
     const label = presenceLabel(status);
     if (label === "WIP") return 0;
     if (label === "Listed") return 1;
-    if (label === "Updated") return 2;
-    if (label === "Unlisted") return 3;
-    if (label === "Outdated") return 4;
-    return 5;
+    if (label === "Revised") return 2;
+    if (label === "Updated") return 3;
+    if (label === "Unlisted") return 4;
+    if (label === "Outdated") return 5;
+    return 6;
   }
 
   function sortByPresenceStatus(rows) {
@@ -5996,7 +6015,7 @@
   /** Collapse tracking-only "not wired" into Unlisted for the presence pie. */
   function presenceBucket(status) {
     const s = status || "not on";
-    if (s === "active" || s === "building" || s === "updated") return "active";
+    if (s === "active" || s === "building" || s === "updated" || s === "revised") return "active";
     if (s === "outdated" || s === "wip") return "outdated";
     return "not on";
   }
@@ -6494,7 +6513,7 @@
       ${kpiHelpBtn("#03")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle((g.title || "Auto Cases").replace(/^#\s*/, ""))}
-        ${duiGoalTargetBarChart()}
+        ${metricWithDeltaHtml(duiGoalTargetBarChart(), null)}
       </div>
       ${goalTrackRows([
         ["Pace", paceCell],
@@ -7141,7 +7160,7 @@
         ? `${escapeHtml(k.value)} · ${escapeHtml(targetLine)}`
         : `Avg ${escapeHtml(k.value)} · ${escapeHtml(targetLine)}`;
       const barAsOf = resolveTileAsOf(k.id, k.updatedAsOf);
-      const caseTrack = k.id === "dg-case-cost" && k.trackHtml ? k.trackHtml : "";
+      const barTrack = k.trackHtml || "";
       return `<button type="button" class="kpi-goal-card kpi-stat-target-bar${vClass}${k.alert ? " kpi-stat-attention" : ""}${periodFreshClass(!!k.augUpdated, !!k.verified, k.value, k.id, barAsOf)}" data-kpi-focus="${k.id}">
         ${periodFreshMark(!!k.augUpdated, !!k.verified, k.value, barAsOf, null, k.id)}
         ${kpiHelpBtn(k.id)}
@@ -7151,7 +7170,7 @@
           ${metricWithDeltaHtml(targetBarChartForKpi(k), k.mom)}
           <span class="kpi-stat-label">${valueLine}</span>
         </div>
-        ${caseTrack}
+        ${barTrack}
         ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
         ${foot}
         ${kpiRefMark(k.id)}
@@ -7466,17 +7485,17 @@
     const momHtml = deltaPp == null
       ? "—"
       : `<span class="kpi-mom-change ${deltaPp >= 0 ? "kpi-mom-up" : "kpi-mom-down"}">${
-          deltaPp === 0 ? "0 pp" : `${deltaPp > 0 ? "↑" : "↓"} ${Math.abs(deltaPp)} pp`
+          deltaPp === 0 ? "0%" : `${deltaPp > 0 ? "↑" : "↓"} ${Math.abs(deltaPp)}%`
         }</span>`;
     const answerValue = ready ? `${pct}%` : "—";
     const answerAsOf = resolveTileAsOf("answer-rate");
     const ariaMissed = missedReady ? `${missed} missed` : "missed unavailable";
-    return `<button type="button" class="kpi-goal-card kpi-stat-answer-rate${periodFreshClass(true, true, answerValue, "answer-rate", answerAsOf)}${!hit && ready ? " kpi-stat-attention" : ""}" data-kpi-focus="answer-rate" aria-label="Weekday answer rate ${ready ? pct + "%" : "unavailable"} · ${ariaMissed} · year avg ${yearAvg != null ? yearAvg + "%" : "—"} · vs last month ${deltaPp == null ? "—" : deltaPp + " pp"}">
+    return `<button type="button" class="kpi-goal-card kpi-stat-answer-rate${periodFreshClass(true, true, answerValue, "answer-rate", answerAsOf)}${!hit && ready ? " kpi-stat-attention" : ""}" data-kpi-focus="answer-rate" aria-label="Weekday answer rate ${ready ? pct + "%" : "unavailable"} · ${ariaMissed} · year avg ${yearAvg != null ? yearAvg + "%" : "—"} · vs last month ${deltaPp == null ? "—" : deltaPp + "%"}">
       ${periodFreshMark(true, true, answerValue, answerAsOf, null, "answer-rate")}
       ${kpiHelpBtn("answer-rate")}
       <div class="kpi-goal-visual">
         ${kpiCardTitle("Answer Rate")}
-        ${valueHtml}
+        ${metricWithDeltaHtml(`<div class="kpi-answer-rate-cluster">${valueHtml}</div>`, null)}
       </div>
       ${goalTrackRows([
         ["Year avg", yearAvg == null ? "—" : `${yearAvg}%`],
@@ -7557,14 +7576,11 @@
     const key = periodToChannelMonth(DATA.period);
     const monthNames = { Jun: "June", Jul: "July", Aug: "August", Sep: "September", Oct: "October" };
     const monthName = monthNames[key] || key || "Month";
-    const last30Leads = y.last30 && y.last30.leads != null ? Number(y.last30.leads) : null;
     const monthLeads = yelpMonthLeadsCount(y, key);
-    /* Hero = calendar month · not rolling last-30 · Kate 10/17/2026. */
+    /* Hero = calendar month · Kate 10/17/2026. Last 30 row removed · Kate 10/18/2026. */
     const leadsN = monthLeads != null
       ? Number(monthLeads)
-      : last30Leads != null
-        ? last30Leads
-        : (y.leads != null ? Number(y.leads) : null);
+      : (y.leads != null ? Number(y.leads) : null);
     const monthLeadsLabel = monthLeads == null ? "—" : String(monthLeads);
     const signedTotalLabel = y.caseValue.contractedTotal
       ? fmtMoney(y.caseValue.contractedTotal)
@@ -7572,7 +7588,6 @@
     const costSigned = y.caseValue.costPerSigned != null
       ? fmtMoney(y.caseValue.costPerSigned)
       : "—";
-    /* As-of = Ads panel pull · not Case_balance recheck date · Kate 10/18 not updated. */
     const leadsAsOf = resolveTileAsOf("yelp-leads") || y.messagesAsOf || y.asOf || y.caseValue.asOf;
     const leadsValue = leadsN == null ? "—" : String(leadsN);
     const freshClass = periodFreshClass(true, true, leadsValue, "yelp-leads", leadsAsOf);
@@ -7585,7 +7600,6 @@
       </div>
       ${goalTrackRows([
         [monthName, monthLeadsLabel],
-        ["Last 30", last30Leads == null ? "—" : String(last30Leads)],
         ["Signed fees", signedTotalLabel],
         ["Cost / signed", costSigned]
       ])}
@@ -7698,22 +7712,102 @@
       ["Search", money(m.adsSpend != null ? m.adsSpend : m.searchSpend)],
       ["LSA", money(m.lsaSpend)],
       ["Yelp", money(m.yelpSpend)],
-      ["Media", money(m.mediaSpend)],
       ["Cases", String(m.cases)],
       ["Avg $/case", money(m.costPerClient)]
     ]);
   }
 
-  /** Click → call · platforms / exports that feed the tile. Search only. */
-  function clickToCallPlatformTrackHtml(metrics) {
+  /** Yelp Ad Analytics clicks + impressions for the tile month when on file. */
+  function yelpAdAnalyticsForMonth(monthKey) {
+    const key = String(monthKey || "").replace(/\*$/, "");
+    const y = DATA.yelpBaseline || {};
+    const clicksMap = y.adClicksByMonth || {};
+    const imprMap = y.adImpressionsByMonth || {};
+    let clicks = clicksMap[key] != null ? Number(clicksMap[key]) : null;
+    let impressions = imprMap[key] != null ? Number(imprMap[key]) : null;
+    if ((clicks == null || impressions == null) && key === "Oct" && y.octAdAnalytics) {
+      if (clicks == null && y.octAdAnalytics.clicks != null) clicks = Number(y.octAdAnalytics.clicks);
+      if (impressions == null && y.octAdAnalytics.impressions != null) impressions = Number(y.octAdAnalytics.impressions);
+    }
+    if ((clicks == null || impressions == null) && key === "Sep" && y.sepAdAnalytics) {
+      if (clicks == null && y.sepAdAnalytics.clicks != null) clicks = Number(y.sepAdAnalytics.clicks);
+      if (impressions == null && y.sepAdAnalytics.impressions != null) impressions = Number(y.sepAdAnalytics.impressions);
+    }
+    if (clicks == null || impressions == null || !(impressions > 0) || !(clicks >= 0)) return null;
+    return {
+      clicks,
+      impressions,
+      ctr: (clicks / impressions) * 100
+    };
+  }
+
+  /**
+   * CTR track · Search owns the bar % and goal.
+   * Yelp Ads CTR when Ad Analytics impr + clicks are on file.
+   * No LSA row · LSA has no click CTR · Kate 10/18/2026.
+   */
+  function ctrPlatformTrackHtml(metrics, monthKey) {
+    const m = metrics || {};
+    if (m.ctr == null) return "";
+    const key = String(monthKey || periodToChannelMonth(DATA.period) || "").replace(/\*$/, "");
+    const searchCtr = m.ctr != null ? `${Math.round(m.ctr * 10) / 10}%` : "—";
+    const rows = [
+      ["Search Campaign", `${m.clicks != null ? m.clicks : "—"} clicks · ${m.impressions != null ? Number(m.impressions).toLocaleString("en-US") : "—"} impr · ${searchCtr}`]
+    ];
+    const yelp = yelpAdAnalyticsForMonth(key);
+    if (yelp) {
+      const yCtr = `${Math.round(yelp.ctr * 10) / 10}%`;
+      rows.push(["Yelp Ads", `${yelp.clicks} clicks · ${yelp.impressions.toLocaleString("en-US")} impr · ${yCtr}`]);
+    }
+    return goalTrackRows(rows);
+  }
+
+  /** CTR bar series · Search goal bar plus Yelp when Ad Analytics exists. */
+  function ctrTargetBarItems(metrics, monthKey) {
+    const m = metrics || {};
+    if (m.ctr == null || !Number.isFinite(m.ctr)) return [];
+    const items = [{ label: "Search", value: m.ctr }];
+    const yelp = yelpAdAnalyticsForMonth(monthKey);
+    if (yelp && Number.isFinite(yelp.ctr)) {
+      items.push({ label: "Yelp", value: yelp.ctr });
+    }
+    return items;
+  }
+
+  /**
+   * Click → call track · Search owns the gauge %.
+   * Yelp Ads clicks → calls when Ad Analytics + by-type are on file.
+   * LSA has no clicks · show inbox leads · charged only.
+   */
+  function clickToCallPlatformTrackHtml(metrics, monthKey) {
     const m = metrics || {};
     if (m.clickToCall == null) return "";
-    const clicks = m.clicks != null ? String(m.clicks) : "—";
-    const phones = m.phones != null ? String(m.phones) : "—";
-    return goalTrackRows([
-      ["Google Ads Campaign", `${clicks} clicks`],
-      ["Google Ads Call details", `${phones} phones`]
-    ]);
+    const key = String(monthKey || periodToChannelMonth(DATA.period) || "").replace(/\*$/, "");
+    const rows = [
+      ["Search Campaign", `${m.clicks != null ? m.clicks : "—"} clicks`],
+      ["Search Call details", `${m.phones != null ? m.phones : "—"} phones`]
+    ];
+    const y = DATA.yelpBaseline || {};
+    const yClicksMap = y.adClicksByMonth || {};
+    let yClicks = yClicksMap[key] != null ? Number(yClicksMap[key]) : null;
+    if (yClicks == null && key === "Oct" && y.octAdAnalytics && y.octAdAnalytics.clicks != null) {
+      yClicks = Number(y.octAdAnalytics.clicks);
+    }
+    const yMonth = y.byMonth && y.byMonth[key] ? y.byMonth[key] : null;
+    const yCalls = yMonth && yMonth.calls != null ? Number(yMonth.calls) : null;
+    const yMessages = yMonth && yMonth.messages != null ? Number(yMonth.messages) : null;
+    if (yClicks != null && Number.isFinite(yClicks) && yClicks > 0) {
+      const parts = [`${yClicks} clicks`];
+      if (yCalls != null && Number.isFinite(yCalls)) parts.push(`${yCalls} calls`);
+      if (yMessages != null && Number.isFinite(yMessages)) parts.push(`${yMessages} messages`);
+      rows.push(["Yelp Ads", parts.join(" · ")]);
+    }
+    const eff = (DATA.lsaEfficiency || []).find(r => String(r.month || "").replace(/\*$/, "") === key);
+    if (eff && Number(eff.leads) > 0) {
+      const charged = Number(eff.charged) || 0;
+      rows.push(["LSA inbox", `${Number(eff.leads)} leads · ${charged} charged`]);
+    }
+    return goalTrackRows(rows);
   }
 
   /** Month rows with clicks + phones for the Click → call monitor. Newest first. */
@@ -7913,7 +8007,8 @@
         value: ctrReady ? `${Math.round(m.ctr * 10) / 10}%` : "—",
         target: `≥ ${g.ctr}%`,
         targetBar: true,
-        targetBarItems: ctrReady ? [{ label: "This month", value: m.ctr }] : [],
+        targetBarItems: ctrReady ? ctrTargetBarItems(m, key) : [],
+        trackHtml: ctrReady ? ctrPlatformTrackHtml(m, key) : "",
         lowerIsBetter: false,
         verified: ctrReady,
         augUpdated: ctrReady,
@@ -7927,7 +8022,7 @@
         value: ctcReady ? `${Math.round(m.clickToCall * 10) / 10}%` : "—",
         target: `≥ ${g.clickToCall}%`,
         gauge: true,
-        trackHtml: ctcReady ? clickToCallPlatformTrackHtml(m) : "",
+        trackHtml: ctcReady ? clickToCallPlatformTrackHtml(m, key) : "",
         lowerIsBetter: false,
         verified: ctcReady,
         augUpdated: ctcReady,
@@ -7960,7 +8055,7 @@
       .map(k => `<div class="kpi-tile-with-projects">${stampTileNum(kpiStatCardHtml(k), n++)}</div>`)
       .join("");
     return `<section class="kpi-section kpi-section-static kpi-section-digital-goals" data-feedback-id="section-digital-goals" data-feedback-label="Digital Quality Goals">
-      ${kpiSectionStaticHead("Digital Quality Goals", "CTR · Click → call · Avg $/case")}
+      ${kpiSectionStaticHead("Digital Quality Goals")}
       <div class="kpi-section-body">
         <div class="kpi-goals-layout">
           <div class="kpi-goals-grid kpi-stat-grid kpi-tiles-3">${cards}</div>
@@ -8214,6 +8309,7 @@
     if (status === "active") return "kpi-presence kpi-presence-on";
     if (status === "building") return "kpi-presence kpi-presence-building";
     if (status === "wip") return "kpi-presence kpi-presence-wip";
+    if (status === "revised") return "kpi-presence kpi-presence-revised";
     if (status === "updated") return "kpi-presence kpi-presence-updated";
     if (status === "outdated") return "kpi-presence kpi-presence-outdated";
     return "kpi-presence kpi-presence-gap";

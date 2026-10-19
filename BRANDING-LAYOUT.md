@@ -39,15 +39,20 @@ Defined in `index.html` ****`:root`. `metrics.css` repeats the core GG set for t
 | `--gg-gold-dark`    | `#b8860b`             | Critical metallic accent only                 |
 | `--gg-cream`        | `#f8f5ef`             | Page background (`--bg`)                      |
 | `--gg-cream-panel`  | `#f3ede4`             | Nested panels                                 |
-| `--gg-chart-plot`   | `#fff5ca`             | Chart plot field (light yellow for series contrast) |
+| `--gg-chart-plot`   | `color-mix(#3a1a6e 15%, #fffcf7)` | **LOCKED** · chart plots + every KPI tile panel · shield purple @ 15% · Kate 10/18/2026 · do not change |
 | `--gg-paper`        | `#fffcf7`             | Cards, inputs (`--surface`)                   |
 | `--gg-brown`        | `#3d3028`             | Body text (`--text`)                          |
 | `--gg-brown-muted`  | `#5c4f45`             | Secondary (`--secondary`)                     |
-| `--gg-royal-deep`   | `#2d1454`             | Section headers, deep accents                 |
-| `--gg-royal`        | `#3a1a6e`             | Headings, buttons, chart primary              |
-| `--gg-royal-blue`   | `#1e3a8a`             | Intake / blue accents                         |
+| `--gg-royal-deep`   | `#2d1454`             | Legacy deep purple · ranks / picker accents   |
+| `--gg-royal`        | `#3a1a6e`             | Chart primary · ranks · project scores        |
+| `--gg-royal-blue`   | `#1e3a8a`             | Intake / Pav blue · equals `--pav-shield-blue` |
 | `--gg-royal-mid`    | `#4c1d95`             | Focus rings                                   |
-| `--gg-burnt`        | `#c45c26`             | Secondary chart / head accent                 |
+| `--pav-shield-navy` | `#0c1a48`             | Cockpit title · active chrome accents         |
+| `--pav-shield-blue` | `#1e3a8a`             | Section heads · active tabs · month pills · Kate 10/18/2026 |
+| `--pav-shield-green` | `#005f3e`            | Shield feather emerald · reserved · Kate 10/18/2026     |
+| `--pav-shield-gold` | `#d8a850`             | Section left rule · title underline · zone accents |
+| `--pav-shield-gold-dark` | `#b07828`        | `--gg-head-accent` · shield rim dark          |
+| `--gg-burnt`        | `#c45c26`             | Secondary chart series only                   |
 | `--gg-forest`       | `#2d5a3d`             | Legacy forest family; not a positive alias    |
 | `--gg-rose`         | `#b23a78`             | Website / HubSpot / referral series           |
 | `--gg-plum`         | `#6a5acd`             | Spend / cost series                           |
@@ -67,18 +72,18 @@ Percentage-change labels use black, regular-weight `↑ +N%` / `↓ −N%` text.
 | Token                              | Default                                      | Use                                      |
 | ---------------------------------- | -------------------------------------------- | ---------------------------------------- |
 | `--gg-series-1` … `4`              | royal · burnt · rose · slate                  | KPI chart series                         |
-| `--gg-head-accent`                 | burnt orange                                 | Title underline, zone bars               |
+| `--gg-head-accent`                 | Pav shield gold-dark                         | Title underline, zone bars, section accents |
 | `--pav-ink` / `--pav-ink-panel`    | near-black                                   | Gilbert chat / thank-you dark shells     |
 | `--pav-text`                       | `#e8e8ec`                                    | Text on **dark** panels only             |
 | `--pav-border`                     | royal rgba                                   | Dark panel borders                       |
 | `--pav-gradient-panel` / `-accent` | royal / burnt → ink                          | Dark shells only                         |
 | `--pav-teal`                       | → `--gg-series-2` (burnt)                    | **Deprecated** — do not introduce teal   |
-| Cockpit title                      | `--gg-royal-deep` + burnt rule               | `.cockpit-title`                         |
+| Cockpit title                      | `--pav-shield-navy` + gold rule + primary shield mark | `.cockpit-title`              |
 
 
-Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` sources.
+Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` / `--pav-shield-*` sources.
 
-**Gold lock:** live gold is limited to the primary Review Plan/continue CTA, completion/thank-you milestones, the premium Why Gilded Goose frame, and the critical Solutions callout. Semantic red/yellow/green stays in written status, values, corner marks, and non-tile callouts. It does not recolor KPI tile chrome. Monthly KPIs tiles always match the Revenue card wash.
+**Gold lock:** shield gold is allowed on section left rules, cockpit title underline, and zone accents. CTA gold stays for Review Plan / continue, thank-you milestones, Why Gilded Goose, and Solutions callouts. Never use gold as a chart category. Semantic red/yellow/green stays in written status, values, corner marks, and non-tile callouts. Monthly KPIs tiles use Pav shield navy wash + border. No teal/cyan from the shield eye on Guide chrome.
 
 ### Layout scale
 
@@ -113,16 +118,16 @@ Links on light: `--gg-royal` + underline. Focus: `outline: 2px solid var(--gg-ro
 | --------------------- | ---------------------- | --------------------------------------------------------------------------- |
 | Body (cockpit)        | `body` in `index.html` | Georgia / Times, serif · `1.14rem` · line-height `1.65` — “legal memo” feel |
 | Body (metrics page)   | `metrics.css` `body`   | system-ui sans — metrics-only exception                                     |
-| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, `--gg-royal-deep` + burnt underline |
-| Section / zone labels | `.picker-zone-label`   | Uppercase royal label + royal/burnt rule                                      |
-| KPI section titles    | `.kpi-section-title`   | Bold white; summary = solid royal-deep fill + burnt left bar                  |
+| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, `--pav-shield-navy` + gold underline + primary shield mark |
+| Section / zone labels | `.picker-zone-label`   | Uppercase navy label + gold rule                                      |
+| KPI section titles    | `.kpi-section-title`   | Bold white; summary = solid `--pav-shield-blue` fill · no left gold bar                  |
 | Card titles           | `.card-title`          | ~`1.28rem`, weight 800, royal                                               |
 | Card summary bullets  | `.card-summary-bullets li` | `1.11rem` — 2pt above the `0.94rem` detail bullet in `.card-objectives li` |
 | KPI report title      | `.kpi-report-title`    | `1.35rem`, weight 800, royal                                                |
 | Table headers         | `.toc-table thead`     | Uppercase, muted brown                                                      |
 
 
-**Section title pattern:** solid royal-deep header → short uppercase white label → lavender hint → burnt left rule. No gradient or pale wash. Gold appears only when the section itself is a critical milestone.
+**Section title pattern:** solid Pav shield blue header → short uppercase white label → mist hint. No left gold rule. No pale wash. No teal/cyan chrome.
 
 To switch cockpit body to sans: change only `body { font-family }` in `index.html`; re-check card density.
 
@@ -134,14 +139,14 @@ To switch cockpit body to sans: change only `body { font-family }` in `index.htm
 
 ```
 ┌─ cockpit-header ───────────── title + subtitle
-├─ cockpit-tabs ─────────────── KPIs | Data | Lead Source | Project Status Updates
+├─ cockpit-tabs ─────────────── KPIs | Data | Lead Source | Status Updates
 │
 ├─ [KPIs] ───────────────────── kpi-report.js → #kpi-report-kpis
 │     collapsible .kpi-section (<details>)
 │     .kpi-stat-card / .kpi-goal-card tiles
 │     .kpi-split-grid → .kpi-split-panel (side-by-side; stack ≤900px)
 ├─ [Impact] ─────────────────── #completed-list + #revenue-calculator
-└─ [Project Status Updates]
+└─ [Status Updates]
    ├─ .picker-zone-priorities ── Quote Calculator hidden while no open bids
    ├─ WIP on project tiles + overview popup · status % on overview bullets
    ├─ .picker-zone-outlines ──── value filters + priority table
@@ -155,7 +160,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
 | KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
-| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid. Inner `.kpi-goal-visual` plot panel is fixed height `12rem` on every tile, solid mid gray `#cfcfcf` with `#a8a8a8` border — not purple wash, not white. Kate 10/18/2026 darken from `#e8e8e8`. **Title** `.kpi-stat-id` sits at the top of that panel · uppercase · letter-spacing · royal serif · plot/gauge fills the space below |
+| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid. Inner `.kpi-goal-visual` plot panel is fixed height `12rem` on every tile, same shield-purple @ 15% wash as chart plots (`--gg-chart-plot`). Kate 10/18/2026. **Title** `.kpi-stat-id` sits at the top of that panel · uppercase · letter-spacing · royal serif · plot/gauge fills the space below |
 | Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
 | KPI tile grid     | `.kpi-tiles-4`                         | Goal cards and metric tiles in one flow, 4 per row; narrow-pane trim ≤1000px, 2-col ≤560px, 1-col ≤380px |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |
@@ -174,7 +179,7 @@ Confirm flow: payment options → submit → fixed SOW emailed by private link �
 
 **Structure:** every graph card uses `chartBlock({ title, chart, table, … })` — **required** header title in `.kpi-chart-head` only. Do not add a chart subtitle or period/source subhead under the title. Then plot + detail table. **No color key under the plot** — series identity lives in table swatches only (`chartBlock` does not inject `.kpi-stack-legend` into `.kpi-chart-plot`). **KPIs / Recommendations:** wrap pairs in `chartPairGridHtml()` / `.data-chart-table-grid` — two columns side by side; detail table under each plot. **Data tab / Key Channel stack:** stack full-width cards in `.data-chart-table-stack` with a royal top border between cards; inside each card `.kpi-chart-split` puts plot left and descriptive table right. Odd leftovers on paired tabs sit in the left cell of the next row. Section heads alone do not satisfy the chart-title rule. Rotated Y-axis titles must clear tick labels (left pad ≥ 84 for multi-word axis titles — see REPORTING-BRAND-GUIDE §7). Stacked lead charts use the same pad as Lead Cost bars. **Y-scale headroom:** top tick ≥ one integer above the highest data point (same guide §7). Financial Breakdown is locked to 300 contacts and $40k spend while current data remains below those tops. **Lead Source tab:** no lateral scroll. Wide month detail splits into paired condensed tables under the directory chart. Justia + FindLaw cards share `.ls-card-pair`. See REPORTING-BRAND-GUIDE §9.
 
-**Plot field:** `--gg-chart-plot` (`#fff5ca`) light yellow behind every chart so series colors read clearly. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
+**Plot field · LOCKED Kate 10/18/2026:** `--gg-chart-plot` = shield purple at 15% on paper behind every chart and every KPI `.kpi-goal-visual` panel. Do not change opacity or invent a second wash. Stacked bars use a single **royal-deep** stroke — never white/paper outlines between segments.
 
 **Value labels:** `.kpi-target-bar-val` and other plotted counts use `--gg-brown` (`#3d3028`). Gauge scale ticks stay `#111`. Never white text on bars, goal tiles, or light plots. Counts sit above or beside the fill, not inside it. Combo charts: counts and spend labels sit above the series — never on the line. **Monthly Revenue:** bar totals ≥ $100k are green (`#1f8a65`) via `cashBarLabelFill()` — not red for missing the $150k goal.
 

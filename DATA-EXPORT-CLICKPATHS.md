@@ -57,7 +57,7 @@ Same date range as §1.
 
 1. [ads.google.com/localservices](https://ads.google.com/localservices) (or **Goals** → **Local Services**)
 2. **Leads** / **Lead inbox**
-3. Date: **All time** or last 90 days (note range in INDEX.md)
+3. Date: the inbox keeps about 60 days. A full download does not include a third month. Pull on a cadence so older leads are already saved.
 4. Export / download CSV → `leads-inbox (NN).csv`
 
 **Contains PII** — local folder only.

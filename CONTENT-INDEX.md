@@ -38,8 +38,8 @@ After markdown edits: `npm run build` (or `npm run watch`).
 
 | What users see          | File         | Field / location                                                         |
 | ----------------------- | ------------ | ------------------------------------------------------------------------ |
-| Browser tab title       | `index.html` | `<title>Operations Dashboard</title>`                      |
-| Main headline           | `index.html` | `.cockpit-title span` — “Operations Dashboard”; Gold       |
+| Browser tab title       | `index.html` | `<title>Pav Law Performance</title>`                      |
+| Main headline           | `index.html` | `.cockpit-title span` — “Pav Law Performance”       |
 | Subtitle + how-to intro | `index.html` | `.cockpit-subtitle`, `.cockpit-intro`, `.cockpit-howto`                  |
 | Default tab on load     | `app.js`     | `activeViewTab: "kpis"` — KPIs panel visible first                       |
 | Tab: Project Picklist   | `index.html` | `button[data-view="picker"]` — cart, outlines, Review Plan |
