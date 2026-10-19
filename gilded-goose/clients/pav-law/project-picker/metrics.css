@@ -9,7 +9,8 @@
   --gg-gold-dark: #b8860b;
   --gg-cream: #f8f5ef;
   --gg-cream-panel: #f3ede4;
-  --gg-chart-plot: #fff5ca;
+  /* LOCKED Kate 10/18/2026 · tile + chart plot wash · shield purple @ 15% · do not change */
+  --gg-chart-plot: color-mix(in srgb, #3a1a6e 15%, #fffcf7);
   --gg-paper: #fffcf7;
   --gg-brown: #3d3028;
   --gg-brown-muted: #5c4f45;
@@ -20,6 +21,19 @@
   --gg-lavender: #c4b5fd;
   --gg-royal-dim: rgba(45, 20, 84, 0.12);
   --gg-royal-border: rgba(45, 20, 84, 0.38);
+  --pav-shield-deep: #061028;
+  --pav-shield-navy: #0c1a48;
+  --pav-shield-blue: #1e3a8a;
+  /* Shield gem-fringe emerald · #008858 darkened 30% · Kate 10/18/2026 */
+  --pav-shield-green: #005f3e;
+  --pav-shield-green-deep: #00452d;
+  --pav-shield-gold: #d8a850;
+  --pav-shield-gold-dark: #b07828;
+  --pav-shield-gold-bright: #f8d888;
+  --pav-shield-mist: #d6e0f5;
+  --pav-shield-mint: #d4ede4;
+  --pav-shield-dim: rgba(12, 26, 72, 0.10);
+  --pav-shield-border: rgba(30, 58, 138, 0.42);
   --gg-burnt: #c45c26;
   --gg-forest: #2d5a3d;
   --gg-rose: #b23a78;
@@ -31,7 +45,7 @@
   --gg-series-2: #c45c26;
   --gg-series-3: #b23a78;
   --gg-series-4: #64748b;
-  --gg-head-accent: #c45c26;
+  --gg-head-accent: var(--pav-shield-gold-dark);
   --gg-negative: #cf2d56;
   --gg-positive: #1f8a65;
   --gg-contrast-dark: #000000;
@@ -184,9 +198,9 @@ body {
 }
 .kpi-report-pill:hover { background: var(--gg-royal-dim); color: var(--gg-royal); border-color: var(--gg-royal); }
 .kpi-report-pill.is-active {
-  background: var(--gg-royal); color: #fff; border-color: var(--gg-royal);
+  background: var(--pav-shield-green); color: #fff; border-color: var(--pav-shield-green-deep);
 }
-.kpi-report-pill.is-active:hover { background: var(--gg-royal); color: #fff; }
+.kpi-report-pill.is-active:hover { background: var(--pav-shield-green-deep); color: #fff; }
 .kpi-report-pill.is-unavailable,
 .kpi-report-pill:disabled {
   cursor: not-allowed;
@@ -236,14 +250,14 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-section-summary {
   cursor: pointer; padding: 0.85rem 1.15rem; list-style: none;
   display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-  background: var(--gg-royal-deep);
+  background: var(--pav-shield-blue);
   border-bottom: 1px solid transparent;
-  border-left: 4px solid var(--gg-burnt);
+  border-left: 0;
   user-select: none;
 }
-.kpi-section[open] .kpi-section-summary { border-bottom-color: var(--border); }
+.kpi-section[open] .kpi-section-summary { border-bottom-color: rgba(216, 168, 80, 0.4); }
 .kpi-section-summary::-webkit-details-marker { display: none; }
-.kpi-section-summary-static { cursor: default; border-bottom-color: var(--border); }
+.kpi-section-summary-static { cursor: default; border-bottom-color: rgba(216, 168, 80, 0.4); }
 .kpi-section-heading { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
 .kpi-section-title {
   font-size: 1.15rem; font-weight: 800; color: #fff;
@@ -251,7 +265,7 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-section-chevron { flex-shrink: 0; font-size: 0.95rem; color: #fff; font-weight: 700; transition: transform 0.2s ease; }
 .kpi-section[open] .kpi-section-chevron { transform: rotate(180deg); }
-.kpi-section-hint { font-size: var(--font-min-rem); font-weight: 600; color: var(--gg-lavender); text-transform: none; letter-spacing: 0; }
+.kpi-section-hint { font-size: var(--font-min-rem); font-weight: 600; color: var(--pav-shield-mist); text-transform: none; letter-spacing: 0; }
 .kpi-section-intro {
   margin: 0 0 1rem; padding: 0.75rem 0.95rem; font-size: 0.9375rem; line-height: 1.55;
   color: var(--gg-brown-muted); background: rgba(45, 20, 84, 0.06);
@@ -800,15 +814,12 @@ body.feedback-mode-on .feedback-target:hover {
   width: 100%;
   text-align: center;
 }
-/* Monthly KPI graph panel · same size on every tile · solid light gray · Kate 10/10/2026 tighten */
-.kpi-goals-grid .kpi-goal-card > .kpi-goal-visual,
-.kpi-goals-grid .kpi-goal-card.kpi-stat-gauge > .kpi-goal-visual,
-.kpi-goals-grid .kpi-goal-card.kpi-stat-answer-rate > .kpi-goal-visual,
-.kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar > .kpi-goal-visual {
-  background: #cfcfcf;
-  background-color: #cfcfcf;
-  background-image: none;
-  border: 1px solid #a8a8a8;
+/* LOCKED Kate 10/18/2026 · every KPI tile panel · --gg-chart-plot 15% · do not change */
+.kpi-goals-grid .kpi-goal-visual {
+  background: var(--gg-chart-plot) !important;
+  background-color: var(--gg-chart-plot) !important;
+  background-image: none !important;
+  border: 1px solid rgba(58, 26, 110, 0.22);
   border-radius: 10px;
   box-sizing: border-box;
   padding: 0.4rem 0.4rem 0.45rem;
@@ -862,14 +873,31 @@ body.feedback-mode-on .feedback-target:hover {
   text-transform: uppercase;
   color: var(--gg-royal, #3a1a6e);
 }
+/* Title pinned top · primary number/plot centers in leftover panel height */
 .kpi-goal-card .kpi-metric-with-delta,
-.kpi-stat-card.kpi-stat-gauge .kpi-metric-with-delta {
+.kpi-stat-card.kpi-stat-gauge .kpi-metric-with-delta,
+.kpi-goals-grid .kpi-goal-card > .kpi-goal-visual > .kpi-stat-val,
+.kpi-goals-grid .kpi-goal-card > .kpi-goal-visual > .kpi-yelp-single {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+.kpi-answer-rate-cluster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  width: 100%;
+  text-align: center;
 }
 .kpi-goal-card .kpi-gauge-val {
   font-size: 1.75rem; font-weight: 800; margin-top: 0.2rem;
@@ -962,12 +990,16 @@ body.feedback-mode-on .feedback-target:hover {
   font-size: 0.8rem; font-weight: 800; color: var(--gg-slate); margin-top: 0.15rem;
 }
 .kpi-section-goals {
-  background: color-mix(in srgb, var(--gg-royal) 7%, var(--gg-cream-panel));
-  border-color: var(--gg-royal-border);
+  background: color-mix(in srgb, var(--pav-shield-blue) 8%, var(--gg-cream-panel));
+  border-color: var(--pav-shield-border);
 }
 .kpi-section-goals > .kpi-section-summary {
-  background: var(--gg-royal-deep);
-  border-left-color: var(--gg-burnt);
+  background: var(--pav-shield-blue);
+  border-left: 0;
+}
+.kpi-section.kpi-section-goals > .kpi-section-summary + .kpi-section-body,
+.kpi-section.kpi-section-goals > .kpi-section-summary-static + .kpi-section-body {
+  padding-top: 20px;
 }
 .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
 .kpi-stat-val { display: block; font-size: 1.45rem; font-weight: 800; color: var(--gg-royal-deep); line-height: 1.1; }
@@ -1312,6 +1344,7 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-presence-on { background: rgba(31, 138, 101, 0.14); color: var(--gg-positive); }
 .kpi-presence-building { background: var(--gg-caution-dim); color: #785b00; }
 .kpi-presence-wip { background: var(--gg-caution-dim); color: #785b00; }
+.kpi-presence-revised { background: rgba(30, 58, 138, 0.12); color: #1e3a8a; }
 .kpi-presence-updated { background: rgba(30, 58, 138, 0.12); color: #1e3a8a; }
 .kpi-presence-outdated { background: rgba(207, 45, 86, 0.12); color: var(--gg-negative); }
 .kpi-presence-gap { background: rgba(45, 20, 84, 0.08); color: var(--gg-royal-mid); }

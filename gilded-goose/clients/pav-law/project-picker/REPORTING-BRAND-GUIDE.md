@@ -161,7 +161,7 @@ One map only — filter tiles + Project Outlines ICONS share `.value-icon.icon-{
 - Keep the existing **KPIs / Data / Guide** tabs and current tile grid.
 - Active tab = royal fill; inactive tabs remain paper with dark text.
 - KPI tile hierarchy: ID/label → large value → target/context → status.
-- Section heads: solid royal-deep background, white title, lavender hint, and burnt left rule. Do not use gradients or pale washes for KPI section headers.
+- Section heads: solid Pav shield blue background, white title, mist hint. No left gold rule. Do not use pale washes or teal/cyan for KPI section headers.
 - Rank / project-score columns and sort controls: royal purple (`--gg-royal`), not gold or forest green.
 - Callouts use a semantic left rule, light wash, aged-brass double outer line, and thin royal inner line; no diamond corner ornaments; no full-layout recolor.
 - Default shadow: `0 1px 4px rgba(45,20,84,.08)`. No heavy floating-card shadows.
@@ -218,7 +218,7 @@ Do not redesign the tile layout; future changes are color, typography, border, o
 - **Every chart card:** **required header title** in `.kpi-chart-head` via `chartBlock({ title })` — one clear title, no subtitle or period/source subhead. Section/panel titles are not a substitute. Then plot + detail table. **Never put a color key under the plot** — series swatches live in the detail table only. Opacity-only forecast states belong in the table or ? help.
 - **2-column lock · KPIs / Recommendations:** graph rows use `.data-chart-table-grid` / `chartPairGridHtml()` — two chart cards side by side, each with its breakdown table under the graph. Do not leave orphan full-width charts when a pair belongs in the section.
 - **Data tab split:** full-width cards in `.data-chart-table-stack`. Inside each card, `.kpi-chart-split` places the graph on the left and the descriptive detail table on the right. Graph SVGs must stay inside the plot column (`max-width: 100%`; long cash charts do not use the 70rem override here). Table column has its own paper background and left rule so nothing paints over it. Stacks to one column under 480px.
-- **Plot area:** light yellow `--gg-chart-plot` (`#fff5ca`) behind every graph for series contrast; stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
+- **Plot area · LOCKED Kate 10/18/2026:** `--gg-chart-plot` = `color-mix(#3a1a6e 15%, #fffcf7)` behind every graph and every KPI `.kpi-goal-visual` panel. Do not change opacity. Stacked segments use one royal-deep outline — never white/paper hairlines. Keep the surrounding chart card paper `#fffcf7`.
 - **Chart border:** thin royal inner line plus aged-brass accent details; ornament must not compete with labels or data.
 - **Time axis direction:** every chart month or period axis reads **oldest → newest, left to right**, so the most recent period is the rightmost bar or point. Caption the direction as `oldest → newest`. Detail-table month rows use current month first. Chart order and table row order are intentionally different.
 - **Forecast periods:** extend to the right of the last actual period, separated by a dashed divider, drawn at reduced opacity, with the actual and forecast spans captioned above the plot.

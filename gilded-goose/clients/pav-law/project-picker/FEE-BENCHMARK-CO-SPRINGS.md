@@ -37,7 +37,7 @@
 | -------- | --------------------------------------- | ------------------------ | -------------------- | -------- | -------------------------------------------------------------------------------------- |
 | RETAINER | Digital Ads Maintenance Retainer        | $2,700/mo                | **$2,900/mo**        | +$200/mo | Approved                                                                               |
 | DataMgmt      | Data Management — Retainer              | $500/mo                  | **merged OpsDash**   | n/a      | Folded into Platform Management 09/17/2026                                              |
-| OpsDash       | Platform Management                     | $800/mo                  | **$500/mo**          | −$300/mo | Revised 09/17/2026 · light 3-system oversight · not full MSP · file id TsMgmt |
+| OpsDash       | Platform Management                     | $800/mo                  | **$600/mo**          | −$200/mo | Revised 10/01/2026 · platforms plus light computer, internet, phone plan, and short tool look · not full MSP · file id TsMgmt |
 | LsaCall      | LSA Call Process Update                 | $0                       | **$1,500**           | +$1,500  | Approved                                                                               |
 | MyCaseClr      | MyCase Data Cleanse                     | $0                       | **$1,500**           | +$1,500  | Approved                                                                               |
 | DigProf      | Digital Presence Refresh                | $1,400                   | **$1,800**           | +$400    | Approved                                                                               |

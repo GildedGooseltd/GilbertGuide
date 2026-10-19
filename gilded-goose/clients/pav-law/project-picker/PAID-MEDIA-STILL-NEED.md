@@ -17,7 +17,7 @@ Last Downloads scan: 10/18/2026 · Yelp Ads Desktop screenshots + Ad Analytics O
 | LSA spend | account_activities_202610 (2).csv | Home Services $1,339.56 on 5 billed leads · Lead Cost uses charged · Lead Calls uses inbox 19 |
 | Ledger Credits | ledger_account_activity_report (12).csv | Wired · Oct* $58,050 through 10/17 · Jul restated $112,350 |
 | HubSpot forms | hubspot-custom-report-form-submits-2026-10-18.zip | Opened 10/18 · lifetime Number of Form Submissions 28 · no Conversion Date · cannot count Oct MTD · need form-submissions export with Conversion Date like Jul 16 files |
-| Yelp contacts | Desktop screenshots 10/18 6:19–6:21 PM · Yelp Ad Analytics Oct 1–17 CSV | Wired · Oct by-type 11 · contacts 4 · Ads 10 · spend $927.48 · CPC $13.25 · CPL $92.75 · Guide Yelp Leads fresh · Yelp Reviews still 10/01 PDF · need fresh Reviews pull |
+| Yelp contacts | Desktop screenshots 10/18 6:19–6:21 PM · Yelp Ad Analytics Oct 1–17 CSV | Wired · Oct by-type 11 · contacts 4 · Ads 10 · spend $927.48 · CPC $13.25 · CPL $92.75 · Guide Yelp Leads fresh · Yelp Reviews 8 confirmed 10/18 |
 
 ## Sep* snapshot from 09/28 pull
 
