@@ -711,6 +711,11 @@
     return normalizeStatus(item) === "inactive";
   }
 
+  /** Scoped Planning · proposal tile format · not In Progress status report. */
+  function isPlanningProject(item) {
+    return normalizeStatus(item) === "planning";
+  }
+
   /** Overview tiles for WIP / Launched · light green In Progress style. */
   function inProgressOverviewProjects() {
     return orderedProjects().filter(p => {
@@ -726,6 +731,15 @@
       if (!isPicklistCatalogItem(p)) return false;
       if (p.monthlyOnly || isCompletedStatus(p) || isPlanningPublish(p)) return false;
       return isInactiveProject(p);
+    });
+  }
+
+  /** Planning proposal tiles · still on Project Overviews · not In Progress report layout. */
+  function planningOverviewProjects() {
+    return orderedProjects().filter(p => {
+      if (!isPicklistCatalogItem(p)) return false;
+      if (p.monthlyOnly || isCompletedStatus(p) || isPlanningPublish(p)) return false;
+      return isPlanningProject(p);
     });
   }
 
@@ -5433,10 +5447,18 @@
           const pack = projectProgressPack(item);
           const along = pack.pct != null ? ` ${pack.pct}% along.` : "";
           return `<div class="project-overview-section project-overview-inactive">
-            <p class="project-overview-inactive-note"><strong>Project inactive.</strong>${escapeHtml(along)} Proposal format · not an active status report.</p>
+            <p class="project-overview-inactive-note">Project inactive.${escapeHtml(along)} Proposal format · not an active status report.</p>
           </div>`;
         })()
-      : "";
+      : isPlanningProject(item)
+        ? (() => {
+            const pack = projectProgressPack(item);
+            const along = pack.pct != null ? ` ${pack.pct}% along.` : "";
+            return `<div class="project-overview-section project-overview-inactive">
+            <p class="project-overview-inactive-note">Project planning.${escapeHtml(along)} Proposal format · not an active status report.</p>
+          </div>`;
+          })()
+        : "";
     bodyEl.innerHTML = `
       ${inactiveNote}
       ${projectWipOverviewHtml(item)}
@@ -5477,13 +5499,16 @@
     return null;
   }
 
-  /** Quote catalog rows plus In Progress / Inactive overview tiles. */
+  /** Quote catalog rows plus In Progress / Inactive / Planning overview tiles. */
   function calculatorWorkingProjects() {
     const byId = new Map();
     inProgressOverviewProjects().forEach(item => {
       if (item) byId.set(item.id, item);
     });
     inactiveOverviewProjects().forEach(item => {
+      if (item) byId.set(item.id, item);
+    });
+    planningOverviewProjects().forEach(item => {
       if (item) byId.set(item.id, item);
     });
     rankedCalculatorCatalog().forEach(r => {
@@ -5499,7 +5524,8 @@
     const sel = isItemSelected(item);
     const summary = itemTldr(item) || "—";
     const inactive = !isRetainer && isInactiveProject(item);
-    const inProgress = !isRetainer && !inactive && isActiveWorkStatus(item);
+    const planning = !isRetainer && !inactive && isPlanningProject(item);
+    const inProgress = !isRetainer && !inactive && !planning && isActiveWorkStatus(item);
     /* Progress only · no fee / quote amounts on proposal tiles · Kate 10/17/2026 */
     const metaHtml = inProgress ? projectTileProgressMetaHtml(item) : "";
     const img = projectTileImageSrc(item);
@@ -5512,22 +5538,26 @@
     const selFirst = isFirstSelected ? " selected-first" : "";
     const reqClass = required ? " tile-required" : "";
     const pack = projectProgressPack(item);
-    const inactiveChip = inactive
+    const statusChip = inactive
       ? `<span class="project-tile-wip-chip project-tile-inactive-chip" title="Project inactive${
           pack.pct != null ? ` · ${pack.pct}% along` : ""
         }">Inactive</span>`
-      : "";
-    /* Same rainbow bar for active + inactive when % is known · Kate 10/10/2026 */
+      : planning
+        ? `<span class="project-tile-wip-chip project-tile-planning-chip" title="Project planning${
+            pack.pct != null ? ` · ${pack.pct}% along` : ""
+          }">Planning</span>`
+        : "";
+    /* Same rainbow bar for active + inactive / planning when % is known · Kate 10/10/2026 */
     const progressBar =
-      inProgress || (inactive && pack.pct != null) ? projectTileProgressBarHtml(pack.pct) : "";
+      inProgress || ((inactive || planning) && pack.pct != null) ? projectTileProgressBarHtml(pack.pct) : "";
     const inProgressClass = inProgress ? " project-tile-in-progress card-status-in-progress" : "";
-    const inactiveClass = inactive ? " project-tile-inactive" : "";
+    const inactiveClass = inactive || planning ? " project-tile-inactive" : "";
     return `
       <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}${inProgressClass}${inactiveClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" data-status="${escapeHtml(normalizeStatus(item))}" role="button" tabindex="0" aria-label="Open overview for ${escapeHtml(item.title)}">
         <div class="project-tile-media">
           <img class="${imgClass}" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="400">
           ${brandLogoHtml}
-          ${inactiveChip}
+          ${statusChip}
         </div>
         ${progressBar}
         <div class="project-tile-body">
@@ -5621,18 +5651,22 @@
     const working = calculatorWorkingProjects()
       .slice()
       .sort((a, b) => {
-        /* Kate 10/10/2026 · SwagPrint last among calculator tiles */
+        /* Kate 10/18/2026 · Platform Management last among calculator tiles */
+        if (a.id === "TsMgmt") return 1;
+        if (b.id === "TsMgmt") return -1;
+        /* Kate 10/10/2026 · SwagPrint next-to-last */
         if (a.id === "SwagPrint") return 1;
         if (b.id === "SwagPrint") return -1;
         const rank = item => {
           if (isActiveWorkStatus(item)) return 0;
-          if (isInactiveProject(item)) return 1;
-          return 2;
+          if (isPlanningProject(item)) return 1;
+          if (isInactiveProject(item)) return 2;
+          return 3;
         };
         const aProg = rank(a);
         const bProg = rank(b);
         if (aProg !== bProg) return aProg - bProg;
-        return Number(a.id === "TsMgmt") - Number(b.id === "TsMgmt");
+        return 0;
       });
     const controls = document.querySelector(".project-list-controls");
     if (controls) controls.hidden = true;

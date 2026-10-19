@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261018-dqg-no-hint";
+  const RENDER_VER = "20261018-c2c-yelp-lsa-only";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["October 2026", "September 2026", "August 2026", "July 2026", "June 2026", "May 2026"];
@@ -7750,13 +7750,13 @@
     const m = metrics || {};
     if (m.ctr == null) return "";
     const key = String(monthKey || periodToChannelMonth(DATA.period) || "").replace(/\*$/, "");
-    const searchCtr = m.ctr != null ? `${Math.round(m.ctr * 10) / 10}%` : "—";
+    const searchCtr = m.ctr != null ? `${Math.round(m.ctr * 10) / 10}` : "—";
     const rows = [
       ["Search Campaign", `${m.clicks != null ? m.clicks : "—"} clicks · ${m.impressions != null ? Number(m.impressions).toLocaleString("en-US") : "—"} impr · ${searchCtr}`]
     ];
     const yelp = yelpAdAnalyticsForMonth(key);
     if (yelp) {
-      const yCtr = `${Math.round(yelp.ctr * 10) / 10}%`;
+      const yCtr = `${Math.round(yelp.ctr * 10) / 10}`;
       rows.push(["Yelp Ads", `${yelp.clicks} clicks · ${yelp.impressions.toLocaleString("en-US")} impr · ${yCtr}`]);
     }
     return goalTrackRows(rows);
@@ -7783,10 +7783,7 @@
     const m = metrics || {};
     if (m.clickToCall == null) return "";
     const key = String(monthKey || periodToChannelMonth(DATA.period) || "").replace(/\*$/, "");
-    const rows = [
-      ["Search Campaign", `${m.clicks != null ? m.clicks : "—"} clicks`],
-      ["Search Call details", `${m.phones != null ? m.phones : "—"} phones`]
-    ];
+    const rows = [];
     const y = DATA.yelpBaseline || {};
     const yClicksMap = y.adClicksByMonth || {};
     let yClicks = yClicksMap[key] != null ? Number(yClicksMap[key]) : null;

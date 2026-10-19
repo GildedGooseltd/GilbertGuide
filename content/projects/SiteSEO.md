@@ -5,7 +5,7 @@
 | -------------- | ----------------- |
 | Priority group | 4                 |
 | Fee            | 4000              |
-| Status         | wip               |
+| Status         | Planning          |
 | Category       | Website / SEO     |
 | Campaign type  | SEO & Site Update |
 | Parent         | HsWebRebuild      |

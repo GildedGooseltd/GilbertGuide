@@ -2389,7 +2389,7 @@ window.PROJECT_DATA = {
     {
       "priorityGroup": 4,
       "fee": 4000,
-      "status": "wip",
+      "status": "planning",
       "category": "Website / SEO",
       "campaignType": "SEO & Site Update",
       "parentId": "HsWebRebuild",
