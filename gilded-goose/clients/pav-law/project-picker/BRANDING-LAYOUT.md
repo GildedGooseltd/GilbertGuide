@@ -134,18 +134,18 @@ To switch cockpit body to sans: change only `body { font-family }` in `index.htm
 
 ```
 ┌─ cockpit-header ───────────── title + subtitle
-├─ cockpit-tabs ─────────────── KPIs | Data | Lead Source | Project Picklist
+├─ cockpit-tabs ─────────────── KPIs | Data | Lead Source | Project Status Updates
 │
 ├─ [KPIs] ───────────────────── kpi-report.js → #kpi-report-kpis
 │     collapsible .kpi-section (<details>)
 │     .kpi-stat-card / .kpi-goal-card tiles
 │     .kpi-split-grid → .kpi-split-panel (side-by-side; stack ≤900px)
 ├─ [Impact] ─────────────────── #completed-list + #revenue-calculator
-└─ [Project Picklist]
-   ├─ .picker-zone-priorities ── selection + Pav Priorities
-   ├─ WIP on project tiles + overview popup · not a separate cockpit tab
+└─ [Project Status Updates]
+   ├─ .picker-zone-priorities ── Quote Calculator hidden while no open bids
+   ├─ WIP on project tiles + overview popup · status % on overview bullets
    ├─ .picker-zone-outlines ──── value filters + priority table
-   └─ .picker-zone-cards ─────── project cards → submit
+   └─ .picker-zone-cards ─────── project cards → overviews
 
 Overlays: Gilbert chat · confirm · thank-you
 ```
@@ -155,7 +155,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
 | KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
-| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid. Inner `.kpi-goal-visual` plot panel is fixed height `17.75rem` on every tile, solid light gray `#e8e8e8` with `#c8c8c8` border — not purple wash, not white |
+| Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid. Inner `.kpi-goal-visual` plot panel is fixed height `12rem` on every tile, solid mid gray `#cfcfcf` with `#a8a8a8` border — not purple wash, not white. Kate 10/18/2026 darken from `#e8e8e8`. **Title** `.kpi-stat-id` sits at the top of that panel · uppercase · letter-spacing · royal serif · plot/gauge fills the space below |
 | Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
 | KPI tile grid     | `.kpi-tiles-4`                         | Goal cards and metric tiles in one flow, 4 per row; narrow-pane trim ≤1000px, 2-col ≤560px, 1-col ≤380px |
 | Split grids       | `.kpi-split-grid`, `.kpi-split-panel`  | Shared box chrome; 2-col → 1-col ≤900px         |

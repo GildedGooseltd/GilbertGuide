@@ -2493,6 +2493,10 @@ window.PROJECT_DATA = {
         "After Domestic Violence SEO · Yelp Projects with UTMs · Yelp.md",
         "After destinations ready · LegalDirs Justia / FindLaw / Avvo UTMs · LegalDirs.md",
         "Monthly readout · GA4 · HubSpot forms · Yelp · directory sources on Phase 1 URLs",
+        "Links / PR · local backlinks · guest posts or outreach on hire pages after Phase 1C landings convert · not volume for its own sake",
+        "Ongoing tech SEO · after the 68 HubSpot errors · regular crawl health · Core Web Vitals · schema · sitemap · noindex prune on ghosts and taxonomy",
+        "SEO readout on Guide dash · organic sessions · clicks · rankings or impressions on Phase 1 URLs · form submits · phone clicks · beside Ads KPIs · monthly cadence",
+        "AEO updates · AI-search readiness on hire pages · FAQ schema when approved · clear answers · entity / NAP consistency · refresh from Semrush AI / AEO checks",
         "`/areas-of-practice/domestic-violence/` · port Justia live DV FAQs · short answers · no outcome promises",
         "`/areas-of-practice/dui-dwai/` · port Justia live DUI FAQs · Express Consent / dual-track language",
         "`/areas-of-practice/protection-orders/` · pull contact / order FAQs from DV live set · cross-link DV",
@@ -2514,7 +2518,7 @@ window.PROJECT_DATA = {
         "Andrew signed Phase 1 fee · card $7,600 · see Price evaluation below"
       ],
       "progressDoneCount": 0,
-      "progressOpenCount": 60,
+      "progressOpenCount": 64,
       "progressPct": 0,
       "abQuestions": [],
       "kpiRefs": [],
@@ -2713,6 +2717,78 @@ window.PROJECT_DATA = {
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 2000,
       "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.31 (17 units) · complexity ×1.232"
+    },
+    {
+      "priorityGroup": 4,
+      "fee": 4000,
+      "status": "wip",
+      "category": "Website / SEO",
+      "campaignType": "SEO & Site Update",
+      "parentId": "HsWebRebuild",
+      "id": "SiteSEO",
+      "title": "Website & SEO Improvements",
+      "tldr": "Rebuild pav.law on HubSpot with SEO cutover over time, but audit and improve the current WordPress site now. Align ad campaigns with the SEO updates so web and PPC perform better together.",
+      "description": "Rebuild pav.law on HubSpot with SEO cutover over time, but audit and improve the current WordPress site now. Align ad campaigns with the SEO updates so web and PPC perform better together.\n\n- GA4 audit & rank: Audit page activity and rank what is performing best and getting the most traffic. Cross-reference with Andrew’s top practice-area expansion goals. Detail: SCRUBBED-REPORTING.\n- Yelp ↔ website: Matching practice-page deep links\n- WIP",
+      "valueAdded": [
+        "Rebuild pav.law on HubSpot with SEO cutover over time, but audit and improve the current WordPress site now. Align ad campaigns with the SEO updates so web and PPC perform better together.",
+        "GA4 audit & rank: Audit page activity and rank what is performing best and getting the most traffic. Cross-reference with Andrew’s top practice-area expansion goals. Detail: SCRUBBED-REPORTING.",
+        "Yelp ↔ website: Matching practice-page deep links",
+        "WIP"
+      ],
+      "hubSpotParts": [
+        "CMS · WordPress cleanse plus HubSpot page rebuild on the same outlines",
+        "Forms · capture on Ads · Yelp · directory practice pages",
+        "Marketing Hub · SEO recommendations and page monitoring"
+      ],
+      "progressDoneItems": [],
+      "progressOpenItems": [],
+      "progressDoneCount": 0,
+      "progressOpenCount": 0,
+      "overviewBulletStatus": [
+        {
+          "bullet": "GA4 audit & rank",
+          "emoji": "",
+          "status": "waiting",
+          "pct": 10
+        },
+        {
+          "bullet": "Yelp ↔ website",
+          "emoji": "",
+          "status": "waiting",
+          "pct": 10
+        }
+      ],
+      "progressPct": 10,
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Website & SEO",
+      "estCostLabel": "$4,000",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5,
+      "feeEstimate": 3700,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "sprint_general",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2900,
+      "feeEstimateNationalMid": 3900,
+      "feeEstimateScope": {
+        "raw": 5.28,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.27
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": -300,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.12 (5.28 units) · complexity ×1"
     },
     {
       "priorityGroup": "AdHoc",

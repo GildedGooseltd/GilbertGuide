@@ -805,10 +805,10 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-goals-grid .kpi-goal-card.kpi-stat-gauge > .kpi-goal-visual,
 .kpi-goals-grid .kpi-goal-card.kpi-stat-answer-rate > .kpi-goal-visual,
 .kpi-goals-grid .kpi-goal-card.kpi-stat-target-bar > .kpi-goal-visual {
-  background: #e8e8e8;
-  background-color: #e8e8e8;
+  background: #cfcfcf;
+  background-color: #cfcfcf;
   background-image: none;
-  border: 1px solid #c8c8c8;
+  border: 1px solid #a8a8a8;
   border-radius: 10px;
   box-sizing: border-box;
   padding: 0.4rem 0.4rem 0.45rem;
@@ -905,6 +905,22 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-cash-week-track tr.kpi-week-proj td {
   color: #0f766e;
   font-weight: 600;
+}
+.kpi-cash-week-track th .kpi-week-hit {
+  display: inline-block;
+  margin-left: 0.2rem;
+  color: var(--gg-positive, #1f8a65);
+  font-weight: 900;
+  font-size: 0.72rem;
+  line-height: 1;
+  vertical-align: 0.05em;
+}
+.kpi-cash-week-track tr.kpi-week-done.kpi-week-hit-row th,
+.kpi-cash-week-track tr.kpi-week-done.kpi-week-hit-row td {
+  opacity: 0.85;
+}
+.kpi-cash-week-track tr.kpi-week-done.kpi-week-hit-row th .kpi-week-hit {
+  opacity: 1;
 }
 .kpi-goals-grid .kpi-goal-track tr { height: 1.65rem; }
 .kpi-goals-grid .kpi-goal-track th,
@@ -1017,9 +1033,10 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-verified-mark::before { content: none; display: none; }
 .kpi-verified-mark-inline { margin-right: 0.15rem; }
 .kpi-aug-updated .kpi-help,
+.kpi-wip .kpi-help,
 .kpi-outdated .kpi-help,
 .kpi-verified .kpi-help {
-  right: 7.25rem;
+  right: 5.5rem;
 }
 .kpi-aug-updated-mark,
 .kpi-outdated-mark {
@@ -1039,8 +1056,18 @@ body.feedback-mode-on .feedback-target:hover {
   color: var(--gg-royal, #3a1a6e);
   line-height: 1;
   min-width: 0.85rem;
-  text-align: right;
+  text-align: left;
   flex-shrink: 0;
+}
+.kpi-goal-card > .kpi-tile-num,
+.kpi-stat-card > .kpi-tile-num,
+.kpi-chart-card > .kpi-tile-num,
+.kpi-split-panel > .kpi-tile-num {
+  position: absolute;
+  top: 0.28rem;
+  left: 0.4rem;
+  z-index: 3;
+  pointer-events: none;
 }
 .kpi-tile-asof {
   font-size: 0.58rem;
@@ -1246,6 +1273,13 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-section .kpi-chart-card > .kpi-aug-updated-mark,
 .kpi-section .kpi-chart-card > .kpi-unverified-mark {
   display: none;
+}
+/* Nested card WIP only when the parent panel has no corner mark of its own. */
+.kpi-split-panel:has(> .kpi-wip-mark) .kpi-chart-card > .kpi-wip-mark,
+.kpi-section:has(> .kpi-wip-mark) .kpi-chart-card > .kpi-wip-mark,
+.kpi-split-panel:has(> .kpi-outdated-mark.kpi-wip-corner) .kpi-chart-card > .kpi-wip-mark,
+.kpi-section:has(> .kpi-outdated-mark.kpi-wip-corner) .kpi-chart-card > .kpi-wip-mark {
+  display: none !important;
 }
 .kpi-split-panel .kpi-chart-card > .kpi-wip-mark,
 .kpi-section .kpi-chart-card > .kpi-wip-mark {
@@ -1760,6 +1794,12 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   box-sizing: border-box;
   position: relative;
   z-index: 1;
+}
+.kpi-chart-series-key {
+  margin: 0 0 0.55rem;
+}
+.kpi-chart-series-key .kpi-stack-legend {
+  margin: 0;
 }
 #kpi-report-data .kpi-chart-split .kpi-chart-detail,
 #kpi-report-data .kpi-chart-split .kpi-table-acc {

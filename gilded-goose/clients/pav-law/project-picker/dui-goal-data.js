@@ -19,8 +19,8 @@ window.DUI_GOAL_DATA = {
   exportStrictCount: 20,
   exportNote:
     "Recheck 10/17/2026 from Contact_10-17-2026.csv = DUI/DWAI 20 · Traffic 22 · Auto total 42 / 50 · pace 84%. Unchanged vs Contact_10-08. Traffic = practice-area (Traffic) tag without DUI/DWAI. No new Auto YTD through Created 10/13.",
-  updatedAt: "2026-10-17",
-  notes: "Verified from Cases practice area (Traffic) tag + DUI/DWAI practice rule on Contact_10-17-2026.csv. Chart = DUI/DWAI + Traffic; total = sum; target line is annual auto goal. Last updated 10/17/2026.",
+  updatedAt: "2026-10-18",
+  notes: "Verified from Cases practice area (Traffic) tag + DUI/DWAI practice rule on Contact_10-17-2026.csv. Chart = DUI/DWAI + Traffic; total = sum; target line is annual auto goal. Recheck 10/18/2026 unchanged.",
   /* Auto chart #03 · two buckets. Traffic = Speeding + Careless + Reckless + Other. */
   autoColumns: [
     { label: "DUI/DWAI", current: 20, vsTarget: true },

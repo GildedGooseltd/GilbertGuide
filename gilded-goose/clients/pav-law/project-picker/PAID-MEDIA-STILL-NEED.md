@@ -2,7 +2,7 @@
 
 Simple name list for LSA + Search staging. Aggregates only. Do not file Contact, Call details caller rows, or LSA inbox Customer names into the repo.
 
-Last Downloads scan: 10/17/2026 evening · Contact · Trust · Case balance wired. Gaps below still block full Oct MTD.
+Last Downloads scan: 10/18/2026 · Yelp Ads Desktop screenshots + Ad Analytics Oct 1–17 wired. Gaps below still block full Oct MTD.
 
 ## Oct* · wired 10/17 · still need for full MTD
 
@@ -16,8 +16,8 @@ Last Downloads scan: 10/17/2026 evening · Contact · Trust · Case balance wire
 | LSA inbox | leads-inbox (26).csv | Wired · 19 Oct received Oct 2–9 · 5 charged / 14 not charged |
 | LSA spend | account_activities_202610 (2).csv | Home Services $1,339.56 on 5 billed leads · Lead Cost uses charged · Lead Calls uses inbox 19 |
 | Ledger Credits | ledger_account_activity_report (12).csv | Wired · Oct* $58,050 through 10/17 · Jul restated $112,350 |
-| HubSpot forms | — | No newer form-submit after 10/02 |
-| Yelp contacts | Ads screenshots 10/08 · Kate 10/17 | Oct calendar contacts 0 · last-30 panel 15 not used on Lead Calls · spend Oct 1–7 $399.90 on Ad Spend only |
+| HubSpot forms | hubspot-custom-report-form-submits-2026-10-18.zip | Opened 10/18 · lifetime Number of Form Submissions 28 · no Conversion Date · cannot count Oct MTD · need form-submissions export with Conversion Date like Jul 16 files |
+| Yelp contacts | Desktop screenshots 10/18 6:19–6:21 PM · Yelp Ad Analytics Oct 1–17 CSV | Wired · Oct by-type 11 · contacts 4 · Ads 10 · spend $927.48 · CPC $13.25 · CPL $92.75 · Guide Yelp Leads fresh · Yelp Reviews still 10/01 PDF · need fresh Reviews pull |
 
 ## Sep* snapshot from 09/28 pull
 
@@ -30,7 +30,7 @@ Last Downloads scan: 10/17/2026 evening · Contact · Trust · Case balance wire
 | Yelp spend | Yelp Ad Analytics for Sep 1, 2026 - Sep 27, 2026.csv | Ad spend $432.67 · 62 clicks · no leads-by-type breakout in this CSV |
 | Contact | Contact_09-28-2026.csv · 6:35 PM | Client Created Sep* 14 through 09/23 · no new Client creates 09/24–09/28 · on dash |
 | Ledger / Trust | ledger_account_activity_report (9).csv · 6:37 PM | Sep* Credits $100,010 through 09/25 · on dash · W4 week $13,545 |
-| HubSpot forms | — | No form-submit export in today’s Downloads |
+| HubSpot forms | Sep still from 10/02 monthly · 4 | 10/18 zip is lifetime only · re-pull Sep/Oct with Conversion Date if Sep needs a recheck |
 
 Case List / Trust Summary still on disk from earlier tonight · not used for #02 or Revenue.
 
@@ -71,8 +71,10 @@ Search Campaign
 
 Yelp
 
-- Yelp Ad Analytics for Sep 1, 2026 - Sep 27, 2026.csv · spend only
-- Leads-by-type still needs a screenshot or Leads export · Sep* contacts not refreshed from this spend CSV alone
+- Desktop screenshots 10/18 6:19–6:21 PM · Oct by-type + Ads/Organic + last-30 clicks + billing spend wired
+- Yelp Ad Analytics for Oct 1, 2026 - Oct 17, 2026.csv · spend $927.48 · 70 clicks · CPC $13.25
+- Reviews still from 10/01/2026 PDF · need fresh Reviews pull for Yelp Reviews tile
+- Sep Ad Analytics for Sep 1–27 still on file for Sep spend $432.67
 
 MyCase
 
