@@ -136,6 +136,7 @@
     LawyerRef: 3,
     NetCoach: 3,
     HsWebRebuild: 4,
+    SiteSEO: 4,
     HsLanding: 4,
     HsEmailSetup: 4,
     AffirmEmail: 4,
@@ -631,7 +632,8 @@
     "InsMailer",
     "WasteAud",
     "CaseWins",
-    "TwistWrnch"
+    "TwistWrnch",
+    "SiteSEO"
   ]);
 
   function normalizeCatalogId(item) {
@@ -5460,7 +5462,8 @@
       LegalDirs: "assets/network-internet.svg",
       HolidayAds: "assets/gigi-celebrating.png",
       WinterAds: "assets/gigi-celebrating.png",
-      DigProf: "assets/pav-law-shield.svg",
+      DigProf: "assets/pav-law-logo-wordmark.png?v=20261018-pl-white",
+      SiteSEO: "assets/pav-law-logo-wordmark.png?v=20261018-pl-white",
       DataMgmt: "assets/gigi-lightbulb-idea.png",
       OpsDash: "assets/systems-admin-tile.svg",
       TsMgmt: "assets/systems-admin-tile.svg",
@@ -5504,7 +5507,7 @@
     const brandLogoHtml = brandLogo
       ? `<img class="project-tile-brand-logo" src="${escapeHtml(brandLogo.src)}" alt="${escapeHtml(brandLogo.alt)}" width="48" height="48" loading="lazy">`
       : "";
-    const brandTile = id === "Yelp" || id === "AdEnhance";
+    const brandTile = id === "Yelp" || id === "AdEnhance" || id === "SiteSEO" || id === "DigProf";
     const imgClass = brandTile ? "project-tile-image project-tile-image-brand" : "project-tile-image";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const reqClass = required ? " tile-required" : "";

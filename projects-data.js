@@ -2387,6 +2387,78 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "profiles local lane · local mid $1,850 · national mid $2,500 · scope ×1.28 (14.63 units) · complexity ×1.1"
     },
     {
+      "priorityGroup": 4,
+      "fee": 4000,
+      "status": "wip",
+      "category": "Website / SEO",
+      "campaignType": "SEO & Site Update",
+      "parentId": "HsWebRebuild",
+      "id": "SiteSEO",
+      "title": "Website & SEO Improvements",
+      "tldr": "Rebuild pav.law on HubSpot with SEO cutover over time, but audit and improve the current WordPress site now. Align ad campaigns with the SEO updates so web and PPC perform better together.",
+      "description": "Rebuild pav.law on HubSpot with SEO cutover over time, but audit and improve the current WordPress site now. Align ad campaigns with the SEO updates so web and PPC perform better together.\n\n- GA4 audit & rank: Audit page activity and rank what is performing best and getting the most traffic. Cross-reference with Andrew’s top practice-area expansion goals. Detail: SCRUBBED-REPORTING.\n- Yelp ↔ website: Matching practice-page deep links\n- WIP",
+      "valueAdded": [
+        "Rebuild pav.law on HubSpot with SEO cutover over time, but audit and improve the current WordPress site now. Align ad campaigns with the SEO updates so web and PPC perform better together.",
+        "GA4 audit & rank: Audit page activity and rank what is performing best and getting the most traffic. Cross-reference with Andrew’s top practice-area expansion goals. Detail: SCRUBBED-REPORTING.",
+        "Yelp ↔ website: Matching practice-page deep links",
+        "WIP"
+      ],
+      "hubSpotParts": [
+        "CMS · WordPress cleanse plus HubSpot page rebuild on the same outlines",
+        "Forms · capture on Ads · Yelp · directory practice pages",
+        "Marketing Hub · SEO recommendations and page monitoring"
+      ],
+      "progressDoneItems": [],
+      "progressOpenItems": [],
+      "progressDoneCount": 0,
+      "progressOpenCount": 0,
+      "overviewBulletStatus": [
+        {
+          "bullet": "GA4 audit & rank",
+          "emoji": "",
+          "status": "waiting",
+          "pct": 10
+        },
+        {
+          "bullet": "Yelp ↔ website",
+          "emoji": "",
+          "status": "waiting",
+          "pct": 10
+        }
+      ],
+      "progressPct": 10,
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "Website & SEO",
+      "estCostLabel": "$4,000",
+      "paymentPlanLabel": "50%",
+      "depositPct": 0.5,
+      "feeEstimate": 3700,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "sprint_general",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2900,
+      "feeEstimateNationalMid": 3900,
+      "feeEstimateScope": {
+        "raw": 5.28,
+        "parts": {
+          "valueAdd": 4,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 1.27
+        }
+      },
+      "feeEstimateComplexity": 1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": -300,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.12 (5.28 units) · complexity ×1"
+    },
+    {
       "priorityGroup": "AdHoc",
       "fee": 1600,
       "invoiceCount": 3,

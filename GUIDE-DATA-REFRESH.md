@@ -82,6 +82,10 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 10/18/2026 | HubSpot first-conversion chart. Oct forms 3. May 7, Jun 8, Jul 6, Aug 0, Sep 4 already matched. Lead Calls 36. Websites bar on the monthly graph uses that 3. Zip still has no date column. RENDER_VER 20261018-hsforms3. |
+| 10/18/2026 | Evening DL · Campaign (50) Oct 1–17 live HS Impr 7,113 · clicks 539 · Cost $6,543.42. Call details (20) All-time is Military-only · skipped. Phones stay Call details (19) = 14. Search $/phone stays activities $6,533.46 ÷ 14 ≈ $467. Lead Calls 34 · cases 9 · LSA 19/5 charged unchanged. |
+| 10/18/2026 | Tile corner audit · green=fresh · red=stale · yellow WIP=missing. Recheck Contact Auto 20+22=42 · Oct clients 9 · CD19 phones 14. WIP Lead Calls HubSpot Oct forms. Red Yelp Reviews PDF 10/01 only. RENDER_VER 20261018-tileaudit. |
+| 10/18/2026 | Call count ignores the 60-second rule. Any Call details row counts. Received and missed. |
 | 10/17/2026 | Evening DL · Contact_10-17 Oct cases 7→9 · Trust snapshot 10/17 · Case_balance · Swag 41% · ledger (12) Oct* $58,050 · then Yelp Oct contacts 0 · Lead Calls 34 · LSA Lead Cost ÷ charged 5 not inbox 19. |
 | 10/17/2026 | Morning DL · Call details (19) Oct Search 14 · leads-inbox (26) LSA 19 · account_activities_202610 (2) Search $6,533.46 · LSA $1,339.56 · Time_series Oct Impr 7,023 · Lead Calls 49 · Campaign (48) All-time skipped. |
 | 10/09/2026 | DL refresh · Call details (17) Oct Search 8 · Contact_10-09 Oct cases 7 · Lead Calls 26. LSA inbox / Billing / ledger / Campaign calendar Impr unchanged. Campaign (47) All-time skipped for Oct Impr. |
