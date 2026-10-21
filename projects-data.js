@@ -2462,7 +2462,7 @@ window.PROJECT_DATA = {
       "priorityGroup": "AdHoc",
       "fee": 1600,
       "invoiceCount": 3,
-      "status": "inactive",
+      "status": "planning",
       "campaignType": "Print & Production",
       "id": "SwagPrint",
       "title": "Printables, Swag & Apparel",
@@ -2545,16 +2545,21 @@ window.PROJECT_DATA = {
       "id": "TsMgmt",
       "title": "Platform Management",
       "tldr": "Monthly retainer for MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance. Also covers light computer and internet support, cell phone plan admin, and a short look at accounts such as Dropbox. The mix can flex a little month to month at the same fee. A full outage, a phone migration, or a file-system move stays outside this fee.",
-      "description": "Monthly retainer for MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance. Also covers light computer and internet support, cell phone plan admin, and a short look at accounts such as Dropbox. The mix can flex a little month to month at the same fee. A full outage, a phone migration, or a file-system move stays outside this fee.",
+      "description": "Monthly retainer for MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance. Also covers light computer and internet support, cell phone plan admin, and a short look at accounts such as Dropbox. The mix can flex a little month to month at the same fee. A full outage, a phone migration, or a file-system move stays outside this fee.\n\n10/19/2026: cancelled Perfmatters, WP Rocket, FindLaw, and Justia. Known yearly savings $29,119.51. WP Rocket has no receipt on file yet. Log: SUBSCRIPTION-SAVINGS.md.",
       "valueAdded": [
-        "Monthly retainer for MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance. Also covers light computer and internet support, cell phone plan admin, and a short look at accounts such as Dropbox. The mix can flex a little month to month at the same fee. A full outage, a phone migration, or a file-system move stays outside this fee."
+        "Monthly retainer for MyCase, Google Suite, Bluehost, and the Ops Dashboard, including KLO maintenance. Also covers light computer and internet support, cell phone plan admin, and a short look at accounts such as Dropbox. The mix can flex a little month to month at the same fee. A full outage, a phone migration, or a file-system move stays outside this fee.",
+        "10/19/2026: cancelled Perfmatters, WP Rocket, FindLaw, and Justia. Known yearly savings $29,119.51. WP Rocket has no receipt on file yet. Log: SUBSCRIPTION-SAVINGS.md."
       ],
       "progressDoneItems": [
         "Guide card live · $500/mo · Recommended · Show on",
         "Scoped· MyCase · Google Suite · Bluehost · Ops Dashboard · light IT · cell plan · storage audit",
         "Confirm invoice / billing cadence with Andrew",
         "MyCase KLO pass",
-        "Google Workspace admin pass"
+        "Google Workspace admin pass",
+        "Cancel Perfmatters · 10/19/2026 · $26.95 per year",
+        "Cancel WP Rocket · 10/19/2026 · amount not on a receipt yet",
+        "Cancel FindLaw · 10/19/2026 · $924.38 per month",
+        "Cancel Justia · 10/19/2026 · $1,500 per month"
       ],
       "progressOpenItems": [
         "Ops Dashboard / KPI source touch for current month",
@@ -2563,38 +2568,38 @@ window.PROJECT_DATA = {
         "Log completed month work for invoice support",
         "Create computer plan for Gabrial's update"
       ],
-      "progressDoneCount": 5,
+      "progressDoneCount": 9,
       "progressOpenCount": 5,
-      "progressPct": 50,
+      "progressPct": 64,
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "published",
       "shortTitle": "Platform Mgmt",
       "estCostLabel": "$500/mo",
       "paymentPlanLabel": "monthly",
-      "feeEstimate": 2900,
+      "feeEstimate": 3000,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "digital_bundle_mo",
       "feeEstimateUnit": "mo",
       "feeEstimateLocalMid": 2300,
       "feeEstimateNationalMid": 3500,
       "feeEstimateScope": {
-        "raw": 2.53,
+        "raw": 3.8,
         "parts": {
-          "valueAdd": 1,
+          "valueAdd": 2,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 1.53
+          "descUnits": 1.8
         }
       },
       "feeEstimateComplexity": 1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": 2400,
-      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.01 (2.53 units) · complexity ×1"
+      "feeEstimateDelta": 2500,
+      "feeEstimateNote": "digital bundle mo lane · local mid $2,300 · national mid $3,500 · scope ×1.07 (3.8 units) · complexity ×1"
     },
     {
       "priorityGroup": 1,
