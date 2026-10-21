@@ -6,7 +6,7 @@
 | Priority group | AdHoc              |
 | Fee            | 1600               |
 | Invoice count  | 3                  |
-| Status         | inactive           |
+| Status         | Planning           |
 | Campaign type  | Print & Production |
 
 

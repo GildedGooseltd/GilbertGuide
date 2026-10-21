@@ -36,7 +36,7 @@ Rule: [`.cursor/rules/guide-data-refresh-audit.mdc`](../../../.cursor/rules/guid
 | FindLaw order / Lead-Source | Order PDF · `FindLaw-Lead-Source-*.csv` · matches | findlawPackage · directory FindLaw · Confirmed |
 | LSA Lead-Source join | `LSA-Lead-Source-*.csv` | lsaMatchedCases · Lead Source LSA charts · Confirmed · Clients w/$ when fee-joined |
 | PPC Lead-Source join | `PPC-Lead-Source-*.csv` | leadSourceConfirmed.ppc · PPC Matches · future PPC month card |
-| Leads referral | `Leads_referral_*.csv` | Parallel referral mix · wire only as that story · not Contact Lead Source |
+| Leads referral | `Leads_referral_*.csv` | Referral source may fill a blank Contact Lead Source. When both are filled, keep Contact Lead Source. Kate 10/18/2026 |
 | Change history | Change history report | Ads post verify · not KPI tiles |
 
 ---
@@ -64,6 +64,7 @@ No orphan one-table updates. No hardcoded `0` Matches while Confirmed > 0 on ano
 | Label | Meaning |
 |---|---|
 | Confirmed Clients / matched clients | MyCase match on Lead-Source join or Contact Lead Source tag. Prefer Trust balance when on the join. **Ignore Contact group** · Kate 10/08/2026 |
+| Lead Source vs referral | Referral source fills a blank only. Existing Contact Lead Source wins on overlap. Kate 10/18/2026. 2026 creates are added beside the existing packs: LSA tags 64, Client Referral 5, Professional Referral 3. PPC Search calls and the 14 phone matches stay. Yelp contacts stay. Do not replace those with the tag counts. |
 | Clients w/$ | Contracted fee on file |
 | Matches | MyCase contact matches on the join |
 | Cost/Contact | Window spend ÷ contacts or leads for that channel |
@@ -82,6 +83,7 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 10/21/2026 | DL financial · ledger (14) Oct* Credits $72,800 through 10/21 · W1 $24,200 · W2 $17,000 · W3 $31,600 · W4 $0. Trust snapshot 10/21 · 377 with balance · $1,756,784. Cases still Contact_10-17 = 9. No new Case_balance. RENDER_VER 20261021-ledger-oct. |
 | 10/18/2026 | HubSpot first-conversion chart. Oct forms 3. May 7, Jun 8, Jul 6, Aug 0, Sep 4 already matched. Lead Calls 36. Websites bar on the monthly graph uses that 3. Zip still has no date column. RENDER_VER 20261018-hsforms3. |
 | 10/18/2026 | Evening DL · Campaign (50) Oct 1–17 live HS Impr 7,113 · clicks 539 · Cost $6,543.42. Call details (20) All-time is Military-only · skipped. Phones stay Call details (19) = 14. Search $/phone stays activities $6,533.46 ÷ 14 ≈ $467. Lead Calls 34 · cases 9 · LSA 19/5 charged unchanged. |
 | 10/18/2026 | Tile corner audit · green=fresh · red=stale · yellow WIP=missing. Recheck Contact Auto 20+22=42 · Oct clients 9 · CD19 phones 14. WIP Lead Calls HubSpot Oct forms. Red Yelp Reviews PDF 10/01 only. RENDER_VER 20261018-tileaudit. |
