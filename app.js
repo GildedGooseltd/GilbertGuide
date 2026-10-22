@@ -633,7 +633,8 @@
     "WasteAud",
     "CaseWins",
     "TwistWrnch",
-    "SiteSEO"
+    "SiteSEO",
+    "HubSpotSetup"
   ]);
 
   function normalizeCatalogId(item) {
@@ -5406,7 +5407,7 @@
     const item = id === "RETAINER" || id === "retainer"
       ? (typeof RETAINER !== "undefined" ? RETAINER : findProjectById(id))
       : findProjectById(id);
-    if (!item) return;
+    if (!item || projectTileOverviewDeferred(item)) return;
     const popup = document.getElementById("project-overview-popup");
     const backdrop = document.getElementById("project-overview-backdrop");
     const titleEl = document.getElementById("project-overview-title");
@@ -5490,7 +5491,8 @@
       OpsDash: "assets/systems-admin-tile.svg",
       TsMgmt: "assets/systems-admin-tile.svg",
       AdultAds: "assets/gigi-lightbulb-idea.png",
-      SwagPrint: "assets/swag-print-collage.jpg?v=20260923-collage2"
+      SwagPrint: "assets/swag-print-collage.jpg?v=20260923-collage2",
+      HubSpotSetup: "assets/hubspot-setup-tile.png?v=20261021-crm"
     };
     return byId[item?.id] || "assets/gg-shield-emblem.png";
   }
@@ -5517,12 +5519,18 @@
     return [...byId.values()];
   }
 
+  /** HubSpot Setup · tile only for now · no summary or overview popup · Kate 10/21/2026 */
+  function projectTileOverviewDeferred(item) {
+    return item?.id === "HubSpotSetup";
+  }
+
   function projectTileHtml(item, isFirstSelected) {
     const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
     const id = item.id;
     const required = isRequiredMaintenance(item, isRetainer) || isRequiredProject(item, isRetainer) || isAlwaysSelectedCartItem(item);
     const sel = isItemSelected(item);
-    const summary = itemTldr(item) || "—";
+    const overviewDeferred = projectTileOverviewDeferred(item);
+    const summary = overviewDeferred ? "" : itemTldr(item) || "—";
     const inactive = !isRetainer && isInactiveProject(item);
     const planning = !isRetainer && !inactive && isPlanningProject(item);
     const inProgress = !isRetainer && !inactive && !planning && isActiveWorkStatus(item);
@@ -5533,7 +5541,7 @@
     const brandLogoHtml = brandLogo
       ? `<img class="project-tile-brand-logo" src="${escapeHtml(brandLogo.src)}" alt="${escapeHtml(brandLogo.alt)}" width="48" height="48" loading="lazy">`
       : "";
-    const brandTile = id === "Yelp" || id === "AdEnhance" || id === "SiteSEO" || id === "DigProf";
+    const brandTile = id === "Yelp" || id === "AdEnhance" || id === "SiteSEO" || id === "DigProf" || id === "HubSpotSetup";
     const imgClass = brandTile ? "project-tile-image project-tile-image-brand" : "project-tile-image";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const reqClass = required ? " tile-required" : "";
@@ -5552,8 +5560,16 @@
       inProgress || ((inactive || planning) && pack.pct != null) ? projectTileProgressBarHtml(pack.pct) : "";
     const inProgressClass = inProgress ? " project-tile-in-progress card-status-in-progress" : "";
     const inactiveClass = inactive || planning ? " project-tile-inactive" : "";
+    const summaryHtml = summary
+      ? `<p class="project-tile-summary">${escapeHtml(summary)}</p>`
+      : "";
+    const tileRole = overviewDeferred ? 'role="listitem"' : 'role="button" tabindex="0"';
+    const tileAria = overviewDeferred
+      ? `aria-label="${escapeHtml(item.title)}"`
+      : `aria-label="Open overview for ${escapeHtml(item.title)}"`;
+    const deferredAttr = overviewDeferred ? ' data-overview-deferred="1"' : "";
     return `
-      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}${inProgressClass}${inactiveClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" data-status="${escapeHtml(normalizeStatus(item))}" role="button" tabindex="0" aria-label="Open overview for ${escapeHtml(item.title)}">
+      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}${inProgressClass}${inactiveClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" data-status="${escapeHtml(normalizeStatus(item))}" ${tileRole} ${tileAria}${deferredAttr}>
         <div class="project-tile-media">
           <img class="${imgClass}" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="400">
           ${brandLogoHtml}
@@ -5564,7 +5580,7 @@
           <h3 class="project-tile-title">${escapeHtml(item.title)}</h3>
           ${projectTileFocusHtml(item, isRetainer)}
           ${metaHtml}
-          <p class="project-tile-summary">${escapeHtml(summary)}</p>
+          ${summaryHtml}
         </div>
       </article>`;
   }
@@ -5787,6 +5803,7 @@
     root.querySelectorAll(".project-tile").forEach(tile => {
       if (tile.dataset.tileOverviewBound) return;
       tile.dataset.tileOverviewBound = "1";
+      if (tile.dataset.overviewDeferred === "1") return;
       const open = () => openProjectOverviewPopup(tile.dataset.id);
       tile.addEventListener("click", e => {
         e.preventDefault();
