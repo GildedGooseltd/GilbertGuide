@@ -2261,6 +2261,53 @@ window.PROJECT_DATA = {
       "feeEstimateNote": "hubspot foundation lane · local mid $5,500 · national mid $10,000 · scope ×0.99 (2.25 units) · complexity ×1.1"
     },
     {
+      "priorityGroup": 2,
+      "fee": 0,
+      "status": "planning",
+      "category": "CRM",
+      "campaignType": "Company Infrastructure",
+      "featuredImage": "assets/hubspot-setup-tile.png",
+      "id": "HubSpotSetup",
+      "title": "HubSpot Setup",
+      "valueAdded": [],
+      "hubSpotParts": [
+        "No HubSpot build in scope"
+      ],
+      "progressDoneItems": [],
+      "progressOpenItems": [],
+      "progressDoneCount": 0,
+      "progressOpenCount": 0,
+      "abQuestions": [],
+      "kpiRefs": [],
+      "publishStatus": "published",
+      "shortTitle": "HubSpot Setup",
+      "estCostLabel": "quote",
+      "paymentPlanLabel": "—",
+      "feeEstimate": 2900,
+      "feeEstimateOngoing": null,
+      "feeEstimateLane": "sprint_general",
+      "feeEstimateUnit": "setup",
+      "feeEstimateLocalMid": 2900,
+      "feeEstimateNationalMid": 3900,
+      "feeEstimateScope": {
+        "raw": 0,
+        "parts": {
+          "valueAdd": 0,
+          "tasks": 0,
+          "completed": 0,
+          "info": 0,
+          "ab": 0,
+          "kpis": 0,
+          "descUnits": 0
+        }
+      },
+      "feeEstimateComplexity": 1.1,
+      "feeEstimateBlend": "55% local / 45% national",
+      "feeEstimatePackaged": false,
+      "feeEstimateDelta": null,
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×0.78 (0 units) · complexity ×1.1"
+    },
+    {
       "priorityGroup": 1,
       "fee": 1200,
       "status": "wip",
