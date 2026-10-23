@@ -117,6 +117,10 @@
       --space-md: 1.25rem;
       --space-lg: 2rem;
       --space-xl: 2.75rem;
+      /* LOCKED Kate 10/23/2026 · gap under section head before tiles/charts · all tabs/pages */
+      --gg-section-body-pad-top: 1.25rem;
+      --gg-section-body-pad-x: 1rem;
+      --gg-section-body-pad-bottom: 1rem;
       /*
        * VALUE ICON COLOR MAP (single source of truth) — v=20260724-finance
        * Filter tiles, table ICONS column, and card badges MUST all use
@@ -4031,7 +4035,7 @@
       padding: 1.15rem 1.25rem 1.5rem;
     }
     .wip-status-section-head {
-      margin: 0 0 0.75rem;
+      margin: 0 0 var(--gg-section-body-pad-top);
       padding: 0.65rem 0.85rem;
       background: var(--gg-royal-deep, #2a1050);
       color: #fff;
@@ -4332,7 +4336,7 @@
       display: inline-flex;
     }
     .ls-card-body {
-      padding: 1rem 1.1rem 1.15rem;
+      padding: var(--gg-section-body-pad-top) 1.1rem 1.15rem;
       display: flex;
       flex-direction: column;
       gap: 0.9rem;
@@ -4848,9 +4852,15 @@
       border-left: 3px solid var(--gg-royal); border-radius: 0 8px 8px 0;
     }
     .kpi-section-leads .kpi-section-summary { border-left: 0; }
-    .kpi-section > :not(summary):not(.kpi-section-summary):not(.kpi-section-summary-static) { padding: 0 1rem 1rem; }
+    /* LOCKED Kate 10/23/2026 · same header→body gap on every .kpi-section · KPIs · Data · Lead Source · Recommendations · metrics */
+    .kpi-section > :not(summary):not(.kpi-section-summary):not(.kpi-section-summary-static) {
+      padding: var(--gg-section-body-pad-top) var(--gg-section-body-pad-x) var(--gg-section-body-pad-bottom);
+    }
     .kpi-section > summary + *,
-    .kpi-section > .kpi-section-summary + * { padding-top: 0.85rem; }
+    .kpi-section > .kpi-section-summary + *,
+    .kpi-section > .kpi-section-summary-static + * {
+      padding-top: var(--gg-section-body-pad-top);
+    }
     .kpi-chart-svg-stacked,
     .kpi-chart-svg-plot {
       width: 100%;
@@ -5865,10 +5875,6 @@
       background: var(--pav-shield-blue);
       border-left: 0;
     }
-    .kpi-section.kpi-section-goals > .kpi-section-summary + .kpi-section-body,
-    .kpi-section.kpi-section-goals > .kpi-section-summary-static + .kpi-section-body {
-      padding-top: 20px;
-    }
     .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
     /* Card-face eggs sit in normal flow (last flex child) — never absolute over footnotes. */
     .kpi-stat-card > .kpi-ref-num,
@@ -6165,7 +6171,9 @@
       padding-left: 2rem;
       border-radius: 0;
     }
-    .kpi-split-panel-body { padding: 0.85rem 1rem 1.35rem; }
+    .kpi-split-panel-body {
+      padding: var(--gg-section-body-pad-top) var(--gg-section-body-pad-x) 1.35rem;
+    }
     .kpi-mini-card, .kpi-dash-card, .kpi-chart-card {
       border: 1px solid var(--border); border-radius: 8px;
       padding: 1.35rem 0.85rem 1.35rem 1.55rem;
@@ -8095,7 +8103,7 @@
   <script src="projects-data.js?v=20261021-hubspot-setup-7"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20261018-tileaudit"></script>
-  <script src="kpi-report.js?v=20261021-ledger-oct"></script>
+  <script src="kpi-report.js?v=20261023-ls-lsa-no-fee"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20261021-hubspot-setup-7"></script>
 </body>

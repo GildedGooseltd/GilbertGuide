@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261021-ledger-oct";
+  const RENDER_VER = "20261023-ls-lsa-no-fee";
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
   /* Newest first — every month with a tile stack. */
   const PERIOD_OPTIONS = ["October 2026", "September 2026", "August 2026", "July 2026", "June 2026", "May 2026"];
@@ -1242,17 +1242,22 @@
       findlaw: { confirmed: 2, trustClients: 1, withMoney: 1, source: "Contact_10-17 Lead Source=Findlaw · 2 tags · 1 with Trust balance" }
     },
     /**
-     * 2026 contacts. Blank Lead Source filled from Referral source. Blacklist excluded.
-     * LSA includes referral source LSA and Google Local Service Ads. Advertisement is included.
+     * HubSpot Lead Source · CRM export hubspot-crm-exports-all-contacts-2026-10-22-1
+     * plus Lead Source uploads through HubSpot-Lead-Source-Update-10-22-2026-2005
+     * Advertisement blanks written as Google Ads. Confirmed = Trust balance on Contact_10-17 match.
+     * Clients w/$ = fee fields on that contact. Blacklist excluded. Aggregates only.
      */
     referralSourceContacts: {
-      asOf: "2026-10-18",
+      asOf: "2026-10-23",
       window: "2026",
-      advertisement: { contacts: 114, withMoney: 0, trustClients: 60, trustSum: 195370 },
-      lsa: { contacts: 64, withMoney: 0, trustClients: 33, trustSum: 115175 },
-      ppc: { contacts: 0, withMoney: 0, trustClients: 0, trustSum: 0 },
-      clientReferral: { contacts: 5, withMoney: 0, trustClients: 3, trustSum: 11500 },
-      professionalReferral: { contacts: 3, withMoney: 0, trustClients: 1, trustSum: 2000 }
+      hubspotContacts: 1043,
+      source:
+        "HubSpot CRM 10/22-1 · uploads 10-22-2026 through 2005 · Trust join Contact_10-17",
+      googleAds: { contacts: 157, withMoney: 27, trustClients: 55, trustSum: 221150 },
+      lsa: { contacts: 158, withMoney: 15, trustClients: 76, trustSum: 303775 },
+      clientReferral: { contacts: 11, withMoney: 0, trustClients: 4, trustSum: 11750 },
+      professionalReferral: { contacts: 3, withMoney: 0, trustClients: 1, trustSum: 2000 },
+      findlaw: { contacts: 1, withMoney: 0, trustClients: 0, trustSum: 0 }
     },
     referralTags2026: {
       asOf: "2026-10-18",
@@ -4998,23 +5003,14 @@
       const n = pack.contacts != null ? String(Number(pack.contacts) || 0) : "0";
       const matches = pack.trustClients != null ? String(Number(pack.trustClients) || 0) : "—";
       const trust = pack.trustSum != null ? fmtMoney(Number(pack.trustSum) || 0) : "—";
-      return [label, "2026", n, matches, "—", "—", trust, "—"];
+      const win = (DATA.referralSourceContacts && DATA.referralSourceContacts.window) || "10/22/2026";
+      return [label, win, n, matches, "—", "—", trust, "—"];
     };
     const channelRollupRows = [
-      tagRollup("Advertisement", "advertisement"),
       tagRollup("LSA", "lsa"),
-      [
-        "Google Ads",
-        "May–Sep",
-        String(ppcContacts),
-        matchCount("ppc"),
-        fmtMoney(ppcSpend),
-        ppcContacts ? fmtMoney(ppcPerCall) : "—",
-        "$0",
-        "0%"
-      ],
-      tagRollup("Client Referral", "clientReferral"),
-      tagRollup("Professional Referral", "professionalReferral"),
+      tagRollup("Google Ads", "googleAds"),
+      tagRollup("Referral via Client", "clientReferral"),
+      tagRollup("Referral via Colleague", "professionalReferral"),
       [
         "Yelp",
         "Jun–Sep",
@@ -5142,12 +5138,12 @@
     const summaryTilesHtml = "";
     const cardsHtml = `
       ${lsCard(
-        "Channel Rollup · LSA + PPC + Directories",
+        "Channel Rollup · HubSpot + Directories",
         `${kpiDetailTable(
           ["Channel", "Window", "Contacts", "Matches", "Spend", "Cost/Contact", "Trust $", "Return %"],
           channelRollupRows
         )}
-        <p class="ls-note">Confirmed Clients is the Trust balance on the same contact.</p>`
+        <p class="ls-note">HubSpot rows use Lead Source after the 10/22 CRM export and the Google Ads / LSA / FindLaw uploads through 8:05 PM. Matches = Trust balance on the Contact_10-17 join. Yelp · Justia · FindLaw package rows stay on their spend windows.</p>`
       )}
       ${lsCard(
         "Lead Source: Yelp",
@@ -5280,101 +5276,53 @@
   }
 
   function leadSourceChannelSummaryTableHtml() {
-    const pack = DATA.lsaMatchedCases || {};
-    const months = pack.months || [];
-    const y = DATA.yelpBaseline || {};
-    const cv = y.caseValue || {};
     const j = DATA.justiaBaseline || {};
+    const y = DATA.yelpBaseline || {};
     const fl = DATA.findlawPackage || {};
     const conf = DATA.leadSourceConfirmed || {};
     const channelStack = DATA.channelMonths || [];
+    const casesSpend = DATA.casesLeadsSpend || [];
+    const hs = DATA.referralSourceContacts || {};
 
-    const lsaLeads = months.reduce((s, r) => s + (Number(r.leads) || 0), 0);
-    const lsaSpend = months.reduce((s, r) => s + (Number(r.spend) || 0), 0);
-    const lsaMonthsN = months.length || 1;
-    const lsaConfirmed = conf.lsa && conf.lsa.confirmed != null
-      ? Number(conf.lsa.confirmed)
-      : pack.clients != null
-        ? Number(pack.clients)
-        : months.reduce((s, r) => s + (Number(r.clients) || 0), 0);
-    const lsaWithMoney = conf.lsa && conf.lsa.withMoney != null
-      ? Number(conf.lsa.withMoney)
-      : pack.withFee != null
-        ? Number(pack.withFee)
-        : months.reduce((s, r) => s + (Number(r.withFee) || 0), 0);
+    const sumKey = (rows, key) => rows.reduce((s, r) => s + (Number(r[key]) || 0), 0);
+    const monthsWith = (rows, key) => rows.filter(r => Number(r[key]) > 0).length;
+    const monthlyAvg = (total, n) => (n > 0 ? total / n : 0);
 
+    const lsaSpend2026 = sumKey(casesSpend, "lsaSpend");
+    const lsaMonthsN = monthsWith(casesSpend, "lsaSpend");
+    const searchSpend2026 = sumKey(casesSpend, "adsSpend");
+    const searchMonthsN = monthsWith(casesSpend, "adsSpend");
+    const findlawMonthly = Number(fl.monthly) || 0;
+    const findlawSpend2026 = sumKey(channelStack, "findlawSpend") || findlawMonthly * monthsWith(channelStack, "findlawSpend");
+    const findlawMonthsN = monthsWith(channelStack, "findlawSpend") || (findlawMonthly > 0 ? channelStack.length : 0);
+    const justiaMonthly = Number(j.spendMonthly) || Number(DATA.referralSitesMonthly) || 0;
+    const justiaFromStack = sumKey(channelStack, "justiaSpend");
+    const justiaMarApr = justiaMonthly * 2;
+    const justiaSpend2026 = justiaFromStack + justiaMarApr;
+    const justiaMonthsN = monthsWith(channelStack, "justiaSpend") + (justiaMonthly > 0 ? 2 : 0);
+    const justiaContacts = Number((j.last6 && j.last6.contacts) || 0);
+    const justiaConfirmed = conf.justia && conf.justia.confirmed != null
+      ? Number(conf.justia.confirmed)
+      : Number(j.confirmedClients) || 0;
     const yelpBy = y.byMonth || {};
-    const yelpContacts = ["Jun", "Jul", "Aug", "Sep"].reduce(
+    const yelpContactMonths = ["Jun", "Jul", "Aug", "Sep", "Oct"];
+    const yelpContacts = yelpContactMonths.reduce(
       (s, m) => s + (Number(yelpBy[m] && yelpBy[m].contacts) || 0),
       0
     );
-    const yelpSpend = channelStack.reduce((s, r) => {
-      const m = String(r.month || "").replace(/\*/g, "");
-      if (m === "Aug" || m === "Sep") return s + (Number(r.yelpSpend) || 0);
-      return s;
-    }, 0);
-    const yelpSpendMonths = channelStack.filter(r => {
-      const m = String(r.month || "").replace(/\*/g, "");
-      return (m === "Aug" || m === "Sep") && Number(r.yelpSpend) > 0;
-    }).length || 1;
+    const yelpSpend2026 = sumKey(channelStack, "yelpSpend");
+    const yelpMonthsN = monthsWith(channelStack, "yelpSpend");
     const yelpConfirmed = conf.yelp && conf.yelp.trustClients != null
       ? Number(conf.yelp.trustClients)
       : conf.yelp && conf.yelp.confirmed != null
         ? Number(conf.yelp.confirmed)
-        : cv.confirmedClients != null
-          ? Number(cv.confirmedClients)
-          : Number(cv.signedWithFee) || 0;
-    const yelpWithMoney = conf.yelp && conf.yelp.withMoney != null
-      ? Number(conf.yelp.withMoney)
-      : Number(cv.signedWithFee) || 0;
-    const yelpCostClient = yelpConfirmed > 0 && yelpSpend > 0
-      ? yelpSpend / yelpConfirmed
-      : cv.costPerSigned != null
-        ? Number(cv.costPerSigned)
-        : null;
-
-    const justiaContacts = Number((j.last6 && j.last6.contacts) || 0);
-    const justiaMonthly = Number(j.spendMonthly) || Number(DATA.referralSitesMonthly) || 0;
-    const justiaSpend = Number((j.last6 && j.last6.spend) || 0) || justiaMonthly * 6;
-    const justiaConfirmed = conf.justia && conf.justia.confirmed != null
-      ? Number(conf.justia.confirmed)
-      : 0;
-    const justiaWithMoney = conf.justia && conf.justia.withMoney != null
-      ? Number(conf.justia.withMoney)
-      : 0;
-
-    const findlawLeads = Number(fl.leadsReal) || 0;
-    const findlawMonthly = Number(fl.monthly) || 0;
-    const findlawConfirmed = conf.findlaw && conf.findlaw.trustClients != null
-      ? Number(conf.findlaw.trustClients)
-      : conf.findlaw && conf.findlaw.confirmed != null
-        ? Number(conf.findlaw.confirmed)
-        : fl.confirmedClients != null
-          ? Number(fl.confirmedClients)
-          : 0;
-    const findlawWithMoney = conf.findlaw && Object.prototype.hasOwnProperty.call(conf.findlaw, "withMoney")
-      ? conf.findlaw.withMoney
-      : null;
-
-    const ppcMonths = channelStack.filter(r => {
-      const m = String(r.month || "").replace(/\*/g, "");
-      return ["May", "Jun", "Jul", "Aug", "Sep"].includes(m);
-    });
-    const ppcContacts = ppcMonths.reduce((s, r) => s + (Number(r.search) || 0), 0);
-    const ppcSpend = ppcMonths.reduce((s, r) => s + (Number(r.searchSpend) || 0), 0);
-    const ppcMonthsN = ppcMonths.length || 1;
-    const ppcConfirmed = conf.ppc && conf.ppc.confirmed != null
-      ? Number(conf.ppc.confirmed)
-      : 0;
-    const ppcWithMoney = conf.ppc && Object.prototype.hasOwnProperty.call(conf.ppc, "withMoney")
-      ? conf.ppc.withMoney
-      : null;
+        : Number((y.caseValue && y.caseValue.confirmedClients) || 0);
 
     const costCell = (spend, clients) => {
       if (!clients || clients <= 0 || spend == null || !(spend > 0)) return "—";
       return fmtMoney(spend / clients);
     };
-    const row = (channel, window, volume, confirmed, withMoney, windowSpend, monthlyCost, costOverride, opts) => {
+    const row = (channel, window, volume, confirmed, windowSpend, monthlyCost, costOverride, opts) => {
       let channelCell = escapeHtml(channel);
       if (opts && opts.verified) {
         channelCell = `<span class="ls-channel-verified">${freshMark()}<span>${escapeHtml(channel)}</span></span>`;
@@ -5388,34 +5336,31 @@
         escapeHtml(window),
         volume == null ? "—" : String(volume),
         confirmed == null ? "—" : String(confirmed),
-        withMoney == null ? "—" : String(withMoney),
-        costOverride != null ? fmtMoney(costOverride) : costCell(windowSpend, confirmed == null ? 0 : (confirmed > 0 ? confirmed : withMoney)),
+        costOverride != null ? fmtMoney(costOverride) : costCell(windowSpend, confirmed == null ? 0 : confirmed),
         monthlyCost == null || !(monthlyCost > 0) ? "—" : fmtMoney(monthlyCost)
       ];
     };
 
-    const tagCompare = (label, key) => {
-      const pack = (DATA.referralSourceContacts && DATA.referralSourceContacts[key]) || {};
+    const tagCompare = (label, key, windowLabel, periodSpend, monthly) => {
+      const pack = hs[key] || {};
       const n = Number(pack.contacts) || 0;
       const confirmed = pack.trustClients != null ? Number(pack.trustClients) : null;
-      const money = pack.withMoney != null ? Number(pack.withMoney) : 0;
-      return row(label, "2026", n, confirmed, money, 0, 0, null, null);
+      return row(label, windowLabel, n, confirmed, periodSpend || 0, monthly || 0, null, null);
     };
-    const yelpTags = (DATA.contactLeadSource && DATA.contactLeadSource.yelp && DATA.contactLeadSource.yelp.matched) || 0;
-    const findlawTags = (DATA.contactLeadSource && DATA.contactLeadSource.findlaw && DATA.contactLeadSource.findlaw.matched) || 0;
     const rows = [
-      tagCompare("Advertisement", "advertisement"),
-      tagCompare("LSA", "lsa"),
-      tagCompare("Client Referral", "clientReferral"),
-      tagCompare("Professional Referral", "professionalReferral"),
-      row("PPC", "2026", 381, 8, 0, 0, 0, null, null),
-      row("Yelp", "2026", Number(yelpTags) || 0, yelpConfirmed, yelpWithMoney, 0, 0, null, null),
-      row("Justia", "2026", 27, 0, 0, 0, 0, null, null),
-      row("FindLaw", "2026", 1, findlawConfirmed, findlawWithMoney, 0, 0, null, null)
-    ].sort((a, b) => (Number(b[2]) || 0) - (Number(a[2]) || 0));
-    const totalContacts = rows.reduce((sum, cells) => sum + (Number(cells[2]) || 0), 0);
-    const totalConfirmed = rows.reduce((sum, cells) => sum + (Number(cells[3]) || 0), 0);
-    rows.push(row("All channels", "2026", totalContacts, totalConfirmed, 0, 0, 0, null, null));
+      tagCompare("LSA", "lsa", "Feb–Oct*", lsaSpend2026, monthlyAvg(lsaSpend2026, lsaMonthsN)),
+      tagCompare("Google Ads", "googleAds", "May–Oct*", searchSpend2026, monthlyAvg(searchSpend2026, searchMonthsN)),
+      tagCompare("Referral via Client", "clientReferral", "As of 10/22", 0, 0),
+      tagCompare("Referral via Colleague", "professionalReferral", "As of 10/22", 0, 0),
+      tagCompare("FindLaw", "findlaw", "May–Oct", findlawSpend2026, monthlyAvg(findlawSpend2026, findlawMonthsN) || findlawMonthly),
+      row("Justia", "Mar–Oct", justiaContacts, justiaConfirmed, justiaSpend2026, monthlyAvg(justiaSpend2026, justiaMonthsN) || justiaMonthly, null, null),
+      row("Yelp", "Jun–Oct*", yelpContacts, yelpConfirmed, yelpSpend2026, monthlyAvg(yelpSpend2026, yelpMonthsN), null, null)
+    ].sort((a, b) => {
+      const aRef = /referral/i.test(String(a[0]).replace(/<[^>]+>/g, ""));
+      const bRef = /referral/i.test(String(b[0]).replace(/<[^>]+>/g, ""));
+      if (aRef !== bRef) return aRef ? 1 : -1;
+      return (Number(b[2]) || 0) - (Number(a[2]) || 0);
+    });
 
     return `${kpiDetailTable(
       [
@@ -5423,14 +5368,24 @@
         "Window",
         "Leads /<br>contacts",
         "Confirmed<br>Clients",
-        "Clients<br>w/$",
         "Cost /<br>client",
         "Monthly<br>cost"
       ],
       rows,
       { stackedHeads: true }
     )}
-    <p class="ls-note">2026 contacts. Confirmed Clients is the Trust balance on that contact. PPC leads are Search calls from May through October 18. Sorted by contact count.</p>`;
+    <p class="ls-note">Window is the month span with spend or tags, not a full calendar year. Cost / client is that window’s media ÷ Confirmed Clients. Monthly cost is the average for months with spend. Referrals have no media. HubSpot-tagged channels use the 10/22 CRM export plus uploads through 8:05 PM, Trust-joined to Contact_10-17. Yelp and Justia use directory / Ads volume, not HubSpot Lead Source tags. Paid and directory channels sort by contact count. Referrals stay at the bottom.</p>`;
+  }
+
+  function leadSourceCoverageLine() {
+    const src = DATA.referralSourceContacts || {};
+    const keys = ["lsa", "googleAds", "clientReferral", "professionalReferral", "findlaw"];
+    const withSource = keys.reduce((sum, key) => sum + (Number(src[key] && src[key].contacts) || 0), 0);
+    const total = Number(src.hubspotContacts) || 0;
+    if (!total) return "";
+    const pct = Math.round((withSource / total) * 1000) / 10;
+    const pctLabel = Number.isInteger(pct) ? String(pct) : pct.toFixed(1);
+    return `<p class="ls-sub">${pctLabel}% of HubSpot contacts have a Lead Source. ${withSource.toLocaleString("en-US")} of ${total.toLocaleString("en-US")}.</p>`;
   }
 
   function leadSourceSectionHtml() {
@@ -5451,19 +5406,13 @@
     };
     const detailRows = months.map(r => {
       const confirmed = r.trustN != null ? Number(r.trustN) : Number(r.clients) || 0;
-      const withMoney = Number(r.withFee) || 0;
       const spend = Number(r.spend) || 0;
-      const costClient = confirmed > 0
-        ? fmtMoney(spend / confirmed)
-        : withMoney > 0
-          ? fmtMoney(spend / withMoney)
-          : "—";
+      const costClient = confirmed > 0 ? fmtMoney(spend / confirmed) : "—";
       return [
         escapeHtml(r.month),
         String(r.leads || 0),
         String(r.matches || 0),
         String(confirmed),
-        String(withMoney),
         costClient,
         fmtMoney(spend),
         r.trustSum ? fmtMoney(r.trustSum) : "—",
@@ -5480,11 +5429,12 @@
       <div class="ls-stack">
         <div class="ls-block-head">
           <h1 class="ls-h1">Lead Source Summary</h1>
+          ${leadSourceCoverageLine()}
         </div>
         ${lsCard(
           "Channel Comparison",
           leadSourceChannelSummaryTableHtml(),
-          { draftLabel: "Data Collection" }
+          { verified: true }
         )}
         ${lsCard(
           "LSA Leads × Trust Balance",
@@ -5500,7 +5450,6 @@
                 "LSA<br>leads",
                 "Matches",
                 "Trust<br>Clients",
-                "Clients<br>w/$",
                 "Cost /<br>client",
                 "Monthly<br>cost",
                 "Trust $",
