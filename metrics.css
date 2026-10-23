@@ -60,6 +60,10 @@
   --font-min-rem: 0.875rem;
   --space-md: 1.25rem;
   --space-lg: 2rem;
+  /* LOCKED Kate 10/23/2026 · gap under section head before tiles/charts · match Guide */
+  --gg-section-body-pad-top: 1.25rem;
+  --gg-section-body-pad-x: 1rem;
+  --gg-section-body-pad-bottom: 1rem;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -271,9 +275,15 @@ body.feedback-mode-on .feedback-target:hover {
   color: var(--gg-brown-muted); background: rgba(45, 20, 84, 0.06);
   border-left: 3px solid var(--gg-royal); border-radius: 0 8px 8px 0;
 }
-.kpi-section > :not(summary):not(.kpi-section-summary) { padding: 0 1rem 1rem; }
+/* LOCKED Kate 10/23/2026 · same header→body gap as Guide index.html */
+.kpi-section > :not(summary):not(.kpi-section-summary):not(.kpi-section-summary-static) {
+  padding: var(--gg-section-body-pad-top) var(--gg-section-body-pad-x) var(--gg-section-body-pad-bottom);
+}
 .kpi-section > summary + *,
-.kpi-section > .kpi-section-summary + * { padding-top: 0.85rem; }
+.kpi-section > .kpi-section-summary + *,
+.kpi-section > .kpi-section-summary-static + * {
+  padding-top: var(--gg-section-body-pad-top);
+}
 .kpi-chart-svg-stacked,
 .kpi-chart-svg-plot {
   width: 100%;
@@ -997,10 +1007,6 @@ body.feedback-mode-on .feedback-target:hover {
   background: var(--pav-shield-blue);
   border-left: 0;
 }
-.kpi-section.kpi-section-goals > .kpi-section-summary + .kpi-section-body,
-.kpi-section.kpi-section-goals > .kpi-section-summary-static + .kpi-section-body {
-  padding-top: 20px;
-}
 .kpi-stat-id { display: block; font-size: 14pt; font-weight: 700; color: var(--gg-royal); margin-bottom: 0.15rem; }
 .kpi-stat-val { display: block; font-size: 1.45rem; font-weight: 800; color: var(--gg-royal-deep); line-height: 1.1; }
 .kpi-val-negative,
@@ -1273,7 +1279,9 @@ body.feedback-mode-on .feedback-target:hover {
   padding-left: 2rem;
   border-radius: 0;
 }
-.kpi-split-panel-body { padding: 0.85rem 1rem 1.35rem; }
+.kpi-split-panel-body {
+  padding: var(--gg-section-body-pad-top) var(--gg-section-body-pad-x) 1.35rem;
+}
 .kpi-mini-card, .kpi-dash-card, .kpi-chart-card {
   border: 1px solid var(--border); border-radius: 8px;
   padding: 1.35rem 0.85rem 1.35rem 1.55rem;

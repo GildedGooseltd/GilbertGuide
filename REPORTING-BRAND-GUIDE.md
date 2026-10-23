@@ -161,7 +161,7 @@ One map only — filter tiles + Project Outlines ICONS share `.value-icon.icon-{
 - Keep the existing **KPIs / Data / Guide** tabs and current tile grid.
 - Active tab = royal fill; inactive tabs remain paper with dark text.
 - KPI tile hierarchy: ID/label → large value → target/context → status.
-- Section heads: solid Pav shield blue background, white title, mist hint. No left gold rule. Do not use pale washes or teal/cyan for KPI section headers.
+- Section heads: solid Pav shield blue background, white title, mist hint. No left gold rule. Do not use pale washes or teal/cyan for KPI section headers. Gap under the head before tiles or charts is `--gg-section-body-pad-top` (`1.25rem` / 20px) on every Guide tab and on metrics.html. Do not ship a goals-only override or a zero top pad on `.kpi-section-summary-static` bodies.
 - Rank / project-score columns and sort controls: royal purple (`--gg-royal`), not gold or forest green.
 - Callouts use a semantic left rule, light wash, aged-brass double outer line, and thin royal inner line; no diamond corner ornaments; no full-layout recolor.
 - Default shadow: `0 1px 4px rgba(45,20,84,.08)`. No heavy floating-card shadows.

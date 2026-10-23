@@ -92,6 +92,7 @@ Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`,
 | --------------------------------------------------------- | ------------------ | ----------------------------- |
 | `--radius`                                                | `12px`             | Cards, panels                 |
 | `--space-sm` / `--space-md` / `--space-lg` / `--space-xl` | `0.75` → `2.75rem` | Gaps                          |
+| `--gg-section-body-pad-top`                               | `1.25rem` (20px)   | **LOCKED Kate 10/23/2026.** Gap under every section head before tiles/charts. Same on KPIs · Data · Lead Source · Recommendations · Status Updates · metrics.html. Token also drives side/bottom via `--gg-section-body-pad-x` / `--gg-section-body-pad-bottom` (`1rem`). Exception: `.kpi-section-leads-split > .kpi-section-body` stays `padding: 0` so split panels own their chrome. |
 | `--font-min-rem`                                          | `0.875rem` (14px)  | Labels, hints — UI copy floor |
 
 
@@ -159,7 +160,7 @@ Overlays: Gilbert chat · confirm · thank-you
 | Pattern           | Classes                                | Behavior                                        |
 | ----------------- | -------------------------------------- | ----------------------------------------------- |
 | Cockpit tabs      | `.cockpit-tabs`, `.view-tab`           | One active view; royal active fill              |
-| KPI sections      | `.kpi-section`, `.kpi-section-summary` | Collapsible; burnt/royal accent + distinctive head |
+| KPI sections      | `.kpi-section`, `.kpi-section-summary` / `-static` | Solid shield-blue head. Body uses `--gg-section-body-pad-top` so the gap under the head matches Monthly KPIs on every tab and on metrics.html. Lead Source `.ls-card-body` and `.kpi-split-panel-body` use the same top pad. |
 | Stat / goal cards | `.kpi-goal-card` on Monthly KPIs · `.kpi-stat-card` only outside that grid | **Revenue chrome on every Monthly KPI tile:** royal wash gradient, 2px royal border, 12px radius. No plain paper tiles in `.kpi-goals-grid`. No yellow/red/green/blue status border/wash. **Same-row equal height** via `.kpi-tile-with-projects` subgrid. Inner `.kpi-goal-visual` plot panel is fixed height `12rem` on every tile, same shield-purple @ 15% wash as chart plots (`--gg-chart-plot`). Kate 10/18/2026. **Title** `.kpi-stat-id` sits at the top of that panel · uppercase · letter-spacing · royal serif · plot/gauge fills the space below |
 | Tile + Solutions  | `.kpi-tile-with-projects`             | Card band + Solutions band; cards in a row match height on all pages |
 | KPI tile grid     | `.kpi-tiles-4`                         | Goal cards and metric tiles in one flow, 4 per row; narrow-pane trim ≤1000px, 2-col ≤560px, 1-col ≤380px |
