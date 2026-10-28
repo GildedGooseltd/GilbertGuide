@@ -83,6 +83,7 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 10/26/2026 | DL $$ · ledger (15) Oct* Credits $81,470 through 10/26 · W1 $24,200 · W2 $17,000 · W3 $31,600 · W4 $8,670. Trust 10/26 · 379 · $1,765,454. Search $/phone activities (3) $7,753.12 ÷ Call details (21) 14 ≈ $554. LSA $2,096.03 · inbox (27) 31/9. Campaign (55) Impr 8,117 · clicks 603. Lead Calls 52. Cases still Contact_10-17 = 9. No new Case_balance. RENDER_VER 20261026-ledger-trust. |
 | 10/21/2026 | DL financial · ledger (14) Oct* Credits $72,800 through 10/21 · W1 $24,200 · W2 $17,000 · W3 $31,600 · W4 $0. Trust snapshot 10/21 · 377 with balance · $1,756,784. Cases still Contact_10-17 = 9. No new Case_balance. RENDER_VER 20261021-ledger-oct. |
 | 10/18/2026 | HubSpot first-conversion chart. Oct forms 3. May 7, Jun 8, Jul 6, Aug 0, Sep 4 already matched. Lead Calls 36. Websites bar on the monthly graph uses that 3. Zip still has no date column. RENDER_VER 20261018-hsforms3. |
 | 10/18/2026 | Evening DL · Campaign (50) Oct 1–17 live HS Impr 7,113 · clicks 539 · Cost $6,543.42. Call details (20) All-time is Military-only · skipped. Phones stay Call details (19) = 14. Search $/phone stays activities $6,533.46 ÷ 14 ≈ $467. Lead Calls 34 · cases 9 · LSA 19/5 charged unchanged. |
