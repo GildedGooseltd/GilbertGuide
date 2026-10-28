@@ -4331,7 +4331,9 @@
     }
     .ls-channel-verified .kpi-aug-updated-mark,
     .ls-channel-verified .kpi-wip-mark,
-    .ls-channel-verified .kpi-blocked-mark {
+    .ls-channel-verified .kpi-blocked-mark,
+    .ls-channel-verified .kpi-flag-mark,
+    .ls-channel-verified .kpi-unverified-mark {
       position: static;
       display: inline-flex;
     }
@@ -6067,6 +6069,46 @@
       font-weight: 900;
     }
     .kpi-blocked-mark::after { content: "⊘"; }
+    .kpi-flag-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 0.95rem;
+      height: 0.95rem;
+      border: none;
+      border-radius: 3px;
+      background: transparent;
+      color: var(--gg-negative, #cf2d56);
+      vertical-align: -0.12em;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      line-height: 1;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .kpi-flag-mark::after { content: "⚑"; }
+    .kpi-conv-scale {
+      display: inline-block;
+      min-width: 3.25rem;
+      padding: 0.18rem 0.45rem;
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
+      font-weight: 650;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .kpi-conv-scale-high {
+      background: color-mix(in srgb, var(--gg-positive, #1f8a65) 22%, #fffcf7);
+      color: #166a4c;
+    }
+    .kpi-conv-scale-mid {
+      background: color-mix(in srgb, var(--gg-caution, #eab308) 28%, #fffcf7);
+      color: var(--gg-brown, #3d3028);
+    }
+    .kpi-conv-scale-low {
+      background: color-mix(in srgb, var(--gg-negative, #cf2d56) 18%, #fffcf7);
+      color: var(--gg-negative, #cf2d56);
+    }
     .kpi-source-footnote {
       display: block;
       margin: 0.55rem 0 0;
@@ -8103,7 +8145,7 @@
   <script src="projects-data.js?v=20261021-hubspot-setup-7"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20261018-tileaudit"></script>
-  <script src="kpi-report.js?v=20261023-ls-lsa-no-fee"></script>
+  <script src="kpi-report.js?v=20261026-ledger-trust"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20261021-hubspot-setup-7"></script>
 </body>
