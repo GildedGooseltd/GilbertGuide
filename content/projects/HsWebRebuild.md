@@ -14,13 +14,18 @@
 
 A new HubSpot site and brand refresh for [pav.law](http://pav.law) launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.
 
+**Hubspot:**
+
 - Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.
 - Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.
 - Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.
+- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.
+
+**Website:**
+
 - Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.
 - SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.
 - Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. 
-- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.
 - Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.
 - Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.
 

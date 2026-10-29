@@ -146,16 +146,18 @@ window.PROJECT_DATA = {
         ]
       },
       "tldr": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.",
-      "description": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.\n\n- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.\n- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.\n- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.\n- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.\n- SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.\n- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. \n- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.\n- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.\n- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.",
+      "description": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.\n\n**HubSpot:**\n\n- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.\n- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.\n- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.\n- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.\n\n**Website:**\n\n- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.\n- SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.\n- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. \n- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.\n- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.",
       "valueAdded": [
         "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.",
+        "**Hubspot:**",
         "Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.",
         "Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.",
         "Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.",
+        "Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.",
+        "**Website:**",
         "Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.",
         "SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.",
         "Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k.",
-        "Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.",
         "Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.",
         "Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation."
       ],
@@ -307,16 +309,16 @@ window.PROJECT_DATA = {
       "estCostLabel": "$27,000",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3600,
+      "feeEstimate": 3700,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "creative_brand",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2100,
       "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 13,
+        "raw": 15,
         "parts": {
-          "valueAdd": 10,
+          "valueAdd": 12,
           "tasks": 0,
           "completed": 0,
           "info": 0,
@@ -328,8 +330,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -23400,
-      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.26 (13 units) · complexity ×1.1"
+      "feeEstimateDelta": -23300,
+      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.29 (15 units) · complexity ×1.1"
     },
     {
       "priority": 5,
