@@ -78,7 +78,7 @@ Percentage-change labels use black, regular-weight `↑ +N%` / `↓ −N%` text.
 | `--pav-border`                     | royal rgba                                   | Dark panel borders                       |
 | `--pav-gradient-panel` / `-accent` | royal / burnt → ink                          | Dark shells only                         |
 | `--pav-teal`                       | → `--gg-series-2` (burnt)                    | **Deprecated** — do not introduce teal   |
-| Cockpit title                      | `--pav-shield-navy` + gold rule + primary shield mark | `.cockpit-title`              |
+| Cockpit title                      | `--pav-shield-navy` + gold rule · no shield mark | `.cockpit-title`              |
 
 
 Semantic aliases (`--bg`, `--surface`, `--text`, `--border`, `--gradient-brand`, `--radius`, `--space-*`) map to GG tokens — prefer editing the `--gg-*` / `--pav-shield-*` sources.
@@ -119,7 +119,7 @@ Links on light: `--gg-royal` + underline. Focus: `outline: 2px solid var(--gg-ro
 | --------------------- | ---------------------- | --------------------------------------------------------------------------- |
 | Body (cockpit)        | `body` in `index.html` | Georgia / Times, serif · `1.14rem` · line-height `1.65` — “legal memo” feel |
 | Body (metrics page)   | `metrics.css` `body`   | system-ui sans — metrics-only exception                                     |
-| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, `--pav-shield-navy` + gold underline + primary shield mark |
+| Cockpit title         | `.cockpit-title`       | `clamp(2.35rem, 6vw, 3.75rem)`, weight 800, `--pav-shield-navy` + gold underline · no shield mark |
 | Section / zone labels | `.picker-zone-label`   | Uppercase navy label + gold rule                                      |
 | KPI section titles    | `.kpi-section-title`   | Bold white; summary = solid `--pav-shield-blue` fill · no left gold bar                  |
 | Card titles           | `.card-title`          | ~`1.28rem`, weight 800, royal                                               |
