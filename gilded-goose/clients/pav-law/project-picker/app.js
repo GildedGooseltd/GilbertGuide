@@ -5651,7 +5651,7 @@
     const inProgress = !isRetainer && !inactive && !planning && isActiveWorkStatus(item);
     const statusNorm = normalizeStatus(item);
     const availableProposal =
-      !isRetainer && !inactive && !planning && !inProgress &&
+      !isRetainer && !inactive && !planning && !inProgress && !item.monthlyOnly &&
       (statusNorm === "available" || statusNorm === "recommended");
     /* Progress only · no fee / quote amounts on proposal tiles · Kate 10/17/2026 */
     const metaHtml = inProgress ? projectTileProgressMetaHtml(item) : "";

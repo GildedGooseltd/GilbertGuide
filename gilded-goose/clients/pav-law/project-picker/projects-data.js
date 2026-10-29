@@ -2468,7 +2468,7 @@ window.PROJECT_DATA = {
       "progressOpenCount": 0,
       "abQuestions": [],
       "kpiRefs": [],
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "shortTitle": "HubSpot Setup",
       "estCostLabel": "quote",
       "paymentPlanLabel": "—",

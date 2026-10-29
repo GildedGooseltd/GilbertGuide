@@ -35,7 +35,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | Network Speech Coaching  | [ ]  | [Networking Speech And Communications Coaching](projects/NetCoach.md) |
 | Pav.Law Website          | [x]  | [Pav.Law Website Build & Brand Refresh](projects/HsWebRebuild.md) |
 | Pav.Law Website          | [ ]  | [Pav.Law Website Build & Brand Refresh](projects/SiteSEO.md) |
-| HubSpot Setup            | [x]  | [HubSpot Setup](projects/HubSpotSetup.md) |
+| HubSpot Setup            | [ ]  | [HubSpot Setup](projects/HubSpotSetup.md) |
 | Insurance Mailer         | [ ]  | [Insurance Envelope Mailer](projects/InsMailer.md) |
 | Financial Waste Audit    | [ ]  | [Full Financial Waste Audit](projects/WasteAud.md) |
 | HS Email Nurture Setup   | [ ]  | [HubSpot Email Nurture · Setup & Design](projects/HsEmailSetup.md) |
@@ -250,7 +250,7 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **HsSvcExpand** · wip · HubSpot Client Intake · $4,200 · Service Hub inbox/KB/SLA/chatbot · Affirm email · phones/VoIP · AffirmEmail + HsVoip archived as merged
 - **HsVoip** — archived · merged HsSvcExpand
 - HsSetup — canceled · background only · open work moved to HsWebRebuild and live HS cards
-- **HubSpotSetup** — Planning · Show on · Priority group 2 umbrella · quote · HubSpot logo tile · child sells stay on HsVoip · LsaCall · HsMktExpand · MyCaseClr · HsSvcExpand · HsWebRebuild
+- **HubSpotSetup** — Planning · Show off · Priority group 2 umbrella · quote · HubSpot logo tile · child sells stay on HsVoip · LsaCall · HsMktExpand · MyCaseClr · HsSvcExpand · HsWebRebuild
 - **HsMktExpand** · available · Publish status unpublished · Show off · attribution + behavioral workflows · Ads sync on DigProf · SEO on HsWebRebuild · email A/B + CSAT on HsEmailSetup
 - **HsEmailSetup** · nurture setup · A/B · CSAT/NPS · templates · e-sign · design add-on / freelancer when special
 - **HsWebRebuild** · available · Show on · Pav.Law Website · one project · PavSiteUpdate archived as merged · audit · SEO on Ads-aligned pages · measure · then port · working total $27,000, one fee · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs HsSetup
@@ -280,6 +280,6 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **SwagPrint** — Planning · Show off · low priority · binders with Jack for Andrew to sample · other samples waiting · revised logo + mockups then designer suite · fee $1,600 · product runs ~$400–$500 client cost
 - **SafetyFirst** — available · Show off · Safety First kit campaign · condoms · hand cleaner · wet wipes · car safety · backup lawyer card 719-888-7888 · $2,200 consulting · product separate · never on survivor advocacy properties
 - **WasteAud** — Archived · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste was the verified floor before subscription, phone, LSA-credit, and vendor leakage
-- **Bulk unpublish** · live Show: Yelp · LegalDirs · TsMgmt · AdEnhance · HsWebRebuild · HubSpotSetup · rest pending review
+- **Bulk unpublish** · live Show: Yelp · LegalDirs · TsMgmt · AdEnhance · HsWebRebuild · rest pending review
 - Fee market context: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)
 
