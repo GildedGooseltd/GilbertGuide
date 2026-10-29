@@ -1850,15 +1850,20 @@
       font-weight: 800;
     }
     .project-overview-section h5.project-overview-category {
-      margin: 0.85rem 0 0.35rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.05em;
+      display: block;
+      margin: 1rem 0 0.45rem;
+      padding: 0.28rem 0 0.28rem 0.55rem;
+      border-left: 3px solid var(--gg-royal, #3a1a6e);
+      background: color-mix(in srgb, var(--gg-royal, #3a1a6e) 8%, #fffcf7);
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--gg-royal, #3a1a6e);
+      color: var(--gg-royal-deep, #2d1454);
       font-weight: 800;
+      line-height: 1.25;
     }
-    .project-overview-section h5.project-overview-category:first-child {
-      margin-top: 0.35rem;
+    .project-overview-section h5.project-overview-category:first-of-type {
+      margin-top: 0.55rem;
     }
     .project-overview-section p {
       margin: 0 0 1.15em;
@@ -8198,11 +8203,11 @@
 
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20261028-hs-setup-hide"></script>
+  <script src="projects-data.js?v=20261028-overview-cats2"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20261028-mycase"></script>
   <script src="kpi-report.js?v=20261028-mycase"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20261028-overview-cats"></script>
+  <script src="app.js?v=20261028-overview-cats2"></script>
 </body>
 </html>
