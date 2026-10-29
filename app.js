@@ -5469,6 +5469,17 @@
         flushList();
         continue;
       }
+      const catHead = line.trim().match(/^\*\*(.+?)\*\*:?\s*$/);
+      if (catHead) {
+        flushPara();
+        flushList();
+        let label = String(catHead[1] || "").replace(/:\s*$/, "").trim();
+        if (/^hubspot$/i.test(label)) label = "HubSpot";
+        if (label) {
+          parts.push(`<h5 class="project-overview-category">${escapeHtml(label)}</h5>`);
+        }
+        continue;
+      }
       const indent = (line.match(/^(\s*)/) || ["", ""])[1].length;
       const bullet = line.match(/^\s*[-*•]\s+(.+)$/);
       if (bullet) {
