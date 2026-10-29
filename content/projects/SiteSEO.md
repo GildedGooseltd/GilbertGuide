@@ -1,31 +1,31 @@
-# Website & SEO Improvements
+# Pav.Law Website Build & Brand Refresh
 
 
-| Field          | Value             |
-| -------------- | ----------------- |
-| Priority group | 4                 |
-| Fee            | 4000              |
-| Status         | Planning          |
-| Category       | Website / SEO     |
-| Campaign type  | SEO & Site Update |
-| Parent         | HsWebRebuild      |
+| Field          | Value          |
+| -------------- | -------------- |
+| Priority group | 4              |
+| Fee            | 27000          |
+| Status         | available      |
+| Category       | Website / SEO  |
+| Campaign type  | HubSpot CMS    |
+| Parent         | HsWebRebuild   |
 
 
 ---
 
 ## Project Overview
 
-Rebuild pav.law on HubSpot with SEO cutover over time, but audit and improve the current WordPress site now. Align ad campaigns with the SEO updates so web and PPC perform better together.
+A new HubSpot site and brand refresh for [pav.law](http://pav.law) launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.
 
-- GA4 audit & rank: Audit page activity and rank what is performing best and getting the most traffic. Cross-reference with Andrew’s top practice-area expansion goals. Detail: [SCRUBBED-REPORTING](../../seo-evidence/ga4-as-of-10-01-2026/SCRUBBED-REPORTING.md).
-- Yelp ↔ website: Matching practice-page deep links
-- WIP
-
-## HubSpot Application
-
-- CMS · WordPress cleanse plus HubSpot page rebuild on the same outlines
-- Forms · capture on Ads · Yelp · directory practice pages
-- Marketing Hub · SEO recommendations and page monitoring
+- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.
+- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.
+- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.
+- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.
+- SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.
+- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. 
+- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.
+- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.
+- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.
 
 ---
 
@@ -38,10 +38,6 @@ Rebuild pav.law on HubSpot with SEO cutover over time, but audit and improve the
 Locked set: 🚧 wip · 📌 active · 🚀 launched · 💰 LeadGen · 🏁 done · Remove clears chip. Launched = live but not finished.
 
 
-| Bullet           | Emoji | Status  | Pct |
-| ---------------- | ----- | ------- | --- |
-| GA4 audit & rank |       | waiting | 10  |
-| Yelp ↔ website   |       | waiting | 10  |
 
 
 ### Project docs
@@ -53,7 +49,7 @@ Locked set: 🚧 wip · 📌 active · 🚀 launched · 💰 LeadGen · 🏁 don
 | [HUBSPOT-CONTENT-CLEANSE.md](../../HUBSPOT-CONTENT-CLEANSE.md)           | Data compile · dual-track rules · AEO findings              |
 | [PAGE-INVENTORY-AUDIT.md](../../PAGE-INVENTORY-AUDIT.md)                 | Keep · update · prune vs traffic                            |
 | [WEBSITE-EXPANSION-PAGE-AUDIT.md](../../WEBSITE-EXPANSION-PAGE-AUDIT.md) | Ads finals · forms gaps                                     |
-| [HsWebRebuild.md](HsWebRebuild.md)                                       | Sprint execute notes · $27,600 card                         |
+| [HsWebRebuild.md](HsWebRebuild.md)                                       | Website project · working total $27,000                     |
 
 
 HubSpot SEO current file: [hubspot-seo-recommendations-export-pav-law-2026-09-28.csv](../../seo-evidence/hubspot-seo-recommendations-export-pav-law-2026-09-28.csv) · 407 recs · 223 HIGH. City-clone HIGH LCP → PRUNE. Ads finals still LCP/TBT/uncrawlable.

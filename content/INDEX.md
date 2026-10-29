@@ -33,8 +33,8 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | HS Client Intake         | [ ]  | [HubSpot Client Intake](projects/HsSvcExpand.md) |
 | Lawyer Referral          | [ ]  | [Lawyer Referral Program](projects/LawyerRef.md) |
 | Network Speech Coaching  | [ ]  | [Networking Speech And Communications Coaching](projects/NetCoach.md) |
-| HubSpot Site Rebuild     | [ ]  | [HubSpot Website Rebuild](projects/HsWebRebuild.md) |
-| Website & SEO            | [x]  | [Website & SEO Improvements](projects/SiteSEO.md) |
+| Pav.Law Website          | [ ]  | [Pav.Law Website Build & Brand Refresh](projects/HsWebRebuild.md) |
+| Pav.Law Website          | [x]  | [Pav.Law Website Build & Brand Refresh](projects/SiteSEO.md) |
 | HubSpot Setup            | [x]  | [HubSpot Setup](projects/HubSpotSetup.md) |
 | Insurance Mailer         | [ ]  | [Insurance Envelope Mailer](projects/InsMailer.md) |
 | Financial Waste Audit    | [ ]  | [Full Financial Waste Audit](projects/WasteAud.md) |
@@ -88,8 +88,8 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | $4,200                      | 50%          | [HubSpot Client Intake](projects/HsSvcExpand.md)                                          |
 | $1,700                      | 20%          | [Lawyer Referral Program](projects/LawyerRef.md)                                          |
 | $2,200                      | 20%          | [Networking Speech And Communications Coaching](projects/NetCoach.md)                       |
-| $27,600                     | 50%          | [HubSpot Website Rebuild](projects/HsWebRebuild.md)                                       |
-| $4,000                      | 50%          | [Website & SEO Improvements](projects/SiteSEO.md)                                           |
+| $27,000                     | 50%          | [Pav.Law Website Build & Brand Refresh](projects/HsWebRebuild.md)                                       |
+| $27,000                     | 50%          | [Pav.Law Website Build & Brand Refresh](projects/SiteSEO.md)                                           |
 | quote                       | —            | [HubSpot Setup](projects/HubSpotSetup.md)                                                   |
 | merged WinterSeason             | —            | [Insurance Envelope Mailer](projects/InsMailer.md)                                         |
 | $500 + 20% verified savings | 50%          | [Full Financial Waste Audit](projects/WasteAud.md)                                        |
@@ -210,7 +210,7 @@ Blank or missing → Guide default **50%** for one-time fees.
 - One-time: `Fee` only
 - Setup + monthly: `Fee` + `Ongoing fee`
 - Package children HsContacts under HsWebRebuild: Est. cost `incl. HsWebRebuild`. AffirmEmail and HsVoip now ride in HsSvcExpand HubSpot Client Intake. Winter Safety email rides in WinterSeason.
-- **HsWebRebuild** — HubSpot CMS rebuild of pav.law · dual-track WP cleanse + HubSpot page rebuild · $27,600 · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs canceled HsSetup
+- **HsWebRebuild** · Pav.Law Website · one website project · live hire pages then HubSpot rebuild · working total $27,000, one fee · PavSiteUpdate archived as merged · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs canceled HsSetup
 - **SocialAds** setup only — ongoing social production under **RETAINER**, not a separate monthly
 
 
@@ -253,8 +253,8 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **HubSpotSetup** — Planning · Show on · Priority group 2 umbrella · quote · HubSpot logo tile · child sells stay on HsVoip · LsaCall · HsMktExpand · MyCaseClr · HsSvcExpand · HsWebRebuild
 - **HsMktExpand** · available · Publish status unpublished · Show off · attribution + behavioral workflows · Ads sync on DigProf · SEO on HsWebRebuild · email A/B + CSAT on HsEmailSetup
 - **HsEmailSetup** · nurture setup · A/B · CSAT/NPS · templates · e-sign · design add-on / freelancer when special
-- **HsWebRebuild** — available · HubSpot CMS rebuild · audit · SEO updates on Ads-aligned port-candidate pages · measure · then port · monthly SEO bucket proposal · $27,600 · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs HsSetup
-- **SiteSEO** — wip · Show on · Website & SEO Improvements · Priority group 4 · $4,000 · parent HsWebRebuild
+- **HsWebRebuild** · available · Pav.Law Website · one project · PavSiteUpdate archived as merged · audit · SEO on Ads-aligned pages · measure · then port · working total $27,000, one fee · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs HsSetup
+- **SiteSEO** — available · Show on · Pav.Law Website Build & Brand Refresh · short title Pav.Law Website · Priority group 4 · $27,000 · parent HsWebRebuild · same fee and title as HsWebRebuild · proposal tile, not WIP report
 - Referral — client / F/F Track 1 · LawyerRef attorney network · see PerfPay for Phase 2 payout tiers
 - WinterSeason — archived · removed as active channel · Kate 10/02/2026 · glovebox mailer is separate · InsMailer · SummerEmail · GabrielOut stay history-only children
 - SealReeng — archived · was merged WinterSeason · not a live channel
