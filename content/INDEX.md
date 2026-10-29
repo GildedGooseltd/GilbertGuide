@@ -25,7 +25,7 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | NTGUILT Ads Launch       | [ ]  | [NTGUILT AdWords Campaign Launch](projects/NtguiltAd.md) |
 | Ad Expansion             | [x]  | [Ad Expansion](projects/AdEnhance.md) |
 | Yelp Ads                 | [x]  | [Yelp Ads](projects/Yelp.md) |
-| Printables & Swag        | [x]  | [Printables, Swag & Apparel](projects/SwagPrint.md) |
+| Printables & Swag        | [ ]  | [Printables, Swag & Apparel](projects/SwagPrint.md) |
 | Adult Site Ads           | [ ]  | [Adult Site(s) Ad Campaign](projects/AdultAds.md) |
 | Holiday & Winter Ads     | [ ]  | [Holiday & Winter Seasonal Ads](projects/HolidayAds.md) |
 | Winter Driving Ads       | [ ]  | [Winter Driving Images — NTGUILT Seasonal Ads](projects/WinterAds.md) |
@@ -33,8 +33,8 @@ Edit either table — build merges by project link ID. Full fee table: [FEE-BENC
 | HS Client Intake         | [ ]  | [HubSpot Client Intake](projects/HsSvcExpand.md) |
 | Lawyer Referral          | [ ]  | [Lawyer Referral Program](projects/LawyerRef.md) |
 | Network Speech Coaching  | [ ]  | [Networking Speech And Communications Coaching](projects/NetCoach.md) |
-| Pav.Law Website          | [ ]  | [Pav.Law Website Build & Brand Refresh](projects/HsWebRebuild.md) |
-| Pav.Law Website          | [x]  | [Pav.Law Website Build & Brand Refresh](projects/SiteSEO.md) |
+| Pav.Law Website          | [x]  | [Pav.Law Website Build & Brand Refresh](projects/HsWebRebuild.md) |
+| Pav.Law Website          | [ ]  | [Pav.Law Website Build & Brand Refresh](projects/SiteSEO.md) |
 | HubSpot Setup            | [x]  | [HubSpot Setup](projects/HubSpotSetup.md) |
 | Insurance Mailer         | [ ]  | [Insurance Envelope Mailer](projects/InsMailer.md) |
 | Financial Waste Audit    | [ ]  | [Full Financial Waste Audit](projects/WasteAud.md) |
@@ -253,8 +253,8 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **HubSpotSetup** — Planning · Show on · Priority group 2 umbrella · quote · HubSpot logo tile · child sells stay on HsVoip · LsaCall · HsMktExpand · MyCaseClr · HsSvcExpand · HsWebRebuild
 - **HsMktExpand** · available · Publish status unpublished · Show off · attribution + behavioral workflows · Ads sync on DigProf · SEO on HsWebRebuild · email A/B + CSAT on HsEmailSetup
 - **HsEmailSetup** · nurture setup · A/B · CSAT/NPS · templates · e-sign · design add-on / freelancer when special
-- **HsWebRebuild** · available · Pav.Law Website · one project · PavSiteUpdate archived as merged · audit · SEO on Ads-aligned pages · measure · then port · working total $27,000, one fee · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs HsSetup
-- **SiteSEO** — available · Show on · Pav.Law Website Build & Brand Refresh · short title Pav.Law Website · Priority group 4 · $27,000 · parent HsWebRebuild · same fee and title as HsWebRebuild · proposal tile, not WIP report
+- **HsWebRebuild** · available · Show on · Pav.Law Website · one project · PavSiteUpdate archived as merged · audit · SEO on Ads-aligned pages · measure · then port · working total $27,000, one fee · folds WebContent · WebSpeed · BlogRevamp · PaviChat · HsLanding intent · absorbs HsSetup
+- **SiteSEO** — available · Show off · Pav.Law Website Build & Brand Refresh · short title Pav.Law Website · Priority group 4 · $27,000 · parent HsWebRebuild · same fee and title as HsWebRebuild · proposal tile stays on HsWebRebuild, not WIP report
 - Referral — client / F/F Track 1 · LawyerRef attorney network · see PerfPay for Phase 2 payout tiers
 - WinterSeason — archived · removed as active channel · Kate 10/02/2026 · glovebox mailer is separate · InsMailer · SummerEmail · GabrielOut stay history-only children
 - SealReeng — archived · was merged WinterSeason · not a live channel
@@ -269,7 +269,7 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - AccessAud / EmailDns — Apr triage completed (access audit · email outage runbook)
 - MyCaseClr — available · MyCase cleanse · Spanish-speaking checkbox · Booked / closed by ↔ HubSpot `pl_booked_closed_by` · Lead Source / phone / dedupe before import
 - **DigProf** — wip · $3,700 · profiles + LSA call process · LinkedIn write/update guide · team graphics + improved headshots · LegalDirs / Yelp carry directory and Yelp sell lines
-- Priority 1 live / WIP stack: Yelp Launched · Ad Expansion wip · SwagPrint · LegalDirs · TsMgmt monthly · Required Digital Ads Retainer unpublished / Show off
+- Priority 1 live / WIP stack: Yelp Launched · Ad Expansion wip · LegalDirs · TsMgmt monthly · Required Digital Ads Retainer unpublished / Show off
 - **TsMgmt** — Recommended · Show on · $500/mo Platform Management · MyCase · Google Suite · Bluehost · Ops Dashboard · light IT · cell plan · Dropbox look · working file [`PLATFORM-MANAGEMENT-CHECKLIST.md`](../../PLATFORM-MANAGEMENT-CHECKLIST.md)
 - **Ad Expansion** — wip · Show on · two Search lanes only · criminal mischief + college towns · wait until late October when core Search is stable · semester mailer for freshman residencies with Ad 2 · no weapons · no seasonal DUI · no WinterSeason · no glovebox · fee may need down-quote from $5,600 · keepers ~$300/mo per live lane
 - **LegalDirs** — wip · Show on · Justia · FindLaw · Avvo · CH-DIRS held until team trained · `pl_lead_source` = Directories when live · site/ads stay 719-888-7888
@@ -277,9 +277,9 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **Digital Ads Retainer** — Required status in INDEX · Publish status unpublished · Show off · not on Guide sell calculator until republished · base $3,000/mo before Ad Expansion add
 - **AdultAds** — On Hold · unpublished · Show off · deferred until buyable site shortlist is ready · never on survivor advocacy properties
 - **CaseyBrand** — Casey rebrand (like DigProf): clothing, makeup, hair, presentation, speech, digital presence
-- **SwagPrint** — Recommended · Show on · low priority · binders with Jack for Andrew to sample · other samples waiting · revised logo + mockups then designer suite · fee $1,600 · product runs ~$400–$500 client cost
+- **SwagPrint** — Planning · Show off · low priority · binders with Jack for Andrew to sample · other samples waiting · revised logo + mockups then designer suite · fee $1,600 · product runs ~$400–$500 client cost
 - **SafetyFirst** — available · Show off · Safety First kit campaign · condoms · hand cleaner · wet wipes · car safety · backup lawyer card 719-888-7888 · $2,200 consulting · product separate · never on survivor advocacy properties
 - **WasteAud** — Archived · fee $500 + 20% verified savings · $1,063 / 30 days known Search waste was the verified floor before subscription, phone, LSA-credit, and vendor leakage
-- **Bulk unpublish** · live Show: Yelp · LegalDirs · TsMgmt · AdEnhance · SwagPrint · SiteSEO · HubSpotSetup · rest pending review
+- **Bulk unpublish** · live Show: Yelp · LegalDirs · TsMgmt · AdEnhance · HsWebRebuild · HubSpotSetup · rest pending review
 - Fee market context: [FEE-BENCHMARK-CO-SPRINGS.md](../FEE-BENCHMARK-CO-SPRINGS.md)
 

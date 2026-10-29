@@ -306,6 +306,14 @@
       overflow: hidden;
       border-radius: 0;
     }
+    .project-tile-no-media .project-tile-status-row {
+      display: flex;
+      align-items: center;
+      padding: 0.55rem 0.75rem 0;
+    }
+    .project-tile-no-media .project-tile-status-row .project-tile-wip-chip {
+      position: static;
+    }
     .project-tile-image {
       display: block;
       width: 100%;
@@ -1858,6 +1866,33 @@
       line-height: 1.45;
       list-style: disc;
     }
+    .project-overview-pay-scroll {
+      overflow-x: auto;
+    }
+    .project-overview-pay {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      color: var(--gg-brown, #3d3028);
+    }
+    .project-overview-pay th,
+    .project-overview-pay td {
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--pav-shield-blue, #1e3a8a) 18%, transparent);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .project-overview-pay th:first-child,
+    .project-overview-pay td:first-child {
+      text-align: left;
+      font-weight: 700;
+    }
+    .project-overview-pay thead th {
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gg-royal-deep, #2d1454);
+    }
     .overview-status-legend {
       margin: 0 0 0.85rem;
       padding: 0.65rem 0.85rem;
@@ -1943,13 +1978,6 @@
       font-size: 0.9rem;
       line-height: 1;
     }
-    .overview-bullet-label {
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: #ffffff;
-    }
     .overview-bullet-pct {
       display: inline-flex;
       align-items: center;
@@ -1966,9 +1994,15 @@
     }
     .overview-bullet-copy {
       min-width: 0;
+      color: var(--gg-brown, #3d3028);
     }
+    /* Label before " - " · same color as body · bold only · Kate 10/28/2026 */
     .overview-bullet-label {
       font-weight: 700;
+      font-size: inherit;
+      letter-spacing: normal;
+      text-transform: none;
+      color: inherit;
     }
     .project-tile-wip-chip {
       position: absolute;
@@ -2005,6 +2039,14 @@
       background: #94a3b8;
       color: #0f172a;
       border: 1px solid #64748b;
+      min-width: auto;
+      padding: 0.22rem 0.55rem;
+      box-shadow: none;
+    }
+    .project-tile-wip-chip.project-tile-proposal-chip {
+      background: var(--gg-royal, #3a1a6e);
+      color: #fffcf7;
+      border: 1px solid var(--gg-royal-mid, #5a2d9e);
       min-width: auto;
       padding: 0.22rem 0.55rem;
       box-shadow: none;
@@ -8145,11 +8187,11 @@
 
   <script src="pages-config.js?v=20260717-toc3col-r2"></script>
   <script src="config.js" onerror="/* local override optional */"></script>
-  <script src="projects-data.js?v=20261028-website-pub"></script>
+  <script src="projects-data.js?v=20261028-swag-hide"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20261028-mycase"></script>
   <script src="kpi-report.js?v=20261028-mycase"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
-  <script src="app.js?v=20261028-website-pub"></script>
+  <script src="app.js?v=20261028-cost-plus-pay"></script>
 </body>
 </html>

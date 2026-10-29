@@ -6,7 +6,7 @@
 | Fee           | 27000          |
 | Status        | available      |
 | Category      | Infrastructure |
-| Campaign type | HubSpot CMS    |
+| Campaign type | Digital        |
 
 ---
 
@@ -34,7 +34,6 @@ A new HubSpot site and brand refresh for [pav.law](http://pav.law) launched befo
 | Feb | | $6,750 | $5,400 | $4,500 |
 | Mar | | | $5,400 | $4,500 |
 | Apr | | | | $4,500 |
-| Total | $27,000 | $27,000 | $27,000 | $27,000 |
 | Current | $4,634 | $4,634 | $4,634 | $4,634 |
 | New Monthly | $13,634 | $11,384 | $10,034 | $9,134 |
 

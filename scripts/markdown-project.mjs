@@ -792,6 +792,26 @@ function parseAccountSection(body) {
   return { label: label.replace(/\s+/g, " ").trim(), source: src ? src[1].trim() : "" };
 }
 
+function parseSimpleMarkdownTable(body) {
+  const lines = String(body || "")
+    .split("\n")
+    .map(line => line.trim())
+    .filter(line => line.startsWith("|"));
+  if (lines.length < 2) return null;
+  const cellsOf = line =>
+    line
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
+      .map(cell => cell.trim());
+  const isSep = line => /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(line);
+  const headers = cellsOf(lines[0]);
+  const rest = isSep(lines[1]) ? lines.slice(2) : lines.slice(1);
+  const rows = rest.filter(line => !isSep(line)).map(cellsOf);
+  if (!headers.length || !rows.length) return null;
+  return { headers, rows };
+}
+
 function parseSections(text) {
   const parts = text.split(/^## /m).slice(1);
   const sections = {};
@@ -854,6 +874,11 @@ export function parseProjectMarkdown(text, fallbackId) {
   const { published, unpublishedMarkdown } = splitPublishedUnpublished(rest);
   const sections = parseSections(published);
   const project = { ...meta };
+  const paymentBody = findSectionBody(sections, "payment options");
+  if (paymentBody) {
+    const table = parseSimpleMarkdownTable(paymentBody);
+    if (table) project.paymentOptions = table;
+  }
   if (unpublishedMarkdown) project.unpublishedMarkdown = unpublishedMarkdown;
 
   if (sections.description) project.description = applyProperCase(sections.description.trim());
