@@ -14,7 +14,7 @@
 
 A new HubSpot site and brand refresh for [pav.law](http://pav.law) launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.
 
-**Hubspot:**
+**HubSpot:**
 
 - Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.
 - Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.
