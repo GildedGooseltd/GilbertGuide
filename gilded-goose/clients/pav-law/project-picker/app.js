@@ -5062,6 +5062,8 @@
       TsMgmt: [],
       OpsDash: [],
       SwagPrint: [],
+      SiteSEO: [],
+      HsWebRebuild: [],
       HsMktExpand: [
         "Marketing Hub · Ads connections, lead source, and quality properties.",
         "CRM · Contacts, custom properties, and reporting data sources.",
@@ -5285,6 +5287,21 @@
     </div>`;
   }
 
+  /** Bold the Label in "Label - description" overview bullets · Kate 10/28/2026 */
+  function overviewBulletCopyHtml(text) {
+    const raw = String(text || "").trim();
+    if (!raw) return "";
+    const m = raw.match(/^(.{1,80}?) - (.+)$/);
+    if (m) {
+      const label = m[1].trim();
+      const rest = m[2];
+      if (label && !label.includes(".") && !label.includes("**")) {
+        return `<strong class="overview-bullet-label">${escapeHtml(label)}</strong> - ${projectTextToHtml(rest)}`;
+      }
+    }
+    return projectTextToHtml(raw);
+  }
+
   function projectOverviewBodyHtml(item) {
     const raw = String(item?.description || item?.tldr || "").trim();
     if (!raw) return `<p>Overview pending.</p>`;
@@ -5298,7 +5315,7 @@
       /* Keep disc bullets + original task text · status icon/% inline only · Kate 10/10/2026 */
       return `<li class="overview-bullet-row overview-bullet-row-plain"><div class="overview-bullet-copy">${
         chip ? `${chip} ` : ""
-      }${projectTextToHtml(text)}</div></li>`;
+      }${overviewBulletCopyHtml(text)}</div></li>`;
     };
     const workedPct = text => {
       const row = matchOverviewBulletStatus(text, lookup);
@@ -5352,7 +5369,7 @@
             : overviewBulletStatusChipHtml(matchOverviewBulletStatus(b.text, lookup));
           html += `<li class="overview-bullet-row overview-bullet-row-plain"><div class="overview-bullet-copy">${
             chip ? `${chip} ` : ""
-          }${projectTextToHtml(b.text)}`;
+          }${overviewBulletCopyHtml(b.text)}`;
           if (hasKids) {
             html += '<ul class="overview-bullet-list overview-bullet-list-nested">';
             openChild = true;
@@ -5425,10 +5442,23 @@
     titleEl.textContent = item.title || "Project";
     if (metaEl) metaEl.textContent = metaParts.join(" - ");
     if (costEl) {
-      /* No proposal / overview fee on this tab · Kate 10/17/2026 */
-      costEl.hidden = true;
-      costEl.innerHTML = "";
-      costEl.className = "project-overview-cost project-tile-cost";
+      const amount = projectQuoteAmountLabel(item, isRetainer);
+      if (!amount || amount === "—") {
+        costEl.hidden = true;
+        costEl.innerHTML = "";
+        costEl.className = "project-overview-cost project-tile-cost";
+      } else {
+        costEl.hidden = false;
+        const estimateFee = isFeeUncertain(item) || isInactiveProject(item);
+        const catalogWeeks = item?.durationWeeks != null && Number(item.durationWeeks) > 0;
+        const period = catalogWeeks ? projectQuotePeriodLabel(item, isRetainer) : "";
+        const periodHtml = period
+          ? `<span class="project-tile-cost-period">${escapeHtml(period)}</span>`
+          : "";
+        costEl.innerHTML = `<span class="project-tile-cost-amount">${escapeHtml(amount)}</span>${periodHtml}`;
+        costEl.className =
+          "project-overview-cost project-tile-cost" + (estimateFee ? " project-tile-cost-estimate" : "");
+      }
     }
     const noteEl = document.getElementById("project-overview-estimate-note");
     if (noteEl) {
@@ -5456,7 +5486,7 @@
             const pack = projectProgressPack(item);
             const along = pack.pct != null ? ` ${pack.pct}% along.` : "";
             return `<div class="project-overview-section project-overview-inactive">
-            <p class="project-overview-inactive-note">Project planning.${escapeHtml(along)} Proposal format · not an active status report.</p>
+            <p class="project-overview-inactive-note">Project proposed.${escapeHtml(along)} Proposal format · not an active status report.</p>
           </div>`;
           })()
         : "";
@@ -5551,9 +5581,9 @@
           pack.pct != null ? ` · ${pack.pct}% along` : ""
         }">Inactive</span>`
       : planning
-        ? `<span class="project-tile-wip-chip project-tile-planning-chip" title="Project planning${
+        ? `<span class="project-tile-wip-chip project-tile-planning-chip" title="Project proposed${
             pack.pct != null ? ` · ${pack.pct}% along` : ""
-          }">Planning</span>`
+          }">Proposed</span>`
         : "";
     /* Same rainbow bar for active + inactive / planning when % is known · Kate 10/10/2026 */
     const progressBar =

@@ -1,48 +1,42 @@
-# HubSpot Website Rebuild
+# Pav.Law Website Build & Brand Refresh
 
-| Field             | Value       |
-| ----------------- | ----------- |
-| Priority          | 12          |
-| Fee               | 27600       |
-| Status            | available |
-| Category          |             |
-| Campaign type     | HubSpot CMS |
+| Field         | Value          |
+| ------------- | -------------- |
+| Priority      | 1              |
+| Fee           | 27000          |
+| Status        | available      |
+| Category      | Infrastructure |
+| Campaign type | HubSpot CMS    |
 
 ---
 
 ## Project Overview
 
-- End state
-  - Rebuild pav.law on HubSpot CMS
-  - Important for SEO and conversion
-  - Absorbs HsSetup site, forms, and contacts-enablement intent
-- Phase 1 now
-  - Execute on [PavSiteUpdate.md](PavSiteUpdate.md) · Pav.Law Site Update · Phase 1
-  - Ads · Yelp · NTGUILT Auto · LegalDirs destinations
-  - Forms and hire SEO on the landing table update-first URLs
-- Later URL wave
-  - [PavSiteUpdateP2.md](PavSiteUpdateP2.md) · `/team` · Military · traffic · drug · rename · marijuana · criminal mischief
-- Testing period then later port
-  - Audit · update port-candidate pages · measure on WordPress
-  - Port proven pages to HubSpot · DNS and redirect cutover on that set
-- Site lanes on this card after Phase 1
-  - Ad Expansion pages when AdEnhance opens · criminal mischief · college/parent
-  - Website Speed and Navigation · Blog Revamp · Pavi Chat QA
-  - Full HubSpot CMS rebuild of remaining KEEP pages
-- Ongoing rules
-  - Cut thin geo and stale pages
-  - Keep pages that earn calls or paid traffic
-  - Native HubSpot forms and workflows so Contact and ads land in CRM
-  - Marketing Hub SEO tools for recommendations and page monitoring
-  - Auto / traffic always under HS: NTGUILT
+A new HubSpot site and brand refresh for [pav.law](http://pav.law) launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.
 
-## HubSpot Application
+- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.
+- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.
+- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.
+- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.
+- SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.
+- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. 
+- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.
+- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.
+- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.
 
-- CMS · full rebuild of pav.law after Phase 1
-- CMS · later team and new practice pages owned on [PavSiteUpdateP2.md](PavSiteUpdateP2.md)
-- CRM · forms and contact capture
-- Marketing Hub · SEO tools · chat logging when enabled
-- Service Hub · after-hours triage handoff to morning intake
+## Payment Options
+
+| | 3 mo. | 4 mo. | 5 mo. | 6 mo. |
+| --- | ---: | ---: | ---: | ---: |
+| Nov | $9,000 | $6,750 | $5,400 | $4,500 |
+| Dec | $9,000 | $6,750 | $5,400 | $4,500 |
+| Jan | $9,000 | $6,750 | $5,400 | $4,500 |
+| Feb | | $6,750 | $5,400 | $4,500 |
+| Mar | | | $5,400 | $4,500 |
+| Apr | | | | $4,500 |
+| Total | $27,000 | $27,000 | $27,000 | $27,000 |
+| Current | $4,634 | $4,634 | $4,634 | $4,634 |
+| New Monthly | $13,634 | $11,384 | $10,034 | $9,134 |
 
 ---
 
@@ -50,530 +44,369 @@
 
 ## Project Plan
 
-not visible on the dashboard · Phase 1 execute file [PavSiteUpdate.md](PavSiteUpdate.md) · this card = full rebuild + later phases
+One HubSpot build and rebrand. No WordPress edits, plugin updates, or form embeds on the current site. Hire pages with live clicks go first. The rest of the pages, video, blog, social setup, and cutover are in this same project. If work starts now, the site is fully launched by December 2026. Pieces ship in that order. DNS moves in December, after the first pieces prove the forms and the phone path. The old site closes when DNS moves.
 
-Audit source: [WEBSITE-EXPANSION-PAGE-AUDIT.md](../../WEBSITE-EXPANSION-PAGE-AUDIT.md) · [PAGE-INVENTORY-AUDIT.md](../../PAGE-INVENTORY-AUDIT.md) · Ads lanes in [AdEnhance.md](AdEnhance.md) · Yelp in [Yelp.md](Yelp.md) · directories in [LegalDirs.md](LegalDirs.md)
+Evidence: [LANDING-PAGES-BY-CAMPAIGN.html](../../seo-evidence/ga4-as-of-10-01-2026/LANDING-PAGES-BY-CAMPAIGN.html), [hubspot-seo-recommendations-export-pav-law-2026-09-28.csv](../../seo-evidence/hubspot-seo-recommendations-export-pav-law-2026-09-28.csv), [SCRUBBED-REPORTING.md](../../seo-evidence/ga4-as-of-10-01-2026/SCRUBBED-REPORTING.md), [HUBSPOT-CONTENT-CLEANSE.md](../../HUBSPOT-CONTENT-CLEANSE.md), and [PAGE-INVENTORY-AUDIT.md](../../PAGE-INVENTORY-AUDIT.md).
 
-### Phase 1 pointer
+Paired work: [Yelp.md](Yelp.md), [LegalDirs.md](LegalDirs.md), [DigProf.md](DigProf.md), [AdCreative.md](AdCreative.md), and [AdEnhance.md](AdEnhance.md).
 
-All Phase 1 checklists · landing table · live on [PavSiteUpdate.md](PavSiteUpdate.md). Later URL wave · `/team` · marijuana · criminal mischief · Military · traffic · drug · rename · on [PavSiteUpdateP2.md](PavSiteUpdateP2.md). Do not duplicate execute steps here.
+### How the Work Runs
 
-### Later phases · after PavSiteUpdate · sections retained
+Paid media stays live on the URLs it already uses. The new site is designed and built on HubSpot. MyCase is not the form. Cutover points pav.law at HubSpot and closes the old site.
 
-#### Section 1 · Google Ads
-
-- Live campaigns to map 1:1
-  - HS: Military
-  - HS: DV
-  - HS: NTGUILT · includes Auto / traffic / tickets / DUI pages
-- Page work
-  - Audit historically best-ranking pages that match those campaigns · GA4 / GSC
-  - KEEP / port-candidate only · prune thin geo and stale pages outside Ads demand
-  - Content · SEO · AEO on those practice URLs
-  - HubSpot Practice Intake forms before Editor finals change
-  - Ads handoff · updated pages become Search finals and deep links
-  - Image and RSA support from [AdCreative.md](AdCreative.md) where needed
-- Sprint hooks below
-  - Sprint A0 · automated promotions scrub on Ads finals
-  - Sprint A · forms on live Ads finals
-  - Sprint B · content + SEO + AEO on Ads-aligned pages
-  - Sprint B2 · contact capture fix on paid paths
-  - Sprint C · Ads deep linking
-  - Sprint E · measurement for Ads landings
-
-#### Section 2 · Yelp
-
-- SEO-improve before new Projects
-  - Domestic violence
-  - Protection orders
-  - Assault
-- Keep strong for live Projects
-  - Military
-  - DUI / DWAI
-  - License / traffic
-- Site work
-  - Two-way deep links and locked UTMs with [Yelp.md](Yelp.md)
-  - Forms live on those URLs before pushing Yelp Project traffic hard
-  - In-body Yelp / review CTAs where tone fits
-- Sprint hook below
-  - Sprint C2 · Yelp ↔ website tracking and deep linking
-
-#### Section 3 · Ad Expansion
-
-- Opens with [AdEnhance.md](AdEnhance.md) when core Search quality gates allow · target end of October 2026
-- Pages
-  - Criminal mischief
-  - College / parent hub
-- Site work before spend
-  - Hire copy · forms · deep links to drug · DUI · contact
-  - College corridor cities as modules · no thin county trees
-- Sprint hooks below
-  - Sprint B rows for criminal-mischief and NEW college/parent
-  - Sprint D · college corridor and location prune
-
-#### Section 4 · Legal directories
-
-- Paired with [LegalDirs.md](LegalDirs.md) · Justia · FindLaw · Avvo
-- Site work
-  - Destination practice pages for directory website UTMs are current and hire-ready
-  - Same practice FAQ / NAP facts directories already paste from
-  - Site phone stays 719-888-7888 · CH-DIRS stays on directory profiles only
-  - Hidden UTM fields catch `utm_source=justia|findlaw|avvo` · `utm_medium=directory`
-- Checklist
-  - [ ] Confirm Justia / FindLaw / Avvo UTM targets land on Section 1 or 2 practice URLs that already have forms or clear tel CTAs
-  - [ ] Align directory FAQ paste with live page answers on DUI · Criminal · DV
-  - [ ] After LegalDirs posts UTMs · verify GA4 / HubSpot landings by source
-  - [ ] Do not put CH-DIRS on pav.law
-
-#### Section 5 · New HubSpot pages
-
-Casey · Jack · marijuana · criminal mischief execute checklists live on [PavSiteUpdateP2.md](PavSiteUpdateP2.md).
-
-### Priority SEO tasks · do first · from DL + HubSpot SEO
-
-Evidence · opened 10/02/2026:
-
-- GA4 YTD 01/01/2026–10/01/2026 · `Landing_page_Landing_page (9).csv` · `Google_organic_search_traffic_… (6).csv` · `Traffic_acquisition_… (9).csv` · `Events_Event_name (9).csv`
-- Use scrubbed channel rules from [SCRUBBED-REPORTING.md](../../seo-evidence/ga4-as-of-10-01-2026/SCRUBBED-REPORTING.md) · ignore Referral · Cross-network · fake Key events
-- HubSpot SEO · [hubspot-seo-recommendations-export-pav-law-2026-09-28.csv](../../seo-evidence/hubspot-seo-recommendations-export-pav-law-2026-09-28.csv) · 407 recs · 223 HIGH
-- PageSpeed homepage 09/28 · mobile ~33 · desktop ~71 · Highend/WPBakery stack
-
-Site performance read · scrubbed:
-
-- Trust channels · Direct 8,044 · Organic Search 4,401 · Paid Search 3,238 sessions
-- Capture · phone_click 114 · form_start 27 · form_submit 20 · forms are the bottleneck, not traffic
-- Top landings that matter for hire · `/` · domestic-violence · `/contact` · protection-orders · dui-dwai
-- Top organic landings · `/` · photo-radar blog · `/contact/` · andrew-brown · then domestic-violence
-- HubSpot HIGH cluster is theme-wide · LCP 53 · TBT 53 · uncrawlable anchors 53 · mobile tap targets 41 · not unique content bugs per page
-- ON_PAGE HIGH is almost none · brand-density / brand-in-headings are LOW · do not start there
-- City and county clones carry the same HIGH speed flags · prune, do not rebuild each clone
-- `/areas-of-practice/criminal-mischief/` missing from HubSpot SEO crawl · create or fix before Ad Expansion spend
-
-Page improve order · traffic × Ads / Yelp / directories:
-
-1. `/areas-of-practice/domestic-violence/` · largest practice landing · Yelp Project #1 · Ads DV
-2. `/contact/` · second hire path · HubSpot form home · directory and Ads overflow
-3. `/areas-of-practice/protection-orders/` · high views · Yelp Project #2
-4. `/areas-of-practice/dui-dwai/` · Ads + Yelp live · license modules
-5. `/` · organic + paid front door · Wave A offer + single meta description
-6. `/areas-of-practice/active-duty-military/` · Ads Military final
-7. `/areas-of-practice/traffic-offenses/` · HS: NTGUILT Auto · photo-radar blog deep link
-8. `/areas-of-practice/assault/` · Yelp Project #3
-9. Ads finals still thin · drug-charges · weapons-charges · then criminal-mischief when Expansion opens
-10. Attorney / team pages · Andrew after practice pages · Casey and Jack as new HubSpot pages · see Section 5
-11. Marijuana / cannabis HubSpot practice page · see Section 5
-
-Largest-impact actions first · checklist:
-
-- [ ] Wave A before 10/12/2026 · Automated Promotions Off or approved offer live · scrub coupon language · offer block on Ads finals + contact · see Sprint A0
-- [ ] Theme pass once on KEEP pages · fix uncrawlable anchors · reduce LCP/TBT blockers · correctly sized images · tap targets · do not run this on prune clones
-- [ ] Duplicate homepage meta description · one description only · Yoast vs theme
-- [ ] Bluehost / entity schema → pav.law
-- [ ] Test HubSpot contact form submit · CRM + notification · then demote MyCase iframe on paid paths
-- [ ] HubSpot Practice Intake on domestic-violence · protection-orders · dui-dwai · contact · military · traffic · drug · weapons
-- [ ] SEO content pass #1 · domestic-violence · hire CTA · FAQ · form · Yelp deep link · Ads final ready
-- [ ] SEO content pass #2 · contact · capture path clean · offer block · UTMs
-- [ ] SEO content pass #3 · protection-orders · cross-link DV · Yelp ready
-- [ ] SEO content pass #4 · dui-dwai · license / Express Consent · cars · form
-- [ ] Homepage · single H1 · Wave A offer · tel + form path · fix uncrawlable nav anchors
-- [ ] Photo-radar blog · internal link to traffic-offenses and dui-dwai with form CTAs
-- [ ] Military + traffic practice pages · forms + Ads deep links
-- [ ] Assault page SEO · then Yelp Assault Project
-- [ ] Mark thin city/county clones PRUNE / noindex · do not spend SEO hours fixing their HIGH LCP rows
-- [ ] Sitemap = KEEP URLs only · staging 301 cleanup sample
-- [ ] Criminal-mischief page · get into crawl + hire content before Ad Expansion
-- [ ] LegalDirs UTM destinations = pages above that already have form or clear tel
-- [ ] Phase 1 complete on [PavSiteUpdate.md](PavSiteUpdate.md) before Ad Expansion site work
-- [ ] Later · Person schema on America · college/parent hub · video clips · full HubSpot port of proven WP pages
-- [ ] Skip first · brand mention density · brand in headings · optimizing every service-area clone
-
-### Landing pages × campaign · update first
-
-GA4 01/01/2026–10/01/2026 · `Landing_page_Landing_page (9).csv` · organic from `Google_organic_search_traffic_Landing_page_+_query_string (6).csv`. SEO improvements = row count per URL in [hubspot-seo-recommendations-export-pav-law-2026-09-28.csv](../../seo-evidence/hubspot-seo-recommendations-export-pav-law-2026-09-28.csv). Full table: [LANDING-PAGES-BY-CAMPAIGN.html](../../seo-evidence/ga4-as-of-10-01-2026/LANDING-PAGES-BY-CAMPAIGN.html).
-
-Sessions are all-channel landings. Organic clicks are Search-linked only. DV practice traffic is mostly paid/direct/other, not organic. Scrub Referral / Cross-network when reading site totals. SEO Total = all HubSpot recommendations on that URL. Jack and marijuana rows are new HubSpot builds · sessions 0 until live.
-
-| Update # | Landing page | Sessions | Org clicks | SEO Total | Campaign |
-| --- | --- | ---: | ---: | ---: | --- |
-| 1 | `/` | 33,196 | 3,517 | 8 | Shared · all live HS + LegalDirs |
-| 2 | `/contact` | 3,373 | 166 | 11 | Shared · all live HS + LegalDirs |
-| 3 | `/areas-of-practice/domestic-violence` | 15,232 | 2 | 7 | HS: DV · Yelp DV |
-| 4 | `/areas-of-practice/protection-orders` | 877 | 5 | 7 | HS: DV · Yelp PPO |
-| 5 | `/areas-of-practice/dui-dwai` | 826 | 4 | 7 | HS: NTGUILT · Yelp DUI |
-| 6 | `/service-areas/el-paso-county/dui-dwai-el-paso` | 251 | 0 | n/a | HS: NTGUILT · geo support |
-| 7 | `/areas-of-practice/dui-dwai/top-dui-attorney` | 240 | 7 | n/a | HS: NTGUILT |
-| 8 | `/areas-of-practice/dui-dwai/el-paso-teller-duis` | 228 | 4 | n/a | HS: NTGUILT |
-| 9 | `/denver-ramping-up-photo-radar-enforcement-what-colorado-drivers-should-know` | 789 | 633 | 11 | HS: NTGUILT · Auto organic magnet |
-| 10 | `/dont-let-a-dv-conviction-ruin-your-career` | 495 | 10 | n/a | HS: DV · organic support |
-| 11 | `/areas-of-practice/traffic-offenses` | 46 | 1 | 7 | HS: NTGUILT · Auto · Yelp License |
-| 12 | `/areas-of-practice/active-duty-military` | 42 | 13 | 7 | HS: Military · Yelp Military |
-| 13 | `/ppir-program-suspended` | 62 | 41 | n/a | HS: Military · organic support |
-| 14 | `/areas-of-practice/assault` | 77 | 3 | 7 | Yelp Assault · DV cluster |
-| 15 | `/team/andrew-brown` | 308 | 284 | 10 | Trust · LegalDirs |
-| 16 | `/team/casey-dinaro` | 91 | 91 | 8 | Trust · DigProf · Section 5 HubSpot |
-| 17 | `/team/jack-strong` | 0 | 0 | n/a | Trust · DigProf · Section 5 HubSpot |
-| 18 | `/areas-of-practice/drug-charges` | 25 | 0 | 6 | Ads finals · college later |
-| 19 | `/areas-of-practice/marijuana-charges` | 0 | 0 | n/a | Section 5 HubSpot · NTGUILT / college later |
-| 20 | `/areas-of-practice/weapons-charges` | 8 | 0 | 8 | Ads finals hold |
-| 21 | `/areas-of-practice/criminal-mischief` | 7 | 0 | n/a | Ad Expansion Ad 1 |
-
-Campaign update order: HS: DV + Yelp DV/PPO → shared `/contact` + `/` → HS: NTGUILT · DUI + Auto / traffic + Yelp DUI/License → HS: Military → Yelp Assault → team HubSpot Casey + Jack → drug + marijuana HubSpot → Ad Expansion later.
-
-### SEO / website proposal
-
-- Goal
-  - Monthly SEO + website bucket scoped to the four sections above
-- Testing period method
-  - Audit first
-  - Update only pages that will eventually port to HubSpot
-  - Align every page update to Google Ads · Yelp · Ad Expansion · or Legal Directory destinations
-  - Learn from live WordPress performance before HubSpot port
-- Proposal must include
-  - Monthly SEO bucket with a set dollar limit
-  - Section 1 month-1 map · Military · DV · NTGUILT · Auto / traffic under NTGUILT
-  - Section 2 Yelp page list · DV · PPO · assault first · then live Project pages
-  - Section 3 Ad Expansion map when those campaigns open · criminal mischief · college / parent
-  - Section 4 directory destination URLs and UTM handoff with LegalDirs
-  - Section 5 new HubSpot pages · Casey · Jack · marijuana
-  - KEEP / port-candidate pages only in the test period
-  - Forms on Ads · Yelp · directory destination pages first
-  - Simplify / prune thin geo and stale pages
-  - Measurement
-    - Organic + paid + Yelp + directory landings
-    - Form submits
-    - Phones by practice
-    - Pass / fail for HubSpot port
-- Completion checklist · proposal
-  - [x] Draft SEO / website proposal for Andrew · [SEO-PROPOSAL-FOR-ANDREW-10-10-2026.md](../../../SEO-PROPOSAL-FOR-ANDREW-10-10-2026.md)
-  - [x] Propose monthly SEO bucket dollar limit · set amount, not open-ended hours
-  - [x] Section 1 · map month-1 SEO updates 1:1 to live Google Ads campaigns
-  - [x] Section 2 · list Yelp SEO pages · DV · PPO · assault · plus live Project URLs
-  - [x] Section 3 · include Ad Expansion pages when those campaigns are ready
-  - [x] Section 4 · list LegalDirs UTM destination pages and FAQ alignment
-  - [x] Section 5 · HubSpot pages for Casey · Jack · marijuana in the proposal scope
-  - [x] List historically best-ranking pages that match those sections · GA4 / GSC evidence
-  - [x] Mark PRUNE vs KEEP / port-candidate pages
-  - [x] Include Ads handoff · finals / deep links after each Section 1 update
-  - [x] Include forms plan for Ads · Yelp · directory destinations first
-  - [x] Include simplify / prune plan
-  - [x] Define pass / fail for porting a page to HubSpot
-  - [ ] Send proposal · wait for Andrew yes before large SEO build
-  - [ ] Later · Andrew Instagram videos on practice pages
-
-### Detail sprints · support the four sections
-
-Sprint A0 · A · B · B2 · C · E → Section 1 Google Ads. Sprint C2 → Section 2 Yelp. Sprint B college/CM rows + Sprint D → Section 3 Ad Expansion. Section 4 Legal directories uses destination pages from Sections 1–2 plus LegalDirs UTMs.
-
-### Sprint A0 · Google automated promotions · before 10/12/2026 · Section 1
-
-Google email 10/01/2026: from 10/12/2026 Search and Performance Max with linked location assets auto-pull promotions from the website when no promotion assets are attached. Account opted in by default. Opt out: Account settings → Automated assets → Automated Promotions → Off.
-
-Colorado: free case evaluation is fine · “no fee if no recovery” needs cost disclosure · no paying for referrals · avoid % off / gift cards / holiday lawyer coupons. Full Wave A checklist and Offer bank: [PRIORITY-04-WEBSITE-SEO.md](../../PRIORITY-04-WEBSITE-SEO.md).
-
-Execute order before 10/12:
-
-1. Andrew approve 1–2 offers from the Offer bank · primary pair = flat-rate quote in writing after review + lane differentiator  
-2. Ads · Automated Promotions Off until site + assets match · or attach manual promotion with approved line first  
-3. WP scrub of coupon / % off / limited-time fee language on Ads finals and homepage  
-4. Same offer block on drug · CM · weapons · traffic · DUI · military · contact · free-case-consultation  
-5. Ads callouts for differentiators · optional one manual promotion asset · no Black Friday / Cyber Monday occasions  
-6. Confirm location + call assets on live HS: DV · Military · NTGUILT  
-7. From 10/12 · Assets audit 2× week · pause bad auto promos  
-
-Ads-ready means: Wave A copy live on finals · forms path decided · promo control set · no retail coupon language Google can scrape.
-
-### Sprint 0 · Bing / tech SEO quick fixes · 09/28/2026
-
-Bing Webmaster URL Inspection on `https://pav.law/`: Indexed successfully · can appear on Bing · OpenGraph + JSON-LD present.
-
-Issue confirmed live: **two `<meta name="description">` tags** on the homepage.
-
-| # | Content |
-| --- | --- |
-| 1 | Facing criminal charges in Colorado? Discover how our Colorado criminal defense can protect your rights and future in court. |
-| 2 | Pav Law is a Colorado criminal defense firm, specializing in DUI, sexual assault, and domestic violence. Our flat rates are transparent and affordable. |
-
-Cause: Yoast SEO outputs one description · theme or another SEO/plugin outputs a second. Bing flags this as an SEO/GEO error. Google also prefers a single description.
-
-How to fix in WordPress:
-
-1. WP Admin → SEO Yoast → Search appearance → confirm homepage meta description  
-2. Check theme SEO / Highend theme options / any second SEO plugin · disable duplicate meta description  
-3. Inspect homepage source · exactly one `name="description"` remains  
-4. Re-run Bing URL Inspection → Recrawl  
-5. Sitewide check: duplicate descriptions on practice pages if the same plugin pair runs everywhere  
-
-Also clean OpenGraph title if editing: `og:title` currently includes HTML entity scales characters · prefer plain text title without emoji entities.
-
-Keep one canonical description. Prefer hire-intent + flat-rate clarity from description 2, or merge into one line under ~155 characters. Align `og:description` to that same sentence.
-
-#### Schema / JSON-LD · Bing markup review 09/28/2026
-
-Bing shows JSON-LD + OpenGraph. Yoast `@graph` on the homepage still ties the firm entity to the **Bluehost staging host** instead of pav.law.
-
-Broken fields in live Yoast graph:
-
-| Field | Wrong value now | Should be |
+| Lane | Where | What happens |
 | --- | --- | --- |
-| WebSite `@id` / `url` | `https://pqq.xnh.mybluehost.me/#website` and `/` | `https://pav.law/#website` and `https://pav.law/` |
-| Organization `@id` / `url` | `https://pqq.xnh.mybluehost.me/#organization` | `https://pav.law/#organization` |
-| SearchAction `urlTemplate` | `https://pqq.xnh.mybluehost.me/?s={search_term_string}` | `https://pav.law/?s={search_term_string}` |
-| WebPage `isPartOf` / `about` | Point at bluehost `#website` / `#organization` | Point at pav.law ids |
-| Organization `name` in Yoast | `Pav Law, PLLC` | Confirm with Kate · public site may stay Pav Law · MSA lock is Pav Law only |
+| A. Build and rebrand | HubSpot staging | Theme, pages, forms, phone, and lead flow. The current site is not edited. |
+| B. Cutover | pav.law DNS | Redirects, then the old site closes. A backup is kept until Coverage is stable. |
+| C. ntguilt.com | Its current host | Same form workflow. That site is not rebuilt here. |
 
-Second Organization block from **Trustindex** reviews widget: separate `@id` on trustindex.io · AggregateRating 4.9 / 156. Keep ratings if desired · but Yoast Organization must use pav.law so Google/Bing do not split the entity across staging + live + Trustindex.
+Order inside this project: rebrand and theme, then forms and SEO on the highest-traffic HubSpot pages, then Yelp and directory handoff, then the rest of the page list, blog, video, and DNS.
 
-How to fix:
+Page revisions follow the campaigns and keywords with clicks. The source is the Search keyword report for October 1 through October 23, 2026. Clicks are the Interactions column.
 
-1. WP Admin → Settings → General → WordPress Address and Site Address = `https://pav.law` · no bluehost URL  
-2. Yoast → Settings → Site representation / Organization · website URL and Organization URL = `https://pav.law` · save  
-3. Yoast → Tools → clear SEO data cache / regenerate if available  
-4. View source homepage → search `mybluehost` · must return **zero** hits in JSON-LD  
-5. Rich Results Test + Bing URL Inspection markup → Organization and WebSite ids on pav.law only  
-6. Optional: Attorney / LegalService typed schema later · after entity URLs are clean  
+- Traffic pages first. HS: DUI pav.law, Traffic / Reckless: traffic attorney 92, traffic court attorney 72, traffic tickets lawyer 45, traffic ticket attorneys 33. HS: NTGUILT, Tickets: traffic ticket attorneys 37, traffic attorney 19.
+- License page next. HS: DUI pav.law, License / Revocation: driving under revocation lawyer 80, driving under restraint colorado 10.
+- DUI page after those. HS: DUI pav.law, DUI: arrested for dui colorado 11, dui attorney colorado 7.
+- Military page only for military queries. HS: Military, Mil DV: fort carson legal 6. Serious criminal charges lawyer, 31 clicks, and criminal attorney colorado springs, 8 clicks, are on Mil Felony. Those are general lawyer terms. They do not get a military page rewrite. A general criminal page is the home if that content is in scope.
 
-Priority: fix bluehost entity URLs before new AEO content. Staging domain in schema confuses answer engines and local pack identity.
+### Deliverables
 
-#### Rich Results Test · homepage · 09/28/2026 11:32:29 PM
+#### Gates
 
-Report: https://search.google.com/test/rich-results/result?id=Fw6fSLPC_QeGTnYzeLk5Qw · crawled successfully · mobile.
+- [ ] Lock the $27,000 website budget. Spend the highest traffic impact first.
+- [ ] Build on the HubSpot host. pav.law DNS stays on the current host until cutover.
+- [ ] Do not edit the WordPress theme, plugins, or pages.
+- [ ] No duplicate public bio or practice URLs across domains.
+- [ ] Automated Promotions are off, or one approved offer is live, on Ads finals and contact. Scrub coupon language. The offer bank and the 10/12/2026 control steps stay with the Ads finals.
+- [ ] One homepage meta description on the HubSpot page.
+- [ ] A HubSpot form test creates the contact, the ticket, and the notification.
+- [ ] Start the rebrand, the theme, the module kit, and the page drafts.
 
-| Detected | Count | Status |
+#### Forms, Same Order as the Page List
+
+- [ ] Contact master form, with hidden UTM, practice, and campaign fields. Replace MyCase on `/contact`.
+- [x] `/free-case-consultation/` was set to draft on 10/22/2026. It had no activity and was not producing.
+- [ ] Replace that page when needed, with a HubSpot form and no MyCase.
+- [ ] HubSpot Practice Intake on domestic-violence. Remove MyCase.
+- [ ] HubSpot Practice Intake on protection-orders. Remove MyCase.
+- [ ] HubSpot Practice Intake on dui-dwai. Remove MyCase.
+- [ ] HubSpot Practice Intake on assault. Remove MyCase.
+- [ ] HubSpot Practice Intake on the rest of the page list in this project. Remove MyCase.
+
+Hidden fields on every practice form: practice_area, utm_source, utm_medium, utm_campaign, utm_content, landing_url, and parent_or_student.
+
+#### HubSpot Direct Line and Follow-Up
+
+The public phone on every hire page stays 719-888-7888. That number forwards into HubSpot Calling. Callers do not see a HubSpot number on pav.law or on ads. CH-YELP and CH-DIRS stay off the site. Full routing is in [HS-PHONES.md](../../../HS-PHONES.md) and [HS-LEAD-TRACK.md](../../../HS-LEAD-TRACK.md).
+
+- [ ] Confirm 719-888-7888 forwards into HubSpot Calling. A test call from a cell rings the HubSpot app and logs on a contact.
+- [ ] Website calls ring Romina first, then voicemail, during intake hours.
+- [ ] Every Call button and sticky phone uses 719-888-7888 only.
+- [ ] The on-page line changes by hours and by who is on call. The number on the page does not change.
+- [ ] A form updates the existing contact when the email or phone already matches.
+- [ ] Source order on submit: Yelp, then Justia or FindLaw or Directories, then Google Ads, then Justia Answers or Quora or Reddit, then Website form.
+- [ ] A form submit creates a task named `Form callback`, due the same business day, high priority, assigned to intake.
+- [ ] A form submit opens a Help Desk ticket in the Prospects pipeline, stage New, owner Romina, with a backup. Customer Agent stays off. Ticket category is New inquiry.
+- [ ] A Deal is created only when that ticket is marked Retained.
+- [ ] Spam does not open a ticket or a callback task.
+- [ ] Romina has a Help Desk queue of the day's website form tickets.
+- [ ] One test form creates one contact, one Prospects ticket, and one `Form callback` task.
+- [ ] The same workflow covers ntguilt.com. The auto and traffic form name stays NTGUILT Auto Inquiry.
+- [ ] The charge field uses the locked practice list. Practice is not the ticket category.
+- [ ] A form submit notifies Romina and Casey.
+- [ ] Each live campaign has an Ads landing: one offer, one form, tied to that practice page. College and criminal mischief wait until [AdEnhance.md](AdEnhance.md) opens.
+- [ ] A missed call or voicemail creates a task named `Missed call callback`, due the same day.
+- [ ] An answered call records name, phone, issue, and language on the contact before hang-up.
+- [ ] An answered call with no source yet is `Phone call`. If the contact already shows paid search, the source is Google Ads.
+- [ ] The daily queue is incomplete callback tasks due that day.
+
+#### Rebrand
+
+Scott F. designs the HubSpot look. The range is $2,000 to $5,000, outside this fee. Firm name stays Pav Law. Print logos already updated on [SwagPrint.md](SwagPrint.md) stay the mark unless Scott and Andrew change them.
+
+- [ ] Lock logo, color, type, header, footer, and buttons in the HubSpot theme.
+- [ ] Practice page, Ads landing, team, blog, and video templates use that design.
+- [ ] Andrew reviews the design before pages are public.
+
+#### Pages, Highest Traffic First
+
+The site phone stays 719-888-7888. Pair the form and the SEO pass on each URL before the next URL. Directory UTMs go only on a URL that already has a form or a clear phone link.
+
+- [ ] `/`. Brand page, about 33,000 sessions. Build it on HubSpot. One H1, the offer, phone, and form.
+- [ ] `/areas-of-practice/domestic-violence/`. About 15,000 sessions. Hire call to action, FAQ, form, and Yelp deep link.
+- [ ] `/contact/`. About 3,400 sessions. Build it on HubSpot. Clean capture path, offer, UTMs, and a HubSpot form. No MyCase.
+- [ ] `/areas-of-practice/protection-orders/`. Hire page, form, Yelp deep link, and a cross-link to Domestic Violence.
+- [ ] `/areas-of-practice/dui-dwai/`. NTGUILT Auto, license and Express Consent, cars, and a form.
+- [ ] Photo-radar blog. About 789 sessions and 633 organic clicks. Deep-link to traffic offenses and dui-dwai, with form calls to action.
+- [ ] `/can-i-be-arrested-for-returning-a-u-haul-vehicle-late/`. 118 organic clicks. Deep-link to the traffic and DUI hire pages.
+- [ ] `/can-a-dui-or-dwai-conviction-affect-your-green-card-status/`. 95 organic clicks. Deep-link to dui-dwai with a form call to action.
+- [ ] `/dont-let-a-dv-conviction-ruin-your-career/`. Deep-link to domestic violence.
+- [ ] Consolidate child DUI URLs into the main dui-dwai page, or deep-link them there.
+- [ ] Keep the El Paso DUI geo page and deep-link it to the main DUI page.
+- [ ] `/areas-of-practice/assault/`, after Domestic Violence and protection orders. Form and Yelp deep link.
+
+#### HubSpot Build
+
+- [ ] Lock theme tokens, templates, and the module kit on the HubSpot host. The current site is not edited.
+- [ ] Wave 1 is the theme, module kit, and global header and footer.
+- [ ] Twin the hire templates: home, contact, Domestic Violence, protection orders, DUI, assault, and the rest of this page list.
+- [ ] Wire HubSpot forms, UTMs, thank-you paths, and notifications on those drafts.
+- [ ] Match the offer and the phone 719-888-7888 on the drafts.
+- [ ] Keep drafts offline until cutover.
+
+#### Yelp and Directories
+
+- [ ] After Domestic Violence SEO, publish Yelp Projects with UTMs. See [Yelp.md](Yelp.md).
+- [ ] Yelp to site: `utm_source=yelp&utm_medium=profile&utm_campaign={practice}&utm_content={project|update|about}`
+- [ ] Site to Yelp: `utm_source=website&utm_medium=referral&utm_campaign=yelp-listing&utm_content={page-slug}`
+- [ ] Add an in-body Yelp link on Domestic Violence, military, and DUI pages where the tone fits.
+- [ ] After destinations are ready, add Justia, FindLaw, and Avvo UTMs. See [LegalDirs.md](LegalDirs.md).
+- [ ] Directory FAQ paste matches the live page on DUI, Criminal, and Domestic Violence.
+- [ ] Hidden fields catch `utm_source=justia|findlaw|avvo` and `utm_medium=directory`.
+- [ ] CH-DIRS stays on directory profiles only. It does not go on pav.law.
+- [ ] Monthly readout of GA4, HubSpot forms, Yelp, and directory sources on these URLs.
+
+#### HubSpot Page SEO
+
+- [ ] Link outreach on hire pages after those landings convert. Keep one log of who was asked, what went live, and which URL. No paid link networks.
+- [ ] Crawl health, Core Web Vitals, schema, sitemap, and noindex on ghosts and taxonomy.
+- [ ] The sitemap equals KEEP URLs only.
+- [ ] Guide readout of organic sessions, clicks, form submits, and phone clicks, beside the Ads KPIs.
+- [ ] AEO on hire pages: a question heading, a short answer, and FAQ schema only after the wording is approved.
+- [ ] Thin city and county clones are not built.
+- [ ] Keep-list geos only: El Paso, Denver, Arapahoe, Jefferson, Douglas, Boulder, Pueblo, Adams, and Teller.
+
+#### FAQ Port, After the Page Has a Form
+
+Source copy is [PAV-PRACTICE-FAQS.md](../../../PAV-PRACTICE-FAQS.md). Port a page only when it is already hire-ready. No outcome promises.
+
+- [ ] `/areas-of-practice/domestic-violence/`. Port the live Justia Domestic Violence FAQs.
+- [ ] `/areas-of-practice/dui-dwai/`. Port the live Justia DUI FAQs, including Express Consent.
+- [ ] `/areas-of-practice/protection-orders/`. Port order FAQs from the Domestic Violence set, and cross-link Domestic Violence.
+- [ ] `/areas-of-practice/assault/`. Port criminal hire FAQs from the live Justia Criminal extras as needed.
+- [ ] FAQ schema only after the wording is approved.
+
+Traffic, Military, and team FAQ ports are in this project, after the highest-traffic pages.
+
+#### Rest of the Page List
+
+These pages follow the highest-traffic set. They are in the same $27,000. Team, Military, traffic, drug, rename, marijuana, and criminal mischief move up when a live campaign or the video crew is already producing that content.
+
+- [ ] `/areas-of-practice/traffic-offenses/`. HS: NTGUILT, covering license, driving under revocation, and points.
+- [ ] `/areas-of-practice/active-duty-military/`. Military queries only.
+- [ ] `/areas-of-practice/drug-charges/`. Form before any Ads final change.
+- [ ] `/areas-of-practice/weapons-charges/`. Hold until that Ads final is in scope.
+- [ ] `/team/andrew-brown/`, after the practice pages.
+- [ ] Criminal mischief and the college and parent hub, only when [AdEnhance.md](AdEnhance.md) opens.
+- [ ] Send the SEO proposal, and wait for a yes before a large SEO build.
+- [ ] Andrew's Instagram videos on practice pages come later.
+
+#### Launch Setup
+
+- [ ] Footer shows Pav Law, 719-888-7888, the office address, and hours, matching the Google Business Profile.
+- [ ] Privacy page is linked from the footer and from every form.
+- [ ] Cookie banner sits below the tap-to-call bar. HubSpot's tracking field loads analytics.
+- [ ] Specialty line only on a page that claims a certification. Past-results line only if results are published.
+- [ ] Team pages have a current photo, role, and bar admission before publish.
+- [ ] Review strip uses reviews already on the profiles.
+- [ ] Public form fields are name, phone, and charge. Email is optional.
+- [ ] Thank-you page is noindex, states the same-day callback, and shows 719-888-7888.
+- [ ] Spam submissions do not create a callback task.
+- [ ] SPF, DKIM, and DMARC are connected. A test form email arrives from pav.law in the intake inbox.
+- [ ] www and HTTP redirect to https://pav.law.
+- [ ] Custom 404 links to the phone, Domestic Violence, DUI, traffic, and contact.
+- [ ] Favicon, logo, and one share image are set.
+- [ ] Organization and Attorney schema use the same phone, address, and profile links.
+- [ ] Tap-to-call is visible without scrolling. Pass a test on a real phone over cellular.
+- [ ] Content images are compressed and have alt text.
+- [ ] GA4 is the one property, with office traffic filtered out.
+- [ ] Phone-click event is separate from the form event.
+- [ ] Bing Webmaster has the sitemap. Do not score the site on Bing query clicks.
+
+#### HubSpot Rebuild and Cutover
+
+- [ ] Website pages, Ads landings, forms, redirects, and SEO fields are in this build.
+- [ ] Embedded calls to action and smart content stay on Ads landings only. Blog clusters follow the hire pages. Chat and HubDB are not in this project.
+- [ ] Blog clusters sit under the practice parents. No blog factory until the hire pages convert.
+- [ ] Video: inventory existing clips first. Place the master on the hire page with captions and a transcript. YouTube growth stays off.
+- [ ] Project management for the videographers covers the schedule, HubSpot access, the shot list, and placement. That work is $3,600 inside this $27,000.
+- [ ] HubSpot Social is connected so the crew can publish and monitor. This project does not run the posting calendar. Google Business Profile posting stays on the ads retainer.
+- [ ] Map each current URL in this list to its HubSpot path.
+- [ ] Load redirects in HubSpot for organic URLs, kept backlinks, and live Ads final URLs. No chains. No bulk homepage dumps.
+- [ ] Click-test Ads, Yelp, Justia, FindLaw, and Avvo the day DNS moves. Each link lands on the hire page in one hop.
+- [ ] Lower DNS TTL. Change only the web records. Leave mail.
+- [ ] Remove the staging noindex. Confirm self-canonicals on pav.law.
+- [ ] Submit the pav.law sitemap in Search Console. Watch Coverage for 2 to 4 weeks.
+- [ ] Keep a backup of the old site until Coverage is stable, then close it. Do not patch it.
+- [ ] One HubSpot web domain for pav.law. ntguilt.com stays on its current host.
+
+### Pages
+
+Update order is traffic impact. Sessions and organic clicks are GA4 from 01/01/2026 through 10/01/2026. SEO Total is the HubSpot recommendation count on 09/28/2026.
+
+| Update # | Target Audience           | Landing page                                                                   | Sessions | Org clicks | SEO Total |
+| -------- | ------------------------- | ------------------------------------------------------------------------------ | -------- | ---------- | --------- |
+| 1        | Pav Law overarching brand | `/`                                                                            | 33,196   | 3,517      | 8         |
+| 2        | Domestic Violence         | `/areas-of-practice/domestic-violence`                                         | 15,232   | 2          | 7         |
+| 3        | Pav Law overarching brand | `/contact`                                                                     | 3,373    | 166        | 11        |
+| 4        | Domestic Violence         | `/areas-of-practice/protection-orders`                                         | 877      | 5          | 7         |
+| 5        | NtGuilt Auto              | `/areas-of-practice/dui-dwai`                                                  | 826      | 4          | 7         |
+| 6        | NtGuilt Auto              | `/denver-ramping-up-photo-radar-enforcement-what-colorado-drivers-should-know` | 789      | 633        | 11        |
+| 7        | Domestic Violence         | `/dont-let-a-dv-conviction-ruin-your-career`                                   | 495      | 10         | n/a       |
+| 8        | NtGuilt Auto              | `/service-areas/el-paso-county/dui-dwai-el-paso`                               | 251      | 0          | n/a       |
+| 9        | NtGuilt Auto              | `/areas-of-practice/dui-dwai/top-dui-attorney`                                 | 240      | 7          | n/a       |
+| 10       | NtGuilt Auto              | `/areas-of-practice/dui-dwai/el-paso-teller-duis`                              | 228      | 4          | n/a       |
+| 11       | NtGuilt Auto              | `/can-i-be-arrested-for-returning-a-u-haul-vehicle-late`                        | 153      | 118        | n/a       |
+| 12       | NtGuilt Auto              | `/can-a-dui-or-dwai-conviction-affect-your-green-card-status`                   | 139      | 95         | 10        |
+| 13       | Domestic Violence         | `/areas-of-practice/assault`                                                   | 77       | 3          | 7         |
+| Total    |                           |                                                                                |          |            | 68        |
+
+Later pages, same project:
+
+| Page | Sessions | Org clicks | SEO Total | Home |
+| --- | --- | --- | --- | --- |
+| `/areas-of-practice/traffic-offenses` | 46 | 1 | 7 | HS: NTGUILT |
+| `/areas-of-practice/active-duty-military` | 42 | 13 | 7 | HS: Military |
+| `/ppir-program-suspended` | 62 | 41 | n/a | Military organic support |
+| `/team/andrew-brown` | 308 | 284 | 10 | Trust, after practice pages |
+| `/team/casey-dinaro` | 91 | 91 | 8 | This project |
+| `/team/jack-strong` | 0 | 0 | n/a | This project |
+| `/areas-of-practice/drug-charges` | 25 | 0 | 6 | This project |
+| `/areas-of-practice/marijuana-charges` | 0 | 0 | n/a | This project |
+| `/areas-of-practice/weapons-charges` | 8 | 0 | 8 | Hold |
+| `/areas-of-practice/criminal-mischief` | 7 | 0 | n/a | Ad Expansion |
+
+### Done When
+
+- [ ] Promo control is set.
+- [ ] HubSpot forms are live on the Ads and Yelp destinations, with no MyCase.
+- [ ] A test form lands in Romina's Help Desk queue as one Prospects ticket and one same-day callback task.
+- [ ] Hire templates are on the HubSpot host, including the rest of this page list.
+- [ ] Brand, Domestic Violence, and NTGUILT Auto landings are updated.
+- [ ] Yelp and LegalDirs can point at these URLs without dead capture.
+- [ ] Video template pages are up, and the crew has a schedule, a shot list, and a place to put finished video.
+- [ ] The blog has started under the practice pages.
+- [ ] HubSpot Social is ready to publish.
+- [ ] pav.law DNS points at HubSpot. The old site is closed. Redirects are loaded. The theme matches the rebrand.
+- [ ] Search Console Coverage has been watched for 2 to 4 weeks.
+- [ ] Footer, privacy page, cookie banner, and pav.law form mail are live.
+- [ ] 404 page is live. www and HTTP redirect to https://pav.law.
+- [ ] Ads and directory links were click-tested the day DNS moved.
+- [ ] Andrew reviewed hire copy before publish, and signed the $27,000 fee. See Payment below.
+
+### Payment, 10/25/2026
+
+One project. The working total is $27,000. Start now. Pieces ship in order. The site is fully launched by December 2026. Search Console is watched for 2 to 4 weeks after launch. Form completes do not pay the build. Site maintenance after cutover stays a separate project.
+
+The list is the HubSpot rebrand and theme, the hire pages, the rest of the practice and team pages, forms, SEO, short answers, phone and follow-up, deep links, video templates and crew management, the blog, social setup, tracking, the DNS cutover, and the launch setup in the overview: footer, privacy, email authentication, the 404 page, and the cutover click test. WordPress repairs are not in this fee. Scott F.'s design range is not in this fee. A second project would hold the video pages, the blog, and the flip until a new signature. The dollars are that same work added together: pages and phone about $12,000, video, blog, social, and tracking about $8,500, and cutover about $6,500.
+
+Inside this fee, the highest-traffic pages and the phone test go first. Video, the blog, and the rest of the pages follow once those pages exist. DNS moves in December, after those pieces prove the forms and the phone path. Moving the domain before that proof drops the rankings the ads are buying. Chat and HubDB are not in this list, so they are not in the fee. The old $27,600 card was a different mix that included those.
+
+| When | What it covers | Fee |
 | --- | --- | --- |
-| Breadcrumbs | 1 | Valid · `@id` `https://pav.law/#breadcrumb` · Home only |
-| Review snippets | 11 | Valid · Trustindex Organization + AggregateRating 4.9 / 156 |
+| Start now. Fully launched by December 2026. Pieces in order. Coverage watch runs 2 to 4 weeks after launch. | The full deliverable list above. | $27,000 |
 
-Google marks 12 items eligible for rich results. That does **not** clear the staging-entity bug.
+Half at signing, $13,500. The other $13,500 when pav.law is on HubSpot.
 
-Inside the expanded Review item graph Google still shows:
+Current Pav monthly charge is $4,634. The last column is the website payment plus that charge. Months with no website payment stay at $4,634.
 
-| Field | Value Google crawled |
-| --- | --- |
-| Trustindex Organization `@id` | `https://www.trustindex.io/reviews/pav.law/en` |
-| Trustindex `url` | `https://pav.law/` |
-| WebPage `isPartOf` WebSite `@id` | `https://pqq.xnh.mybluehost.me/#website` |
-| WebSite `url` / SearchAction | `https://pqq.xnh.mybluehost.me/` · `…/?s={search_term_string}` |
-| Publisher / about Organization `@id` | `https://pqq.xnh.mybluehost.me/#organization` |
-| Yoast Organization name | `Pav Law, PLLC` |
+| Option | Month | Amount | Monthly Total + Current |
+| --- | --- | ---: | ---: |
+| Two Payments | November 2026 | $13,500 | $18,134 |
+| Two Payments | Cutover month | $13,500 | $18,134 |
+| Half Now, Rest In 2027 | November 2026 | $13,500 | $18,134 |
+| Half Now, Rest In 2027 | January 2027 | $4,500 | $9,134 |
+| Half Now, Rest In 2027 | February 2027 | $4,500 | $9,134 |
+| Half Now, Rest In 2027 | March 2027 | $4,500 | $9,134 |
+| Six Equal Months | November 2026 | $4,500 | $9,134 |
+| Six Equal Months | December 2026 | $4,500 | $9,134 |
+| Six Equal Months | January 2027 | $4,500 | $9,134 |
+| Six Equal Months | February 2027 | $4,500 | $9,134 |
+| Six Equal Months | March 2027 | $4,500 | $9,134 |
+| Six Equal Months | April 2027 | $4,500 | $9,134 |
 
-So: stars/reviews can show · firm entity still split across Trustindex + Bluehost staging + pav.law page. Fix Yoast Site Address / Site representation to pav.law · retest this URL until `mybluehost` is gone from the graph. Keep Trustindex reviews if desired once Yoast org is clean.
+Ongoing site maintenance is not this project. Payment there is per website form complete. Maintenance revisions use the same keyword rule.
 
-#### Free AEO / GEO audits · homepage · 09/28/2026 11:47–11:50 PM
+### Price Evaluation, 10/03/2026, Internal Only
 
-Downloads PDFs compiled into [HUBSPOT-CONTENT-CLEANSE.md](../../HUBSPOT-CONTENT-CLEANSE.md).
+Not visible on the dashboard. The 10/25 payment table is the current fee. The notes below are the old comps for a 13-URL phase, including WordPress page work. They are not the quote. The current plan does not edit WordPress.
 
-| Tool | Score | Priority gaps |
-| --- | --- | --- |
-| MentionAgent | 81 · 13/17 | FAQPage/HowTo · author markup · denser answers under H2s · llms.txt already OK |
-| AI-Advisors | 69 | FAQ · richer Organization · Person/author · citations |
-| seoscore.tools | Overall 70 · SEO 78 · AEO 68 · GEO 67 | Title length 67 · FAQ/Q&A · takeaways · hidden text cleanup |
+URL count for this quote:
 
-Do not install third-party SEO Autopilot plugins. Fold FAQ + author + short answers into HubSpot-ready page rewrites after Sprint 0 schema fix.
+- Phase 1 live is 13 URLs and 68 HubSpot SEO errors.
+- The quote includes the HubSpot redesign start, MyCase out, and HubSpot forms in.
 
-#### PageSpeed Insights · homepage · 09/28/2026 11:32 PM MDT
+Comps:
 
-Report: https://pagespeed.web.dev/analysis/https-pav-law/hkppdg47dy
+- Forms only, $2,200 to $2,800.
+- Dual-track wave, $3,600 to $4,500.
+- Earlier full-card working total, $27,600. That is not the quote.
+- LegalDirs, $1,200, for phones and UTMs only.
+- DigProf, $3,700, for profiles, listings, and links to team URLs.
+- Later pages are in this $27,000.
 
-| | Mobile | Desktop |
-| --- | --- | --- |
-| Performance | 33 | 71 |
-| Accessibility | 75 | 77 |
-| Best Practices | 96 | 96 |
-| SEO | 85 | 85 |
-| FCP | 6.8 s | 0.7 s |
-| LCP | 17.1 s | 3.3 s |
-| TBT | 1,150 ms | 210 ms |
-| CLS | 0 | 0.029 |
-| Field CrUX | No data | No data |
+Build blocks:
 
-Lab drains: render-blocking Highend + WPBakery CSS · unused JS/CSS · ~2.6–2.9 MB payload · HubSpot collectedforms.js. SEO fails: non-descriptive link · uncrawlable links. Do not port this theme stack to HubSpot. Full cleanse + data compile: [HUBSPOT-CONTENT-CLEANSE.md](../../HUBSPOT-CONTENT-CLEANSE.md).
+- Forms and MyCase removal, HubSpot capture on contact and the priority practice pages, about $2,400 to $3,200.
+- WordPress hire SEO and deep links, Phase 1 live set, 13 URLs, about $1,800 to $2,400.
+- Theme, offer, schema, and light technical work on the KEEP set, about $800 to $1,200.
+- HubSpot redesign start, theme kit, and Phase 1 hire templates for home, contact, Domestic Violence, protection orders, DUI, and assault, about $1,800 to $2,800.
+- Yelp and LegalDirs handoff is light and billed on those cards.
 
-#### Site data compile · Downloads + project evidence · through 10/01/2026
+Price range by scope:
 
-Evidence copies live in [seo-evidence/](../../seo-evidence/README.md).
+| Scope | What is included | Fee range | Weeks and invoices |
+| ----- | ---------------- | --------- | ------------------ |
+| Phase 1 lean | 13 live URLs, MyCase out, HubSpot forms, offer and theme, thinner redesign start | $6,000 to $7,200 | 6 to 8 weeks, 4 to 5 invoices |
+| Phase 1 recommended | 13 live URLs, MyCase out, HubSpot forms, offer and theme, HubSpot redesign start | $6,800 to $8,400 | 8 weeks, 5 invoices |
+| Phase 1 stretch | Recommended scope, plus fuller dual-track twins for the top hire URLs | $8,400 to $10,500 | 8 to 10 weeks, 5 to 6 invoices |
 
-Primary: Bing Performance + Coverage 09/28 · AI citations · Referring domains · IndexNow · HubSpot SEO 09/28 export `hubspot-seo-recommendations-export-pav-law-2026-09-28.csv` · AEO PDFs · PageSpeed · Rich Results · GA4/GSC Aug organic · GA4 channel pull 10/01 · live sitemap ~176 URLs · page inventory audit.
+Engagement options. Offer both.
 
-HubSpot SEO 09/28: 407 recs · 223 HIGH · 53 LCP · 53 TBT · 53 uncrawlable anchors · brand density/headings new · Ads finals drug/weapons/traffic/dui/military/contact still HIGH speed · city clones HIGH → PRUNE not dual-build. Jun 25 export archived in seo-evidence only.
+Option A, project schedule:
 
-Critical: Coverage indexed ~9,979 on 07/09 → ~170 by mid-Sep. ~75k 404 in not-indexed inventory. Bing query clicks dominated by gambling spam terms. Expansion practice pages drug/CM/weapons ≈ 0 Bing clicks. Referring pages mostly staging mybluehost. Cleanse page-by-page for HubSpot transfer using HUBSPOT-CONTENT-CLEANSE + PAGE-INVENTORY-AUDIT.
+- Fixed Phase 1 fee, set weeks, and a set invoice count.
+- The old card figure for a 13-URL slice was $7,600, the middle of $6,800 to $8,400. The current fee is $27,000 for the full list.
+- This fits when he wants a clear finish line and one statement-of-work number.
 
-#### GA4 web activity · Downloads 10/01/2026 · scrubbed reporting only
+Option B, a higher retainer with a monthly SEO and website bucket:
 
-Source: [SCRUBBED-REPORTING.md](../../seo-evidence/ga4-as-of-10-01-2026/SCRUBBED-REPORTING.md) · property `Pav Law - GA4` · range 01/01/2026–10/01/2026.
+- Keep the Digital Ads retainer as it is. Add a capped SEO and website line. This is not open hours.
+- Ask $2,000 a month. The sell band is $1,500 to $2,500 a month.
+- Each month, work the Phase 1 URL list from highest traffic to lowest until that month's dollar cap is used.
+- The work order matches Option A: MyCase out, HubSpot forms, and the redesign start.
+- At $2,000 a month, the Phase 1 recommended fee of about $7,600 is about 4 months.
+- This fits when he wants a lower monthly cash outlay and ongoing SEO after the URL list.
 
-Scrub applied before any number below: drop Türkiye + India · drop Referral + Cross-network · ignore Key events and ads lead-form conversions on this property.
+How to present it:
 
-| Signal | Scrubbed finding |
-| --- | --- |
-| Site volume | 27,393 active users · US floor 22,209 · scrubbed channel sessions 15,845 |
-| Trust lanes | Direct 8,044 · Organic Search 4,401 · Paid Search 3,238 |
-| Organic Social | 58 sessions · ~0.4% of scrubbed sessions · platform hosts ~49 |
-| Vs 08/13 | Clean `pav.law` Organic Social was 20 through 08/13 · small absolute rise only · not a social surge |
-| Capture | phone_click 114 · form_submit 20 · form_start 27 |
-| Top landings | `/` · domestic-violence · `/contact` · protection-orders · dui-dwai · photo-radar blog |
+- The outcomes are the same. The cash timing is different.
+- He picks A or B. Do not run both on the same URLs in the same month.
+- If he starts on B and later wants a finish sprint, convert the remaining scope to Option A and credit the months already paid.
+- The full list is one project. There is no second website project after the readout.
 
-Verdict for Priority 4: Organic Search winners that match live Google Ads · Ads finals · forms capture · Bluehost entity fix. SocialAds / DigProf profile links remain a separate awareness lane · scrubbed GA4 does not show social driving meaningful site demand.
+How to pick inside a project band:
 
-### Sprint A · HubSpot forms on live Ads finals · Section 1
+- Floor: a thinner redesign start and fewer deep links.
+- Middle: the current Phase 1 recommendation, 13 live URLs, redesign start, MyCase out.
+- Ceiling: fuller dual-track twins for the top hire URLs.
 
-Embed Practice Intake on these URLs before changing Editor finals:
+Do not:
 
-1. /areas-of-practice/drug-charges/
-2. /areas-of-practice/criminal-mischief/
-3. /areas-of-practice/weapons-charges/
-4. /areas-of-practice/traffic-offenses/
-5. /areas-of-practice/dui-dwai/
-6. /contact/ · keep master form · add hidden UTM · practice · campaign · ad_group · parent_or_student fields
-7. /free-case-consultation/ · add HubSpot form or stop sending paid traffic here
+- Charge DigProf for practice or Ads landing SEO.
+- Charge LegalDirs for destination SEO. Profile paste stays on LegalDirs.
+- Sell Phase 1 as the old $27,600 rebuild total.
+- Promise open monthly SEO hours. Use only a capped dollar bucket.
+- Fold website SEO into the $3,000 Ads retainer without a separate line.
+- Use form completes to pay the build.
 
-Hidden fields on every practice form: practice_area · utm_source · utm_medium · utm_campaign · utm_content · landing_url · parent_or_student
+Later work inside this project:
 
-### Sprint B · content + SEO + AEO updates · Sections 1 and 3
+- The redesign, the rest of the pages, the blog, video, and DNS are this $27,000. Chat is not included.
+- Option B can continue as light SEO care after this project closes.
 
-Audit first. Update live WordPress for port-candidate pages that align to a live Google Ads campaign or an Ad Expansion lane when that lane opens. Port to HubSpot after performance is clear. DV · PPO · assault SEO for Yelp is Section 2 · same page-quality bar · see Sprint C2.
+Ongoing:
 
-| Page | Update |
-| --- | --- |
-| drug-charges | Parent block · concert/party/rave/festival hire · event-location sections · possession vs distribution CTA · question H2s · FAQ · form |
-| criminal-mischief | Hire CTA · record stakes · link to theft-property and contact · form |
-| weapons-charges | Firearm violence defense · link to assault · menacing · form · no CCW hero |
-| traffic-offenses | Reckless / serious ticket hire · **license · DUR · DOR · points · CDL** modules · form |
-| dui-dwai | Parent/student · cannabis DWAI · **vehicular/crash · car + license** modules · form |
-| active-duty-military | Form only unless Ads finals change |
-| NEW college/parent | Parent-first student defense · underage voice to parents · school/scholarship/career impact · deep links to drug · dui · criminal mischief · contact |
-
-AEO on each: question-style H2 · first sentences answer the charge · FAQPage only for real FAQs · author/firm entity consistent · answers in server HTML
-
-#### Content gaps to fill · blogs and pages
-
-Student / college impact · parent-first:
-
-- Blog or hub sections: what a drug · DUI · or criminal charge does to school · scholarship · housing · clearance · career
-- Underage marijuana / possession · parents what to do next
-- Charged near campus vs city PD · when you need a lawyer
-- College calendar spikes · move-in · homecoming · Halloween · finals · not soft MIP-only posts
-
-License and cars · expand on site:
-
-- traffic-offenses and dui-dwai: driving under revocation · suspended/revoked license · DOR hearings · points · CDL risk
-- Crash became a charge · leaving the scene · vehicular assault module
-- Glovebox / insurance mailer landing tie-in · prior ticket clients
-
-Drug charges at events and locations · on drug-charges + short blogs:
-
-- Concert · rave · festival arrest or possession · hire intent · no ticket/tourism SEO
-- Red Rocks / Denver club corridor / Springs venues as **location context in copy** · not separate venue URLs
-- Party house / dorm search · paraphernalia stacked with possession
-- Possession vs distribution after a show · link existing possession-vs-distribution post
-
-#### Service-area / location prune · activity keep-list
-
-Sep 2026 Location report · live HS only · spend + interactions. Website location laundry lists and thin county clones should follow this keep set · not every Colorado county.
-
-Keep / prioritize on site and in nav modules:
-
-1. Colorado Springs · El Paso County  
-2. Denver County  
-3. Arapahoe County  
-4. Jefferson County  
-5. Douglas County  
-6. Boulder County  
-7. Pueblo County  
-8. Adams County  
-9. Teller County  
-
-Secondary / thin · do not build new trees yet: Fountain · Fort Collins city · Broomfield · Fremont · Summit · Larimer/Weld county hubs
-
-Prune or noindex long clone matrices that are not in the keep set and earn no calls or paid traffic. College corridor names can appear on the college/parent hub as cities we serve without full county page trees.
-
-### Sprint B2 · HubSpot contact form · why submits look empty · fix capture · Sections 1–4
-
-Live embed on /contact/ only: portal `246206963` · form `d0cb0897-38b3-44e2-bc6b-9495342e8c3f` · region `na2` · `js-na2.hsforms.net` loader present. Embed markup looks intact. Near-zero HubSpot form volume is still expected until capture paths are fixed.
-
-Likely causes · verify in HubSpot UI:
-
-1. **Form only on /contact/** · Ads finals hit practice pages with `tel:` only · callers never see the HubSpot form · Guide Sep HubSpot forms ~1 matches phone-first behavior  
-2. **Competing MyCase contact iframe on /contact/** · visitors may submit MyCase instead of HubSpot · check MyCase contact_us submissions  
-3. **/free-case-consultation/** uses Google Calendar · zero HubSpot form there  
-4. **Wrong HubSpot view** · submissions may sit in spam · deleted · another portal · or lifecycle not in the forms export Kate downloads  
-5. **Notifications / workflow off** · submits exist but nobody sees email alerts  
-6. **Thank-you / required fields / spam filter** · test submit from phone + desktop · confirm contact appears in CRM within 1 minute  
-
-Fix order:
-
-1. Test submit the live contact form · confirm CRM contact + notification  
-2. Check HubSpot → Marketing → Forms → that form → Submissions · Spam · and portal 246206963  
-3. Check MyCase contact form inbox for parallel volume  
-4. Put Practice Intake HubSpot forms on every Ads practice page · sticky mobile form or click-to-call + form  
-5. One primary web intake · HubSpot · demote or remove MyCase iframe from paid paths  
-6. Align free-case-consultation to HubSpot form or redirect to /contact/ with UTMs  
-7. GTM form_submit + tel_click events by page  
-8. HubSpot tracking numbers on high-traffic pages when new employee queue is live  
-
-Do not assume the embed is “broken” until a test submit fails. Assume **capture surface is too narrow** and **split across MyCase / Calendar / phone**.
-
-### Sprint C · cross-linking and deep linking · Section 1 · Yelp note in item 11
-
-Hub pages: /areas-of-practice/ · /service-areas/ · new college/parent page
-
-Deep link rules:
-
-1. Every Ads RSA final URL = matching practice page with form · not bare /contact/ when a practice page exists
-2. Practice page → related practice · contextual in-body links · not only footer
-3. Practice page → 1–2 strongest county clones when geo matters · El Paso first for Springs lanes
-4. Blog → practice · possession-vs-distribution blog → drug-charges form CTA
-5. College/parent page → drug-charges · dui-dwai · criminal-mischief · contact · never venue microsites
-6. drug-charges ↔ dui-dwai for cannabis DWAI vs possession routing
-7. weapons-charges ↔ assault ↔ menacing
-8. criminal-mischief ↔ theft-property-crimes · careful tone · accused defense only
-9. traffic-offenses ↔ dui-dwai for license/DUR and crash stacks
-10. Each updated page → /contact/ and tel CTA · HubSpot number when live
-11. Yelp ↔ website · every high-traffic practice page that has a Yelp Project also deep-links both ways with locked UTMs · see Sprint C2
-
-Internal link minimum per updated practice page: 3 contextual related-practice links · 1 hub link · 1 contact/form CTA · 1 related blog or county page when it exists · 1 Yelp listing or review CTA when that practice has a live Yelp Project
-
-### Sprint C2 · Yelp ↔ website tracking and deep linking · Section 2
-
-Paired with [Yelp.md](Yelp.md) Project Plan. Same practice slug map both places. Do not invent a second UTM scheme.
-
-Practice pages that must support Yelp Projects first:
-
-| Practice | Site URL | Yelp Project status |
-| --- | --- | --- |
-| Domestic violence | `/areas-of-practice/domestic-violence/` | Publish next on Yelp |
-| Protection orders | `/areas-of-practice/protection-orders/` | Publish next on Yelp |
-| Assault | `/areas-of-practice/assault/` | Publish after PPO |
-| Military | `/areas-of-practice/active-duty-military/` | Live on Yelp |
-| DUI / DWAI | `/areas-of-practice/dui-dwai/` | Live on Yelp |
-| License / traffic support | `/areas-of-practice/traffic-offenses/` · dui license modules | Live License Project on Yelp |
-
-Yelp → site link pack:
-
-`?utm_source=yelp&utm_medium=profile&utm_campaign={practice}&utm_content={project|update|about}`
-
-Site → Yelp listing pack:
-
-`utm_source=website&utm_medium=referral&utm_campaign=yelp-listing&utm_content={page-slug}`
-
-Tasks:
-
-- [ ] On each table URL: HubSpot Practice Intake or contact path live before pushing Yelp Project traffic hard  
-- [ ] Add in-body CTA block: View Pav Law on Yelp / Leave a review · tracked URL · no fake review ask on charge pages that feel tone-deaf · prefer DV · military · DUI success-adjacent pages and contact/reviews  
-- [ ] Internal links: domestic-violence ↔ protection-orders ↔ assault · already required for Ads · confirm live anchors  
-- [ ] GA4 custom channel or exploration: sessions where `utm_source=yelp` · landings by practice · key events  
-- [ ] GTM: form_submit + phone_click on those URLs · include utm params in event params when present  
-- [ ] HubSpot: hidden UTM fields already on forms · verify Yelp-sourced submits retain source · set or confirm `pl_lead_source` rules so Yelp calls/messages stay Yelp even if they later hit the site  
-- [ ] Monthly joint readout with Yelp project: Yelp Messages/Calls/Ads spend · GA4 yelp UTM sessions · HubSpot Yelp source · by practice campaign slug  
-- [ ] When dual-track HubSpot CMS twins are built for DV · PPO · assault · military · dui · copy the same Yelp deep-link CTAs and UTM rules into the HubSpot pages so cutover does not break tracking  
-
-### Sprint D · college corridor and location prune · Section 3
-
-1. College/parent hub module listing keep-list cities only: Springs · Denver · Arapahoe · Jefferson · Douglas · Boulder · Pueblo · Adams · Teller corridors · Fort Collins / Greeley as college names without full county trees until activity proves  
-2. Do not build thin Larimer · Weld · Mesa · Jefferson duplicate laundry lists beyond keep-list proof  
-3. Cut or noindex thin geo clones outside the Sep activity keep-list that do not earn calls or paid traffic · keep El Paso / Denver / Arapahoe / Jefferson / Douglas clones first  
-4. Blog magnets: student/parent impact · license/DUR/cars · drug charges at concerts and parties · all link to practice pages with forms  
-
-### Sprint E · measurement · all four sections
-
-Search Console on updated URLs · HubSpot form submits by practice_area · tel clicks in GTM · Ads finals only after form live · Yelp UTM sessions · directory UTM sessions · signed-case tags for CM · College · Weapons · Drugs · DUI
+- Option A has no monthly fee on Phase 1 after the project closes. A capped SEO bucket can be added later.
+- Option B's monthly SEO line continues until he pauses it. After this project, that line is light SEO care.
+- Maintenance after cutover is the separate form-complete project.
