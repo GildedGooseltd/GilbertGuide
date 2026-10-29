@@ -75,9 +75,76 @@ window.PROJECT_DATA = {
       "fee": 27000,
       "status": "available",
       "category": "Infrastructure",
-      "campaignType": "HubSpot CMS",
+      "campaignType": "Digital",
       "id": "HsWebRebuild",
       "title": "Pav.Law Website Build & Brand Refresh",
+      "paymentOptions": {
+        "headers": [
+          "",
+          "3 mo.",
+          "4 mo.",
+          "5 mo.",
+          "6 mo."
+        ],
+        "rows": [
+          [
+            "Nov",
+            "$9,000",
+            "$6,750",
+            "$5,400",
+            "$4,500"
+          ],
+          [
+            "Dec",
+            "$9,000",
+            "$6,750",
+            "$5,400",
+            "$4,500"
+          ],
+          [
+            "Jan",
+            "$9,000",
+            "$6,750",
+            "$5,400",
+            "$4,500"
+          ],
+          [
+            "Feb",
+            "",
+            "$6,750",
+            "$5,400",
+            "$4,500"
+          ],
+          [
+            "Mar",
+            "",
+            "",
+            "$5,400",
+            "$4,500"
+          ],
+          [
+            "Apr",
+            "",
+            "",
+            "",
+            "$4,500"
+          ],
+          [
+            "Current",
+            "$4,634",
+            "$4,634",
+            "$4,634",
+            "$4,634"
+          ],
+          [
+            "New Monthly",
+            "$13,634",
+            "$11,384",
+            "$10,034",
+            "$9,134"
+          ]
+        ]
+      },
       "tldr": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.",
       "description": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.\n\n- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.\n- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.\n- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.\n- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.\n- SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.\n- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. \n- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.\n- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.\n- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.",
       "valueAdded": [
@@ -235,7 +302,7 @@ window.PROJECT_DATA = {
       "progressPct": 1,
       "abQuestions": [],
       "kpiRefs": [],
-      "publishStatus": "unpublished",
+      "publishStatus": "published",
       "shortTitle": "Pav.Law Website",
       "estCostLabel": "$27,000",
       "paymentPlanLabel": "50%",
@@ -2652,7 +2719,7 @@ window.PROJECT_DATA = {
       "progressOpenCount": 0,
       "abQuestions": [],
       "kpiRefs": [],
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "shortTitle": "Pav.Law Website",
       "estCostLabel": "$27,000",
       "paymentPlanLabel": "50%",
@@ -2727,7 +2794,7 @@ window.PROJECT_DATA = {
       "progressPct": 73,
       "abQuestions": [],
       "kpiRefs": [],
-      "publishStatus": "published",
+      "publishStatus": "unpublished",
       "shortTitle": "Printables & Swag",
       "estCostLabel": "$1,600",
       "paymentPlanLabel": "20%",

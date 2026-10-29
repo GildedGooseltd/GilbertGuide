@@ -634,6 +634,7 @@
     "CaseWins",
     "TwistWrnch",
     "SiteSEO",
+    "HsWebRebuild",
     "HubSpotSetup"
   ]);
 
@@ -717,6 +718,23 @@
     return normalizeStatus(item) === "planning";
   }
 
+  /**
+   * Overview popup fee · proposed / sell only.
+   * Hide for ongoing WIP · Launched · retainer · monthly ongoing.
+   * Show for available · Planning · inactive · Recommended.
+   * Kate 10/28/2026.
+   */
+  function showProjectOverviewFee(item, isRetainer) {
+    if (!item) return false;
+    if (isRetainer || item.isRetainer) return false;
+    if (isActiveWorkStatus(item)) return false;
+    if (normalizeStatus(item) === "ongoing") return false;
+    if (item.monthlyOnly) return false;
+    if (isInactiveProject(item) || isPlanningProject(item)) return true;
+    const s = normalizeStatus(item);
+    return s === "available" || s === "recommended";
+  }
+
   /** Overview tiles for WIP / Launched · light green In Progress style. */
   function inProgressOverviewProjects() {
     return orderedProjects().filter(p => {
@@ -732,6 +750,15 @@
       if (!isPicklistCatalogItem(p)) return false;
       if (p.monthlyOnly || isCompletedStatus(p) || isPlanningPublish(p)) return false;
       return isInactiveProject(p);
+    });
+  }
+
+  /** Published available proposals on the catalog, such as the website rebuild. */
+  function availableOverviewProjects() {
+    return orderedProjects().filter(p => {
+      if (!isPicklistCatalogItem(p)) return false;
+      if (p.monthlyOnly || isCompletedStatus(p) || isPlanningPublish(p)) return false;
+      return normalizeStatus(p) === "available";
     });
   }
 
@@ -1314,6 +1341,24 @@
     }
     if (Number.isFinite(max) && max > fee) return `${fmt(fee)}–${fmt(max)}`;
     return fmt(fee);
+  }
+
+  /** Overview popup cost · secondary label under fee when Payment Options exist. Kate 10/28/2026. */
+  function projectOverviewPaymentOptionsLabel(item) {
+    const headers = item?.paymentOptions?.headers;
+    if (!Array.isArray(headers) || headers.length < 2) return "";
+    const months = headers
+      .slice(1)
+      .map(h => {
+        const m = String(h || "").match(/(\d+)\s*mo/i);
+        return m ? Number(m[1]) : NaN;
+      })
+      .filter(n => Number.isFinite(n) && n > 0);
+    if (!months.length) return "";
+    const lo = Math.min(...months);
+    const hi = Math.max(...months);
+    if (lo === hi) return `${lo}-month payment options`;
+    return `${lo}-${hi} month payment options`;
   }
 
   function projectQuotePeriodLabel(item, isRetainer) {
@@ -5302,6 +5347,33 @@
     return projectTextToHtml(raw);
   }
 
+  function paymentOptionsSectionHtml(item) {
+    const table = item?.paymentOptions;
+    if (!table || !Array.isArray(table.headers) || !Array.isArray(table.rows) || !table.rows.length) return "";
+    const head = table.headers
+      .map(cell => `<th>${escapeHtml(cell)}</th>`)
+      .join("");
+    const body = table.rows
+      .filter(row => {
+        const label = String(Array.isArray(row) ? row[0] : "").trim().toLowerCase();
+        return label !== "total";
+      })
+      .map(row => {
+        const cells = (Array.isArray(row) ? row : [])
+          .map((cell, i) => {
+            const tag = i === 0 ? "th" : "td";
+            return `<${tag}>${escapeHtml(cell)}</${tag}>`;
+          })
+          .join("");
+        return `<tr>${cells}</tr>`;
+      })
+      .join("");
+    return `<div class="project-overview-section">
+      <h4>Payment Options</h4>
+      <div class="project-overview-pay-scroll"><table class="project-overview-pay"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>
+    </div>`;
+  }
+
   function projectOverviewBodyHtml(item) {
     const raw = String(item?.description || item?.tldr || "").trim();
     if (!raw) return `<p>Overview pending.</p>`;
@@ -5443,15 +5515,17 @@
     if (metaEl) metaEl.textContent = metaParts.join(" - ");
     if (costEl) {
       const amount = projectQuoteAmountLabel(item, isRetainer);
-      if (!amount || amount === "—") {
+      const payLabel = projectOverviewPaymentOptionsLabel(item);
+      const showFee = showProjectOverviewFee(item, isRetainer);
+      if (!showFee || !amount || amount === "—") {
         costEl.hidden = true;
         costEl.innerHTML = "";
         costEl.className = "project-overview-cost project-tile-cost";
       } else {
         costEl.hidden = false;
         const estimateFee = isFeeUncertain(item) || isInactiveProject(item);
-        const catalogWeeks = item?.durationWeeks != null && Number(item.durationWeeks) > 0;
-        const period = catalogWeeks ? projectQuotePeriodLabel(item, isRetainer) : "";
+        const catalogWeeks = !payLabel && item?.durationWeeks != null && Number(item.durationWeeks) > 0;
+        const period = payLabel || (catalogWeeks ? projectQuotePeriodLabel(item, isRetainer) : "");
         const periodHtml = period
           ? `<span class="project-tile-cost-period">${escapeHtml(period)}</span>`
           : "";
@@ -5497,6 +5571,7 @@
         <h4>Project Overview</h4>
         ${projectOverviewBodyHtml(item)}
       </div>
+      ${paymentOptionsSectionHtml(item)}
       ${hubSection}`;
 
     closeHelpPopup();
@@ -5517,6 +5592,7 @@
       WinterAds: "assets/gigi-celebrating.png",
       DigProf: "assets/pav-law-logo-wordmark.png?v=20261018-pl-white",
       SiteSEO: "assets/pav-law-logo-wordmark.png?v=20261018-pl-white",
+      HsWebRebuild: "assets/pav-law-logo-wordmark.png?v=20261018-pl-white",
       DataMgmt: "assets/gigi-lightbulb-idea.png",
       OpsDash: "assets/systems-admin-tile.svg",
       TsMgmt: "assets/systems-admin-tile.svg",
@@ -5543,6 +5619,9 @@
     planningOverviewProjects().forEach(item => {
       if (item) byId.set(item.id, item);
     });
+    availableOverviewProjects().forEach(item => {
+      if (item) byId.set(item.id, item);
+    });
     rankedCalculatorCatalog().forEach(r => {
       if (r?.item && !byId.has(r.item.id)) byId.set(r.item.id, r.item);
     });
@@ -5554,24 +5633,34 @@
     return item?.id === "HubSpotSetup";
   }
 
+  /** No tile hero image · Kate 10/28/2026 */
+  function projectTileImageHidden(item) {
+    return item?.id === "HubSpotSetup" || item?.id === "SwagPrint";
+  }
+
   function projectTileHtml(item, isFirstSelected) {
     const isRetainer = !!item.isRetainer || item.id === "RETAINER" || item.id === "retainer";
     const id = item.id;
     const required = isRequiredMaintenance(item, isRetainer) || isRequiredProject(item, isRetainer) || isAlwaysSelectedCartItem(item);
     const sel = isItemSelected(item);
     const overviewDeferred = projectTileOverviewDeferred(item);
+    const hideImage = projectTileImageHidden(item);
     const summary = overviewDeferred ? "" : itemTldr(item) || "—";
     const inactive = !isRetainer && isInactiveProject(item);
     const planning = !isRetainer && !inactive && isPlanningProject(item);
     const inProgress = !isRetainer && !inactive && !planning && isActiveWorkStatus(item);
+    const statusNorm = normalizeStatus(item);
+    const availableProposal =
+      !isRetainer && !inactive && !planning && !inProgress &&
+      (statusNorm === "available" || statusNorm === "recommended");
     /* Progress only · no fee / quote amounts on proposal tiles · Kate 10/17/2026 */
     const metaHtml = inProgress ? projectTileProgressMetaHtml(item) : "";
-    const img = projectTileImageSrc(item);
-    const brandLogo = projectTileBrandLogoSrc(item);
+    const img = hideImage ? "" : projectTileImageSrc(item);
+    const brandLogo = hideImage ? null : projectTileBrandLogoSrc(item);
     const brandLogoHtml = brandLogo
       ? `<img class="project-tile-brand-logo" src="${escapeHtml(brandLogo.src)}" alt="${escapeHtml(brandLogo.alt)}" width="48" height="48" loading="lazy">`
       : "";
-    const brandTile = id === "Yelp" || id === "AdEnhance" || id === "SiteSEO" || id === "DigProf" || id === "HubSpotSetup";
+    const brandTile = id === "Yelp" || id === "AdEnhance" || id === "SiteSEO" || id === "HsWebRebuild" || id === "DigProf" || id === "HubSpotSetup";
     const imgClass = brandTile ? "project-tile-image project-tile-image-brand" : "project-tile-image";
     const selFirst = isFirstSelected ? " selected-first" : "";
     const reqClass = required ? " tile-required" : "";
@@ -5581,30 +5670,38 @@
           pack.pct != null ? ` · ${pack.pct}% along` : ""
         }">Inactive</span>`
       : planning
-        ? `<span class="project-tile-wip-chip project-tile-planning-chip" title="Project proposed${
+        ? `<span class="project-tile-wip-chip project-tile-planning-chip" title="Planning${
             pack.pct != null ? ` · ${pack.pct}% along` : ""
-          }">Proposed</span>`
-        : "";
+          }">Planning</span>`
+        : availableProposal
+          ? `<span class="project-tile-wip-chip project-tile-proposal-chip" title="Proposal">Proposal</span>`
+          : "";
     /* Same rainbow bar for active + inactive / planning when % is known · Kate 10/10/2026 */
     const progressBar =
       inProgress || ((inactive || planning) && pack.pct != null) ? projectTileProgressBarHtml(pack.pct) : "";
     const inProgressClass = inProgress ? " project-tile-in-progress card-status-in-progress" : "";
     const inactiveClass = inactive || planning ? " project-tile-inactive" : "";
+    const noMediaClass = hideImage ? " project-tile-no-media" : "";
     const summaryHtml = summary
       ? `<p class="project-tile-summary">${escapeHtml(summary)}</p>`
       : "";
+    const mediaHtml = hideImage
+      ? statusChip
+        ? `<div class="project-tile-status-row">${statusChip}</div>`
+        : ""
+      : `<div class="project-tile-media">
+          <img class="${imgClass}" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="400">
+          ${brandLogoHtml}
+          ${statusChip}
+        </div>`;
     const tileRole = overviewDeferred ? 'role="listitem"' : 'role="button" tabindex="0"';
     const tileAria = overviewDeferred
       ? `aria-label="${escapeHtml(item.title)}"`
       : `aria-label="Open overview for ${escapeHtml(item.title)}"`;
     const deferredAttr = overviewDeferred ? ' data-overview-deferred="1"' : "";
     return `
-      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}${inProgressClass}${inactiveClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" data-status="${escapeHtml(normalizeStatus(item))}" ${tileRole} ${tileAria}${deferredAttr}>
-        <div class="project-tile-media">
-          <img class="${imgClass}" src="${escapeHtml(img)}" alt="" loading="lazy" width="640" height="400">
-          ${brandLogoHtml}
-          ${statusChip}
-        </div>
+      <article class="card project-tile${sel ? " selected" : ""}${selFirst}${reqClass}${inProgressClass}${inactiveClass}${noMediaClass}" id="project-${escapeHtml(id)}" data-id="${escapeHtml(id)}" data-retainer="${isRetainer}" data-required="${required}" data-status="${escapeHtml(normalizeStatus(item))}" ${tileRole} ${tileAria}${deferredAttr}>
+        ${mediaHtml}
         ${progressBar}
         <div class="project-tile-body">
           <h3 class="project-tile-title">${escapeHtml(item.title)}</h3>
