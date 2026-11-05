@@ -5332,7 +5332,8 @@
     </div>`;
   }
 
-  /** Bold the Label in "Label - description" overview bullets · Kate 10/28/2026 */
+  /** Bold the Label in "Label - description" overview bullets · Kate 10/28/2026.
+   * Title · Platform → bold title only, platform in () unbolded · Kate 11/04/2026 */
   function overviewBulletCopyHtml(text) {
     const raw = String(text || "").trim();
     if (!raw) return "";
@@ -5341,6 +5342,14 @@
       const label = m[1].trim();
       const rest = m[2];
       if (label && !label.includes(".") && !label.includes("**")) {
+        const plat = label.match(/^(.+?)\s+·\s+(.+)$/);
+        if (plat) {
+          const title = plat[1].trim();
+          const platform = plat[2].trim();
+          if (title && platform) {
+            return `<strong class="overview-bullet-label">${escapeHtml(title)}</strong> (${escapeHtml(platform)}) - ${projectTextToHtml(rest)}`;
+          }
+        }
         return `<strong class="overview-bullet-label">${escapeHtml(label)}</strong> - ${projectTextToHtml(rest)}`;
       }
     }
