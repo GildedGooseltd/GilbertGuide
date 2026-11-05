@@ -2,9 +2,34 @@
 
 Simple name list for LSA + Search staging. Aggregates only. Do not file Contact, Call details caller rows, or LSA inbox Customer names into the repo.
 
-Last Downloads scan: 10/18/2026 · Yelp Ads Desktop screenshots + Ad Analytics Oct 1–17 wired. Gaps below still block full Oct MTD.
+Last Downloads scan: 11/05/2026 9:39 AM. Guide RENDER_VER 20261105-full.
 
-## Oct* · wired 10/17 · still need for full MTD
+## 11/05/2026 · Oct close + Nov* MTD
+
+On disk vs Guide right now. Aggregates only.
+
+| Source | Newest on disk | Vs Guide | Note |
+|---|---|---|---|
+| Contact | Contact_11-05-2026.csv | Guide Oct* cases 20 · file Oct Client 21 · Nov Client 2 | Ready to wire |
+| Trust | Trust_account_summary_11-05-2026.csv | Guide 10/29 · 383 · $1,784,204 · file 388 with balance · $1,798,754 | Ready to wire |
+| Case balance | Case_balance_summary_11-05-2026.csv | Guide 10/29 | Ready to rejoin Oct/Nov cohorts |
+| LSA inbox | leads-inbox (30).csv | Guide Oct 55 · file Oct 64 · Nov 4 · Charged Oct 19 · Nov 3 | Ready · do not overwrite Sep from this file · Sep total 36 vs Guide 44 |
+| Search Call details | Call details (28).csv Oct 1–31 · 19 phones · 12 received / 7 missed · last Oct 30 · Nov 0 · (29) All-time | Guide 16 | Oct calendar ready · no Nov phones yet |
+| Search Campaign | (63) Oct 1–31 · live HS $7,982.07 · phones 17 · (60) Nov 1–4 | Ready Oct calendar | (63) NTGUILT + Military only in filter · no DUI row |
+| Search / LSA spend | account_activities_202610 (3).csv 10/23 | Guide Search $7,753 · LSA $2,096 | No newer Oct · no Nov activities |
+| Time series | Time_series_chart(2026.09.16-2026.11.04).csv | Oct Impr 10,203 · $9,803 · Nov Impr 1,091 · $1,024 | Account-level · not HS-only $/phone |
+| Yelp | Desktop 11/05 screenshots + Ad Analytics Oct 6–Nov 4 | Oct leads 19 · contacts 7 · spend Oct 6–31 $1,279.72 · Nov spend $228.06 · Nov leads 2 | Contacts formula wired · Reviews not on these screenshots |
+| Ledger Credits | ledger (20) Oct 1–Nov 4 filter · (19)/(18) full | Guide Oct* $100,220 · file Oct $104,970 through 10/30 · Nov* $9,800 through 11/04 | Ready · no Credit rows on 10/31 |
+| HubSpot forms | intake + ntguilt-auto-inquiry submissions 11/05 · Conversion Date on | Guide Oct forms 12 · file Oct 18 · Nov 5 | Ready · only those two forms pulled |
+
+Still need to finish Oct close and open Nov*:
+
+1. Call details · Nov 1–MTD · Oct calendar is (28) · 19 phones through 10/30 · Nov 0 in All-time (29)
+2. account_activities_202610 final · and account_activities_202611 MTD
+3. Yelp Ad Analytics · Oct 1–31 calendar if Oct 1–5 spend needed · or confirm Oct 6–31 is enough
+4. Yelp Reviews listing pull if review count moved
+
+## Older · Oct* wired 10/17 · still need for full MTD
 
 | Source | Newest file | Status |
 |---|---|---|

@@ -83,6 +83,11 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 11/05/2026 | October revenue tile $120,470. Ledger (20)/(19) $104,970 through 10/30, plus $15,000 cashier's check and $500 cash. W4 $47,670. YTD $949,176. RENDER_VER 20261105-cash500. |
+| 11/05/2026 | Full DL refresh. Campaign (63) Account Oct 1–31 Impr 10,203 · clicks 737 · CTR 7.22%. Statement Search $/phone $9,555.44 ÷ 19 ≈ $503. Oct practice DV 4 · Traffic/DUI 8 · PPO 1 · Other 8. Nov* channel Lead Calls 9 · cash $9,800 · cases 2 · Campaign (60) $1,023.97. YTD cash $933,676. RENDER_VER 20261105-full. |
+| 11/05/2026 | Oct close refresh. ledger (20)/(19) Oct* Credits $104,970 through 10/30 · W4 $32,170 · YTD $923,876. Call details (28) Oct 1–31 · 19 phones. Campaign (63) Oct 1–31 Military+NTGUILT $7,982. Statement Search $9,555.44 · LSA $4,319.02 held. Lead Calls 108. Search $/phone ~$503. HubSpot Forms 18. RENDER_VER 20261105-octclose. |
+| 11/05/2026 | Call details (27) October rows 19. Includes every call in Call details (25) plus one Military received call on 10/30. Lead Calls 108. Search $/phone about $503. RENDER_VER 20261105-calls19. |
+| 11/05/2026 | Call details (25) Oct 1–30 Search 18. leads-inbox (30) Oct 64 received, 19 charged. Statement 10/31 live HS Search $9,555.44, LSA $4,319.02. HubSpot form submits 11/05: NTGUILT 16 in October from 10/08, Intake 2. Lead Calls 107. Search $/phone about $531. Avg cost per case about $722. CTR stays Campaign (59). Cash stays ledger (17). RENDER_VER 20261105-octtiles. |
 | 10/29/2026 | ledger (17) Oct* Credits $100,220 through 10/29. 88 credit rows. W1 $24,200, W2 $17,000, W3 $31,600, W4 $27,420. Jan–Sep credits unchanged. YTD $919,126. RENDER_VER 20261029-cash. |
 | 10/29/2026 | Trust_account_summary_10-29. Open trust 383, balance $1,784,204. Lifetime credits on that file rose $14,700 since the 10/28 snapshot. No new ledger activity export. October revenue stays $81,470 through 10/26 from ledger (16). RENDER_VER 20261029-trust. |
 | 10/29/2026 | September marked complete. Lead Calls goal is the last 3 complete months: Jul 281, Aug 101, Sep 97, round to 160. October stays partial. RENDER_VER 20261029-sep. |
