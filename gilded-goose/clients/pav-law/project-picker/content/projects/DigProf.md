@@ -15,8 +15,8 @@
 - Refresh firm and attorney presence for Pav Law, Andrew, Casey, and Jack
   - Materials can also be shared with the wider team
   - Another review round can be completed after the first pass
-- Team pages · DigProf lane 2 · bios and listings that link to [PavSiteUpdateP2.md](PavSiteUpdateP2.md) team URLs
-- Andrew · Casey · Jack HubSpot page builds · [PavSiteUpdateP2.md](PavSiteUpdateP2.md) · not rebuilt here
+- Team pages · DigProf lane 2 · bios and listings that link to team URLs on [Pav.Law Website](HsWebRebuild.md)
+- Andrew · Casey · Jack HubSpot page builds · [Pav.Law Website](HsWebRebuild.md) · not rebuilt here
 - Platforms in this project
   - Google Business Profile
   - LinkedIn
@@ -70,11 +70,11 @@ DigProf lanes
 - [ ] 1 · GBP
   - [ ] Merge Andrew Brown + Pav Law · close duplicates
 - [ ] 2 · Team pages · profiles + links
-  - [ ] HubSpot team page builds · Andrew · Casey · Jack · [PavSiteUpdateP2.md](PavSiteUpdateP2.md)
+  - [ ] HubSpot team page builds · Andrew · Casey · Jack · [Pav.Law Website](HsWebRebuild.md)
   - [ ] After those URLs exist · link DigProf bios · GBP · LinkedIn · Yelp to Andrew · Casey · Jack
   - [ ] Casey / Jack Justia + FindLaw mirror Andrew · [ATTORNEY-DIRECTORY-PROFILE-CHECKLIST.md](../../../ATTORNEY-DIRECTORY-PROFILE-CHECKLIST.md) · Casey now · Jack after 10/23/2026 · LegalDirs owns directory product work
   - [ ] Questionnaire answers in · [ATTORNEY-PROFILE-QUESTIONNAIRE.md](../../../ATTORNEY-PROFILE-QUESTIONNAIRE.md) · Kate writes bios
-- [ ] 3 · Firm + attorney bios rewrite with tracked website links · point at [PavSiteUpdateP2.md](PavSiteUpdateP2.md) team URLs
+- [ ] 3 · Firm + attorney bios rewrite with tracked website links · point at [Pav.Law Website](HsWebRebuild.md) team URLs
 - [ ] 4 · Jack announcements · on or after 10/23/2026
   - [ ] Draft hire post · Jack joining Pav Law as attorney
   - [ ] Draft sworn-in / Colorado bar admission post
@@ -114,7 +114,7 @@ Current DigProf outline includes
 
 - GBP merge Andrew + Pav Law
 - LinkedIn writing and update guide · company + attorney profiles · UTMs
-- Team pages · links to [PavSiteUpdateP2.md](PavSiteUpdateP2.md) Andrew · Casey · Jack URLs
+- Team pages · links to [Pav.Law Website](HsWebRebuild.md) Andrew · Casey · Jack URLs
 - Team graphics · headshots · card design · logos · team image edits on SwagPrint
 - Firm and attorney bios rewrite with tracked website links
 - HubSpot listing fields · LSA call process ops
@@ -123,17 +123,17 @@ Current DigProf outline includes
 
 Verdict
 
-- Keep $3,700 if DigProf = profiles · GBP · LinkedIn · bios · LSA ops · and links to [PavSiteUpdateP2.md](PavSiteUpdateP2.md) team URLs
+- Keep $3,700 if DigProf = profiles · GBP · LinkedIn · bios · LSA ops · and links to [Pav.Law Website](HsWebRebuild.md) team URLs
 - Raise to $4,200–$4,600 only if second review round plus headshot/graphics production sits inside DigProf instead of SwagPrint
-- Do not raise DigProf for Andrew · Casey · Jack HubSpot builds · those are [PavSiteUpdateP2.md](PavSiteUpdateP2.md)
-- Do not raise DigProf for marijuana · criminal mischief · those are [PavSiteUpdateP2.md](PavSiteUpdateP2.md)
+- Do not raise DigProf for Andrew · Casey · Jack HubSpot builds · those are [Pav.Law Website](HsWebRebuild.md)
+- Do not raise DigProf for marijuana · criminal mischief · those are [Pav.Law Website](HsWebRebuild.md)
 - Do not raise DigProf for Justia/FindLaw/Avvo refresh · that is LegalDirs $1,200
 
 Overlap locks
 
 - DigProf owns bios · GBP · LinkedIn · listing paste
-- [PavSiteUpdateP2.md](PavSiteUpdateP2.md) owns Andrew · Casey · Jack HubSpot team page builds
-- [PavSiteUpdateP2.md](PavSiteUpdateP2.md) owns marijuana · criminal mischief HubSpot practice pages
+- [Pav.Law Website](HsWebRebuild.md) owns Andrew · Casey · Jack HubSpot team page builds
+- [Pav.Law Website](HsWebRebuild.md) owns marijuana · criminal mischief HubSpot practice pages
 - DigProf links profiles to those team URLs when live
 - LegalDirs owns CH-DIRS · directory UTMs · FAQ paste
 - SwagPrint owns business card design · logos · team image edits · storefront ordering still open

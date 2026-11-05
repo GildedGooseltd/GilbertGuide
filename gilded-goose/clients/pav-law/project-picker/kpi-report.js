@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261029-cash";
+  const RENDER_VER = "20261030-rev120";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -133,7 +133,7 @@
     },
     "financial": {
       file: "ledger_account_activity_report (17).csv · Contact_10-29-2026 · ledger export 10/29/2026 · Trust snapshot 10/29",
-      fields: "Trust Credits · $100k goal · Aug $104,545 · Sep cases 16 · Sep revenue $113,985 · Oct* cases 20 · Oct* revenue $100,220 through 10/29"
+      fields: "Trust Credits · $120k goal · Aug $104,545 · Sep cases 16 · Sep revenue $113,985 · Oct* cases 20 · Oct* revenue $100,220 through 10/29"
     },
     "cases-created": {
       file: "Contact_10-29-2026 aggregates · export 2026-10-29",
@@ -161,8 +161,8 @@
     },
     "#02": {
       title: "#02 New Cases",
-      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months. August 20 is full month. September is 16 through Created 09/30/2026. October* is 20 through Created 10/29/2026 from Contact_10-29-2026. Track table is practice mix for that month from Cases practice area text. Fuzzy buckets only. Case target exists so monthly revenue can clear $100k. Gauge only.",
-      formula: "Count of Client contacts with Created date in month. Practice rows = same contacts bucketed from Cases (practice area). Target = floor($100k ÷ revenue/case) + 1 so monthly revenue clears $100k."
+      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months. August 20 is full month. September is 16 through Created 09/30/2026. October* is 20 through Created 10/29/2026 from Contact_10-29-2026. Track table is practice mix for that month from Cases practice area text. Fuzzy buckets only. Case target exists so monthly revenue can clear $120k. Gauge only.",
+      formula: "Count of Client contacts with Created date in month. Practice rows = same contacts bucketed from Cases (practice area). Target = floor($120k ÷ revenue/case) + 1 so monthly revenue clears $120k."
     },
     "#07": {
       title: "#07 Spend Waste",
@@ -272,7 +272,7 @@
     },
     "cash-pace": {
       title: "Revenue",
-      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity. Sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. June and July are full months vs the $100k revenue goal. August is full month $104,545. July restated $112,350 from ledger (12). September is $113,985 through 09/30/2026. October* is $100,220 through 10/29/2026 from ledger (17). W1–W4 under the dial are a running Trust Credit total by calendar week. Completed weeks are gray and show the cumulative collected through that week from the ledger. The live week shows only the end-of-week projected running total if the current daily Credit pace continues through that week’s last day. Later weeks project the running total if pace continues through the end of that week. W1 days 1–7 · W2 days 8–14 · W3 days 15–21 · W4 days 22–end. $85k is the operating-expense assumption on Predictions. June sample baseline, not this revenue goal.",
+      desc: "Follows the KPI tile month. Monthly client revenue from MyCase Trust account activity. Sum Credit column by calendar month. Andrew’s ~$104k August figure is this report, not operating cash flow or P and L. Monthly revenue goal is $120k. Dial scale tops at $150k. August is full month $104,545. July restated $112,350 from ledger (12). September is $113,985 through 09/30/2026. October* is $100,220 through 10/29/2026 from ledger (17). W1–W4 under the dial are a running Trust Credit total by calendar week. Completed weeks are gray and show the cumulative collected through that week from the ledger. The live week shows only the end-of-week projected running total if the current daily Credit pace continues through that week’s last day. Later weeks project the running total if pace continues through the end of that week. W1 days 1–7 · W2 days 8–14 · W3 days 15–21 · W4 days 22–end. $85k is the operating-expense assumption on Predictions. June sample baseline, not this revenue goal.",
       formula: "Running total = sum of Trust Credits from day 1 through that week. Completed = ledger actuals. Live/future week proj = MTD daily Credit pace × last day of that week. Current MTD stays on the dial."
     },
     "sales-cost-funnel": {
@@ -308,7 +308,7 @@
     "financial": {
       title: "#09 Financials",
       desc: "Monthly client revenue from MyCase Trust account activity export. Credit column. Jan–Jul from ledger_account_activity_report (5). Aug $104,545 from ledger (5)/(7). Jul restated $112,350 from ledger (12). Sep $113,985 through 09/30/2026 from ledger (11)/(12). Oct* $100,220 through 10/29/2026 from ledger (17). Not operating cash flow. Not accrual billed revenue. 2026 chart goal line = $150k.",
-      formula: "Revenue = Credit sum by calendar month. Monthly goal = $100,000."
+      formula: "Revenue = Credit sum by calendar month. Monthly goal = $120,000. Chart aspirational line = $150k."
     },
     "cases-created": {
       title: "Cases Created",
@@ -1324,7 +1324,7 @@
       partialMonthKey: "Oct",
       partialDaysElapsed: 29,
       partialDaysInMonth: 31,
-      cashGoalMonthly: 100000,
+      cashGoalMonthly: 120000,
       rangeNote: "Jan–Sep Trust activity Credits · Jul restated $112,350 · Oct* $100,220 MTD through 10/29/2026 ledger (17) · cases Contact_10-29 Sep 16 · Oct Created 20 · Trust snapshot 10/29 · 383 open · $1,784,204"
     },
     /**
@@ -1620,11 +1620,11 @@
   }
 
   /**
-   * #02 target = new cases needed so monthly cash clears $100k.
+   * #02 target = new cases needed so monthly cash clears $120k.
    * cash/case = 2026 full months (ledger credits ÷ newCases); fallback mean fee × 80%.
    */
   function applyNewCasesCashGoalTarget() {
-    const GOAL_CASH = 100000;
+    const GOAL_CASH = 120000;
     const rows = (DATA.cashCollected2026Ytd || []).filter(r => r && !/\*/.test(String(r.month || "")));
     let cash = 0;
     let cases = 0;
@@ -4184,7 +4184,7 @@
 
   function cashGoalMonthly() {
     const n = Number((DATA.cashCollectedTotals || {}).cashGoalMonthly);
-    return Number.isFinite(n) && n > 0 ? n : 100000;
+    return Number.isFinite(n) && n > 0 ? n : 120000;
   }
 
   function cashCollectedChart(rows) {
@@ -6662,7 +6662,7 @@
   function cashCollectedPaceCardHtml() {
     const m = cashMonthPaceModel();
     if (!m) return "";
-    /* Dial scale $150k · goal mark stays at monthly $100k target. Celebrate only when collected hits goal. */
+    /* Dial scale $150k · goal mark = monthly $120k target. Celebrate only when collected hits goal. */
     const hit = m.credit >= m.target;
     const scaleMax = Math.max(m.credit, m.target, 150000);
     const cashValue = fmtMoney(m.credit);
@@ -6670,7 +6670,7 @@
       valueLabel: cashValue,
       endLabel: fmtMoney(scaleMax),
       goalMark: m.target / scaleMax,
-      goalLabel: "100k",
+      goalLabel: `${Math.round(m.target / 1000)}k`,
       endMark: true,
       centerClass: "kpi-gauge-center-amt",
       celebrate: hit

@@ -24,7 +24,23 @@ A new HubSpot site and brand refresh for [pav.law](http://pav.law) launched befo
 **Website:**
 
 - Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.
-- SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.
+- SEO/AEO - Optimize hire pages for search and AI answers, and forward each old URL to its new page.
+  - Page Titles And Summaries · HubSpot - One on-page headline, one Google title, and one short search blurb per hire page.
+  - Clean Sitemap · HubSpot - Index only real keep pages. Drop junk and empty category URLs.
+  - Speed And Mobile Load · HubSpot - Fast phone load on the new theme, lighter than the current WordPress stack.
+  - Business Identity Markup · HubSpot - Firm name, phone, address, and attorney identity in page code. Remove Bluehost staging identity.
+  - Forward Old Links · HubSpot Cutover - Old WordPress, Ads, Yelp, and directory links land on the matching new page in one hop.
+  - Secure Main Domain · HubSpot Cutover - www and http both go to https://pav.law.
+  - Search Console · After Launch - Submit the sitemap and watch Coverage for 2 to 4 weeks.
+  - Keep-List Counties Only · HubSpot - County pages for the chosen counties only. No thin city copies.
+  - Website Results On The Guide · After Launch - Organic visits, form submits, and phone taps next to Google Ads results.
+  - Directories To Hire Pages · HubSpot Then Directories - Update Yelp, Justia, FindLaw, and similar only after that page has a form and the firm phone.
+  - Trusted Links To Hire Pages · After Convert - Ask partners and real sites you already work with to link the exact hire page. Log who and which URL. Not paid links.
+  - Question And Short Answer · HubSpot - Question heading plus a plain short answer so search and AI can quote the firm cleanly.
+  - FAQs Plus Video And Social · HubSpot - FAQs on Domestic Violence, DUI, protection orders, and assault. Zach and Andrew videos and posts deep-link to the matching hire page with the same charge language, form, and phone.
+  - FAQ Markup · HubSpot - Structured FAQ code so search and AI can read the Q&As.
+  - Author Tiles · HubSpot - Name, role, and firm identity for attorneys and team members on the content.
+  - Captions And Transcripts · HubSpot - Hire-page video follows Zach and Andrew's content plan, with captions and a transcript on the page. YouTube growth stays outside this project.
 - Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. 
 - Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.
 - Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.

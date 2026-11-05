@@ -3,8 +3,8 @@
  * Rebuild: npm run build
  */
 window.PROJECT_DATA = {
-  "guideName": "Lord Gilbert Granville",
-  "guideShortName": "Gilbert",
+  "guideName": "Pav Law",
+  "guideShortName": "Pav",
   "guideIcon": "assets/gigi-seal.jpg",
   "guideHero": "assets/gilbert-thinking.png",
   "guideSeal": "assets/gilbert-celebrating.png",
@@ -146,7 +146,7 @@ window.PROJECT_DATA = {
         ]
       },
       "tldr": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.",
-      "description": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.\n\n**HubSpot:**\n\n- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.\n- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.\n- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.\n- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.\n\n**Website:**\n\n- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.\n- SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.\n- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. \n- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.\n- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.",
+      "description": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.\n\n**HubSpot:**\n\n- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.\n- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.\n- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.\n- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.\n\n**Website:**\n\n- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.\n- SEO/AEO - Optimize hire pages for search and AI answers, and forward each old URL to its new page.\n  - Page Titles And Summaries · HubSpot - One on-page headline, one Google title, and one short search blurb per hire page.\n  - Clean Sitemap · HubSpot - Index only real keep pages. Drop junk and empty category URLs.\n  - Speed And Mobile Load · HubSpot - Fast phone load on the new theme, lighter than the current WordPress stack.\n  - Business Identity Markup · HubSpot - Firm name, phone, address, and attorney identity in page code. Remove Bluehost staging identity.\n  - Forward Old Links · HubSpot Cutover - Old WordPress, Ads, Yelp, and directory links land on the matching new page in one hop.\n  - Secure Main Domain · HubSpot Cutover - www and http both go to https://pav.law.\n  - Search Console · After Launch - Submit the sitemap and watch Coverage for 2 to 4 weeks.\n  - Keep-List Counties Only · HubSpot - County pages for the chosen counties only. No thin city copies.\n  - Website Results On The Guide · After Launch - Organic visits, form submits, and phone taps next to Google Ads results.\n  - Directories To Hire Pages · HubSpot Then Directories - Update Yelp, Justia, FindLaw, and similar only after that page has a form and the firm phone.\n  - Trusted Links To Hire Pages · After Convert - Ask partners and real sites you already work with to link the exact hire page. Log who and which URL. Not paid links.\n  - Question And Short Answer · HubSpot - Question heading plus a plain short answer so search and AI can quote the firm cleanly.\n  - FAQs Plus Video And Social · HubSpot - FAQs on Domestic Violence, DUI, protection orders, and assault. Zach and Andrew videos and posts deep-link to the matching hire page with the same charge language, form, and phone.\n  - FAQ Markup · HubSpot - Structured FAQ code so search and AI can read the Q&As.\n  - Author Tiles · HubSpot - Name, role, and firm identity for attorneys and team members on the content.\n  - Captions And Transcripts · HubSpot - Hire-page video follows Zach and Andrew's content plan, with captions and a transcript on the page. YouTube growth stays outside this project.\n- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. \n- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.\n- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.",
       "valueAdded": [
         "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.",
         "**HubSpot:**",
@@ -156,7 +156,23 @@ window.PROJECT_DATA = {
         "Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.",
         "**Website:**",
         "Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.",
-        "SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.",
+        "SEO/AEO - Optimize hire pages for search and AI answers, and forward each old URL to its new page.",
+        "- Page Titles And Summaries · HubSpot - One on-page headline, one Google title, and one short search blurb per hire page.",
+        "- Clean Sitemap · HubSpot - Index only real keep pages. Drop junk and empty category URLs.",
+        "- Speed And Mobile Load · HubSpot - Fast phone load on the new theme, lighter than the current WordPress stack.",
+        "- Business Identity Markup · HubSpot - Firm name, phone, address, and attorney identity in page code. Remove Bluehost staging identity.",
+        "- Forward Old Links · HubSpot Cutover - Old WordPress, Ads, Yelp, and directory links land on the matching new page in one hop.",
+        "- Secure Main Domain · HubSpot Cutover - www and http both go to https://pav.law.",
+        "- Search Console · After Launch - Submit the sitemap and watch Coverage for 2 to 4 weeks.",
+        "- Keep-List Counties Only · HubSpot - County pages for the chosen counties only. No thin city copies.",
+        "- Website Results On The Guide · After Launch - Organic visits, form submits, and phone taps next to Google Ads results.",
+        "- Directories To Hire Pages · HubSpot Then Directories - Update Yelp, Justia, FindLaw, and similar only after that page has a form and the firm phone.",
+        "- Trusted Links To Hire Pages · After Convert - Ask partners and real sites you already work with to link the exact hire page. Log who and which URL. Not paid links.",
+        "- Question And Short Answer · HubSpot - Question heading plus a plain short answer so search and AI can quote the firm cleanly.",
+        "- FAQs Plus Video And Social · HubSpot - FAQs on Domestic Violence, DUI, protection orders, and assault. Zach and Andrew videos and posts deep-link to the matching hire page with the same charge language, form, and phone.",
+        "- FAQ Markup · HubSpot - Structured FAQ code so search and AI can read the Q&As.",
+        "- Author Tiles · HubSpot - Name, role, and firm identity for attorneys and team members on the content.",
+        "- Captions And Transcripts · HubSpot - Hire-page video follows Zach and Andrew's content plan, with captions and a transcript on the page. YouTube growth stays outside this project.",
         "Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k.",
         "Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.",
         "Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation."
@@ -309,16 +325,16 @@ window.PROJECT_DATA = {
       "estCostLabel": "$27,000",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3700,
+      "feeEstimate": 4100,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "creative_brand",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2100,
       "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 15,
+        "raw": 31,
         "parts": {
-          "valueAdd": 12,
+          "valueAdd": 28,
           "tasks": 0,
           "completed": 0,
           "info": 0,
@@ -330,8 +346,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -23300,
-      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.29 (15 units) · complexity ×1.1"
+      "feeEstimateDelta": -22900,
+      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.41 (31 units) · complexity ×1.1"
     },
     {
       "priority": 5,
@@ -2906,7 +2922,7 @@ window.PROJECT_DATA = {
       "id": "Yelp",
       "title": "Yelp Ads",
       "tldr": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
-      "description": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.\n\n- HubSpot:\n  - Phone Routing & Tracking: Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.\n  - Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.\n  - Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.\n- Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.\n- Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are currently about $50/day · raise if the channel keeps performing.\n- Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.\n- Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.",
+      "description": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.\n\n- HubSpot:\n  - Phone Routing & Tracking: Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.\n  - Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.\n  - Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.\n- Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.\n- Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are $9/day. Kate 10/29/2026.\n- Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.\n- Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.",
       "valueAdded": [
         "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
         "HubSpot:",
@@ -2914,7 +2930,7 @@ window.PROJECT_DATA = {
         "- Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.",
         "- Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.",
         "Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.",
-        "Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are currently about $50/day · raise if the channel keeps performing.",
+        "Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are $9/day. Kate 10/29/2026.",
         "Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.",
         "Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out."
       ],
@@ -2930,7 +2946,7 @@ window.PROJECT_DATA = {
         "Enrolled 7 more past clients into the Yelp drip campaign for reviews",
         "HubSpot MyCase Yelp process doc written",
         "Set up Jack on HubSpot",
-        "Ads pace ~$50/day",
+        "Ads pace $9/day · set 10/29/2026",
         "Live Yelp Projects · Military · DUI/DWAI · License",
         "Specialties / FAQ / Connect refresh",
         "Insurance-card postcard mailer · Winter Warning + Yelp review request",

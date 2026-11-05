@@ -215,7 +215,7 @@ Blank or missing → Guide default **50%** for one-time fees.
 
 
 
-### Gilbert best-fit score (Pav Priorities shortlist)
+### Best-fit score (Pav Priorities shortlist)
 
 Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **140** with WIP + season urgency + Recommended). **Required** items are never scored (Fit shows —). Completed / archived / monthly-only → excluded (`−999`). **WIP / Started / Launched** → not eligible for the quote picklist or best-fit shortlist · Kate 10/09/2026. **No status or Visibility penalties** on scored rows — use INDEX **Visibility = Unpublished** to gray drafts for Andrew (backend), not ranking.
 
@@ -229,7 +229,7 @@ Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **140** with WIP + sea
 | Priority               | **30** | Relative to live INDEX project scores (top → 30, bottom → 0) |
 | Lead generator         | **17** | Has **Leads** value icon                                     |
 | Enabler                | **15** | Foundation / unblocker flag                                  |
-| Goal match             | **20** | Gilbert survey / goal keywords (only when goal text is set)  |
+| Goal match             | **20** | Survey / goal keywords (only when goal text is set)          |
 | Data — backed metric   | **10** | Linked KPI label                                             |
 | Data — return estimate | **4**  | Return / ROI estimate on card                                |
 | Fee accessibility      | **8**  |                                                              |
@@ -239,7 +239,7 @@ Named **0–100** scale (`SCORE_WEIGHTS` in `app.js`; max **140** with WIP + sea
 | Recommended            | **20** | INDEX Status = Recommended                                   |
 
 
-Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of this score (cart +18 · Gilbert-recommended +10) — outside the 100 scale.
+Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of this score (cart +18 · survey recommended +10) — outside the 100 scale.
 
 ## Notes
 
@@ -273,7 +273,7 @@ Survey shortlist (`gilbertRankedPicks`) adds a goal-keyword overlay on top of th
 - **TsMgmt** — Recommended · Show on · $500/mo Platform Management · MyCase · Google Suite · Bluehost · Ops Dashboard · light IT · cell plan · Dropbox look · working file [`PLATFORM-MANAGEMENT-CHECKLIST.md`](../../PLATFORM-MANAGEMENT-CHECKLIST.md)
 - **Ad Expansion** — wip · Show on · two Search lanes only · criminal mischief + college towns · wait until late October when core Search is stable · semester mailer for freshman residencies with Ad 2 · no weapons · no seasonal DUI · no WinterSeason · no glovebox · fee may need down-quote from $5,600 · keepers ~$300/mo per live lane
 - **LegalDirs** — wip · Show on · Justia · FindLaw · Avvo · CH-DIRS held until team trained · `pl_lead_source` = Directories when live · site/ads stay 719-888-7888
-- **Yelp** — Launched · Show on · ads ~$50/day · raise if performing · CH-YELP hold released · not on quote picklist while Launched · SEO-improve pav.law pages then publish DV/PPO/Assault Projects with deep links · nurture + workflow On · $2,600 setup · then $500/mo Yelp platform · not inside Google / LSA retainer
+- **Yelp** — Launched · Show on · ads $9/day · Kate 10/29/2026 · CH-YELP hold released · not on quote picklist while Launched · SEO-improve pav.law pages then publish DV/PPO/Assault Projects with deep links · nurture + workflow On · $2,600 setup · then $500/mo Yelp platform · not inside Google / LSA retainer
 - **Digital Ads Retainer** — Required status in INDEX · Publish status unpublished · Show off · not on Guide sell calculator until republished · base $3,000/mo before Ad Expansion add
 - **AdultAds** — On Hold · unpublished · Show off · deferred until buyable site shortlist is ready · never on survivor advocacy properties
 - **CaseyBrand** — Casey rebrand (like DigProf): clothing, makeup, hair, presentation, speech, digital presence

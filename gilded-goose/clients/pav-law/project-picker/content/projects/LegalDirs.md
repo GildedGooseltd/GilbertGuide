@@ -82,5 +82,5 @@ CH-DIRS = HubSpot Calling DID for Justia · FindLaw · Avvo profile phone / call
 - [ ] Draft Jack bio + FAQ set from answers
 - [ ] Draft announcement · Jack hired / joining Pav Law
 - [x] Email signature title update
-- [ ] HubSpot / pav.law team page · PavSiteUpdateP2 · then deep-link directories
+- [ ] HubSpot team page on Pav.Law Website, then deep-link directories
 - [ ] When `/team/casey-dinaro/` and `/team/jack-strong/` go live · deep-link bios
