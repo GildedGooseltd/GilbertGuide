@@ -26,7 +26,7 @@ Yelp page and ads were tested over the last month on a low budget with solid lea
   - Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.
   - Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.
 - Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.
-- Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are currently about $50/day · raise if the channel keeps performing.
+- Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are $9/day. Kate 10/29/2026.
 - Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.
 - Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.
 
@@ -67,7 +67,7 @@ Locked set: 🚧 wip · 📌 active · 🚀 launched · 💰 LeadGen · 🏁 don
 - [x] HubSpot MyCase Yelp process doc written
 - [x] Set up Jack on HubSpot
 - [ ] Revise Yelp call number to a HubSpot intake number for better tracking
-- [x] Ads pace ~$50/day
+- [x] Ads pace $9/day · set 10/29/2026
 - [x] Live Yelp Projects · Military · DUI/DWAI · License
 - [ ] SEO-improve pav.law DV page · then publish Yelp DV Project + UTM link
 - [ ] SEO-improve pav.law PPO page · then publish Yelp PPO Project + UTM link

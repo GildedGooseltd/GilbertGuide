@@ -3,8 +3,8 @@
  * Rebuild: npm run build
  */
 window.PROJECT_DATA = {
-  "guideName": "Lord Gilbert Granville",
-  "guideShortName": "Gilbert",
+  "guideName": "Pav Law",
+  "guideShortName": "Pav",
   "guideIcon": "assets/gigi-seal.jpg",
   "guideHero": "assets/gilbert-thinking.png",
   "guideSeal": "assets/gilbert-celebrating.png",
@@ -146,7 +146,7 @@ window.PROJECT_DATA = {
         ]
       },
       "tldr": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.",
-      "description": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.\n\n**HubSpot:**\n\n- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.\n- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.\n- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.\n- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.\n\n**Website:**\n\n- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.\n- SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.\n- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. \n- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.\n- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.",
+      "description": "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.\n\n**HubSpot:**\n\n- Help Desk - Set up a Help Desk ticket for Romina on a form, a call, or another action, and set up task assignment from those tickets.\n- Phone Setup & Routing - Update phone assignments and replace T-Mobile lines with free HubSpot lines where possible. Add dedicated lines for the ads. Set up call routing with HubSpot workflows or Aircall, based on volume and complexity.\n- Lead Source Tracking - Set up automated lead source tracking and build the reports used to allocate budgets.\n- Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.\n\n**Website:**\n\n- Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.\n- SEO/AEO - Optimize hire pages for search and AI answers, and forward each old URL to its new page.\n  - Page Titles And Summaries · HubSpot - One on-page headline, one Google title, and one short search blurb per hire page.\n  - Clean Sitemap · HubSpot - Index only real keep pages. Drop junk and empty category URLs.\n  - Speed And Mobile Load · HubSpot - Fast phone load on the new theme, lighter than the current WordPress stack.\n  - Business Identity Markup · HubSpot - Firm name, phone, address, and attorney identity in page code. Remove Bluehost staging identity.\n  - Forward Old Links · HubSpot Cutover - Old WordPress, Ads, Yelp, and directory links land on the matching new page in one hop.\n  - Secure Main Domain · HubSpot Cutover - www and http both go to https://pav.law.\n  - Search Console · After Launch - Submit the sitemap and watch Coverage for 2 to 4 weeks.\n  - Keep-List Counties Only · HubSpot - County pages for the chosen counties only. No thin city copies.\n  - Website Results On The Guide · After Launch - Organic visits, form submits, and phone taps next to Google Ads results.\n  - Directories To Hire Pages · HubSpot Then Directories - Update Yelp, Justia, FindLaw, and similar only after that page has a form and the firm phone.\n  - Trusted Links To Hire Pages · After Convert - Ask partners and real sites you already work with to link the exact hire page. Log who and which URL. Not paid links.\n  - Question And Short Answer · HubSpot - Question heading plus a plain short answer so search and AI can quote the firm cleanly.\n  - FAQs Plus Video And Social · HubSpot - FAQs on Domestic Violence, DUI, protection orders, and assault. Zach and Andrew videos and posts deep-link to the matching hire page with the same charge language, form, and phone.\n  - FAQ Markup · HubSpot - Structured FAQ code so search and AI can read the Q&As.\n  - Author Tiles · HubSpot - Name, role, and firm identity for attorneys and team members on the content.\n  - Captions And Transcripts · HubSpot - Hire-page video follows Zach and Andrew's content plan, with captions and a transcript on the page. YouTube growth stays outside this project.\n- Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k. \n- Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.\n- Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation.",
       "valueAdded": [
         "A new HubSpot site and brand refresh for pav.law launched before end of year. The current site stays up until the domain moves at a scheduled low activity time.",
         "**HubSpot:**",
@@ -156,7 +156,23 @@ window.PROJECT_DATA = {
         "Social Hub - Set Zach up in HubSpot to post, schedule, track, and report. Set up his access to the business ad accounts, and set up monitoring for keywords and trends.",
         "**Website:**",
         "Pages - Build the hire pages for each practice area, refresh content that is performing well, align pages with  Google Ads, persistent 719-888-7888 and a form. Build the team pages, the blog, and the video pages.",
-        "SEO/AEO - Optimize the new pages for the firm's services and for AI answers, and set each old page to forward to its new page.",
+        "SEO/AEO - Optimize hire pages for search and AI answers, and forward each old URL to its new page.",
+        "- Page Titles And Summaries · HubSpot - One on-page headline, one Google title, and one short search blurb per hire page.",
+        "- Clean Sitemap · HubSpot - Index only real keep pages. Drop junk and empty category URLs.",
+        "- Speed And Mobile Load · HubSpot - Fast phone load on the new theme, lighter than the current WordPress stack.",
+        "- Business Identity Markup · HubSpot - Firm name, phone, address, and attorney identity in page code. Remove Bluehost staging identity.",
+        "- Forward Old Links · HubSpot Cutover - Old WordPress, Ads, Yelp, and directory links land on the matching new page in one hop.",
+        "- Secure Main Domain · HubSpot Cutover - www and http both go to https://pav.law.",
+        "- Search Console · After Launch - Submit the sitemap and watch Coverage for 2 to 4 weeks.",
+        "- Keep-List Counties Only · HubSpot - County pages for the chosen counties only. No thin city copies.",
+        "- Website Results On The Guide · After Launch - Organic visits, form submits, and phone taps next to Google Ads results.",
+        "- Directories To Hire Pages · HubSpot Then Directories - Update Yelp, Justia, FindLaw, and similar only after that page has a form and the firm phone.",
+        "- Trusted Links To Hire Pages · After Convert - Ask partners and real sites you already work with to link the exact hire page. Log who and which URL. Not paid links.",
+        "- Question And Short Answer · HubSpot - Question heading plus a plain short answer so search and AI can quote the firm cleanly.",
+        "- FAQs Plus Video And Social · HubSpot - FAQs on Domestic Violence, DUI, protection orders, and assault. Zach and Andrew videos and posts deep-link to the matching hire page with the same charge language, form, and phone.",
+        "- FAQ Markup · HubSpot - Structured FAQ code so search and AI can read the Q&As.",
+        "- Author Tiles · HubSpot - Name, role, and firm identity for attorneys and team members on the content.",
+        "- Captions And Transcripts · HubSpot - Hire-page video follows Zach and Andrew's content plan, with captions and a transcript on the page. YouTube growth stays outside this project.",
         "Brand Refresh - Update the logo, the color scheme, and the content. Optional hire additioonal design support between 2-5k.",
         "Directories & Redirects - Update connected channels including Yelp, Justia, FindLaw etc. Point those profiles at the new pages once the pages have a form and the phone.",
         "Project Management - Project manage/coordinate with additional contractors as needed for additional graphic design or video creation."
@@ -309,16 +325,16 @@ window.PROJECT_DATA = {
       "estCostLabel": "$27,000",
       "paymentPlanLabel": "50%",
       "depositPct": 0.5,
-      "feeEstimate": 3700,
+      "feeEstimate": 4100,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "creative_brand",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 2100,
       "feeEstimateNationalMid": 3300,
       "feeEstimateScope": {
-        "raw": 15,
+        "raw": 31,
         "parts": {
-          "valueAdd": 12,
+          "valueAdd": 28,
           "tasks": 0,
           "completed": 0,
           "info": 0,
@@ -330,8 +346,8 @@ window.PROJECT_DATA = {
       "feeEstimateComplexity": 1.1,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
-      "feeEstimateDelta": -23300,
-      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.29 (15 units) · complexity ×1.1"
+      "feeEstimateDelta": -22900,
+      "feeEstimateNote": "creative brand lane · local mid $2,100 · national mid $3,250 · scope ×1.41 (31 units) · complexity ×1.1"
     },
     {
       "priority": 5,
@@ -461,11 +477,11 @@ window.PROJECT_DATA = {
         "1 · GBP",
         "Merge Andrew Brown + Pav Law · close duplicates",
         "2 · Team pages · profiles + links",
-        "HubSpot team page builds · Andrew · Casey · Jack · PavSiteUpdateP2.md",
+        "HubSpot team page builds · Andrew · Casey · Jack · Pav.Law Website",
         "After those URLs exist · link DigProf bios · GBP · LinkedIn · Yelp to Andrew · Casey · Jack",
         "Casey / Jack Justia + FindLaw mirror Andrew · ATTORNEY-DIRECTORY-PROFILE-CHECKLIST.md · Casey now · Jack after 10/23/2026 · LegalDirs owns directory product work",
         "Questionnaire answers in · ATTORNEY-PROFILE-QUESTIONNAIRE.md · Kate writes bios",
-        "3 · Firm + attorney bios rewrite with tracked website links · point at PavSiteUpdateP2.md team URLs",
+        "3 · Firm + attorney bios rewrite with tracked website links · point at Pav.Law Website team URLs",
         "4 · Jack announcements · on or after 10/23/2026",
         "Draft hire post · Jack joining Pav Law as attorney",
         "Draft sworn-in / Colorado bar admission post",
@@ -584,15 +600,15 @@ window.PROJECT_DATA = {
       "parentId": "HsWebRebuild",
       "id": "HsMktExpand",
       "title": "HubSpot Marketing Hub Expansion",
-      "tldr": "Lead-source and quality tracking so the team knows where leads come from and which sources produce the best matters CRM setup plus ads data connections and integrations across Search · LSA · Yelp · referral · website Behavioral workflows on page views and abandons · not only form submit No new HubSpot product. Uses Marketing Hub Pav already owns Boundaries Ads sync for intake users lives on LSA Call Process. SEO lives on Website Rebuild. Email A/B and CSAT live on Email Nurture Setup.",
-      "description": "Lead-source and quality tracking so the team knows where leads come from and which sources produce the best matters CRM setup plus ads data connections and integrations across Search · LSA · Yelp · referral · website Behavioral workflows on page views and abandons · not only form submit No new HubSpot product. Uses Marketing Hub Pav already owns Boundaries Ads sync for intake users lives on LSA Call Process. SEO lives on Website Rebuild. Email A/B and CSAT live on Email Nurture Setup.",
+      "tldr": "Lead-source and quality tracking so the team knows where leads come from and which sources produce the best matters. CRM setup plus ads data connections and integrations across Search · LSA · Yelp · referral · website · Reddit · Quora · Justia Answers. Behavioral workflows on page views and abandons · not only form submit. No new HubSpot product. Uses Marketing Hub Pav already owns. Boundaries: Ads sync for intake users lives on LSA Call Process. SEO lives on Website Rebuild. Email A/B and CSAT live on Email Nurture Setup.",
+      "description": "Lead-source and quality tracking so the team knows where leads come from and which sources produce the best matters. CRM setup plus ads data connections and integrations across Search · LSA · Yelp · referral · website · Reddit · Quora · Justia Answers. Behavioral workflows on page views and abandons · not only form submit. No new HubSpot product. Uses Marketing Hub Pav already owns. Boundaries: Ads sync for intake users lives on LSA Call Process. SEO lives on Website Rebuild. Email A/B and CSAT live on Email Nurture Setup.",
       "valueAdded": [
-        "Lead-source and quality tracking so the team knows where leads come from and which sources produce the best matters CRM setup plus ads data connections and integrations across Search · LSA · Yelp · referral · website Behavioral workflows on page views and abandons · not only form submit No new HubSpot product. Uses Marketing Hub Pav already owns Boundaries Ads sync for intake users lives on LSA Call Process. SEO lives on Website Rebuild. Email A/B and CSAT live on Email Nurture Setup."
+        "Lead-source and quality tracking so the team knows where leads come from and which sources produce the best matters. CRM setup plus ads data connections and integrations across Search · LSA · Yelp · referral · website · Reddit · Quora · Justia Answers. Behavioral workflows on page views and abandons · not only form submit. No new HubSpot product. Uses Marketing Hub Pav already owns. Boundaries: Ads sync for intake users lives on LSA Call Process. SEO lives on Website Rebuild. Email A/B and CSAT live on Email Nurture Setup."
       ],
       "hubSpotParts": [
-        "Marketing Hub · ads connections, lead source, and quality properties",
+        "Marketing Hub · ads connections, Forum outreach campaign, lead source, and quality properties",
         "CRM · contacts, custom properties, and reporting data sources",
-        "Workflows · follow-up tasks on form submits"
+        "Workflows · follow-up tasks on form submits · community UTM → Lead source map"
       ],
       "progressDoneItems": [],
       "progressOpenItems": [],
@@ -612,7 +628,7 @@ window.PROJECT_DATA = {
       "feeEstimateLocalMid": 2900,
       "feeEstimateNationalMid": 3900,
       "feeEstimateScope": {
-        "raw": 3.1,
+        "raw": 3.28,
         "parts": {
           "valueAdd": 1,
           "tasks": 0,
@@ -620,14 +636,14 @@ window.PROJECT_DATA = {
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.1
+          "descUnits": 2.28
         }
       },
       "feeEstimateComplexity": 1.188,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": 1900,
-      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.04 (3.1 units) · complexity ×1.188"
+      "feeEstimateNote": "sprint general lane · local mid $2,850 · national mid $3,900 · scope ×1.05 (3.28 units) · complexity ×1.188"
     },
     {
       "priority": 10,
@@ -689,18 +705,18 @@ window.PROJECT_DATA = {
       "id": "HsSvcExpand",
       "title": "HubSpot Client Intake",
       "tldr": "One HubSpot client-intake build so phones, Service Hub queues, and Affirm financing emails work together instead of three separate sells.",
-      "description": "One HubSpot client-intake build so phones, Service Hub queues, and Affirm financing emails work together instead of three separate sells.\n\nExpand Service Hub Pav already owns for shared inbox · knowledge base · SLAs · chatbot. Shared inbox / help desk for email · chat · social in one queue. Knowledge base FAQs that feed the chatbot and cut repeat questions. Internal attorney setup articles · directory profile + FAQ paste · enablement/hubspot-kb/README.md · publish to HubSpot KB category Attorney setup · team only. SLAs for speed-to-lead and callback timers. Customer agent / advanced chatbot for after-hours triage · after-hours chat QA lives on HsWebRebuild. Intake tickets for new cases and project assignments stay coordinated with DigProf LSA call process. CSAT / NPS stay on Email Nurture Setup.\n\nPhones and VoIP: dedicated lines for call types such as Spanish and current clients. Public branding stays on 719-888-7888 only. Automated call logging, tracking, and reporting. Start by transferring one line into HubSpot · setup docs · short onboarding deck. HubSpot forms assign to Casey with same-day callback so more auto calls get answered.\n\nAffirm financing email: monthly how-it-works send for open-balance and payment-plan clients without promising approval. CTA to Romina or intake for Affirm checkout when merchant is live. Extra Affirm sends in November and December for financing info and collections during the slower season.",
+      "description": "One HubSpot client-intake build so phones, Service Hub queues, and Affirm financing emails work together instead of three separate sells.\n\nExpand Service Hub Pav already owns for shared inbox · knowledge base · SLAs · chatbot. Shared inbox / help desk for email · chat · social in one queue. Knowledge base FAQs that feed the chatbot and cut repeat questions. Internal attorney setup articles · directory profile + FAQ paste · enablement/hubspot-kb/README.md · publish to HubSpot KB category Attorney setup · team only. SLAs for speed-to-lead and callback timers. Customer agent and after-hours chat stay on this intake project. Intake tickets for new cases and project assignments stay coordinated with DigProf LSA call process. CSAT / NPS stay on Email Nurture Setup.\n\nPhones and VoIP: dedicated lines for call types such as Spanish and current clients. Public branding stays on 719-888-7888 only. Automated call logging, tracking, and reporting. Start by transferring one line into HubSpot · setup docs · short onboarding deck. Website forms open a Help Desk ticket for Romina. The same-day callback task still notifies intake. Casey keeps LSA call entry.\n\nAffirm financing email: monthly how-it-works send for open-balance and payment-plan clients without promising approval. CTA to Romina or intake for Affirm checkout when merchant is live. Extra Affirm sends in November and December for financing info and collections during the slower season.",
       "valueAdded": [
         "One HubSpot client-intake build so phones, Service Hub queues, and Affirm financing emails work together instead of three separate sells.",
-        "Expand Service Hub Pav already owns for shared inbox · knowledge base · SLAs · chatbot. Shared inbox / help desk for email · chat · social in one queue. Knowledge base FAQs that feed the chatbot and cut repeat questions. Internal attorney setup articles · directory profile + FAQ paste · enablement/hubspot-kb/README.md · publish to HubSpot KB category Attorney setup · team only. SLAs for speed-to-lead and callback timers. Customer agent / advanced chatbot for after-hours triage · after-hours chat QA lives on HsWebRebuild. Intake tickets for new cases and project assignments stay coordinated with DigProf LSA call process. CSAT / NPS stay on Email Nurture Setup.",
-        "Phones and VoIP: dedicated lines for call types such as Spanish and current clients. Public branding stays on 719-888-7888 only. Automated call logging, tracking, and reporting. Start by transferring one line into HubSpot · setup docs · short onboarding deck. HubSpot forms assign to Casey with same-day callback so more auto calls get answered.",
+        "Expand Service Hub Pav already owns for shared inbox · knowledge base · SLAs · chatbot. Shared inbox / help desk for email · chat · social in one queue. Knowledge base FAQs that feed the chatbot and cut repeat questions. Internal attorney setup articles · directory profile + FAQ paste · enablement/hubspot-kb/README.md · publish to HubSpot KB category Attorney setup · team only. SLAs for speed-to-lead and callback timers. Customer agent and after-hours chat stay on this intake project. Intake tickets for new cases and project assignments stay coordinated with DigProf LSA call process. CSAT / NPS stay on Email Nurture Setup.",
+        "Phones and VoIP: dedicated lines for call types such as Spanish and current clients. Public branding stays on 719-888-7888 only. Automated call logging, tracking, and reporting. Start by transferring one line into HubSpot · setup docs · short onboarding deck. Website forms open a Help Desk ticket for Romina. The same-day callback task still notifies intake. Casey keeps LSA call entry.",
         "Affirm financing email: monthly how-it-works send for open-balance and payment-plan clients without promising approval. CTA to Romina or intake for Affirm checkout when merchant is live. Extra Affirm sends in November and December for financing info and collections during the slower season."
       ],
       "hubSpotParts": [
         "Service Hub · Shared inbox · knowledge · SLAs · chatbot for intake and after-hours triage",
         "Calling · Logged calls · missed-call tasks · same-day callback ownership when lines are in HubSpot",
         "Marketing Hub · Affirm how-it-works and Nov–Dec financing / collections sends to open-balance lists",
-        "CRM · Open-balance and payment-plan segments for Affirm · form-to-Casey routing"
+        "CRM · Open-balance and payment-plan segments for Affirm · website form tickets route to Romina"
       ],
       "progressDoneItems": [],
       "progressOpenItems": [],
@@ -958,9 +974,16 @@ window.PROJECT_DATA = {
       "id": "AdCreative",
       "title": "Next-Round Ad Creative",
       "tldr": "Next design round for Google Ads creative, driven by what already ran. Research which image assets performed best, then make more in those styles aligned to live campaigns. Priority sets: American and military for HS: Military, auto / traffic for Auto campaigns, campus and student-life stills for college / Ad 2 areas, and new criminal mischief graphics for Ad Expansion Ad 1. Keep winners among sitelinks, callouts, and RSA lines that already carry impressions. Rebuild or replace weak RSA and PMax asset groups before more spend. Production path: creative pipeline keeps Pav Law military images and NTGUILT separate.",
-      "description": "Next design round for Google Ads creative, driven by what already ran. Research which image assets performed best, then make more in those styles aligned to live campaigns. Priority sets: American and military for HS: Military, auto / traffic for Auto campaigns, campus and student-life stills for college / Ad 2 areas, and new criminal mischief graphics for Ad Expansion Ad 1. Keep winners among sitelinks, callouts, and RSA lines that already carry impressions. Rebuild or replace weak RSA and PMax asset groups before more spend. Production path: creative pipeline keeps Pav Law military images and NTGUILT separate.",
+      "description": "Next design round for Google Ads creative, driven by what already ran. Research which image assets performed best, then make more in those styles aligned to live campaigns. Priority sets: American and military for HS: Military, auto / traffic for Auto campaigns, campus and student-life stills for college / Ad 2 areas, and new criminal mischief graphics for Ad Expansion Ad 1. Keep winners among sitelinks, callouts, and RSA lines that already carry impressions. Rebuild or replace weak RSA and PMax asset groups before more spend. Production path: creative pipeline keeps Pav Law military images and NTGUILT separate.\n\n- Website design\n  - Visual design for the pav.law HubSpot site.\n  - Likely designer: Scott F.\n  - Working range: $2,000 to $5,000. The number is open until Scott prices the work.\n  - This range sits outside the $27,000 website build.\n  - Design files and the license go to Pav Law.\n  - Who pays Scott is not set yet.",
       "valueAdded": [
-        "Next design round for Google Ads creative, driven by what already ran. Research which image assets performed best, then make more in those styles aligned to live campaigns. Priority sets: American and military for HS: Military, auto / traffic for Auto campaigns, campus and student-life stills for college / Ad 2 areas, and new criminal mischief graphics for Ad Expansion Ad 1. Keep winners among sitelinks, callouts, and RSA lines that already carry impressions. Rebuild or replace weak RSA and PMax asset groups before more spend. Production path: creative pipeline keeps Pav Law military images and NTGUILT separate."
+        "Next design round for Google Ads creative, driven by what already ran. Research which image assets performed best, then make more in those styles aligned to live campaigns. Priority sets: American and military for HS: Military, auto / traffic for Auto campaigns, campus and student-life stills for college / Ad 2 areas, and new criminal mischief graphics for Ad Expansion Ad 1. Keep winners among sitelinks, callouts, and RSA lines that already carry impressions. Rebuild or replace weak RSA and PMax asset groups before more spend. Production path: creative pipeline keeps Pav Law military images and NTGUILT separate.",
+        "Website design",
+        "- Visual design for the pav.law HubSpot site.",
+        "- Likely designer: Scott F.",
+        "- Working range: $2,000 to $5,000. The number is open until Scott prices the work.",
+        "- This range sits outside the $27,000 website build.",
+        "- Design files and the license go to Pav Law.",
+        "- Who pays Scott is not set yet."
       ],
       "hubSpotParts": [
         "No HubSpot build in scope"
@@ -991,29 +1014,29 @@ window.PROJECT_DATA = {
       "abQuestions": [],
       "kpiRefs": [],
       "publishStatus": "unpublished",
-      "feeEstimate": 4400,
+      "feeEstimate": 5600,
       "feeEstimateOngoing": null,
       "feeEstimateLane": "display_search_launch",
       "feeEstimateUnit": "setup",
       "feeEstimateLocalMid": 3100,
       "feeEstimateNationalMid": 4800,
       "feeEstimateScope": {
-        "raw": 3.45,
+        "raw": 11,
         "parts": {
-          "valueAdd": 1,
+          "valueAdd": 8,
           "tasks": 0,
           "completed": 0,
           "info": 0,
           "ab": 0,
           "kpis": 0,
-          "descUnits": 2.45
+          "descUnits": 3
         }
       },
-      "feeEstimateComplexity": 1.08,
+      "feeEstimateComplexity": 1.188,
       "feeEstimateBlend": "55% local / 45% national",
       "feeEstimatePackaged": false,
       "feeEstimateDelta": null,
-      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.05 (3.45 units) · complexity ×1.08"
+      "feeEstimateNote": "display search launch lane · local mid $3,100 · national mid $4,750 · scope ×1.23 (11 units) · complexity ×1.188"
     },
     {
       "priority": 23,
@@ -2488,7 +2511,7 @@ window.PROJECT_DATA = {
         "Audit directories and identify the most impactful listings to add or update",
         "Draft Jack bio + FAQ set from answers",
         "Draft announcement · Jack hired / joining Pav Law",
-        "HubSpot / pav.law team page · PavSiteUpdateP2 · then deep-link directories",
+        "HubSpot team page on Pav.Law Website, then deep-link directories",
         "When `/team/casey-dinaro/` and `/team/jack-strong/` go live · deep-link bios"
       ],
       "progressDoneCount": 11,
@@ -2783,7 +2806,7 @@ window.PROJECT_DATA = {
       "id": "Yelp",
       "title": "Yelp Ads",
       "tldr": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
-      "description": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.\n\n- HubSpot:\n  - Phone Routing & Tracking: Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.\n  - Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.\n  - Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.\n- Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.\n- Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are currently about $50/day · raise if the channel keeps performing.\n- Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.\n- Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.",
+      "description": "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.\n\n- HubSpot:\n  - Phone Routing & Tracking: Route Yelp to a HubSpot number that rings Jack. He logs leads in the HubSpot mobile app.\n  - Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.\n  - Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.\n- Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.\n- Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are $9/day. Kate 10/29/2026.\n- Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.\n- Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out.",
       "valueAdded": [
         "Yelp page and ads were tested over the last month on a low budget with solid lead flow. Strong channel with a few upgrades left.",
         "HubSpot:",
@@ -2791,7 +2814,7 @@ window.PROJECT_DATA = {
         "- Email Nurture Campaign: Expand past-client review nurture over about two months so reviews arrive in a steady drip. Add closings as they land; light A/B and copy tweaks.",
         "- Tracking & Dashboards: Yelp Messages, Calls, spend, and CPC next to the shared phone inbound dashboard.",
         "Yelp Messaging and Content: Clear owner-reply backlog. Refresh announcements, portfolio, and FAQ for boosted practice lanes. Later phase: short video clips and recordings into Yelp Updates and Projects after the source videos are reviewed.",
-        "Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are currently about $50/day · raise if the channel keeps performing.",
+        "Yelp Projects portfolio: Improve the best matching pav.law pages for SEO first, then publish Domestic Violence · Protection Orders · Assault / Menacing Projects that deep-link out to those pages with UTM tracking. Ads are $9/day. Kate 10/29/2026.",
         "Yelp ↔ website tracking: Shared UTM + HubSpot source map so Yelp clicks, messages, and calls can be compared to organic and paid site landings for the same practice lanes.",
         "Insurance Envelope and Handout: Design an insert for insurance card holders that asks for a Yelp review and lists contact info. Casey, Jack, and Andrew hand these out."
       ],
@@ -2807,7 +2830,7 @@ window.PROJECT_DATA = {
         "Enrolled 7 more past clients into the Yelp drip campaign for reviews",
         "HubSpot MyCase Yelp process doc written",
         "Set up Jack on HubSpot",
-        "Ads pace ~$50/day",
+        "Ads pace $9/day · set 10/29/2026",
         "Live Yelp Projects · Military · DUI/DWAI · License",
         "Specialties / FAQ / Connect refresh",
         "Insurance-card postcard mailer · Winter Warning + Yelp review request",

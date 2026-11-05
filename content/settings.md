@@ -2,8 +2,8 @@
 
 | Field | Value |
 |---|---|
-| **Guide name** | Lord Gilbert Granville |
-| **Guide short name** | Gilbert |
+| **Guide name** | Pav Law |
+| **Guide short name** | Pav |
 | **Icon** | assets/gigi-seal.jpg |
 | **Guide hero** | assets/gilbert-thinking.png |
 | **Seal** | assets/gilbert-celebrating.png |

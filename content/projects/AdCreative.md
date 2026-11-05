@@ -13,6 +13,14 @@
 
 Next design round for Google Ads creative, driven by what already ran. Research which image assets performed best, then make more in those styles aligned to live campaigns. Priority sets: American and military for HS: Military, auto / traffic for Auto campaigns, campus and student-life stills for college / Ad 2 areas, and new criminal mischief graphics for Ad Expansion Ad 1. Keep winners among sitelinks, callouts, and RSA lines that already carry impressions. Rebuild or replace weak RSA and PMax asset groups before more spend. Production path: creative pipeline keeps Pav Law military images and NTGUILT separate.
 
+- Website design
+  - Visual design for the pav.law HubSpot site.
+  - Likely designer: Scott F.
+  - Working range: $2,000 to $5,000. The number is open until Scott prices the work.
+  - This range sits outside the $27,000 website build.
+  - Design files and the license go to Pav Law.
+  - Who pays Scott is not set yet.
+
 ## HubSpot Application
 
 - No HubSpot build in scope
@@ -22,6 +30,16 @@ Next design round for Google Ads creative, driven by what already ran. Research 
 —— Unpublished below ——
 
 ## Project Plan
+
+### Website design payer
+
+The $2,000 to $5,000 is Scott's range, not a second GGL fee. The card Fee stays 0 so this number is not added to the $27,000 build.
+
+Better path: Andrew pays Scott. The contract names Pav Law. The files and the license belong to Pav Law. The amount stays off the website build invoice.
+
+Kate pays Scott only if he will only invoice Gilded Goose. Andrew is then billed Scott's number, with no markup, and the contract still assigns the files to Pav Law.
+
+### Ads creative
 
 Kate 10/02/2026. Rank keepers by phones first, then clicks, then impressions. Image metrics: run local API `pav-law-analytics/google-ads/pull_image_asset_performance.py` or Expanded final URL / asset exports. Do not use Assets → Associations. Pipeline: `Ad Reports/creative-pipeline/` · skill creative-pipeline.
 
