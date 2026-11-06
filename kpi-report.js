@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261105-nov";
+  const RENDER_VER = "20261106-week-goal";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -127,6 +127,10 @@
       file: "casesLeadsSpend Search+LSA + channelMonths Yelp ÷ Contact_11-05 Client creates · recheck 11/05/2026",
       fields: "Avg cost per new case · Oct $13,874.46 + $1,279.72 Yelp ÷ 21 = ~$722 · goal ≤ $650 · proof Jun–Aug ~$518–$623"
     },
+    "spend-goal-nov": {
+      file: "Campaign (60) Nov 1–4 Account cost · Yelp Ad Analytics Nov 1–4 · channelMonths Nov* · LSA spend not on file · recheck 11/05/2026",
+      fields: "Nov* Search $1,023.97 + Yelp $228.06 = $1,252.03 toward ≤ $20k Search + LSA + Yelp · LSA spend — · same band as Oct 2026 media cap until Kate locks a Nov number"
+    },
     "cash-collected": {
       file: "ledger_account_activity_report (20).csv · (19) twin · export 11/05/2026 · Jan–Jun · Aug locked · Jul restated $112,350 · Sep through 09/30 · Oct* through 10/30",
       fields: "Trust Credits · Aug $104,545 · Jul $112,350 · Sep $113,985 through 09/30/2026 · Oct* $120,470 including $15,000 cashier's check and $500 cash"
@@ -156,12 +160,12 @@
   const KPI_HELP = {
     "#01": {
       title: "#01 Lead Calls",
-      desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid. That is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot Forms + Yelp contacts + Justia + FindLaw. HubSpot Forms = form submits with Conversion Date · not CRM Contacts · not lifetime Number of Form Submissions. Yelp contacts = Messages + round(Calls × 46% answer from call log). Justia contacts = calls + emails allocated across Mar–Aug. Track table breaks out each channel.",
-      formula: "Oct* 108 = Search 19 + LSA 64 + HubSpot Forms 18 + Yelp 7. Kate 10/18/2026 Lead Calls row is HubSpot Forms only. Sep 97 = Search 41 + LSA 44 + HubSpot Forms 4 + Yelp 8. September is a complete month. Yelp Oct contacts 7 from Leads breakdown screenshot 11/05/2026: Messages 5 + round(Calls 4 × 46%). Search from Call details (28) Oct 1–31, last phone day 10/30. LSA October from leads-inbox (30): 64 received, 19 charged, 44 not charged, 1 credited. Oct HubSpot Forms 18 = NTGUILT 16 from the 11/05 export, dates 10/08–10/30, plus Intake 2. Oct 1–7 is outside that NTGUILT file. Target = round of the last 3 complete months: Jul 281, Aug 101, Sep 97."
+      desc: "Uses the selected tile month. June and July are proof months for the paid stack. August MTD is low because Search ads are paused unpaid. That is a funding gap, not an expected quiet month. Stack = Search Call details + LSA inbox + HubSpot Forms + Yelp contacts + Justia + FindLaw. HubSpot Forms = form submits with Conversion Date · not CRM Contacts · not lifetime Number of Form Submissions. Yelp contacts = Messages + round(Calls × 46% answer from call log). Justia contacts = calls + emails allocated across Mar–Aug. Track table breaks out each channel. In November each count shows the month-to-date number, then a 30-day forecast after a slash. Search uses October's 19 calls on 737 clicks against November's click pace, because November call details are not in yet. LSA and HubSpot Forms pace the first 4 days across 30 days. Yelp uses October's 7 contacts on $1,280 against about $2,328 of planned November spend, with 11/23/2026 through 11/27/2026 paused. Justia and FindLaw stay at 0. Apple Maps is a $300 first test, about 5 calls or website visits, with signed cases at the Search trust rate. Total is the sum of the forecasts. Conversions apply each channel's current trust rate. The forecast stays out of the Lead Calls total.",
+      formula: "Oct* 108 = Search 19 + LSA 64 + HubSpot Forms 18 + Yelp 7. Kate 10/18/2026 Lead Calls row is HubSpot Forms only. Sep 97 = Search 41 + LSA 44 + HubSpot Forms 4 + Yelp 8. September is a complete month. Yelp Oct contacts 7 from Leads breakdown screenshot 11/05/2026: Messages 5 + round(Calls 4 × 46%). Search from Call details (28) Oct 1–31, last phone day 10/30. LSA October from leads-inbox (30): 64 received, 19 charged, 44 not charged, 1 credited. Oct HubSpot Forms 18 = NTGUILT 16 from the 11/05 export, dates 10/08–10/30, plus Intake 2. Oct 1–7 is outside that NTGUILT file. Target = round of the last 3 complete months: Jul 281, Aug 101, Sep 97. Nov forecast after the slash: Search ~16, LSA ~30, Yelp ~13, HubSpot Forms ~38, Justia ~0, FindLaw ~0, Apple Maps ~5. Total leads ~102. Conversions ~17 at current trust rates."
     },
     "#02": {
       title: "#02 New Cases",
-      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months. August 20 is full month. September is 16 through Created 09/30/2026. October is 21 from Contact_11-05-2026. November* is 2. Track table is practice mix for that month from Cases practice area text. Fuzzy buckets only. Case target exists so monthly revenue can clear $120k. Gauge only.",
+      desc: "MyCase Contact group = Client counted by Created date. June 36 and July 35 are full calendar months. August 20 is full month. September is 16 through Created 09/30/2026. October is 21 from Contact_11-05-2026. November* is 2. Track table lists the most common practice sections from the selected month and the three months before it. Other is left out. Fuzzy buckets only. Case target exists so monthly revenue can clear $120k. Gauge only.",
       formula: "Count of Client contacts with Created date in month. Practice rows = same contacts bucketed from Cases (practice area). Target = floor($120k ÷ revenue/case) + 1 so monthly revenue clears $120k."
     },
     "#07": {
@@ -196,7 +200,7 @@
     },
     "#03": {
       title: "#03 Auto Cases",
-      desc: "YTD auto signed matters from Contact_10-29-2026. Stack = DUI practice-area rule + Traffic tag without DUI. Chart = DUI/DWAI 20, Traffic 23. Auto total 43 / annual goal 50, pace 86%. Rechecked 10/29/2026.",
+      desc: "YTD auto signed matters from Contact_10-29-2026. Stack = DUI practice-area rule + Traffic tag without DUI. Chart = DUI/DWAI 20, Traffic 23. Auto total 43 / annual goal 50, pace 86%. Rechecked 10/29/2026. DUI trust and Traffic trust are the Trust balance on those same cases from Contact_11-05-2026.",
       formula:
         "Stack = DUI practice-area rule + Traffic tag without DUI. Chart buckets = DUI/DWAI vs all other Auto-stack rows as Traffic. Total = sum of columns. Schedule = total − (50 × days elapsed ÷ days in year)."
     },
@@ -269,6 +273,11 @@
       title: "Ad Spend",
       desc: "Tile-month paid media only: Search Campaign / account activities, LSA Home Services, Yelp Ads, and Justia Referral Sites fee when on file. HubSpot forms fee and digital management retainer are not included. Hero total is Search + LSA + Yelp + Justia; table breaks out each channel.",
       formula: "Total = Search + LSA + Yelp + Justia + FindLaw. Oct* Search $9,555.44 + LSA $4,319.02 + Yelp $1,279.72 Oct 6–31 + Justia $1,500 + FindLaw $924.38. Search and LSA are the 10/31 statement. Person Crimes $127.22 is left out of Search. Justia $1,500/mo Referral Sites fee through contract end Dec 2026. Kate 10/10/2026."
+    },
+    "spend-goal-nov": {
+      title: "Spend / Goal · Nov",
+      desc: "November only. Variable media toward the monthly cap: Search + LSA + Yelp. Justia and FindLaw fees stay off this tile. Goal stays ≤ $20k until a November-specific cap is locked. Hero is MTD spend on file. Projected is MTD pace × 30 days when the month is still open.",
+      formula: "Spend = Search + LSA when known + Yelp from channelMonths Nov*. Goal = $20,000. Left = Goal − Spend. Projected = Spend ÷ days on file × 30. Nov* through 11/04: Search $1,023.97 + Yelp $228.06 · LSA —."
     },
     "cash-pace": {
       title: "Revenue",
@@ -501,10 +510,10 @@
   }
 
   const DATA = {
-    period: "October 2026",
+    period: "November 2026",
     asOf: "2026-11-05",
     lastUpdated: "2026-11-05",
-    updateLabel: "October 2026",
+    updateLabel: "November 2026",
     updateScope: "Full DL refresh 11/05 · Oct* cash $120,470 including $15,000 cashier's check and $500 cash · ledger $104,970 · Campaign (63) Account Impr 10,203 · clicks 737 · Call details (28) 19 phones · Lead Calls 108 · Nov* cash $9,800 · Lead Calls 9 · cases 2 · Trust 388 · $1,798,754",
     source: "Contact_11-05-2026 · Case_balance_summary_11-05-2026 · Trust_account_summary_11-05-2026 · Call details (28) · leads-inbox (30) · ledger (20)/(19) · Campaign (63)/(60) · statement 10/31 · HubSpot form submits 11/05 · Yelp Ad Analytics + Desktop 11/05",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
@@ -519,6 +528,7 @@
       "justia": "2026-09-18",
       "answer-rate": "2026-11-05",
       "ad-spend-by-channel": "2026-11-05",
+      "spend-goal-nov": "2026-11-05",
       "dg-ctr": "2026-11-05",
       "dg-click-call": "2026-11-05",
       "dg-phone-cost": "2026-11-05",
@@ -542,6 +552,7 @@
       "yelp-leads": "fresh",
       "answer-rate": "fresh",
       "ad-spend-by-channel": "fresh",
+      "spend-goal-nov": "fresh",
       "dg-ctr": "fresh",
       "dg-click-call": "fresh",
       "dg-case-cost": "fresh",
@@ -562,6 +573,17 @@
       costPerClient: 650,
       /* Baseline tracked share for hidden-phone estimate. Kate 10/19/2026 · 15% across the account. */
       clickToCallBaseline: 15
+    },
+    /**
+     * November media spend vs monthly cap.
+     * Cap = Search + LSA + Yelp only · same ≤ $20k band as Oct 2026 until Kate locks Nov.
+     * Days on file = last day in Nov* note window for pace projection.
+     */
+    spendGoalNov: {
+      monthKey: "Nov",
+      goal: 20000,
+      daysOnFile: 4,
+      asOf: "2026-11-05"
     },
     /**
      * Live HS click → call rows for hidden-phone monitoring.
@@ -1041,6 +1063,9 @@
         exportNote: d.exportNote || "",
         autoColumns,
         estRevenue: d.estRevenue || null,
+        trustDui: d.trustDui != null ? Number(d.trustDui) : null,
+        trustTraffic: d.trustTraffic != null ? Number(d.trustTraffic) : null,
+        trustAsOf: d.trustAsOf || null,
         updatedAt: d.updatedAt || null
       };
     })(),
@@ -3502,6 +3527,36 @@
     return "$" + x.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
+  function fmtAdSpendWhole(n) {
+    const x = Number(n);
+    if (!Number.isFinite(x)) return "—";
+    return "$" + Math.round(x).toLocaleString("en-US");
+  }
+
+  /** November Ad Spend forecast. Search paces the days on file. Yelp keeps the $100 plan with the court week paused. Justia and FindLaw are monthly fees. */
+  function novAdSpendForecast(label, actual) {
+    const daysOnFile = Number(DATA.spendGoalNov && DATA.spendGoalNov.daysOnFile) || 4;
+    const daysInMonth = daysInCalendarMonth("Nov");
+    if (label === "Search") return actual * (daysInMonth / daysOnFile);
+    if (label === "Yelp") return actual + (21 * 100);
+    if (label === "Justia" || label === "FindLaw") return actual;
+    return null;
+  }
+
+  function adSpendGoalTrackHtml(channels) {
+    const forecastOn = periodToChannelMonth(DATA.period) === "Nov";
+    const body = channels.map(c => {
+      const actual = fmtAdSpendWhole(c.spend);
+      if (!forecastOn) {
+        return `<tr><th scope="row">${escapeHtml(c.label)}</th><td>${actual}</td></tr>`;
+      }
+      const forecast = novAdSpendForecast(c.label, Number(c.spend) || 0);
+      const pair = forecast == null ? actual : `${actual} / ~${fmtAdSpendWhole(forecast)}`;
+      return `<tr><th scope="row" colspan="2">${escapeHtml(c.label)}<span class="kpi-forecast-under">${pair}</span></th></tr>`;
+    }).join("");
+    return `<table class="kpi-goal-track kpi-spend-forecast-track"><tbody>${body}</tbody></table>`;
+  }
+
   function currentAdSpendPack() {
     const meta = tileMonthMeta();
     const ch = meta.ch || {};
@@ -3598,7 +3653,7 @@
   function adSpendStatCardHtml() {
     const pack = currentAdSpendPack();
     if (!pack.channels.length) return "";
-    const total = fmtAdSpend(pack.total);
+    const total = fmtAdSpendWhole(pack.total);
     const asOf = resolveTileAsOf("ad-spend-by-channel");
     return `<button type="button" class="kpi-goal-card${periodFreshClass(true, true, total, "ad-spend-by-channel", asOf)}" data-kpi-focus="ad-spend-by-channel" aria-label="Ad Spend ${total} · ${pack.meta.label}">
       ${periodFreshMark(true, true, total, asOf, null, "ad-spend-by-channel")}
@@ -3607,7 +3662,84 @@
         ${kpiCardTitle("Ad Spend")}
         ${metricWithDeltaHtml(`<span class="kpi-stat-val">${total}</span>`, null)}
       </div>
-      ${goalTrackRows(pack.channels.map(c => [escapeHtml(c.label), fmtAdSpend(c.spend)]))}
+      ${adSpendGoalTrackHtml(pack.channels)}
+    </button>`;
+  }
+
+  /** Nov* Search + LSA + Yelp vs monthly media cap. Fixed November tile. */
+  function spendGoalNovPack() {
+    const cfg = DATA.spendGoalNov || {};
+    const ch = findChannelMonthRow(cfg.monthKey || "Nov") || {};
+    const search = ch.searchSpend != null ? Number(ch.searchSpend) : null;
+    const lsa = ch.lsaSpend != null ? Number(ch.lsaSpend) : null;
+    const yelp = ch.yelpSpend != null ? Number(ch.yelpSpend) : null;
+    const channels = [
+      { label: "Search", spend: search, color: "#c45c26" },
+      { label: "LSA", spend: lsa, color: "#1e3a8a" },
+      { label: "Yelp", spend: yelp, color: "#64748b" }
+    ];
+    const spend = channels.reduce((sum, c) => sum + (Number.isFinite(c.spend) ? c.spend : 0), 0);
+    const goal = Number(cfg.goal) || 20000;
+    const daysOnFile = Math.max(1, Number(cfg.daysOnFile) || 1);
+    const daysInMonth = daysInCalendarMonth(cfg.monthKey || "Nov");
+    const projected = spend * (daysInMonth / daysOnFile);
+    const left = goal - spend;
+    const over = spend > goal;
+    return {
+      channels,
+      spend,
+      goal,
+      left,
+      projected,
+      over,
+      daysOnFile,
+      daysInMonth,
+      partial: /\*/.test(String(ch.month || "Nov*"))
+    };
+  }
+
+  function spendGoalNovTargetBar(pack) {
+    return barWithTargetChart(
+      [{ label: "Spend", value: pack.spend, color: pack.over ? undefined : "#c45c26" }],
+      {
+        target: pack.goal,
+        lowerIsBetter: true,
+        compact: true,
+        height: 150,
+        width: 220,
+        fullCategoryLabels: true,
+        ariaLabel: `November spend ${fmtAdSpend(pack.spend)} vs goal ${fmtAdSpend(pack.goal)}`
+      }
+    );
+  }
+
+  function spendGoalNovCardHtml() {
+    const pack = spendGoalNovPack();
+    if (!Number.isFinite(pack.spend) && !pack.channels.some(c => Number.isFinite(c.spend))) return "";
+    const spendVal = fmtAdSpend(pack.spend);
+    const asOf = resolveTileAsOf("spend-goal-nov") || (DATA.spendGoalNov && DATA.spendGoalNov.asOf);
+    const alertClass = pack.over ? " kpi-stat-attention" : "";
+    const leftLabel = pack.left >= 0 ? "Left" : "Over";
+    const leftVal = fmtAdSpend(Math.abs(pack.left));
+    const pacePct = Math.round((pack.spend / (pack.goal || 1)) * 100);
+    const track = [
+      ["Goal", fmtAdSpend(pack.goal)],
+      [leftLabel, leftVal],
+      ["Projected", `~${fmtAdSpend(pack.projected)}`],
+      ["Of goal", `${pacePct}%`],
+      ...pack.channels.map(c => [
+        escapeHtml(c.label),
+        Number.isFinite(c.spend) ? fmtAdSpend(c.spend) : "—"
+      ])
+    ];
+    return `<button type="button" class="kpi-goal-card kpi-stat-target-bar${alertClass}${periodFreshClass(true, true, spendVal, "spend-goal-nov", asOf)}" data-kpi-focus="spend-goal-nov" aria-label="Spend Goal Nov ${spendVal} of ${fmtAdSpend(pack.goal)} · projected ~${fmtAdSpend(pack.projected)}">
+      ${periodFreshMark(true, true, spendVal, asOf, null, "spend-goal-nov")}
+      ${kpiHelpBtn("spend-goal-nov")}
+      <div class="kpi-goal-visual">
+        ${kpiCardTitle("Spend / Goal · Nov")}
+        ${metricWithDeltaHtml(spendGoalNovTargetBar(pack) || `<span class="kpi-stat-val">${spendVal}</span>`, null)}
+      </div>
+      ${goalTrackRows(track)}
     </button>`;
   }
 
@@ -6607,9 +6739,13 @@
       ? (Number(row.daysElapsed) || Number(totals.partialDaysElapsed) || 1)
       : daysInMonth;
     const expectedToDate = target * (daysElapsed / daysInMonth);
-    const projected = isPartial
-      ? Math.round((credit / Math.max(daysElapsed, 1)) * daysInMonth)
-      : credit;
+    const monthKeyEarly = meta.key || String(row.month || "").replace(/\*$/, "");
+    const novPath = isPartial && monthKeyEarly === "Nov" ? novCashPath() : null;
+    const projected = novPath
+      ? novPath.projected
+      : isPartial
+        ? Math.round((credit / Math.max(daysElapsed, 1)) * daysInMonth)
+        : credit;
     const deltaToDate = Math.round(credit - expectedToDate);
     const gap = Math.abs(deltaToDate);
     const onPace = credit >= expectedToDate;
@@ -6635,9 +6771,11 @@
       cls: onPace ? "kpi-mom-up" : "kpi-mom-down",
       arrow: onPace ? "↑" : "↓",
       label: onPace ? `Ahead ${fmtMoney(gap)}` : `Behind ${fmtMoney(gap)}`,
-      detail: isPartial
-        ? `Through day ${daysElapsed} of ${daysInMonth}: expected ${fmtMoney(expectedToDate)} for an ${fmtMoney(target)} month · revenue ${fmtMoney(credit)} · projected ${fmtMoney(projected)}`
-        : `${monthLabel} full month vs ${fmtMoney(target)} target · revenue ${fmtMoney(credit)}`
+      detail: novPath
+        ? novPath.note
+        : isPartial
+          ? `Through day ${daysElapsed} of ${daysInMonth}: expected ${fmtMoney(expectedToDate)} for an ${fmtMoney(target)} month · revenue ${fmtMoney(credit)} · projected ${fmtMoney(projected)}`
+          : `${monthLabel} full month vs ${fmtMoney(target)} target · revenue ${fmtMoney(credit)}`
     };
   }
 
@@ -6655,6 +6793,7 @@
       ? Math.max(1, Number(m.daysElapsed) || 1)
       : daysInMonth;
     const pace = (Number(m.credit) || 0) / Math.max(day, 1);
+    const novPath = m.monthKey === "Nov" && m.isPartial ? novCashPath() : null;
     const actuals = (DATA.cashCreditsByWeek && DATA.cashCreditsByWeek[m.monthKey]) || {};
     const weeks = [
       { id: "W1", start: 1, end: 7 },
@@ -6668,7 +6807,7 @@
       .map(w => {
         const end = Math.min(w.end, daysInMonth);
         const weekActual = Math.round(Number(actuals[w.id]) || 0);
-        const eowProj = Math.round(pace * end);
+        const eowProj = novPath ? novPath.running(end) : Math.round(pace * end);
         if (day >= end) {
           runActual += weekActual;
           return {
@@ -6708,22 +6847,32 @@
   function cashWeekEstimatesTrackHtml(m) {
     const weeks = cashWeekCollectionEstimates(m);
     if (!weeks.length) return "";
+    const novPath = m && m.monthKey === "Nov" && m.isPartial ? novCashPath() : null;
+    const goal = Number(m && m.target) || 120000;
     const rows = weeks.map(w => {
-      const rowClass = w.kind === "done"
+      const shown = w.kind === "live" ? w.eowProj : w.running;
+      const goalClass = w.kind === "done"
+        ? ""
+        : (Number(shown) >= goal ? " kpi-week-goal" : " kpi-week-short");
+      const rowClass = (w.kind === "done"
         ? "kpi-week-done"
         : w.kind === "live"
           ? "kpi-week-live"
-          : "kpi-week-proj";
+          : "kpi-week-proj") + goalClass;
       let tip;
       let value;
       if (w.kind === "done") {
         tip = `Week collected ${fmtMoney(w.weekActual)} · running ${fmtMoney(w.running)}`;
         value = fmtMoney(w.running);
       } else if (w.kind === "live") {
-        tip = `End-of-week estimate if MTD pace continues through day ${w.end} · collected ${fmtMoney(w.running)} on dial`;
+        tip = novPath
+          ? `${novPath.note} Running total through day ${w.end}.`
+          : `End-of-week estimate if MTD pace continues through day ${w.end} · collected ${fmtMoney(w.running)} on dial`;
         value = `~${fmtMoney(w.eowProj)}`;
       } else {
-        tip = `Estimated running total if MTD pace continues through day ${w.end}`;
+        tip = novPath
+          ? `${novPath.note} Running total through day ${w.end}.`
+          : `Estimated running total if MTD pace continues through day ${w.end}`;
         value = `~${fmtMoney(w.running)}`;
       }
       /* No week ✓ · Kate 10/18/2026 · removed after hit-logic thrash */
@@ -6807,7 +6956,9 @@
       </div>
       ${goalTrackRows([
         ["Pace", paceCell],
-        ["Total", `${total}/${target}`]
+        ["Total", `${total}/${target}`],
+        ...(g.trustDui != null ? [["DUI trust", `<span title="${escapeHtml("Trust balance on the 20 DUI cases created in 2026 through 10/29/2026. Contact file 11/05/2026.")}">${fmtMoney(g.trustDui)}</span>`]] : []),
+        ...(g.trustTraffic != null ? [["Traffic trust", `<span title="${escapeHtml("Trust balance on the 23 Traffic cases created in 2026 through 10/29/2026. Contact file 11/05/2026.")}">${fmtMoney(g.trustTraffic)}</span>`]] : [])
       ])}
       ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
       ${kpiRefMark("#03")}
@@ -6821,11 +6972,149 @@
     ).join("")}</tbody></table>`;
   }
 
+  /** November lead count cell: month-to-date / 30-day forecast. Forecast is not added to the tile total. */
+  function leadCountForecastCell(actual, forecast, tip) {
+    const shown = actual == null || actual === "" ? "—" : String(Number(actual) || 0);
+    if (periodToChannelMonth(DATA.period) !== "Nov" || forecast == null) return shown;
+    return `${shown} / <span title="${escapeHtml(tip)}">~${forecast}</span>`;
+  }
+
+  function novLeadForecasts() {
+    const daysOnFile = Number(DATA.spendGoalNov && DATA.spendGoalNov.daysOnFile) || 4;
+    const daysInMonth = daysInCalendarMonth("Nov");
+    const pace = daysInMonth / daysOnFile;
+    const nov = findChannelMonthRow("Nov") || {};
+    const oct = findChannelMonthRow("Oct") || {};
+    const novAds = (DATA.funnelAds && DATA.funnelAds.Nov) || {};
+    const octAds = (DATA.funnelAds && DATA.funnelAds.Oct) || {};
+    const novClicks = Number(novAds.clicks) || 0;
+    const octClicks = Number(octAds.clicks) || 0;
+    const octCalls = Number(oct.search) || Number(octAds.phoneCalls) || 0;
+    const search = octClicks > 0 ? Math.round(novClicks * pace * (octCalls / octClicks)) : 0;
+    const lsa = Math.round((Number(nov.lsa) || 0) * pace);
+    const forms = Math.round((Number(nov.hubspotForms) || 0) * pace);
+    const openDaysAfterFile = 21;
+    const yelpSpendPlan = (Number(nov.yelpSpend) || 0) + (openDaysAfterFile * 100);
+    const octYelp = Number(oct.yelp) || 0;
+    const octYelpSpend = Number(oct.yelpSpend) || 0;
+    const yelp = octYelpSpend > 0 ? Math.round(octYelp * (yelpSpendPlan / octYelpSpend)) : 0;
+    return {
+      search,
+      lsa,
+      yelp,
+      forms,
+      justia: 0,
+      findlaw: 0,
+      yelpSpendPlan
+    };
+  }
+
+  /** Signed cases from the November lead forecast. Same rates as the Lead Calls tile. */
+  function novSignedForecast() {
+    const fc = novLeadForecasts();
+    const appleLeads = 5;
+    const search = Math.round(fc.search * (1 / 20));
+    const lsa = Math.round(fc.lsa * (10 / 119));
+    const yelp = Math.round(fc.yelp * (3 / 5));
+    const forms = Math.round(fc.forms * (4 / 28));
+    const apple = Math.round(appleLeads * (1 / 20));
+    return {
+      search,
+      lsa,
+      yelp,
+      forms,
+      apple,
+      total: search + lsa + yelp + forms + apple
+    };
+  }
+
+  /** Light-staff week. Yelp is paused these days. Collections on older matters still run. */
+  function novStaffedDay(dayOfMonth) {
+    return dayOfMonth < 23 || dayOfMonth > 27;
+  }
+
+  /**
+   * November cash path.
+   * Base is Trust Credits already in, run forward at that daily rate.
+   * The lead forecast signs more cases than the new-case pace, so the extra
+   * retainers are added on staffed days only. Retainer is Yelp trust ÷ signed.
+   */
+  function novCashPath() {
+    const row = (DATA.cashCollected2026Ytd || []).find(r => String(r.month || "").replace(/\*$/, "") === "Nov");
+    const yelp = (DATA.yelpBaseline && DATA.yelpBaseline.caseValue) || {};
+    const signedN = Number(yelp.signedWithFee) || 0;
+    const trustTotal = Number(yelp.trustCreditTotal) || 0;
+    if (!row || !signedN || !trustTotal) return null;
+    const days = Math.max(1, Number(row.daysElapsed) || 1);
+    const daysInMonth = daysInCalendarMonth("Nov");
+    const credit = Number(row.credit) || 0;
+    const casesNow = Number(row.newCases) || 0;
+    const signed = novSignedForecast();
+    const casePace = Math.round(casesNow * daysInMonth / days);
+    const extra = Math.max(0, signed.total - casePace);
+    const trustEach = Math.round(trustTotal / signedN);
+    const added = extra * trustEach;
+    const baseDaily = credit / days;
+    let openLeft = 0;
+    for (let d = days + 1; d <= daysInMonth; d++) if (novStaffedDay(d)) openLeft++;
+    const extraDaily = openLeft ? added / openLeft : 0;
+    const running = (day) => {
+      const end = Math.max(days, Math.min(daysInMonth, day));
+      if (end <= days) return Math.round(credit);
+      let open = 0;
+      for (let d = days + 1; d <= end; d++) if (novStaffedDay(d)) open++;
+      return Math.round(credit + (end - days) * baseDaily + open * extraDaily);
+    };
+    return {
+      signed,
+      casePace,
+      extra,
+      trustEach,
+      added,
+      credit,
+      days,
+      daysInMonth,
+      projected: running(daysInMonth),
+      running,
+      note: `Collected ${fmtMoney(credit)} through day ${days}. That pace continues every day. The lead forecast signs ${signed.total} against a ${casePace}-case pace, about ${fmtMoney(added)} more in retainers on staffed days. 11/23/2026 through 11/27/2026 stays on the collection pace only.`
+    };
+  }
+
+  function practiceSectionLabel(name) {
+    const keep = { dv: "DV", ppo: "PPO", dui: "DUI", dwai: "DWAI" };
+    return String(name || "").split(/(\s+|[/])/).map(part => {
+      const key = part.toLowerCase();
+      if (keep[key]) return keep[key];
+      if (!/[A-Za-z]/.test(part)) return part;
+      return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+    }).join("");
+  }
+
   function newCasesPracticeTrackHtml(monthKey) {
+    const order = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const key = String(monthKey || "").replace(/\*$/, "");
-    const rows = (DATA.newCasesByPractice && DATA.newCasesByPractice[key]) || [];
-    if (!rows.length) return "";
-    return goalTrackRows(rows.map(r => [escapeHtml(r.name), String(Number(r.n) || 0)]));
+    const idx = order.indexOf(key);
+    const windowKeys = idx < 0 ? [key] : order.slice(Math.max(0, idx - 3), idx + 1);
+    const pack = DATA.newCasesByPractice || {};
+    const totals = {};
+    windowKeys.forEach(k => {
+      (pack[k] || []).forEach(r => {
+        const name = String(r.name || "").trim();
+        if (!name || /^other$/i.test(name)) return;
+        totals[name] = (totals[name] || 0) + (Number(r.n) || 0);
+      });
+    });
+    const ranked = Object.entries(totals)
+      .filter(([, n]) => n >= 3)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    const start = windowKeys[0];
+    const end = windowKeys[windowKeys.length - 1];
+    const caption = start === end ? start : `${start} through ${end}`;
+    const body = ranked.map(([name, n]) =>
+      `<tr><th scope="row">${escapeHtml(practiceSectionLabel(name))}</th><td>${n}</td></tr>`
+    ).join("");
+    if (!body) return "";
+    return `<table class="kpi-goal-track"><caption class="kpi-stat-formula">${escapeHtml(caption)}</caption><tbody>${body}</tbody></table>`;
   }
 
   function placeholderGoalCardHtml() {
@@ -7412,14 +7701,42 @@
             const ch = findChannelMonthRow(periodToChannelMonth(DATA.period));
             const n = v => (v == null || v === "" ? "—" : String(Number(v) || 0));
             const hub = channelHubspotFormsCount(ch);
-            return goalTrackRows([
-              ["Search", n(ch && ch.search)],
-              ["LSA", n(ch && ch.lsa)],
-              ["Yelp", n(ch && ch.yelp)],
-              ["Justia", n(ch && ch.justia)],
-              ["FindLaw", n(ch && ch.findlaw)],
-              ["HubSpot Forms", n(hub.known ? hub.count : null)]
-            ]);
+            const fc = periodToChannelMonth(DATA.period) === "Nov" ? novLeadForecasts() : null;
+            const cell = (actual, forecast, tip) => leadCountForecastCell(actual, fc ? forecast : null, tip);
+            const justiaCell = cell(ch && ch.justia, fc && fc.justia, "No Justia contacts since August. Forecast stays 0.");
+            const findlawCell = cell(ch && ch.findlaw, fc && fc.findlaw, "No FindLaw contacts in recent months. Forecast stays 0.");
+            const activity = (actual, forecast) => {
+              const seen = actual == null || actual === "" ? 0 : Number(actual) || 0;
+              const ahead = forecast == null ? seen : Number(forecast) || 0;
+              return Math.max(seen, ahead);
+            };
+            const ranked = [
+              { label: "Search", actual: ch && ch.search, forecast: fc && fc.search, tip: "November call details are not in yet. October was 19 calls on 737 clicks. November is on pace for about 615 clicks, about 16 calls." },
+              { label: "LSA", actual: ch && ch.lsa, forecast: fc && fc.lsa, tip: "4 leads in the first 4 days, paced across 30 days." },
+              { label: "Yelp", actual: ch && ch.yelp, forecast: fc && fc.yelp, tip: "October was 7 contacts on $1,280. November plan is about $2,328 with 11/23/2026 through 11/27/2026 paused." },
+              { label: "HubSpot Forms", actual: hub.known ? hub.count : null, forecast: fc && fc.forms, tip: "5 forms in the first 4 days, paced across 30 days." }
+            ];
+            let sumRow = "";
+            if (fc) {
+              const signed = novSignedForecast();
+              const conv = signed.total;
+              const appleLeads = 5;
+              const leadSum = fc.search + fc.lsa + fc.yelp + fc.justia + fc.findlaw + fc.forms + appleLeads;
+              ranked.push({
+                label: "Apple Maps",
+                actual: 0,
+                forecast: appleLeads,
+                tip: "A $300 first month. About 5 calls or website visits if cost per tap stays at or under $5. Signed cases use the Search trust rate, 1 of 20 numbered calls."
+              });
+              ranked.sort((a, b) => activity(b.actual, b.forecast) - activity(a.actual, a.forecast));
+              const sumTitle = "Search 1 of 20 numbered calls. LSA 10 with trust of 119 tagged leads. Yelp 3 of 5 contacts. HubSpot Forms 4 with trust of 28 submits. Apple Maps uses the Search rate.";
+              sumRow = `<tr class="kpi-lead-sum"><th scope="row" colspan="2"><span title="${escapeHtml(sumTitle)}">~${leadSum} leads · ~${conv} signed</span></th></tr>`;
+            } else {
+              ranked.sort((a, b) => activity(b.actual, b.forecast) - activity(a.actual, a.forecast));
+            }
+            const rows = ranked.map(r => [r.label, cell(r.actual, r.forecast, r.tip)]);
+            const dirRow = `<tr class="kpi-lead-sum kpi-dir-line"><th scope="row" colspan="2"><span>Justia ${justiaCell} · FindLaw ${findlawCell}</span></th></tr>`;
+            return goalTrackRows(rows).replace("</tbody>", `${sumRow}${dirRow}</tbody>`);
           })()
         : k.id === "#02"
         ? newCasesPracticeTrackHtml(periodToChannelMonth(DATA.period))
@@ -8381,6 +8698,7 @@
       yelpReviewsGoalCardHtml(),
       yelpLeadsGoalCardHtml(),
       adSpendStatCardHtml(),
+      spendGoalNovCardHtml(),
       answerRateGoalCardHtml()
     ].filter(Boolean).map(html => `<div class="kpi-tile-with-projects">${stampTileNum(html, tileNum++)}</div>`).join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="KPIs">

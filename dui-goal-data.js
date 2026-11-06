@@ -26,6 +26,10 @@ window.DUI_GOAL_DATA = {
     { label: "DUI/DWAI", current: 20, vsTarget: true },
     { label: "Traffic", current: 23, vsTarget: false }
   ],
+  /* Trust balance on the chart cohort. Contact_11-05-2026. Creates through 10/29/2026. */
+  trustDui: 52070,
+  trustTraffic: 33550,
+  trustAsOf: "2026-11-05",
   /* Est. revenue · case-num cross-ref Contact_09-23 auto stack × Case_balance/list/revenue · 09/24/2026
      19/42 matched · fill unknowns with kind median DUI $5,500 · Traffic $1,500. Aggregates only. */
   estRevenue: {

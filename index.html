@@ -463,12 +463,14 @@
     }
     .cockpit-title {
       margin: 0;
-      font-size: clamp(2.35rem, 6vw, 3.75rem);
-      font-weight: 800; line-height: 1.05; letter-spacing: 0.02em;
+      font-size: clamp(1.05rem, 2.2vw, 1.65rem);
+      font-weight: 800; line-height: 1.15; letter-spacing: 0.01em;
       color: var(--gg-royal);
       padding-bottom: 0.35rem;
       border-bottom: 3px solid var(--pav-shield-gold);
       display: inline-block;
+      max-width: 100%;
+      white-space: nowrap;
     }
     .cockpit-title span {
       color: var(--gg-royal);
@@ -4726,9 +4728,13 @@
     }
     .kpi-report-pill:hover { background: var(--pav-shield-dim); color: var(--pav-shield-blue); border-color: var(--pav-shield-blue); }
     .kpi-report-pill.is-active {
-      background: var(--pav-shield-green); color: #fff; border-color: var(--pav-shield-green-deep);
+      background: var(--gg-rose); color: #fff; border-color: color-mix(in srgb, var(--gg-rose) 78%, #1a1033);
     }
-    .kpi-report-pill.is-active:hover { background: var(--pav-shield-green-deep); color: #fff; }
+    .kpi-report-pill.is-active:hover {
+      background: color-mix(in srgb, var(--gg-rose) 82%, #1a1033);
+      color: #fff;
+      border-color: color-mix(in srgb, var(--gg-rose) 70%, #1a1033);
+    }
     .kpi-report-pill.is-unavailable,
     .kpi-report-pill:disabled {
       cursor: not-allowed;
@@ -5849,7 +5855,89 @@
       width: 4.5rem; font-weight: 700; color: var(--gg-royal); text-transform: uppercase;
       letter-spacing: 0.03em; font-size: 0.68rem; padding-right: 0.5rem;
     }
-    .kpi-goal-track td { color: var(--gg-brown); font-weight: 600; }
+    .kpi-goal-track td { color: var(--gg-brown); font-weight: 600; white-space: nowrap; }
+    .kpi-forecast-under {
+      display: block;
+      margin-top: 0.08rem;
+      font-weight: 600;
+      color: var(--gg-brown);
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 0.8rem;
+      white-space: normal;
+    }
+    .kpi-spend-forecast-track th { width: auto; }
+    /* Value drops under the row label when the pair does not fit the tile. */
+    .kpi-goals-grid .kpi-goal-track,
+    .kpi-stat-grid .kpi-goal-track,
+    .kpi-tiles-4 .kpi-goal-track,
+    .kpi-goals-grid .kpi-goal-track tbody,
+    .kpi-stat-grid .kpi-goal-track tbody,
+    .kpi-tiles-4 .kpi-goal-track tbody,
+    .kpi-goals-grid .kpi-goal-track caption,
+    .kpi-stat-grid .kpi-goal-track caption,
+    .kpi-tiles-4 .kpi-goal-track caption {
+      display: block;
+      width: 100%;
+    }
+    .kpi-goal-track caption {
+      text-align: left;
+      padding: 0.1rem 0.2rem 0;
+      caption-side: top;
+    }
+    .kpi-goals-grid .kpi-goal-track tr,
+    .kpi-stat-grid .kpi-goal-track tr,
+    .kpi-tiles-4 .kpi-goal-track tr {
+      display: flex !important;
+      flex-wrap: wrap;
+      align-items: baseline;
+      column-gap: 0.35rem;
+      width: 100%;
+      height: auto !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .kpi-goals-grid .kpi-goal-track th,
+    .kpi-goals-grid .kpi-goal-track td,
+    .kpi-stat-grid .kpi-goal-track th,
+    .kpi-stat-grid .kpi-goal-track td,
+    .kpi-tiles-4 .kpi-goal-track th,
+    .kpi-tiles-4 .kpi-goal-track td {
+      display: block !important;
+      width: auto;
+      border-bottom: none;
+      white-space: nowrap;
+    }
+    .kpi-goals-grid .kpi-goal-track th,
+    .kpi-stat-grid .kpi-goal-track th,
+    .kpi-tiles-4 .kpi-goal-track th {
+      flex: 0 0 auto;
+    }
+    .kpi-goals-grid .kpi-goal-track td,
+    .kpi-stat-grid .kpi-goal-track td,
+    .kpi-tiles-4 .kpi-goal-track td {
+      flex: 1 1 auto;
+      min-width: min-content;
+    }
+    .kpi-goals-grid .kpi-goal-track th[colspan="2"],
+    .kpi-stat-grid .kpi-goal-track th[colspan="2"],
+    .kpi-tiles-4 .kpi-goal-track th[colspan="2"] {
+      flex: 1 0 100%;
+    }
+    .kpi-goals-grid .kpi-cash-week-track tr,
+    .kpi-stat-grid .kpi-cash-week-track tr,
+    .kpi-tiles-4 .kpi-cash-week-track tr {
+      flex-wrap: nowrap !important;
+    }
+    .kpi-goal-track tr.kpi-lead-sum th {
+      width: auto;
+      flex: 1 0 100%;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gg-brown);
+      white-space: nowrap;
+    }
     .kpi-cash-week-track tr.kpi-week-done th,
     .kpi-cash-week-track tr.kpi-week-done td {
       color: var(--gg-brown-muted, #5c4f45);
@@ -5859,8 +5947,15 @@
     .kpi-cash-week-track tr.kpi-week-live td,
     .kpi-cash-week-track tr.kpi-week-proj th,
     .kpi-cash-week-track tr.kpi-week-proj td {
-      color: #0f766e;
       font-weight: 600;
+    }
+    .kpi-cash-week-track tr.kpi-week-goal th,
+    .kpi-cash-week-track tr.kpi-week-goal td {
+      color: #1f8a65;
+    }
+    .kpi-cash-week-track tr.kpi-week-short th,
+    .kpi-cash-week-track tr.kpi-week-short td {
+      color: #cf2d56;
     }
     .kpi-cash-week-track th .kpi-week-hit {
       display: inline-block;
@@ -8045,7 +8140,7 @@
 
   <div id="main-app">
     <header class="cockpit-header">
-      <h1 class="cockpit-title"><span>Pav Law Performance</span></h1>
+      <h1 class="cockpit-title"><span>Pav Law Performance Metrics &amp; Goals Dashboard</span></h1>
     </header>
 
     <div class="cockpit-tabs-wrap">
@@ -8197,8 +8292,8 @@
   <script src="config.js" onerror="/* local override optional */"></script>
   <script src="projects-data.js?v=20261104-web-proposal"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
-  <script src="dui-goal-data.js?v=20261029-goals"></script>
-  <script src="kpi-report.js?v=20261105-nov"></script>
+  <script src="dui-goal-data.js?v=20261106-auto-trust"></script>
+  <script src="kpi-report.js?v=20261106-week-goal"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20261104-platform-parens"></script>
 </body>
