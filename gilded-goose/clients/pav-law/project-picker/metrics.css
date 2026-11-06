@@ -797,6 +797,78 @@ body.feedback-mode-on .feedback-target:hover {
   color: var(--gg-brown); box-shadow: 0 1px 4px rgba(45, 20, 84, 0.08);
   position: relative; min-width: 0;
 }
+.kpi-work-goals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(16rem, 1fr));
+  gap: 0.85rem;
+}
+.kpi-work-goal { height: auto; }
+.kpi-work-goal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.kpi-work-goal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gg-royal-deep, var(--gg-royal));
+}
+.kpi-work-goal-now {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--gg-royal-deep, var(--gg-royal));
+}
+.kpi-work-goal-note {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  color: var(--secondary, #5c4f45);
+}
+.kpi-work-goal-list {
+  list-style: none;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  width: 100%;
+}
+.kpi-work-goal-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "who state" "text text";
+  gap: 0.12rem 0.6rem;
+  padding: 0.55rem 0 0.45rem;
+  border-top: 1px solid rgba(58, 26, 110, 0.14);
+}
+.kpi-work-goal-who {
+  grid-area: who;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--gg-royal);
+  text-transform: none;
+  letter-spacing: 0;
+  white-space: normal;
+}
+.kpi-work-goal-text {
+  grid-area: text;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--gg-brown);
+  white-space: normal;
+}
+.kpi-work-goal-state {
+  grid-area: state;
+  align-self: start;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.kpi-work-goal-met { color: #1f8a65; }
+.kpi-work-goal-short { color: #cf2d56; }
+@media (max-width: 800px) {
+  .kpi-work-goals-grid { grid-template-columns: 1fr; }
+}
 /* Monthly KPIs lock: every tile matches Revenue chrome. */
 .kpi-goals-grid .kpi-stat-card {
   display: flex;
@@ -865,8 +937,8 @@ body.feedback-mode-on .feedback-target:hover {
 .kpi-yelp-dual-l {
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  text-transform: none;
   color: var(--gg-brown, #5c4a3a);
 }
 .kpi-goal-card .kpi-goal-visual .kpi-stat-id {
@@ -879,8 +951,8 @@ body.feedback-mode-on .feedback-target:hover {
   font-size: 1.05rem;
   font-weight: 800;
   line-height: 1.2;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  text-transform: none;
   color: var(--gg-royal, #3a1a6e);
 }
 /* Title pinned top · primary number/plot centers in leftover panel height */
@@ -928,8 +1000,8 @@ body.feedback-mode-on .feedback-target:hover {
   line-height: 1.2;
 }
 .kpi-goal-track th {
-  width: 4.5rem; font-weight: 700; color: var(--gg-royal); text-transform: uppercase;
-  letter-spacing: 0.03em; font-size: 0.68rem; padding-right: 0.5rem;
+  width: 4.5rem; font-weight: 700; color: var(--gg-royal); text-transform: none;
+  letter-spacing: 0.01em; font-size: 0.72rem; padding-right: 0.5rem;
 }
 .kpi-goal-track td { color: var(--gg-brown); font-weight: 600; white-space: nowrap; }
 .kpi-forecast-under {
@@ -941,6 +1013,27 @@ body.feedback-mode-on .feedback-target:hover {
   letter-spacing: 0;
   font-size: 0.8rem;
   white-space: normal;
+}
+.kpi-mtd-forecast {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+  line-height: 1.2;
+  white-space: normal;
+}
+.kpi-mtd-line,
+.kpi-forecast-line {
+  display: block;
+  font-weight: 600;
+  color: var(--gg-brown);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.72rem;
+}
+.kpi-forecast-line {
+  color: var(--gg-brown-muted, #5c4f45);
+  font-weight: 500;
 }
 .kpi-spend-forecast-track th { width: auto; }
 .kpi-goals-grid .kpi-goal-track,
@@ -1278,14 +1371,25 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-flag-mark::after { content: "⚑"; }
 .kpi-conv-scale {
-  display: inline-block;
-  min-width: 3.25rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05rem;
+  min-width: 3.5rem;
   padding: 0.18rem 0.45rem;
   border-radius: 4px;
   font-variant-numeric: tabular-nums;
   font-weight: 650;
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.15;
+}
+.kpi-conv-pct { display: block; }
+.kpi-conv-status {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
 .kpi-conv-scale-high {
   background: color-mix(in srgb, var(--gg-positive, #1f8a65) 22%, #fffcf7);
@@ -1730,9 +1834,9 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   margin-bottom: 0.2rem;
   color: var(--gg-burnt);
   font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
 .kpi-stat-card.kpi-stat-gauge .kpi-stat-kicker {
   text-align: center;
@@ -1802,8 +1906,8 @@ text.kpi-chart-axis { fill: var(--secondary); font-size: 12pt; font-weight: 600;
   color: var(--secondary);
   font-size: 0.67rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  text-transform: none;
 }
 .kpi-cash-pace-stats strong {
   margin-top: 0.12rem;
