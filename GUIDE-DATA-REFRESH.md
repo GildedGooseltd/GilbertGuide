@@ -83,6 +83,8 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 11/08/2026 | Evening MyCase + Yelp. Contact_11-08 Nov* cases 4 · ledger (21) $15,775 · Trust 390 · $1,804,729 · Case_balance Nov contracted 3 · Yelp Nov 1–7 $427.21 · spend goal $4,374.37 · Lead Calls 26 held · Search $/phone ~$1,003 held · Oct* cash $120,470 held. RENDER_VER 20261108-nov-mycase-yelp. |
+| 11/08/2026 | Nov* DL. leads-inbox (31) 19 / 8 charged. account_activities_202611 Search $2,006.37 · LSA $1,940.79. Call details (30) 2 phones. Lead Calls 26. Search $/phone ~$1,003. Spend goal $4,175.22. Oct* stack held. RENDER_VER 20261108-nov-dl. |
 | 11/05/2026 | October revenue tile $120,470. Ledger (20)/(19) $104,970 through 10/30, plus $15,000 cashier's check and $500 cash. W4 $47,670. YTD $949,176. RENDER_VER 20261105-cash500. |
 | 11/05/2026 | Full DL refresh. Campaign (63) Account Oct 1–31 Impr 10,203 · clicks 737 · CTR 7.22%. Statement Search $/phone $9,555.44 ÷ 19 ≈ $503. Oct practice DV 4 · Traffic/DUI 8 · PPO 1 · Other 8. Nov* channel Lead Calls 9 · cash $9,800 · cases 2 · Campaign (60) $1,023.97. YTD cash $933,676. RENDER_VER 20261105-full. |
 | 11/05/2026 | Oct close refresh. ledger (20)/(19) Oct* Credits $104,970 through 10/30 · W4 $32,170 · YTD $923,876. Call details (28) Oct 1–31 · 19 phones. Campaign (63) Oct 1–31 Military+NTGUILT $7,982. Statement Search $9,555.44 · LSA $4,319.02 held. Lead Calls 108. Search $/phone ~$503. HubSpot Forms 18. RENDER_VER 20261105-octclose. |
