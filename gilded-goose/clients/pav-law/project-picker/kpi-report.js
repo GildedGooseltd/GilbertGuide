@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-net-lead-first";
+  const RENDER_VER = "20261119-no-legal-sites-title";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -9304,7 +9304,6 @@
       focus: "#16",
       help: false,
       verified: anyVerified,
-      title: "Legal Referral Sites",
       chart: channelTable,
       omitTable: true
     });
