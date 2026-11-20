@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-apple-maps";
+  const RENDER_VER = "20261119-wip-label";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -6568,22 +6568,21 @@
       revised: "Tested",
       updated: "Updated",
       outdated: "Outdated",
-      "not wired": "Disqualified",
-      "not on": "Disqualified"
+      "not wired": "WIP",
+      "not on": "WIP"
     };
     return map[status] || status || "—";
   }
 
-  /** WIP · Listed · Tested · Disqualified · Updated · Outdated. Stable within each bucket. */
+  /** WIP · Listed · Tested · Updated · Outdated. Stable within each bucket. */
   function presenceStatusSortRank(status) {
     const label = presenceLabel(status);
     if (label === "WIP") return 0;
     if (label === "Listed") return 1;
     if (label === "Tested") return 2;
-    if (label === "Disqualified") return 3;
-    if (label === "Updated") return 4;
-    if (label === "Outdated") return 5;
-    return 6;
+    if (label === "Updated") return 3;
+    if (label === "Outdated") return 4;
+    return 5;
   }
 
   function sortByPresenceStatus(rows) {
