@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-no-legal-sites-title";
+  const RENDER_VER = "20261119-no-funnel-conversions";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -314,8 +314,8 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel",
-      desc: "Follows the KPI tile month. Funnel: Impressions → Clicks → Direct contacts → Signed cases → Contracted cases → Trust with open values → Closed fully paid trust accounts. Websites = HubSpot forms + pav.law + ntguilt.com. Breakdown table: Contacts = contact-level leads. Conversions = MyCase matches. Cost per conversion = spend ÷ conversions when matches exist.",
-      formula: "Signed = Contact group Client by Created. Trust open = those Clients with Contact Trust balance > 0, Contact_11-08. Contracted = Case_balance Total > 0 on Billing Contact join. Oct 18 of 21 held from Case_balance_11-05. Nov 3 of 4 from Case_balance_11-08. Paid closed = fully paid trust on that cohort, pending join. Contacts / Conversions table unchanged."
+      desc: "Follows the KPI tile month. Funnel: Impressions → Clicks → Direct contacts → Signed cases → Contracted cases → Trust with open values → Closed fully paid trust accounts. Websites = HubSpot forms + pav.law + ntguilt.com. Breakdown table: Contacts = contact-level leads. Cost per contact = spend ÷ contacts when contacts exist.",
+      formula: "Signed = Contact group Client by Created. Trust open = those Clients with Contact Trust balance > 0, Contact_11-08. Contracted = Case_balance Total > 0 on Billing Contact join. Oct 18 of 21 held from Case_balance_11-05. Nov 3 of 4 from Case_balance_11-08. Paid closed = fully paid trust on that cohort, pending join."
     },
     "dg-ctr": {
       title: "Digital Goal · CTR",
@@ -4287,33 +4287,25 @@
     const pack = salesCostFunnelChannelSpend();
     const parts = pack && pack.parts;
     if (!parts || !parts.known) return "";
-    const meta = tileMonthMeta();
-    const conv = salesFunnelChannelConversions(meta.key);
-    const cell = v => (v == null ? "—" : String(v));
-    const row = (label, contacts, conversions, spend) => [
+    const row = (label, contacts, spend) => [
       label,
       String(contacts),
-      cell(conversions),
-      salesCostFunnelCostPerContact(spend, conversions)
+      salesCostFunnelCostPerContact(spend, contacts)
     ];
     const rows = [
-      row("Search", parts.search, conv.search, pack.search),
-      row("LSA", parts.lsa, conv.lsa, pack.lsa),
-      row("Websites", parts.websites, conv.websites, pack.websites),
-      row("Yelp", parts.yelp, conv.yelp, pack.yelp),
-      row("Justia", parts.justia, conv.justia, pack.justia),
-      row("FindLaw", parts.findlaw, conv.findlaw, 0)
+      row("Search", parts.search, pack.search),
+      row("LSA", parts.lsa, pack.lsa),
+      row("Websites", parts.websites, pack.websites),
+      row("Yelp", parts.yelp, pack.yelp),
+      row("Justia", parts.justia, pack.justia),
+      row("FindLaw", parts.findlaw, 0)
     ];
-    const convVals = [conv.search, conv.lsa, conv.websites, conv.yelp, conv.justia, conv.findlaw];
-    const convKnown = convVals.filter(v => v != null);
-    const convTotal = convKnown.length ? convKnown.reduce((s, v) => s + (Number(v) || 0), 0) : null;
     rows.push([
       '<span class="kpi-table-total">Total</span>',
       `<span class="kpi-table-total">${parts.total}</span>`,
-      `<span class="kpi-table-total">${cell(convTotal)}</span>`,
-      `<span class="kpi-table-total">${salesCostFunnelCostPerContact(pack.total, convTotal)}</span>`
+      `<span class="kpi-table-total">${salesCostFunnelCostPerContact(pack.total, parts.total)}</span>`
     ]);
-    return kpiDetailTable(["Channel", "Contacts", "Conversions", "Cost per conversion"], rows);
+    return kpiDetailTable(["Channel", "Contacts", "Cost per contact"], rows);
   }
 
   function salesCostFunnelBandHalf(volume, maxVol, maxHalf, minHalf) {
