@@ -2,7 +2,7 @@
 
 Simple name list for LSA + Search staging. Aggregates only. Do not file Contact, Call details caller rows, or LSA inbox Customer names into the repo.
 
-Last Downloads scan: 11/19/2026 8:02 PM. Guide RENDER_VER `20261119-yelp-pub`.
+Last Downloads scan: 11/19/2026 8:08 PM. Guide RENDER_VER `20261119-yelp10`.
 
 ## 11/19/2026 · Nov* refresh
 
@@ -20,14 +20,14 @@ Wired from newest DL this turn. Aggregates only.
 | HubSpot forms | ntguilt + primary-intake 11/19 | Nov Forms 32 = 24 + 8 | |
 | FindLaw contacts | Contacts_2026October20_2026November19.csv | Nov 6 | |
 | Yelp Ad spend | Nov 1–18 + Oct 1–31 CSVs | Nov $2,808.09 · Oct $1,500 | |
-| Yelp contacts / Reviews | Desktop 11/05 only | Contacts 0 held · Reviews red | Need screenshots |
+| Yelp contacts | Desktop Leads breakdown 11/08 | Nov contacts 1 · Messages 1 · Calls 0 · raw 5 | No newer than 11/08 |
+| Yelp reviews | Kate 11/19 | Total 10 · Nov new 2 · rating 4.5 | |
 | Auto Cases / #28 / Justia / Client Referrals QR | No new pack | Red X | |
 
 ## Still need
 
-1. Yelp Leads breakdown screenshot · Nov Messages / Calls / Website / Directions
-2. Yelp Reviews or GBP month-new screenshot
-3. Auto / DUI goal pack refresh if Auto Cases should leave red
+1. Newer Yelp Leads breakdown past 11/08 if Nov contacts moved
+2. Auto / DUI goal pack refresh if Auto Cases should leave red
 
 ## Older history
 

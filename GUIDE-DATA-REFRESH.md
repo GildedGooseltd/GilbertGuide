@@ -83,6 +83,7 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 11/19/2026 | Yelp reviews 10 · Nov new 2. Nov contacts 1 from Desktop 11/08 Leads breakdown. Lead Calls 101. RENDER_VER 20261119-yelp10. |
 | 11/19/2026 | Yelp Ad Analytics Nov 1–18 $2,808.09 · 120 clicks · Oct 1–31 $1,500 · 115 clicks. Call details (34)/(35) phones still 10. Lead Calls 100. RENDER_VER 20261119-yelp-pub. |
 | 11/19/2026 | HubSpot form submits 11/19: Nov Forms 32 = ntguilt 24 + primary-intake 8. Lead Calls 100. Call details (33) same 10 phones as (32). RENDER_VER 20261119-hsforms. |
 | 11/19/2026 | Evening Call details (32) Nov 1–19 phones 10 · 4 Received · 6 Missed · NTGUILT 7 · Military 3. FindLaw Contacts Nov 6. Lead Calls 73. Search $/phone ~$532. Click → call ~2.0%. RENDER_VER 20261119-call32. |
