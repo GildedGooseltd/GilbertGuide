@@ -83,6 +83,7 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 11/19/2026 | Nov* DL. Contact_11-19 cases 17 · Oct 22 · ledger (4) $73,493 · Trust 406 · $1,862,447 · LSA 52 / 16 charged · Search $5,321 · phones 5 · Lead Calls 62 · spend goal ~$10,765 · HubSpot/Yelp/Reviews/Auto/#28/Justia/Client Referrals marked stale red. RENDER_VER 20261119-nov-dl. |
 | 11/08/2026 | Evening MyCase + Yelp. Contact_11-08 Nov* cases 4 · ledger (21) $15,775 · Trust 390 · $1,804,729 · Case_balance Nov contracted 3 · Yelp Nov 1–7 $427.21 · spend goal $4,374.37 · Lead Calls 26 held · Search $/phone ~$1,003 held · Oct* cash $120,470 held. RENDER_VER 20261108-nov-mycase-yelp. |
 | 11/08/2026 | Nov* DL. leads-inbox (31) 19 / 8 charged. account_activities_202611 Search $2,006.37 · LSA $1,940.79. Call details (30) 2 phones. Lead Calls 26. Search $/phone ~$1,003. Spend goal $4,175.22. Oct* stack held. RENDER_VER 20261108-nov-dl. |
 | 11/05/2026 | October revenue tile $120,470. Ledger (20)/(19) $104,970 through 10/30, plus $15,000 cashier's check and $500 cash. W4 $47,670. YTD $949,176. RENDER_VER 20261105-cash500. |
