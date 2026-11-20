@@ -5267,6 +5267,10 @@
       .kpi-tiles-4 .kpi-goal-track td {
         text-align: right;
       }
+      .kpi-tiles-4 .kpi-spend-forecast-track th {
+        width: auto;
+        max-width: none;
+      }
     }
     @media (max-width: 560px) {
       .kpi-goals-grid.kpi-tiles-4,
@@ -6460,7 +6464,29 @@
       width: 0.72rem;
       height: 0.72rem;
     }
+    /* Ad Spend track · keep Search + LSA label off the $ pair · Kate 11/19/2026 */
     .kpi-spend-forecast-track th { width: auto; }
+    .kpi-goals-grid .kpi-spend-forecast-track tr,
+    .kpi-stat-grid .kpi-spend-forecast-track tr,
+    .kpi-tiles-4 .kpi-spend-forecast-track tr {
+      flex-wrap: wrap !important;
+      row-gap: 0.05rem;
+    }
+    .kpi-goals-grid .kpi-spend-forecast-track th,
+    .kpi-stat-grid .kpi-spend-forecast-track th,
+    .kpi-tiles-4 .kpi-spend-forecast-track th {
+      flex: 0 0 auto !important;
+      min-width: min-content !important;
+      max-width: 100%;
+      overflow: visible;
+    }
+    .kpi-goals-grid .kpi-spend-forecast-track td,
+    .kpi-stat-grid .kpi-spend-forecast-track td,
+    .kpi-tiles-4 .kpi-spend-forecast-track td {
+      flex: 1 1 auto !important;
+      min-width: min-content;
+      max-width: 100%;
+    }
     /* Value drops under the row label when the pair does not fit the tile. */
     .kpi-goals-grid .kpi-goal-track,
     .kpi-stat-grid .kpi-goal-track,
