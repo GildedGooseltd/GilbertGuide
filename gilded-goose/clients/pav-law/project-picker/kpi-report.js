@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-funnel-no-table";
+  const RENDER_VER = "20261119-funnel-no-paid-closed";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -314,8 +314,8 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel",
-      desc: "Follows the KPI tile month. Funnel: Impressions → Clicks → Direct contacts → Signed cases → Contracted cases → Trust with open values → Closed fully paid trust accounts. Websites = HubSpot forms + pav.law + ntguilt.com.",
-      formula: "Signed = Contact group Client by Created. Trust open = those Clients with Contact Trust balance > 0, Contact_11-08. Contracted = Case_balance Total > 0 on Billing Contact join. Oct 18 of 21 held from Case_balance_11-05. Nov 3 of 4 from Case_balance_11-08. Paid closed = fully paid trust on that cohort, pending join."
+      desc: "Follows the KPI tile month. Funnel: Impressions → Clicks → Direct contacts → Signed cases → Contracted cases → Trust with open values. Websites = HubSpot forms + pav.law + ntguilt.com.",
+      formula: "Signed = Contact group Client by Created. Trust open = those Clients with Contact Trust balance > 0, Contact_11-08. Contracted = Case_balance Total > 0 on Billing Contact join. Oct 18 of 21 held from Case_balance_11-05. Nov 3 of 4 from Case_balance_11-08."
     },
     "dg-ctr": {
       title: "Digital Goal · CTR",
@@ -4197,8 +4197,7 @@
         conversion: stepPct(cases, directKnown ? direct : null)
       },
       moneyStage("contracted", "Contracted cases", "#6a5acd", moneyStages.contracted, cases),
-      moneyStage("trust-open", "Trust with open values", "#1e3a8a", moneyStages.trustOpen, cases),
-      moneyStage("paid-closed", "Closed fully paid trust accounts", "#1f8a65", moneyStages.paidClosed, cases)
+      moneyStage("trust-open", "Trust with open values", "#1e3a8a", moneyStages.trustOpen, cases)
     ];
   }
 
@@ -4445,7 +4444,7 @@
     return `<section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-sales-funnel" data-feedback-label="Sales Funnel">
       ${statusCorner(true)}
       ${kpiHelpBtn("sales-cost-funnel")}
-      ${kpiSectionStaticHead("Sales Funnel", "Impressions · clicks · contacts · signed · contracted · trust open · paid closed")}
+      ${kpiSectionStaticHead("Sales Funnel", "Impressions · clicks · contacts · signed · contracted · trust open")}
       <div class="kpi-section-body">
         <div class="data-chart-table-stack">
           ${salesCostFunnelChartBlockHtml()}
