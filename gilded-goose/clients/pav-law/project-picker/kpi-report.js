@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-funnel-label-size";
+  const RENDER_VER = "20261119-funnel-no-table";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -314,7 +314,7 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel",
-      desc: "Follows the KPI tile month. Funnel: Impressions → Clicks → Direct contacts → Signed cases → Contracted cases → Trust with open values → Closed fully paid trust accounts. Websites = HubSpot forms + pav.law + ntguilt.com. Breakdown table: Contacts = contact-level leads. Cost per contact = spend ÷ contacts when contacts exist.",
+      desc: "Follows the KPI tile month. Funnel: Impressions → Clicks → Direct contacts → Signed cases → Contracted cases → Trust with open values → Closed fully paid trust accounts. Websites = HubSpot forms + pav.law + ntguilt.com.",
       formula: "Signed = Contact group Client by Created. Trust open = those Clients with Contact Trust balance > 0, Contact_11-08. Contracted = Case_balance Total > 0 on Billing Contact join. Oct 18 of 21 held from Case_balance_11-05. Nov 3 of 4 from Case_balance_11-08. Paid closed = fully paid trust on that cohort, pending join."
     },
     "dg-ctr": {
@@ -4433,13 +4433,11 @@
 
   function salesCostFunnelChartBlockHtml() {
     const stages = salesCostFunnelStages();
-    const channelTable = salesCostFunnelChannelBreakdownTable();
     return chartBlock({
       help: false,
       title: "Sales Funnel",
       chart: `${salesCostFunnelSvg(stages)}${salesCostFunnelLegendHtml(stages)}`,
-      table: channelTable || undefined,
-      omitTable: !channelTable
+      omitTable: true
     });
   }
 
