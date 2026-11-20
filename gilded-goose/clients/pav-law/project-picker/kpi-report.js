@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-no-mtd-row";
+  const RENDER_VER = "20261119-no-projected-row";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -7112,7 +7112,6 @@
       </div>
       ${goalTrackRows([
         ["Pace", paceCell],
-        ["Projected", `<span class="kpi-track-actual">${fmtMoney(m.projected)}</span>`, "actual"],
         ...(function () {
           const cashRow = (DATA.cashCollected2026Ytd || []).find(r => String(r.month || "").replace(/\*$/, "") === m.monthKey);
           if (!cashRow) return [];
