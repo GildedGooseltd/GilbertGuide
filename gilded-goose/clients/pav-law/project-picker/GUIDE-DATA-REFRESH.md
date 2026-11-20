@@ -83,6 +83,9 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 11/19/2026 | Yelp Ad Analytics Nov 1–18 $2,808.09 · 120 clicks · Oct 1–31 $1,500 · 115 clicks. Call details (34)/(35) phones still 10. Lead Calls 100. RENDER_VER 20261119-yelp-pub. |
+| 11/19/2026 | HubSpot form submits 11/19: Nov Forms 32 = ntguilt 24 + primary-intake 8. Lead Calls 100. Call details (33) same 10 phones as (32). RENDER_VER 20261119-hsforms. |
+| 11/19/2026 | Evening Call details (32) Nov 1–19 phones 10 · 4 Received · 6 Missed · NTGUILT 7 · Military 3. FindLaw Contacts Nov 6. Lead Calls 73. Search $/phone ~$532. Click → call ~2.0%. RENDER_VER 20261119-call32. |
 | 11/19/2026 | Nov* DL. Contact_11-19 cases 17 · Oct 22 · ledger (4) $73,493 · Trust 406 · $1,862,447 · LSA 52 / 16 charged · Search $5,321 · phones 5 · Lead Calls 62 · spend goal ~$10,765 · HubSpot/Yelp/Reviews/Auto/#28/Justia/Client Referrals marked stale red. RENDER_VER 20261119-nov-dl. |
 | 11/08/2026 | Evening MyCase + Yelp. Contact_11-08 Nov* cases 4 · ledger (21) $15,775 · Trust 390 · $1,804,729 · Case_balance Nov contracted 3 · Yelp Nov 1–7 $427.21 · spend goal $4,374.37 · Lead Calls 26 held · Search $/phone ~$1,003 held · Oct* cash $120,470 held. RENDER_VER 20261108-nov-mycase-yelp. |
 | 11/08/2026 | Nov* DL. leads-inbox (31) 19 / 8 charged. account_activities_202611 Search $2,006.37 · LSA $1,940.79. Call details (30) 2 phones. Lead Calls 26. Search $/phone ~$1,003. Spend goal $4,175.22. Oct* stack held. RENDER_VER 20261108-nov-dl. |
