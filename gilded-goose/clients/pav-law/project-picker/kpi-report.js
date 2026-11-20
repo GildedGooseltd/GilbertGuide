@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-disqualified";
+  const RENDER_VER = "20261119-disqualified2";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -6568,22 +6568,21 @@
       revised: "Disqualified",
       updated: "Updated",
       outdated: "Outdated",
-      "not wired": "Unlisted",
-      "not on": "Unlisted"
+      "not wired": "Disqualified",
+      "not on": "Disqualified"
     };
     return map[status] || status || "—";
   }
 
-  /** WIP · Listed · Disqualified · Updated · Unlisted · Outdated. Stable within each bucket. */
+  /** WIP · Listed · Disqualified · Updated · Outdated. Stable within each bucket. */
   function presenceStatusSortRank(status) {
     const label = presenceLabel(status);
     if (label === "WIP") return 0;
     if (label === "Listed") return 1;
     if (label === "Disqualified") return 2;
     if (label === "Updated") return 3;
-    if (label === "Unlisted") return 4;
-    if (label === "Outdated") return 5;
-    return 6;
+    if (label === "Outdated") return 4;
+    return 5;
   }
 
   function sortByPresenceStatus(rows) {
@@ -6592,7 +6591,7 @@
     );
   }
 
-  /** Collapse tracking-only "not wired" into Unlisted for the presence pie. */
+  /** Collapse tracking-only "not wired" into the not-on presence pie bucket. */
   function presenceBucket(status) {
     const s = status || "not on";
     if (s === "active" || s === "building" || s === "updated" || s === "revised") return "active";
