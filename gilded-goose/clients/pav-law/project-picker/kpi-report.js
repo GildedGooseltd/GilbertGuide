@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-tested";
+  const RENDER_VER = "20261119-apple-maps";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -1090,7 +1090,7 @@
       { platform: "Facebook", rating: "—", count: null, status: "outdated", verified: false },
       { platform: "LinkedIn (firm)", rating: "—", count: null, status: "outdated", verified: false },
       { platform: "BBB", rating: "—", count: null, status: "not on", verified: false },
-      { platform: "Bing Places / Apple", rating: "—", count: null, status: "not wired", verified: false }
+      { platform: "Apple Maps", rating: "—", count: null, status: "not wired", verified: false }
     ],
     verticals: [
       { name: "DUI/DWAI", jun: 5, ytd: 20 },
