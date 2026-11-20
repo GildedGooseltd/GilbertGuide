@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-ad-spend-split";
+  const RENDER_VER = "20261119-ad-spend-split2";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -3639,11 +3639,13 @@
     return "$" + Math.round(x).toLocaleString("en-US");
   }
 
-  /** November Ad Spend forecast. Search + LSA paces the days on file. Yelp keeps the $100 plan with the court week paused. Justia and FindLaw are locked monthly fees. */
+  /** November Ad Spend forecast. Search and LSA pace the days on file. Yelp keeps the $100 plan with the court week paused. Justia and FindLaw are locked monthly fees. */
   function novAdSpendForecast(label, actual) {
     const daysOnFile = Number(DATA.spendGoalNov && DATA.spendGoalNov.daysOnFile) || 4;
     const daysInMonth = daysInCalendarMonth("Nov");
-    if (label === "Search" || label === "Search + LSA") return actual * (daysInMonth / daysOnFile);
+    if (label === "Search" || label === "LSA" || label === "Search + LSA") {
+      return actual * (daysInMonth / daysOnFile);
+    }
     if (label === "Yelp") return actual + (21 * 100);
     if (label === "Justia" || label === "FindLaw") return actual;
     return null;
