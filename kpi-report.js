@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-dg-track-inline";
+  const RENDER_VER = "20261119-ad-spend-split";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -299,8 +299,8 @@
     },
     "ad-spend-by-channel": {
       title: "Ad Spend",
-      desc: "On Channel activity. Tile-month paid media only: Search + LSA as one row, Yelp Ads, and Justia and FindLaw locked fees when on file. HubSpot forms fee and digital management retainer are not included. Hero total is Search + LSA + Yelp + Justia + FindLaw. Breakdown table sits to the right of the tile.",
-      formula: "Total = Search + LSA + Yelp + Justia + FindLaw. Row Search + LSA = Search media + LSA Home Services when known. Oct* Search $9,555.44 + LSA $4,319.02 + Yelp $1,279.72 Oct 6–31 + Justia $1,500 + FindLaw $924.38. Nov* Search $2,006.37 + LSA $1,940.79 + Yelp $427.21. Person Crimes $127.22 is left out of Search. Justia $1,500/mo Referral Sites fee through contract end Dec 2026. Kate 10/10/2026."
+      desc: "On Channel activity. Tile-month paid media only: Search and LSA as separate rows, Yelp Ads, and Justia and FindLaw locked fees when on file. HubSpot forms fee and digital management retainer are not included. Hero total is Search + LSA + Yelp + Justia + FindLaw. Breakdown table sits to the right of the tile.",
+      formula: "Total = Search + LSA + Yelp + Justia + FindLaw. Search and LSA stay on their own rows with their own spend. Oct* Search $9,555.44 + LSA $4,319.02 + Yelp $1,279.72 Oct 6–31 + Justia $1,500 + FindLaw $924.38. Nov* Search $2,006.37 + LSA $1,940.79 + Yelp $427.21. Person Crimes $127.22 is left out of Search. Justia $1,500/mo Referral Sites fee through contract end Dec 2026. Kate 10/10/2026."
     },
     "spend-goal-nov": {
       title: "Spend / Goal · Nov",
@@ -3687,12 +3687,11 @@
         ? Number(DATA.findlawPackage.monthly)
         : null);
     const channels = [];
-    if (search != null || lsa != null) {
-      channels.push({
-        label: "Search + LSA",
-        spend: (Number(search) || 0) + (Number(lsa) || 0),
-        color: "#c45c26"
-      });
+    if (search != null) {
+      channels.push({ label: "Search", spend: Number(search) || 0, color: "#c45c26" });
+    }
+    if (lsa != null) {
+      channels.push({ label: "LSA", spend: Number(lsa) || 0, color: "#1e3a8a" });
     }
     if (yelp != null) {
       channels.push({ label: "Yelp", spend: yelp, color: "#64748b" });
