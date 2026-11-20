@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-disqualified2";
+  const RENDER_VER = "20261119-tested";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -6565,7 +6565,7 @@
       active: "Listed",
       building: "Listed",
       wip: "WIP",
-      revised: "Disqualified",
+      revised: "Tested",
       updated: "Updated",
       outdated: "Outdated",
       "not wired": "Disqualified",
@@ -6574,15 +6574,16 @@
     return map[status] || status || "—";
   }
 
-  /** WIP · Listed · Disqualified · Updated · Outdated. Stable within each bucket. */
+  /** WIP · Listed · Tested · Disqualified · Updated · Outdated. Stable within each bucket. */
   function presenceStatusSortRank(status) {
     const label = presenceLabel(status);
     if (label === "WIP") return 0;
     if (label === "Listed") return 1;
-    if (label === "Disqualified") return 2;
-    if (label === "Updated") return 3;
-    if (label === "Outdated") return 4;
-    return 5;
+    if (label === "Tested") return 2;
+    if (label === "Disqualified") return 3;
+    if (label === "Updated") return 4;
+    if (label === "Outdated") return 5;
+    return 6;
   }
 
   function sortByPresenceStatus(rows) {
