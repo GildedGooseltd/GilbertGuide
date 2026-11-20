@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-adspend-channel";
+  const RENDER_VER = "20261119-ls-no-h1";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -6071,7 +6071,6 @@
     return `<div class="ls-canvas" data-feedback-id="tab-lead-source" data-feedback-label="Lead Source">
       <div class="ls-stack">
         <div class="ls-block-head">
-          <h1 class="ls-h1">Lead Source Summary</h1>
           ${leadSourceCoverageLine()}
         </div>
         ${lsCard(
