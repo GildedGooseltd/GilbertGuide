@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-ad-spend-total-top";
+  const RENDER_VER = "20261119-net-lead-first";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -3931,8 +3931,8 @@
       ${periodFreshMark(stackReady, stackReady, stackVal, stackAsOf, null, "#01")}
       ${kpiHelpBtn("cases-leads-spend")}
       <div class="kpi-split-panel-body">
-        ${adSpendChannelActivityRowHtml()}
         ${netLeadShareBlockHtml()}
+        ${adSpendChannelActivityRowHtml()}
         <div class="data-chart-table-stack">
           ${reviewsByChannelPanelHtml()}
         </div>
