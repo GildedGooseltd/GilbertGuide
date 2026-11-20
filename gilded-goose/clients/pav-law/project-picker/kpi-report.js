@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-outdated-dq";
+  const RENDER_VER = "20261119-adspend-channel";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -299,8 +299,8 @@
     },
     "ad-spend-by-channel": {
       title: "Ad Spend",
-      desc: "Tile-month paid media only: Search + LSA as one track row, Yelp Ads, and Justia and FindLaw locked fees when on file. HubSpot forms fee and digital management retainer are not included. Hero total is Search + LSA + Yelp + Justia + FindLaw.",
-      formula: "Total = Search + LSA + Yelp + Justia + FindLaw. Track row Search + LSA = Search media + LSA Home Services when known. Oct* Search $9,555.44 + LSA $4,319.02 + Yelp $1,279.72 Oct 6–31 + Justia $1,500 + FindLaw $924.38. Nov* Search $2,006.37 + LSA $1,940.79 + Yelp $427.21. Person Crimes $127.22 is left out of Search. Justia $1,500/mo Referral Sites fee through contract end Dec 2026. Kate 10/10/2026."
+      desc: "On Channel activity. Tile-month paid media only: Search + LSA as one row, Yelp Ads, and Justia and FindLaw locked fees when on file. HubSpot forms fee and digital management retainer are not included. Hero total is Search + LSA + Yelp + Justia + FindLaw. Breakdown table sits to the right of the tile.",
+      formula: "Total = Search + LSA + Yelp + Justia + FindLaw. Row Search + LSA = Search media + LSA Home Services when known. Oct* Search $9,555.44 + LSA $4,319.02 + Yelp $1,279.72 Oct 6–31 + Justia $1,500 + FindLaw $924.38. Nov* Search $2,006.37 + LSA $1,940.79 + Yelp $427.21. Person Crimes $127.22 is left out of Search. Justia $1,500/mo Referral Sites fee through contract end Dec 2026. Kate 10/10/2026."
     },
     "spend-goal-nov": {
       title: "Spend / Goal · Nov",
@@ -3775,8 +3775,37 @@
         ${kpiCardTitle("Ad Spend")}
         ${metricWithDeltaHtml(`<span class="kpi-stat-val">${total}</span>`, null)}
       </div>
-      ${adSpendGoalTrackHtml(pack.channels)}
     </button>`;
+  }
+
+  /** Channel activity · Ad Spend breakdown table to the right of the tile. */
+  function adSpendChannelTableHtml(pack) {
+    const forecastOn = periodToChannelMonth(DATA.period) === "Nov";
+    const headers = forecastOn ? ["Channel", "Spend", "Forecast"] : ["Channel", "Spend"];
+    const rows = pack.channels.map(c => {
+      const label = `<span class="kpi-stack-swatch" style="background:${c.color}" aria-hidden="true"></span> ${escapeHtml(c.label)}`;
+      const spend = fmtAdSpendWhole(c.spend);
+      const lockedFee = c.label === "Justia" || c.label === "FindLaw";
+      if (!forecastOn) return [label, spend];
+      if (lockedFee) return [label, spend, lockedFeeGoalHtml()];
+      const forecast = novAdSpendForecast(c.label, Number(c.spend) || 0);
+      return [label, spend, forecast == null ? "—" : fmtAdSpendWhole(forecast)];
+    });
+    return kpiDetailTable(headers, rows);
+  }
+
+  function adSpendChannelActivityRowHtml() {
+    const pack = currentAdSpendPack();
+    if (!pack.channels.length) return "";
+    const tile = adSpendStatCardHtml();
+    if (!tile) return "";
+    return `<div class="data-chart-table-side data-chart-ad-spend-row">
+      <div class="kpi-ad-spend-tile-col">${tile}</div>
+      <div class="kpi-chart-card" data-kpi-focus="ad-spend-by-channel">
+        <div class="kpi-chart-head">${chartHeadHtml("Ad Spend by Channel")}</div>
+        <div class="kpi-chart-detail">${adSpendChannelTableHtml(pack)}</div>
+      </div>
+    </div>`;
   }
 
   /** Nov* Search + LSA + Yelp vs monthly media cap. Fixed November tile. */
@@ -3902,6 +3931,7 @@
       ${periodFreshMark(stackReady, stackReady, stackVal, stackAsOf, null, "#01")}
       ${kpiHelpBtn("cases-leads-spend")}
       <div class="kpi-split-panel-body">
+        ${adSpendChannelActivityRowHtml()}
         ${netLeadShareBlockHtml()}
         <div class="data-chart-table-stack">
           ${reviewsByChannelPanelHtml()}
@@ -9011,7 +9041,6 @@
     const kpiCards = [
       ...metrics.map(k => kpiStatCardHtml(k)),
       yelpReviewsGoalCardHtml(),
-      adSpendStatCardHtml(),
       answerRateGoalCardHtml()
     ].filter(Boolean).map(html => `<div class="kpi-tile-with-projects">${stampTileNum(html, tileNum++)}</div>`).join("");
     const goalsBlock = `<section class="kpi-section kpi-section-static kpi-section-goals" data-feedback-id="section-goals" data-feedback-label="KPIs">
