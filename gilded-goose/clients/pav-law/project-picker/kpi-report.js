@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-ad-spend-no-tile";
+  const RENDER_VER = "20261119-ad-spend-total-top";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -3768,7 +3768,7 @@
   function adSpendChannelTableHtml(pack) {
     const forecastOn = periodToChannelMonth(DATA.period) === "Nov";
     const headers = forecastOn ? ["Channel", "Spend", "Forecast"] : ["Channel", "Spend"];
-    const rows = pack.channels.map(c => {
+    const channelRows = pack.channels.map(c => {
       const label = `<span class="kpi-stack-swatch" style="background:${c.color}" aria-hidden="true"></span> ${escapeHtml(c.label)}`;
       const spend = fmtAdSpendWhole(c.spend);
       const lockedFee = c.label === "Justia" || c.label === "FindLaw";
@@ -3777,7 +3777,20 @@
       const forecast = novAdSpendForecast(c.label, Number(c.spend) || 0);
       return [label, spend, forecast == null ? "—" : fmtAdSpendWhole(forecast)];
     });
-    return kpiDetailTable(headers, rows);
+    const totalSpend = fmtAdSpendWhole(pack.total);
+    let totalRow;
+    if (!forecastOn) {
+      totalRow = ["Total", totalSpend];
+    } else {
+      const forecastTotal = pack.channels.reduce((sum, c) => {
+        const lockedFee = c.label === "Justia" || c.label === "FindLaw";
+        if (lockedFee) return sum + (Number(c.spend) || 0);
+        const forecast = novAdSpendForecast(c.label, Number(c.spend) || 0);
+        return sum + (forecast == null ? 0 : forecast);
+      }, 0);
+      totalRow = ["Total", totalSpend, fmtAdSpendWhole(forecastTotal)];
+    }
+    return kpiDetailTable(headers, [totalRow].concat(channelRows));
   }
 
   function adSpendChannelActivityRowHtml() {
