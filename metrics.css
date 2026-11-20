@@ -1457,31 +1457,34 @@ body.feedback-mode-on .feedback-target:hover {
   padding-bottom: 0.12rem;
   font-size: 0.72rem;
 }
-/* Digital goals platform tracks · label over detail · regular weight · Kate 11/06/2026 */
+/* Digital goals platform tracks · label and amount on one line · Kate 11/19/2026 */
 .kpi-section-digital-goals .kpi-goal-track tr {
-  flex-wrap: wrap !important;
-  align-items: flex-start;
-  row-gap: 0.1rem;
+  flex-wrap: nowrap !important;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: 0.35rem;
   height: auto !important;
-  padding: 0.28rem 0;
+  padding: 0.12rem 0;
 }
 .kpi-section-digital-goals .kpi-goal-track th {
-  flex: 1 0 100%;
+  flex: 1 1 auto;
+  min-width: 0;
   font-weight: 600;
   font-size: 0.68rem;
   line-height: 1.25;
-  padding: 0 0.2rem 0;
+  padding: 0 0.2rem;
+  white-space: nowrap;
 }
 .kpi-section-digital-goals .kpi-goal-track td,
 .kpi-section-digital-goals .kpi-goal-track td.kpi-track-actual {
-  flex: 1 0 100%;
-  margin-left: 0;
-  text-align: left;
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
   font-weight: 400;
   font-size: 0.72rem;
-  line-height: 1.35;
-  white-space: normal;
-  padding: 0 0.2rem 0.05rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  padding: 0 0.2rem;
 }
 /* Weekday / weekend missed-rate split on the Missed Opportunity text tile. */
 .kpi-missed-split { margin-top: 0.4rem; }
