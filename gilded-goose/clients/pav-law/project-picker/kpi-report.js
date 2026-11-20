@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-no-funnel-conversions";
+  const RENDER_VER = "20261119-funnel-label-size";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -4344,9 +4344,9 @@
       const countText = Number(s.value).toLocaleString("en-US");
       const sliceWide = end - start >= 0.12 || usable.length === 1;
       const label = sliceWide
-        ? `<text x="${labelX}" y="${midY - 7}" text-anchor="middle" dominant-baseline="middle" style="fill:#f5efe6;font-size:12px;font-weight:700;paint-order:stroke;stroke:rgba(61,48,40,0.4);stroke-width:2px">${escapeHtml(s.label)}</text>
-        <text x="${labelX}" y="${midY + 9}" text-anchor="middle" dominant-baseline="middle" style="fill:#f5efe6;font-size:14px;font-weight:800;paint-order:stroke;stroke:rgba(61,48,40,0.4);stroke-width:2px">${countText}</text>`
-        : `<text x="${labelX}" y="${midY}" text-anchor="middle" dominant-baseline="middle" style="fill:#f5efe6;font-size:12px;font-weight:800;paint-order:stroke;stroke:rgba(61,48,40,0.4);stroke-width:2px">${countText}</text>`;
+        ? `<text x="${labelX}" y="${midY - 10}" text-anchor="middle" dominant-baseline="middle" style="fill:#f5efe6;font-size:16px;font-weight:700;paint-order:stroke;stroke:rgba(61,48,40,0.4);stroke-width:2px">${escapeHtml(s.label)}</text>
+        <text x="${labelX}" y="${midY + 12}" text-anchor="middle" dominant-baseline="middle" style="fill:#f5efe6;font-size:18px;font-weight:800;paint-order:stroke;stroke:rgba(61,48,40,0.4);stroke-width:2px">${countText}</text>`
+        : `<text x="${labelX}" y="${midY}" text-anchor="middle" dominant-baseline="middle" style="fill:#f5efe6;font-size:15px;font-weight:800;paint-order:stroke;stroke:rgba(61,48,40,0.4);stroke-width:2px">${countText}</text>`;
       return `<g>
         <polygon points="${poly}" fill="${s.color || fallbackColor}"/>
         ${label}
