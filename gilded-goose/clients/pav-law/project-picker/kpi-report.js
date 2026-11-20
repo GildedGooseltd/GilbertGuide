@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-yelp10";
+  const RENDER_VER = "20261119-fresh-marks";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -32,8 +32,8 @@
       fields: "Contact group=Client · Created date · practice mix fuzzy · Jun 36 · Jul 35 · Aug 20 · Sep 16 · Oct 21 = DV 4 · Traffic/DUI 8 · PPO 1 · Other 8 · Nov* 4 = DV 1 · Traffic/DUI 3"
     },
     "#03": {
-      file: "Downloads/Contact_10-29-2026.csv · dui-goal-data.js · recheck 2026-10-29",
-      fields: "DUI/DWAI 20 · Traffic 23 · Auto 43/50 · pace 86% · rechecked on Contact_10-29, Auto stack unchanged"
+      file: "Downloads/Contact_11-19-2026(1).csv, dui-goal-data.js, recheck 11/19/2026",
+      fields: "DUI/DWAI 22, Traffic 33, Auto 55/50, pace 110%, Trust balance $112,120. November added 2 DUI/DWAI and 9 Traffic Client creates."
     },
     "#04": {
       file: "Downloads/Contact_11-08-2026 (1).csv · Contact group Client by Created date · casesMom newCases · last updated 2026-11-08",
@@ -76,8 +76,8 @@
       fields: "Search weekday May–Oct* · LSA May–Oct* · Yelp Jun–Sep answeredCalls÷calls · overall Yelp answer 46% · Avg % = mean of channels on file · target ≥ 90%"
     },
     "#28": {
-      file: "Downloads/Contact_09-28-2026.csv · Client + fee · locked order Pre-Trial Flat Fee → pre-File flat → trial_fee → retainer → payment_amount · recheck 2026-10-02",
-      fields: "Client + fee mean $5,661 · n=139 · Contact_09-28-2026 aggregates · not cash collected"
+      file: "Downloads/Contact_11-19-2026(1).csv, Client + fee locked order Pre-Trial Flat Fee, pre-File flat, trial_fee, retainer, payment_amount, recheck 11/19/2026",
+      fields: "Client + fee mean $5,661, n = 139 on Contact_11-19-2026(1).csv aggregates, not cash collected."
     },
     "#30": {
       file: "Staging. DASHBOARD-STAGING.md · Cost per Case · model still hydrates for Avg Case Value notes",
@@ -94,6 +94,10 @@
     "#29": {
       file: "Downloads/Contact_10-02-2026.csv · Client + fee · quoted fee fields + Trust balance · recheck 2026-10-08",
       fields: "Quoted = Pre-Trial Flat Fee → pre-File flat → trial_fee → retainer → payment_amount · Trust = Contact Trust balance mean on same Client+fee rows · n≥5 · LOE 1–5 · biggest opportunity = quoted mean ÷ LOE when n≥15"
+    },
+    "attorney-flat-fee": {
+      file: "Downloads/case_list_report(1).csv, open dates 11/02/2026 through 11/19/2026",
+      fields: "18 flat-fee cases totaling $79,400 out of 21 opened cases in November 2026 MTD. Two hourly cases and one case without a fee structure are excluded from the flat-fee averages."
     },
     "cash-pace": {
       file: "ledger_account_activity_report (21).csv · export 11/08/2026 · Credits Sep $113,985 through 09/30/2026 · Oct* ledger $104,970 through 10/30/2026 plus $15,000 cashier's check and $500 cash · Jul restated $112,350 · Contact_11-08 cases · Trust snapshot 11/08",
@@ -267,6 +271,11 @@
       title: "#29 Practice Area Average Fee",
       desc: "Quoted mean fee vs mean Trust balance by practice area. Same Client + fee cohort · n ≥ 5 · Contact_10-02-2026. Quoted uses contracted fee field order. Trust is money on the Contact Trust balance, not QuickBooks collections. LOE 1–5 from Kate rough LOE chart 09/23/2026. Biggest opportunity = highest quoted mean ÷ LOE among practices with n ≥ 15.",
       formula: "Quoted mean and Trust mean on the same Client+fee rows. Biggest opportunity = quoted mean ÷ LOE · only when n ≥ 15."
+    },
+    "attorney-flat-fee": {
+      title: "Flat Fee By Lead Attorney",
+      desc: "Contracted flat-fee cases opened from 11/02/2026 through 11/19/2026 in MyCase, grouped by Lead Attorney. Covers 18 flat-fee cases totaling $79,400 out of 21 opened cases in the window. Two hourly cases and one case with a blank fee structure are excluded from the flat-fee average.",
+      formula: "Average Flat Fee = Total Contracted Flat Fees divided by Flat-Fee Cases for each Lead Attorney. Share Of Total = attorney total divided by $79,400."
     },
     "cases-leads-spend": {
       title: "#05 Key Channel Activity",
@@ -538,13 +547,13 @@
     asOf: "2026-11-19",
     lastUpdated: "2026-11-19",
     updateLabel: "November 2026",
-    updateScope: "DL 11/19 · Yelp reviews 10 · Nov new 2 · Yelp contacts 1 · spend $2,808 · HubSpot 32 · Lead Calls 101 · phones 10 · cash $73,493 · cases 17",
-    source: "Kate 11/19 Yelp reviews 10 · Yelp Ad Analytics Nov 1–18 + Oct 1–31 · Desktop Leads breakdown 11/08 Nov Messages 1 · Call details (34)/(35) · hubspot forms 11/19 · Contact_11-19 · Trust_11-19 · ledger (4) · leads-inbox (32) · account_activities_202611 (1) · FindLaw Contacts",
+    updateScope: "DL 11/19: Auto Cases 55/50, #28 fee $5,661, Flat Fee By Lead Attorney table, Yelp reviews 10, spend $2,808, HubSpot 32, Lead Calls 101, phones 10, cash $73,493, cases 17",
+    source: "Kate 11/19 Yelp reviews 10, Yelp Ad Analytics Nov 1–18 + Oct 1–31, Desktop Leads breakdown 11/08 Nov Messages 1, Call details (34)/(35), hubspot forms 11/19, Contact_11-19, case_list_report(1), Trust_11-19, ledger (4), leads-inbox (32), account_activities_202611 (1), FindLaw Contacts",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
       "#01": "2026-11-19",
       "#02": "2026-11-19",
-      "#03": "2026-11-08",
+      "#03": "2026-11-19",
       "#04": "2026-11-19",
       "cash-pace": "2026-11-19",
       "yelp": "2026-11-19",
@@ -561,7 +570,7 @@
       "client-referrals-review": "2026-11-06",
       "#19": "2026-10-02",
       "#21": "2026-10-02",
-      "#28": "2026-10-02"
+      "#28": "2026-11-19"
     },
     /**
      * Monthly KPI corner audit · Kate 10/18/2026.
@@ -571,7 +580,7 @@
     tileAudit: {
       "#01": "fresh",
       "#02": "fresh",
-      "#03": "stale",
+      "#03": "fresh",
       "#04": "fresh",
       "cash-pace": "fresh",
       "yelp": "fresh",
@@ -583,7 +592,7 @@
       "dg-click-call": "fresh",
       "dg-phone-cost": "fresh",
       "dg-case-cost": "fresh",
-      "#28": "stale",
+      "#28": "fresh",
       "click-call-monitor": "fresh",
       "client-referrals-review": "stale",
       "justia": "stale",
@@ -707,8 +716,8 @@
     ],
     kpis: [
       /* #01/#02 hydrated by applyTileMonth from channelMonths + casesLeadsSpend */
-      { id: "#01", label: "Lead Calls", value: "108", target: "≥ 160", mom: null, count: 108, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-11-05" },
-      { id: "#02", label: "New Cases", value: "21", target: "≥ 23", mom: null, count: 21, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-11-05" },
+      { id: "#01", label: "Lead Calls", value: "108", target: "≥ 160", mom: null, count: 108, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-11-19" },
+      { id: "#02", label: "New Cases", value: "21", target: "≥ 23", mom: null, count: 21, verified: true, hit: false, alert: true, gauge: true, augUpdated: true, updatedAsOf: "2026-11-19" },
       /* staging — restore by removing archived: true · work doc DASHBOARD-STAGING.md · Missed Opportunity */
       { id: "#19", label: "Missed Opportunity", value: "—", target: "$0", mom: null, verified: false, alert: false, lostTracker: true, augUpdated: false, archived: true },
       { id: "#21", label: "Answered Calls", value: "—", target: "≥ 90%", mom: null, verified: false, alert: false, gauge: true, goal: true, archived: true },
@@ -986,6 +995,19 @@
       { name: "SA Prefile", loe: 1 },
       { name: "PO Revo", loe: 1, mapsTo: "Probation Revocation" }
     ],
+    /* MyCase case_list_report(1).csv, open dates 11/02/2026 through 11/19/2026, aggregates only */
+    flatFeeByAttorney: {
+      asOf: "2026-11-19",
+      window: "11/02/2026 through 11/19/2026",
+      openedCases: 21,
+      hourlyCases: 2,
+      blankFeeCases: 1,
+      rows: [
+        { attorney: "Jack Strong", cases: 10, total: 39500, avg: 3950 },
+        { attorney: "Andrew Brown", cases: 3, total: 31400, avg: 10466.67 },
+        { attorney: "Cassandra Dinaro", cases: 5, total: 8500, avg: 1700 }
+      ]
+    },
     costPerCall: [
       { channel: "Direct contact (blended)", cost: "$65" },
       { channel: "Military", cost: "$40" },
@@ -1410,7 +1432,7 @@
      * Referral tags for 2026 creates are in referralTags2026.
      */
     leadSourceConfirmed: {
-      asOf: "2026-11-05",
+      asOf: "2026-11-19",
       definition: "Same contact as the lead source. Trust balance above 0 is a confirmed client. Ignore Contact group.",
       lsa: { confirmed: 42, withMoney: 10, source: "LSA-Lead-Source-10-07 · trustClients. Not the lead source contact set." },
       ppc: { confirmed: 14, withMoney: null, source: "PPC-Lead-Source-10-08 + older-calls · unique matched phones. Not a 2026 lead source tag." },
@@ -1418,37 +1440,37 @@
       justia: { confirmed: 0, trustClients: 0, withMoney: 0, source: "Contact_11-05 Lead Source=Justia · 0 tags" },
       findlaw: { confirmed: 2, trustClients: 1, withMoney: 1, source: "Contact_11-05 Lead Source=FindLaw · 2 tags · 1 with Trust balance" },
       website: {
-        confirmed: 4,
-        trustClients: 4,
+        confirmed: 7,
+        trustClients: 7,
         withMoney: 0,
         source:
-          "HubSpot form-submits zip 10/18 · 23 submitters · 28 submits May–Oct* · email join Contact_10-17 Trust > 0 · blacklist excluded · 1 also has HubSpot Lead Source LSA"
+          "HubSpot form submits 11/19/2026, 43 unique submitters across NTGUILT and Primary Intake, email join to Contact_11-19-2026(1) Trust > 0 totaling $12,000, blacklist excluded"
       }
     },
     /**
-     * HubSpot Lead Source · CRM export hubspot-crm-exports-all-contacts-2026-10-22-1
-     * plus Lead Source uploads through HubSpot-Lead-Source-Update-11-05-2026-0830
-     * Advertisement blanks written as Google Ads. Confirmed = Trust balance on Contact_11-05 match.
+     * HubSpot Lead Source, CRM export hubspot-crm-exports-all-contacts-2026-10-22-1
+     * plus Lead Source uploads through 11-19-2026-2030.
+     * Confirmed = Trust balance on Contact_11-19-2026(1) match.
      * Clients w/$ = fee fields on that contact. Blacklist excluded. Aggregates only.
      */
     referralSourceContacts: {
-      asOf: "2026-11-05",
+      asOf: "2026-11-19",
       window: "2026",
-      hubspotContacts: 1043,
+      hubspotContacts: 1258,
       source:
-        "HubSpot CRM 10/22-1 · uploads through HubSpot-Lead-Source-Update-11-05-2026-0830 · Trust join Contact_11-05",
-      googleAds: { contacts: 277, withMoney: 59, trustClients: 115, trustSum: 537975 },
-      lsa: { contacts: 170, withMoney: 16, trustClients: 82, trustSum: 324525 },
+        "HubSpot CRM 10/22-1 plus uploads through 11-19-2026-2030, Trust join Contact_11-19-2026(1)",
+      googleAds: { contacts: 335, withMoney: 67, trustClients: 133, trustSum: 591675 },
+      lsa: { contacts: 153, withMoney: 10, trustClients: 74, trustSum: 309725 },
       clientReferral: { contacts: 11, withMoney: 0, trustClients: 4, trustSum: 11750 },
       professionalReferral: { contacts: 3, withMoney: 0, trustClients: 1, trustSum: 2000 },
-      findlaw: { contacts: 3, withMoney: 1, trustClients: 1, trustSum: 3900 },
-      /* Trust > 0 · Created 2026 · email match to HubSpot · Lead Source after uploads through 11/05 0830 */
+      findlaw: { contacts: 11, withMoney: 1, trustClients: 1, trustSum: 3900 },
+      /* Trust > 0, Created 2026, email match to HubSpot, Lead Source after uploads through 11/19 2030 */
       active2026Clients: {
-        withLeadSource: 123,
-        inHubSpot: 146,
-        pct: 84.2,
-        myCaseTrust2026: 199,
-        definition: "Active client = Trust balance > 0 · Created 2026 · blacklist excluded"
+        withLeadSource: 133,
+        inHubSpot: 163,
+        pct: 81.6,
+        myCaseTrust2026: 214,
+        definition: "Active client = Trust balance > 0, Created 2026, blacklist excluded"
       }
     },
     referralTags2026: {
@@ -2446,14 +2468,14 @@
     return "fresh";
   }
 
-  /** Resolve ISO as-of for a tile id · kpi.updatedAsOf · DATA.tileAsOf · optional override. */
+  /** Resolve ISO as-of for a tile id. Prefer DATA.tileAsOf from the latest refresh, then kpi.updatedAsOf. */
   function resolveTileAsOf(tileId, override) {
-    if (override) return String(override);
     const id = String(tileId || "");
-    const kpi = (DATA.kpis || []).find(item => item.id === id);
-    if (kpi && kpi.updatedAsOf) return String(kpi.updatedAsOf);
     const map = DATA.tileAsOf || {};
     if (map[id]) return String(map[id]);
+    if (override) return String(override);
+    const kpi = (DATA.kpis || []).find(item => item.id === id);
+    if (kpi && kpi.updatedAsOf) return String(kpi.updatedAsOf);
     return "";
   }
 
@@ -8142,6 +8164,42 @@
     });
   }
 
+  function flatFeeByAttorneyCardHtml() {
+    const pack = DATA.flatFeeByAttorney || {};
+    const rows = Array.isArray(pack.rows) ? pack.rows : [];
+    if (!rows.length) return "";
+    const totalCases = rows.reduce((sum, r) => sum + (Number(r.cases) || 0), 0);
+    const totalFees = rows.reduce((sum, r) => sum + (Number(r.total) || 0), 0);
+    const overallAvg = totalCases > 0 ? totalFees / totalCases : 0;
+    const fmtExact = n => "$" + Number(n || 0).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    const body = rows.map(r => {
+      const share = totalFees > 0 ? `${((Number(r.total) / totalFees) * 100).toFixed(1)}%` : "0%";
+      return `<tr><td>${escapeHtml(r.attorney)}</td><td>${r.cases}</td><td>${fmtMoney(r.total)}</td><td>${fmtExact(r.avg)}</td><td>${share}</td></tr>`;
+    }).join("");
+    const totalRow = `<tr class="kpi-table-total"><td>Total</td><td>${totalCases}</td><td>${fmtMoney(totalFees)}</td><td>${fmtExact(overallAvg)}</td><td>100%</td></tr>`;
+    const noteText = pack.window
+      ? `Open dates ${pack.window}. Excludes ${pack.hourlyCases || 0} hourly cases and ${pack.blankFeeCases || 0} case without a fee structure out of ${pack.openedCases || totalCases} opened cases.`
+      : "";
+    const noteHtml = noteText ? `<p class="kpi-table-note">${escapeHtml(noteText)}</p>` : "";
+    const table = `<div class="kpi-chart-detail">
+      <table class="kpi-table kpi-chart-table">
+        <thead><tr><th scope="col">Lead Attorney</th><th scope="col">Flat-Fee Cases</th><th scope="col">Total Contracted</th><th scope="col">Average Flat Fee</th><th scope="col">Share Of Total</th></tr></thead>
+        <tbody>${body}${totalRow}</tbody>
+      </table>
+      ${noteHtml}
+    </div>`;
+    /* No card corner: Cases and Fees section already carries the one WIP mark. */
+    return chartBlock({
+      title: "Flat Fee By Lead Attorney",
+      focus: "attorney-flat-fee",
+      helpId: "attorney-flat-fee",
+      table
+    });
+  }
+
   function forecastExpenseCoverageDialHtml() {
     const collectibleAnnual = 884981;
     const expensesAnnual = 960000;
@@ -11024,6 +11082,7 @@
         <div class="kpi-section-body">
           <div class="data-chart-table-stack">
             ${feeByPracticeSectionHtml()}
+            ${flatFeeByAttorneyCardHtml()}
             ${casesYoyPanelHtml()}
           </div>
         </div>
