@@ -5950,134 +5950,191 @@
       color: inherit;
     }
     .kpi-reward-scale-seats {
-      display: grid;
-      gap: 0.65rem;
-      margin: 0.45rem 0 0.35rem;
+      margin: 0.45rem 0 0.45rem;
     }
-    .kpi-reward-scale-seat {
-      padding: 0.55rem 0.65rem;
-      border: 1px solid rgba(58, 26, 110, 0.16);
+    .kpi-reward-seats-wrap {
+      overflow-x: auto;
+      border: 1px solid rgba(58, 26, 110, 0.18);
       border-radius: 8px;
-      background: color-mix(in srgb, #3a1a6e 6%, #fffcf7);
+      background: var(--gg-paper, #fffcf7);
     }
-    .kpi-reward-scale-seat .kpi-reward-scale-label {
-      margin-bottom: 0.35rem;
+    .kpi-reward-seats-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
     }
-    .kpi-reward-scale-seat-clear {
+    .kpi-reward-seats-table thead th {
+      padding: 0.45rem 0.35rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      line-height: 1.18;
+      text-align: left;
+      vertical-align: bottom;
+      border-bottom: 2px solid rgba(58, 26, 110, 0.18);
+      background: color-mix(in srgb, #3a1a6e 5%, #fffcf7);
+    }
+    .kpi-reward-seats-table thead th.kpi-reward-th-seat {
+      color: var(--gg-royal-deep, #2d1454);
+      padding-left: 0.5rem;
+      min-width: 4.5rem;
+    }
+    .kpi-reward-seats-table thead th.kpi-reward-th-calls {
+      color: var(--gg-series-2, #c45c26);
+      text-align: right;
+    }
+    .kpi-reward-seats-table thead th.kpi-reward-th-conv {
+      color: var(--gg-series-3, #b23a78);
+      text-align: right;
+    }
+    .kpi-reward-seats-table thead th.kpi-reward-th-cases {
+      color: var(--gg-royal, #3a1a6e);
+      text-align: right;
+    }
+    .kpi-reward-seats-table thead th.kpi-reward-th-eq {
+      width: 1.7rem;
+      padding: 0.4rem 0.15rem;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .kpi-reward-seats-table thead th.kpi-reward-th-result {
+      background: var(--gg-chart-plot, color-mix(in srgb, #3a1a6e 15%, #fffcf7));
+      text-align: right;
+    }
+    .kpi-reward-seats-table thead th.kpi-reward-th-contrib {
+      color: var(--gg-positive, #1f8a65);
+      border-left: 2px solid var(--gg-royal, #3a1a6e);
+      padding-left: 0.45rem;
+    }
+    .kpi-reward-seats-table thead th.kpi-reward-th-gain {
+      color: var(--gg-plum, #6a5acd);
+      padding-right: 0.5rem;
+    }
+    .kpi-reward-results-eq {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--gg-royal, #3a1a6e);
-      cursor: pointer;
-    }
-    .kpi-reward-scale-seat-clear input {
-      accent-color: var(--gg-royal, #3a1a6e);
-    }
-    .kpi-reward-scale-seat-fields {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.65rem 0.75rem;
-      align-items: start;
-    }
-    .kpi-reward-scale-seat-results {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.55rem 0.75rem;
-      margin-top: 0.7rem;
-      padding-top: 0.65rem;
-      border-top: 1px solid rgba(58, 26, 110, 0.12);
-    }
-    .kpi-reward-scale-seat-fields .kpi-reward-field,
-    .kpi-reward-scale-seat-results .kpi-reward-field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      min-width: 0;
-      margin: 0;
-    }
-    .kpi-reward-scale-seat-fields .kpi-reward-field-title,
-    .kpi-reward-scale-seat-results .kpi-reward-field-title {
-      display: block;
-      margin: 0;
-      padding: 0;
-      font-size: 0.72rem;
+      justify-content: center;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 999px;
+      background: var(--gg-royal, #3a1a6e);
+      color: #fff;
+      font-size: 0.85rem;
       font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: 0.01em;
+      line-height: 1;
+      user-select: none;
     }
-    .kpi-reward-scale-seat-fields .kpi-reward-field-title {
-      min-height: 2.1rem;
+    .kpi-reward-seats-table tbody th,
+    .kpi-reward-seats-table tbody td {
+      padding: 0.42rem 0.35rem;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(58, 26, 110, 0.1);
     }
-    .kpi-reward-field-calls .kpi-reward-field-title {
-      color: var(--gg-series-2, #c45c26);
+    .kpi-reward-seats-table tbody tr:last-child th,
+    .kpi-reward-seats-table tbody tr:last-child td {
+      border-bottom: 2px solid rgba(58, 26, 110, 0.18);
     }
-    .kpi-reward-field-conversion .kpi-reward-field-title {
-      color: var(--gg-series-3, #b23a78);
+    .kpi-reward-seats-table .kpi-reward-seat-name {
+      padding-left: 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--gg-royal-deep, #2d1454);
+      text-align: left;
+      white-space: nowrap;
     }
-    .kpi-reward-field-cases .kpi-reward-field-title {
-      color: var(--gg-royal, #3a1a6e);
+    .kpi-reward-seats-table .kpi-reward-seat-input-cell {
+      text-align: right;
+      vertical-align: top;
+      padding-top: 0.42rem;
     }
-    .kpi-reward-field-contrib .kpi-reward-field-title {
-      color: var(--gg-positive, #1f8a65);
-    }
-    .kpi-reward-field-gain .kpi-reward-field-title {
-      color: var(--gg-plum, #6a5acd);
-    }
-    .kpi-reward-scale-seat-fields .kpi-reward-scale-average,
-    .kpi-reward-scale-seat-results .kpi-reward-scale-average {
-      width: 100%;
-      max-width: none;
-      align-self: stretch;
+    .kpi-reward-seats-table .kpi-reward-scale-average {
+      width: 3.9rem;
+      max-width: 100%;
       box-sizing: border-box;
       margin: 0;
-      color: var(--gg-brown, #6b5344);
-      font-size: 1.05rem;
+      padding: 0.22rem 0.35rem;
+      color: var(--gg-brown, #3d3028);
+      font-size: 0.9rem;
       font-weight: 700;
+      text-align: right;
     }
-    .kpi-reward-scale-seat-fields .kpi-reward-field-range {
+    .kpi-reward-seats-table .kpi-reward-field-range {
       display: block;
-      margin: 0;
-      font-size: 0.68rem;
+      margin-top: 0.18rem;
+      font-size: 0.62rem;
       font-weight: 500;
-      line-height: 1.2;
+      line-height: 1.15;
       color: var(--secondary, #5c4f45);
+      white-space: nowrap;
+    }
+    .kpi-reward-seats-table .kpi-reward-td-eq {
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--gg-royal, #3a1a6e);
+      padding: 0.42rem 0.15rem;
+      user-select: none;
+    }
+    .kpi-reward-seats-table .kpi-reward-seat-result-cell {
+      background: var(--gg-chart-plot, color-mix(in srgb, #3a1a6e 15%, #fffcf7));
+      text-align: right;
+      white-space: nowrap;
+      cursor: default;
+    }
+    .kpi-reward-seats-table .kpi-reward-td-eq + .kpi-reward-seat-result-cell {
+      border-left: 2px solid var(--gg-royal, #3a1a6e);
+      padding-left: 0.45rem;
+    }
+    .kpi-reward-seats-table tr td.kpi-reward-seat-result-cell:last-child {
+      padding-right: 0.5rem;
     }
     .kpi-reward-seat-contrib-value,
     .kpi-reward-seat-gain-value {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.15rem 0.3rem;
-      box-sizing: border-box;
-      min-height: 2.5rem;
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: flex-end;
+      gap: 0.15rem;
       margin: 0;
-      padding: 0.45rem 0.55rem;
-      border-radius: 0.4rem;
-      background: #fff;
-      font-weight: 600;
+      padding: 0;
+      border: none;
+      background: transparent;
       line-height: 1.2;
-    }
-    .kpi-reward-seat-contrib-value {
-      border: 1px solid color-mix(in srgb, #1f8a65 32%, transparent);
-    }
-    .kpi-reward-seat-gain-value {
-      border: 1px solid color-mix(in srgb, #6a5acd 32%, transparent);
+      cursor: default;
     }
     .kpi-reward-seat-contrib-value .kpi-mtd-line,
     .kpi-reward-seat-gain-value .kpi-mtd-line {
-      color: var(--gg-brown, #6b5344);
-      font-size: 0.95rem;
-      font-weight: 400;
+      color: var(--gg-brown, #3d3028);
+      font-size: 0.88rem;
+      font-weight: 700;
     }
     .kpi-reward-seat-contrib-value .kpi-goal-slash {
       color: var(--secondary, #5c4f45);
+      font-size: 0.8rem;
       font-weight: 400;
     }
     .kpi-reward-seat-contrib-value .kpi-forecast-line {
       color: var(--gg-royal, #3a1a6e);
-      font-size: 0.95rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .kpi-reward-seats-table tfoot th,
+    .kpi-reward-seats-table tfoot td {
+      padding: 0.48rem 0.35rem;
+      background: color-mix(in srgb, #3a1a6e 8%, #fffcf7);
+      font-weight: 700;
+      vertical-align: middle;
+    }
+    .kpi-reward-seats-table tfoot td.kpi-reward-seat-result-cell {
+      background: color-mix(in srgb, #3a1a6e 20%, #fffcf7);
+    }
+    .kpi-reward-seats-table .kpi-reward-seat-total-num,
+    .kpi-reward-seats-table .kpi-reward-seat-total-dash {
+      text-align: right;
+      font-size: 0.9rem;
+      color: var(--gg-brown, #3d3028);
+      padding-right: 0.5rem;
+    }
+    .kpi-reward-seats-table .kpi-reward-seat-total-dash {
+      color: var(--secondary, #5c4f45);
       font-weight: 400;
     }
     .kpi-reward-seat-gain-value .kpi-seat-gain-up {
@@ -8969,7 +9026,7 @@
   <script src="projects-data.js?v=20261104-web-proposal"></script>
   <script src="recommendations-data.js?v=20260727-hubspot-casey-r1"></script>
   <script src="dui-goal-data.js?v=20261119-auto55"></script>
-  <script src="kpi-report.js?v=20261123-dl-refresh"></script>
+  <script src="kpi-report.js?v=20261123-seat-table2"></script>
   <script src="metrics-feedback.js?v=20260715-comments-off"></script>
   <script src="app.js?v=20261104-platform-parens"></script>
 </body>

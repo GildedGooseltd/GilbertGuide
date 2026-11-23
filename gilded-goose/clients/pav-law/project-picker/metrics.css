@@ -1016,6 +1016,200 @@ body.feedback-mode-on .feedback-target:hover {
   font-weight: 700;
   text-align: right;
 }
+.kpi-reward-scale-seats {
+  margin: 0.45rem 0 0.45rem;
+}
+.kpi-reward-seats-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(58, 26, 110, 0.18);
+  border-radius: 8px;
+  background: var(--gg-paper, #fffcf7);
+}
+.kpi-reward-seats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.kpi-reward-seats-table thead th {
+  padding: 0.45rem 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.18;
+  text-align: left;
+  vertical-align: bottom;
+  border-bottom: 2px solid rgba(58, 26, 110, 0.18);
+  background: color-mix(in srgb, #3a1a6e 5%, #fffcf7);
+}
+.kpi-reward-seats-table thead th.kpi-reward-th-seat {
+  color: var(--gg-royal-deep, #2d1454);
+  padding-left: 0.5rem;
+  min-width: 4.5rem;
+}
+.kpi-reward-seats-table thead th.kpi-reward-th-calls {
+  color: var(--gg-series-2, #c45c26);
+  text-align: right;
+}
+.kpi-reward-seats-table thead th.kpi-reward-th-conv {
+  color: var(--gg-series-3, #b23a78);
+  text-align: right;
+}
+.kpi-reward-seats-table thead th.kpi-reward-th-cases {
+  color: var(--gg-royal, #3a1a6e);
+  text-align: right;
+}
+.kpi-reward-seats-table thead th.kpi-reward-th-eq {
+  width: 1.7rem;
+  padding: 0.4rem 0.15rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.kpi-reward-seats-table thead th.kpi-reward-th-result {
+  background: var(--gg-chart-plot, color-mix(in srgb, #3a1a6e 15%, #fffcf7));
+  text-align: right;
+}
+.kpi-reward-seats-table thead th.kpi-reward-th-contrib {
+  color: var(--gg-positive, #1f8a65);
+  border-left: 2px solid var(--gg-royal, #3a1a6e);
+  padding-left: 0.45rem;
+}
+.kpi-reward-seats-table thead th.kpi-reward-th-gain {
+  color: var(--gg-plum, #6a5acd);
+  padding-right: 0.5rem;
+}
+.kpi-reward-results-eq {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 999px;
+  background: var(--gg-royal, #3a1a6e);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+}
+.kpi-reward-seats-table tbody th,
+.kpi-reward-seats-table tbody td {
+  padding: 0.42rem 0.35rem;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(58, 26, 110, 0.1);
+}
+.kpi-reward-seats-table tbody tr:last-child th,
+.kpi-reward-seats-table tbody tr:last-child td {
+  border-bottom: 2px solid rgba(58, 26, 110, 0.18);
+}
+.kpi-reward-seats-table .kpi-reward-seat-name {
+  padding-left: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--gg-royal-deep, #2d1454);
+  text-align: left;
+  white-space: nowrap;
+}
+.kpi-reward-seats-table .kpi-reward-seat-input-cell {
+  text-align: right;
+  vertical-align: top;
+  padding-top: 0.42rem;
+}
+.kpi-reward-seats-table .kpi-reward-scale-average {
+  width: 3.9rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.22rem 0.35rem;
+  color: var(--gg-brown, #3d3028);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+}
+.kpi-reward-seats-table .kpi-reward-field-range {
+  display: block;
+  margin-top: 0.18rem;
+  font-size: 0.62rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--secondary, #5c4f45);
+  white-space: nowrap;
+}
+.kpi-reward-seats-table .kpi-reward-td-eq {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gg-royal, #3a1a6e);
+  padding: 0.42rem 0.15rem;
+  user-select: none;
+}
+.kpi-reward-seats-table .kpi-reward-seat-result-cell {
+  background: var(--gg-chart-plot, color-mix(in srgb, #3a1a6e 15%, #fffcf7));
+  text-align: right;
+  white-space: nowrap;
+  cursor: default;
+}
+.kpi-reward-seats-table .kpi-reward-td-eq + .kpi-reward-seat-result-cell {
+  border-left: 2px solid var(--gg-royal, #3a1a6e);
+  padding-left: 0.45rem;
+}
+.kpi-reward-seats-table tr td.kpi-reward-seat-result-cell:last-child {
+  padding-right: 0.5rem;
+}
+.kpi-reward-seat-contrib-value,
+.kpi-reward-seat-gain-value {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  line-height: 1.2;
+  cursor: default;
+}
+.kpi-reward-seat-contrib-value .kpi-mtd-line,
+.kpi-reward-seat-gain-value .kpi-mtd-line {
+  color: var(--gg-brown, #3d3028);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.kpi-reward-seat-contrib-value .kpi-goal-slash {
+  color: var(--secondary, #5c4f45);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.kpi-reward-seat-contrib-value .kpi-forecast-line {
+  color: var(--gg-royal, #3a1a6e);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.kpi-reward-seats-table tfoot th,
+.kpi-reward-seats-table tfoot td {
+  padding: 0.48rem 0.35rem;
+  background: color-mix(in srgb, #3a1a6e 8%, #fffcf7);
+  font-weight: 700;
+  vertical-align: middle;
+}
+.kpi-reward-seats-table tfoot td.kpi-reward-seat-result-cell {
+  background: color-mix(in srgb, #3a1a6e 20%, #fffcf7);
+}
+.kpi-reward-seats-table .kpi-reward-seat-total-num,
+.kpi-reward-seats-table .kpi-reward-seat-total-dash {
+  text-align: right;
+  font-size: 0.9rem;
+  color: var(--gg-brown, #3d3028);
+  padding-right: 0.5rem;
+}
+.kpi-reward-seats-table .kpi-reward-seat-total-dash {
+  color: var(--secondary, #5c4f45);
+  font-weight: 400;
+}
+.kpi-reward-seat-gain-value .kpi-seat-gain-up {
+  color: var(--gg-positive, #1f8a65);
+}
+.kpi-reward-seat-gain-value .kpi-seat-gain-down {
+  color: var(--gg-negative, #cf2d56);
+}
 .kpi-reward-scale-inputs {
   margin: 0 0 0.85rem;
   padding-bottom: 0.75rem;

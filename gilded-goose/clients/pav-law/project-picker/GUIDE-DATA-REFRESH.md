@@ -83,6 +83,7 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 11/23/2026 | Midday DL refresh: ledger_account_activity_report 29 through 11/23 (last credit 11/20) moved Nov* revenue from $73,493 to $79,843 (+$6,350 in W3 to $28,700), 2026 YTD to $1,019,219, and trust_account_activity_report 3 confirmed Trust balance $1,868,797 through 11/23. Yelp reviews confirmed at 11 total, Nov new 3 as of 11/23. RENDER_VER 20261123-ledger29. |
 | 11/23/2026 | Search keyword report 70 Nov 1 through 11/19: Total Search Impr 7,322, clicks 513, CTR 7.01% (replacing Nov 1 through 16 Time_series 5,834). Click to call 10 / 513 = 1.9%. Synced yelpBaseline.reviewsAsOf to 2026-11-21 and lsaEfficiency Nov notCharged to 35 (1 in review). Verified case_list_report 15 Nov opens match Flat Fee By Lead Attorney. Published live with 11/21 LSA 60/24 and Yelp reviews 11. RENDER_VER 20261123-dl-refresh. |
 | 11/21/2026 | Yelp reviews 11 · Nov new 3 Kate 11/21. RENDER_VER 20261121-yelp11. |
 | 11/21/2026 | LSA only. leads-inbox (33) Nov 1–21: 60 received, 24 charged, 35 not charged, 1 in review. Lead Calls 109. LSA spend held $5,015.93 from activities 11/19. Campaign (66) Nov 14–20 week only, not applied to MTD Impr/clicks. No newer Call details, Contact, ledger, HubSpot forms, or activities. RENDER_VER 20261121-lsa-inbox33. |
