@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261119-funnel-no-paid-closed";
+  const RENDER_VER = "20261123-dl-refresh";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -21,11 +21,11 @@
     },
     "yelp": {
       file: "Yelp listing Kate 11/05/2026 · pav.law Google widget 11/08/2026 · DATA.reviews profiles",
-      fields: "Hero Yelp 9 of 20 · net new 2026 Jun 2 · Jul 1 · Aug 1 · Sep 1 · Oct 0 · Nov 1 · Google total 145 on pav.law widget 11/08/2026 · Google new Aug 1 · Sep 4 · Oct 0 · Nov 0 · Jul and Jun not in the newest slice · 2026 new reviews Aug 2 · Sep 5 · Oct 0 · Nov 1 · monthly goal 2"
+      fields: "Hero Yelp 11 of 20 · net new 2026 Jun 2 · Jul 1 · Aug 1 · Sep 1 · Oct 0 · Nov 3 · Google total 145 on pav.law widget 11/08/2026 · Google new Aug 1 · Sep 4 · Oct 0 · Nov 0 · Jul and Jun not in the newest slice · 2026 new reviews Aug 2 · Sep 5 · Oct 0 · Nov 3 · monthly goal 3"
     },
     "yelp-leads": {
       file: "Desktop Yelp screenshots 11/05/2026 · Ad Analytics CSV Oct 6–Nov 4 · Oct 9–Nov 7 · Contact_10-17 Lead Source=Yelp signed fees",
-      fields: "Oct Yelp contacts 7 = Messages 5 + round(Calls 4 × 46%) · Nov contacts 1 = Messages 1 + Calls 0 from Desktop 11/08 · spend Oct $1,500 · Nov $2,808.09 · CPC Oct $13.04 · Nov $23.40 · reviews 10 · Nov new 2 · signed fees $23,500 · cost/signed $168"
+      fields: "Oct Yelp contacts 7 = Messages 5 + round(Calls 4 × 46%) · Nov contacts 1 = Messages 1 + Calls 0 from Desktop 11/08 · spend Oct $1,500 · Nov $2,808.09 · CPC Oct $13.04 · Nov $23.40 · reviews 11 · Nov new 3 · signed fees $23,500 · cost/signed $168"
     },
     "#02": {
       file: "Downloads/Contact_11-08-2026 (1).csv · export 2026-11-08 · Sep Created through 09/30 · Oct Created 21 · Nov Created 4",
@@ -61,7 +61,7 @@
     },
     "#16": {
       file: "Google Maps + Yelp public pages · scraped 2026-07-16 · 102 S Tejon St",
-      fields: "GBP 4.9 · 145 reviews · pav.law Google widget 11/08/2026 · Yelp 4.5 · 10 reviews · FindLaw 0 (no firm reviews)"
+      fields: "GBP 4.9 · 145 reviews · pav.law Google widget 11/08/2026 · Yelp 4.5 · 11 reviews · FindLaw 0 (no firm reviews)"
     },
     "#19": {
       file: "Staging. DASHBOARD-STAGING.md · Missed Opportunity · Call details (9) Sep 1–23 in phoneByMonth",
@@ -229,7 +229,7 @@
     },
     "#16": {
       title: "#16 Reviews by channel",
-      desc: "Public review ratings and counts by directory. Yelp listing 4.5 · 10 reviews · Kate 11/19/2026. November new is 2. Ads/lead funnel baseline lives on the Yelp card (Data tab) and Project Guide DigProf.",
+      desc: "Public review ratings and counts by directory. Yelp listing 4.5 · 11 reviews · Kate 11/21/2026. November new is 3. Ads/lead funnel baseline lives on the Yelp card (Data tab) and Project Guide DigProf.",
       formula: null
     },
     "#17": {
@@ -239,7 +239,7 @@
     },
     "yelp": {
       title: "Reviews",
-      desc: "Hero is this month's new review count. Track rows: month new vs monthly Goal, Yelp total toward 20, Google new vs the same monthly Goal. Monthly Goal is the 2026 average of new Yelp and Google reviews per month, rounded up. August through November are the months with both counts: 2, 5, 0, and 2. The average rounds up to 3. June and July stay out of the average because the Google slice does not cover those months. Google new comes from the newest-first Google reviews on the pav.law widget, checked 11/08/2026. August is 1, September is 4, October is 0, and November is 0. July stays blank because that slice still ends inside July. June is not in the slice. The widget total is 145. Yelp total is 10 as of 11/19/2026.",
+      desc: "Hero is this month's new review count. Track rows: month new vs monthly Goal, Yelp total toward 20, Google new vs the same monthly Goal. Monthly Goal is the 2026 average of new Yelp and Google reviews per month, rounded up. August through November are the months with both counts: 2, 5, 0, and 3. The average rounds up to 3. June and July stay out of the average because the Google slice does not cover those months. Google new comes from the newest-first Google reviews on the pav.law widget, checked 11/08/2026. August is 1, September is 4, October is 0, and November is 0. July stays blank because that slice still ends inside July. June is not in the slice. The widget total is 145. Yelp total is 11 as of 11/21/2026.",
       formula: "Hero = Yelp month new. Monthly Goal = average of new Yelp plus Google reviews for 2026 months with both counts, rounded up. Yelp total = count / 20. Google = month new / monthly Goal."
     },
     "yelp-leads": {
@@ -544,22 +544,22 @@
 
   const DATA = {
     period: "November 2026",
-    asOf: "2026-11-19",
-    lastUpdated: "2026-11-19",
+    asOf: "2026-11-21",
+    lastUpdated: "2026-11-23",
     updateLabel: "November 2026",
-    updateScope: "DL 11/19: Auto Cases 55/50, #28 fee $5,661, Flat Fee By Lead Attorney table, Yelp reviews 10, spend $2,808, HubSpot 32, Lead Calls 101, phones 10, cash $73,493, cases 17",
-    source: "Kate 11/19 Yelp reviews 10, Yelp Ad Analytics Nov 1–18 + Oct 1–31, Desktop Leads breakdown 11/08 Nov Messages 1, Call details (34)/(35), hubspot forms 11/19, Contact_11-19, case_list_report(1), Trust_11-19, ledger (4), leads-inbox (32), account_activities_202611 (1), FindLaw Contacts",
+    updateScope: "DL 11/23: Search keyword report 70 Nov 1–19 Impr 7,322, clicks 513, CTR 7.01%. LSA 60 / 24 charged, Lead Calls 109. Yelp reviews 11, Nov new 3. Case list 15 verified Nov flat fees. Search phones 10, spend, cash, cases held from 11/19",
+    source: "Kate 11/21 Yelp reviews 11. leads-inbox (33) Nov 1–21. Search keyword report (70) Nov 1–19 Impr/clicks. case_list_report (15) verified 11/23. Prior 11/19 stack: Call details (34)/(35), hubspot forms 11/19, Contact_11-19, Trust_11-19, ledger (4), account_activities_202611 (1), Yelp Ad Analytics Nov 1–18, FindLaw Contacts. Campaign report (66) is Nov 14–20 week only, not used for MTD Impr/clicks",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
-      "#01": "2026-11-19",
+      "#01": "2026-11-21",
       "#02": "2026-11-19",
       "#03": "2026-11-19",
       "#04": "2026-11-19",
       "cash-pace": "2026-11-19",
-      "yelp": "2026-11-19",
+      "yelp": "2026-11-21",
       "yelp-leads": "2026-11-19",
       "justia": "2026-09-18",
-      "answer-rate": "2026-11-19",
+      "answer-rate": "2026-11-21",
       "ad-spend-by-channel": "2026-11-19",
       "spend-goal-nov": "2026-11-19",
       "dg-ctr": "2026-11-19",
@@ -837,7 +837,7 @@
       {
         month: "Nov*",
         search: 10,
-        lsa: 52,
+        lsa: 60,
         hubspot: 32,
         hubspotForms: 32,
         yelp: 1,
@@ -848,7 +848,7 @@
         findlawSpend: 924.38,
         searchSpend: 5321.38,
         lsaSpend: 5015.93,
-        note: "Nov* DL 11/19. Search phones 10 Call details (34)/(35). Search $5,321.38 · LSA 52 / $5,015.93. HubSpot Forms 32. Yelp contacts 1 = Messages 1 + round(Calls 0 × 46%) from Desktop Leads breakdown 11/08 Nov tooltip · total raw 5 · spend Nov 1–18 $2,808.09. Reviews 10 · Nov new 2 Kate 11/19. FindLaw 6. Cases 17. Cash $73,493. Lead Calls 101 = Search 10 + LSA 52 + HubSpot 32 + Yelp 1 + FindLaw 6."
+        note: "Nov* DL 11/21 LSA. leads-inbox (33) Nov 1–21: 60 received, 24 charged, 35 not charged, 1 in review. LSA spend still account_activities_202611 (1) $5,015.93 through 11/19. Search phones 10 Call details (34)/(35). Search $5,321.38. HubSpot Forms 32. Yelp contacts 1 · spend Nov 1–18 $2,808.09. Reviews 11 · Nov new 3 Kate 11/21. FindLaw 6. Cases 17. Cash $73,493. Lead Calls 109 = Search 10 + LSA 60 + HubSpot 32 + Yelp 1 + FindLaw 6. Campaign (66) Nov 14–20 week only, not applied to MTD Impr/clicks."
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -896,11 +896,11 @@
         windowNote: "Phones Call details (28) Oct 1–31, 19 Search calls, last phone day 10/30. Spend is the 10/31 statement live HS $9,555.44. Person Crimes $127.22 left out. Campaign (63) Oct 1–31 Account Impr 10,203 · clicks 737 · CTR 7.22%. $/phone ~$503."
       },
       Nov: {
-        impressions: 5834,
-        clicks: 507,
+        impressions: 7322,
+        clicks: 513,
         phoneCalls: 10,
         searchSpendLock: 5321.38,
-        windowNote: "Phones Call details (32) Nov 1–19: 10 Search calls · 4 Received · 6 Missed · last phone day 11/19. Spend account_activities_202611 (1) live HS $5,321.38. Impr 5,834 from Time_series Nov 1–16 · clicks 507 from activities. $/phone ~$532. Click → call 10 ÷ 507 ≈ 2.0%."
+        windowNote: "Phones Call details (34)/(35) Nov 1–19: 10 Search calls, 4 Received, 6 Missed, last phone day 11/19. Spend account_activities_202611 (1) live HS $5,321.38. Impr 7,322 and clicks 513 from Search keyword report (70) Nov 1–19 Total: Search, CTR 7.01%. $/phone ~$532. Click → call 10 ÷ 513 ≈ 1.9%."
       }
     },
     sourceMix: [
@@ -1018,7 +1018,7 @@
       { platform: "Past-client program", count: null, delta: null, status: "building", verified: false },
       { platform: "Friend / family", count: null, delta: null, status: "not wired", verified: false },
       { platform: "Attorney cross-referral", count: null, delta: null, status: "not wired", verified: false },
-      { platform: "Yelp", count: 10, delta: "+1", status: "active", verified: true },
+      { platform: "Yelp", count: 11, delta: "+1", status: "active", verified: true },
       { platform: "Justia", count: 27, delta: null, status: "active", verified: true },
       { platform: "Nextdoor", count: null, delta: null, status: "not on", verified: false }
     ],
@@ -1037,13 +1037,13 @@
       {
         platform: "Yelp",
         rating: "4.5",
-        count: 10,
-        asOf: "2026-11-19",
-        newByMonth: { Jun: 2, Jul: 1, Aug: 1, Sep: 1, Oct: 0, Nov: 2 },
+        count: 11,
+        asOf: "2026-11-21",
+        newByMonth: { Jun: 2, Jul: 1, Aug: 1, Sep: 1, Oct: 0, Nov: 3 },
         status: "revised",
         verified: true,
         url: "https://biz.yelp.com/home/A1V6e8n5rG3QQ3HMiK_q2g",
-        source: "Kate 11/19/2026 listing total 10 · Nov new 2 from prior 8 through Oct · rating 4.5 held"
+        source: "Kate 11/21/2026 listing total 11 · Nov new 3 from prior 8 through Oct · rating 4.5 held"
       },
       { platform: "Nextdoor Business", rating: "—", count: null, newByMonth: {}, status: "not on", verified: false },
       {
@@ -1202,7 +1202,7 @@
       { month: "Aug", cases: 20, leads: 101, spend: 10292.10, lsaSpend: 8516.70, adsSpend: 1775.40, adsLeads: 30, websiteLeads: 0 },
       { month: "Sep", cases: 16, leads: 97, spend: 19083.93, lsaSpend: 5432.71, adsSpend: 13651.22, adsLeads: 41, websiteLeads: 4 },
       { month: "Oct*", cases: 22, leads: 108, spend: 13874.46, lsaSpend: 4319.02, adsSpend: 9555.44, adsLeads: 19, websiteLeads: 18 },
-      { month: "Nov*", cases: 17, leads: 101, spend: 10337.31, lsaSpend: 5015.93, adsSpend: 5321.38, adsLeads: 10, websiteLeads: 32 }
+      { month: "Nov*", cases: 17, leads: 109, spend: 10337.31, lsaSpend: 5015.93, adsSpend: 5321.38, adsLeads: 10, websiteLeads: 32 }
     ],
     /**
      * Justia Profile Stats · Kate 09/18/2026.
@@ -1248,11 +1248,11 @@
      * Listing Reviews PDF 10/01/2026: 4.5 · 8 reviews. Last-30 ad clicks/impr from Ads performance panel.
      */
     yelpBaseline: {
-      asOf: "2026-11-19",
-      reviewsAsOf: "2026-11-19",
+      asOf: "2026-11-21",
+      reviewsAsOf: "2026-11-21",
       messagesAsOf: "2026-11-08",
       spendAsOf: "2026-11-19",
-      window: "Reviews 10 Kate 11/19 · Nov new 2. Oct contacts 7 held. Nov contacts 1 = Messages 1 + Calls 0 from Desktop Leads breakdown 11/08 Nov tooltip · raw total 5. Spend 11/19: Oct 1–31 $1,500 · Nov 1–18 $2,808.09 · 120 clicks · CPC $23.40. Answer rate 46% for contact formula.",
+      window: "Reviews 11 Kate 11/21 · Nov new 3. Oct contacts 7 held. Nov contacts 1 = Messages 1 + Calls 0 from Desktop Leads breakdown 11/08 Nov tooltip · raw total 5. Spend 11/19: Oct 1–31 $1,500 · Nov 1–18 $2,808.09 · 120 clicks · CPC $23.40. Answer rate 46% for contact formula.",
       answerRate: 0.46,
       answerRateNote: "Calls to your business · Answered 46% · call log 10/08 · still used for contact formula and Oct answeredCalls estimate",
       contactFormula: "Messages + round(Calls × answerRate)",
@@ -1367,14 +1367,14 @@
           Sep: { signed: 0, contractedTotal: 0, trustCredits: 0, potential: 1 }
         }
       },
-      reviews: 10,
-      reviewsTotal: 10,
+      reviews: 11,
+      reviewsTotal: 11,
       reviewsJune: 2,
       reviewsJuly: 1,
       reviewsAugust: 1,
       reviewsSeptember: 1,
       reviewsOctober: 0,
-      reviewsNovember: 2,
+      reviewsNovember: 3,
       reviewsPrior: 2,
       rating: "4.5"
     },
@@ -1558,9 +1558,9 @@
       { month: "Aug", leads: 61, charged: 27, notCharged: 34, lsaSpend: 8516.70 },
       { month: "Sep", leads: 44, charged: 20, notCharged: 24, lsaSpend: 5432.71 },
       { month: "Oct*", leads: 64, charged: 19, notCharged: 45, lsaSpend: 4319.02 },
-      { month: "Nov*", leads: 52, charged: 16, notCharged: 33, lsaSpend: 5015.93 }
+      { month: "Nov*", leads: 60, charged: 24, notCharged: 35, lsaSpend: 5015.93 }
     ],
-    lsaChargeRateOverall: { charged: 200, leads: 508, pct: 39.4 },
+    lsaChargeRateOverall: { charged: 208, leads: 516, pct: 40.3 },
     /* LSA inbox phones and names matched to Contact_09-28 / Lead-Source-10-07. Kate 10/08: Trust = client signal. No person fields. */
     lsaMatchedCases: {
       asOf: "2026-10-08",
@@ -2360,8 +2360,8 @@
     if (key === "Jul") return "July 2026 · Search + LSA + HubSpot 6 + Justia 6 + FindLaw 1 · verified";
     if (key === "Aug") return "August 2026 full month · revenue $104,545 · 20 cases · Justia 0 · ads paused";
     if (key === "Sep") return "September 2026 · Search 41 · LSA 44 · Billing Search $13,651 · LSA $5,433 · revenue $113,985 · cases Contact_10-02 · 16 cases · weekday answer 46%";
-    if (key === "Nov") return "November 2026 through 11/19 · Search phones 10 · Search spend $5,321 · Impr 5,834 · clicks 507 · LSA 52 / 16 charged · LSA $5,016 · HubSpot Forms 32 · FindLaw 6 · Yelp contacts 1 · Yelp spend $2,808 through 11/18 · Yelp reviews 10 · Lead Calls 101 · Search $/phone ~$532 · revenue $73,493 · cases 17";
-    return "October 2026 · Search 19 · LSA 64 inbox / 19 charged · HubSpot Forms 18 · Yelp 7 · Lead Calls 108 · Search $9,555 · LSA $4,319 · Yelp $1,500 Oct 1–31 · revenue $120,470 including $15,000 cashier's check and $500 cash · cases 22 · CTR 7.22% · Search $/phone ~$503 · Nov* Lead Calls 101 · cases 17 · revenue $73,493";
+    if (key === "Nov") return "November 2026 through 11/21 LSA, Search phones 10 through 11/19, Search spend $5,321, Impr 7,322, clicks 513, CTR 7.01%, LSA 60 / 24 charged, LSA $5,016 through 11/19, HubSpot Forms 32, FindLaw 6, Yelp contacts 1, Yelp spend $2,808 through 11/18, Yelp reviews 11, Nov new 3, Lead Calls 109, Search $/phone ~$532, revenue $73,493, cases 17";
+    return "October 2026 · Search 19 · LSA 64 inbox / 19 charged · HubSpot Forms 18 · Yelp 7 · Lead Calls 108 · Search $9,555 · LSA $4,319 · Yelp $1,500 Oct 1–31 · revenue $120,470 including $15,000 cashier's check and $500 cash · cases 22 · CTR 7.22% · Search $/phone ~$503 · Nov* Lead Calls 109 · cases 17 · revenue $73,493";
   }
 
   function reportPeriodPillsHtml() {
