@@ -83,6 +83,10 @@ Follow pav-kpi-month-update: period label matches values · green when filled ·
 
 | Date | Note |
 |---|---|
+| 11/23/2026 | Search keyword report 70 Nov 1 through 11/19: Total Search Impr 7,322, clicks 513, CTR 7.01% (replacing Nov 1 through 16 Time_series 5,834). Click to call 10 / 513 = 1.9%. Synced yelpBaseline.reviewsAsOf to 2026-11-21 and lsaEfficiency Nov notCharged to 35 (1 in review). Verified case_list_report 15 Nov opens match Flat Fee By Lead Attorney. Published live with 11/21 LSA 60/24 and Yelp reviews 11. RENDER_VER 20261123-dl-refresh. |
+| 11/21/2026 | Yelp reviews 11 · Nov new 3 Kate 11/21. RENDER_VER 20261121-yelp11. |
+| 11/21/2026 | LSA only. leads-inbox (33) Nov 1–21: 60 received, 24 charged, 35 not charged, 1 in review. Lead Calls 109. LSA spend held $5,015.93 from activities 11/19. Campaign (66) Nov 14–20 week only, not applied to MTD Impr/clicks. No newer Call details, Contact, ledger, HubSpot forms, or activities. RENDER_VER 20261121-lsa-inbox33. |
+| 11/19/2026 | Full 11/19 refresh: Auto Cases YTD 55/50 (DUI/DWAI 22, Traffic 33, Trust $112,120) fresh, #28 fee mean $5,661 (n=139) fresh, Flat Fee By Lead Attorney table added from case_list_report(1), Lead Source website/HubSpot aggregates refreshed post-11/19 uploads. RENDER_VER 20261119-refresh12. |
 | 11/19/2026 | Yelp reviews 10 · Nov new 2. Nov contacts 1 from Desktop 11/08 Leads breakdown. Lead Calls 101. RENDER_VER 20261119-yelp10. |
 | 11/19/2026 | Yelp Ad Analytics Nov 1–18 $2,808.09 · 120 clicks · Oct 1–31 $1,500 · 115 clicks. Call details (34)/(35) phones still 10. Lead Calls 100. RENDER_VER 20261119-yelp-pub. |
 | 11/19/2026 | HubSpot form submits 11/19: Nov Forms 32 = ntguilt 24 + primary-intake 8. Lead Calls 100. Call details (33) same 10 phones as (32). RENDER_VER 20261119-hsforms. |
