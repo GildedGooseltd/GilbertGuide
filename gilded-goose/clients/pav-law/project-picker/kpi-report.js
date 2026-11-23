@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261123-seat-table2";
+  const RENDER_VER = "20261123-goals-rm-fee-card";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -16,12 +16,12 @@
   /** Export-backed source footnotes — file path + fields for quick re-pull. */
   const KPI_SOURCES = {
     "#01": {
-      file: "Call details (28) Oct 1–31 · leads-inbox (30) · Campaign (59)/(63) · statement 10/31 · HubSpot form submits 11/05 · recheck 2026-11-05",
-      fields: "Jun 226 · Jul 281 · Aug 101 · Sep 97 · Oct* 108 = Search 19 + LSA 64 + HubSpot Forms 18 + Yelp 7 · Search from Call details (28) · NTGUILT forms 16 from 10/08 · Intake forms 2 · Yelp Oct contacts 7 · Lead Calls goal = round of Jul 281, Aug 101, Sep 97"
+      file: "Call details (35) through 11/19/2026, leads-inbox (33) through 11/21/2026, HubSpot form submits 11/19/2026, FindLaw INSIGHT 11/19/2026, Yelp Ad Analytics through 11/18/2026",
+      fields: "Jun 228, Jul 289, Aug 111, Sep 101, Oct* 109, Nov* 109 = LSA 60 + Forms 32 + Search 10 + FindLaw 6 + Yelp 1"
     },
     "yelp": {
-      file: "Yelp listing Kate 11/05/2026 · pav.law Google widget 11/08/2026 · DATA.reviews profiles",
-      fields: "Hero Yelp 11 of 20 · net new 2026 Jun 2 · Jul 1 · Aug 1 · Sep 1 · Oct 0 · Nov 3 · Google total 145 on pav.law widget 11/08/2026 · Google new Aug 1 · Sep 4 · Oct 0 · Nov 0 · Jul and Jun not in the newest slice · 2026 new reviews Aug 2 · Sep 5 · Oct 0 · Nov 3 · monthly goal 3"
+      file: "Yelp listing Kate 11/23/2026, Google Maps live scrape 11/23/2026, DATA.reviews profiles",
+      fields: "Hero Yelp 11 of 20, net new 2026 Jun 2, Jul 1, Aug 1, Sep 1, Oct 0, Nov 3. Google total 145 on Google Maps 11/23/2026, 2026 new Jan 1, Feb 6, Mar 3, Apr 10, May 4, Jun 4, Jul 6, Aug 1, Sep 4, Oct 2, Nov 0. Combined 2026 new Jun 6, Jul 7, Aug 2, Sep 5, Oct 2, Nov 3, monthly goal 5"
     },
     "yelp-leads": {
       file: "Desktop Yelp screenshots 11/05/2026 · Ad Analytics CSV Oct 6–Nov 4 · Oct 9–Nov 7 · Contact_10-17 Lead Source=Yelp signed fees",
@@ -60,8 +60,8 @@
       fields: "May 72/27 · Jun 83/39 locked · Jul 132/52 · Aug* 61/19 · Sep 44/15 · Jul LSA $14,555.67 · Aug* LSA $6,285.70 · Sep LSA $4,882.56"
     },
     "#16": {
-      file: "Google Maps + Yelp public pages · scraped 2026-07-16 · 102 S Tejon St",
-      fields: "GBP 4.9 · 145 reviews · pav.law Google widget 11/08/2026 · Yelp 4.5 · 11 reviews · FindLaw 0 (no firm reviews)"
+      file: "Google Maps live scrape 11/23/2026 and Yelp listing 11/23/2026, 102 S Tejon St",
+      fields: "GBP 4.9, 145 reviews as of 11/23/2026, Yelp 4.5, 11 reviews, FindLaw 0"
     },
     "#19": {
       file: "Staging. DASHBOARD-STAGING.md · Missed Opportunity · Call details (9) Sep 1–23 in phoneByMonth",
@@ -156,8 +156,8 @@
       fields: "ROAS = ledger Credits ÷ Search + LSA · paid-stack target 10× · watch below 4×"
     },
     "lsa-matched-cases": {
-      file: "29 leads-inbox files 03/02/2026–10/07/2026 · Contact_09-28-2026 Cell phone or first and last name · Home Services Ads activity Mar–Sep 2026",
-      fields: "82 MyCase matches · 10 with a contracted fee · average $5,350 · fee sum $53,500 · LSA media $54,305 · cost per match $662 · cost per fee case $5,431"
+      file: "38 leads-inbox files through 11/21/2026 joined to Contact_11-19-2026(1) and Case_balance_summary_11-19-2026(1), LSA billing Mar to Nov* 2026",
+      fields: "100 unique MyCase matches, 53 Trust clients ($173,050), 27 with contracted fee ($141,000, avg $5,222), LSA media $66,421, cost per match $664, 261% Trust return"
     },
     "client-referrals-review": {
       file: "da.gd stats pages · Review Media Kit print-11-07-2026 · CASE-CLOSE-REVIEW-QR-TRACKING.md",
@@ -239,7 +239,7 @@
     },
     "yelp": {
       title: "Reviews",
-      desc: "Hero is this month's new review count. Track rows: month new vs monthly Goal, Yelp total toward 20, Google new vs the same monthly Goal. Monthly Goal is the 2026 average of new Yelp and Google reviews per month, rounded up. August through November are the months with both counts: 2, 5, 0, and 3. The average rounds up to 3. June and July stay out of the average because the Google slice does not cover those months. Google new comes from the newest-first Google reviews on the pav.law widget, checked 11/08/2026. August is 1, September is 4, October is 0, and November is 0. July stays blank because that slice still ends inside July. June is not in the slice. The widget total is 145. Yelp total is 11 as of 11/23/2026.",
+      desc: "Hero is this month's new Yelp review count. Track rows: month new vs monthly Goal, Yelp total toward 20, Google new vs the same monthly Goal. Monthly Goal is the 2026 average of new Yelp and Google reviews per month, rounded up. June through November are the months with both counts: 6, 7, 2, 5, 2, and 3. The average is 4.17 and rounds up to 5. Google new comes from live Google Maps exact review timestamps scraped 11/23/2026: Jan 1, Feb 6, Mar 3, Apr 10, May 4, Jun 4, Jul 6, Aug 1, Sep 4, Oct 2, and Nov 0, total 145. Yelp total is 11 as of 11/23/2026.",
       formula: "Hero = Yelp month new. Monthly Goal = average of new Yelp plus Google reviews for 2026 months with both counts, rounded up. Yelp total = count / 20. Google = month new / monthly Goal."
     },
     "yelp-leads": {
@@ -314,8 +314,8 @@
     },
     "sales-cost-funnel": {
       title: "Sales Funnel",
-      desc: "Follows the KPI tile month. Funnel: Impressions → Clicks → Direct contacts → Signed cases → Contracted cases → Trust with open values. Websites = HubSpot forms + pav.law + ntguilt.com.",
-      formula: "Signed = Contact group Client by Created. Trust open = those Clients with Contact Trust balance > 0, Contact_11-08. Contracted = Case_balance Total > 0 on Billing Contact join. Oct 18 of 21 held from Case_balance_11-05. Nov 3 of 4 from Case_balance_11-08."
+      desc: "Follows the KPI tile month. Funnel: Impressions, Clicks, Direct contacts, Signed cases, Contracted cases, and Trust with open values. Upper funnel combines Search Ads impressions and clicks with GA4 website views and active users for pav.law and ntguilt.com when on file. Websites in Direct contacts combines HubSpot forms, pav.law, and ntguilt.com.",
+      formula: "Upper funnel Websites uses GA4 Pav Law - GA4 views and 30-day active users covering pav.law and ntguilt.com from Engagement_overview (5).csv through 10/01/2026. Signed = Contact group Client by Created. Trust open = those Clients with Contact Trust balance > 0. Contracted = Case_balance Total > 0 on Billing Contact join."
     },
     "dg-ctr": {
       title: "Digital Goal · CTR",
@@ -752,7 +752,7 @@
         findlawSpend: 924.38,
         searchSpend: 6005,
         lsaSpend: 11006,
-        note: "HubSpot form submits report 10/02/2026 · 7. Justia 09/18/2026 · 5 calls + 2 emails = 7 contacts · 2 website clicks. FindLaw contacts 10/05/2026 · 1 lead."
+        note: "HubSpot form submits report 10/02/2026: 7. Justia 09/18/2026: 5 calls + 2 emails = 7 contacts. FindLaw INSIGHT 11/19/2026: 1 call."
       },
       {
         month: "Jun",
@@ -764,11 +764,11 @@
         yelpSpend: 0,
         justia: 6,
         justiaSpend: 1500,
-        findlaw: 0,
+        findlaw: 2,
         findlawSpend: 924.38,
         searchSpend: 8296,
         lsaSpend: 13206,
-        note: "Search Call details (13) All-time · 126 calls · 90 received / 36 missed · ≥60s 27. HubSpot form submits report 10/02/2026 · 8. Yelp · 2 Messages · 2 Calls · 3 contacts. Justia 09/18/2026 · 4 calls + 2 emails = 6 contacts"
+        note: "Search Call details (13): 126 calls. HubSpot forms: 8. Yelp: 2 Messages, 2 Calls, 3 contacts, $0 ad spend. Justia: 6 contacts. FindLaw INSIGHT 11/19/2026: 2 calls."
       },
       {
         month: "Jul",
@@ -777,14 +777,14 @@
         hubspot: 6,
         hubspotForms: 6,
         yelp: 5,
-        yelpSpend: 0,
+        yelpSpend: 29,
         justia: 6,
         justiaSpend: 1500,
-        findlaw: 1,
+        findlaw: 9,
         findlawSpend: 924.38,
         searchSpend: 7262,
         lsaSpend: 14556,
-        note: "Search Call details (1) Jul 1–31 · LSA inbox(3) Jul full · HubSpot form submits report 10/02/2026 · 6. Yelp 10/08 · 5 Messages · 1 Call answered · 5 contacts. Justia 09/18/2026 · 4 calls + 2 emails = 6 contacts · 4 website clicks. FindLaw contacts 10/05/2026 · 1 lead."
+        note: "Search Call details: 131 calls. LSA inbox: 132 leads. HubSpot forms: 6. Yelp: 5 contacts, $29 ad spend from Yelp Ad Analytics Jan-Nov 18. Justia: 6 contacts. FindLaw INSIGHT 11/19/2026: 9 calls."
       },
       {
         month: "Aug",
@@ -793,14 +793,14 @@
         hubspot: 0,
         hubspotForms: 0,
         yelp: 10,
-        yelpSpend: 72.58,
+        yelpSpend: 124.97,
         justia: 0,
         justiaSpend: 1500,
-        findlaw: 0,
+        findlaw: 10,
         findlawSpend: 924.38,
         searchSpend: 1775.40,
         lsaSpend: 8516.70,
-        note: "Search Call details (13) · 30 calls. LSA inbox(3) 61 leads. Billing activity (1) Aug · Search $1,775.40 · LSA Home Services $8,516.70 / 27 billed leads. HubSpot forms 10/02 · 0. Yelp 10/08 · 8 Messages · 4 Calls · 10 contacts · spend $72.58."
+        note: "Search Call details: 30 calls. LSA inbox: 61 leads. Billing: Search $1,775.40, LSA $8,516.70. HubSpot forms: 0. Yelp: 10 contacts, $124.97 full-month ad spend from Yelp Ad Analytics 11/19. FindLaw INSIGHT 11/19/2026: 9 calls, 1 email."
       },
       {
         month: "Sep",
@@ -809,14 +809,14 @@
         hubspot: 4,
         hubspotForms: 4,
         yelp: 8,
-        yelpSpend: 432.67,
+        yelpSpend: 572.23,
         justia: 0,
         justiaSpend: 1500,
-        findlaw: 0,
+        findlaw: 4,
         findlawSpend: 924.38,
         searchSpend: 13651.22,
         lsaSpend: 5432.71,
-        note: "Search Call details (13) · Sep 41 calls. LSA inbox (22) 44 leads. Billing activity (1) Sep · Search $13,651.22 · LSA Home Services $5,432.71 / 20 billed leads. Campaign (41) Sep 1–28 Impr 3,224. Yelp 10/08 · 6 Messages · 5 Calls · 8 contacts · Ad Analytics Sep 1–27 $432.67 · HubSpot forms 4. Justia fee $1,500 · Kate 10/10 through contract end. Cases Contact_10-08 · Sep 16. Cash ledger (11) Sep $113,985."
+        note: "Search Call details: 41 calls. LSA inbox: 44 leads. Billing: Search $13,651.22, LSA $5,432.71. Yelp: 8 contacts, $572.23 full-month ad spend from Yelp Ad Analytics 11/19. HubSpot forms: 4. FindLaw INSIGHT 11/19/2026: 3 calls, 1 email."
       },
       {
         month: "Oct*",
@@ -828,11 +828,11 @@
         yelpSpend: 1500,
         justia: 0,
         justiaSpend: 1500,
-        findlaw: 0,
+        findlaw: 1,
         findlawSpend: 924.38,
         searchSpend: 9555.44,
         lsaSpend: 4319.02,
-        note: "Oct* cash $120,470 = ledger (20)/(19) $104,970 through 10/30/2026 plus $15,000 cashier's check and $500 cash. No Credit rows on 10/31. Search Call details (28)/(35) Oct 1–31: 19 calls, 12 received / 7 missed, last phone day 10/30. LSA leads-inbox (30): 64 Oct received, 19 charged, 44 not charged, 1 credited. LSA spend statement 10/31 $4,319.02 for 20 leads. Search spend statement 10/31 live HS $9,555.44. Person Crimes $127.22 left out. Campaign (63) Oct 1–31 Account Impr 10,203 · clicks 737 · cost $9,802.75. HubSpot Forms 18 = NTGUILT 16 from 10/08–10/30 plus Intake 2. Yelp Oct contacts 7 held. Yelp spend Oct 1–31 $1,500 from Ad Analytics 11/19. Cases 22 Contact_11-19."
+        note: "Oct* cash $120,470. Search Call details (28)/(35): 19 calls. LSA leads-inbox (30): 64 received, 19 charged. LSA spend $4,319.02, Search spend $9,555.44. HubSpot Forms 18. Yelp: 7 contacts, $1,500 ad spend. FindLaw INSIGHT 11/19/2026: 1 call. Cases 22 Contact_11-19."
       },
       {
         month: "Nov*",
@@ -848,7 +848,7 @@
         findlawSpend: 924.38,
         searchSpend: 5321.38,
         lsaSpend: 5015.93,
-        note: "Nov* DL 11/23 midday: ledger (29) Cash $79,843 through 11/23, Trust balance $1,868,797 through 11/23. Yelp reviews 11, Nov new 3 Kate 11/23. leads-inbox (33) Nov 1–21: 60 received, 24 charged, 35 not charged, 1 in review. LSA spend still account_activities_202611 (1) $5,015.93 through 11/19. Search phones 10 Call details (34)/(35). Search $5,321.38. HubSpot Forms 32. Yelp contacts 1, spend Nov 1–18 $2,808.09. FindLaw 6. Cases 17. Lead Calls 109 = Search 10 + LSA 60 + HubSpot 32 + Yelp 1 + FindLaw 6."
+        note: "Nov* DL 11/23 midday: ledger (29) Cash $79,843 through 11/23, Trust balance $1,868,797 through 11/23. Yelp reviews 11, Nov new 3 Kate 11/23. leads-inbox (33) Nov 1-21: 60 received, 24 charged. LSA spend $5,015.93, Search $5,321.38 through 11/19. Search phones 10. HubSpot Forms 32. Yelp contacts 1 (11/08), spend Nov 1-18 $2,808.09. FindLaw INSIGHT 6 (3 calls, 3 emails). Cases 17. Lead Calls 109."
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -1027,12 +1027,12 @@
         platform: "Google Business Profile",
         rating: "4.9",
         count: 145,
-        asOf: "2026-11-08",
-        newByMonth: { Jun: null, Jul: null, Aug: 1, Sep: 4, Oct: 0, Nov: 0 },
+        asOf: "2026-11-23",
+        newByMonth: { Jan: 1, Feb: 6, Mar: 3, Apr: 10, May: 4, Jun: 4, Jul: 6, Aug: 1, Sep: 4, Oct: 2, Nov: 0 },
         status: "revised",
         verified: true,
         url: "https://www.google.com/maps/search/?api=1&query=Pav+Law+102+S+Tejon+St+Suite+1100+Colorado+Springs+CO",
-        source: "pav.law Google widget 11/08/2026 · total 145 · newest-first slice through 07/11/2026 · Aug 1 · Sep 4 · Oct 0 · Nov 0"
+        source: "Google Maps live scrape 11/23/2026, total 145, rating 4.9, 2026 new by exact timestamp: Jan 1, Feb 6, Mar 3, Apr 10, May 4, Jun 4, Jul 6, Aug 1, Sep 4, Oct 2, Nov 0"
       },
       {
         platform: "Yelp",
@@ -1197,11 +1197,11 @@
       { month: "Mar", cases: 17, leads: null, spend: 921, lsaSpend: 921, adsSpend: 0, adsLeads: null, websiteLeads: null },
       { month: "Apr", cases: 15, leads: null, spend: 3449, lsaSpend: 3449, adsSpend: 0, adsLeads: null, websiteLeads: null },
       { month: "May", cases: 22, leads: 126, spend: 17011, lsaSpend: 11006, adsSpend: 6005, adsLeads: 39, websiteLeads: 7 },
-      { month: "Jun", cases: 36, leads: 226, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 126, websiteLeads: 8 },
-      { month: "Jul", cases: 35, leads: 281, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 6 },
-      { month: "Aug", cases: 20, leads: 101, spend: 10292.10, lsaSpend: 8516.70, adsSpend: 1775.40, adsLeads: 30, websiteLeads: 0 },
-      { month: "Sep", cases: 16, leads: 97, spend: 19083.93, lsaSpend: 5432.71, adsSpend: 13651.22, adsLeads: 41, websiteLeads: 4 },
-      { month: "Oct*", cases: 22, leads: 108, spend: 13874.46, lsaSpend: 4319.02, adsSpend: 9555.44, adsLeads: 19, websiteLeads: 18 },
+      { month: "Jun", cases: 36, leads: 228, spend: 21502, lsaSpend: 13206, adsSpend: 8296, adsLeads: 126, websiteLeads: 8 },
+      { month: "Jul", cases: 35, leads: 289, spend: 21818, lsaSpend: 14556, adsSpend: 7262, adsLeads: 131, websiteLeads: 6 },
+      { month: "Aug", cases: 20, leads: 111, spend: 10292.10, lsaSpend: 8516.70, adsSpend: 1775.40, adsLeads: 30, websiteLeads: 0 },
+      { month: "Sep", cases: 16, leads: 101, spend: 19083.93, lsaSpend: 5432.71, adsSpend: 13651.22, adsLeads: 41, websiteLeads: 4 },
+      { month: "Oct*", cases: 22, leads: 109, spend: 13874.46, lsaSpend: 4319.02, adsSpend: 9555.44, adsLeads: 19, websiteLeads: 18 },
       { month: "Nov*", cases: 17, leads: 109, spend: 10337.31, lsaSpend: 5015.93, adsSpend: 5321.38, adsLeads: 10, websiteLeads: 32 }
     ],
     /**
@@ -1306,27 +1306,31 @@
         note: "Yelp Ad Analytics Nov 1–18 downloaded 11/19/2026 · Incomplete month"
       },
       sepAdAnalytics: {
-        window: "2026-09-01 to 2026-09-27",
-        impressions: 7253,
-        clicks: 62,
-        avgCpc: 6.98,
-        spend: 432.67
+        window: "2026-09-01 to 2026-09-30",
+        impressions: 8765,
+        clicks: 75,
+        avgCpc: 7.63,
+        spend: 572.23
       },
-      /* Calendar-month Ad Analytics for Click → call and CTR tracks · not the Search gauge. */
+      /* Calendar-month Ad Analytics for Click to call and CTR tracks, not the Search gauge. */
       adClicksByMonth: {
-        Aug: 27,
-        Sep: 62,
+        Jul: 8,
+        Aug: 38,
+        Sep: 75,
         Oct: 115,
         Nov: 120
       },
       adImpressionsByMonth: {
-        Sep: 7253,
+        Jul: 1001,
+        Aug: 2359,
+        Sep: 8765,
         Oct: 14444,
         Nov: 10182
       },
-      sepBillingSpend: 432.67,
-      sepBillingSpendWindow: "2026-09-01 to 2026-09-27",
-      augBillingSpend: 72.58,
+      sepBillingSpend: 572.23,
+      sepBillingSpendWindow: "2026-09-01 to 2026-09-30",
+      augBillingSpend: 124.97,
+      julBillingSpend: 29,
       messages: 5,
       messageCategories: [],
       messageRecencyDays: [],
@@ -1350,21 +1354,24 @@
        * Aggregates only. 5 Contact matches · 3 signed with fee · 1 Potential Case $0 · billing contact rolls into homicide matter.
        */
       caseValue: {
-        asOf: "2026-10-17",
-        source: "Case_balance_summary_10-17-2026 · Trust_account_summary_10-17-2026 · Contact_10-17 Lead Source=Yelp · contracted Total join · prior Trust Credit Aug pack kept where Credit column thin",
+        asOf: "2026-11-19",
+        source: "Contact_11-19-2026(1) Trust balance, Contact_11-10-2026 Lead Source=Yelp (5 tags, 3 Trust clients), Yelp Ad Analytics Jan 1 - Nov 18",
         matchedContacts: 5,
         confirmedClients: 5,
+        trustClients: 3,
         signedWithFee: 3,
         potentialNoFee: 2,
         contractedTotal: 23500,
         contractedMean: 7833,
-        trustCreditTotal: 9145,
-        spendForSigned: 505.25,
-        costPerSigned: 168,
+        trustCreditTotal: 13220,
+        spendForSigned: 726.20,
+        costPerSigned: 242,
         byMonth: {
           Jul: { signed: 2, contractedTotal: 8500, trustCredits: 3145 },
-          Aug: { signed: 1, contractedTotal: 15000, trustCredits: 6000 },
-          Sep: { signed: 0, contractedTotal: 0, trustCredits: 0, potential: 1 }
+          Aug: { signed: 1, contractedTotal: 15000, trustCredits: 10075 },
+          Sep: { signed: 0, contractedTotal: 0, trustCredits: 0, potential: 1 },
+          Oct: { signed: 0, contractedTotal: 0, trustCredits: 0 },
+          Nov: { signed: 0, contractedTotal: 0, trustCredits: 0 }
         }
       },
       reviews: 11,
@@ -1380,6 +1387,31 @@
     },
     /** HubSpot forms fee — $1,095/mo starting Jun 2026 (not charged Jan–May). Kate 10/23/2026. */
     websiteHubspotMonthlyFromJun: 1095,
+    /** GA4 website traffic for ntguilt.com from latest on-file Engagement overview export. */
+    ga4Ntguilt: {
+      views: 733,
+      asOf: "2026-10-01",
+      window: "01/01/2026 through 10/01/2026",
+      source: "Downloads/Engagement_overview (5).csv, Pav Law - GA4, Page title NTGUILT Views 733"
+    },
+    /**
+     * GA4 upper-funnel website traffic for pav.law and ntguilt.com combined on Pav Law - GA4.
+     * Post-hack clean monthly views (pro-rated from GA4 weekly Views W18-W39) and month-end 30-day active users.
+     * Source: Downloads/Engagement_overview (5).csv (01/01/2026 through 10/01/2026). Oct past 10/01 and Nov not on file.
+     */
+    gaWebsiteFunnel: {
+      asOf: "2026-10-01",
+      source: "Downloads/Engagement_overview (5).csv, Pav Law - GA4 (pav.law + ntguilt.com), 01/01/2026 through 10/01/2026",
+      byMonth: {
+        May: { views: 5133, users: 2854, pavLawViews: null, ntguiltViews: null, pavLawUsers: null, ntguiltUsers: null },
+        Jun: { views: 4116, users: 2397, pavLawViews: null, ntguiltViews: null, pavLawUsers: null, ntguiltUsers: null },
+        Jul: { views: 2873, users: 1957, pavLawViews: null, ntguiltViews: null, pavLawUsers: null, ntguiltUsers: null },
+        Aug: { views: 1860, users: 1014, pavLawViews: null, ntguiltViews: null, pavLawUsers: null, ntguiltUsers: null },
+        Sep: { views: 2419, users: 1689, pavLawViews: null, ntguiltViews: null, pavLawUsers: null, ntguiltUsers: null },
+        Oct: { views: null, users: null, pavLawViews: null, ntguiltViews: null, pavLawUsers: null, ntguiltUsers: null },
+        Nov: { views: null, users: null, pavLawViews: null, ntguiltViews: null, pavLawUsers: null, ntguiltUsers: null }
+      }
+    },
     /** Guide Digital Ads Maintenance Retainer — contractor management for Search/LSA/Microsoft. */
     digitalMgmtMonthly: 3000,
     /** Referral Sites listings — $1,500/mo. */
@@ -1390,29 +1422,42 @@
      * Lead-Source real leads exclude Kate Apr Estate Planning test row.
      */
     findlawPackage: {
-      asOf: "2026-10-08",
+      asOf: "2026-11-19",
       orderId: "Q-10772187",
       monthly: 924.38,
-      source: "Order Q-10772187 · Contact_10-17 Lead Source=FindLaw tags · FindLaw-Lead-Source-10-05",
-      leadsReal: 2,
+      source: "Order Q-10772187, FindLaw INSIGHT Contacts 11/19/2026 (Nov 2025 through Nov 19, 2026), Contact_11-19-2026(1) Trust join",
+      leadsReal: 36,
+      uniqueContacts: 27,
+      callsTotal: 29,
+      emailsTotal: 7,
       matchedContacts: 2,
-      confirmedClients: 2,
-      leadsByMonth: { Mar: 0, Apr: 0, May: 1, Jun: 0, Jul: 1, Aug: 0, Sep: 0 },
-      /* Contact Lead Source=FindLaw · by Contact Created month · Kate tagged by 10/08 */
-      matchedByCreatedMonth: { Mar: 0, Apr: 0, May: 0, Jun: 0, Jul: 1, Aug: 0, Sep: 0 },
-      matchedOutsideWindow: 1
+      confirmedClients: 1,
+      trustClients: 1,
+      trustSum: 3900,
+      leadsByMonth: { Feb: 2, Mar: 0, Apr: 1, May: 1, Jun: 2, Jul: 9, Aug: 10, Sep: 4, Oct: 1, Nov: 6 },
+      callsByMonth: { Feb: 1, Mar: 0, Apr: 0, May: 1, Jun: 2, Jul: 9, Aug: 9, Sep: 3, Oct: 1, Nov: 3 },
+      emailsByMonth: { Feb: 1, Mar: 0, Apr: 1, May: 0, Jun: 0, Jul: 0, Aug: 1, Sep: 1, Oct: 0, Nov: 3 },
+      matchedByCreatedMonth: { May: 1, Jul: 1 },
+      trustByMonth: { Jul: 1 },
+      matchedOutsideWindow: 0,
+      impressions: 6543,
+      engagements: 183,
+      impressionsWindow: "11/01/2025 through 10/31/2026",
+      impressionsSource: "Downloads/dashboard_insight_performance_analytics.pdf 11/19/2026",
+      clicks: 26,
+      clicksWindow: "10/01/2025 through 09/30/2026",
+      clicksSource: "Downloads/DirectoryProfiles_2025Oct01_2026Sep30.xlsx 21 + DirectoryAds_2025Oct01_2026Sep30.xlsx 5"
     },
     /**
-     * Contact Lead Source field tags · Contact_11-05 · Kate updates.
-     * Ignore Contact group. Use these matches on Lead Source graphs/tables.
-     * Blank Contact Lead Source filled from Leads Referral source on phone join when single-source.
+     * Contact Lead Source field tags from Contact_11-10-2026 joined to Contact_11-19-2026(1) Trust balance.
+     * Ignore Contact group.
      */
     contactLeadSource: {
-      asOf: "2026-11-05",
-      source: "Contact_11-05-2026.csv Lead Source, plus Leads_referral_10-17-2026.csv where Lead Source was blank. Map 10/18/2026. Blacklist excluded. Dual-path skipped.",
-      yelp: { matched: 5, byCreatedMonth: { Jul: 2, Aug: 2, Sep: 1 } },
-      findlaw: { matched: 2, byCreatedMonth: { Jul: 1 }, matchedOutsideWindow: 1 },
-      justia: { matched: 0, byCreatedMonth: {} },
+      asOf: "2026-11-19",
+      source: "Contact_11-10-2026.csv Lead Source tags joined to Contact_11-19-2026(1).csv Trust balance. Blacklist excluded.",
+      yelp: { matched: 5, trustClients: 3, byCreatedMonth: { Jul: 2, Aug: 2, Sep: 1 } },
+      findlaw: { matched: 2, trustClients: 1, byCreatedMonth: { May: 1, Jul: 1 }, matchedOutsideWindow: 0 },
+      justia: { matched: 0, trustClients: 0, byCreatedMonth: {} },
       lsa: {
         matched: 63,
         byCreatedMonth: { Feb: 10, Apr: 8, May: 11, Jun: 9, Jul: 7, Aug: 6, Sep: 5, Oct: 7 }
@@ -1428,48 +1473,53 @@
       }
     },
     /**
-     * Confirmed clients from the existing joins. Kate 10/19/2026: do not replace these with referral tags.
-     * Referral tags for 2026 creates are in referralTags2026.
+     * Confirmed clients from channel joins. Trust balance above 0 is the confirmed client signal.
      */
     leadSourceConfirmed: {
-      asOf: "2026-11-19",
+      asOf: "2026-11-21",
       definition: "Same contact as the lead source. Trust balance above 0 is a confirmed client. Ignore Contact group.",
-      lsa: { confirmed: 42, withMoney: 10, source: "LSA-Lead-Source-10-07 · trustClients. Not the lead source contact set." },
-      ppc: { confirmed: 14, withMoney: null, source: "PPC-Lead-Source-10-08 + older-calls · unique matched phones. Not a 2026 lead source tag." },
-      yelp: { confirmed: 5, trustClients: 3, withMoney: 3, source: "Contact_11-05 Lead Source=Yelp · 5 tags · 3 with Trust balance" },
-      justia: { confirmed: 0, trustClients: 0, withMoney: 0, source: "Contact_11-05 Lead Source=Justia · 0 tags" },
-      findlaw: { confirmed: 2, trustClients: 1, withMoney: 1, source: "Contact_11-05 Lead Source=FindLaw · 2 tags · 1 with Trust balance" },
+      lsa: { confirmed: 53, matched: 100, withMoney: 27, trustSum: 173050, source: "LSA leads-inbox Mar through Nov 21 joined to Contact_11-19-2026(1) and Case_balance_summary_11-19-2026(1)" },
+      ppc: { confirmed: 14, withMoney: null, source: "PPC-Lead-Source-10-08 + older-calls unique matched phones, plus Call details (35) Oct 1 Trust client ($3,000)" },
+      yelp: { confirmed: 5, trustClients: 3, withMoney: 3, trustSum: 13220, source: "Contact_11-10 Lead Source=Yelp (5 tags), Contact_11-19(1) 3 with Trust balance totaling $13,220" },
+      justia: { confirmed: 0, trustClients: 0, withMoney: 0, source: "Contact_11-10 Lead Source=Justia: 0 tags" },
+      findlaw: { confirmed: 2, trustClients: 1, withMoney: 1, trustSum: 3900, source: "FindLaw INSIGHT 11/19/2026 joined to Contact_11-19(1): 2 MyCase matches, 1 Trust client ($3,900)" },
       website: {
         confirmed: 7,
         trustClients: 7,
         withMoney: 0,
+        trustSum: 12000,
+        primaryIntakeTrustClients: 1,
+        primaryIntakeTrustSum: 5000,
+        ntguiltFormTrustClients: 6,
+        ntguiltFormTrustSum: 7000,
         source:
-          "HubSpot form submits 11/19/2026, 43 unique submitters across NTGUILT and Primary Intake, email join to Contact_11-19-2026(1) Trust > 0 totaling $12,000, blacklist excluded"
+          "HubSpot form submits 11/19/2026 joined to Contact_11-19-2026(1): Primary Intake 1 Trust client ($5,000), NTGUILT Auto Inquiry 6 Trust clients ($7,000), blacklist excluded"
       }
     },
     /**
-     * HubSpot Lead Source, CRM export hubspot-crm-exports-all-contacts-2026-10-22-1
-     * plus Lead Source uploads through 11-19-2026-2030.
-     * Confirmed = Trust balance on Contact_11-19-2026(1) match.
-     * Clients w/$ = fee fields on that contact. Blacklist excluded. Aggregates only.
+     * HubSpot Lead Source: CRM export 10/22-1 plus all Lead Source uploads through HubSpot-Combined-Contacts-11-20-2026-1255.csv.
+     * Confirmed = Trust balance > 0 on Contact_11-19-2026(1) match. Blacklist excluded. Aggregates only.
      */
     referralSourceContacts: {
-      asOf: "2026-11-19",
+      asOf: "2026-11-20",
       window: "2026",
-      hubspotContacts: 1258,
+      hubspotContacts: 1232,
       source:
-        "HubSpot CRM 10/22-1 plus uploads through 11-19-2026-2030, Trust join Contact_11-19-2026(1)",
-      googleAds: { contacts: 335, withMoney: 67, trustClients: 133, trustSum: 591675 },
-      lsa: { contacts: 153, withMoney: 10, trustClients: 74, trustSum: 309725 },
+        "HubSpot CRM 10/22-1 plus uploads through 11/20/2026 (HubSpot-Combined-Contacts-11-20-2026-1255.csv), Trust join Contact_11-19-2026(1)",
+      googleAds: { contacts: 335, withMoney: 67, trustClients: 135, trustSum: 601175 },
+      lsa: { contacts: 153, withMoney: 10, trustClients: 76, trustSum: 324725 },
       clientReferral: { contacts: 11, withMoney: 0, trustClients: 4, trustSum: 11750 },
       professionalReferral: { contacts: 3, withMoney: 0, trustClients: 1, trustSum: 2000 },
+      websiteForm: { contacts: 12, withMoney: 0, trustClients: 1, trustSum: 5000 },
       findlaw: { contacts: 11, withMoney: 1, trustClients: 1, trustSum: 3900 },
-      /* Trust > 0, Created 2026, email match to HubSpot, Lead Source after uploads through 11/19 2030 */
+      yelp: { contacts: 5, withMoney: 0, trustClients: 3, trustSum: 13220 },
+      /* Trust > 0, Created 2026, email or phone match to HubSpot, Lead Source after uploads through 11/20 */
       active2026Clients: {
-        withLeadSource: 133,
-        inHubSpot: 163,
-        pct: 81.6,
-        myCaseTrust2026: 214,
+        withLeadSource: 136,
+        inHubSpot: 162,
+        pct: 84.0,
+        myCaseTrust2026: 217,
+        myCaseTrust2026Sum: 769886,
         definition: "Active client = Trust balance > 0, Created 2026, blacklist excluded"
       }
     },
@@ -1532,13 +1582,65 @@
      * Contracted = Case_balance Total > 0 on Billing Contact join · 11/19.
      */
     salesFunnelCaseEconomics: {
-      asOf: "2026-11-19",
-      source: "Contact_11-19-2026(1) · Client Created · Trust balance · Case_balance_summary_11-19(1) Totals · Trust_account_summary_11-19",
+      asOf: "2026-11-23",
+      source: "Contact_11-19-2026 Client Created + Trust balance > 0, case_list_report (15) 11/23/2026 Flat Fee > 0, joined to LSA leads-inbox (33), Call details (35), HubSpot forms 11/19, FindLaw INSIGHT, and Lead Source tags. Aggregates only.",
       byMonth: {
-        Aug: { contracted: null, trustOpen: 17, paidClosed: null },
-        Sep: { contracted: null, trustOpen: 16, paidClosed: null },
-        Oct: { contracted: 13, trustOpen: 15, paidClosed: null },
-        Nov: { contracted: 12, trustOpen: 15, paidClosed: null }
+        May: {
+          contracted: 20,
+          trustOpen: 20,
+          paidClosed: null,
+          signedByChannel: { Search: 6, LSA: 7, Referral: 1, Other: 8 },
+          contractedByChannel: { Search: 6, LSA: 6, Referral: 1, Other: 7 },
+          trustOpenByChannel: { Search: 6, LSA: 7, Referral: 1, Other: 6 }
+        },
+        Jun: {
+          contracted: 33,
+          trustOpen: 27,
+          paidClosed: null,
+          signedByChannel: { Search: 11, LSA: 15, Referral: 1, Other: 9 },
+          contractedByChannel: { Search: 11, LSA: 15, Referral: 1, Other: 6 },
+          trustOpenByChannel: { Search: 9, LSA: 13, Referral: 1, Other: 4 }
+        },
+        Jul: {
+          contracted: 33,
+          trustOpen: 29,
+          paidClosed: null,
+          signedByChannel: { Search: 11, LSA: 9, Websites: 2, Yelp: 2, Other: 11 },
+          contractedByChannel: { Search: 10, LSA: 9, Websites: 2, Yelp: 1, Other: 11 },
+          trustOpenByChannel: { Search: 10, LSA: 8, Websites: 2, Yelp: 2, Other: 7 }
+        },
+        Aug: {
+          contracted: 18,
+          trustOpen: 17,
+          paidClosed: null,
+          signedByChannel: { Search: 6, LSA: 5, Yelp: 1, Referral: 1, Other: 7 },
+          contractedByChannel: { Search: 4, LSA: 5, Yelp: 1, Referral: 1, Other: 7 },
+          trustOpenByChannel: { Search: 5, LSA: 5, Referral: 1, Other: 6 }
+        },
+        Sep: {
+          contracted: 14,
+          trustOpen: 16,
+          paidClosed: null,
+          signedByChannel: { Search: 7, LSA: 4, Referral: 1, Other: 4 },
+          contractedByChannel: { Search: 5, LSA: 4, Referral: 1, Other: 4 },
+          trustOpenByChannel: { Search: 7, LSA: 4, Referral: 1, Other: 4 }
+        },
+        Oct: {
+          contracted: 20,
+          trustOpen: 15,
+          paidClosed: null,
+          signedByChannel: { Search: 2, LSA: 6, Websites: 1, Other: 13 },
+          contractedByChannel: { Search: 2, LSA: 6, Websites: 1, Other: 11 },
+          trustOpenByChannel: { Search: 2, LSA: 6, Websites: 1, Other: 6 }
+        },
+        Nov: {
+          contracted: 13,
+          trustOpen: 15,
+          paidClosed: null,
+          signedByChannel: { LSA: 5, Websites: 5, Other: 7 },
+          contractedByChannel: { LSA: 4, Websites: 5, Other: 4 },
+          trustOpenByChannel: { LSA: 4, Websites: 5, Other: 6 }
+        }
       }
     },
     /* Trust Credits by calendar week, aggregates only: Jun-Jul ledger (5), Aug ledger (7), Sep ledger (11)/(12), Oct ledger (20)/(19), Nov ledger (29). */
@@ -1561,37 +1663,56 @@
       { month: "Nov*", leads: 60, charged: 24, notCharged: 35, lsaSpend: 5015.93 }
     ],
     lsaChargeRateOverall: { charged: 208, leads: 516, pct: 40.3 },
-    /* LSA inbox phones and names matched to Contact_09-28 / Lead-Source-10-07. Kate 10/08: Trust = client signal. No person fields. */
+    /* LSA inbox phones and names matched to Contact_11-19-2026(1) and Case_balance_summary_11-19-2026(1). Kate 10/08: Trust = client signal. No person fields. */
     lsaMatchedCases: {
-      asOf: "2026-10-08",
-      matched: 82,
-      clients: 38,
-      trustClients: 42,
-      trustSum: 117950,
-      withFee: 10,
-      withoutFee: 72,
-      feeSum: 53500,
-      avgFee: 5350,
+      asOf: "2026-11-21",
+      matched: 100,
+      clients: 53,
+      trustClients: 53,
+      trustSum: 173050,
+      withFee: 27,
+      withoutFee: 73,
+      feeSum: 141000,
+      avgFee: 5222,
       months: [
-        { month: "Mar", leads: 30, matches: 5, clients: 0, trustN: 1, trustSum: 2500, withFee: 0, feeSum: 0, spend: 920.90 },
-        { month: "Apr", leads: 63, matches: 10, clients: 4, trustN: 6, trustSum: 20600, withFee: 0, feeSum: 0, spend: 3448.51 },
-        { month: "May", leads: 72, matches: 9, clients: 3, trustN: 4, trustSum: 10000, withFee: 1, feeSum: 1500, spend: 11005.75 },
-        { month: "Jun", leads: 83, matches: 20, clients: 10, trustN: 8, trustSum: 27850, withFee: 8, feeSum: 48500, spend: 13206.13 },
-        { month: "Jul", leads: 132, matches: 20, clients: 9, trustN: 12, trustSum: 32500, withFee: 0, feeSum: 0, spend: 14555.67 },
-        { month: "Aug", leads: 61, matches: 11, clients: 7, trustN: 8, trustSum: 18500, withFee: 0, feeSum: 0, spend: 6285.70 },
-        { month: "Sep", leads: 44, matches: 7, clients: 4, trustN: 3, trustSum: 6000, withFee: 1, feeSum: 3500, spend: 4882.56 }
+        { month: "Mar", leads: 30, matches: 5, clients: 1, trustN: 1, trustSum: 2500, withFee: 0, feeSum: 0, spend: 920.90 },
+        { month: "Apr", leads: 63, matches: 7, clients: 5, trustN: 5, trustSum: 17600, withFee: 0, feeSum: 0, spend: 3448.51 },
+        { month: "May", leads: 72, matches: 8, clients: 4, trustN: 4, trustSum: 11000, withFee: 2, feeSum: 6000, spend: 11005.75 },
+        { month: "Jun", leads: 83, matches: 18, clients: 9, trustN: 9, trustSum: 32950, withFee: 10, feeSum: 61500, spend: 13206.13 },
+        { month: "Jul", leads: 132, matches: 20, clients: 12, trustN: 12, trustSum: 36500, withFee: 2, feeSum: 11500, spend: 14555.67 },
+        { month: "Aug", leads: 61, matches: 11, clients: 8, trustN: 8, trustSum: 29500, withFee: 2, feeSum: 10500, spend: 8516.70 },
+        { month: "Sep", leads: 44, matches: 10, clients: 5, trustN: 5, trustSum: 18000, withFee: 5, feeSum: 24500, spend: 5432.71 },
+        { month: "Oct", leads: 64, matches: 12, clients: 4, trustN: 4, trustSum: 6500, withFee: 1, feeSum: 3000, spend: 4319.02 },
+        { month: "Nov*", leads: 60, matches: 11, clients: 6, trustN: 6, trustSum: 20000, withFee: 5, feeSum: 24000, spend: 5015.93 }
       ],
       fees: [
-        { month: "May", group: "Client", fee: 1500 },
-        { month: "Jun", group: "Client", fee: 4500 },
-        { month: "Jun", group: "Client", fee: 4500 },
-        { month: "Jun", group: "Client", fee: 6000 },
-        { month: "Jun", group: "Client", fee: 9000 },
-        { month: "Jun", group: "Client", fee: 9000 },
-        { month: "Jun", group: "No group", fee: 1500 },
-        { month: "Jun", group: "No group", fee: 6000 },
-        { month: "Jun", group: "No group", fee: 8000 },
-        { month: "Sep", group: "Client", fee: 3500 }
+        { month: "May", fee: 1500 },
+        { month: "May", fee: 4500 },
+        { month: "Jun", fee: 1500 },
+        { month: "Jun", fee: 4500 },
+        { month: "Jun", fee: 4500 },
+        { month: "Jun", fee: 6000 },
+        { month: "Jun", fee: 6000 },
+        { month: "Jun", fee: 6000 },
+        { month: "Jun", fee: 7000 },
+        { month: "Jun", fee: 8000 },
+        { month: "Jun", fee: 9000 },
+        { month: "Jun", fee: 9000 },
+        { month: "Jul", fee: 5500 },
+        { month: "Jul", fee: 6000 },
+        { month: "Aug", fee: 5000 },
+        { month: "Aug", fee: 5500 },
+        { month: "Sep", fee: 3500 },
+        { month: "Sep", fee: 4500 },
+        { month: "Sep", fee: 5000 },
+        { month: "Sep", fee: 5500 },
+        { month: "Sep", fee: 6000 },
+        { month: "Oct", fee: 3000 },
+        { month: "Nov*", fee: 1000 },
+        { month: "Nov*", fee: 1500 },
+        { month: "Nov*", fee: 5500 },
+        { month: "Nov*", fee: 8000 },
+        { month: "Nov*", fee: 8000 }
       ]
     },
     /* NEW-E — Payment Method = Trust applications (ledger) + Client trust balance snapshot */
@@ -2945,20 +3066,26 @@
           .concat(otherRows.map(item => item.row))
       : (rows || []);
     const colClass = h => {
-      const label = plainHeader(h);
-      if (label === "Trust $") return "kpi-col-trust";
+      const label = plainHeader(h).toLowerCase();
+      if (label === "trust $" || label === "trust credits") return "kpi-col-trust";
       if (
-        label === "LSA spend"
-        || label === "LSA media"
-        || label === "PPC spend"
-        || label === "Spend"
-        || label === "YTD spend"
-        || label === "Monthly cost"
-        || label === "Avg. Monthly cost"
+        label === "lsa spend"
+        || label === "lsa media"
+        || label === "ppc spend"
+        || label === "search spend"
+        || label === "ad spend"
+        || label === "spend"
+        || label === "ytd spend"
+        || label === "monthly cost"
+        || label === "avg. monthly cost"
       ) {
         return "kpi-col-spend";
       }
       return "";
+    };
+    const isTotalRow = row => {
+      const first = plainHeader(row && row[0] != null ? row[0] : "");
+      return /^(total\b|mar to |feb to |jun to |may to |jan to |all\b|mar–|feb–|jun–)/i.test(first);
     };
     const formatSpendCell = cell => {
       const raw = String(cell == null ? "" : cell).trim();
@@ -2978,7 +3105,8 @@
         const value = cls === "kpi-col-spend" ? formatSpendCell(cell) : cell;
         return `<td${cls ? ` class="${cls}"` : ""}>${value}</td>`;
       }).join("");
-      return `<tr>${cells}</tr>`;
+      const rowCls = isTotalRow(r) ? ' class="kpi-row-total"' : "";
+      return `<tr${rowCls}>${cells}</tr>`;
     }).join("");
     const tableClass = stackedHeads
       ? "kpi-table kpi-chart-table kpi-chart-table-stacked"
@@ -3900,24 +4028,177 @@
   }
 
   function netLeadShareBlockHtml() {
-    const segments = [
-      { name: "Search", pct: 44, color: "#c45c26", count: 386 },
-      { name: "LSA", pct: 52, color: "#1e3a8a", count: 456 },
-      { name: "Yelp", pct: 4, color: "#64748b", count: 33 }
+    const months = DATA.channelMonths || [];
+    const casesSpend = DATA.casesLeadsSpend || [];
+    const funnel = DATA.funnelAds || {};
+    const yelp = DATA.yelpBaseline || {};
+    const ref = DATA.referralSourceContacts || {};
+    const conf = DATA.leadSourceConfirmed || {};
+    const hubFee = Number(DATA.websiteHubspotMonthlyFromJun) || 0;
+    const sumKey = (rows, key) => rows.reduce((s, r) => s + (Number(r[key]) || 0), 0);
+    const sumObjVals = obj => Object.values(obj || {}).reduce((s, v) => s + (Number(v) || 0), 0);
+    const searchImpr = Object.values(funnel).reduce((s, f) => s + (f && Number(f.impressions) ? Number(f.impressions) : 0), 0);
+    const searchClicks = Object.values(funnel).reduce((s, f) => s + (f && Number(f.clicks) ? Number(f.clicks) : 0), 0);
+    const yelpImpr = sumObjVals(yelp.adImpressionsByMonth);
+    const yelpClicks = sumObjVals(yelp.adClicksByMonth);
+    const hubMonths = months.filter(m => !/^May\b/i.test(String(m.month || ""))).length;
+    const defs = [
+      {
+        name: "LSA",
+        color: "#1e3a8a",
+        count: sumKey(months, "lsa"),
+        impressions: null,
+        clicks: null,
+        revenue: ref.lsa && ref.lsa.trustSum != null ? Number(ref.lsa.trustSum) : null,
+        clients: ref.lsa && ref.lsa.trustClients != null ? Number(ref.lsa.trustClients) : 0,
+        spend: sumKey(casesSpend, "lsaSpend") || sumKey(months, "lsaSpend")
+      },
+      {
+        name: "Search",
+        color: "#0d9488",
+        count: sumKey(months, "search"),
+        impressions: searchImpr > 0 ? searchImpr : null,
+        clicks: searchClicks > 0 ? searchClicks : null,
+        revenue: ref.googleAds && ref.googleAds.trustSum != null ? Number(ref.googleAds.trustSum) : null,
+        clients: ref.googleAds && ref.googleAds.trustClients != null ? Number(ref.googleAds.trustClients) : 0,
+        spend: sumKey(casesSpend, "adsSpend") || sumKey(months, "searchSpend")
+      },
+      {
+        name: "HubSpot Forms",
+        color: "#db2777",
+        count: months.reduce((s, m) => s + (Number(m.hubspotForms != null ? m.hubspotForms : m.hubspot) || 0), 0),
+        impressions: DATA.ga4Ntguilt && DATA.ga4Ntguilt.views != null ? Number(DATA.ga4Ntguilt.views) : null,
+        clicks: null,
+        revenue: conf.website && conf.website.trustSum != null ? Number(conf.website.trustSum) : null,
+        clients: conf.website && conf.website.trustClients != null ? Number(conf.website.trustClients) : 0,
+        spend: hubFee * hubMonths
+      },
+      {
+        name: "Yelp",
+        color: "#7c3aed",
+        count: sumKey(months, "yelp"),
+        impressions: yelpImpr > 0 ? yelpImpr : null,
+        clicks: yelpClicks > 0 ? yelpClicks : null,
+        revenue: conf.yelp && conf.yelp.trustSum != null ? Number(conf.yelp.trustSum) : (ref.yelp && ref.yelp.trustSum != null ? Number(ref.yelp.trustSum) : null),
+        clients: conf.yelp && conf.yelp.trustClients != null ? Number(conf.yelp.trustClients) : (ref.yelp && ref.yelp.trustClients != null ? Number(ref.yelp.trustClients) : 0),
+        spend: sumKey(months, "yelpSpend")
+      },
+      {
+        name: "FindLaw",
+        color: "#0284c7",
+        count: sumKey(months, "findlaw"),
+        impressions: DATA.findlawPackage && DATA.findlawPackage.impressions != null ? Number(DATA.findlawPackage.impressions) : null,
+        clicks: DATA.findlawPackage && DATA.findlawPackage.clicks != null ? Number(DATA.findlawPackage.clicks) : null,
+        revenue: conf.findlaw && conf.findlaw.trustSum != null ? Number(conf.findlaw.trustSum) : (ref.findlaw && ref.findlaw.trustSum != null ? Number(ref.findlaw.trustSum) : null),
+        clients: conf.findlaw && conf.findlaw.trustClients != null ? Number(conf.findlaw.trustClients) : (ref.findlaw && ref.findlaw.trustClients != null ? Number(ref.findlaw.trustClients) : 0),
+        spend: sumKey(months, "findlawSpend")
+      },
+      {
+        name: "Justia",
+        color: "#c026d3",
+        count: sumKey(months, "justia"),
+        impressions: null,
+        clicks: null,
+        revenue: 0,
+        clients: conf.justia && conf.justia.trustClients != null ? Number(conf.justia.trustClients) : 0,
+        spend: sumKey(months, "justiaSpend")
+      }
     ];
-    return chartPairGridHtml(chartBlock({
-      title: "Net Lead Share",
-      chart: donutChart(segments),
-      table: kpiDetailTable(
-        ["Channel", "Leads", "Share"],
-        [
-          ["Search", "386", "44%"],
-          ["LSA", "456", "52%"],
-          ["Yelp", "33", "4%"],
-          ["May through October", "875", "100%"]
-        ]
-      )
-    }));
+    const raw = defs
+      .filter(s => s.count > 0 || s.spend > 0)
+      .sort((a, b) => b.count - a.count);
+    const totalLeads = raw.reduce((sum, s) => sum + s.count, 0);
+    if (!totalLeads) return "";
+    const exact = raw.map(s => (s.count / totalLeads) * 100);
+    const floors = exact.map(v => Math.floor(v));
+    let rem = 100 - floors.reduce((sum, v) => sum + v, 0);
+    const order = exact
+      .map((v, i) => ({ i, frac: v - floors[i] }))
+      .sort((a, b) => b.frac - a.frac);
+    for (let k = 0; k < rem && k < order.length; k++) {
+      floors[order[k].i] += 1;
+    }
+    const segments = raw.map((s, i) => ({ ...s, pct: floors[i] }));
+    const fmtInt = n => (n == null ? "—" : Math.round(n).toLocaleString("en-US"));
+    const fmtDollars = n => (n == null ? "—" : fmtMoney(Math.round(n)));
+    const fmtCpa = (spend, clients) => (clients > 0 && spend > 0 ? fmtMoney(Math.round(spend / clients)) : "—");
+    const adPack = currentAdSpendPack();
+    const adByName = {};
+    (adPack.channels || []).forEach(c => { adByName[c.label] = c; });
+    const monthKey = periodToChannelMonth(DATA.period) || "Nov";
+    const forecastOn = monthKey === "Nov";
+    const monthSpendHead = `${monthKey} Spend`;
+    const headers = forecastOn
+      ? ["Channel", "Leads", "Share", "Impressions", "Clicks", "Revenue", "Total Spend", monthSpendHead, "Forecast", "Cost Per Acquisition"]
+      : ["Channel", "Leads", "Share", "Impressions", "Clicks", "Revenue", "Total Spend", monthSpendHead, "Cost Per Acquisition"];
+    const tableRows = segments.map(s => {
+      const adCh = adByName[s.name] || null;
+      const monthSpendCell = adCh ? fmtAdSpendWhole(adCh.spend) : "—";
+      const lockedFee = s.name === "Justia" || s.name === "FindLaw";
+      let forecastCell = "—";
+      if (forecastOn && adCh) {
+        if (lockedFee) {
+          forecastCell = lockedFeeGoalHtml();
+        } else {
+          const forecast = novAdSpendForecast(s.name, Number(adCh.spend) || 0);
+          forecastCell = forecast == null ? "—" : fmtAdSpendWhole(forecast);
+        }
+      }
+      const row = [
+        `<span class="kpi-stack-swatch" style="background:${s.color}" aria-hidden="true"></span> ${escapeHtml(s.name)}`,
+        fmtInt(s.count),
+        `${s.pct}%`,
+        fmtInt(s.impressions),
+        fmtInt(s.clicks),
+        fmtDollars(s.revenue),
+        fmtDollars(s.spend),
+        monthSpendCell
+      ];
+      if (forecastOn) row.push(forecastCell);
+      row.push(fmtCpa(s.spend, s.clients));
+      return row;
+    });
+    const totalImpr = segments.reduce((sum, s) => sum + (s.impressions || 0), 0);
+    const totalClicks = segments.reduce((sum, s) => sum + (s.clicks || 0), 0);
+    const totalRev = segments.reduce((sum, s) => sum + (s.revenue || 0), 0);
+    const totalSpend = segments.reduce((sum, s) => sum + (s.spend || 0), 0);
+    const totalClients = segments.reduce((sum, s) => sum + (s.clients || 0), 0);
+    const forecastTotal = (adPack.channels || []).reduce((sum, c) => {
+      const lockedFee = c.label === "Justia" || c.label === "FindLaw";
+      if (lockedFee) return sum + (Number(c.spend) || 0);
+      const forecast = novAdSpendForecast(c.label, Number(c.spend) || 0);
+      return sum + (forecast == null ? 0 : forecast);
+    }, 0);
+    const totalRow = [
+      "Total",
+      fmtInt(totalLeads),
+      "100%",
+      fmtInt(totalImpr),
+      fmtInt(totalClicks),
+      fmtDollars(totalRev),
+      fmtDollars(totalSpend),
+      fmtAdSpendWhole(adPack.total)
+    ];
+    if (forecastOn) totalRow.push(fmtAdSpendWhole(forecastTotal));
+    totalRow.push(fmtCpa(totalSpend, totalClients));
+    tableRows.push(totalRow);
+    const note = `<p class="kpi-chart-footnote">Leads cover May through November 2026 on file. Impressions and clicks cover on-file ad reports for Search and Yelp, GA4 NTGUILT website views through 10/01/2026 on HubSpot Forms, and FindLaw INSIGHT impressions through 10/31/2026 with directory clicks through 09/30/2026. Revenue is Trust balance on confirmed clients by channel through 11/19/2026. Total Spend sums all on-file channel media and fees from May through November. ${escapeHtml(monthSpendHead)}${forecastOn ? " and Forecast cover" : " covers"} selected-month paid media and directory fees, excluding HubSpot Forms fees. Cost Per Acquisition divides Total Spend by confirmed Trust clients.</p>`;
+    const topPair = `<div class="data-chart-channel-funnel-row">
+      ${chartBlock({
+        help: false,
+        title: "Net Lead Share",
+        chart: donutChart(segments),
+        omitTable: true,
+        cardClass: "kpi-chart-card-lead-share"
+      })}
+      ${salesCostFunnelChartBlockHtml()}
+    </div>`;
+    const tableRow = `<div class="data-chart-table-side data-chart-ad-spend-row">
+      <div class="kpi-chart-card kpi-chart-card-table-only">
+        <div class="kpi-chart-detail">${kpiDetailTable(headers, tableRows, { stackedHeads: true })}${note}</div>
+      </div>
+    </div>`;
+    return `${topPair}${tableRow}`;
   }
 
   function casesLeadsSpendSectionHtml() {
@@ -3932,10 +4213,6 @@
       ${kpiHelpBtn("cases-leads-spend")}
       <div class="kpi-split-panel-body">
         ${netLeadShareBlockHtml()}
-        ${adSpendChannelActivityRowHtml()}
-        <div class="data-chart-table-stack">
-          ${reviewsByChannelPanelHtml()}
-        </div>
       </div>
       ${kpiRefMark("#05")}
     </article>`;
@@ -3945,12 +4222,12 @@
     const series = leadCostPerChannelSeries(DATA.casesLeadsSpend || []);
     if (!series.channels.length) return "";
     return lsCard(
-      "Lead Cost per Channel YTD",
+      "Lead Cost Per Channel YTD",
       `<div class="ls-chart-split">
         <div class="ls-chart-plot">${costPerResponseChart(series.channels)}</div>
         <div class="ls-chart-desc">${costPerResponseDetailTable(DATA.casesLeadsSpend || [])}</div>
       </div>`,
-      { verified: true }
+      { verified: true, asOf: "11/21/2026" }
     );
   }
 
@@ -3958,12 +4235,12 @@
     const chart = stackedLeadsByMonthChart(leadsByMonthFromChannels(DATA.channels, { useChannelMonths: true }));
     if (!chart) return "";
     return lsCard(
-      "Leads by Channel per Month",
+      "Leads By Channel Per Month",
       `<div class="ls-chart-split">
         <div class="ls-chart-plot">${chart}</div>
         <div class="ls-chart-desc">${channelsDetailTable(DATA.channels)}${sourceFootnote("#01")}</div>
       </div>`,
-      { verified: true }
+      { verified: true, asOf: "11/21/2026" }
     );
   }
 
@@ -4068,26 +4345,68 @@
     };
   }
 
+  const SALES_FUNNEL_CHANNEL_COLORS = {
+    Search: "#3a1a6e",
+    LSA: "#1e3a8a",
+    Websites: "#b23a78",
+    Yelp: "#7c3aed",
+    Justia: "#6a5acd",
+    FindLaw: "#7f234f",
+    Referral: "#0d9488",
+    Other: "#64748b"
+  };
+
+  function salesCostFunnelChannelSlices(byChannel) {
+    if (!byChannel || typeof byChannel !== "object") return [];
+    const order = ["Search", "LSA", "Websites", "Yelp", "Justia", "FindLaw", "Referral", "Other"];
+    return order
+      .filter(k => Number(byChannel[k]) > 0)
+      .map(k => ({ label: k, value: Number(byChannel[k]), color: SALES_FUNNEL_CHANNEL_COLORS[k] || "#64748b" }));
+  }
+
   function salesCostFunnelContactSlices(parts) {
     if (!parts || !parts.known) return [];
     const defs = [
-      { key: "search", label: "Search", color: "#3a1a6e", known: parts.searchKnown },
-      { key: "lsa", label: "LSA", color: "#1e3a8a", known: parts.lsaKnown },
-      { key: "websites", label: "Websites", color: "#b23a78", known: parts.websitesKnown },
-      { key: "yelp", label: "Yelp", color: "#64748b", known: parts.yelpKnown },
-      { key: "justia", label: "Justia", color: "#6a5acd", known: parts.justiaKnown },
-      { key: "findlaw", label: "FindLaw", color: "#7f234f", known: parts.findlawKnown }
+      { key: "search", label: "Search", color: SALES_FUNNEL_CHANNEL_COLORS.Search, known: parts.searchKnown },
+      { key: "lsa", label: "LSA", color: SALES_FUNNEL_CHANNEL_COLORS.LSA, known: parts.lsaKnown },
+      { key: "websites", label: "Websites", color: SALES_FUNNEL_CHANNEL_COLORS.Websites, known: parts.websitesKnown },
+      { key: "yelp", label: "Yelp", color: SALES_FUNNEL_CHANNEL_COLORS.Yelp, known: parts.yelpKnown },
+      { key: "justia", label: "Justia", color: SALES_FUNNEL_CHANNEL_COLORS.Justia, known: parts.justiaKnown },
+      { key: "findlaw", label: "FindLaw", color: SALES_FUNNEL_CHANNEL_COLORS.FindLaw, known: parts.findlawKnown }
     ];
     return defs
       .filter(d => d.known && Number(parts[d.key]) > 0)
       .map(d => ({ label: d.label, value: Number(parts[d.key]) || 0, color: d.color }));
   }
 
-  function salesCostFunnelImpressionSlices(impressions) {
-    if (impressions != null && impressions > 0) {
-      return [{ label: "Search", value: impressions, color: "#3a1a6e" }];
+  function salesCostFunnelUpperSlices(searchVal, gaWeb, totalKey, pavKey, ntKey) {
+    const slices = [];
+    if (searchVal != null && searchVal > 0) {
+      slices.push({ label: "Search", value: searchVal, color: "#3a1a6e" });
     }
-    return [];
+    const gw = gaWeb || {};
+    const pavVal = gw[pavKey] != null ? Number(gw[pavKey]) : null;
+    const ntVal = gw[ntKey] != null ? Number(gw[ntKey]) : null;
+    const combVal = gw[totalKey] != null ? Number(gw[totalKey]) : null;
+    if ((pavVal != null && pavVal > 0) || (ntVal != null && ntVal > 0)) {
+      if (pavVal != null && pavVal > 0) {
+        slices.push({ label: "pav.law", value: pavVal, color: "#b23a78" });
+      }
+      if (ntVal != null && ntVal > 0) {
+        slices.push({ label: "ntguilt.com", value: ntVal, color: "#db2777" });
+      }
+    } else if (combVal != null && combVal > 0) {
+      slices.push({ label: "Websites", value: combVal, color: "#b23a78" });
+    }
+    return slices;
+  }
+
+  function salesCostFunnelImpressionSlices(impressions, gaWeb) {
+    return salesCostFunnelUpperSlices(impressions, gaWeb, "views", "pavLawViews", "ntguiltViews");
+  }
+
+  function salesCostFunnelClickSlices(clicks, gaWeb) {
+    return salesCostFunnelUpperSlices(clicks, gaWeb, "users", "pavLawUsers", "ntguiltUsers");
   }
 
   function salesCostFunnelStages() {
@@ -4095,6 +4414,7 @@
     const ch = meta.ch || {};
     const cls = meta.cls || {};
     const ads = (DATA.funnelAds && DATA.funnelAds[meta.key]) || {};
+    const gaWeb = (DATA.gaWebsiteFunnel && DATA.gaWebsiteFunnel.byMonth && DATA.gaWebsiteFunnel.byMonth[meta.key]) || {};
     const parts = salesCostFunnelContactParts(meta);
     const impressions = ads.impressions != null ? Number(ads.impressions) : null;
     const clicks = ads.clicks != null ? Number(ads.clicks) : null;
@@ -4124,21 +4444,30 @@
     const contactBasis = `${meta.label} Search ${parts.search} + LSA ${parts.lsa} + Websites ${parts.websites} + Yelp ${parts.yelp} + Justia ${parts.justia} + FindLaw ${parts.findlaw}`;
     const caseBasis = `${meta.label} Search + LSA media`;
     const contactSlices = salesCostFunnelContactSlices(parts);
-    const impressionSlices = salesCostFunnelImpressionSlices(impressions);
-    const clickSlices = clicks != null && clicks > 0
-      ? [{ label: "Search", value: clicks, color: "#3a1a6e" }]
-      : [];
+    const impressionSlices = salesCostFunnelImpressionSlices(impressions, gaWeb);
+    const clickSlices = salesCostFunnelClickSlices(clicks, gaWeb);
+    const totalImpressions = impressionSlices.length
+      ? impressionSlices.reduce((sum, s) => sum + (Number(s.value) || 0), 0)
+      : null;
+    const totalClicks = clickSlices.length
+      ? clickSlices.reduce((sum, s) => sum + (Number(s.value) || 0), 0)
+      : null;
+    const gaUpperNote = gaWeb && gaWeb.views != null
+      ? ` + GA4 Websites ${gaWeb.views.toLocaleString("en-US")} views / ${gaWeb.users != null ? gaWeb.users.toLocaleString("en-US") : "—"} active users (pav.law + ntguilt.com)`
+      : "";
     const moneyStages = salesFunnelCaseEconomicsForMonth(meta.key);
-    const moneyStage = (key, label, color, count, priorVol) => {
+    const signedSlices = salesCostFunnelChannelSlices(moneyStages.signedByChannel);
+    const moneyStage = (key, label, color, count, priorVol, byChannel) => {
       const known = count != null;
       const n = known ? Number(count) || 0 : 0;
+      const channelSlices = salesCostFunnelChannelSlices(byChannel);
       return {
         key,
         label,
         volume: known ? n : 0,
         volumeText: known ? String(n) : "—",
         color,
-        slices: known && n > 0 ? [{ label: "All channels", value: n, color }] : [],
+        slices: known && n > 0 ? channelSlices : [],
         unitCost: "—",
         spend: "—",
         spendBasis: `${meta.label} · ${label}`,
@@ -4149,26 +4478,26 @@
       {
         key: "impr",
         label: "Impressions",
-        volume: impressions || 0,
-        volumeText: impressions != null ? impressions.toLocaleString("en-US") : "—",
+        volume: totalImpressions || 0,
+        volumeText: totalImpressions != null ? totalImpressions.toLocaleString("en-US") : "—",
         color: "#3a1a6e",
         slices: impressionSlices,
         unitCost: impressions && adsSpend != null ? moneyDigits(adsSpend / impressions, 2) : "—",
         spend: adsSpend != null ? moneyDigits(adsSpend, 2) : "—",
-        spendBasis: adsBasis,
+        spendBasis: `${adsBasis}${gaUpperNote}`,
         conversion: "—"
       },
       {
         key: "clicks",
         label: "Clicks",
-        volume: clicks || 0,
-        volumeText: clicks != null ? clicks.toLocaleString("en-US") : "—",
+        volume: totalClicks || 0,
+        volumeText: totalClicks != null ? totalClicks.toLocaleString("en-US") : "—",
         color: "#3a1a6e",
         slices: clickSlices,
         unitCost: clicks && adsSpend != null ? moneyDigits(adsSpend / clicks, 2) : "—",
         spend: adsSpend != null ? moneyDigits(adsSpend, 2) : "—",
-        spendBasis: adsBasis,
-        conversion: stepPct(clicks, impressions)
+        spendBasis: `${adsBasis}${gaUpperNote}`,
+        conversion: stepPct(totalClicks, totalImpressions)
       },
       {
         key: "contacts",
@@ -4188,16 +4517,14 @@
         volume: cases || 0,
         volumeText: cases != null ? String(cases) : "—",
         color: "#b23a78",
-        slices: cases != null && cases > 0
-          ? [{ label: "All channels", value: cases, color: "#b23a78" }]
-          : [],
+        slices: cases != null && cases > 0 ? signedSlices : [],
         unitCost: cases && media ? fmtMoney(media / cases) : "—",
         spend: media ? fmtMoney(media) : "—",
         spendBasis: caseBasis,
         conversion: stepPct(cases, directKnown ? direct : null)
       },
-      moneyStage("contracted", "Contracted cases", "#6a5acd", moneyStages.contracted, cases),
-      moneyStage("trust-open", "Trust with open values", "#1e3a8a", moneyStages.trustOpen, cases)
+      moneyStage("contracted", "Contracted cases", "#6a5acd", moneyStages.contracted, cases, moneyStages.contractedByChannel),
+      moneyStage("trust-open", "Trust with open values", "#1e3a8a", moneyStages.trustOpen, cases, moneyStages.trustOpenByChannel)
     ];
   }
 
@@ -4208,7 +4535,10 @@
     return {
       contracted: row.contracted != null ? Number(row.contracted) : null,
       trustOpen: row.trustOpen != null ? Number(row.trustOpen) : null,
-      paidClosed: row.paidClosed != null ? Number(row.paidClosed) : null
+      paidClosed: row.paidClosed != null ? Number(row.paidClosed) : null,
+      signedByChannel: row.signedByChannel || null,
+      contractedByChannel: row.contractedByChannel || null,
+      trustOpenByChannel: row.trustOpenByChannel || null
     };
   }
 
@@ -4354,7 +4684,7 @@
   }
 
   function salesCostFunnelLegendHtml(stages) {
-    const channelOrder = ["Search", "LSA", "Websites", "Yelp", "Justia", "FindLaw", "All channels"];
+    const channelOrder = ["Search", "LSA", "Websites", "Yelp", "Justia", "FindLaw", "Referral", "Other"];
     const seen = new Map();
     (stages || []).forEach(stage => {
       (stage.slices || []).forEach(s => {
@@ -4376,10 +4706,10 @@
   function salesCostFunnelSvg(stages) {
     const n = stages.length;
     const labelCol = 176;
-    const chartW = 720;
-    const segH = 78;
-    const gap = 10;
-    const top = 10;
+    const chartW = 700;
+    const segH = 66;
+    const gap = 8;
+    const top = 8;
     const height = top + n * segH + (n - 1) * gap + 8;
     const width = labelCol + chartW + 24;
     const cx = labelCol + chartW / 2;
@@ -4433,10 +4763,11 @@
   function salesCostFunnelChartBlockHtml() {
     const stages = salesCostFunnelStages();
     return chartBlock({
-      help: false,
+      helpId: "sales-cost-funnel",
       title: "Sales Funnel",
       chart: `${salesCostFunnelSvg(stages)}${salesCostFunnelLegendHtml(stages)}`,
-      omitTable: true
+      omitTable: true,
+      cardClass: "kpi-chart-card-sales-funnel"
     });
   }
 
@@ -4931,16 +5262,16 @@
   }
 
   function lsaMatchedFeeBars() {
-    const fees = (DATA.lsaMatchedCases && DATA.lsaMatchedCases.fees) || [];
+    const months = (DATA.lsaMatchedCases && DATA.lsaMatchedCases.months) || [];
+    const vals = months.map(r => Number(r.trustSum) || 0);
     const w = 720;
-    const h = 260;
-    const pad = { l: 58, r: 16, t: 36, b: 48 };
+    const h = 280;
+    const pad = { l: 64, r: 18, t: 36, b: 48 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
-    /* Kate 10/08/2026 · end Y scale at $12k. Data max $9k. */
-    const axisMax = 12000;
-    const slot = plotW / Math.max(fees.length, 1);
-    const barW = Math.min(36, slot * 0.62);
+    const axisMax = Math.max(40000, chartAxisMax(vals, 5000));
+    const slot = plotW / Math.max(months.length, 1);
+    const barW = Math.min(48, slot * 0.68);
     const ticks = axisTicks(axisMax, 4).map(value => {
       const y = pad.t + plotH * (1 - value / axisMax);
       const label = value === 0 ? "$0" : `$${Math.round(value / 1000)}k`;
@@ -4949,17 +5280,20 @@
         <text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${label}</text>
       </g>`;
     }).join("");
-    const bars = fees.map((r, i) => {
-      const bh = Math.max(4, (plotH * r.fee) / axisMax);
+    const bars = months.map((r, i) => {
+      const val = Number(r.trustSum) || 0;
+      const bh = val ? Math.max(4, (plotH * val) / axisMax) : 0;
       const x = pad.l + i * slot + (slot - barW) / 2;
       const y = pad.t + plotH - bh;
+      const roundedK = Math.round(val / 100) / 10;
+      const shortVal = val >= 1000 ? `$${Number.isInteger(roundedK) ? roundedK : roundedK.toFixed(1)}k` : "$0";
       return `<g>
         <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="3" fill="#3a1a6e"/>
-        <text x="${x + barW / 2}" y="${barLabelY(y, pad.t, 6)}" text-anchor="middle" class="kpi-chart-total">$${Math.round(r.fee / 1000)}k</text>
+        <text x="${x + barW / 2}" y="${barLabelY(y, pad.t, 6)}" text-anchor="middle" class="kpi-chart-total">${shortVal}</text>
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Contracted fee for each LSA matched case with a fee, oldest to newest">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="Monthly Trust balance on LSA matched contacts, March to November, oldest to newest">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}${bars}
     </svg>`;
@@ -4969,14 +5303,13 @@
     const months = (DATA.lsaMatchedCases && DATA.lsaMatchedCases.months) || [];
     const costs = months.map(r => r.matches ? r.spend / r.matches : 0);
     const w = 720;
-    const h = 260;
-    const pad = { l: 58, r: 16, t: 36, b: 48 };
+    const h = 280;
+    const pad = { l: 64, r: 18, t: 36, b: 48 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
-    /* Kate 10/08/2026 · end Y scale at $1,500. Data max ~$1,223. */
-    const axisMax = 1500;
+    const axisMax = Math.max(1500, chartAxisMax(costs, 250));
     const slot = plotW / Math.max(months.length, 1);
-    const barW = Math.min(42, slot * 0.55);
+    const barW = Math.min(48, slot * 0.65);
     const ticks = axisTicks(axisMax, 4).map(value => {
       const y = pad.t + plotH * (1 - value / axisMax);
       const label = value === 0 ? "$0" : `$${Math.round(value)}`;
@@ -4996,7 +5329,7 @@
         <text x="${x + barW / 2}" y="${h - 16}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>
       </g>`;
     }).join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="LSA media divided by MyCase matches, March to September, oldest to newest">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-plot" viewBox="0 0 ${w} ${h}" role="img" aria-label="LSA media divided by MyCase matches, March to November, oldest to newest">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}${bars}
     </svg>`;
@@ -5006,10 +5339,21 @@
     const pack = DATA.lsaMatchedCases;
     if (!pack) return "";
     const spend = pack.months.reduce((sum, r) => sum + (Number(r.spend) || 0), 0);
-    const feeRows = pack.fees.map(r => [escapeHtml(`${r.month} 2026`), escapeHtml(r.group), fmtMoney(r.fee)]);
-    feeRows.push(["Cases with a fee", String(pack.withFee), fmtMoney(pack.feeSum)]);
-    feeRows.push(["Average case value", "Fee cases", fmtMoney(pack.avgFee)]);
-    const costRows = pack.months.map(r => {
+    const feeRows = pack.months.slice().reverse().map(r => [
+      escapeHtml(`${r.month} 2026`),
+      String(r.trustN || 0),
+      r.trustSum ? fmtMoney(r.trustSum) : "—",
+      String(r.withFee || 0),
+      r.feeSum ? fmtMoney(r.feeSum) : "—"
+    ]);
+    feeRows.push([
+      "Mar to Nov*",
+      String(pack.trustClients),
+      fmtMoney(pack.trustSum),
+      String(pack.withFee),
+      fmtMoney(pack.feeSum)
+    ]);
+    const costRows = pack.months.slice().reverse().map(r => {
       const perMatch = r.matches ? r.spend / r.matches : null;
       const perFee = r.withFee ? r.spend / r.withFee : null;
       return [
@@ -5023,7 +5367,7 @@
       ];
     });
     costRows.push([
-      "Mar–Sep",
+      "Mar to Nov*",
       String(pack.matched),
       String(pack.withFee),
       fmtMoney(pack.feeSum),
@@ -5033,25 +5377,25 @@
     ]);
     return `<section class="kpi-section kpi-section-static kpi-verified kpi-aug-updated" data-feedback-id="section-lsa-matched-cases" data-feedback-label="LSA matched cases">
       ${statusCorner(true)}
-      ${kpiSectionStaticHead("LSA matched cases", "Contracted fee on MyCase matches · LSA media ÷ matches")}
+      ${kpiSectionStaticHead("LSA Matched Cases", "Trust balance and contracted fees on MyCase matches through 11/21/2026")}
       <div class="kpi-section-body">
         ${chartPairGridHtml(
           chartBlock({
-            title: "Case Value",
+            title: "LSA Trust Balance",
             chart: lsaMatchedFeeBars(),
-            table: kpiDetailTable(["Month", "Contact group", "Fee"], feeRows)
+            table: kpiDetailTable(["Month", "Trust Clients", "Trust $", "Fee Cases", "Contracted Fee"], feeRows)
           }),
           chartBlock({
-            title: "Cost per Match",
+            title: "Cost Per Match",
             chart: lsaMatchedCostBars(),
             table: kpiDetailTable(
-              ["Month", "Matches", "With fee", "Case value", "LSA media", "Cost per match", "Cost per fee case"],
+              ["Month", "Matches", "With Fee", "Case Value", "LSA Media", "Cost Per Match", "Cost Per Fee Case"],
               costRows
             )
           })
         )}
         ${sourceFootnote("lsa-matched-cases")}
-        <p class="data-inline-note">82 LSA leads match a MyCase contact. 10 have a contracted fee. Average case value is ${fmtMoney(pack.avgFee)} across those 10. Total contracted value is ${fmtMoney(pack.feeSum)}. 72 matches have no contracted fee on the contact export, so they are not in the average. LSA media for March through September is ${fmtMoney(spend)}. Cost per match is ${fmtMoney(spend / pack.matched)}. Cost per fee case is ${fmtMoney(spend / pack.withFee)}.</p>
+        <p class="data-inline-note">${pack.matched} unique LSA leads match a MyCase contact through 11/21/2026, with ${pack.trustClients} Trust clients totaling ${fmtMoney(pack.trustSum)}. ${pack.withFee} matched contacts have a contracted fee on file averaging ${fmtMoney(pack.avgFee)} for ${fmtMoney(pack.feeSum)} total. LSA media for March through November is ${fmtMoney(spend)}, or ${fmtMoney(spend / pack.matched)} per match and ${fmtMoney(spend / pack.withFee)} per fee case.</p>
       </div>
     </section>`;
   }
@@ -5212,6 +5556,9 @@
   }
 
   function lsCard(title, bodyHtml, opts) {
+    const asOf = opts && opts.asOf
+      ? `<span class="ls-card-asof">As of ${escapeHtml(opts.asOf)}</span>`
+      : "";
     const draft = opts && opts.draftLabel
       ? `<span class="ls-card-draft">${wipMark()}<span class="ls-card-draft-label">${escapeHtml(opts.draftLabel)}</span></span>`
       : "";
@@ -5230,38 +5577,44 @@
           <span class="ls-card-problem-label">Inaccurate</span>
         </span>`
       : "";
+    const flagged = opts && opts.flaggedLabel
+      ? `<span class="ls-card-draft">
+          <span class="kpi-flag-mark" title="${escapeHtml(opts.flaggedLabel)}" aria-label="${escapeHtml(opts.flaggedLabel)}"></span>
+          <span class="ls-card-problem-label">${escapeHtml(opts.flaggedLabel)}</span>
+        </span>`
+      : "";
     return `<article class="ls-card">
       <header class="ls-card-head">
         <h3 class="ls-card-title">${escapeHtml(title)}</h3>
-        ${verified}${draft}${blocked}${inaccurate}
+        <div class="ls-card-meta">${asOf}${verified}${draft}${flagged}${blocked}${inaccurate}</div>
       </header>
       <div class="ls-card-body">${bodyHtml}</div>
     </article>`;
   }
 
-  /** Directory contacts · Yelp / Justia / FindLaw · Mar–Sep. Colors match channel mix. */
+  /** Directory contacts: Yelp, Justia, and FindLaw, Mar to Nov*. Colors match channel mix. */
   function directoryContactsChart(rows) {
     const yelp = rows.map(r => Number(r.yelp) || 0);
     const justia = rows.map(r => Number(r.justia) || 0);
     const findlaw = rows.map(r => Number(r.findlaw) || 0);
-    const countMax = chartAxisMax([...yelp, ...justia, ...findlaw]);
+    const countMax = chartAxisMax([...yelp, ...justia, ...findlaw], 2);
     const w = 960;
     const h = 280;
-    const pad = { l: 48, r: 22, t: 28, b: 48 };
+    const pad = { l: 48, r: 22, t: 30, b: 48 };
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
     const n = rows.length;
-    const slot = plotW / n;
-    const barW = Math.max(5, Math.min(14, slot * 0.2));
-    const gap = 2;
+    const slot = plotW / Math.max(n, 1);
+    const barW = Math.max(8, Math.min(20, slot * 0.24));
+    const gap = 3;
     const groupW = barW * 3 + gap * 2;
-    const colors = { yelp: "#64748b", justia: "#6a5acd", findlaw: "#7f234f" };
+    const colors = { yelp: "#64748b", justia: "#6a5acd", findlaw: "#b23a78" };
     const ticks = [0, 0.25, 0.5, 0.75, 1]
       .map(t => {
         const y = pad.t + plotH * (1 - t);
         return `<g>
         <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" class="kpi-chart-grid"/>
-        <text x="${pad.l - 6}" y="${y + 3}" text-anchor="end" class="kpi-chart-axis">${Math.round(countMax * t)}</text>
+        <text x="${pad.l - 6}" y="${y + 4}" text-anchor="end" class="kpi-chart-axis">${Math.round(countMax * t)}</text>
       </g>`;
       })
       .join("");
@@ -5276,11 +5629,11 @@
         return series
           .map((s, si) => {
             const v = s.data[i];
-            const bh = v ? Math.max(2, (plotH * v) / countMax) : 0;
+            const bh = v ? Math.max(3, (plotH * v) / countMax) : 0;
             const x = groupX + si * (barW + gap);
             const y = pad.t + plotH - bh;
             const label = v
-              ? `<text x="${x + barW / 2}" y="${y - 4}" text-anchor="middle" class="kpi-chart-value">${v}</text>`
+              ? `<text x="${x + barW / 2}" y="${barLabelY(y, pad.t, 4)}" text-anchor="middle" class="kpi-chart-total" style="font-size:12px">${v}</text>`
               : "";
             return `<g>
             <rect x="${x}" y="${y}" width="${barW}" height="${bh}" rx="2" fill="${s.color}"/>
@@ -5293,65 +5646,59 @@
     const xLabels = rows
       .map((r, i) => {
         const x = pad.l + i * slot + slot / 2;
-        return `<text x="${x}" y="${h - 14}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.month)}</text>`;
+        return `<text x="${x}" y="${h - 14}" text-anchor="middle" class="kpi-chart-label">${escapeHtml(r.label || r.month)}</text>`;
       })
       .join("");
-    return `<svg class="kpi-chart-svg kpi-chart-svg-wide" viewBox="0 0 ${w} ${h}" role="img" aria-label="Yelp, Justia, and FindLaw contacts by month">
+    return `<svg class="kpi-chart-svg kpi-chart-svg-wide" viewBox="0 0 ${w} ${h}" role="img" aria-label="Yelp, Justia, and FindLaw contacts by month, March to November">
       <rect x="${pad.l}" y="${pad.t}" width="${plotW}" height="${plotH}" class="kpi-chart-plot-bg"/>
       ${ticks}${bars}${xLabels}
-    </svg>
-    <div class="kpi-chart-legend" style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.5rem">
-      <span><span class="kpi-swatch" style="background:${colors.yelp}"></span> Yelp contacts</span>
-      <span><span class="kpi-swatch" style="background:${colors.justia}"></span> Justia contacts</span>
-      <span><span class="kpi-swatch" style="background:${colors.findlaw}"></span> FindLaw leads</span>
-    </div>`;
+    </svg>`;
   }
 
   function leadSourceDirectorySectionHtml() {
     const y = DATA.yelpBaseline || {};
     const j = DATA.justiaBaseline || {};
     const fl = DATA.findlawPackage || {};
+    const hs = DATA.referralSourceContacts || {};
     const yelpBy = y.byMonth || {};
     const justiaBy = j.byMonth || {};
     const findlawBy = fl.leadsByMonth || {};
-    const monthKeys = ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"];
+    const findlawCallsBy = fl.callsByMonth || {};
+    const findlawEmailsBy = fl.emailsByMonth || {};
+    const monthKeys = ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"];
     const rows = monthKeys.map(month => ({
       month,
+      label: month === "Nov" ? "Nov*" : month,
       yelp: Number((yelpBy[month] && yelpBy[month].contacts) || 0),
       justia: Number((justiaBy[month] && justiaBy[month].contacts) || 0),
       findlaw: Number(findlawBy[month] || 0)
     }));
     const yelpContacts = rows.reduce((s, r) => s + r.yelp, 0);
     const justiaContacts = rows.reduce((s, r) => s + r.justia, 0);
-    const findlawLeads = Number(fl.leadsReal) || rows.reduce((s, r) => s + r.findlaw, 0);
+    const findlawMarNov = rows.reduce((s, r) => s + r.findlaw, 0);
+    const findlawAll2026 = Number(fl.leadsReal) || findlawMarNov;
     const lsaMonths = (DATA.lsaMatchedCases && DATA.lsaMatchedCases.months) || [];
     const lsaContacts = lsaMonths.reduce((s, r) => s + (Number(r.leads) || 0), 0);
     const lsaSpend = lsaMonths.reduce((s, r) => s + (Number(r.spend) || 0), 0);
     const channelStack = DATA.channelMonths || [];
+    const casesSpend = DATA.casesLeadsSpend || [];
     const ppcMonths = channelStack.filter(r => {
       const m = String(r.month || "").replace(/\*/g, "");
-      return ["May", "Jun", "Jul", "Aug", "Sep"].includes(m);
+      return ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"].includes(m);
     });
     const ppcContacts = ppcMonths.reduce((s, r) => s + (Number(r.search) || 0), 0);
     const ppcSpend = ppcMonths.reduce((s, r) => s + (Number(r.searchSpend) || 0), 0);
-    const yelpSpend = channelStack.reduce((s, r) => {
-      const m = String(r.month || "").replace(/\*/g, "");
-      if (m === "Aug" || m === "Sep") return s + (Number(r.yelpSpend) || 0);
-      return s;
-    }, 0);
+    const lsaSpend2026 = casesSpend.reduce((s, r) => s + (Number(r.lsaSpend) || 0), 0);
+    const yelpSpend = channelStack.reduce((s, r) => s + (Number(r.yelpSpend) || 0), 0);
     const justiaSpend = Number((j.last6 && j.last6.spend) || 0) || Number(j.spendMonthly || 0) * 6;
     const findlawMonthly = Number(fl.monthly) || 0;
-    const findlawSpendMarAug = findlawMonthly * 6;
-    const lsaPerLead = lsaContacts ? lsaSpend / lsaContacts : 0;
-    const ppcPerCall = ppcContacts ? ppcSpend / ppcContacts : 0;
+    const findlawSpendPaid = channelStack.reduce((s, r) => s + (Number(r.findlawSpend) || 0), 0) || findlawMonthly * 7;
+    const hubFee = Number(DATA.websiteHubspotMonthlyFromJun) || 0;
+    const websiteSpend2026 = hubFee * 6;
     const yelpPerContact = yelpContacts ? yelpSpend / yelpContacts : 0;
     const justiaPerContact = justiaContacts ? justiaSpend / justiaContacts : 0;
-    const findlawPerLead = findlawLeads ? findlawSpendMarAug / findlawLeads : 0;
+    const findlawPerLead = findlawAll2026 ? findlawSpendPaid / findlawAll2026 : 0;
     const cv = y.caseValue || {};
-    const yelpSigned = Number(cv.signedWithFee) || 0;
-    const yelpPerSigned = yelpSigned > 0 && yelpSpend > 0
-      ? (cv.costPerSigned != null ? Number(cv.costPerSigned) : yelpSpend / yelpSigned)
-      : null;
     const lsaByMonth = {};
     lsaMonths.forEach(r => {
       lsaByMonth[String(r.month || "").replace(/\*/g, "")] = r;
@@ -5381,8 +5728,9 @@
         const lsaSpendMo = lsa ? Number(lsa.spend) || 0 : null;
         const ppcCalls = ppc && ppc.search != null ? Number(ppc.search) : null;
         const ppcSpendMo = ppc && ppc.searchSpend != null ? Number(ppc.searchSpend) : null;
+        const isJustiaWindow = ["Mar", "Apr", "May", "Jun", "Jul", "Aug"].includes(month);
         return [
-          escapeHtml(month),
+          escapeHtml(month === "Nov" ? "Nov*" : month),
           lsaLeads == null ? "—" : String(lsaLeads),
           matches == null ? "—" : String(matches),
           trustN == null ? "—" : String(trustN),
@@ -5392,7 +5740,7 @@
           ppcCalls == null ? "—" : String(ppcCalls),
           ppcSpendMo == null ? "—" : fmtMoney(ppcSpendMo),
           String(dir.yelp || 0),
-          String(dir.justia || 0),
+          isJustiaWindow ? String(dir.justia || 0) : "—",
           String(dir.findlaw || 0)
         ];
       });
@@ -5403,7 +5751,7 @@
     const lsaMatchedTotal = (DATA.lsaMatchedCases && DATA.lsaMatchedCases.matched)
       || lsaMonths.reduce((s, r) => s + (Number(r.matches) || 0), 0);
     combinedMonthRows.push([
-      "Mar–Sep",
+      "Mar to Nov*",
       String(lsaContacts),
       String(lsaMatchedTotal),
       String(trustClientsTotal),
@@ -5414,67 +5762,79 @@
       fmtMoney(ppcSpend),
       String(yelpContacts),
       String(justiaContacts),
-      String(findlawLeads)
+      String(findlawMarNov)
     ]);
     const yelpTrust = Number(cv.trustCreditTotal) || 0;
-    const yelpMatches = (DATA.contactLeadSource && DATA.contactLeadSource.yelp && DATA.contactLeadSource.yelp.matched != null)
-      ? Number(DATA.contactLeadSource.yelp.matched)
-      : Number(cv.matchedContacts) || 0;
-    const yelpReturnPct = yelpSpend > 0
-      ? Math.round((yelpTrust / yelpSpend) * 100) + "%"
-      : "0%";
-    const confPack = DATA.leadSourceConfirmed || {};
-    const matchCount = key => {
-      const row = confPack[key];
-      if (row && row.confirmed != null) return String(Number(row.confirmed) || 0);
-      return "0";
+    const yelpTrustClients = Number(cv.trustClients) || 3;
+    const yelpReturnPct = yelpSpend > 0 ? Math.round((yelpTrust / yelpSpend) * 100) + "%" : "—";
+    const findlawTrust = Number(fl.trustSum) || 0;
+    const findlawTrustClients = Number(fl.trustClients) || 1;
+    const findlawReturnPct = findlawSpendPaid > 0 ? Math.round((findlawTrust / findlawSpendPaid) * 100) + "%" : "—";
+    const rollupRow = (label, win, contacts, trustN, spend, trustSum) => {
+      const c = Number(contacts) || 0;
+      const m = Number(trustN) || 0;
+      const sp = Number(spend) || 0;
+      const tr = Number(trustSum) || 0;
+      return [
+        label,
+        win,
+        String(c),
+        String(m),
+        sp > 0 ? fmtMoney(sp) : "$0",
+        sp > 0 && c > 0 ? fmtMoney(sp / c) : "—",
+        tr > 0 ? fmtMoney(tr) : "$0",
+        sp > 0 ? Math.round((tr / sp) * 100) + "%" : "—"
+      ];
     };
-    const tagRollup = (label, key) => {
-      const pack = (DATA.referralSourceContacts && DATA.referralSourceContacts[key]) || {};
-      const n = pack.contacts != null ? String(Number(pack.contacts) || 0) : "0";
-      const matches = pack.trustClients != null ? String(Number(pack.trustClients) || 0) : "—";
-      const trust = pack.trustSum != null ? fmtMoney(Number(pack.trustSum) || 0) : "—";
-      const win = (DATA.referralSourceContacts && DATA.referralSourceContacts.window) || "10/22/2026";
-      return [label, win, n, matches, "—", "—", trust, "—"];
-    };
+    const hsLsa = hs.lsa || {};
+    const hsAds = hs.googleAds || {};
+    const hsWeb = hs.websiteForm || {};
+    const hsCli = hs.clientReferral || {};
+    const hsPro = hs.professionalReferral || {};
     const channelRollupRows = [
-      tagRollup("LSA", "lsa"),
-      tagRollup("Google Ads", "googleAds"),
-      tagRollup("Referral via Client", "clientReferral"),
-      tagRollup("Referral via Colleague", "professionalReferral"),
-      [
-        "Yelp",
-        "Jun–Sep",
-        String(yelpContacts),
-        matchCount("yelp") !== "0" ? matchCount("yelp") : String(yelpMatches),
-        fmtMoney(yelpSpend),
-        yelpContacts
-          ? `${fmtMoney(yelpPerContact)}${yelpPerSigned != null ? ` · ${fmtMoney(yelpPerSigned)}/signed` : ""}`
-          : "—",
-        fmtMoney(yelpTrust),
-        yelpReturnPct
-      ],
-      [
-        "Justia",
-        "Mar–Aug",
-        String(justiaContacts),
-        matchCount("justia"),
-        fmtMoney(justiaSpend),
-        justiaContacts ? fmtMoney(justiaPerContact) : "—",
-        "$0",
-        "0%"
-      ],
-      [
-        "FindLaw",
-        "Mar–Aug",
-        String(findlawLeads),
-        matchCount("findlaw"),
-        fmtMoney(findlawSpendMarAug),
-        findlawLeads ? fmtMoney(findlawPerLead) : "—",
-        "$0",
-        "0%"
-      ]
+      rollupRow("Google Ads", "May to Nov*", hsAds.contacts, hsAds.trustClients, ppcSpend, hsAds.trustSum),
+      rollupRow("LSA", "Feb to Nov*", hsLsa.contacts, hsLsa.trustClients, lsaSpend2026, hsLsa.trustSum),
+      rollupRow("Yelp", "Jun to Nov*", yelpContacts, yelpTrustClients, yelpSpend, yelpTrust),
+      rollupRow("FindLaw", "Feb to Nov*", findlawAll2026, findlawTrustClients, findlawSpendPaid, findlawTrust),
+      rollupRow("Website Forms", "Jun to Nov*", hsWeb.contacts, hsWeb.trustClients, websiteSpend2026, hsWeb.trustSum),
+      rollupRow("Referral via Client", "2026 YTD", hsCli.contacts, hsCli.trustClients, 0, hsCli.trustSum),
+      rollupRow("Referral via Colleague", "2026 YTD", hsPro.contacts, hsPro.trustClients, 0, hsPro.trustSum),
+      rollupRow("Justia", "Mar to Aug", justiaContacts, 0, justiaSpend, 0)
     ];
+    const rollupTotalTrustN = (Number(hsAds.trustClients) || 0)
+      + (Number(hsLsa.trustClients) || 0)
+      + yelpTrustClients
+      + findlawTrustClients
+      + (Number(hsWeb.trustClients) || 0)
+      + (Number(hsCli.trustClients) || 0)
+      + (Number(hsPro.trustClients) || 0);
+    const rollupTotalTrustSum = (Number(hsAds.trustSum) || 0)
+      + (Number(hsLsa.trustSum) || 0)
+      + yelpTrust
+      + findlawTrust
+      + (Number(hsWeb.trustSum) || 0)
+      + (Number(hsCli.trustSum) || 0)
+      + (Number(hsPro.trustSum) || 0);
+    const rollupTotalSpend = ppcSpend + lsaSpend2026 + yelpSpend + findlawSpendPaid + websiteSpend2026 + justiaSpend;
+    const rollupTotalContacts = (Number(hsAds.contacts) || 0)
+      + (Number(hsLsa.contacts) || 0)
+      + yelpContacts
+      + findlawAll2026
+      + (Number(hsWeb.contacts) || 0)
+      + (Number(hsCli.contacts) || 0)
+      + (Number(hsPro.contacts) || 0)
+      + justiaContacts;
+    channelRollupRows.push([
+      "Total Attributed",
+      "2026 YTD",
+      String(rollupTotalContacts),
+      String(rollupTotalTrustN),
+      fmtMoney(rollupTotalSpend),
+      rollupTotalContacts > 0 ? fmtMoney(rollupTotalSpend / rollupTotalContacts) : "—",
+      fmtMoney(rollupTotalTrustSum),
+      rollupTotalSpend > 0 ? Math.round((rollupTotalTrustSum / rollupTotalSpend) * 100) + "%" : "—"
+    ]);
+
     const contactDetail = combinedMonthRows;
     const clsTags = DATA.contactLeadSource || {};
     const yelpTagBy = (clsTags.yelp && clsTags.yelp.byCreatedMonth) || {};
@@ -5483,16 +5843,23 @@
       : Number(cv.matchedContacts) || 0;
     const yelpSignedBy = (cv.byMonth) || {};
     const yelpLeadBy = yelpBy;
-    const yelpMoneyMonths = ["Oct", "Sep", "Aug", "Jul", "Jun"];
+    const yelpMoneyMonths = ["Nov", "Oct", "Sep", "Aug", "Jul", "Jun"];
+    const yelpSpendByMonth = {};
+    channelStack.forEach(r => {
+      const m = String(r.month || "").replace(/\*/g, "");
+      yelpSpendByMonth[m] = Number(r.yelpSpend) || 0;
+    });
     const yelpMoneyRows = yelpMoneyMonths.map(month => {
       const signedCell = yelpSignedBy[month] || {};
       const signed = Number(signedCell.signed) || 0;
       const fee = Number(signedCell.contractedTotal) || 0;
       const trust = Number(signedCell.trustCredits) || 0;
       const leads = Number((yelpLeadBy[month] && yelpLeadBy[month].contacts) || 0);
+      const sp = yelpSpendByMonth[month] || 0;
       return [
-        escapeHtml(month),
+        escapeHtml(month === "Nov" ? "Nov*" : month),
         String(leads),
+        sp > 0 ? fmtMoney(sp) : "$0",
         String(Number(yelpTagBy[month]) || 0),
         String(signed),
         fee ? fmtMoney(fee) : "—",
@@ -5504,13 +5871,15 @@
       0
     );
     yelpMoneyRows.push([
-      "Jun–Oct",
+      "Jun to Nov*",
       String(yelpLeadTotal),
+      fmtMoney(yelpSpend),
       String(yelpMatchedTotal),
       String(cv.signedWithFee || 0),
       fmtMoney(cv.contractedTotal || 0),
       fmtMoney(cv.trustCreditTotal || 0)
     ]);
+
     const justiaLast6 = j.last6 || {};
     const justiaTagBy = (clsTags.justia && clsTags.justia.byCreatedMonth) || {};
     const justiaMatchedTotal = clsTags.justia && clsTags.justia.matched != null
@@ -5531,60 +5900,71 @@
       ];
     });
     justiaMonthRows.push([
-      "Mar–Aug",
+      "Mar to Aug",
       String(Number(justiaLast6.calls) || 0),
       String(Number(justiaLast6.emails) || Number(j.emailsLast6) || 0),
       String(justiaContacts),
       String(justiaMatchedTotal),
       fmtMoney(justiaSpend)
     ]);
+
     const findlawTagBy = (clsTags.findlaw && clsTags.findlaw.byCreatedMonth)
       || fl.matchedByCreatedMonth
       || {};
-    const findlawMatchedTotal = clsTags.findlaw && clsTags.findlaw.matched != null
-      ? Number(clsTags.findlaw.matched)
-      : fl.confirmedClients != null
-        ? Number(fl.confirmedClients)
-        : Number(fl.matchedContacts) || 0;
-    const findlawMonthKeys = ["Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar"];
+    const findlawTrustBy = fl.trustByMonth || {};
+    const findlawMatchedTotal = Number(fl.matchedContacts) || 2;
+    const findlawMonthKeys = ["Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb"];
     const findlawMonthRows = findlawMonthKeys.map(month => {
-      const leads = Number(findlawBy[month] || 0);
-      const matched = Number(findlawTagBy[month]) || 0;
-      const inSpendWindow = ["Mar", "Apr", "May", "Jun", "Jul", "Aug"].includes(month);
+      const calls = Number(findlawCallsBy[month] || 0);
+      const emails = Number(findlawEmailsBy[month] || 0);
+      const total = Number(findlawBy[month] || 0);
+      const matched = Number(findlawTagBy[month] || 0);
+      const trustN = Number(findlawTrustBy[month] || 0);
       return [
-        escapeHtml(month),
-        String(leads),
+        escapeHtml(month === "Nov" ? "Nov*" : month),
+        String(calls),
+        String(emails),
+        String(total),
         String(matched),
-        inSpendWindow ? fmtMoney(findlawMonthly) : "—",
-        leads && inSpendWindow ? fmtMoney(findlawMonthly / leads) : "—"
+        trustN > 0 ? fmtMoney(findlawTrust) : "—"
       ];
     });
     findlawMonthRows.push([
-      "Mar–Aug",
-      String(findlawLeads),
+      "Feb to Nov*",
+      String(Number(fl.callsTotal) || 29),
+      String(Number(fl.emailsTotal) || 7),
+      String(findlawAll2026),
       String(findlawMatchedTotal),
-      fmtMoney(findlawSpendMarAug),
-      findlawLeads ? fmtMoney(findlawPerLead) : "—"
+      fmtMoney(findlawTrust)
     ]);
+
+    const dirSeriesKey = `<div class="kpi-chart-series-key">
+      <span><span class="kpi-swatch" style="background:#64748b"></span> Yelp Contacts</span>
+      <span><span class="kpi-swatch" style="background:#6a5acd"></span> Justia Contacts</span>
+      <span><span class="kpi-swatch" style="background:#b23a78"></span> FindLaw Contacts</span>
+    </div>`;
+
     const summaryTilesHtml = "";
     const cardsHtml = `
       ${lsCard(
-        "Channel Rollup · HubSpot + Directories",
+        "Channel Rollup: HubSpot And Directories",
         `${kpiDetailTable(
-          ["Channel", "Window", "Contacts", "Matches", "Spend", "Cost/Contact", "Trust $", "Return %"],
-          channelRollupRows
+          ["Channel", "Window", "Contacts", "Trust<br>Clients", "Spend", "Cost /<br>Contact", "Trust $", "Return<br>%"],
+          channelRollupRows,
+          { stackedHeads: true }
         )}
-        <p class="ls-note">HubSpot rows use Lead Source after the 10/22 CRM export and the Google Ads / LSA / FindLaw / Yelp uploads through 11/05 8:30 AM. Matches = Trust balance on the Contact_11-05 join. Yelp · Justia · FindLaw package rows stay on their spend windows.</p>`
+        <p class="ls-note">HubSpot Lead Source rows combine the 10/22/2026 CRM export and all contact uploads through 11/20/2026, joined to Contact_11-19-2026 Trust balance with blacklisted contacts excluded. Yelp, FindLaw, and Justia show verified directory contacts and 2026 package or ad spend.</p>`,
+        { verified: true, asOf: "11/20/2026" }
       )}
       ${lsCard(
         "Lead Source: Yelp",
         `${kpiDetailTable(
-          ["Month", "Leads", "Matched<br>MyCase", "Signed", "Contracted fee", "Trust credits"],
+          ["Month", "Contacts", "Ad Spend", "Matched<br>MyCase", "Signed", "Contracted<br>Fee", "Trust<br>Credits"],
           yelpMoneyRows,
           { stackedHeads: true }
         )}
-        <p class="ls-note">Leads are Yelp contacts: Messages plus answered calls. Jun 3, Jul 5, Aug 10, Sep 8, Oct 7. Matched MyCase stays the 5 Contact Lead Source tags. Signed, fee, and trust stay on yelpBaseline.caseValue.</p>`,
-        { verified: true }
+        <p class="ls-note">Contacts are Yelp messages plus answered calls. Nov* contacts are held from the 11/08/2026 Leads breakdown until a fresh Leads export lands. Ad Spend uses full Yelp Ad Analytics through 11/18/2026 totaling ${fmtMoney(yelpSpend)}. Trust credits total ${fmtMoney(yelpTrust)} across ${yelpTrustClients} Trust clients on Contact_11-19-2026.</p>`,
+        { verified: true, asOf: "11/19/2026" }
       )}
       <div class="ls-card-pair">
       ${lsCard(
@@ -5596,6 +5976,7 @@
         )}`,
         {
           blocked: true,
+          asOf: "09/18/2026",
           problemLabel:
             "Problem: no leads or contact info can be downloaded from Justia. Must come directly from Andrew's email."
         }
@@ -5603,25 +5984,27 @@
       ${lsCard(
         "Lead Source: FindLaw",
         `${kpiDetailTable(
-          ["Month", "Leads", "Matched<br>MyCase", "Spend", "Cost / lead"],
+          ["Month", "Calls", "Emails", "Total", "Matched<br>MyCase", "Trust $"],
           findlawMonthRows,
           { stackedHeads: true }
         )}
-        <p class="ls-note">Leads = FindLaw-Lead-Source real · Kate test excluded. Matched MyCase = Contact_10-08 Lead Source=FindLaw · ${findlawMatchedTotal} tags Kate set · Jul Created 1 in-window · 1 older Created outside Mar–Sep. Package $${findlawMonthly.toFixed(2)}/mo Order Q-10772187.</p>`
+        <p class="ls-note">FindLaw INSIGHT through 11/19/2026 with Kate test excluded: ${findlawAll2026} contacts across ${Number(fl.callsTotal) || 29} calls and ${Number(fl.emailsTotal) || 7} emails, ${findlawMatchedTotal} MyCase matches, and ${findlawTrustClients} Trust client at ${fmtMoney(findlawTrust)}. Package is $${findlawMonthly.toFixed(2)} per month on Order Q-10772187.</p>`,
+        { verified: true, asOf: "11/19/2026" }
       )}
       </div>
       ${lsCard(
-        "Month Detail · LSA + PPC + Directories",
+        "Monthly Channel Detail: LSA, Search, And Directories",
         `${directoryContactsChart(rows)}
+        ${dirSeriesKey}
         <div class="ls-card-pair ls-month-detail-tables">
           ${kpiDetailTable(
             [
               "Month",
-              "LSA<br>leads",
+              "LSA<br>Leads",
               "Matches",
-              "Clients",
+              "Trust<br>Clients",
               "Trust $",
-              "LSA<br>spend",
+              "LSA<br>Spend",
               "Return<br>%"
             ],
             contactDetail.map(r => r.slice(0, 7)),
@@ -5630,8 +6013,8 @@
           ${kpiDetailTable(
             [
               "Month",
-              "PPC<br>calls",
-              "PPC<br>spend",
+              "Search<br>Calls",
+              "Search<br>Spend",
               "Yelp",
               "Justia",
               "FindLaw"
@@ -5640,9 +6023,9 @@
             { stackedHeads: true }
           )}
         </div>
-        <p class="ls-note">Gaps filled with 0 or. when that channel has no source for the month. Yelp contacts = Messages + round(Calls × 46%). Justia = calls + emails. FindLaw = Lead-Source real · Kate test excluded. Mar–May Yelp = 0 · Sep Justia = 0 · Mar–Apr PPC = —.</p>`
-      )}
-      <p class="ls-note">FindLaw $924.38/mo from Order Q-10772187. Justia $1,500/mo Referral Sites attribution. Still thin vs LSA for signed volume.</p>`;
+        <p class="ls-note">Rows run newest to oldest through 11/21/2026. Search Calls use Call details through 11/19/2026. FindLaw uses INSIGHT calls plus emails through 11/19/2026. Justia shows dashes after August because no export exists past 09/18/2026.</p>`,
+        { verified: true, asOf: "11/21/2026" }
+      )}`;
     return { summaryTilesHtml, cardsHtml };
   }
 
@@ -5651,7 +6034,7 @@
     if (!pack || !pack.months || !pack.months.length) return null;
     const spend = pack.months.reduce((sum, r) => sum + (Number(r.spend) || 0), 0);
     const trustTotal = pack.trustSum || pack.months.reduce((s, r) => s + (Number(r.trustSum) || 0), 0);
-    const costRows = pack.months.map(r => {
+    const costRows = pack.months.slice().reverse().map(r => {
       const perMatch = r.matches ? r.spend / r.matches : null;
       return [
         escapeHtml(`${r.month} 2026`),
@@ -5661,6 +6044,13 @@
         perMatch != null ? fmtMoney(perMatch) : "—"
       ];
     });
+    costRows.push([
+      "Mar to Nov*",
+      String(pack.matched),
+      fmtMoney(trustTotal),
+      fmtMoney(spend),
+      pack.matched ? fmtMoney(spend / pack.matched) : "—"
+    ]);
     return { pack, spend, trustTotal, costRows };
   }
 
@@ -5668,42 +6058,54 @@
     const cpa = costPerClientAcquisitionPack();
     if (!cpa) return "";
     const perClient = cpa.pack.matched ? cpa.spend / cpa.pack.matched : null;
-    const summary = `<p class="kpi-chart-summary" aria-label="Cost per Client Acquisition totals">
+    const summary = `<p class="kpi-chart-summary" aria-label="Cost Per Client Acquisition totals">
       <span>${cpa.pack.matched} matches</span>
       <span>Trust ${fmtMoney(cpa.trustTotal)}</span>
       <span>LSA media ${fmtMoney(cpa.spend)}</span>
-      <span>$/Client ${perClient != null ? fmtMoney(perClient) : "—"}</span>
+      <span>$/Match ${perClient != null ? fmtMoney(perClient) : "—"}</span>
     </p>`;
     return lsCard(
-      "Cost per Client Acquisition per Month",
+      "Cost Per Client Acquisition Per Month",
       `<div class="ls-chart-split">
         <div class="ls-chart-plot">${lsaMatchedCostBars()}${summary}</div>
         <div class="ls-chart-desc">${kpiDetailTable(
-          ["Month", "Matches", "Trust $", "LSA media", "$/Client"],
+          ["Month", "Matches", "Trust $", "LSA Media", "$/Match"],
           cpa.costRows
         )}</div>
       </div>`,
-      { draftLabel: "HubSpot Integration Build" }
+      { draftLabel: "HubSpot Integration Build", asOf: "11/21/2026" }
     );
   }
 
   function leadSourceLsaMoneyCardsHtml(pack) {
     if (!pack) return "";
     const months = pack.months || [];
-    const moneyRows = months.map(r => [
+    const moneyRows = months.slice().reverse().map(r => [
       escapeHtml(r.month),
-      r.trustSum ? fmtMoney(r.trustSum) : "—"
+      String(r.trustN || 0),
+      r.trustSum ? fmtMoney(r.trustSum) : "—",
+      String(r.withFee || 0),
+      r.feeSum ? fmtMoney(r.feeSum) : "—"
     ]);
     moneyRows.push([
-      "Mar–Sep",
-      fmtMoney(pack.trustSum || 0)
+      "Mar to Nov*",
+      String(pack.trustClients || 0),
+      fmtMoney(pack.trustSum || 0),
+      String(pack.withFee || 0),
+      fmtMoney(pack.feeSum || 0)
     ]);
     return `${lsCard(
-      "Case Value",
-      `${lsaMatchedFeeBars()}
-      ${kpiDetailTable(["Month", "Trust $"], moneyRows)}
-      <p class="ls-note">Trust $ is the Contact Trust balance on matched LSA contacts. That is money on the trust account.</p>`,
-      { verified: true }
+      "LSA Case Value And Trust Balance",
+      `<div class="ls-chart-split">
+        <div class="ls-chart-plot">${lsaMatchedFeeBars()}</div>
+        <div class="ls-chart-desc">${kpiDetailTable(
+          ["Month", "Trust<br>Clients", "Trust $", "Fee<br>Cases", "Contracted<br>Fee"],
+          moneyRows,
+          { stackedHeads: true }
+        )}</div>
+      </div>
+      <p class="ls-note">Trust $ is Contact_11-19-2026 Trust balance across ${pack.trustClients || 53} matched LSA clients. Contracted Fee covers ${pack.withFee || 27} matched cases averaging ${fmtMoney(pack.avgFee || 5222)} on Case_balance_summary_11-19-2026.</p>`,
+      { verified: true, asOf: "11/21/2026" }
     )}`;
   }
 
@@ -5727,17 +6129,23 @@
     const findlawMonthly = Number(fl.monthly) || 0;
     const findlawSpend2026 = sumKey(channelStack, "findlawSpend") || findlawMonthly * monthsWith(channelStack, "findlawSpend");
     const findlawMonthsN = monthsWith(channelStack, "findlawSpend") || (findlawMonthly > 0 ? channelStack.length : 0);
+    const findlawBy = fl.leadsByMonth || {};
+    const findlawMayNovLeads = ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"].reduce(
+      (s, m) => s + (Number(findlawBy[m]) || 0),
+      0
+    );
+    const findlawConfirmed = fl.trustClients != null
+      ? Number(fl.trustClients)
+      : Number((conf.findlaw && conf.findlaw.trustClients) || 1);
     const justiaMonthly = Number(j.spendMonthly) || Number(DATA.referralSitesMonthly) || 0;
-    const justiaFromStack = sumKey(channelStack, "justiaSpend");
-    const justiaMarApr = justiaMonthly * 2;
-    const justiaSpend2026 = justiaFromStack + justiaMarApr;
-    const justiaMonthsN = monthsWith(channelStack, "justiaSpend") + (justiaMonthly > 0 ? 2 : 0);
+    const justiaSpend2026 = Number((j.last6 && j.last6.spend) || 0) || justiaMonthly * 6;
+    const justiaMonthsN = 6;
     const justiaContacts = Number((j.last6 && j.last6.contacts) || 0);
     const justiaConfirmed = conf.justia && conf.justia.confirmed != null
       ? Number(conf.justia.confirmed)
       : Number(j.confirmedClients) || 0;
     const yelpBy = y.byMonth || {};
-    const yelpContactMonths = ["Jun", "Jul", "Aug", "Sep", "Oct"];
+    const yelpContactMonths = ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"];
     const yelpContacts = yelpContactMonths.reduce(
       (s, m) => s + (Number(yelpBy[m] && yelpBy[m].contacts) || 0),
       0
@@ -5784,7 +6192,6 @@
         volume == null ? "—" : String(volume),
         confirmed == null ? "—" : String(confirmed),
         conversionCell(confirmed, volume),
-        costCell(monthSpend, monthClients == null ? 0 : monthClients),
         costCell(windowSpend, confirmed == null ? 0 : confirmed),
         monthlyCost == null || !(monthlyCost > 0) ? "—" : fmtMoney(monthlyCost)
       ];
@@ -5808,7 +6215,7 @@
         opts || null
       );
     };
-    const referralYtdMonths = 10;
+    const referralYtdMonths = 11;
     const yelpContactMonthsN = yelpContactMonths.length;
     const lsaMatchedMonths = (DATA.lsaMatchedCases && DATA.lsaMatchedCases.months) || [];
     const yelpSignedBy = (y.caseValue && y.caseValue.byMonth) || {};
@@ -5819,7 +6226,7 @@
       : null;
     const curMonthKey = curCases
       ? String(curCases.month || "").replace(/\*$/, "")
-      : "Oct";
+      : "Nov";
     const curChannel = channelStack.find(
       m => String(m.month || "").replace(/\*$/, "") === curMonthKey
     ) || null;
@@ -5869,7 +6276,7 @@
       }
       if (monthKey === curMonthKey) websiteCurForms = web.forms;
     });
-    const websiteMonthsN = websiteLeadMonths || channelStack.length || 6;
+    const websiteMonthsN = websiteLeadMonths || channelStack.length || 7;
     const websiteConfirmed = conf.website && conf.website.trustClients != null
       ? Number(conf.website.trustClients)
       : conf.website && conf.website.confirmed != null
@@ -5884,10 +6291,10 @@
       tagCompare(
         "LSA",
         "lsa",
-        "Feb–Oct*",
+        "Feb to Nov*",
         lsaSpend2026,
         monthlyAvg(lsaSpend2026, lsaMonthsN),
-        lsaMonthsN || 9,
+        lsaMonthsN || 10,
         null,
         lsaMonthSpendUse,
         lsaMonthClientsUse
@@ -5895,43 +6302,45 @@
       tagCompare(
         "Google Ads",
         "googleAds",
-        "May–Oct*",
+        "May to Nov*",
         searchSpend2026,
         monthlyAvg(searchSpend2026, searchMonthsN),
-        searchMonthsN || 6,
+        searchMonthsN || 7,
         null,
         searchMonthSpend,
         null
       ),
-      tagCompare("Referral via Client", "clientReferral", "YTD", 0, 0, referralYtdMonths, null, null, null),
-      tagCompare("Referral via Colleague", "professionalReferral", "YTD", 0, 0, referralYtdMonths, null, null, null),
-      tagCompare(
+      tagCompare("Referral via Client", "clientReferral", "2026 YTD", 0, 0, referralYtdMonths, null, null, null),
+      tagCompare("Referral via Colleague", "professionalReferral", "2026 YTD", 0, 0, referralYtdMonths, null, null, null),
+      row(
         "FindLaw",
-        "findlaw",
-        "May–Oct",
+        "May to Nov*",
+        findlawMayNovLeads,
+        findlawConfirmed,
         findlawSpend2026,
         monthlyAvg(findlawSpend2026, findlawMonthsN) || findlawMonthly,
-        findlawMonthsN || 6,
+        findlawMonthsN || 7,
         null,
         findlawMonthSpend,
+        null,
         null
       ),
       row(
         "Justia",
-        "Mar–Oct",
+        "Mar to Aug",
         justiaContacts,
         justiaConfirmed,
         justiaSpend2026,
         monthlyAvg(justiaSpend2026, justiaMonthsN) || justiaMonthly,
-        justiaMonthsN || 8,
+        justiaMonthsN,
         null,
         justiaMonthSpend,
         null,
-        null
+        { blocked: true }
       ),
       row(
         "Yelp",
-        "Jun–Oct*",
+        "Jun to Nov*",
         yelpContacts,
         yelpConfirmed,
         yelpSpend2026,
@@ -5944,7 +6353,7 @@
       ),
       row(
         "Website",
-        "May–Oct*",
+        "May to Nov*",
         websiteLeads,
         websiteConfirmed,
         websiteSpend,
@@ -5994,17 +6403,75 @@
       [
         "Channel",
         "Window",
-        "Leads /<br>contacts",
+        "Leads /<br>Contacts",
         "Confirmed<br>Clients",
         "Conversion<br>%",
-        "This Month<br>Cost / client",
-        "Avg. Cost /<br>client",
-        "Avg. Monthly<br>cost"
+        "Avg. Cost /<br>Client",
+        "Avg. Monthly<br>Cost"
       ],
       rows,
       { stackedHeads: true }
-    )}
-    <p class="ls-note">This Month Cost / client is that month’s media ÷ that month’s clients when both are on file. For LSA, if the current tile month has spend but no Trust Clients yet, it uses the newest matched month that has both. Avg. Cost / client is the window’s media ÷ Confirmed Clients. Avg. Monthly cost is window media ÷ months with spend, not the period total. Referrals have no media. Website is HubSpot form submits on pav.law and ntguilt.com for May–Oct*. Confirmed Clients are form submitters with Trust balance on Contact_10-17. HubSpot forms fee is $1,095/mo from June when that month had submits. HubSpot-tagged channels use the 10/22 CRM export plus uploads through 11/05 8:30 AM, Trust-joined to Contact_11-05. Yelp and Justia use directory / Ads volume, not HubSpot Lead Source tags. Paid and directory channels sort by contact count. Referrals stay at the bottom.</p>`;
+    )}`;
+  }
+
+  function leadSourceSummaryStripHtml() {
+    const src = DATA.referralSourceContacts || {};
+    const active = src.active2026Clients || {};
+    const withSource = Number(active.withLeadSource) || 0;
+    const totalHs = Number(active.inHubSpot) || 0;
+    const pct = active.pct != null
+      ? Number(active.pct)
+      : totalHs > 0 ? Math.round((withSource / totalHs) * 1000) / 10 : 0;
+    const pctLabel = Number.isInteger(pct) ? String(pct) : pct.toFixed(1);
+
+    const hsChannels = ["googleAds", "lsa", "clientReferral", "professionalReferral", "websiteForm", "findlaw", "yelp"];
+    const totalTrustClients = hsChannels.reduce((s, k) => s + (Number(src[k] && src[k].trustClients) || 0), 0);
+    const totalTrustSum = hsChannels.reduce((s, k) => s + (Number(src[k] && src[k].trustSum) || 0), 0);
+
+    const pack = DATA.lsaMatchedCases || {};
+    const lsaMonths = pack.months || [];
+    const lsaSpend = lsaMonths.reduce((s, r) => s + (Number(r.spend) || 0), 0);
+    const lsaTrust = Number(pack.trustSum) || 0;
+    const lsaReturn = lsaSpend > 0 ? `${Math.round((lsaTrust / lsaSpend) * 100)}%` : "—";
+
+    const channelStack = DATA.channelMonths || [];
+    const latestCh = channelStack.length ? channelStack[channelStack.length - 1] : null;
+    const latestMonth = latestCh ? String(latestCh.month || "Nov*") : "Nov*";
+    const latestWeb = latestCh ? channelWebsiteLeads(latestCh).count : 0;
+    const latestLeads = latestCh
+      ? (Number(latestCh.lsa) || 0)
+        + (Number(latestCh.search) || 0)
+        + latestWeb
+        + (Number(latestCh.yelp) || 0)
+        + (Number(latestCh.findlaw) || 0)
+        + (Number(latestCh.justia) || 0)
+      : 0;
+    const latestBreak = latestCh
+      ? `LSA ${latestCh.lsa || 0}, Forms ${latestWeb}, Search ${latestCh.search || 0}, FindLaw ${latestCh.findlaw || 0}, Yelp ${latestCh.yelp || 0}`
+      : "";
+
+    return `<div class="ls-summary-strip" role="region" aria-label="Lead Source Headline Metrics">
+      <div class="ls-summary-tile ls-summary-tile-royal">
+        <div class="ls-summary-label">2026 Attribution Coverage</div>
+        <div class="ls-summary-value">${escapeHtml(pctLabel)}%</div>
+        <div class="ls-summary-sub">${withSource.toLocaleString("en-US")} of ${totalHs.toLocaleString("en-US")} HubSpot active clients</div>
+      </div>
+      <div class="ls-summary-tile ls-summary-tile-good">
+        <div class="ls-summary-label">Attributed Trust Balance</div>
+        <div class="ls-summary-value">${fmtMoney(totalTrustSum)}</div>
+        <div class="ls-summary-sub">${totalTrustClients.toLocaleString("en-US")} confirmed clients across 7 channels</div>
+      </div>
+      <div class="ls-summary-tile ls-summary-tile-navy">
+        <div class="ls-summary-label">LSA Trust Return</div>
+        <div class="ls-summary-value">${escapeHtml(lsaReturn)}</div>
+        <div class="ls-summary-sub">${fmtMoney(lsaTrust)} Trust on ${fmtMoney(lsaSpend)} spend, Mar to Nov*</div>
+      </div>
+      <div class="ls-summary-tile ls-summary-tile-navy">
+        <div class="ls-summary-label">${escapeHtml(latestMonth)} Tracked Leads</div>
+        <div class="ls-summary-value">${latestLeads.toLocaleString("en-US")}</div>
+        <div class="ls-summary-sub">${escapeHtml(latestBreak)}</div>
+      </div>
+    </div>`;
   }
 
   function leadSourceCoverageLine() {
@@ -6017,7 +6484,7 @@
       ? Number(active.pct)
       : Math.round((withSource / total) * 1000) / 10;
     const pctLabel = Number.isInteger(pct) ? String(pct) : pct.toFixed(1);
-    return `<p class="ls-sub">${pctLabel}% of active 2026 clients in HubSpot have a Lead Source. ${withSource.toLocaleString("en-US")} of ${total.toLocaleString("en-US")}.</p>`;
+    return `<p class="ls-sub">${pctLabel}% of active 2026 clients in HubSpot have a Lead Source: ${withSource.toLocaleString("en-US")} of ${total.toLocaleString("en-US")} as of 11/20/2026.</p>`;
   }
 
   function leadSourceSectionHtml() {
@@ -6025,6 +6492,7 @@
     if (!pack || !pack.months || !pack.months.length) return "";
     const months = pack.months;
     const totalSpend = months.reduce((s, r) => s + (Number(r.spend) || 0), 0);
+    const totalLeads = months.reduce((s, r) => s + (Number(r.leads) || 0), 0);
     const trustSum = pack.trustSum || months.reduce((s, r) => s + (Number(r.trustSum) || 0), 0);
     const returnPct = spend => {
       if (!spend) return "—";
@@ -6036,7 +6504,7 @@
       if (!sp) return "—";
       return Math.round((tr / sp) * 100) + "%";
     };
-    const detailRows = months.map(r => {
+    const detailRows = months.slice().reverse().map(r => {
       const confirmed = r.trustN != null ? Number(r.trustN) : Number(r.clients) || 0;
       const spend = Number(r.spend) || 0;
       const costClient = confirmed > 0 ? fmtMoney(spend / confirmed) : "—";
@@ -6051,49 +6519,56 @@
         monthReturn(r)
       ];
     });
+    const totalTrustN = pack.trustClients || months.reduce((s, r) => s + (Number(r.trustN) || 0), 0);
+    detailRows.push([
+      "Mar to Nov*",
+      String(totalLeads),
+      String(pack.matched || 0),
+      String(totalTrustN),
+      totalTrustN > 0 ? fmtMoney(totalSpend / totalTrustN) : "—",
+      fmtMoney(totalSpend),
+      fmtMoney(trustSum),
+      returnPct(totalSpend)
+    ]);
     const periodSummaryHtml = `<div class="ls-period-summary" role="note">
       <span class="kpi-col-trust">Trust $ ${fmtMoney(trustSum)}</span>
-      <span class="kpi-col-spend">LSA spend (${fmtMoney(totalSpend)})</span>
+      <span class="kpi-col-spend">LSA Spend ${fmtMoney(totalSpend)}</span>
       <span>Return ${returnPct(totalSpend)}</span>
     </div>`;
     const directory = leadSourceDirectorySectionHtml() || { summaryTilesHtml: "", cardsHtml: "" };
     return `<div class="ls-canvas" data-feedback-id="tab-lead-source" data-feedback-label="Lead Source">
       <div class="ls-stack">
-        <div class="ls-block-head">
-          ${leadSourceCoverageLine()}
-        </div>
+        ${leadSourceSummaryStripHtml()}
         ${lsCard(
           "Channel Comparison",
           leadSourceChannelSummaryTableHtml(),
-          { verified: true }
+          { draftLabel: "Under Construction", flaggedLabel: "Inaccurate Data", asOf: "11/21/2026" }
         )}
         ${leadSourceLeadCostYtdHtml()}
         ${leadSourceLeadsByChannelHtml()}
         ${leadSourceCostPerClientAcquisitionHtml()}
         ${lsCard(
-          "LSA Leads × Trust Balance",
-          `<div class="ls-chart-split">
-            <div class="ls-chart-plot">
+          "LSA Leads And Trust Balance",
+          `<div class="ls-chart-plot">
               ${leadSourceDualChart(months)}
               ${periodSummaryHtml}
-              <p class="ls-note">Left axis: counts. Right axis: Trust $. Return % = Trust $ ÷ LSA spend.</p>
+              <p class="ls-note">Left axis: counts. Right axis: Trust $. Return % equals Trust $ divided by LSA spend.</p>
             </div>
-            <div class="ls-chart-desc">${kpiDetailTable(
+            ${kpiDetailTable(
               [
                 "Month",
-                "LSA<br>leads",
+                "LSA<br>Leads",
                 "Matches",
                 "Trust<br>Clients",
-                "Cost /<br>client",
-                "Monthly<br>cost",
+                "Cost /<br>Client",
+                "Monthly<br>Cost",
                 "Trust $",
                 "Return<br>%"
               ],
               detailRows,
               { stackedHeads: true }
-            )}</div>
-          </div>`,
-          { draftLabel: "HubSpot Integration Build" }
+            )}`,
+          { draftLabel: "HubSpot Integration Build", asOf: "11/21/2026" }
         )}
         ${leadSourceLsaMoneyCardsHtml(pack)}
         <div data-feedback-id="section-lead-source-directories" data-feedback-label="Lead Source directories">
@@ -7144,7 +7619,6 @@
         ...(g.trustDui != null ? [["DUI trust", `<span title="${escapeHtml("Trust balance on the 20 DUI cases created in 2026 through 10/29/2026. Contact file 11/05/2026.")}">${fmtMoney(g.trustDui)}</span>`, "actual"]] : []),
         ...(g.trustTraffic != null ? [["Traffic trust", `<span title="${escapeHtml("Trust balance on the 23 Traffic cases created in 2026 through 10/29/2026. Contact file 11/05/2026.")}">${fmtMoney(g.trustTraffic)}</span>`, "actual"]] : [])
       ])}
-      ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
       ${kpiRefMark("#03")}
     </button>`;
   }
@@ -8008,7 +8482,7 @@
           ${heroGoal}
         </div>
         ${barTrack}
-        ${hit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
+        ${hit && !k.hideTargetHit ? '<span class="kpi-target-hit">Target reached</span>' : ""}
         ${foot}
         ${kpiRefMark(k.id)}
       </button>`;
@@ -8670,8 +9144,7 @@
       ["Search", money(m.adsSpend != null ? m.adsSpend : m.searchSpend)],
       ["LSA", money(m.lsaSpend)],
       ["Yelp", money(m.yelpSpend)],
-      ["Cases", String(m.cases)],
-      ["Avg $/case", money(m.costPerClient)]
+      ["Cases", String(m.cases)]
     ]);
   }
 
@@ -8958,6 +9431,7 @@
         verified: ctrReady,
         augUpdated: ctrReady,
         hit: ctrReady && m.ctr >= g.ctr,
+        hideTargetHit: true,
         alert: ctrReady && m.ctr < g.ctr,
         updatedAsOf: resolveTileAsOf("dg-ctr")
       },
@@ -9046,8 +9520,7 @@
         <div class="kpi-section-body">
           ${casesLeadsSpendSectionHtml()}
         </div>
-      </section>
-      ${salesFunnelSectionHtml()}`;
+      </section>`;
     el.dataset.rendered = RENDER_VER;
     bindKpiInteractions(el);
     bindDashboardInteractions(el);
@@ -10663,6 +11136,13 @@
       : "Individual goal is " + yearText + ", based on the annual average answer rate on the call log, May through October. A 1.5× marks a collective answer rate of at least 90%. The highest closer gets a 2× bonus when the month breaks the sales record. Conversion is tracked per person and is not in the pay. Answer pay is an individual flat and is not set. The habit to practice is answering calls.";
     const yearBaseline = lift.monthlyCalls > 0 ? lift.monthlyCalls : 0;
     const minCallsForGoal = lift.callsForCashGoal > 0 ? lift.callsForCashGoal : 0;
+    const minCasesForGoal = lift.fee > 0
+      ? Math.ceil(lift.cashGoal / lift.fee - 1e-9)
+      : (lift.casesForCashGoal > 0 ? lift.casesForCashGoal : 22);
+    const completeCaseRows = (DATA.casesLeadsSpend || []).filter(r => !/\*$/.test(String(r.month || "")) && Number(r.cases) > 0);
+    const avgMonthlyCases2026 = completeCaseRows.length > 0
+      ? Math.ceil(completeCaseRows.reduce((s, r) => s + Number(r.cases), 0) / completeCaseRows.length - 1e-9)
+      : avgCases;
     const incomingFloor = yearBaseline > 0 ? yearBaseline : 0;
     const incomingDefault = Math.max(incomingFloor, minCallsForGoal);
     const answerFloor = rewardWeekdayAnswerFloorPct();
@@ -10672,67 +11152,31 @@
       return `<tr${mark}><td>${row.pct}%</td><td>${row.answered.toLocaleString("en-US")}</td><td>${row.cases.toLocaleString("en-US")}</td><td>${fmtMoney(row.revenue)}</td></tr>`;
     }).join("");
     const seatNames = ["Romina", "Andrew", "Jack", "Casey"];
-    const weekdayClose = rewardWeekdayCloseRates();
-    const weekendClose = rewardWeekendCloseRates();
-    const seatCaseShare = lift.casesForCashGoal > 0
-      ? Math.ceil(lift.casesForCashGoal / seatNames.length - 1e-9)
-      : 6;
-    /* Seat Conversion % = measured answered → case on all paid phones. Not LSA Agreement Sent 50%. */
-    const answeredHistory = rewardAnsweredHistory();
-    const currentAnsweredBook = lift.monthlyAnswered > 0 ? lift.monthlyAnswered : answeredHistory.avg;
-    const halfCurrentAnswered = currentAnsweredBook > 0
-      ? Math.ceil(currentAnsweredBook / 2 - 1e-9)
-      : 0;
-    const histLow = answeredHistory.low > 0 ? answeredHistory.low : 0;
-    const histHigh = answeredHistory.high > 0 ? answeredHistory.high : 0;
+    const supportSeatCases = 2;
+    const leadSeatPool = Math.max(0, minCasesForGoal - supportSeatCases * 2);
+    const defaultSeatCases = {
+      Romina: Math.ceil(leadSeatPool / 2),
+      Andrew: Math.floor(leadSeatPool / 2),
+      Jack: supportSeatCases,
+      Casey: supportSeatCases
+    };
     const seatCards = seatNames.map((name, i) => {
       const id = "kpi-reward-seat-" + i;
-      const isAndrew = name === "Andrew";
-      const isHalfBook = name === "Romina" || name === "Andrew";
-      const closePctSeat = isAndrew ? weekendClose.answeredPct : weekdayClose.answeredPct;
-      const closeRateSeat = isAndrew ? weekendClose.answeredToCase : weekdayClose.answeredToCase;
-      const bookLabel = isAndrew ? "Weekend" : "Weekday";
-      const seatAnswerDefault = isHalfBook && halfCurrentAnswered > 0
-        ? halfCurrentAnswered
-        : (closeRateSeat > 0
-          ? Math.ceil(seatCaseShare / closeRateSeat - 1e-9)
-          : (lift.answersForCashGoal > 0 ? Math.ceil(lift.answersForCashGoal / seatNames.length - 1e-9) : 0));
-      /* History band · Romina/Andrew split the May–Oct answered book 50/50. Jack/Casey use equal seat share. */
-      const seatAnswerMin = histLow > 0
-        ? Math.ceil(histLow / (isHalfBook ? 2 : seatNames.length) - 1e-9)
-        : 0;
-      const seatAnswerMax = histHigh > 0
-        ? Math.ceil(histHigh / (isHalfBook ? 2 : seatNames.length) - 1e-9)
-        : 0;
-      const answerMin = seatAnswerMin > 0 ? seatAnswerMin : 0;
-      const answerMax = seatAnswerMax > 0 ? Math.max(seatAnswerMax, seatAnswerDefault) : 0;
-      const answerClamped = answerMax > 0
-        ? Math.min(Math.max(seatAnswerDefault, answerMin), answerMax)
-        : seatAnswerDefault;
-      const seatCaseDefault = answerClamped > 0
-        ? Math.ceil(answerClamped * closeRateSeat - 1e-9)
-        : seatCaseShare;
-      const seatRevDefault = seatCaseDefault * lift.fee;
+      const seatCaseDefault = defaultSeatCases[name] != null ? defaultSeatCases[name] : 2;
+      const seatFeeDefault = Math.round(lift.fee || 5661);
+      const seatRevDefault = seatCaseDefault * seatFeeDefault;
       const seatGoalShareDefault = lift.cashGoal > 0
         ? Math.round((seatRevDefault / lift.cashGoal) * 100)
         : 0;
-      const rangeAttr = answerMax > 0
-        ? ` min="${answerMin}" max="${answerMax}"`
-        : ` min="0"`;
-      const rangeHint = answerMax > 0
-        ? `<span class="kpi-reward-field-range">May–Oct ${answerMin.toLocaleString("en-US")}–${answerMax.toLocaleString("en-US")}</span>`
-        : "";
-      return `<tr class="kpi-reward-scale-seat" data-seat="${i}" data-seat-book="${isAndrew ? "weekend" : "weekday"}" data-answer-min="${answerMin}" data-answer-max="${answerMax}" data-seat-base-rev="${seatRevDefault}">
+      const startHint = `<span class="kpi-reward-field-range">Start ${seatCaseDefault.toLocaleString("en-US")}</span>`;
+      return `<tr class="kpi-reward-scale-seat" data-seat="${i}" data-seat-name="${escapeHtml(name)}" data-seat-base-rev="${seatRevDefault}" data-seat-base-cases="${seatCaseDefault}">
           <th scope="row" class="kpi-reward-seat-name">${escapeHtml(name)}</th>
           <td class="kpi-reward-seat-input-cell">
-            <input id="${id}-target" class="kpi-reward-scale-average" type="number"${rangeAttr} step="1" value="${answerClamped}" data-seat-target aria-label="${escapeHtml(name)} target calls answered${answerMax > 0 ? `, May through October answered range ${answerMin} to ${answerMax}` : ""}">
-            ${rangeHint}
+            <input id="${id}-cases" class="kpi-reward-scale-average" type="number" min="0" step="1" value="${seatCaseDefault}" data-seat-cases aria-label="${escapeHtml(name)} new cases signed">
+            ${startHint}
           </td>
           <td class="kpi-reward-seat-input-cell">
-            <input id="${id}-close" class="kpi-reward-scale-average" type="number" min="0" max="100" step="1" value="${closePctSeat}" data-seat-close aria-label="${escapeHtml(name)} ${bookLabel.toLowerCase()} answered call to case conversion percent">
-          </td>
-          <td class="kpi-reward-seat-input-cell">
-            <input id="${id}-cases" class="kpi-reward-scale-average" type="number" min="0" step="1" value="${seatCaseDefault}" data-seat-cases aria-label="${escapeHtml(name)} target number of cases to close">
+            <input id="${id}-fee" class="kpi-reward-scale-average kpi-reward-fee-input" type="number" min="0" step="100" value="${seatFeeDefault}" data-seat-fee aria-label="${escapeHtml(name)} average case value in dollars">
           </td>
           <td class="kpi-reward-td-eq" aria-hidden="true">=</td>
           <td class="kpi-reward-seat-result-cell kpi-reward-seat-contrib" role="group" aria-label="${escapeHtml(name)} estimated contribution ${fmtMoney(seatRevDefault)}, ${seatGoalShareDefault}% of cash goal">
@@ -10749,28 +11193,27 @@
           </td>
         </tr>`;
     }).join("");
-    /* Cash guide stops at the live cash goal. No rows above $150k. Kate 11/06/2026. */
-    const cashCap = Math.min(lift.cashGoal > 0 ? lift.cashGoal : 150000, 150000);
-    const cashSteps = [100000, 120000, 140000, 150000].filter(cash => cash <= cashCap);
-    if (cashCap > 0 && cashSteps.indexOf(cashCap) < 0) cashSteps.push(cashCap);
-    cashSteps.sort((a, b) => a - b);
-    const callsForCash = (cash) => {
-      const unit = lift.close * lift.fee;
-      if (!(unit > 0) || !(cash > 0)) return 0;
-      const answers = Math.ceil(cash / unit - 1e-9);
-      return Math.ceil(answers / 0.9 - 1e-9);
+    const cashSteps = [100000, 120000, 140000, 150000];
+    if (lift.cashGoal > 0 && lift.cashGoal <= 150000 && cashSteps.indexOf(lift.cashGoal) < 0) {
+      cashSteps.push(lift.cashGoal);
+      cashSteps.sort((a, b) => a - b);
+    }
+    const casesForCash = (cash) => {
+      if (!(lift.fee > 0) || !(cash > 0)) return 0;
+      return Math.ceil(cash / lift.fee - 1e-9);
     };
-    const callsGuide = cashSteps.map(cash => {
-      const n = callsForCash(cash);
-      const goalMark = cash === lift.cashGoal ? " · cash goal" : "";
-      return fmtMoney(cash) + " → " + n.toLocaleString("en-US") + " calls" + goalMark;
-    }).join(" · ");
-    return `<div class="kpi-reward-scale" data-reward-scale data-year-avg="${yearAvg == null ? "" : yearAvg}" data-collective="${collective ? collective.pct : ""}" data-collective-goal="${collectiveGoal}" data-monthly-baseline="${yearBaseline}" data-calls-for-goal="${minCallsForGoal}" data-answers-for-goal="${lift.answersForCashGoal || 0}" data-cases-for-goal="${lift.casesForCashGoal || 0}" data-cash-goal="${lift.cashGoal || 150000}" data-close="${lift.close}" data-call-close="${lift.callClose}" data-answered-pct="${lift.answeredPct || ""}" data-fee="${lift.fee}" data-seat-count="${seatNames.length}" data-answer-floor="${answerFloor.pct}" data-answer-floor-month="${escapeHtml(answerFloor.month)}">
+    const casesGuide = cashSteps.map(cash => {
+      const n = casesForCash(cash);
+      const goalMark = cash === lift.cashGoal ? " for the cash goal" : "";
+      return fmtMoney(cash) + " is " + n.toLocaleString("en-US") + " cases" + goalMark;
+    }).join(", ");
+    const targetRevDefault = minCasesForGoal * lift.fee;
+    const targetPctDefault = lift.cashGoal > 0 ? Math.round((targetRevDefault / lift.cashGoal) * 100) : 0;
+    const recordPhrase = record.record != null ? " Sales record is " + record.record + " in " + record.recordMonth + "." : "";
+    return `<div class="kpi-reward-scale" data-reward-scale data-year-avg="${yearAvg == null ? "" : yearAvg}" data-collective="${collective ? collective.pct : ""}" data-collective-goal="${collectiveGoal}" data-monthly-baseline="${yearBaseline}" data-calls-for-goal="${minCallsForGoal}" data-answers-for-goal="${lift.answersForCashGoal || 0}" data-cases-for-goal="${minCasesForGoal}" data-avg-monthly-cases="${avgMonthlyCases2026}" data-record-cases="${record.record == null ? "" : record.record}" data-record-month="${escapeHtml(record.recordMonth || "")}" data-cash-goal="${lift.cashGoal || 150000}" data-close="${lift.close}" data-call-close="${lift.callClose}" data-answered-pct="${lift.answeredPct || ""}" data-fee="${lift.fee}" data-seat-count="${seatNames.length}" data-answer-floor="${answerFloor.pct}" data-answer-floor-month="${escapeHtml(answerFloor.month)}">
       <h3 class="kpi-reward-scale-title">Sales Commission Calculator</h3>
       <div class="kpi-reward-scale-inputs">
-        <div class="kpi-reward-scale-label"><label for="kpi-reward-incoming-calls">Min calls for ${fmtMoney(lift.cashGoal)}</label><input id="kpi-reward-incoming-calls" class="kpi-reward-scale-average" type="number" min="${incomingFloor}" step="1" value="${incomingDefault}" data-incoming-calls aria-label="Min calls for ${fmtMoney(lift.cashGoal)}" aria-valuemin="${incomingFloor}"></div>
-        <small data-calls-guide>Calls guide at 90% answer: ${callsGuide}.</small>
-        <small data-incoming-note>At a 90% answer rate and measured answered → case ${answeredPctLabel}% on all paid phones. Call → case ${closePct}%. Average case value ${fmtMoney(lift.fee)}. The field allows down to the year average of ${yearBaseline.toLocaleString("en-US")} phones / month.</small>
+        <div class="kpi-reward-scale-label"><label for="kpi-reward-target-cases">Min New Cases For ${fmtMoney(lift.cashGoal)}</label><input id="kpi-reward-target-cases" class="kpi-reward-scale-average" type="number" min="1" step="1" value="${minCasesForGoal}" data-target-cases aria-label="Min new cases signed for ${fmtMoney(lift.cashGoal)}" aria-valuemin="1"></div>
         <h4 class="kpi-reward-scale-impact-title">Individual Goal Calculator</h4>
         <div class="kpi-reward-scale-seats">
           <div class="kpi-reward-seats-wrap">
@@ -10778,9 +11221,8 @@
               <thead>
                 <tr>
                   <th scope="col" class="kpi-reward-th-seat">Seat</th>
-                  <th scope="col" class="kpi-reward-th-calls">Target Calls Answered</th>
-                  <th scope="col" class="kpi-reward-th-conv">Answered Call / Case Conversion %</th>
-                  <th scope="col" class="kpi-reward-th-cases">Target Number Of Cases To Close</th>
+                  <th scope="col" class="kpi-reward-th-cases">New Cases Signed</th>
+                  <th scope="col" class="kpi-reward-th-fee">Avg. Case Value</th>
                   <th scope="col" class="kpi-reward-th-eq" aria-label="Equals"><span class="kpi-reward-results-eq">=</span></th>
                   <th scope="col" class="kpi-reward-th-result kpi-reward-th-contrib">Est. Contribution</th>
                   <th scope="col" class="kpi-reward-th-result kpi-reward-th-gain">Money Gain</th>
@@ -10790,9 +11232,8 @@
               <tfoot>
                 <tr class="kpi-reward-seats-total">
                   <th scope="row" class="kpi-reward-seat-name">Team Total</th>
-                  <td class="kpi-reward-seat-total-num" data-seat-total-calls>0</td>
-                  <td class="kpi-reward-seat-total-dash">—</td>
                   <td class="kpi-reward-seat-total-num" data-seat-total-cases>0</td>
+                  <td class="kpi-reward-seat-total-num" data-seat-total-avg-fee>${fmtMoney(lift.fee)}</td>
                   <td class="kpi-reward-td-eq" aria-hidden="true">=</td>
                   <td class="kpi-reward-seat-result-cell">
                     <div class="kpi-reward-seat-contrib-value">
@@ -10811,130 +11252,44 @@
             </table>
           </div>
         </div>
-        <small data-seat-note>Each seat sets Target Calls Answered, Answered Call / Case Conversion %, and Target Number Of Cases To Close. Answered Call / Case Conversion % opens at measured answered → case on all paid phones, May through October. Weekday seats use ${weekdayClose.answeredPct}%. Andrew uses weekend ${weekendClose.answeredPct}%. Firm Calls Needed stays on the same all-phone book. The 50% figure people remember is LSA Agreement Sent ÷ tagged LSA leads, or consult → sign. That is a later stage, not answered call → signed case. Romina and Andrew default Target Calls Answered to a 50/50 split of the current answered book. Jack and Casey follow the $150k case-need share. Est. contribution is cases × year average case value. Answer pay is an individual flat and is not set. The habit to practice is answering calls.</small>
       </div>
-      <p class="kpi-reward-scale-note" data-reward-note>${scaleNote}</p>
-      <div class="kpi-reward-scale-control">
-        <div class="kpi-reward-scale-label"><span>Individual goal based on the annual average</span><strong data-reward-year>${yearText}</strong></div>
-        <div class="kpi-reward-scale-lift">
-          <table class="kpi-reward-scale-table kpi-reward-scale-lift-table">
-            <thead>
-              <tr>
-                <th scope="col">Metric</th>
-                <th scope="col">Average</th>
-                <th scope="col">Goal</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Calls / month</td>
-                <td data-call-vol-current>${fmtVol(avgCalls, "Not set")}</td>
-                <td data-call-vol-goal>${fmtVol(goalCalls, "Not set")}</td>
-              </tr>
-              <tr>
-                <td>Answered / month</td>
-                <td data-call-vol-answered-avg>${fmtVol(avgAnswered, "Not set")}</td>
-                <td data-call-vol-answered-goal>${fmtVol(goalAnswered, "Not set")}</td>
-              </tr>
-              <tr>
-                <td>Cases / month</td>
-                <td data-call-vol-cases-avg>${fmtVol(avgCases, "Not set")}</td>
-                <td data-call-vol-cases-goal>${fmtVol(goalCases, "Not set")}</td>
-              </tr>
-              <tr>
-                <td>Revenue / month</td>
-                <td data-call-vol-rev-avg>${avgRev > 0 ? fmtMoney(avgRev) : "Not set"}</td>
-                <td data-call-vol-rev-goal>${fmtMoney(goalRev)}</td>
-              </tr>
-              <tr>
-                <td>Additional revenue · 90%</td>
-                <td colspan="1">Lift from current answer rate to 90% on the incoming book</td>
-                <td data-call-vol-revenue>${liftAddRev > 0 ? "+" + fmtMoney(liftAddRev) : fmtMoney(0)}</td>
-              </tr>
-            </tbody>
-          </table>
-          <small data-call-vol-note>${callVolNote}</small>
-          <small data-call-vol-lift-note>Extra monthly revenue at a 90% answer rate versus the current rate on the same incoming book. Measured answered → case ${answeredPctLabel}% on all paid phones. Average case value ${fmtMoney(lift.fee)}. May through October book lift is ${lift.extraAnswers} more answered contacts and ${liftGain} over that window.</small>
-        </div>
-        <div class="kpi-reward-scale-impact">
-          <h4 class="kpi-reward-scale-impact-title">Answer Rate Impact</h4>
-          <p class="kpi-reward-scale-impact-lead">Estimated cases and revenue on the Incoming all-phone book as answer rate moves from the historical call-log low of ${answerFloor.pct}% in ${answerFloor.month} up to 95%. Uses average case value ${fmtMoney(lift.fee)} and measured answered → case ${answeredPctLabel}%.</p>
-          <table class="kpi-reward-scale-table kpi-reward-scale-impact-table">
-            <thead>
-              <tr>
-                <th scope="col">Answer Rate</th>
-                <th scope="col">Answered</th>
-                <th scope="col">Est. Cases</th>
-                <th scope="col">Est. Revenue</th>
-              </tr>
-            </thead>
-            <tbody data-answer-impact-body>${impactBody}</tbody>
-          </table>
-          <small data-answer-impact-note>* Calculated on an incomplete view. Call → case is new cases ÷ Search calls + LSA leads, May through October. Answered → case treats Search received plus LSA leads as answered contacts. Not a person-tagged join. The 50% LSA Agreement Sent rate is a different stage. Incoming entry drives the book size.</small>
-        </div>
-      </div>
-      <section class="kpi-reward-team">
-        <h4 class="kpi-reward-team-title">Team Goals</h4>
-        <div class="kpi-reward-team-body">
-          <div class="kpi-reward-scale-label"><span>Collective answer rate</span><strong data-reward-collective>${collectiveText}</strong></div>
-          <div class="kpi-reward-scale-label"><span>Sales record</span><strong>${record.record == null ? "Not set" : record.record + " in " + record.recordMonth}</strong></div>
-        </div>
-      </section>
     </div>`;
   }
 
   function bindRewardScale(root) {
     const box = root.querySelector("[data-reward-scale]");
     if (!box) return;
-    const incoming = box.querySelector("[data-incoming-calls]");
+    const targetCasesInput = box.querySelector("[data-target-cases]");
     const note = box.querySelector("[data-reward-note]");
     const seats = Array.from(box.querySelectorAll("[data-seat]"));
-    const paintSeats = (opts) => {
-      const fee = Number(box.getAttribute("data-fee")) || 5661;
+    const paintSeats = (targetCases) => {
+      const defaultFee = Number(box.getAttribute("data-fee")) || 5661;
       const cashGoal = Math.max(0, Number(box.getAttribute("data-cash-goal")) || 150000);
-      const syncCases = !!(opts && opts.syncCases);
       let casesSum = 0;
       let revSum = 0;
       let baseRevSum = 0;
-      let answersSum = 0;
       seats.forEach((seat) => {
-        const targetEl = seat.querySelector("[data-seat-target]");
-        const closeEl = seat.querySelector("[data-seat-close]");
         const casesEl = seat.querySelector("[data-seat-cases]");
+        const feeEl = seat.querySelector("[data-seat-fee]");
         const contribEl = seat.querySelector("[data-seat-contrib]");
         const contribMoneyEl = seat.querySelector("[data-seat-contrib-money]");
         const contribPctEl = seat.querySelector("[data-seat-contrib-pct]");
         const gainMoneyEl = seat.querySelector("[data-seat-gain-money]");
         const gainGroup = seat.querySelector(".kpi-reward-seat-gain");
-        const book = seat.getAttribute("data-seat-book") === "weekend" ? "Weekend" : "Weekday";
-        const answerMin = Math.max(0, Number(seat.getAttribute("data-answer-min")) || 0);
-        const answerMax = Math.max(0, Number(seat.getAttribute("data-answer-max")) || 0);
+        const seatName = seat.getAttribute("data-seat-name") || "Seat";
         const baseRev = Math.max(0, Number(seat.getAttribute("data-seat-base-rev")) || 0);
         baseRevSum += baseRev;
-        let answered = targetEl ? Number(targetEl.value) : 0;
-        if (!Number.isFinite(answered) || answered < 0) answered = 0;
-        answered = Math.ceil(answered - 1e-9);
-        if (answerMin > 0 && answered < answerMin) answered = answerMin;
-        if (answerMax > 0 && answered > answerMax) answered = answerMax;
-        if (targetEl) {
-          if (answerMin > 0) targetEl.min = String(answerMin);
-          if (answerMax > 0) targetEl.max = String(answerMax);
-          if (String(targetEl.value) !== String(answered)) targetEl.value = String(answered);
-        }
-        let callPct = closeEl ? Number(closeEl.value) : 0;
-        if (!Number.isFinite(callPct) || callPct < 0) callPct = 0;
-        if (callPct > 100) callPct = 100;
-        callPct = Math.round(callPct);
-        if (closeEl && String(closeEl.value) !== String(callPct)) closeEl.value = String(callPct);
         let cases = casesEl ? Number(casesEl.value) : 0;
-        if (syncCases) cases = Math.ceil(answered * (callPct / 100) - 1e-9);
         if (!Number.isFinite(cases) || cases < 0) cases = 0;
         cases = Math.ceil(cases - 1e-9);
         if (casesEl && String(casesEl.value) !== String(cases)) casesEl.value = String(cases);
-        const rev = cases * fee;
+        let seatFee = feeEl ? Number(feeEl.value) : defaultFee;
+        if (!Number.isFinite(seatFee) || seatFee < 0) seatFee = 0;
+        seatFee = Math.round(seatFee);
+        if (feeEl && String(feeEl.value) !== String(seatFee)) feeEl.value = String(seatFee);
+        const rev = cases * seatFee;
         const goalShare = cashGoal > 0 ? Math.round((rev / cashGoal) * 100) : 0;
         const gain = rev - baseRev;
-        answersSum += answered;
         casesSum += cases;
         revSum += rev;
         if (contribMoneyEl) contribMoneyEl.textContent = fmtMoney(rev);
@@ -10942,7 +11297,7 @@
         if (contribEl) {
           const group = seat.querySelector(".kpi-reward-seat-contrib");
           if (group) {
-            group.setAttribute("aria-label", book + " estimated contribution " + fmtMoney(rev) + ", " + goalShare + "% of cash goal");
+            group.setAttribute("aria-label", seatName + " estimated contribution " + fmtMoney(rev) + ", " + goalShare + "% of cash goal");
           }
         }
         if (gainMoneyEl) {
@@ -10957,18 +11312,19 @@
           const gainAria = gain === 0
             ? "no money gain versus starting goal"
             : (gain > 0 ? "money gain " : "money down ") + fmtMoney(Math.abs(gain)) + " versus starting goal";
-          gainGroup.setAttribute("aria-label", book + " " + gainAria);
+          gainGroup.setAttribute("aria-label", seatName + " " + gainAria);
         }
       });
       const teamShare = cashGoal > 0 ? Math.round((revSum / cashGoal) * 100) : 0;
       const totalGain = revSum - baseRevSum;
-      const totalCallsEl = box.querySelector("[data-seat-total-calls]");
+      const weightedFee = casesSum > 0 ? Math.round(revSum / casesSum) : Math.round(defaultFee);
       const totalCasesEl = box.querySelector("[data-seat-total-cases]");
+      const totalAvgFeeEl = box.querySelector("[data-seat-total-avg-fee]");
       const totalContribMoneyEl = box.querySelector("[data-seat-total-contrib-money]");
       const totalContribPctEl = box.querySelector("[data-seat-total-contrib-pct]");
       const totalGainMoneyEl = box.querySelector("[data-seat-total-gain-money]");
-      if (totalCallsEl) totalCallsEl.textContent = answersSum.toLocaleString("en-US");
       if (totalCasesEl) totalCasesEl.textContent = casesSum.toLocaleString("en-US");
+      if (totalAvgFeeEl) totalAvgFeeEl.textContent = fmtMoney(weightedFee);
       if (totalContribMoneyEl) totalContribMoneyEl.textContent = fmtMoney(revSum);
       if (totalContribPctEl) totalContribPctEl.textContent = teamShare + "%";
       if (totalGainMoneyEl) {
@@ -10980,7 +11336,14 @@
       }
       const seatNote = box.querySelector("[data-seat-note]");
       if (seatNote) {
-        seatNote.textContent = "Each seat sets Target Calls Answered, Answered Call / Case Conversion %, and Target Number Of Cases To Close. Answered Call / Case Conversion % is measured answered → case on all paid phones. Andrew defaults to weekend. The others default to weekday. The 50% people remember is LSA Agreement Sent or consult → sign, not this rate. Est. contribution is cases × year average case value. Answer pay is an individual flat and is not set. The habit to practice is answering calls. Combined est. contribution " + fmtMoney(revSum) + " toward " + fmtMoney(cashGoal) + " · " + teamShare + "% of cash goal.";
+        const goalTarget = targetCases > 0 ? targetCases : casesSum;
+        const diff = casesSum - goalTarget;
+        const paceText = diff === 0
+          ? "Team Total matches the " + goalTarget.toLocaleString("en-US") + "-case target."
+          : diff > 0
+            ? "Team Total is +" + diff.toLocaleString("en-US") + " cases above the " + goalTarget.toLocaleString("en-US") + "-case target."
+            : "Team Total is " + Math.abs(diff).toLocaleString("en-US") + " cases short of the " + goalTarget.toLocaleString("en-US") + "-case target.";
+        seatNote.textContent = "Each seat sets New Cases Signed and Avg. Case Value. Est. Contribution is signed cases multiplied by average case value against the " + fmtMoney(cashGoal) + " cash goal. Money Gain shows the revenue difference versus each seat's starting case target. " + paceText + " Combined est. contribution is " + fmtMoney(revSum) + ", or " + teamShare + "% of the cash goal. Nonlawyer pay stays flat dollars only and never a percent of legal fees.";
       }
       return { casesSum, revSum };
     };
@@ -10988,9 +11351,12 @@
       const baseline = Math.max(0, Number(box.getAttribute("data-monthly-baseline")) || 0);
       const goalCalls = Math.max(0, Number(box.getAttribute("data-calls-for-goal")) || 0);
       const goalAnswers = Math.max(0, Number(box.getAttribute("data-answers-for-goal")) || 0);
-      const goalCases = Math.max(0, Number(box.getAttribute("data-cases-for-goal")) || 0);
+      const goalCases = Math.max(1, Number(box.getAttribute("data-cases-for-goal")) || 22);
+      const avgMonthlyCases = Math.max(0, Number(box.getAttribute("data-avg-monthly-cases")) || 0);
+      const recordCases = box.getAttribute("data-record-cases") || "";
+      const recordMonth = box.getAttribute("data-record-month") || "";
       const cashGoal = Math.max(0, Number(box.getAttribute("data-cash-goal")) || 150000);
-      const close = Number(box.getAttribute("data-close")) || 0.073;
+      const close = Number(box.getAttribute("data-close")) || 0.22;
       const callCloseRaw = box.getAttribute("data-call-close");
       const callClose = callCloseRaw === "" || callCloseRaw == null ? close : Number(callCloseRaw);
       const fee = Number(box.getAttribute("data-fee")) || 5661;
@@ -10999,18 +11365,24 @@
       const answeredPctLabel = answeredPctRaw
         ? String(Math.round(Number(answeredPctRaw) || 0))
         : String(Math.round((close || 0) * 100));
-      const floor = baseline > 0 ? baseline : 0;
-      let entered = incoming ? Number(incoming.value) : Math.max(floor, goalCalls);
-      if (!Number.isFinite(entered)) entered = Math.max(floor, goalCalls);
-      entered = Math.ceil(entered - 1e-9);
-      if (floor > 0 && entered < floor) entered = floor;
-      if (incoming) {
-        incoming.min = String(floor);
-        incoming.setAttribute("aria-valuemin", String(floor));
-        if (String(incoming.value) !== String(entered)) incoming.value = String(entered);
-        incoming.setCustomValidity(entered < floor ? "Minimum is the year average of " + floor + " phones / month." : "");
+      let enteredCases = targetCasesInput ? Number(targetCasesInput.value) : goalCases;
+      if (!Number.isFinite(enteredCases) || enteredCases < 1) enteredCases = 1;
+      enteredCases = Math.ceil(enteredCases - 1e-9);
+      if (targetCasesInput && String(targetCasesInput.value) !== String(enteredCases)) {
+        targetCasesInput.value = String(enteredCases);
       }
-      const answersAt90 = Math.ceil(entered * 0.9 - 1e-9);
+      const targetRev = enteredCases * fee;
+      const targetPct = cashGoal > 0 ? Math.round((targetRev / cashGoal) * 100) : 0;
+      const incomingNote = box.querySelector("[data-incoming-note]");
+      if (incomingNote) {
+        const recordPart = recordCases && recordMonth ? " Sales record is " + recordCases + " in " + recordMonth + "." : "";
+        incomingNote.textContent = "Target " + enteredCases.toLocaleString("en-US") + " new cases at " + fmtMoney(fee) + " average case equals " + fmtMoney(targetRev) + ", or " + targetPct + "% of the " + fmtMoney(cashGoal) + " cash goal. Complete-month 2026 average is " + avgMonthlyCases.toLocaleString("en-US") + " new cases per month." + recordPart;
+      }
+      const impliedCalls = Math.max(
+        baseline,
+        close > 0 ? Math.ceil((enteredCases / close) / 0.9 - 1e-9) : baseline
+      );
+      const answersAt90 = Math.ceil(impliedCalls * 0.9 - 1e-9);
       const casesAt90 = Math.ceil(answersAt90 * close - 1e-9);
       const revAt90 = answersAt90 * close * fee;
       const collectiveRaw = box.getAttribute("data-collective");
@@ -11018,7 +11390,7 @@
       if (!Number.isFinite(currentRate) || currentRate < 0) currentRate = 0;
       if (currentRate > 100) currentRate = 100;
       currentRate = currentRate / 100;
-      const answersNow = Math.ceil(entered * currentRate - 1e-9);
+      const answersNow = Math.ceil(impliedCalls * currentRate - 1e-9);
       const casesNow = Math.ceil(answersNow * close - 1e-9);
       const revNow = answersNow * close * fee;
       const addRev = Math.max(0, revAt90 - revNow);
@@ -11030,23 +11402,19 @@
       const volNote = box.querySelector("[data-call-vol-note]");
       if (volNote) {
         volNote.textContent = goalCalls > 0
-          ? "Average is all paid phones, May through October. Search calls plus LSA leads. Goal clears " + fmtMoney(cashGoal) + " at a 90% answer rate. Incoming entry is " + entered.toLocaleString("en-US") + ". Call → case " + closePct + "%. Answered → case " + answeredPctLabel + "%. Average case value " + fmtMoney(fee) + ". That is " + goalAnswers.toLocaleString("en-US") + " answered and " + goalCases.toLocaleString("en-US") + " cases at the goal."
+          ? "Average is all paid phones, May through October. Search calls plus LSA leads. Goal clears " + fmtMoney(cashGoal) + " at a 90% answer rate. Target cases entry is " + enteredCases.toLocaleString("en-US") + ". Call to case " + closePct + "%. Answered to case " + answeredPctLabel + "%. Average case value " + fmtMoney(fee) + ". That is " + goalAnswers.toLocaleString("en-US") + " answered and " + goalCases.toLocaleString("en-US") + " cases at the goal."
           : "Cash goal call volume is not on file yet.";
       }
       const liftNote = box.querySelector("[data-call-vol-lift-note]");
       if (liftNote) {
         const curPctLabel = String(Math.round(currentRate * 1000) / 10).replace(/\.0$/, "");
-        liftNote.textContent = "On " + entered.toLocaleString("en-US") + " incoming phones, lifting answer rate from " + curPctLabel + "% to 90% adds " + answersAt90.toLocaleString("en-US") + " answered vs " + answersNow.toLocaleString("en-US") + ", about +" + addCases.toLocaleString("en-US") + " cases and +" + fmtMoney(addRev) + " a month. Answered → case " + answeredPctLabel + "%. Average case value " + fmtMoney(fee) + ".";
-      }
-      const incomingNote = box.querySelector("[data-incoming-note]");
-      if (incomingNote) {
-        incomingNote.textContent = "At a 90% answer rate and measured answered → case " + answeredPctLabel + "% on all paid phones. Call → case " + closePct + "%. Average case value " + fmtMoney(fee) + ". The field allows down to the year average of " + baseline.toLocaleString("en-US") + " phones / month.";
+        liftNote.textContent = "On " + impliedCalls.toLocaleString("en-US") + " implied incoming phones, lifting answer rate from " + curPctLabel + "% to 90% adds " + answersAt90.toLocaleString("en-US") + " answered vs " + answersNow.toLocaleString("en-US") + ", about +" + addCases.toLocaleString("en-US") + " cases and +" + fmtMoney(addRev) + " a month. Answered to case " + answeredPctLabel + "%. Average case value " + fmtMoney(fee) + ".";
       }
       const floorPct = Math.max(0, Number(box.getAttribute("data-answer-floor")) || 46);
       const floorMonth = box.getAttribute("data-answer-floor-month") || "Sep";
       const impactBody = box.querySelector("[data-answer-impact-body]");
       if (impactBody) {
-        const rows = rewardAnswerRateImpactRows(entered, close, fee, floorPct, 95);
+        const rows = rewardAnswerRateImpactRows(impliedCalls, close, fee, floorPct, 95);
         impactBody.innerHTML = rows.map(row => {
           const mark = row.pct === 90 ? ' class="kpi-reward-scale-impact-goal"' : "";
           return `<tr${mark}><td>${row.pct}%</td><td>${row.answered.toLocaleString("en-US")}</td><td>${row.cases.toLocaleString("en-US")}</td><td>${fmtMoney(row.revenue)}</td></tr>`;
@@ -11054,14 +11422,13 @@
       }
       const impactLead = box.querySelector(".kpi-reward-scale-impact-lead");
       if (impactLead) {
-        impactLead.textContent = "Estimated cases and revenue on the Incoming all-phone book as answer rate moves from the historical call-log low of " + floorPct + "% in " + floorMonth + " up to 95%. Uses average case value " + fmtMoney(fee) + " and measured answered → case " + answeredPctLabel + "%.";
+        impactLead.textContent = "Estimated cases and revenue on the Incoming all-phone book as answer rate moves from the historical call-log low of " + floorPct + "% in " + floorMonth + " up to 95%. Uses average case value " + fmtMoney(fee) + " and measured answered to case " + answeredPctLabel + "%.";
       }
       const impactNote = box.querySelector("[data-answer-impact-note]");
       if (impactNote) {
-        impactNote.textContent = "* Calculated on an incomplete view. Call → case is new cases ÷ Search calls + LSA leads, May through October. Answered → case treats Search received plus LSA leads as answered contacts. The 50% LSA Agreement Sent rate is a different stage. Incoming entry is " + entered.toLocaleString("en-US") + ".";
+        impactNote.textContent = "* Calculated on an incomplete view. Call to case is new cases divided by Search calls plus LSA leads, May through October. Answered to case treats Search received plus LSA leads as answered contacts. The 50% LSA Agreement Sent rate is a different stage. Target cases entry is " + enteredCases.toLocaleString("en-US") + ".";
       }
-      paintSeats({ syncCases: !!box._seatSyncCases });
-      box._seatSyncCases = false;
+      paintSeats(enteredCases);
     };
     const paint = () => {
       const yearRaw = box.getAttribute("data-year-avg");
@@ -11075,44 +11442,31 @@
       paintIncoming();
     };
     seats.forEach((seat) => {
-      const target = seat.querySelector("[data-seat-target]");
-      const close = seat.querySelector("[data-seat-close]");
       const cases = seat.querySelector("[data-seat-cases]");
-      const syncFromClose = () => {
-        box._seatSyncCases = true;
-        paintIncoming();
-      };
-      if (target) {
-        target.addEventListener("input", syncFromClose);
-        target.addEventListener("change", syncFromClose);
-        target.addEventListener("blur", syncFromClose);
-      }
-      if (close) {
-        close.addEventListener("input", syncFromClose);
-        close.addEventListener("change", syncFromClose);
-        close.addEventListener("blur", syncFromClose);
-      }
+      const feeEl = seat.querySelector("[data-seat-fee]");
       if (cases) {
         cases.addEventListener("input", paintIncoming);
         cases.addEventListener("change", paintIncoming);
         cases.addEventListener("blur", paintIncoming);
       }
+      if (feeEl) {
+        feeEl.addEventListener("input", paintIncoming);
+        feeEl.addEventListener("change", paintIncoming);
+        feeEl.addEventListener("blur", paintIncoming);
+      }
     });
-    if (incoming) {
-      incoming.addEventListener("input", paintIncoming);
-      incoming.addEventListener("change", paintIncoming);
-      incoming.addEventListener("blur", paintIncoming);
+    if (targetCasesInput) {
+      targetCasesInput.addEventListener("input", paintIncoming);
+      targetCasesInput.addEventListener("change", paintIncoming);
+      targetCasesInput.addEventListener("blur", paintIncoming);
     }
     paint();
   }
 
   function goalsTabSectionHtml() {
     const cards = [
-      goalsAnswerRateCardHtml(),
-      goalsClickCallCardHtml(),
       goalsRevenueCardHtml(),
       goalsYoyCardHtml(),
-      goalsFeeCardHtml(),
       goalsClientReferralsReviewCardHtml()
     ].filter(Boolean);
     if (!cards.length) return "";

@@ -4,7 +4,7 @@
  */
 window.DUI_GOAL_DATA = {
   year: 2026,
-  current: 20,
+  current: 22,
   jun: 5,
   jul: 2,
   aug: 0,
@@ -13,23 +13,23 @@ window.DUI_GOAL_DATA = {
   title: "# Auto Cases",
   label: "DUI",
   definition:
-    "Client contacts with Created date in 2026 in the Auto stack: DUI practice-area rule, or Traffic tag with no DUI/DWAI matter. Chart = two buckets. DUI/DWAI = practice DUI rule. Traffic = all other Auto-stack rows. Source export as of 10/29/2026.",
+    "Client contacts with Created date in 2026 in the Auto stack: DUI practice-area rule, or Traffic tag with no DUI/DWAI matter. Chart = two buckets. DUI/DWAI = practice DUI rule. Traffic = all other Auto-stack rows. Source export as of 11/19/2026.",
   sourceFile:
-    "Downloads/Contact_10-29-2026.csv · Ad Reports/exports/mycase/as-of-2026-09-23/auto-cases-ytd.csv",
-  exportStrictCount: 20,
+    "Downloads/Contact_11-19-2026(1).csv",
+  exportStrictCount: 22,
   exportNote:
-    "Recheck 10/29/2026 from Contact_10-29-2026.csv = DUI/DWAI 20, Traffic 23, Auto total 43 / 50, pace 86%. Traffic = practice-area (Traffic) tag without DUI/DWAI. October practice mix also counts Speeding, Careless, and Insurance as Traffic/DUI.",
-  updatedAt: "2026-10-29",
-  notes: "Verified from Cases practice area (Traffic) tag plus DUI/DWAI practice rule on Contact_10-29-2026.csv. Chart = DUI/DWAI plus Traffic. Total = sum. Target line is the annual auto goal. Recheck 10/29/2026. Auto stack unchanged from 10/28.",
+    "Recheck 11/19/2026 from Contact_11-19-2026(1).csv = DUI/DWAI 22, Traffic 33, Auto total 55 / 50, pace 110%. November added 2 DUI/DWAI and 9 Traffic Client creates. Traffic = practice-area (Traffic) tag without DUI/DWAI.",
+  updatedAt: "2026-11-19",
+  notes: "Verified from Cases practice area (Traffic) tag plus DUI/DWAI practice rule on Contact_11-19-2026(1).csv. Chart = DUI/DWAI plus Traffic. Total = sum. Target line is the annual auto goal. Recheck 11/19/2026.",
   /* Auto chart #03 · two buckets. Traffic = Speeding + Careless + Reckless + Other. */
   autoColumns: [
-    { label: "DUI/DWAI", current: 20, vsTarget: true },
-    { label: "Traffic", current: 23, vsTarget: false }
+    { label: "DUI/DWAI", current: 22, vsTarget: true },
+    { label: "Traffic", current: 33, vsTarget: false }
   ],
-  /* Trust balance on the chart cohort. Contact_11-05-2026. Creates through 10/29/2026. */
-  trustDui: 52070,
-  trustTraffic: 33550,
-  trustAsOf: "2026-11-05",
+  /* Trust balance on the chart cohort. Contact_11-19-2026(1).csv. Creates through 11/19/2026. */
+  trustDui: 62070,
+  trustTraffic: 50050,
+  trustAsOf: "2026-11-19",
   /* Est. revenue · case-num cross-ref Contact_09-23 auto stack × Case_balance/list/revenue · 09/24/2026
      19/42 matched · fill unknowns with kind median DUI $5,500 · Traffic $1,500. Aggregates only. */
   estRevenue: {
