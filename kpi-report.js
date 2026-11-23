@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261123-dl-refresh";
+  const RENDER_VER = "20261123-seat-table2";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -229,7 +229,7 @@
     },
     "#16": {
       title: "#16 Reviews by channel",
-      desc: "Public review ratings and counts by directory. Yelp listing 4.5 · 11 reviews · Kate 11/21/2026. November new is 3. Ads/lead funnel baseline lives on the Yelp card (Data tab) and Project Guide DigProf.",
+      desc: "Public review ratings and counts by directory. Yelp listing 4.5, 11 reviews, Kate 11/23/2026. November new is 3. Ads/lead funnel baseline lives on the Yelp card (Data tab) and Project Guide DigProf.",
       formula: null
     },
     "#17": {
@@ -239,7 +239,7 @@
     },
     "yelp": {
       title: "Reviews",
-      desc: "Hero is this month's new review count. Track rows: month new vs monthly Goal, Yelp total toward 20, Google new vs the same monthly Goal. Monthly Goal is the 2026 average of new Yelp and Google reviews per month, rounded up. August through November are the months with both counts: 2, 5, 0, and 3. The average rounds up to 3. June and July stay out of the average because the Google slice does not cover those months. Google new comes from the newest-first Google reviews on the pav.law widget, checked 11/08/2026. August is 1, September is 4, October is 0, and November is 0. July stays blank because that slice still ends inside July. June is not in the slice. The widget total is 145. Yelp total is 11 as of 11/21/2026.",
+      desc: "Hero is this month's new review count. Track rows: month new vs monthly Goal, Yelp total toward 20, Google new vs the same monthly Goal. Monthly Goal is the 2026 average of new Yelp and Google reviews per month, rounded up. August through November are the months with both counts: 2, 5, 0, and 3. The average rounds up to 3. June and July stay out of the average because the Google slice does not cover those months. Google new comes from the newest-first Google reviews on the pav.law widget, checked 11/08/2026. August is 1, September is 4, October is 0, and November is 0. July stays blank because that slice still ends inside July. June is not in the slice. The widget total is 145. Yelp total is 11 as of 11/23/2026.",
       formula: "Hero = Yelp month new. Monthly Goal = average of new Yelp plus Google reviews for 2026 months with both counts, rounded up. Yelp total = count / 20. Google = month new / monthly Goal."
     },
     "yelp-leads": {
@@ -544,19 +544,19 @@
 
   const DATA = {
     period: "November 2026",
-    asOf: "2026-11-21",
+    asOf: "2026-11-23",
     lastUpdated: "2026-11-23",
     updateLabel: "November 2026",
-    updateScope: "DL 11/23: Search keyword report 70 Nov 1–19 Impr 7,322, clicks 513, CTR 7.01%. LSA 60 / 24 charged, Lead Calls 109. Yelp reviews 11, Nov new 3. Case list 15 verified Nov flat fees. Search phones 10, spend, cash, cases held from 11/19",
-    source: "Kate 11/21 Yelp reviews 11. leads-inbox (33) Nov 1–21. Search keyword report (70) Nov 1–19 Impr/clicks. case_list_report (15) verified 11/23. Prior 11/19 stack: Call details (34)/(35), hubspot forms 11/19, Contact_11-19, Trust_11-19, ledger (4), account_activities_202611 (1), Yelp Ad Analytics Nov 1–18, FindLaw Contacts. Campaign report (66) is Nov 14–20 week only, not used for MTD Impr/clicks",
+    updateScope: "DL 11/23 midday: ledger 29 Nov revenue $79,843 (+$6,350 W3), 2026 YTD $1,019,219, Trust balance $1,868,797 through 11/23. Yelp reviews 11 confirmed 11/23. LSA 60 / 24 charged, Lead Calls 109. Search Nov 1–19 Impr 7,322, clicks 513, CTR 7.01%",
+    source: "ledger (29) and trust_account_activity_report (3) through 11/23. Kate 11/23 Yelp reviews 11. leads-inbox (33) Nov 1–21. Search keyword report (70) Nov 1–19 Impr/clicks. case_list_report (15) verified 11/23. Prior 11/19 stack: Call details (34)/(35), hubspot forms 11/19, Contact_11-19, Trust_11-19, account_activities_202611 (1), Yelp Ad Analytics Nov 1–18, FindLaw Contacts",
     /* Per Monthly KPI tile · source export date · shown next to the corner checkbox */
     tileAsOf: {
       "#01": "2026-11-21",
       "#02": "2026-11-19",
       "#03": "2026-11-19",
       "#04": "2026-11-19",
-      "cash-pace": "2026-11-19",
-      "yelp": "2026-11-21",
+      "cash-pace": "2026-11-23",
+      "yelp": "2026-11-23",
       "yelp-leads": "2026-11-19",
       "justia": "2026-09-18",
       "answer-rate": "2026-11-21",
@@ -848,7 +848,7 @@
         findlawSpend: 924.38,
         searchSpend: 5321.38,
         lsaSpend: 5015.93,
-        note: "Nov* DL 11/21 LSA. leads-inbox (33) Nov 1–21: 60 received, 24 charged, 35 not charged, 1 in review. LSA spend still account_activities_202611 (1) $5,015.93 through 11/19. Search phones 10 Call details (34)/(35). Search $5,321.38. HubSpot Forms 32. Yelp contacts 1 · spend Nov 1–18 $2,808.09. Reviews 11 · Nov new 3 Kate 11/21. FindLaw 6. Cases 17. Cash $73,493. Lead Calls 109 = Search 10 + LSA 60 + HubSpot 32 + Yelp 1 + FindLaw 6. Campaign (66) Nov 14–20 week only, not applied to MTD Impr/clicks."
+        note: "Nov* DL 11/23 midday: ledger (29) Cash $79,843 through 11/23, Trust balance $1,868,797 through 11/23. Yelp reviews 11, Nov new 3 Kate 11/23. leads-inbox (33) Nov 1–21: 60 received, 24 charged, 35 not charged, 1 in review. LSA spend still account_activities_202611 (1) $5,015.93 through 11/19. Search phones 10 Call details (34)/(35). Search $5,321.38. HubSpot Forms 32. Yelp contacts 1, spend Nov 1–18 $2,808.09. FindLaw 6. Cases 17. Lead Calls 109 = Search 10 + LSA 60 + HubSpot 32 + Yelp 1 + FindLaw 6."
       }
     ],
     /** Search Campaign Impr/Clicks/Phone calls by tile month. */
@@ -1038,12 +1038,12 @@
         platform: "Yelp",
         rating: "4.5",
         count: 11,
-        asOf: "2026-11-21",
+        asOf: "2026-11-23",
         newByMonth: { Jun: 2, Jul: 1, Aug: 1, Sep: 1, Oct: 0, Nov: 3 },
         status: "revised",
         verified: true,
         url: "https://biz.yelp.com/home/A1V6e8n5rG3QQ3HMiK_q2g",
-        source: "Kate 11/21/2026 listing total 11 · Nov new 3 from prior 8 through Oct · rating 4.5 held"
+        source: "Kate 11/23/2026 listing total 11, Nov new 3 from prior 8 through Oct, rating 4.5 held"
       },
       { platform: "Nextdoor Business", rating: "—", count: null, newByMonth: {}, status: "not on", verified: false },
       {
@@ -1248,11 +1248,11 @@
      * Listing Reviews PDF 10/01/2026: 4.5 · 8 reviews. Last-30 ad clicks/impr from Ads performance panel.
      */
     yelpBaseline: {
-      asOf: "2026-11-21",
-      reviewsAsOf: "2026-11-21",
+      asOf: "2026-11-23",
+      reviewsAsOf: "2026-11-23",
       messagesAsOf: "2026-11-08",
       spendAsOf: "2026-11-19",
-      window: "Reviews 11 Kate 11/21 · Nov new 3. Oct contacts 7 held. Nov contacts 1 = Messages 1 + Calls 0 from Desktop Leads breakdown 11/08 Nov tooltip · raw total 5. Spend 11/19: Oct 1–31 $1,500 · Nov 1–18 $2,808.09 · 120 clicks · CPC $23.40. Answer rate 46% for contact formula.",
+      window: "Reviews 11 Kate 11/23, Nov new 3. Oct contacts 7 held. Nov contacts 1 = Messages 1 + Calls 0 from Desktop Leads breakdown 11/08 Nov tooltip, raw total 5. Spend 11/19: Oct 1–31 $1,500, Nov 1–18 $2,808.09, 120 clicks, CPC $23.40. Answer rate 46% for contact formula.",
       answerRate: 0.46,
       answerRateNote: "Calls to your business · Answered 46% · call log 10/08 · still used for contact formula and Oct answeredCalls estimate",
       contactFormula: "Messages + round(Calls × answerRate)",
@@ -1510,20 +1510,20 @@
       { month: "Aug", credit: 104545, newCases: 20 },
       { month: "Sep", credit: 113985, newCases: 16 },
       { month: "Oct*", credit: 120470, ledgerCredit: 104970, cashiersCheck: 15000, cash: 500, newCases: 22 },
-      { month: "Nov*", credit: 73493, newCases: 17, daysElapsed: 19 }
+      { month: "Nov*", credit: 79843, newCases: 17, daysElapsed: 23 }
     ],
     cashCollectedTotals: {
       total2025: 945436,
-      total2026ToDate: 1012869,
-      allCredits: 1958305,
+      total2026ToDate: 1019219,
+      allCredits: 1964655,
       contractedMean: 5661,
       yearLabel: "2025",
-      asOf: "2026-11-19",
+      asOf: "2026-11-23",
       partialMonthKey: "Nov",
-      partialDaysElapsed: 19,
+      partialDaysElapsed: 23,
       partialDaysInMonth: 30,
       cashGoalMonthly: 120000,
-      rangeNote: "Jan–Sep Trust activity Credits · Jul restated $112,350 · Oct* $120,470 = ledger $104,970 through 10/30/2026 plus $15,000 cashier's check and $500 cash · no Credit rows on 10/31 · Nov* $73,493 through 11/19 from ledger (4) · cases Contact_11-19 Sep 16 · Oct Created 22 · Nov* 17 · Trust snapshot 11/19 · 406 open · $1,862,447"
+      rangeNote: "Jan–Sep Trust activity Credits, Jul restated $112,350, Oct* $120,470 = ledger $104,970 through 10/30/2026 plus $15,000 cashier's check and $500 cash, no Credit rows on 10/31, Nov* $79,843 through 11/23 from ledger (29), cases Contact_11-19 Sep 16, Oct Created 22, Nov* 17, Trust balance $1,868,797 through 11/23 from trust_account_activity_report (3) and 406 open from Trust_11-19"
     },
     /**
      * Sales Funnel money stages after Signed cases · Kate 10/10/2026.
@@ -1541,14 +1541,14 @@
         Nov: { contracted: 12, trustOpen: 15, paidClosed: null }
       }
     },
-    /* Trust Credits by calendar week · aggregates only · Jun–Jul ledger (5) · Aug ledger (7) · Sep ledger (11)/(12) · Oct ledger (20)/(19) · Nov ledger (4). */
+    /* Trust Credits by calendar week, aggregates only: Jun-Jul ledger (5), Aug ledger (7), Sep ledger (11)/(12), Oct ledger (20)/(19), Nov ledger (29). */
     cashCreditsByWeek: {
       Jun: { W1: 27400, W2: 19650, W3: 30625, W4: 25810 },
       Jul: { W1: 18850, W2: 21600, W3: 34425, W4: 37475 },
       Aug: { W1: 15070, W2: 31825, W3: 8800, W4: 48850 },
       Sep: { W1: 28565, W2: 30900, W3: 27000, W4: 27520 },
       Oct: { W1: 24200, W2: 17000, W3: 31600, W4: 47670 },
-      Nov: { W1: 14775, W2: 36368, W3: 22350, W4: 0 }
+      Nov: { W1: 14775, W2: 36368, W3: 28700, W4: 0 }
     },
     /* NEW-C / NEW-D — LSA efficiency · inbox lead volume · billed leads + spend from Billing activity (1) Aug–Oct */
     lsaEfficiency: [
@@ -1623,11 +1623,11 @@
         { month: "Aug* 2026", applications: 0, rows: 0 }
       ],
       snapshot: {
-        asOf: "2026-11-19",
-        sourceFile: "Downloads/Trust_account_summary_11-19-2026.csv",
+        asOf: "2026-11-23",
+        sourceFile: "Downloads/trust_account_activity_report (3).pdf through 11/23 + Trust_account_summary_11-19-2026.csv client count",
         clientsWithBalance: 406,
-        totalBalance: 1862447,
-        meanBalance: 4587
+        totalBalance: 1868797,
+        meanBalance: 4603
       },
       refundCredits2025Feb: 7000
     }
@@ -2360,8 +2360,8 @@
     if (key === "Jul") return "July 2026 · Search + LSA + HubSpot 6 + Justia 6 + FindLaw 1 · verified";
     if (key === "Aug") return "August 2026 full month · revenue $104,545 · 20 cases · Justia 0 · ads paused";
     if (key === "Sep") return "September 2026 · Search 41 · LSA 44 · Billing Search $13,651 · LSA $5,433 · revenue $113,985 · cases Contact_10-02 · 16 cases · weekday answer 46%";
-    if (key === "Nov") return "November 2026 through 11/21 LSA, Search phones 10 through 11/19, Search spend $5,321, Impr 7,322, clicks 513, CTR 7.01%, LSA 60 / 24 charged, LSA $5,016 through 11/19, HubSpot Forms 32, FindLaw 6, Yelp contacts 1, Yelp spend $2,808 through 11/18, Yelp reviews 11, Nov new 3, Lead Calls 109, Search $/phone ~$532, revenue $73,493, cases 17";
-    return "October 2026 · Search 19 · LSA 64 inbox / 19 charged · HubSpot Forms 18 · Yelp 7 · Lead Calls 108 · Search $9,555 · LSA $4,319 · Yelp $1,500 Oct 1–31 · revenue $120,470 including $15,000 cashier's check and $500 cash · cases 22 · CTR 7.22% · Search $/phone ~$503 · Nov* Lead Calls 109 · cases 17 · revenue $73,493";
+    if (key === "Nov") return "November 2026 through 11/23 ledger, revenue $79,843, LSA 60 / 24 charged through 11/21, Search phones 10 through 11/19, Search spend $5,321, Impr 7,322, clicks 513, CTR 7.01%, LSA $5,016 through 11/19, HubSpot Forms 32, FindLaw 6, Yelp contacts 1, Yelp spend $2,808 through 11/18, Yelp reviews 11, Nov new 3, Lead Calls 109, Search $/phone ~$532, cases 17";
+    return "October 2026: Search 19, LSA 64 inbox / 19 charged, HubSpot Forms 18, Yelp 7, Lead Calls 108, Search $9,555, LSA $4,319, Yelp $1,500 Oct 1–31, revenue $120,470 including $15,000 cashier's check and $500 cash, cases 22, CTR 7.22%, Search $/phone ~$503. Nov* Lead Calls 109, cases 17, revenue $79,843";
   }
 
   function reportPeriodPillsHtml() {
@@ -10720,44 +10720,34 @@
         ? ` min="${answerMin}" max="${answerMax}"`
         : ` min="0"`;
       const rangeHint = answerMax > 0
-        ? `<span class="kpi-reward-field-range">May–Oct answered ${answerMin.toLocaleString("en-US")}–${answerMax.toLocaleString("en-US")}</span>`
+        ? `<span class="kpi-reward-field-range">May–Oct ${answerMin.toLocaleString("en-US")}–${answerMax.toLocaleString("en-US")}</span>`
         : "";
-      return `<div class="kpi-reward-scale-seat" data-seat="${i}" data-seat-book="${isAndrew ? "weekend" : "weekday"}" data-answer-min="${answerMin}" data-answer-max="${answerMax}" data-seat-base-rev="${seatRevDefault}">
-          <div class="kpi-reward-scale-label">
-            <span>Monthly Goals: ${escapeHtml(name)}</span>
-          </div>
-          <div class="kpi-reward-scale-seat-fields">
-            <label for="${id}-target" class="kpi-reward-field kpi-reward-field-calls">
-              <span class="kpi-reward-field-title">Target Calls Answered</span>
-              <input id="${id}-target" class="kpi-reward-scale-average" type="number"${rangeAttr} step="1" value="${answerClamped}" data-seat-target aria-label="${escapeHtml(name)} target calls answered${answerMax > 0 ? `, May through October answered range ${answerMin} to ${answerMax}` : ""}">
-              ${rangeHint}
-            </label>
-            <label for="${id}-close" class="kpi-reward-field kpi-reward-field-conversion">
-              <span class="kpi-reward-field-title">Answered Call / Case Conversion %</span>
-              <input id="${id}-close" class="kpi-reward-scale-average" type="number" min="0" max="100" step="1" value="${closePctSeat}" data-seat-close aria-label="${escapeHtml(name)} ${bookLabel.toLowerCase()} answered call to case conversion percent">
-            </label>
-            <label for="${id}-cases" class="kpi-reward-field kpi-reward-field-cases">
-              <span class="kpi-reward-field-title">Target Number Of Cases To Close</span>
-              <input id="${id}-cases" class="kpi-reward-scale-average" type="number" min="0" step="1" value="${seatCaseDefault}" data-seat-cases aria-label="${escapeHtml(name)} target number of cases to close">
-            </label>
-          </div>
-          <div class="kpi-reward-scale-seat-results">
-            <div class="kpi-reward-seat-contrib kpi-reward-field kpi-reward-field-contrib" role="group" aria-label="${escapeHtml(name)} estimated contribution ${fmtMoney(seatRevDefault)}, ${seatGoalShareDefault}% of cash goal">
-              <span class="kpi-reward-field-title kpi-reward-seat-contrib-label">Est. Contribution</span>
-              <div class="kpi-reward-scale-average kpi-reward-seat-contrib-value" data-seat-contrib>
-                <strong class="kpi-mtd-line" data-seat-contrib-money>${fmtMoney(seatRevDefault)}</strong>
-                <span class="kpi-goal-slash">/</span>
-                <span class="kpi-forecast-line" data-seat-contrib-pct>${seatGoalShareDefault}%</span>
-              </div>
+      return `<tr class="kpi-reward-scale-seat" data-seat="${i}" data-seat-book="${isAndrew ? "weekend" : "weekday"}" data-answer-min="${answerMin}" data-answer-max="${answerMax}" data-seat-base-rev="${seatRevDefault}">
+          <th scope="row" class="kpi-reward-seat-name">${escapeHtml(name)}</th>
+          <td class="kpi-reward-seat-input-cell">
+            <input id="${id}-target" class="kpi-reward-scale-average" type="number"${rangeAttr} step="1" value="${answerClamped}" data-seat-target aria-label="${escapeHtml(name)} target calls answered${answerMax > 0 ? `, May through October answered range ${answerMin} to ${answerMax}` : ""}">
+            ${rangeHint}
+          </td>
+          <td class="kpi-reward-seat-input-cell">
+            <input id="${id}-close" class="kpi-reward-scale-average" type="number" min="0" max="100" step="1" value="${closePctSeat}" data-seat-close aria-label="${escapeHtml(name)} ${bookLabel.toLowerCase()} answered call to case conversion percent">
+          </td>
+          <td class="kpi-reward-seat-input-cell">
+            <input id="${id}-cases" class="kpi-reward-scale-average" type="number" min="0" step="1" value="${seatCaseDefault}" data-seat-cases aria-label="${escapeHtml(name)} target number of cases to close">
+          </td>
+          <td class="kpi-reward-td-eq" aria-hidden="true">=</td>
+          <td class="kpi-reward-seat-result-cell kpi-reward-seat-contrib" role="group" aria-label="${escapeHtml(name)} estimated contribution ${fmtMoney(seatRevDefault)}, ${seatGoalShareDefault}% of cash goal">
+            <div class="kpi-reward-seat-contrib-value" data-seat-contrib>
+              <strong class="kpi-mtd-line" data-seat-contrib-money>${fmtMoney(seatRevDefault)}</strong>
+              <span class="kpi-goal-slash">/</span>
+              <span class="kpi-forecast-line" data-seat-contrib-pct>${seatGoalShareDefault}%</span>
             </div>
-            <div class="kpi-reward-seat-gain kpi-reward-field kpi-reward-field-gain" role="group" aria-label="${escapeHtml(name)} money gain versus starting goal $0">
-              <span class="kpi-reward-field-title">Money Gain</span>
-              <div class="kpi-reward-scale-average kpi-reward-seat-gain-value" data-seat-gain>
-                <strong class="kpi-mtd-line" data-seat-gain-money>$0</strong>
-              </div>
+          </td>
+          <td class="kpi-reward-seat-result-cell kpi-reward-seat-gain" role="group" aria-label="${escapeHtml(name)} money gain versus starting goal $0">
+            <div class="kpi-reward-seat-gain-value" data-seat-gain>
+              <strong class="kpi-mtd-line" data-seat-gain-money>$0</strong>
             </div>
-          </div>
-        </div>`;
+          </td>
+        </tr>`;
     }).join("");
     /* Cash guide stops at the live cash goal. No rows above $150k. Kate 11/06/2026. */
     const cashCap = Math.min(lift.cashGoal > 0 ? lift.cashGoal : 150000, 150000);
@@ -10782,7 +10772,45 @@
         <small data-calls-guide>Calls guide at 90% answer: ${callsGuide}.</small>
         <small data-incoming-note>At a 90% answer rate and measured answered → case ${answeredPctLabel}% on all paid phones. Call → case ${closePct}%. Average case value ${fmtMoney(lift.fee)}. The field allows down to the year average of ${yearBaseline.toLocaleString("en-US")} phones / month.</small>
         <h4 class="kpi-reward-scale-impact-title">Individual Goal Calculator</h4>
-        <div class="kpi-reward-scale-seats">${seatCards}</div>
+        <div class="kpi-reward-scale-seats">
+          <div class="kpi-reward-seats-wrap">
+            <table class="kpi-reward-seats-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="kpi-reward-th-seat">Seat</th>
+                  <th scope="col" class="kpi-reward-th-calls">Target Calls Answered</th>
+                  <th scope="col" class="kpi-reward-th-conv">Answered Call / Case Conversion %</th>
+                  <th scope="col" class="kpi-reward-th-cases">Target Number Of Cases To Close</th>
+                  <th scope="col" class="kpi-reward-th-eq" aria-label="Equals"><span class="kpi-reward-results-eq">=</span></th>
+                  <th scope="col" class="kpi-reward-th-result kpi-reward-th-contrib">Est. Contribution</th>
+                  <th scope="col" class="kpi-reward-th-result kpi-reward-th-gain">Money Gain</th>
+                </tr>
+              </thead>
+              <tbody>${seatCards}</tbody>
+              <tfoot>
+                <tr class="kpi-reward-seats-total">
+                  <th scope="row" class="kpi-reward-seat-name">Team Total</th>
+                  <td class="kpi-reward-seat-total-num" data-seat-total-calls>0</td>
+                  <td class="kpi-reward-seat-total-dash">—</td>
+                  <td class="kpi-reward-seat-total-num" data-seat-total-cases>0</td>
+                  <td class="kpi-reward-td-eq" aria-hidden="true">=</td>
+                  <td class="kpi-reward-seat-result-cell">
+                    <div class="kpi-reward-seat-contrib-value">
+                      <strong class="kpi-mtd-line" data-seat-total-contrib-money>$0</strong>
+                      <span class="kpi-goal-slash">/</span>
+                      <span class="kpi-forecast-line" data-seat-total-contrib-pct>0%</span>
+                    </div>
+                  </td>
+                  <td class="kpi-reward-seat-result-cell">
+                    <div class="kpi-reward-seat-gain-value">
+                      <strong class="kpi-mtd-line" data-seat-total-gain-money>$0</strong>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
         <small data-seat-note>Each seat sets Target Calls Answered, Answered Call / Case Conversion %, and Target Number Of Cases To Close. Answered Call / Case Conversion % opens at measured answered → case on all paid phones, May through October. Weekday seats use ${weekdayClose.answeredPct}%. Andrew uses weekend ${weekendClose.answeredPct}%. Firm Calls Needed stays on the same all-phone book. The 50% figure people remember is LSA Agreement Sent ÷ tagged LSA leads, or consult → sign. That is a later stage, not answered call → signed case. Romina and Andrew default Target Calls Answered to a 50/50 split of the current answered book. Jack and Casey follow the $150k case-need share. Est. contribution is cases × year average case value. Answer pay is an individual flat and is not set. The habit to practice is answering calls.</small>
       </div>
       <p class="kpi-reward-scale-note" data-reward-note>${scaleNote}</p>
@@ -10867,6 +10895,7 @@
       const syncCases = !!(opts && opts.syncCases);
       let casesSum = 0;
       let revSum = 0;
+      let baseRevSum = 0;
       let answersSum = 0;
       seats.forEach((seat) => {
         const targetEl = seat.querySelector("[data-seat-target]");
@@ -10881,6 +10910,7 @@
         const answerMin = Math.max(0, Number(seat.getAttribute("data-answer-min")) || 0);
         const answerMax = Math.max(0, Number(seat.getAttribute("data-answer-max")) || 0);
         const baseRev = Math.max(0, Number(seat.getAttribute("data-seat-base-rev")) || 0);
+        baseRevSum += baseRev;
         let answered = targetEl ? Number(targetEl.value) : 0;
         if (!Number.isFinite(answered) || answered < 0) answered = 0;
         answered = Math.ceil(answered - 1e-9);
@@ -10930,9 +10960,26 @@
           gainGroup.setAttribute("aria-label", book + " " + gainAria);
         }
       });
+      const teamShare = cashGoal > 0 ? Math.round((revSum / cashGoal) * 100) : 0;
+      const totalGain = revSum - baseRevSum;
+      const totalCallsEl = box.querySelector("[data-seat-total-calls]");
+      const totalCasesEl = box.querySelector("[data-seat-total-cases]");
+      const totalContribMoneyEl = box.querySelector("[data-seat-total-contrib-money]");
+      const totalContribPctEl = box.querySelector("[data-seat-total-contrib-pct]");
+      const totalGainMoneyEl = box.querySelector("[data-seat-total-gain-money]");
+      if (totalCallsEl) totalCallsEl.textContent = answersSum.toLocaleString("en-US");
+      if (totalCasesEl) totalCasesEl.textContent = casesSum.toLocaleString("en-US");
+      if (totalContribMoneyEl) totalContribMoneyEl.textContent = fmtMoney(revSum);
+      if (totalContribPctEl) totalContribPctEl.textContent = teamShare + "%";
+      if (totalGainMoneyEl) {
+        totalGainMoneyEl.textContent = totalGain === 0
+          ? "$0"
+          : (totalGain > 0 ? "+" : "−") + fmtMoney(Math.abs(totalGain));
+        totalGainMoneyEl.classList.toggle("kpi-seat-gain-up", totalGain > 0);
+        totalGainMoneyEl.classList.toggle("kpi-seat-gain-down", totalGain < 0);
+      }
       const seatNote = box.querySelector("[data-seat-note]");
       if (seatNote) {
-        const teamShare = cashGoal > 0 ? Math.round((revSum / cashGoal) * 100) : 0;
         seatNote.textContent = "Each seat sets Target Calls Answered, Answered Call / Case Conversion %, and Target Number Of Cases To Close. Answered Call / Case Conversion % is measured answered → case on all paid phones. Andrew defaults to weekend. The others default to weekday. The 50% people remember is LSA Agreement Sent or consult → sign, not this rate. Est. contribution is cases × year average case value. Answer pay is an individual flat and is not set. The habit to practice is answering calls. Combined est. contribution " + fmtMoney(revSum) + " toward " + fmtMoney(cashGoal) + " · " + teamShare + "% of cash goal.";
       }
       return { casesSum, revSum };
