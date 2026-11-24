@@ -930,6 +930,24 @@ body.feedback-mode-on .feedback-target:hover {
 }
 .kpi-work-goal-met { color: #1f8a65; }
 .kpi-work-goal-short { color: #cf2d56; }
+.kpi-cr-hits-table .kpi-cr-hit-num {
+  font-weight: 700;
+  color: var(--gg-brown);
+  white-space: nowrap;
+  text-align: right;
+}
+.kpi-cr-hits-table .kpi-work-goal-type {
+  min-width: 6rem;
+}
+.kpi-cr-hits-table .kpi-work-goal-target {
+  min-width: 0;
+  white-space: nowrap;
+}
+.kpi-cr-hits-table th:nth-child(n+2),
+.kpi-cr-hits-table td:nth-child(n+2) {
+  text-align: right;
+  white-space: nowrap;
+}
 @media (max-width: 800px) {
   .kpi-work-goals-grid { grid-template-columns: 1fr; }
   .kpi-work-goal-body { grid-template-columns: 1fr; }

@@ -3,7 +3,7 @@
  * (former Dashboards charts live at the bottom of the KPIs tab).
  */
 (function () {
-  const RENDER_VER = "20261123-goals-rm-fee-card";
+  const RENDER_VER = "20261123-practice-bucket-fees";
   /** Corner check · as-of older than this many calendar days → red. Kate 10/27/2026. */
   const TILE_ASOF_STALE_DAYS = 10;
   /** Tile-month pills — current month first. May/Jun/Jul = proof months; Oct* MTD. */
@@ -99,6 +99,10 @@
       file: "Downloads/case_list_report(1).csv, open dates 11/02/2026 through 11/19/2026",
       fields: "18 flat-fee cases totaling $79,400 out of 21 opened cases in November 2026 MTD. Two hourly cases and one case without a fee structure are excluded from the flat-fee averages."
     },
+    "practice-bucket-fees": {
+      file: "Downloads/case_list_report (15).csv and Downloads/ledger_account_activity_report (29).csv through 11/23/2026",
+      fields: "All-Time 672 matters grouped into 8 practice buckets, sorted highest to lowest by Trust Paid Net as % Of Fee. Excludes $59,730 in multi-case blank-link deposits and $92,765 in unmatched legacy or third-party contacts from case totals."
+    },
     "cash-pace": {
       file: "ledger_account_activity_report (21).csv · export 11/08/2026 · Credits Sep $113,985 through 09/30/2026 · Oct* ledger $104,970 through 10/30/2026 plus $15,000 cashier's check and $500 cash · Jul restated $112,350 · Contact_11-08 cases · Trust snapshot 11/08",
       fields: "Follows tile month · Sep Credits through 09/30/2026 · Oct* dial $120,470 = ledger $104,970 through day 30 plus $15,000 cashier's check and $500 cash · no Credit rows on 10/31 · Nov* $15,775 through 11/08 · W1 $14,775 · W2 $1,000 · completed gray · future = pace × week-end day"
@@ -160,8 +164,8 @@
       fields: "100 unique MyCase matches, 53 Trust clients ($173,050), 27 with contracted fee ($141,000, avg $5,222), LSA media $66,421, cost per match $664, 261% Trust return"
     },
     "client-referrals-review": {
-      file: "da.gd stats pages · Review Media Kit print-11-07-2026 · CASE-CLOSE-REVIEW-QR-TRACKING.md",
-      fields: "Per-attorney Yelp + Google QR access counts · 3 letter pages × 4 cards = 12 cards each · hand out by 12/31/2026"
+      file: "da.gd stats pages, Google Maps live scrape 11/23/2026, Yelp listing 11/23/2026, CASE-CLOSE-REVIEW-QR-TRACKING.md",
+      fields: "QR scans start at 0 until cards go out; client review targets are 2 / month, 6 / quarter, 24 / year per attorney and 6 / month, 18 / quarter, 72 / year for Team"
     },
   };
 
@@ -277,6 +281,11 @@
       desc: "Contracted flat-fee cases opened from 11/02/2026 through 11/19/2026 in MyCase, grouped by Lead Attorney. Covers 18 flat-fee cases totaling $79,400 out of 21 opened cases in the window. Two hourly cases and one case with a blank fee structure are excluded from the flat-fee average.",
       formula: "Average Flat Fee = Total Contracted Flat Fees divided by Flat-Fee Cases for each Lead Attorney. Share Of Total = attorney total divided by $79,400."
     },
+    "practice-bucket-fees": {
+      title: "Practice Bucket Breakdown: All-Time, 672 Cases",
+      desc: "Compares MyCase Listed Flat Fee against actual net Trust cash collected across all 672 matters through 11/23/2026, sorted highest to lowest by % Of Fee. % Unpaid is the share of total cases with $0 net trust paid. Trust Paid Net equals Case-Link plus single-case blank-link trust credits minus client refunds and rejected eChecks.",
+      formula: "Avg Listed Fee = Listed Fee divided by Priced cases. Avg Paid / Paying = Trust Paid Net divided by Paying cases. % Of Fee = Trust Paid Net divided by Listed Fee. % Unpaid = cases with $0 net trust paid divided by total Cases."
+    },
     "cases-leads-spend": {
       title: "#05 Key Channel Activity",
       desc: "Channel activity on KPIs: lead share and reviews by channel. Leads by Channel per Month, Lead Cost per Channel YTD, and Cost per Client Acquisition per Month live on the Lead Source tab.",
@@ -369,8 +378,8 @@
     },
     "client-referrals-review": {
       title: "Client Referrals Review QRs",
-      desc: "Case-close Your Feedback Helps cards. Each lawyer prints 3 letter pages of 4 cards, 12 cards each, and hands every card out by 12/31/2026. Hits are da.gd access counts on that lawyer's Yelp and Google short links. A hit is a scan or click. It is not a finished Yelp or Google review.",
-      formula: "Hits = da.gd stats daily access total for that short link. Cards out = cards handed ÷ 12. Team cards = sum handed ÷ 36."
+      desc: "Case-close review QR tracking and client review targets by month, quarter, and year. QR counts start at 0 because cards have not been handed out yet. Pre-launch test scans are excluded from the live count. Team Month, Quarter, and Year review counts pull from live Google Business Profile and Yelp totals.",
+      formula: "QR count = post-launch da.gd scans per link, starting at 0. Attorney targets = 2 / month, 6 / quarter, 24 / year. Team targets = 6 / month, 18 / quarter, 72 / year."
     }
   };
 
@@ -567,7 +576,7 @@
       "dg-phone-cost": "2026-11-19",
       "dg-case-cost": "2026-11-19",
       "click-call-monitor": "2026-11-19",
-      "client-referrals-review": "2026-11-06",
+      "client-referrals-review": "2026-11-23",
       "#19": "2026-10-02",
       "#21": "2026-10-02",
       "#28": "2026-11-19"
@@ -594,7 +603,7 @@
       "dg-case-cost": "fresh",
       "#28": "fresh",
       "click-call-monitor": "fresh",
-      "client-referrals-review": "stale",
+      "client-referrals-review": "fresh",
       "justia": "stale",
       "#19": "wip",
       "#21": "wip"
@@ -612,21 +621,26 @@
       clickToCallBaseline: 15
     },
     /**
-     * Client Referrals case-close review QRs · da.gd hits + handout plan.
-     * Kate 11/06/2026 · 3 letter pages × 4 cards = 12 per attorney · all out by 12/31/2026.
-     * Hits from da.gd stats pages. Not finished Yelp / Google reviews.
+     * Client Referrals case-close review QRs + client review targets (month, quarter, year).
+     * Kate 11/23/2026: QR counts start from 0 because cards have not been handed out yet.
+     * Pre-launch da.gd test hits saved as preLaunchYelpHits / preLaunchGoogleHits so future pulls subtract them.
+     * Review targets: 2 / month, 6 / quarter, 24 / year per attorney; Team 6 / month, 18 / quarter, 72 / year.
      */
     clientReferralsReview: {
-      asOf: "2026-11-06",
-      deadline: "2026-12-31",
-      pagesPerAttorney: 3,
-      cardsPerPage: 4,
-      cardsPerAttorney: 12,
+      asOf: "2026-11-23",
+      monthlyReviewsPerAttorney: 2,
+      quarterlyReviewsPerAttorney: 6,
+      yearlyReviewsPerAttorney: 24,
       attorneys: [
         {
           who: "Andrew",
-          yelpHits: 3,
-          googleHits: 2,
+          yelpHits: 0,
+          googleHits: 0,
+          preLaunchYelpHits: 3,
+          preLaunchGoogleHits: 2,
+          reviewsMonth: 0,
+          reviewsQuarter: 0,
+          reviewsYear: 0,
           yelpSlug: "pygHqh",
           googleSlug: "IjVa3",
           cardsPrinted: 12,
@@ -634,8 +648,13 @@
         },
         {
           who: "Casey",
-          yelpHits: 2,
-          googleHits: 2,
+          yelpHits: 0,
+          googleHits: 0,
+          preLaunchYelpHits: 2,
+          preLaunchGoogleHits: 2,
+          reviewsMonth: 0,
+          reviewsQuarter: 0,
+          reviewsYear: 0,
           yelpSlug: "wKhd",
           googleSlug: "ulVA3",
           cardsPrinted: 12,
@@ -643,8 +662,13 @@
         },
         {
           who: "Jack",
-          yelpHits: 2,
-          googleHits: 2,
+          yelpHits: 0,
+          googleHits: 0,
+          preLaunchYelpHits: 2,
+          preLaunchGoogleHits: 2,
+          reviewsMonth: 0,
+          reviewsQuarter: 0,
+          reviewsYear: 0,
           yelpSlug: "PrfYO",
           googleSlug: "ybQ8q",
           cardsPrinted: 12,
@@ -1006,6 +1030,21 @@
         { attorney: "Jack Strong", cases: 10, total: 39500, avg: 3950 },
         { attorney: "Andrew Brown", cases: 3, total: 31400, avg: 10466.67 },
         { attorney: "Cassandra Dinaro", cases: 5, total: 8500, avg: 1700 }
+      ]
+    },
+    /* MyCase case_list_report (15).csv + ledger_account_activity_report (29).csv through 11/23/2026, aggregates only */
+    practiceBucketBreakdown: {
+      asOf: "2026-11-23",
+      label: "All-Time, 672 Cases",
+      rows: [
+        { area: "Assault / Menacing", cases: 83, priced: 70, paying: 69, listedFee: 520360, netTrustPaid: 445795, trustBalance: 352435 },
+        { area: "Other Criminal", cases: 222, priced: 168, paying: 148, listedFee: 730600, netTrustPaid: 571645, trustBalance: 507495 },
+        { area: "Theft / Property", cases: 54, priced: 45, paying: 35, listedFee: 302750, netTrustPaid: 234420, trustBalance: 203170 },
+        { area: "Traffic", cases: 72, priced: 64, paying: 57, listedFee: 123350, netTrustPaid: 90200, trustBalance: 87700 },
+        { area: "DUI / DWAI", cases: 67, priced: 50, paying: 43, listedFee: 253500, netTrustPaid: 171870, trustBalance: 134170 },
+        { area: "Domestic Violence / DV", cases: 126, priced: 114, paying: 99, listedFee: 644700, netTrustPaid: 427175, trustBalance: 326625 },
+        { area: "Sex Assault / Sex Offense", cases: 30, priced: 24, paying: 20, listedFee: 216250, netTrustPaid: 116825, trustBalance: 105575 },
+        { area: "Probation Revocation", cases: 18, priced: 16, paying: 7, listedFee: 69000, netTrustPaid: 19700, trustBalance: 19700 }
       ]
     },
     costPerCall: [
@@ -8689,6 +8728,68 @@
     });
   }
 
+  function practiceBucketBreakdownCardHtml() {
+    const pack = DATA.practiceBucketBreakdown || {};
+    const rawRows = Array.isArray(pack.rows) ? pack.rows : [];
+    if (!rawRows.length) return "";
+    const rows = [...rawRows].sort((a, b) => {
+      const aHasFee = Number(a.listedFee) > 0;
+      const bHasFee = Number(b.listedFee) > 0;
+      if (aHasFee !== bHasFee) return aHasFee ? -1 : 1;
+      if (aHasFee && bHasFee) {
+        const diff = (Number(b.netTrustPaid) / Number(b.listedFee)) - (Number(a.netTrustPaid) / Number(a.listedFee));
+        if (diff !== 0) return diff;
+      }
+      return (Number(b.netTrustPaid) || 0) - (Number(a.netTrustPaid) || 0);
+    });
+    const fmtPct = (num, den) => (den > 0 ? `${((num / den) * 100).toFixed(1)}%` : "N/A");
+    const totCases = rows.reduce((s, r) => s + (Number(r.cases) || 0), 0);
+    const totPriced = rows.reduce((s, r) => s + (Number(r.priced) || 0), 0);
+    const totPaying = rows.reduce((s, r) => s + (Number(r.paying) || 0), 0);
+    const totFee = rows.reduce((s, r) => s + (Number(r.listedFee) || 0), 0);
+    const totNet = rows.reduce((s, r) => s + (Number(r.netTrustPaid) || 0), 0);
+    const totBal = rows.reduce((s, r) => s + (Number(r.trustBalance) || 0), 0);
+    const body = rows.map(r => {
+      const cases = Number(r.cases) || 0;
+      const priced = Number(r.priced) || 0;
+      const paying = Number(r.paying) || 0;
+      const fee = Number(r.listedFee) || 0;
+      const net = Number(r.netTrustPaid) || 0;
+      const bal = Number(r.trustBalance) || 0;
+      const unpaid = Math.max(0, cases - paying);
+      const avgFee = priced > 0 ? fmtMoney(Math.round(fee / priced)) : "$0";
+      const avgPaid = paying > 0 ? fmtMoney(Math.round(net / paying)) : "$0";
+      const ratio = fee > 0 ? net / fee : null;
+      const pctText = fmtPct(net, fee);
+      let pctCell = pctText;
+      if (ratio != null && ratio >= 0.8) {
+        pctCell = `<span style="color:#1f8a65">${pctText} High</span>`;
+      } else if (ratio != null && ratio < 0.5) {
+        pctCell = `<span class="kpi-negative-value">${pctText} Low</span>`;
+      }
+      return `<tr><td>${escapeHtml(r.area)}</td><td>${cases}</td><td>${priced} / ${paying}</td><td>${fmtPct(unpaid, cases)}</td><td>${fmtMoney(fee)}</td><td>${avgFee}</td><td>${fmtMoney(net)}</td><td>${avgPaid}</td><td>${pctCell}</td><td>${fmtMoney(bal)}</td></tr>`;
+    }).join("");
+    const totUnpaid = Math.max(0, totCases - totPaying);
+    const totAvgFee = totPriced > 0 ? fmtMoney(Math.round(totFee / totPriced)) : "$0";
+    const totAvgPaid = totPaying > 0 ? fmtMoney(Math.round(totNet / totPaying)) : "$0";
+    const totalRow = `<tr class="kpi-table-total"><td>Total</td><td>${totCases}</td><td>${totPriced} / ${totPaying}</td><td>${fmtPct(totUnpaid, totCases)}</td><td>${fmtMoney(totFee)}</td><td>${totAvgFee}</td><td>${fmtMoney(totNet)}</td><td>${totAvgPaid}</td><td>${fmtPct(totNet, totFee)}</td><td>${fmtMoney(totBal)}</td></tr>`;
+    const noteText = "Source: MyCase case_list_report 15 and ledger_account_activity_report 29 through 11/23/2026. % Unpaid is the share of total cases with $0 net trust paid. Trust Paid Net equals Case-Link plus single-case blank-link trust credits minus client refunds and rejected eChecks. Multi-case blank-link deposits of $59,730 and unmatched legacy or third-party contacts of $92,765 stay outside case totals. Rows at 80% or higher show green High; rows below 50% show red Low.";
+    const table = `<div class="kpi-chart-detail">
+      <table class="kpi-table kpi-chart-table">
+        <thead><tr><th scope="col">Practice Area</th><th scope="col">Cases</th><th scope="col">Priced / Paying</th><th scope="col">% Unpaid</th><th scope="col">Listed Fee</th><th scope="col">Avg Listed Fee</th><th scope="col">Trust Paid Net</th><th scope="col">Avg Paid / Paying</th><th scope="col">% Of Fee</th><th scope="col">Trust Balance</th></tr></thead>
+        <tbody>${body}${totalRow}</tbody>
+      </table>
+      <p class="kpi-table-note">${escapeHtml(noteText)}</p>
+    </div>`;
+    /* No card corner: Cases and Fees section already carries the one WIP mark. */
+    return chartBlock({
+      title: `Practice Bucket Breakdown: ${pack.label || "All-Time, 672 Cases"}`,
+      focus: "practice-bucket-fees",
+      helpId: "practice-bucket-fees",
+      table
+    });
+  }
+
   function forecastExpenseCoverageDialHtml() {
     const collectibleAnnual = 884981;
     const expensesAnnual = 960000;
@@ -10699,37 +10800,69 @@
 
   function clientReferralsReviewPack() {
     const pack = DATA.clientReferralsReview || {};
-    const goalCards = Number(pack.cardsPerAttorney) || 12;
+    const monthGoal = Number(pack.monthlyReviewsPerAttorney) || 2;
+    const quarterGoal = Number(pack.quarterlyReviewsPerAttorney) || (monthGoal * 3);
+    const yearGoal = Number(pack.yearlyReviewsPerAttorney) || (monthGoal * 12);
     const attorneys = (pack.attorneys || []).map(row => {
       const yelp = Number(row.yelpHits) || 0;
       const google = Number(row.googleHits) || 0;
-      const handed = Number(row.cardsHanded) || 0;
-      const printed = Number(row.cardsPrinted) || goalCards;
+      const reviewsMonth = Number(row.reviewsMonth) || 0;
+      const reviewsQuarter = Number(row.reviewsQuarter) || 0;
+      const reviewsYear = Number(row.reviewsYear) || 0;
       return {
         who: String(row.who || ""),
         yelpHits: yelp,
         googleHits: google,
         hits: yelp + google,
-        cardsHanded: handed,
-        cardsPrinted: printed,
-        cardsGoal: goalCards,
+        reviewsMonth,
+        reviewsQuarter,
+        reviewsYear,
+        monthGoal,
+        quarterGoal,
+        yearGoal,
         yelpSlug: String(row.yelpSlug || ""),
         googleSlug: String(row.googleSlug || "")
       };
     }).filter(r => r.who);
-    const totalHits = attorneys.reduce((n, r) => n + r.hits, 0);
-    const totalHanded = attorneys.reduce((n, r) => n + r.cardsHanded, 0);
-    const totalGoal = attorneys.length * goalCards;
+    const totalYelpHits = attorneys.reduce((n, r) => n + r.yelpHits, 0);
+    const totalGoogleHits = attorneys.reduce((n, r) => n + r.googleHits, 0);
+    const totalHits = totalYelpHits + totalGoogleHits;
+    const teamMonthGoal = attorneys.length * monthGoal;
+    const teamQuarterGoal = attorneys.length * quarterGoal;
+    const teamYearGoal = attorneys.length * yearGoal;
+    const gbpProfile = reviewProfileByPlatform("Google Business Profile");
+    const yelpProfile = reviewProfileByPlatform("Yelp");
+    const monthKey = periodToChannelMonth(DATA.period) || "Nov";
+    const quarterMap = {
+      Jan: ["Jan", "Feb", "Mar"], Feb: ["Jan", "Feb", "Mar"], Mar: ["Jan", "Feb", "Mar"],
+      Apr: ["Apr", "May", "Jun"], May: ["Apr", "May", "Jun"], Jun: ["Apr", "May", "Jun"],
+      Jul: ["Jul", "Aug", "Sep"], Aug: ["Jul", "Aug", "Sep"], Sep: ["Jul", "Aug", "Sep"],
+      Oct: ["Oct", "Nov", "Dec"], Nov: ["Oct", "Nov", "Dec"], Dec: ["Oct", "Nov", "Dec"]
+    };
+    const yearMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const sumFirmReviews = (months) => months.reduce((sum, m) => {
+      const g = reviewProfileMonthNew(gbpProfile, m);
+      const y = reviewProfileMonthNew(yelpProfile, m);
+      return sum + (g != null && Number.isFinite(Number(g)) ? Number(g) : 0) + (y != null && Number.isFinite(Number(y)) ? Number(y) : 0);
+    }, 0);
+    const teamReviewsMonth = sumFirmReviews([monthKey]);
+    const teamReviewsQuarter = sumFirmReviews(quarterMap[monthKey] || [monthKey]);
+    const teamReviewsYear = sumFirmReviews(yearMonths);
     return {
       asOf: pack.asOf || "",
-      deadline: pack.deadline || "2026-12-31",
-      pagesPerAttorney: Number(pack.pagesPerAttorney) || 3,
-      cardsPerPage: Number(pack.cardsPerPage) || 4,
-      cardsPerAttorney: goalCards,
+      monthGoal,
+      quarterGoal,
+      yearGoal,
+      teamMonthGoal,
+      teamQuarterGoal,
+      teamYearGoal,
+      teamReviewsMonth,
+      teamReviewsQuarter,
+      teamReviewsYear,
       attorneys,
-      totalHits,
-      totalHanded,
-      totalGoal
+      totalYelpHits,
+      totalGoogleHits,
+      totalHits
     };
   }
 
@@ -10738,24 +10871,24 @@
     if (!pack.attorneys.length) return "";
     const asOf = resolveTileAsOf("client-referrals-review") || pack.asOf || "";
     const corner = periodFreshMark(true, true, String(pack.totalHits), asOf, null, "client-referrals-review");
-    const deadlineLabel = pack.deadline === "2026-12-31" ? "12/31/2026" : String(pack.deadline);
     const body = pack.attorneys.map(row => {
-      const cardsState = row.cardsHanded >= row.cardsGoal
+      const state = row.reviewsMonth >= row.monthGoal
         ? `<span class="kpi-work-goal-state kpi-work-goal-met">Met</span>`
         : `<span class="kpi-work-goal-state kpi-work-goal-short">Short</span>`;
       return `<tr data-goal-kind="individual">
         <td class="kpi-work-goal-type">
           <span class="kpi-work-goal-who">${escapeHtml(row.who)}</span>
           <span class="kpi-work-goal-kind">Individual</span>
-          ${cardsState}
+          ${state}
         </td>
         <td class="kpi-cr-hit-num">${escapeHtml(String(row.yelpHits))}</td>
         <td class="kpi-cr-hit-num">${escapeHtml(String(row.googleHits))}</td>
-        <td class="kpi-cr-hit-num">${escapeHtml(String(row.hits))}</td>
-        <td class="kpi-work-goal-target">${actualGoalCell(String(row.cardsHanded), String(row.cardsGoal), `${row.who} cards handed toward ${row.cardsGoal}`)}</td>
+        <td class="kpi-work-goal-target">${actualGoalCell(String(row.reviewsMonth), String(row.monthGoal), `${row.who} client reviews this month toward ${row.monthGoal}`)}</td>
+        <td class="kpi-work-goal-target">${actualGoalCell(String(row.reviewsQuarter), String(row.quarterGoal), `${row.who} client reviews this quarter toward ${row.quarterGoal}`)}</td>
+        <td class="kpi-work-goal-target">${actualGoalCell(String(row.reviewsYear), String(row.yearGoal), `${row.who} client reviews this year toward ${row.yearGoal}`)}</td>
       </tr>`;
     }).join("");
-    const teamState = pack.totalHanded >= pack.totalGoal
+    const teamState = pack.teamReviewsMonth >= pack.teamMonthGoal
       ? `<span class="kpi-work-goal-state kpi-work-goal-met">Met</span>`
       : `<span class="kpi-work-goal-state kpi-work-goal-short">Short</span>`;
     const foot = `<tr data-goal-kind="team">
@@ -10764,12 +10897,14 @@
         <span class="kpi-work-goal-kind">Team</span>
         ${teamState}
       </td>
-      <td class="kpi-cr-hit-num">${escapeHtml(String(pack.attorneys.reduce((n, r) => n + r.yelpHits, 0)))}</td>
-      <td class="kpi-cr-hit-num">${escapeHtml(String(pack.attorneys.reduce((n, r) => n + r.googleHits, 0)))}</td>
-      <td class="kpi-cr-hit-num">${escapeHtml(String(pack.totalHits))}</td>
-      <td class="kpi-work-goal-target">${actualGoalCell(String(pack.totalHanded), String(pack.totalGoal), `Team cards handed toward ${pack.totalGoal}`)}</td>
+      <td class="kpi-cr-hit-num">${escapeHtml(String(pack.totalYelpHits))}</td>
+      <td class="kpi-cr-hit-num">${escapeHtml(String(pack.totalGoogleHits))}</td>
+      <td class="kpi-work-goal-target">${actualGoalCell(String(pack.teamReviewsMonth), String(pack.teamMonthGoal), `Team client reviews this month toward ${pack.teamMonthGoal}`)}</td>
+      <td class="kpi-work-goal-target">${actualGoalCell(String(pack.teamReviewsQuarter), String(pack.teamQuarterGoal), `Team client reviews this quarter toward ${pack.teamQuarterGoal}`)}</td>
+      <td class="kpi-work-goal-target">${actualGoalCell(String(pack.teamReviewsYear), String(pack.teamYearGoal), `Team client reviews this year toward ${pack.teamYearGoal}`)}</td>
     </tr>`;
-    return `<button type="button" class="kpi-goal-card kpi-work-goal" data-kpi-focus="client-referrals-review" aria-label="Client Referrals review QR hits ${pack.totalHits}. ${pack.pagesPerAttorney} pages of 4 cards each. Hand all ${pack.totalGoal} cards out by ${deadlineLabel}.">
+    const noteText = `QR count starts at 0 until cards go out. Client reviews target: ${pack.teamMonthGoal} / month, ${pack.teamQuarterGoal} / quarter, ${pack.teamYearGoal} / year.`;
+    return `<button type="button" class="kpi-goal-card kpi-work-goal" data-kpi-focus="client-referrals-review" aria-label="Client Referrals Review QRs count ${pack.totalHits}. ${noteText}">
       ${corner}
       ${kpiHelpBtn("client-referrals-review")}
       <div class="kpi-work-goal-body">
@@ -10778,17 +10913,18 @@
             <span class="kpi-work-goal-title">Client Referrals Review QRs</span>
             <span class="kpi-work-goal-now">${escapeHtml(String(pack.totalHits))}</span>
           </div>
-          <p class="kpi-work-goal-note">${escapeHtml(`${pack.pagesPerAttorney} pages × ${pack.cardsPerPage} cards each · hand all out by ${deadlineLabel}`)}</p>
+          <p class="kpi-work-goal-note">${escapeHtml(noteText)}</p>
         </div>
         <div class="kpi-work-goal-table-wrap">
           <table class="kpi-table kpi-work-goal-table kpi-cr-hits-table">
             <thead>
               <tr>
                 <th scope="col">Attorney</th>
-                <th scope="col">Yelp Hits</th>
-                <th scope="col">Google Hits</th>
-                <th scope="col">Hits</th>
-                <th scope="col">Cards Out</th>
+                <th scope="col">Yelp QR</th>
+                <th scope="col">Google QR</th>
+                <th scope="col">Month</th>
+                <th scope="col">Quarter</th>
+                <th scope="col">Year</th>
               </tr>
             </thead>
             <tbody>${body}${foot}</tbody>
@@ -11496,6 +11632,7 @@
         <div class="kpi-section-body">
           <div class="data-chart-table-stack">
             ${feeByPracticeSectionHtml()}
+            ${practiceBucketBreakdownCardHtml()}
             ${flatFeeByAttorneyCardHtml()}
             ${casesYoyPanelHtml()}
           </div>
